@@ -1,14 +1,18 @@
 {
   "name": "nukmiris-backend",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "private": true,
-  "description": "Reconstructed v6A.4 support-only development baseline; appointment actions remain disabled",
+  "description": "Business-specific calendar availability over signed WhatsApp webhooks; event changes remain disabled",
   "engines": {
     "node": ">=24 <25"
   },
   "scripts": {
     "start": "node whatsapp-webhook.js",
-    "test": "node --test --test-reporter=spec --test-concurrency=1 test/support-only.test.cjs"
+    "test": "node --test --test-reporter=spec --test-concurrency=1 test/support-only.test.cjs test/availability.test.cjs test/connections.test.cjs test/availability-webhook.test.cjs",
+    "google:connect": "node scripts/google-connect.js",
+    "calendars:list": "node scripts/connections.js --list-calendars",
+    "business:configure": "node scripts/configure-business.js",
+    "connections:check": "node scripts/connections.js"
   },
   "dependencies": {
     "@google-cloud/local-auth": "3.0.1",

@@ -2,6 +2,8 @@
 
 Prepared on 2026-10-24 as the approved follow-up to the read-only audit.
 
+This document records the original support-only baseline at commit `54cb8d3e876a38524ce7fc7b772f8d20f0c1bf6f`. The subsequent v0.1.0 availability checkpoint adds the calendar service, signed receiving-number routing, business configuration, and PC connection commands described in [README.md](README.md). The historical adaptation/validation notes below describe that original baseline.
+
 ## Source and limits
 
 - Source archive: [`../docs/handoffs/NukMiris-Codex-Handoff-2026-10-24-redacted.zip`](../docs/handoffs/NukMiris-Codex-Handoff-2026-10-24-redacted.zip).

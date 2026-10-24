@@ -8,7 +8,7 @@ const path = require("node:path");
 const https = require("node:https");
 const http = require("node:http");
 const { once } = require("node:events");
-const { randomUUID } = require("node:crypto");
+const { randomUUID, createHmac } = require("node:crypto");
 const { spawnSync } = require("node:child_process");
 const { createRequire } = require("node:module");
 const { DatabaseSync } = require("node:sqlite");
@@ -53,6 +53,9 @@ describe("v6A.4 support-only baseline", { concurrency: false }, () => {
       WHATSAPP_PHONE_NUMBER_ID: "synthetic-unused-channel",
       WHATSAPP_VERIFY_TOKEN: "synthetic-verification-value",
       WHATSAPP_API_VERSION: "v26.0",
+      META_APP_SECRET: "synthetic-app-secret",
+      NUKMIRIS_MODE: "support",
+      NUKMIRIS_ROUTING_MODE: "development",
     };
     for (const [key, value] of Object.entries(environment)) {
       originalEnvironment.set(key, process.env[key]);
@@ -119,12 +122,13 @@ describe("v6A.4 support-only baseline", { concurrency: false }, () => {
     const message = kind === "text"
       ? { from: options.from || sender, id: options.id || randomUUID(), type: "text", text: { body } }
       : { from: options.from || sender, id: options.id || randomUUID(), type: "interactive", interactive: { type: kind, [kind]: { id: body } } };
+    const payload = JSON.stringify({ entry: [{ changes: [{ value: {
+      metadata: { phone_number_id: "synthetic-receiving-channel" }, messages: [message],
+    } }] }] });
     const response = await nativeFetch(`${origin}/webhook`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ entry: [{ changes: [{ value: {
-        metadata: { phone_number_id: "synthetic-receiving-channel" }, messages: [message],
-      } }] }] }),
+      headers: { "Content-Type": "application/json", "X-Hub-Signature-256": "sha256=" + createHmac("sha256", "synthetic-app-secret").update(payload).digest("hex") },
+      body: payload,
     });
     assert.equal(response.status, 200);
     await response.arrayBuffer();
@@ -279,7 +283,9 @@ describe("v6A.4 support-only baseline", { concurrency: false }, () => {
       env: {
         NODE_ENV: "test", HOST: "127.0.0.1", PORT: "0", NUKMIRIS_DB_PATH: databasePath,
         WHATSAPP_TOKEN: "synthetic-unused-token", WHATSAPP_PHONE_NUMBER_ID: "synthetic-unused-channel",
-        WHATSAPP_VERIFY_TOKEN: "synthetic-verification-value", ...overrides,
+        WHATSAPP_VERIFY_TOKEN: "synthetic-verification-value",
+        META_APP_SECRET: "synthetic-app-secret", NUKMIRIS_MODE: "support", NUKMIRIS_ROUTING_MODE: "development",
+        ...overrides,
       },
       encoding: "utf8", timeout: 10000,
     });
@@ -312,5 +318,17 @@ describe("v6A.4 support-only baseline", { concurrency: false }, () => {
     const result = runInvalidConfiguration({ PORT: "invalid" });
     assert.notEqual(result.status, 0);
     assert.match(result.stderr, /PORT must be an integer/);
+  });
+
+  test("a missing Meta app secret stops startup", () => {
+    const result = runInvalidConfiguration({ META_APP_SECRET: "" });
+    assert.notEqual(result.status, 0);
+    assert.match(result.stderr, /Missing WhatsApp configuration/);
+  });
+
+  test("an unsupported booking mode cannot enable calendar changes", () => {
+    const result = runInvalidConfiguration({ NUKMIRIS_MODE: "booking" });
+    assert.notEqual(result.status, 0);
+    assert.match(result.stderr, /must be support or availability/);
   });
 });

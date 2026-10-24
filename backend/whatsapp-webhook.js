@@ -11,9 +11,12 @@ const { authenticate } = require("@google-cloud/local-auth");
 const { google } = require("googleapis");
 const { DateTime } = require("luxon");
 const { DatabaseSync } = require("node:sqlite");
+const { AsyncLocalStorage } = require("node:async_hooks");
+const { validMetaSignature } = require("./lib/meta-signature");
+const { createCalendarAvailability } = require("./lib/google-calendar");
 
 const app = express();
-app.use(express.json());
+app.use(express.json({ limit: "1mb", verify(req, res, bytes) { req.rawBody = bytes; } }));
 
 const PORT = Number(process.env.PORT || 3000);
 const HOST = process.env.HOST || "127.0.0.1";
@@ -21,6 +24,9 @@ const VERIFY_TOKEN = process.env.WHATSAPP_VERIFY_TOKEN;
 const TOKEN = process.env.WHATSAPP_TOKEN;
 const PHONE_ID = process.env.WHATSAPP_PHONE_NUMBER_ID;
 const API_VERSION = process.env.WHATSAPP_API_VERSION || "v26.0";
+const APP_SECRET = process.env.META_APP_SECRET;
+const MODE = process.env.NUKMIRIS_MODE || "support";
+const ROUTING_MODE = process.env.NUKMIRIS_ROUTING_MODE || "receiving_number";
 
 const ZONE = "America/Mexico_City";
 const CALENDAR_ID = "primary";
@@ -30,9 +36,11 @@ const OFFER_LIFETIME = 15 * 60 * 1000;
 const CREDENTIALS = path.join(__dirname, "credentials.json");
 const DB_PATH = path.resolve(__dirname, process.env.NUKMIRIS_DB_PATH || "data/nukmiris-sessions.sqlite");
 
-if (!TOKEN || !PHONE_ID || !VERIFY_TOKEN) {
-  throw new Error("Missing WhatsApp configuration. Set WHATSAPP_TOKEN, WHATSAPP_PHONE_NUMBER_ID, and WHATSAPP_VERIFY_TOKEN; see backend/.env.example.");
+if (!TOKEN || !PHONE_ID || !VERIFY_TOKEN || !APP_SECRET) {
+  throw new Error("Missing WhatsApp configuration. Set WHATSAPP_TOKEN, WHATSAPP_PHONE_NUMBER_ID, WHATSAPP_VERIFY_TOKEN, and META_APP_SECRET; see backend/.env.example.");
 }
+if (!["support", "availability"].includes(MODE)) throw new Error("NUKMIRIS_MODE must be support or availability");
+if (!["development", "receiving_number"].includes(ROUTING_MODE)) throw new Error("Invalid NUKMIRIS_ROUTING_MODE");
 if (!Number.isInteger(PORT) || PORT < 0 || PORT > 65535) {
   throw new Error("PORT must be an integer between 0 and 65535.");
 }
@@ -43,9 +51,9 @@ if (!fs.existsSync(DB_PATH)) {
 let calendar;
 
 // ==================================================
-// PHASE 6A.4 — DEVELOPMENT TENANT ROUTING AND SCOPED STORAGE
-// Production must route by receiving Meta business phone-number ID,
-// never by customer sender phone number. No fallback to a default tenant.
+// BUSINESS ROUTING AND SCOPED STORAGE
+// Signed receiving-number routing is the default. The sender-based route
+// is retained only for explicit legacy development mode; no default tenant.
 // ==================================================
 const db = new DatabaseSync(DB_PATH);
 db.exec("PRAGMA foreign_keys = ON");
@@ -54,6 +62,8 @@ const requiredTables = [
   "business_customer_sessions", "business_support_conversations",
   "business_support_messages"
 ];
+if (ROUTING_MODE === "receiving_number") requiredTables.push("business_whatsapp_connections");
+if (MODE === "availability") requiredTables.push("business_settings", "business_calendar_connections");
 const presentTables = new Set(db.prepare("SELECT name FROM sqlite_master WHERE type='table'").all().map(r => r.name));
 for (const table of requiredTables) {
   if (!presentTables.has(table)) throw new Error(`Phase 6A prerequisite missing: ${table}`);
@@ -63,10 +73,23 @@ const routeQuery = db.prepare(`
   FROM dev_test_business_routes r JOIN businesses b ON b.business_id = r.business_id
   WHERE r.sender_whatsapp_id = ? AND b.status = 'test'
 `);
+const receivingRoute = ROUTING_MODE === "receiving_number" ? db.prepare(`
+  SELECT b.business_id, b.business_name, b.time_zone, w.phone_number_id
+  FROM business_whatsapp_connections w JOIN businesses b ON b.business_id=w.business_id
+  WHERE w.phone_number_id=? AND b.status IN ('test','active')
+`) : null;
+const businessContext = new AsyncLocalStorage();
+const messageQueues = new Map();
+const availability = MODE === "availability" ? createCalendarAvailability({
+  db, lookaheadDays: Number(process.env.NUKMIRIS_LOOKAHEAD_DAYS || 14),
+}) : null;
 function businessFor(from) {
+  const context = businessContext.getStore();
+  if (context?.sender === from) return context.business;
+  if (ROUTING_MODE !== "development") throw new Error("A verified receiving-business context is required");
   const business = routeQuery.get(from);
   if (!business) throw new Error(`No approved Phase 6A development business mapping for sender ${from}`);
-  return business;
+  return { ...business, phone_number_id: PHONE_ID, time_zone: ZONE };
 }
 
 class BusinessSessions {
@@ -157,6 +180,7 @@ const processedMessages = new Map();
 // ==================================================
 
 async function connectCalendar() {
+  throw new Error("Legacy Calendar connection is disabled; use the read-only availability connection");
   console.log("Connecting to Google Calendar...");
 
   const auth = await authenticate({
@@ -243,7 +267,7 @@ function validateFullName(input) {
 async function sendMessage(to, body) {
   const url =
     `https://graph.facebook.com/${API_VERSION}/` +
-    `${PHONE_ID}/messages`;
+    `${businessFor(to).phone_number_id}/messages`;
 
   const response = await fetch(url, {
     method: "POST",
@@ -290,7 +314,7 @@ async function sendReplyButtons(to, body, buttons) {
   }
 
   const response = await fetch(
-    `https://graph.facebook.com/${API_VERSION}/${PHONE_ID}/messages`,
+    `https://graph.facebook.com/${API_VERSION}/${businessFor(to).phone_number_id}/messages`,
     {
       method: "POST",
       headers: {
@@ -328,12 +352,12 @@ async function sendReplyButtons(to, body, buttons) {
 }
 
 // Interactive list for 4-10 existing appointments.
-async function sendAppointmentList(to, body, rows) {
+async function sendAppointmentList(to, body, rows, button = "Ver citas") {
   if (rows.length < 1 || rows.length > 10) {
     throw new Error("WhatsApp list must contain 1-10 rows.");
   }
   const response = await fetch(
-    `https://graph.facebook.com/${API_VERSION}/${PHONE_ID}/messages`,
+    `https://graph.facebook.com/${API_VERSION}/${businessFor(to).phone_number_id}/messages`,
     {
       method: "POST",
       headers: {
@@ -349,8 +373,8 @@ async function sendAppointmentList(to, body, rows) {
           type: "list",
           body: { text: body },
           action: {
-            button: "Ver citas",
-            sections: [{ title: "Mis citas", rows }]
+            button,
+            sections: [{ title: button === "Ver horarios" ? "Horarios disponibles" : "Mis citas", rows }]
           }
         }
       })
@@ -1074,6 +1098,7 @@ async function offerCancellationConfirmation(from, appointment) {
 }
 
 async function chooseAppointment(from, input, session) {
+  throw new Error("Calendar actions disabled while business calendar integration is verified");
   if (Date.now() > session.expiresAt) {
     sessions.delete(from);
     await sendMessage(
@@ -1206,6 +1231,7 @@ async function startCancellation(from) {
 // ==================================================
 
 async function confirmCancellation(from, answer) {
+  throw new Error("Calendar actions disabled while business calendar integration is verified");
   const session = sessions.get(from);
 
   if (!session || session.mode !== "cancel") return;
@@ -1374,6 +1400,74 @@ function alreadyProcessed(id) {
 // PROCESS WHATSAPP MESSAGES
 // ==================================================
 
+async function renderAvailability(from, session, page) {
+  const pageSize = 8;
+  const count = Math.ceil(session.slots.length / pageSize);
+  if (!Number.isInteger(page) || page < 0 || page >= count) throw new Error("Invalid availability page");
+  session.page = page;
+  sessions.set(from, session);
+  const zone = availability.configuration(businessFor(from).business_id).settings.timeZone;
+  const rows = session.slots.slice(page * pageSize, (page + 1) * pageSize).map((slot, index) => ({
+    id: `availability:${session.offerId}:slot:${page * pageSize + index}`,
+    title: DateTime.fromISO(slot.start).setZone(zone).setLocale("es").toFormat("ccc dd/LL HH:mm"),
+    description: `Termina a las ${DateTime.fromISO(slot.end).setZone(zone).toFormat("HH:mm")}`,
+  }));
+  if (page > 0) rows.push({ id: `availability:${session.offerId}:page:${page - 1}`, title: "Horarios anteriores" });
+  if (page + 1 < count) rows.push({ id: `availability:${session.offerId}:page:${page + 1}`, title: "Más horarios" });
+  await sendAppointmentList(from,
+    `Horarios disponibles de ${businessFor(from).business_name}. Página ${page + 1} de ${count}.\n\nEsta consulta no reserva una cita. Escribe Menu para volver.`,
+    rows, "Ver horarios");
+}
+
+async function offerAvailability(from) {
+  const businessId = businessFor(from).business_id;
+  const slots = await availability.listSlots(businessId);
+  if (!slots.length) {
+    sessions.delete(from);
+    await sendMessage(from, "No encontré horarios disponibles en los próximos días. Escribe Menu para volver o intenta más tarde.");
+    return;
+  }
+  await renderAvailability(from, {
+    mode: "availability", slots, offerId: randomUUID(), page: 0,
+    calendarId: availability.configuration(businessId).calendarId,
+    expiresAt: Date.now() + OFFER_LIFETIME,
+  }, 0);
+}
+
+async function handleAvailabilitySelection(from, command) {
+  const match = /^availability:([0-9a-f-]{36}):(page|slot):(\d+)$/.exec(command);
+  const session = sessions.get(from);
+  if (!match || !session || session.mode !== "availability" || session.offerId !== match[1] ||
+      Date.now() > session.expiresAt || session.calendarId !== availability.configuration(businessFor(from).business_id).calendarId) {
+    await sendMessage(from, "Esta opción ya no está vigente. Escribe Cita para consultar nuevos horarios.");
+    return;
+  }
+  const index = Number(match[3]);
+  if (match[2] === "page") {
+    if (!Number.isSafeInteger(index) || index >= Math.ceil(session.slots.length / 8)) {
+      await sendMessage(from, "Esta opción ya no está vigente. Escribe Cita para consultar nuevos horarios.");
+      return;
+    }
+    await renderAvailability(from, session, index);
+    return;
+  }
+  const slot = session.slots[index];
+  if (!slot) {
+    await sendMessage(from, "Esta opción ya no está vigente. Escribe Cita para consultar nuevos horarios.");
+    return;
+  }
+  const fresh = await availability.listSlots(businessFor(from).business_id);
+  if (!fresh.some(value => value.start === slot.start && value.end === slot.end)) {
+    sessions.delete(from);
+    await sendMessage(from, "Ese horario ya no está disponible. Escribe Cita para consultar nuevamente.");
+    return;
+  }
+  const zone = availability.configuration(businessFor(from).business_id).settings.timeZone;
+  await sendMessage(from, "El horario sigue disponible: " +
+    DateTime.fromISO(slot.start).setZone(zone).setLocale("es").toFormat("cccc d 'de' LLLL, HH:mm") +
+    ".\n\nLa reserva automática todavía no está activada. Escribe Menu para regresar o hablar con el negocio.");
+}
+
 async function handleMessage(message) {
   const isText = message.type === "text";
   const isButton = message.type === "interactive" &&
@@ -1381,7 +1475,7 @@ async function handleMessage(message) {
   const isList = message.type === "interactive" &&
     message.interactive?.type === "list_reply";
   if (!isText && !isButton && !isList) return;
-  if (alreadyProcessed(message.id)) return;
+  if (message.id && alreadyProcessed(`${businessFor(message.from).business_id}:${message.id}`)) return;
 
   const from = message.from;
   const text = isText ? (message.text?.body || "").trim() :
@@ -1389,18 +1483,21 @@ async function handleMessage(message) {
       (message.interactive?.list_reply?.id || "");
   const command = text.toLowerCase();
 
-  if (busyCustomers.has(from)) {
+  const customerKey = `${businessFor(from).business_id}:${from}`;
+  if (busyCustomers.has(customerKey)) {
     console.log("Customer operation already in progress.");
     return;
   }
-  busyCustomers.add(from);
+  busyCustomers.add(customerKey);
   try {
     const business = businessFor(from); // Fail closed for unassigned test numbers.
-    console.log("Phase 6A.4 development route:", business.business_id);
+    console.log("Business route:", business.business_id);
+    const consultAvailability = availability && isText && ["cita", "horarios"].includes(command);
+    const availabilityMenu = availability && isButton ? /^menu:([0-9a-f-]{36}):book$/.exec(command) : null;
     const isAppointmentAction =
-      (isText && ["cita", "reagendar", "cancelar"].includes(command)) ||
+      (isText && ["cita", "reagendar", "cancelar"].includes(command) && !consultAvailability) ||
       ((isButton || isList) && /^(book|reschedule|appointment|cancel|manage):/.test(command)) ||
-      (isButton && /^menu:[0-9a-f-]{36}:(book|manage)$/.test(command));
+      (isButton && /^menu:[0-9a-f-]{36}:(book|manage)$/.test(command) && !availabilityMenu);
     if (isAppointmentAction) {
       sessions.delete(from);
       await sendMessage(from, SCHEDULING_PAUSED);
@@ -1417,6 +1514,32 @@ async function handleMessage(message) {
         console.log("Business human-support message stored:", businessFor(from).business_id);
       } else {
         await sendMessage(from, "Tu conversación está en atención personal. Escribe tu mensaje o Menu.");
+      }
+      return;
+    }
+
+    if (consultAvailability || availabilityMenu) {
+      if (availabilityMenu) {
+        const currentMenu = sessions.get(from);
+        if (!currentMenu || currentMenu.mode !== "main_menu" || currentMenu.menuId !== availabilityMenu[1] || Date.now() > currentMenu.expiresAt) {
+          await sendMessage(from, "Esta opción ya no está vigente. Escribe Cita para consultar horarios.");
+          return;
+        }
+      }
+      sessions.delete(from);
+      try { await offerAvailability(from); }
+      catch (error) {
+        sessions.delete(from);
+        console.error("Calendar availability check failed; inspect the local connection configuration.");
+        await sendMessage(from, "No pude consultar el calendario en este momento. Intenta más tarde o escribe Menu para recibir ayuda.");
+      }
+      return;
+    }
+    if (availability && (isButton || isList) && command.startsWith("availability:")) {
+      try { await handleAvailabilitySelection(from, command); }
+      catch (error) {
+        console.error("Calendar availability selection failed; inspect the local connection configuration.");
+        await sendMessage(from, "No pude comprobar ese horario. Escribe Cita para intentar nuevamente.");
       }
       return;
     }
@@ -1522,7 +1645,7 @@ async function handleMessage(message) {
   } catch (error) {
     console.error("NukMiris processing error:", error.message);
   } finally {
-    busyCustomers.delete(from);
+    busyCustomers.delete(customerKey);
   }
 }
 
@@ -1548,6 +1671,9 @@ app.get("/webhook", (req, res) => {
 // ==================================================
 
 app.post("/webhook", (req, res) => {
+  if (!validMetaSignature(req.rawBody, req.get("X-Hub-Signature-256"), APP_SECRET)) {
+    return res.sendStatus(403);
+  }
   res.sendStatus(200);
 
   const changes =
@@ -1559,11 +1685,19 @@ app.post("/webhook", (req, res) => {
     const messages = change.value?.messages || [];
 
     for (const message of messages) {
-      handleMessage(message).catch(error => {
-        console.error(
-          "Webhook error:",
-          error.message
-        );
+      if (typeof message.from !== "string" || !message.from) continue;
+      const phoneId = change.value?.metadata?.phone_number_id;
+      const business = ROUTING_MODE === "receiving_number"
+        ? (typeof phoneId === "string" ? receivingRoute.get(phoneId) : undefined)
+        : routeQuery.get(message.from);
+      if (!business) continue;
+      const resolved = { ...business, phone_number_id: business.phone_number_id || PHONE_ID };
+      const key = `${resolved.business_id}:${message.from}`;
+      const queued = (messageQueues.get(key) || Promise.resolve()).catch(() => {}).then(() =>
+        businessContext.run({ business: resolved, sender: message.from }, () => handleMessage(message)));
+      messageQueues.set(key, queued);
+      queued.catch(() => console.error("Webhook processing failed; inspect the local configuration.")).finally(() => {
+        if (messageQueues.get(key) === queued) messageQueues.delete(key);
       });
     }
   }
@@ -1575,20 +1709,25 @@ app.post("/webhook", (req, res) => {
 
 async function start() {
   try {
-    console.log("Phase 6A.4: Google Calendar connection postponed; all calendar operations blocked.");
+    if (availability) {
+      const connected = db.prepare("SELECT business_id FROM business_whatsapp_connections").all();
+      if (!connected.length) throw new Error("Configure a business connection before starting availability mode");
+      for (const business of connected) await availability.verify(business.business_id);
+      console.log("Google Calendar availability connection verified. Event changes remain disabled.");
+    }
 
     return app.listen(PORT, HOST, () => {
       console.log("--------------------------------");
       console.log("NukMiris WhatsApp + Google Calendar POC");
       console.log("--------------------------------");
       console.log("Webhook server running on port", PORT);
-      console.log("Google Calendar: DISABLED (Phase 6A.4 safety gate)");
+      console.log(availability ? "Google Calendar: read-only availability" : "Google Calendar: DISABLED");
       console.log("Persistent sessions: SQLite enabled");
       console.log("Customer registry: SQLite enabled");
-      console.log("Multiple appointment selection: Enabled");
-      console.log("New booking: DISABLED until per-business calendar setup");
-      console.log("Appointment rescheduling: DISABLED until per-business calendar setup");
-      console.log("Appointment cancellation: DISABLED until per-business calendar setup");
+      console.log(availability ? "Availability lookup: Enabled" : "Availability lookup: Disabled");
+      console.log("New booking: DISABLED for this checkpoint");
+      console.log("Appointment rescheduling: DISABLED for this checkpoint");
+      console.log("Appointment cancellation: DISABLED for this checkpoint");
       console.log("Booking trigger: cita");
       console.log("Rescheduling trigger: reagendar");
       console.log("Cancellation trigger: cancelar (SI / NO)");

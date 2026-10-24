@@ -1,35 +1,47 @@
-# NukMiris support-only backend
+# NukMiris calendar availability — v0.1.0
 
-This is a reconstructed development baseline based on the handoff's v6A.4 source snapshot. The owner reports running that version on their PC. The PC file and installed dependency versions have not been compared directly; see [BASELINE.md](BASELINE.md).
+This checkpoint connects the PC backend to a specifically selected Google Calendar and signed Meta WhatsApp webhooks. `Cita`, `Horarios`, and the appointment menu button show all matching times within a configurable search window, with paging for later results. It does not create, reschedule, or cancel Calendar events yet.
 
-**Appointment booking, rescheduling, and cancellation remain disabled.** The current sender-based business routing is a development simulation. The known audit gaps remain documented in [KNOWN_LIMITATIONS.md](KNOWN_LIMITATIONS.md); this checkpoint does not make the webhook ready for public or production use.
+**Start here:** [PC setup and connection checks](PC_SETUP.md).
 
-## Install and test without real accounts
+Juanita's confirmed schedule is Monday–Friday, 10:00–19:00, 60-minute appointments starting on the hour, no buffer between appointments, and lunch 13:00–14:00. On an empty future weekday that gives 10:00, 11:00, 12:00, 14:00, 15:00, 16:00, 17:00, and 18:00. The final appointment ends at 19:00.
 
-Use Node 24.19.0 (also recorded in `.nvmrc`) and npm 11. From this directory:
+The template is [config/juanita.example.json](config/juanita.example.json). `business:configure` saves those settings and the explicit calendar/receiving-number mappings into the existing database after creating a local backup. The runtime reads the settings from SQLite, without hardcoded appointment hours or a fallback to `primary`. Other businesses retain their settings.
+
+## Install and test
+
+Use Node 24.19.0 and npm 11. From `backend/`:
 
 ```sh
 npm ci --ignore-scripts
 npm test
 ```
 
-The tests use the real Express, Luxon, and SQLite dependencies, temporary synthetic databases, loopback HTTP, and mocked outbound integrations. They skip `.env` loading, never read the real database or OAuth files, and do not contact WhatsApp or Google. Temporary files are removed after the tests.
+Tests use real Express/Luxon/SQLite, signed loopback HTTP, disposable synthetic databases, and simulated Google/Meta responses. They skip `.env` loading and never read real credentials or a real business database. They cover busy events, adjacent appointments, closing/lunch boundaries, calendar selection, paging, business isolation, stale selections, signature rejection, and disabled event changes.
 
-No credentials, business calendars, migrations, tunnel, or running PC application are needed for `npm test`. Tests protect the current support-only behavior; known security gaps are recorded separately rather than treated as passing production acceptance criteria.
+Checkpoint validation: frozen installation completed and all 68 tests passed, with no skipped tests. Real Google authorization, Meta access, and callback delivery remain to be verified on the PC.
 
-## Local launch with existing development configuration
+## Runtime modes
 
-Live startup is a separate, manual operation. Keep your existing PC app stopped before opening its database from another process. Do not start a tunnel or connect real accounts as part of installation or testing.
+- `NUKMIRIS_MODE=availability`: verify the configured calendar at startup, then answer availability requests. Local Google authorization and database mappings are required.
+- `NUKMIRIS_MODE=support`: support conversations and menus, with appointment actions paused and no Google connection.
 
-1. Copy `.env.example` to an ignored `.env` in this directory and enter your existing development configuration locally. Do not paste credentials into chat or commit them.
-2. Set `NUKMIRIS_DB_PATH` to the existing database that already has the Phase 6A.3 tables. An absolute path is supported; a relative path resolves from `backend/`. No database or migration is created automatically. Do not copy the real database into Git.
-3. Set `WHATSAPP_VERIFY_TOKEN` to the value you have configured for the Meta subscription challenge. It is separate from `WHATSAPP_TOKEN`. The archived hardcoded value has been removed from this runtime.
-4. Start with `npm start`. The default bind address is `127.0.0.1`, port 3000. Stop with Ctrl+C.
+Both modes verify Meta signatures. Receiving-number routing is the default: authenticated `metadata.phone_number_id` selects the business and outbound sender. `NUKMIRIS_ROUTING_MODE=development` retains the customer-number simulation for offline regression tests and deliberate legacy development; do not use it for real business routing.
 
-The `.env` path is anchored to this directory. Missing WhatsApp configuration, a nonexistent database, or missing Phase 6A tables stops startup. Do not copy Google OAuth credentials for this checkpoint: the inherited Calendar connection is not called and appointment actions remain blocked.
+The default search window is 14 days, configurable through `NUKMIRIS_LOOKAHEAD_DAYS` from 1 to 90. Start-time spacing, duration, buffer, hours, breaks, and weekdays are independent settings. A configured buffer is cleanup time after appointments and must fit before breaks and closing. Juanita's buffer is explicitly zero.
 
-`GET /webhook` supports the existing Meta subscription challenge. There is no owner dashboard or general web interface yet. The repository's root `index.html` and `privacy.html` remain the separate static website.
+## PC connections
 
-## Development boundaries
+The PC guide explains these commands and the required local settings:
 
-Preserve the Spanish commands and replies, including `Hola`, `Cita`, `Reagendar`, `Cancelar`, and `Menu`. Use synthetic fixtures for tests. Keep the v5C.5 rollback and original v6A.4 source in the dated archive; do not run the booking-enabled rollback against a multi-business database. Migrations and calendar activation require separate work and validation.
+```sh
+npm run google:connect
+npm run calendars:list
+npm run business:configure
+npm run connections:check
+npm start
+```
+
+Stop the old webhook before configuring its database. The configuration command backs up SQLite, adds missing mapping tables, and updates only the selected business. It refuses conflicting mappings and never changes Calendar events. There is no owner dashboard yet; the root website remains separate.
+
+See [KNOWN_LIMITATIONS.md](KNOWN_LIMITATIONS.md) for remaining gaps and [BASELINE.md](BASELINE.md) for provenance. Preserve the historical v5C.5 and v6A.4 archive; the booking-enabled rollback must not be used as a multi-business runtime.

@@ -1,0 +1,13 @@
+{
+  "businessId": "juanita-nails",
+  "settings": {
+    "timeZone": "America/Mexico_City",
+    "workingDays": [1, 2, 3, 4, 5],
+    "openingTime": "10:00",
+    "closingTime": "19:00",
+    "durationMinutes": 60,
+    "bufferMinutes": 0,
+    "startIntervalMinutes": 60,
+    "breaks": [{ "start": "13:00", "end": "14:00" }]
+  }
+}
