@@ -1,0 +1,25 @@
+{
+  "name": "nukmiris-backend",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Reconstructed v6A.4 support-only development baseline; appointment actions remain disabled",
+  "engines": {
+    "node": ">=24 <25"
+  },
+  "scripts": {
+    "start": "node whatsapp-webhook.js",
+    "test": "node --test --test-reporter=spec --test-concurrency=1 test/support-only.test.cjs"
+  },
+  "dependencies": {
+    "@google-cloud/local-auth": "3.0.1",
+    "dotenv": "18.0.9",
+    "express": "5.3.0",
+    "googleapis": "188.0.0",
+    "luxon": "3.7.2"
+  },
+  "overrides": {
+    "gaxios@6.7.1": {
+      "uuid": "11.1.1"
+    }
+  }
+}

@@ -1,0 +1,29 @@
+# Local configuration and authentication
+.env
+.env.*
+!.env.example
+credentials.json
+credentials-*.json
+token.json
+*token*.json
+service-account*.json
+*.pem
+*.key
+
+# Real databases, journals, and backups
+*.sqlite
+*.sqlite-*
+*.sqlite3
+*.sqlite3-*
+*.db
+*.db-*
+*.bak
+*.bak-*
+
+# Dependencies and generated/local files
+node_modules/
+.local/
+coverage/
+logs/
+*.log
+.DS_Store
