@@ -86,4 +86,4 @@ For an empty future weekday, starts should be **10:00, 11:00, 12:00, 14:00, 15:0
 
 ## Report back
 
-Share whether each connection says `OK` or `FAILED`, and whether `Cita` returns the expected choices. For failures, share the command and non-secret status/error text. Do not share `.env`, tokens, credential files, or the real database. After this PC verification, the next checkpoint is automatic booking with business ownership and conflict protection.
+Share whether each connection says `OK` or `FAILED`, and whether `Cita` returns the expected choices. For failures, share the command and non-secret status/error text. Do not share `.env`, tokens, credential files, or the real database. After PC availability verification, use the separate [automatic-booking checkpoint](BOOKING_CHECKPOINT.md) to opt in to confirmed new appointments.

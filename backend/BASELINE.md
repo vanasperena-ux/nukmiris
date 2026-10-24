@@ -22,6 +22,8 @@ The evidence above is the owner's PC verification. No live account credentials, 
 
 ## Historical support-only baseline
 
+The v0.2.0 automatic-booking checkpoint is additive and opt-in; see [BOOKING_CHECKPOINT.md](BOOKING_CHECKPOINT.md). Availability mode retains the verified engine, schedule, mappings, and separate read-only authorization. Its real-PC verification above is not a claim that automatic bookings have been verified on the PC.
+
 Prepared on 2026-10-24 as the approved follow-up to the read-only audit.
 
 This document records the original support-only baseline at commit `54cb8d3e876a38524ce7fc7b772f8d20f0c1bf6f`. The subsequent v0.1.0 availability checkpoint adds the calendar service, signed receiving-number routing, business configuration, and PC connection commands described in [README.md](README.md). The historical adaptation/validation notes below describe that original baseline.

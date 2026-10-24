@@ -326,9 +326,24 @@ describe("v6A.4 support-only baseline", { concurrency: false }, () => {
     assert.match(result.stderr, /Missing WhatsApp configuration/);
   });
 
-  test("an unsupported booking mode cannot enable calendar changes", () => {
-    const result = runInvalidConfiguration({ NUKMIRIS_MODE: "booking" });
+  test("an unsupported runtime mode cannot enable calendar changes", () => {
+    const result = runInvalidConfiguration({ NUKMIRIS_MODE: "rescheduling" });
     assert.notEqual(result.status, 0);
-    assert.match(result.stderr, /must be support or availability/);
+    assert.match(result.stderr, /must be support, availability, or booking/);
+  });
+
+  test("automatic booking rejects the legacy sender-number simulation", () => {
+    const result = runInvalidConfiguration({ NUKMIRIS_MODE: "booking", NUKMIRIS_ROUTING_MODE: "development" });
+    assert.notEqual(result.status, 0);
+    assert.match(result.stderr, /requires receiving-number routing/);
+  });
+
+  test("automatic booking requires prepared journal tables rather than migrating during startup", () => {
+    fixture.exec(`CREATE TABLE IF NOT EXISTS business_whatsapp_connections (business_id TEXT PRIMARY KEY,phone_number_id TEXT UNIQUE);
+      CREATE TABLE IF NOT EXISTS business_calendar_connections (business_id TEXT PRIMARY KEY,google_calendar_id TEXT UNIQUE);`);
+    const result = runInvalidConfiguration({ NUKMIRIS_MODE: "booking", NUKMIRIS_ROUTING_MODE: "receiving_number" });
+    assert.notEqual(result.status, 0);
+    assert.match(result.stderr, /booking_requests/);
+    assert.equal(fixture.prepare("SELECT COUNT(*) AS n FROM sqlite_master WHERE name='booking_requests'").get().n, 0);
   });
 });

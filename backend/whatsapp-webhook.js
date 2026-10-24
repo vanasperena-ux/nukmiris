@@ -13,7 +13,8 @@ const { DateTime } = require("luxon");
 const { DatabaseSync } = require("node:sqlite");
 const { AsyncLocalStorage } = require("node:async_hooks");
 const { validMetaSignature } = require("./lib/meta-signature");
-const { createCalendarAvailability } = require("./lib/google-calendar");
+const { createCalendarAvailability, loadCalendarClient } = require("./lib/google-calendar");
+const { createBookingService } = require("./lib/booking");
 
 const app = express();
 app.use(express.json({ limit: "1mb", verify(req, res, bytes) { req.rawBody = bytes; } }));
@@ -39,8 +40,9 @@ const DB_PATH = path.resolve(__dirname, process.env.NUKMIRIS_DB_PATH || "data/nu
 if (!TOKEN || !PHONE_ID || !VERIFY_TOKEN || !APP_SECRET) {
   throw new Error("Missing WhatsApp configuration. Set WHATSAPP_TOKEN, WHATSAPP_PHONE_NUMBER_ID, WHATSAPP_VERIFY_TOKEN, and META_APP_SECRET; see backend/.env.example.");
 }
-if (!["support", "availability"].includes(MODE)) throw new Error("NUKMIRIS_MODE must be support or availability");
+if (!["support", "availability", "booking"].includes(MODE)) throw new Error("NUKMIRIS_MODE must be support, availability, or booking");
 if (!["development", "receiving_number"].includes(ROUTING_MODE)) throw new Error("Invalid NUKMIRIS_ROUTING_MODE");
+if (MODE === "booking" && ROUTING_MODE !== "receiving_number") throw new Error("Automatic booking requires receiving-number routing");
 if (!Number.isInteger(PORT) || PORT < 0 || PORT > 65535) {
   throw new Error("PORT must be an integer between 0 and 65535.");
 }
@@ -63,7 +65,8 @@ const requiredTables = [
   "business_support_messages"
 ];
 if (ROUTING_MODE === "receiving_number") requiredTables.push("business_whatsapp_connections");
-if (MODE === "availability") requiredTables.push("business_settings", "business_calendar_connections");
+if (["availability", "booking"].includes(MODE)) requiredTables.push("business_settings", "business_calendar_connections");
+if (MODE === "booking") requiredTables.push("booking_requests", "calendar_booking_locks");
 const presentTables = new Set(db.prepare("SELECT name FROM sqlite_master WHERE type='table'").all().map(r => r.name));
 for (const table of requiredTables) {
   if (!presentTables.has(table)) throw new Error(`Phase 6A prerequisite missing: ${table}`);
@@ -80,9 +83,11 @@ const receivingRoute = ROUTING_MODE === "receiving_number" ? db.prepare(`
 `) : null;
 const businessContext = new AsyncLocalStorage();
 const messageQueues = new Map();
-const availability = MODE === "availability" ? createCalendarAvailability({
+const availability = ["availability", "booking"].includes(MODE) ? createCalendarAvailability({
   db, lookaheadDays: Number(process.env.NUKMIRIS_LOOKAHEAD_DAYS || 14),
+  getClient: MODE === "booking" ? () => loadCalendarClient({ booking: true }) : undefined,
 }) : null;
+const bookings = MODE === "booking" ? createBookingService({ db, availability, enabled: true }) : null;
 function businessFor(from) {
   const context = businessContext.getStore();
   if (context?.sender === from) return context.business;
@@ -1415,7 +1420,9 @@ async function renderAvailability(from, session, page) {
   if (page > 0) rows.push({ id: `availability:${session.offerId}:page:${page - 1}`, title: "Horarios anteriores" });
   if (page + 1 < count) rows.push({ id: `availability:${session.offerId}:page:${page + 1}`, title: "Más horarios" });
   await sendAppointmentList(from,
-    `Horarios disponibles de ${businessFor(from).business_name}. Página ${page + 1} de ${count}.\n\nEsta consulta no reserva una cita. Escribe Menu para volver.`,
+    `Horarios disponibles de ${businessFor(from).business_name}. Página ${page + 1} de ${count}.\n\n` +
+      (bookings ? "Selecciona un horario. Te pediremos confirmar antes de reservar. Escribe Menu para volver."
+        : "Esta consulta no reserva una cita. Escribe Menu para volver."),
     rows, "Ver horarios");
 }
 
@@ -1462,10 +1469,76 @@ async function handleAvailabilitySelection(from, command) {
     await sendMessage(from, "Ese horario ya no está disponible. Escribe Cita para consultar nuevamente.");
     return;
   }
+  if (bookings) {
+    const customer = customers.get(from);
+    if (!customer) {
+      sessions.set(from, { mode: "booking_name", slot, calendarId: session.calendarId, expiresAt: Date.now() + OFFER_LIFETIME });
+      await sendMessage(from, "Para reservar este horario, indícanos tu nombre completo. Después te pediremos confirmar la cita. Escribe Menu para volver.");
+    } else {
+      await showBookingConfirmation(from, slot, session.calendarId);
+    }
+    return;
+  }
   const zone = availability.configuration(businessFor(from).business_id).settings.timeZone;
   await sendMessage(from, "El horario sigue disponible: " +
     DateTime.fromISO(slot.start).setZone(zone).setLocale("es").toFormat("cccc d 'de' LLLL, HH:mm") +
     ".\n\nLa reserva automática todavía no está activada. Escribe Menu para regresar o hablar con el negocio.");
+}
+
+async function showBookingConfirmation(from, slot, calendarId) {
+  const business = businessFor(from);
+  if (availability.configuration(business.business_id).calendarId !== calendarId) {
+    sessions.delete(from);
+    await sendMessage(from, "La configuración cambió. Escribe Cita para consultar nuevamente.");
+    return;
+  }
+  const fresh = await availability.listSlots(business.business_id);
+  if (!fresh.some(value => value.start === slot.start && value.end === slot.end)) {
+    sessions.delete(from);
+    await sendMessage(from, "Ese horario ya no está disponible. Escribe Cita para consultar nuevamente.");
+    return;
+  }
+  const intent = bookings.createIntent({ businessId: business.business_id, sender: from, slot, calendarId });
+  sessions.set(from, { mode: "booking_confirm", requestId: intent.requestId, expiresAt: Date.now() + OFFER_LIFETIME });
+  const zone = availability.configuration(business.business_id).settings.timeZone;
+  await sendReplyButtons(from,
+    `Confirma tu cita en ${business.business_name}:\n\n${intent.name}\n` +
+    DateTime.fromISO(intent.start).setZone(zone).setLocale("es").toFormat("cccc d 'de' LLLL, HH:mm") +
+    `–${DateTime.fromISO(intent.end).setZone(zone).toFormat("HH:mm")}\n\nEl horario se comprobará otra vez al confirmar.`,
+    [{ id: `booking:${intent.requestId}:yes`, title: "Confirmar cita" },
+      { id: `booking:${intent.requestId}:no`, title: "Elegir otro horario" }]);
+}
+
+async function handleBookingDecision(from, command) {
+  const match = /^booking:([0-9a-f-]{36}):(yes|no)$/.exec(command);
+  if (!match) {
+    await sendMessage(from, "Esta opción ya no está vigente. Escribe Cita para comenzar nuevamente.");
+    return;
+  }
+  const context = { businessId: businessFor(from).business_id, sender: from, requestId: match[1] };
+  const outcome = match[2] === "yes" ? await bookings.confirm(context) : bookings.decline(context);
+  if (outcome.status === "busy") {
+    await sendReplyButtons(from, "Estamos comprobando otra reserva. Intenta confirmar de nuevo en unos momentos.",
+      [{ id: command, title: "Confirmar cita" }, { id: `booking:${match[1]}:no`, title: "Elegir otro horario" }]);
+    return;
+  }
+  if (["uncertain", "pending"].includes(outcome.status)) {
+    console.error("Booking needs verification. Request ID:", match[1]);
+    await sendMessage(from, "Tu solicitud sigue en verificación. Pulsa el mismo botón Confirmar cita para consultar su estado; no hagas otra reserva por ahora.");
+    return;
+  }
+  const current = sessions.get(from);
+  if (current?.requestId === match[1]) sessions.delete(from);
+  if (outcome.status === "confirmed") {
+    const zone = availability.configuration(context.businessId).settings.timeZone;
+    await sendMessage(from, "¡Tu cita está confirmada!\n\n" +
+      DateTime.fromISO(outcome.start).setZone(zone).setLocale("es").toFormat("cccc d 'de' LLLL, HH:mm") +
+      `–${DateTime.fromISO(outcome.end).setZone(zone).toFormat("HH:mm")}\n${businessFor(from).business_name}\n\n¡Te esperamos!`);
+  } else if (outcome.status === "declined" && match[2] === "no") {
+    await offerAvailability(from);
+  } else {
+    await sendMessage(from, "No pudimos confirmar esta solicitud. Escribe Cita para consultar nuevos horarios.");
+  }
 }
 
 async function handleMessage(message) {
@@ -1492,6 +1565,9 @@ async function handleMessage(message) {
   try {
     const business = businessFor(from); // Fail closed for unassigned test numbers.
     console.log("Business route:", business.business_id);
+    if (bookings && isText && ["hola", "menu", "cita", "horarios", "reagendar", "cancelar"].includes(command)) {
+      bookings.invalidateOffers({ businessId: business.business_id, sender: from });
+    }
     const consultAvailability = availability && isText && ["cita", "horarios"].includes(command);
     const availabilityMenu = availability && isButton ? /^menu:([0-9a-f-]{36}):book$/.exec(command) : null;
     const isAppointmentAction =
@@ -1500,7 +1576,9 @@ async function handleMessage(message) {
       (isButton && /^menu:[0-9a-f-]{36}:(book|manage)$/.test(command) && !availabilityMenu);
     if (isAppointmentAction) {
       sessions.delete(from);
-      await sendMessage(from, SCHEDULING_PAUSED);
+      await sendMessage(from, bookings
+        ? "Esta opción aún no está disponible. Escribe Cita para hacer una reserva nueva o Menu para recibir ayuda."
+        : SCHEDULING_PAUSED);
       return;
     }
     // Human support is a persistent state, independent of 15-minute sessions.
@@ -1542,6 +1620,37 @@ async function handleMessage(message) {
         await sendMessage(from, "No pude comprobar ese horario. Escribe Cita para intentar nuevamente.");
       }
       return;
+    }
+
+    if (bookings && isButton && command.startsWith("booking:")) {
+      try { await handleBookingDecision(from, command); }
+      catch (error) {
+        console.error("Booking confirmation could not be completed or delivered. Retry the same confirmation to check its saved status.");
+        await sendMessage(from, "No pude completar o enviar la confirmación. Pulsa el mismo botón para revisar tu solicitud antes de intentar otra reserva.");
+      }
+      return;
+    }
+    if (bookings && isText && !["hola", "menu"].includes(command)) {
+      const pending = sessions.get(from);
+      if (pending?.mode === "booking_name") {
+        if (Date.now() > pending.expiresAt) {
+          sessions.delete(from);
+          await sendMessage(from, "La selección ha vencido. Escribe Cita para consultar nuevamente.");
+          return;
+        }
+        const name = validateFullName(text);
+        if (!name) {
+          await sendMessage(from, "Por favor, escribe tu nombre completo (máximo 120 caracteres). Escribe Menu para volver.");
+          return;
+        }
+        customers.register(from, name);
+        await showBookingConfirmation(from, pending.slot, pending.calendarId);
+        return;
+      }
+      if (pending?.mode === "booking_confirm") {
+        await sendMessage(from, "Usa los botones Confirmar cita o Elegir otro horario. Escribe Menu para volver.");
+        return;
+      }
     }
 
     const session = sessions.get(from);
@@ -1709,11 +1818,13 @@ app.post("/webhook", (req, res) => {
 
 async function start() {
   try {
+    if (bookings) await bookings.verify();
     if (availability) {
       const connected = db.prepare("SELECT business_id FROM business_whatsapp_connections").all();
       if (!connected.length) throw new Error("Configure a business connection before starting availability mode");
       for (const business of connected) await availability.verify(business.business_id);
-      console.log("Google Calendar availability connection verified. Event changes remain disabled.");
+      console.log(bookings ? "Google Calendar booking authorization and availability verified."
+        : "Google Calendar availability connection verified. Event changes remain disabled.");
     }
 
     return app.listen(PORT, HOST, () => {
@@ -1721,11 +1832,11 @@ async function start() {
       console.log("NukMiris WhatsApp + Google Calendar POC");
       console.log("--------------------------------");
       console.log("Webhook server running on port", PORT);
-      console.log(availability ? "Google Calendar: read-only availability" : "Google Calendar: DISABLED");
+      console.log(bookings ? "Google Calendar: confirmed new bookings" : availability ? "Google Calendar: read-only availability" : "Google Calendar: DISABLED");
       console.log("Persistent sessions: SQLite enabled");
       console.log("Customer registry: SQLite enabled");
       console.log(availability ? "Availability lookup: Enabled" : "Availability lookup: Disabled");
-      console.log("New booking: DISABLED for this checkpoint");
+      console.log(bookings ? "New booking: customer confirmation required" : "New booking: DISABLED for this checkpoint");
       console.log("Appointment rescheduling: DISABLED for this checkpoint");
       console.log("Appointment cancellation: DISABLED for this checkpoint");
       console.log("Booking trigger: cita");

@@ -1,25 +1,30 @@
 {
   "name": "nukmiris-backend",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
-  "description": "Business-specific calendar availability over signed WhatsApp webhooks; event changes remain disabled",
+  "description": "Verified calendar availability plus opt-in, customer-confirmed new bookings",
   "engines": {
     "node": ">=24 <25"
   },
   "scripts": {
     "start": "node whatsapp-webhook.js",
-    "test": "node --test --test-reporter=spec --test-concurrency=1 test/support-only.test.cjs test/availability.test.cjs test/connections.test.cjs test/availability-webhook.test.cjs",
+    "test": "node --test --test-reporter=spec --test-concurrency=1 test/support-only.test.cjs test/availability.test.cjs test/connections.test.cjs test/availability-webhook.test.cjs test/booking.test.cjs test/booking-webhook.test.cjs test/booking-oauth.test.cjs",
     "google:connect": "node scripts/google-connect.js",
     "calendars:list": "node scripts/connections.js --list-calendars",
     "business:configure": "node scripts/configure-business.js",
-    "connections:check": "node scripts/connections.js"
+    "connections:check": "node scripts/connections.js",
+    "google:connect:booking": "node scripts/google-connect.js --booking",
+    "connections:check:booking": "node scripts/connections.js --booking",
+    "booking:prepare": "node scripts/prepare-booking.js",
+    "booking:reconcile": "node scripts/reconcile-booking.js"
   },
   "dependencies": {
     "@google-cloud/local-auth": "3.0.1",
     "dotenv": "18.0.9",
     "express": "5.3.0",
     "googleapis": "188.0.0",
-    "luxon": "3.7.2"
+    "luxon": "3.7.2",
+    "open": "7.4.2"
   },
   "overrides": {
     "gaxios@6.7.1": {

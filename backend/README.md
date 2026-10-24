@@ -1,8 +1,8 @@
-# NukMiris calendar availability — v0.1.0
+# NukMiris availability and confirmed new bookings — v0.2.0
 
-This checkpoint connects the PC backend to a specifically selected Google Calendar and signed Meta WhatsApp webhooks. `Cita`, `Horarios`, and the appointment menu button show all matching times within a configurable search window, with paging for later results. It does not create, reschedule, or cancel Calendar events yet.
+The owner-verified v0.1.0 availability flow remains available unchanged in availability mode. `Cita`, `Horarios`, and the appointment menu button show matching times from the explicitly selected business calendar, with paging for later results. Version 0.2.0 adds optional new bookings only after the customer confirms a chosen time. Rescheduling and cancellation remain disabled.
 
-**Start here:** [PC setup and connection checks](PC_SETUP.md).
+**Existing verified PC installation:** [automatic-booking upgrade and test](BOOKING_CHECKPOINT.md). **Initial read-only setup:** [PC setup and connection checks](PC_SETUP.md).
 
 Juanita's confirmed schedule is Monday–Friday, 10:00–19:00, 60-minute appointments starting on the hour, no buffer between appointments, and lunch 13:00–14:00. On an empty future weekday that gives 10:00, 11:00, 12:00, 14:00, 15:00, 16:00, 17:00, and 18:00. The final appointment ends at 19:00.
 
@@ -17,16 +17,21 @@ npm ci --ignore-scripts
 npm test
 ```
 
-Tests use real Express/Luxon/SQLite, signed loopback HTTP, disposable synthetic databases, and simulated Google/Meta responses. They skip `.env` loading and never read real credentials or a real business database. They cover busy events, adjacent appointments, closing/lunch boundaries, calendar selection, paging, business isolation, stale selections, signature rejection, and disabled event changes.
+Tests use real Express/Luxon/SQLite, signed loopback HTTP, disposable synthetic databases, and simulated Google/Meta responses. They skip `.env` loading and never read real credentials or a real business database. They cover busy events, adjacent appointments, closing/lunch boundaries, calendar selection, paging, business isolation, stale selections, signature rejection, and disabled writes in availability mode.
+
+Booking tests additionally cover explicit confirmation, business/customer ownership, duplicate confirmations, separate SQLite connections, persistence after reopening the database, overlapping requests, ambiguous Google responses, and a failed WhatsApp confirmation after the event was saved. OAuth tests cover loopback callbacks, state/PKCE, declined consent, and separation from the verified read-only cache.
 
 Checkpoint validation: frozen installation completed and all 68 cloud tests passed, with no skipped tests. On 2026-10-24, the owner also confirmed successful real Windows PC installation/tests, Google and Meta checks, webhook delivery, and calendar busy-time filtering. This v0.1.0 availability flow is the verified baseline; see [BASELINE.md](BASELINE.md) for the recorded evidence.
+
+The v0.2.0 checkpoint subsequently passed all 98 offline tests, with no skipped tests, and `npm audit --omit=dev` reported zero known vulnerabilities. Real automatic appointment creation still needs the separate PC test described in the booking guide; cloud tests did not create real events.
 
 ## Runtime modes
 
 - `NUKMIRIS_MODE=availability`: verify the configured calendar at startup, then answer availability requests. Local Google authorization and database mappings are required.
 - `NUKMIRIS_MODE=support`: support conversations and menus, with appointment actions paused and no Google connection.
+- `NUKMIRIS_MODE=booking`: the same availability engine plus explicit customer confirmation and new-event creation. Separate booking authorization and backed-up journal preparation are required. This is opt-in; `.env.example` still selects availability mode.
 
-Both modes verify Meta signatures. Receiving-number routing is the default: authenticated `metadata.phone_number_id` selects the business and outbound sender. `NUKMIRIS_ROUTING_MODE=development` retains the customer-number simulation for offline regression tests and deliberate legacy development; do not use it for real business routing.
+All modes verify Meta signatures. Receiving-number routing is the default: authenticated `metadata.phone_number_id` selects the business and outbound sender. `NUKMIRIS_ROUTING_MODE=development` retains the customer-number simulation for offline regression tests and deliberate legacy development; booking mode rejects it.
 
 The default search window is 14 days, configurable through `NUKMIRIS_LOOKAHEAD_DAYS` from 1 to 90. Start-time spacing, duration, buffer, hours, breaks, and weekdays are independent settings. A configured buffer is cleanup time after appointments and must fit before breaks and closing. Juanita's buffer is explicitly zero.
 

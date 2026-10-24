@@ -4,11 +4,12 @@ const fs = require("node:fs");
 const path = require("node:path");
 const { DatabaseSync } = require("node:sqlite");
 const { loadLocalEnv } = require("../lib/local-env");
-const { loadCalendarClient, createCalendarAvailability } = require("../lib/google-calendar");
+const { loadCalendarClient, createCalendarAvailability, verifyBookingAuthorization } = require("../lib/google-calendar");
 const { checkMeta, listWritableCalendars } = require("../lib/connection-checks");
 
 async function main() {
   loadLocalEnv();
+  const booking = process.argv.includes("--booking");
   if (process.argv.includes("--list-calendars")) {
     const calendars = await listWritableCalendars(loadCalendarClient());
     if (!calendars.length) throw new Error("No writable calendars were found");
@@ -31,11 +32,16 @@ async function main() {
     if (!fs.existsSync(filename)) throw new Error("Existing business database is missing");
     db = new DatabaseSync(filename, { readOnly: true });
     const businessId = process.env.NUKMIRIS_BUSINESS_ID || "juanita-nails";
-    const result = await createCalendarAvailability({ db }).verify(businessId);
-    console.log(`Google Calendar: OK (${result.calendarName}; availability only, no events changed).`);
+    if (booking) {
+      if (!db.prepare("SELECT 1 FROM sqlite_master WHERE name='booking_requests'").get()) throw new Error("Run booking:prepare first");
+      await verifyBookingAuthorization();
+    }
+    const result = await createCalendarAvailability({ db, getClient: () => loadCalendarClient({ booking }) }).verify(businessId);
+    console.log(`Google Calendar: OK (${result.calendarName}; ${booking ? "new-booking permission verified" : "availability only"}, no events changed).`);
   } catch (error) {
     failed = true;
-    console.error("Google Calendar: FAILED. Review local authorization and the business/calendar settings; run business:configure if needed.");
+    console.error(booking ? "Google Calendar: FAILED. Review google:connect:booking, booking:prepare, and the selected business calendar."
+      : "Google Calendar: FAILED. Review local authorization and the business/calendar settings; run business:configure if needed.");
   } finally { if (db) db.close(); }
   if (!process.env.META_APP_SECRET || !process.env.WHATSAPP_VERIFY_TOKEN) {
     failed = true;

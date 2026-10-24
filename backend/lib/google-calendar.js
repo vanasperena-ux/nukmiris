@@ -11,19 +11,42 @@ const READ_SCOPES = [
   "https://www.googleapis.com/auth/calendar.calendarlist.readonly",
   "https://www.googleapis.com/auth/calendar.freebusy",
 ];
+const BOOKING_SCOPES = [...READ_SCOPES, "https://www.googleapis.com/auth/calendar.events"];
 
-function tokenPath() {
-  return path.resolve(__dirname, "..", process.env.GOOGLE_OAUTH_TOKEN_PATH || ".local/google-token.json");
+function tokenPath({ booking = false } = {}) {
+  const filename = path.resolve(__dirname, "..", booking
+    ? process.env.GOOGLE_BOOKING_TOKEN_PATH || ".local/google-booking-token.json"
+    : process.env.GOOGLE_OAUTH_TOKEN_PATH || ".local/google-token.json");
+  if (booking) {
+    const normalize = value => process.platform === "win32" ? value.toLowerCase() : value;
+    if (normalize(filename) === normalize(tokenPath())) throw new Error("Booking authorization must use a separate file from the verified availability authorization");
+  }
+  return filename;
 }
 
-function loadCalendarClient() {
-  const filename = tokenPath();
-  if (!fs.existsSync(filename)) throw new Error("Google authorization is missing. Run npm run google:connect on your PC");
+function loadGoogleAuthorization(options = {}) {
+  const filename = tokenPath(options);
+  if (!fs.existsSync(filename)) throw new Error(`Google authorization is missing. Run npm run ${options.booking ? "google:connect:booking" : "google:connect"} on your PC`);
   const saved = JSON.parse(fs.readFileSync(filename, "utf8"));
   if (saved.type !== "authorized_user" || !saved.client_id || !saved.client_secret || !saved.refresh_token) {
-    throw new Error("Google token file is incomplete. Reauthorize locally with npm run google:connect -- --reauthorize");
+    throw new Error(`Google token file is incomplete. Reauthorize locally with npm run ${options.booking ? "google:connect:booking" : "google:connect"} -- --reauthorize`);
   }
-  return google.calendar({ version: "v3", auth: google.auth.fromJSON(saved) });
+  return google.auth.fromJSON(saved);
+}
+
+function loadCalendarClient(options = {}) {
+  return google.calendar({ version: "v3", auth: loadGoogleAuthorization(options) });
+}
+
+async function verifyBookingAuthorization(getAuthorization = () => loadGoogleAuthorization({ booking: true })) {
+  const auth = await getAuthorization();
+  const access = await auth.getAccessToken();
+  const token = typeof access === "string" ? access : access?.token;
+  if (!token) throw new Error("Google booking authorization could not be verified");
+  const info = await auth.getTokenInfo(token);
+  if (!info.scopes?.some(scope => scope === "https://www.googleapis.com/auth/calendar.events" || scope === "https://www.googleapis.com/auth/calendar")) {
+    throw new Error("Google event permission is missing. Run npm run google:connect:booking on your PC");
+  }
 }
 
 function createCalendarAvailability({ db, getClient = loadCalendarClient, now = () => DateTime.now(), lookaheadDays = 14 }) {
@@ -61,4 +84,4 @@ function createCalendarAvailability({ db, getClient = loadCalendarClient, now = 
   return { listSlots, verify, configuration };
 }
 
-module.exports = { READ_SCOPES, tokenPath, loadCalendarClient, createCalendarAvailability };
+module.exports = { READ_SCOPES, BOOKING_SCOPES, tokenPath, loadCalendarClient, createCalendarAvailability, verifyBookingAuthorization };
