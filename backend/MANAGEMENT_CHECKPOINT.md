@@ -1,6 +1,8 @@
 # Rescheduling and cancellation — v0.3.0 PC checkpoint
 
-The owner accepted the v0.2.1 appointment choices after verifying the earlier availability and new-booking checkpoints. This update adds optional **customer-confirmed rescheduling and cancellation**. Automated tests use synthetic data and simulated Google/Meta services; the new actions still need a real test on the owner's Windows PC.
+The owner accepted the v0.2.1 appointment choices after verifying the earlier availability and new-booking checkpoints. This update adds optional **customer-confirmed rescheduling and cancellation**. Automated tests use synthetic data and simulated Google/Meta services.
+
+**Owner verification:** on 2026-10-24, the owner reported the PC checkpoint successful: “that worked, reagendar and cancelar worked well.” Version 0.3.0 is now the verified rescheduling/cancellation baseline. The instructions below remain the setup/retest guide; they do not imply an outstanding first test. See [BASELINE.md](BASELINE.md) for the evidence and scope.
 
 All **144 automated tests passed**, with no skipped tests, including the earlier availability/new-booking regressions and the new management flows and recovery checks.
 

@@ -2,7 +2,7 @@
 
 The accepted availability and new-booking flow remains in place. `Cita`, `Horarios`, and the appointment menu button offer two appointments, then **Más opciones** for two more, then **Elegir fecha** to choose a day and see its available times. Customers can also type a date as DD/MM/AAAA. New bookings require explicit confirmation. Version 0.3.0 adds optional customer-confirmed rescheduling and cancellation of owned future NukMiris appointments.
 
-**Next PC checkpoint:** [enable and test rescheduling/cancellation](MANAGEMENT_CHECKPOINT.md). **Accepted appointment choices:** [menu guide](BOOKING_UX.md). **First booking setup:** [automatic-booking upgrade and test](BOOKING_CHECKPOINT.md). **Initial read-only setup:** [PC setup and connection checks](PC_SETUP.md).
+**Verified management checkpoint:** [rescheduling/cancellation setup and retest guide](MANAGEMENT_CHECKPOINT.md). **Accepted appointment choices:** [menu guide](BOOKING_UX.md). **First booking setup:** [automatic-booking upgrade and test](BOOKING_CHECKPOINT.md). **Initial read-only setup:** [PC setup and connection checks](PC_SETUP.md).
 
 Juanita's confirmed schedule is Monday–Friday, 10:00–19:00, 60-minute appointments starting on the hour, no buffer between appointments, and lunch 13:00–14:00. On an empty future weekday that gives 10:00, 11:00, 12:00, 14:00, 15:00, 16:00, 17:00, and 18:00. The final appointment ends at 19:00.
 
@@ -25,7 +25,7 @@ Checkpoint validation: frozen installation completed and all 68 cloud tests pass
 
 The v0.2.0 checkpoint subsequently passed all 98 offline tests, with no skipped tests, and `npm audit --omit=dev` reported zero known vulnerabilities. On 2026-10-24 the owner also reported the real PC booking checkpoint tested successfully (“tested and all good”). This is the verified automatic-new-booking baseline. Cloud tests did not create real events; see [BASELINE.md](BASELINE.md) for the evidence and scope.
 
-The v0.2.1 browsing update passed all 109 offline tests with no skipped tests, and the owner subsequently accepted the changes on 2026-10-24. The v0.3.0 management checkpoint retains those regressions and adds tests for ownership, confirmation, source edits, new conflicts, duplicate/concurrent actions, shared locks, persistence, and lost write/delivery responses. The new management actions still need a real PC check; [MANAGEMENT_CHECKPOINT.md](MANAGEMENT_CHECKPOINT.md) provides the steps.
+The v0.2.1 browsing update passed all 109 offline tests with no skipped tests, and the owner subsequently accepted the changes on 2026-10-24. The v0.3.0 management checkpoint retains those regressions and adds tests for ownership, confirmation, source edits, new conflicts, duplicate/concurrent actions, shared locks, persistence, and lost write/delivery responses. On 2026-10-24 the owner also confirmed that rescheduling and cancellation worked on the PC (“that worked, reagendar and cancelar worked well”). See [BASELINE.md](BASELINE.md) for scope and [MANAGEMENT_CHECKPOINT.md](MANAGEMENT_CHECKPOINT.md) for setup/retest instructions.
 
 The complete v0.3.0 offline suite passed all **144 tests**, with no skipped tests. No dependencies changed and no live calendar events or WhatsApp messages were sent by these tests.
 

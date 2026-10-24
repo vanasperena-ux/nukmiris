@@ -1,10 +1,12 @@
 # Baseline provenance
 
-## Rescheduling/cancellation update — v0.3.0, awaiting PC verification
+## Verified rescheduling/cancellation baseline — v0.3.0
 
 After accepting v0.2.1, the owner requested the next rescheduling/cancellation checkpoint. Version 0.3.0 adds a separate opt-in service for customer-owned future NukMiris appointments, explicit confirmations, ETag-protected updates/deletion, a backed-up change journal, and recovery reads. See [MANAGEMENT_CHECKPOINT.md](MANAGEMENT_CHECKPOINT.md).
 
-The accepted availability engine, Google authorization, schedule/configuration, and two-plus-two browsing module remain unchanged. The booking service adds guards against late recovery responses overwriting completed state or releasing a subsequent change's calendar lock. The new feature shares that lock with new bookings. Real rescheduling/cancellation on the PC remains unverified; cloud tests use simulated services only.
+The accepted availability engine, Google authorization, schedule/configuration, and two-plus-two browsing module remain unchanged. The booking service adds guards against late recovery responses overwriting completed state or releasing a subsequent change's calendar lock. The new feature shares that lock with new bookings.
+
+On 2026-10-24, after receiving the PC upgrade/test instructions, the owner reported: **“that worked, reagendar and cancelar worked well.”** Treat v0.3.0 as the owner-verified rescheduling/cancellation baseline, alongside the accepted availability, browsing, and new-booking checkpoints. Delivered reference: `100a7a4`. No separate PC commit hash or detailed run log was supplied. This report verifies the overall management checkpoint; it does not supply separate live evidence for each concurrency, crash-recovery, or authorization case. The cloud agent did not access the PC or repeat these actions against live accounts.
 
 Validation: all 144 offline tests passed, with zero failures/skipped tests. This includes the accepted availability/new-booking regressions, signed management flows, backup/preparation checks, ETag conflicts, duplicate/concurrent writes, persistence, and late recovery results.
 
