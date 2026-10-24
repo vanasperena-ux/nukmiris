@@ -4,7 +4,7 @@ Version 0.1.0 adds read-only calendar availability and addresses several finding
 
 | Original finding | Current status |
 | --- | --- |
-| Unsigned POST requests accepted | Fixed in this runtime: HMAC-SHA256 over the exact raw body, constant-time comparison, rejection before processing, and a required Meta App Secret. Offline signature tests pass; the real Meta callback still needs PC verification. |
+| Unsigned POST requests accepted | Fixed in this runtime: HMAC-SHA256 over the exact raw body, constant-time comparison, rejection before processing, and a required Meta App Secret. Offline signature tests pass; the owner confirmed real callback verification and delivery on the PC on 2026-10-24. |
 | Customer-number routing | Default routing now uses the authenticated receiving phone-number ID and business database mapping. Sessions and outbound replies use that context. The old simulation requires explicit development mode. |
 | Internal cancellation bypasses the disabled state | Legacy cancellation/selection and legacy Calendar connection now fail closed. New availability uses a separate read-only service and narrower Google scopes. Event ownership and safe booking writes remain future work. |
 | Concurrent messages dropped | Same-process messages are now queued per business/customer; deduplication and busy keys are business-scoped. Persistence/retry limitations remain below. |
@@ -13,7 +13,7 @@ Version 0.1.0 adds read-only calendar availability and addresses several finding
 
 Remaining limits:
 
-- The real PC file, installed configuration, Google grant/calendar, and Meta callback have not been tested from the cloud. Follow `PC_SETUP.md` and report connection statuses.
+- The owner confirmed the real v0.1.0 PC integration on 2026-10-24, including both connection checks and busy-time filtering. The cloud agent has no direct access to the PC, live configuration, or database. New changes still need their own PC validation against this preserved baseline.
 - Queues and deduplication are in memory. Requests are acknowledged before durable storage, so a crash or failed handler can lose work. There is no production retry queue or multi-worker idempotency/locking yet.
 - One shared test Meta token and Google account are used for this development checkpoint. Real owner onboarding, independent credentials, tenant authorization, and offboarding are not implemented.
 - The new Google authorization request uses read-only scopes; any older, broader account grants are not automatically revoked. This runtime still does not issue event-writing calls.

@@ -19,7 +19,7 @@ npm test
 
 Tests use real Express/Luxon/SQLite, signed loopback HTTP, disposable synthetic databases, and simulated Google/Meta responses. They skip `.env` loading and never read real credentials or a real business database. They cover busy events, adjacent appointments, closing/lunch boundaries, calendar selection, paging, business isolation, stale selections, signature rejection, and disabled event changes.
 
-Checkpoint validation: frozen installation completed and all 68 tests passed, with no skipped tests. Real Google authorization, Meta access, and callback delivery remain to be verified on the PC.
+Checkpoint validation: frozen installation completed and all 68 cloud tests passed, with no skipped tests. On 2026-10-24, the owner also confirmed successful real Windows PC installation/tests, Google and Meta checks, webhook delivery, and calendar busy-time filtering. This v0.1.0 availability flow is the verified baseline; see [BASELINE.md](BASELINE.md) for the recorded evidence.
 
 ## Runtime modes
 

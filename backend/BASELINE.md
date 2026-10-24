@@ -1,5 +1,27 @@
 # Baseline provenance
 
+## Verified availability baseline — v0.1.0
+
+On 2026-10-24, the owner reported successful real Windows PC integration testing of backend v0.1.0. This is the verified availability baseline for the automatic-booking checkpoint. Preserve its existing availability flow rather than replacing it.
+
+Repository reference: `d44c96376e1b808010aeac885934dde40aec7b04` (`main` when this verification was recorded). The owner identified the tested version as v0.1.0; no separate PC commit hash was supplied.
+
+Owner-verified results:
+
+- Node 24/dependencies installed and all local automated tests passed.
+- `business:configure` completed successfully.
+- Meta WhatsApp and Google Calendar connection checks both returned OK.
+- Cloudflare tunnel and Meta webhook verification succeeded.
+- WhatsApp `Menu`, then `Cita`, returned real calendar availability.
+- A temporary 10:00–11:00 busy event removed 10:00 while leaving 11:00 available, confirming zero buffer between appointments.
+- The temporary test event was subsequently deleted.
+
+Selected business: `juanita-nails`. Selected Google Calendar display name: **Juanita's Nailsalon – Juanita**. The runtime must continue using the stored explicit calendar ID; this display name is documentation, not a replacement ID or a fallback to `primary`.
+
+The evidence above is the owner's PC verification. No live account credentials, database, or event data were accessed by the cloud agent to repeat those checks. Automatic creation, rescheduling, and cancellation remain disabled in this baseline. Any new booking mode must be additive and retain the verified availability behavior and regression tests.
+
+## Historical support-only baseline
+
 Prepared on 2026-10-24 as the approved follow-up to the read-only audit.
 
 This document records the original support-only baseline at commit `54cb8d3e876a38524ce7fc7b772f8d20f0c1bf6f`. The subsequent v0.1.0 availability checkpoint adds the calendar service, signed receiving-number routing, business configuration, and PC connection commands described in [README.md](README.md). The historical adaptation/validation notes below describe that original baseline.
