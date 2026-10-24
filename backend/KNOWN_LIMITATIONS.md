@@ -1,6 +1,6 @@
 # Current limitations and audit follow-up
 
-Version 0.2.0 preserves the owner-verified v0.1.0 availability mode and adds opt-in, customer-confirmed new appointments. It does not enable rescheduling, cancellation, or production business onboarding.
+Version 0.2.1 updates appointment browsing with short suggestions and date selection, preserving the owner-verified availability engine and v0.2.0 customer-confirmed new bookings. It does not enable rescheduling, cancellation, or production business onboarding.
 
 | Original finding | Current status |
 | --- | --- |
@@ -13,7 +13,7 @@ Version 0.2.0 preserves the owner-verified v0.1.0 availability mode and adds opt
 
 Remaining limits:
 
-- The owner confirmed the v0.1.0 availability integration and subsequently reported the v0.2.0 automatic-booking PC checkpoint successful on 2026-10-24. The cloud agent has no direct PC access; its 98 tests use synthetic data/simulated services. Separate live results for each concurrency and crash-recovery case were not supplied, so the limits below still apply.
+- The owner confirmed the v0.1.0 availability integration and subsequently reported the v0.2.0 automatic-booking PC checkpoint successful on 2026-10-24. The subsequent v0.2.1 menu update still needs a real PC WhatsApp check. The cloud agent has no direct PC access; its tests use synthetic data/simulated services. Separate live results for each concurrency and crash-recovery case were not supplied, so the limits below still apply.
 - General message queues and deduplication remain in memory; a crash before work is journaled can lose a message. Booking requests and calendar locks now persist in SQLite and coordinate instances sharing that database, but there is no durable message-delivery queue or coordination between independent database copies.
 - One shared test Meta token and Google account are used for this development checkpoint. Real owner onboarding, independent credentials, tenant authorization, and offboarding are not implemented.
 - Availability authorization stays separate. Optional booking consent adds `calendar.events`, whose Google permission also permits edit/delete operations; this app enables only new-event insertion and verification reads. Old grants are not revoked.

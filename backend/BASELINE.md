@@ -1,5 +1,13 @@
 # Baseline provenance
 
+## Appointment browsing update — v0.2.1, awaiting PC verification
+
+The owner requested shorter appointment choices after verifying v0.2.0. Version 0.2.1 shows two appointments, then two more, then date selection and that day's times. Customers may also type a date as DD/MM/AAAA. See [BOOKING_UX.md](BOOKING_UX.md) for the flow and PC update steps.
+
+All 109 offline tests passed with no skipped tests. The availability engine, Google Calendar client, booking service, signature verification, business configuration, and Juanita schedule remain unchanged from the verified code baseline. Presentation tests now cover the new menu, direct date entry, fresh calendar checks, empty dates, navigation, stale actions, and both date-first booking paths.
+
+This new menu has not yet been reported tested on the real PC. The verified v0.2.0 and v0.1.0 checkpoints below remain the live integration references; no real events or messages were sent by the cloud agent.
+
 ## Verified automatic-booking baseline — v0.2.0
 
 On 2026-10-24, after receiving the v0.2.0 upgrade and real-PC booking test instructions, the owner reported: **“tested and all good.”** Treat v0.2.0 as the owner-verified automatic-new-booking baseline, alongside the preserved v0.1.0 availability baseline.

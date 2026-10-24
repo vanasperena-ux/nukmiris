@@ -80,7 +80,7 @@ cloudflared tunnel --url http://127.0.0.1:3000
 
 In the same Meta app, set the callback to the tunnel's HTTPS address followed by `/webhook`, enter the verify-token value from `.env`, and subscribe to WhatsApp's `messages` field. Update the callback if a temporary tunnel changes address. Incoming signatures must match `META_APP_SECRET`.
 
-From an approved test-recipient WhatsApp account, send `Menu` first to exit any existing human-support conversation, then `Cita` to the Meta test sender. You should receive available hourly choices from Juanita's calendar. **Más horarios** shows later results. Past times, busy events, lunch, and closed days are excluded. Selecting a time checks it again without reserving it.
+From an approved test-recipient WhatsApp account, send `Menu` first to exit any existing human-support conversation, then `Cita` to the Meta test sender. You should receive two available appointments from Juanita's calendar. **Más opciones** shows two more, followed by **Elegir fecha** for choosing a day and its available times. You may also type a date as DD/MM/AAAA. Past times, busy events, lunch, and closed days are excluded. Selecting a time checks it again without reserving it in availability mode. See [the current menu guide](BOOKING_UX.md).
 
 For an empty future weekday, starts should be **10:00, 11:00, 12:00, 14:00, 15:00, 16:00, 17:00, and 18:00**. A 10:00–11:00 event removes 10:00 and leaves 11:00 available. An all-day busy event removes that day.
 

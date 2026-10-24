@@ -9,6 +9,7 @@ const { createHmac, randomUUID } = require("node:crypto");
 const { createDatabase } = require("./helpers/database.cjs");
 const { prepareBookingSchema } = require("../lib/booking");
 const { BOOKING_SCOPES } = require("../lib/google-calendar");
+const { DateTime } = require("luxon");
 const nativeFetch = globalThis.fetch;
 const secret = "synthetic-booking-signature";
 
@@ -113,15 +114,15 @@ describe("customer-confirmed WhatsApp bookings", { concurrency: false }, () => {
   }
   async function confirmation(options = {}) {
     await post("Cita", options);
-    const choice = rows().find(row => row.id.includes(":slot:"));
-    await post(choice.id, { ...options, kind: "list_reply" });
+    const choice = buttons().find(row => row.id.includes(":slot:"));
+    await post(choice.id, { ...options, kind: "button_reply" });
     return buttons();
   }
 
   test("a new customer supplies a name and confirms before any event is created", async () => {
     await post("Cita");
-    const selected = rows()[0].id;
-    await post(selected, { kind: "list_reply" });
+    const selected = buttons()[0].id;
+    await post(selected, { kind: "button_reply" });
     assert.match(outgoing.at(-1).payload.text.body, /nombre completo/);
     assert.equal(inserts.length, 0);
     await post("12345");
@@ -149,7 +150,7 @@ describe("customer-confirmed WhatsApp bookings", { concurrency: false }, () => {
     let choices = await confirmation();
     const oldYes = choices.find(button => button.id.endsWith(":yes")).id;
     await post(choices.find(button => button.id.endsWith(":no")).id, { kind: "button_reply" });
-    assert(rows().length > 0);
+    assert(buttons().some(button => button.id.includes(":slot:")));
     await post(oldYes, { kind: "button_reply" });
     assert.equal(inserts.length, 0);
     choices = await confirmation();
@@ -175,6 +176,43 @@ describe("customer-confirmed WhatsApp bookings", { concurrency: false }, () => {
     await post(confirm, { kind: "button_reply" });
     assert.equal(inserts.length, 0);
     assert.match(outgoing.at(-1).payload.text.body, /No pudimos confirmar/);
+  });
+  test("date-first browsing creates exactly one selected-day appointment only after confirmation", async () => {
+    registered();
+    await post("Cita");
+    assert.equal(buttons().length, 3);
+    await post(buttons()[2].id, { kind: "button_reply" });
+    assert.equal(buttons()[2].title, "Elegir fecha");
+    await post(buttons()[2].id, { kind: "button_reply" });
+    const day = rows().filter(row => row.id.includes(":date:")).at(-1);
+    const selectedDate = day.id.split(":").at(-1);
+    await post(day.id, { kind: "list_reply" });
+    const slot = buttons()[0];
+    assert.match(slot.title, /^\d{2}:00$/);
+    assert.equal(inserts.length, 0);
+    await post(slot.id, { kind: "button_reply" });
+    const yes = buttons().find(button => button.id.endsWith(":yes"));
+    assert(yes);
+    assert.equal(inserts.length, 0);
+    await post(yes.id, { kind: "button_reply" });
+    await post(yes.id, { kind: "button_reply" });
+    assert.equal(inserts.length, 1);
+    assert.equal(inserts[0].calendarId, "calendar-synthetic-a");
+    assert.equal(DateTime.fromISO(inserts[0].requestBody.start.dateTime).setZone("America/Mexico_City").toISODate(), selectedDate);
+  });
+  test("a typed date can lead a new customer through registration and confirmed booking", async () => {
+    await post("Cita");
+    const session = JSON.parse(db.prepare("SELECT session_json FROM business_customer_sessions").get().session_json);
+    const day = DateTime.fromISO(session.slots.at(-1).start).setZone("America/Mexico_City");
+    await post(day.toFormat("dd/LL/yyyy"));
+    assert.equal(inserts.length, 0);
+    await post(buttons()[0].id, { kind: "button_reply" });
+    assert.match(outgoing.at(-1).payload.text.body, /nombre completo/);
+    await post("Cliente Nuevo");
+    assert.equal(inserts.length, 0);
+    await post(buttons().find(button => button.id.endsWith(":yes")).id, { kind: "button_reply" });
+    assert.equal(inserts.length, 1);
+    assert.equal(DateTime.fromISO(inserts[0].requestBody.start.dateTime).setZone("America/Mexico_City").toISODate(), day.toISODate());
   });
   test("a failed WhatsApp confirmation does not turn a retry into a second booking", async () => {
     registered();

@@ -15,6 +15,7 @@ const { AsyncLocalStorage } = require("node:async_hooks");
 const { validMetaSignature } = require("./lib/meta-signature");
 const { createCalendarAvailability, loadCalendarClient } = require("./lib/google-calendar");
 const { createBookingService } = require("./lib/booking");
+const { createAvailabilityMenu } = require("./lib/availability-menu");
 
 const app = express();
 app.use(express.json({ limit: "1mb", verify(req, res, bytes) { req.rawBody = bytes; } }));
@@ -33,6 +34,7 @@ const ZONE = "America/Mexico_City";
 const CALENDAR_ID = "primary";
 const HOURS = [10, 11, 15];
 const OFFER_LIFETIME = 15 * 60 * 1000;
+const LOOKAHEAD_DAYS = Number(process.env.NUKMIRIS_LOOKAHEAD_DAYS || 14);
 
 const CREDENTIALS = path.join(__dirname, "credentials.json");
 const DB_PATH = path.resolve(__dirname, process.env.NUKMIRIS_DB_PATH || "data/nukmiris-sessions.sqlite");
@@ -84,7 +86,7 @@ const receivingRoute = ROUTING_MODE === "receiving_number" ? db.prepare(`
 const businessContext = new AsyncLocalStorage();
 const messageQueues = new Map();
 const availability = ["availability", "booking"].includes(MODE) ? createCalendarAvailability({
-  db, lookaheadDays: Number(process.env.NUKMIRIS_LOOKAHEAD_DAYS || 14),
+  db, lookaheadDays: LOOKAHEAD_DAYS,
   getClient: MODE === "booking" ? () => loadCalendarClient({ booking: true }) : undefined,
 }) : null;
 const bookings = MODE === "booking" ? createBookingService({ db, availability, enabled: true }) : null;
@@ -356,8 +358,8 @@ async function sendReplyButtons(to, body, buttons) {
   return data;
 }
 
-// Interactive list for 4-10 existing appointments.
-async function sendAppointmentList(to, body, rows, button = "Ver citas") {
+// Interactive list for appointments or choosing a date (at most 10 rows).
+async function sendAppointmentList(to, body, rows, button = "Ver citas", sectionTitle = "Mis citas") {
   if (rows.length < 1 || rows.length > 10) {
     throw new Error("WhatsApp list must contain 1-10 rows.");
   }
@@ -379,7 +381,7 @@ async function sendAppointmentList(to, body, rows, button = "Ver citas") {
           body: { text: body },
           action: {
             button,
-            sections: [{ title: button === "Ver horarios" ? "Horarios disponibles" : "Mis citas", rows }]
+            sections: [{ title: sectionTitle, rows }]
           }
         }
       })
@@ -1405,64 +1407,17 @@ function alreadyProcessed(id) {
 // PROCESS WHATSAPP MESSAGES
 // ==================================================
 
-async function renderAvailability(from, session, page) {
-  const pageSize = 8;
-  const count = Math.ceil(session.slots.length / pageSize);
-  if (!Number.isInteger(page) || page < 0 || page >= count) throw new Error("Invalid availability page");
-  session.page = page;
-  sessions.set(from, session);
-  const zone = availability.configuration(businessFor(from).business_id).settings.timeZone;
-  const rows = session.slots.slice(page * pageSize, (page + 1) * pageSize).map((slot, index) => ({
-    id: `availability:${session.offerId}:slot:${page * pageSize + index}`,
-    title: DateTime.fromISO(slot.start).setZone(zone).setLocale("es").toFormat("ccc dd/LL HH:mm"),
-    description: `Termina a las ${DateTime.fromISO(slot.end).setZone(zone).toFormat("HH:mm")}`,
-  }));
-  if (page > 0) rows.push({ id: `availability:${session.offerId}:page:${page - 1}`, title: "Horarios anteriores" });
-  if (page + 1 < count) rows.push({ id: `availability:${session.offerId}:page:${page + 1}`, title: "Más horarios" });
-  await sendAppointmentList(from,
-    `Horarios disponibles de ${businessFor(from).business_name}. Página ${page + 1} de ${count}.\n\n` +
-      (bookings ? "Selecciona un horario. Te pediremos confirmar antes de reservar. Escribe Menu para volver."
-        : "Esta consulta no reserva una cita. Escribe Menu para volver."),
-    rows, "Ver horarios");
-}
+const availabilityFlow = availability ? createAvailabilityMenu({
+  availability, sessions, businessFor, sendMessage, sendReplyButtons, sendAppointmentList,
+  onSelect: selectAvailableSlot, bookingEnabled: !!bookings,
+  lookaheadDays: LOOKAHEAD_DAYS, lifetime: OFFER_LIFETIME,
+}) : null;
 
 async function offerAvailability(from) {
-  const businessId = businessFor(from).business_id;
-  const slots = await availability.listSlots(businessId);
-  if (!slots.length) {
-    sessions.delete(from);
-    await sendMessage(from, "No encontré horarios disponibles en los próximos días. Escribe Menu para volver o intenta más tarde.");
-    return;
-  }
-  await renderAvailability(from, {
-    mode: "availability", slots, offerId: randomUUID(), page: 0,
-    calendarId: availability.configuration(businessId).calendarId,
-    expiresAt: Date.now() + OFFER_LIFETIME,
-  }, 0);
+  await availabilityFlow.offer(from);
 }
 
-async function handleAvailabilitySelection(from, command) {
-  const match = /^availability:([0-9a-f-]{36}):(page|slot):(\d+)$/.exec(command);
-  const session = sessions.get(from);
-  if (!match || !session || session.mode !== "availability" || session.offerId !== match[1] ||
-      Date.now() > session.expiresAt || session.calendarId !== availability.configuration(businessFor(from).business_id).calendarId) {
-    await sendMessage(from, "Esta opción ya no está vigente. Escribe Cita para consultar nuevos horarios.");
-    return;
-  }
-  const index = Number(match[3]);
-  if (match[2] === "page") {
-    if (!Number.isSafeInteger(index) || index >= Math.ceil(session.slots.length / 8)) {
-      await sendMessage(from, "Esta opción ya no está vigente. Escribe Cita para consultar nuevos horarios.");
-      return;
-    }
-    await renderAvailability(from, session, index);
-    return;
-  }
-  const slot = session.slots[index];
-  if (!slot) {
-    await sendMessage(from, "Esta opción ya no está vigente. Escribe Cita para consultar nuevos horarios.");
-    return;
-  }
+async function selectAvailableSlot(from, slot, session) {
   const fresh = await availability.listSlots(businessFor(from).business_id);
   if (!fresh.some(value => value.start === slot.start && value.end === slot.end)) {
     sessions.delete(from);
@@ -1614,12 +1569,21 @@ async function handleMessage(message) {
       return;
     }
     if (availability && (isButton || isList) && command.startsWith("availability:")) {
-      try { await handleAvailabilitySelection(from, command); }
+      try { await availabilityFlow.handleSelection(from, command); }
       catch (error) {
         console.error("Calendar availability selection failed; inspect the local connection configuration.");
         await sendMessage(from, "No pude comprobar ese horario. Escribe Cita para intentar nuevamente.");
       }
       return;
+    }
+
+    if (availability && isText && !["hola", "menu"].includes(command)) {
+      try { if (await availabilityFlow.handleText(from, text)) return; }
+      catch (error) {
+        console.error("Calendar date lookup failed; inspect the local connection configuration.");
+        await sendMessage(from, "No pude consultar esa fecha. Intenta de nuevo o escribe Menu para recibir ayuda.");
+        return;
+      }
     }
 
     if (bookings && isButton && command.startsWith("booking:")) {
