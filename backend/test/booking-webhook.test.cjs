@@ -28,6 +28,7 @@ describe("customer-confirmed WhatsApp bookings", { concurrency: false }, () => {
     }
     for (const [key, value] of Object.entries({
       NODE_ENV: "test", HOST: "127.0.0.1", PORT: "0", NUKMIRIS_MODE: "booking", NUKMIRIS_ROUTING_MODE: "receiving_number",
+      NUKMIRIS_ENABLE_MANAGEMENT: "false",
       NUKMIRIS_DB_PATH: filename, NUKMIRIS_LOOKAHEAD_DAYS: "14", GOOGLE_OAUTH_TOKEN_PATH: readFile, GOOGLE_BOOKING_TOKEN_PATH: bookingFile,
       WHATSAPP_TOKEN: "synthetic-unused", WHATSAPP_PHONE_NUMBER_ID: "synthetic-unused", WHATSAPP_VERIFY_TOKEN: "synthetic-verify",
       META_APP_SECRET: secret, WHATSAPP_API_VERSION: "v26.0",

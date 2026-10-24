@@ -1,12 +1,20 @@
 # Baseline provenance
 
-## Appointment browsing update — v0.2.1, awaiting PC verification
+## Rescheduling/cancellation update — v0.3.0, awaiting PC verification
+
+After accepting v0.2.1, the owner requested the next rescheduling/cancellation checkpoint. Version 0.3.0 adds a separate opt-in service for customer-owned future NukMiris appointments, explicit confirmations, ETag-protected updates/deletion, a backed-up change journal, and recovery reads. See [MANAGEMENT_CHECKPOINT.md](MANAGEMENT_CHECKPOINT.md).
+
+The accepted availability engine, Google authorization, schedule/configuration, and two-plus-two browsing module remain unchanged. The booking service adds guards against late recovery responses overwriting completed state or releasing a subsequent change's calendar lock. The new feature shares that lock with new bookings. Real rescheduling/cancellation on the PC remains unverified; cloud tests use simulated services only.
+
+Validation: all 144 offline tests passed, with zero failures/skipped tests. This includes the accepted availability/new-booking regressions, signed management flows, backup/preparation checks, ETag conflicts, duplicate/concurrent writes, persistence, and late recovery results.
+
+## Accepted appointment browsing baseline — v0.2.1
 
 The owner requested shorter appointment choices after verifying v0.2.0. Version 0.2.1 shows two appointments, then two more, then date selection and that day's times. Customers may also type a date as DD/MM/AAAA. See [BOOKING_UX.md](BOOKING_UX.md) for the flow and PC update steps.
 
 All 109 offline tests passed with no skipped tests. The availability engine, Google Calendar client, booking service, signature verification, business configuration, and Juanita schedule remain unchanged from the verified code baseline. Presentation tests now cover the new menu, direct date entry, fresh calendar checks, empty dates, navigation, stale actions, and both date-first booking paths.
 
-This new menu has not yet been reported tested on the real PC. The verified v0.2.0 and v0.1.0 checkpoints below remain the live integration references; no real events or messages were sent by the cloud agent.
+On 2026-10-24, the owner subsequently reported **“Ok all good, the changes are accepted.”** Delivered reference: `df816ef`. Treat the v0.2.1 browsing changes as accepted. No separate PC commit hash or detailed run log was supplied. The verified v0.2.0 and v0.1.0 checkpoints below remain the detailed integration references; no real events or messages were sent by the cloud agent.
 
 ## Verified automatic-booking baseline — v0.2.0
 

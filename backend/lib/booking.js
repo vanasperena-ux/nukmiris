@@ -62,7 +62,13 @@ function createBookingService({ db, availability, enabled = false,
   }
   function terminal(row, state) {
     db.exec("BEGIN IMMEDIATE");
-    try { update(row, state); release(row); db.exec("COMMIT"); }
+    try {
+      const current = lookup({ requestId: row.request_id, businessId: row.business_id, sender: row.sender_whatsapp_id });
+      // Recovery reads may finish late, after a confirmed appointment has
+      // entered another operation. Never release that newer operation's lock.
+      if (!["pending", "uncertain"].includes(current.state)) { db.exec("COMMIT"); return result(current); }
+      update(row, state); release(row); db.exec("COMMIT");
+    }
     catch (error) { db.exec("ROLLBACK"); throw error; }
     return result(row);
   }
@@ -197,7 +203,8 @@ function createBookingService({ db, availability, enabled = false,
     } catch (error) {
       const code = Number(error.response?.status || error.code);
       if (!attempted || [400, 401, 403, 404, 410, 422].includes(code)) return terminal(row, "rejected");
-      update(row, "uncertain");
+      db.prepare("UPDATE booking_requests SET state='uncertain',updated_at=? WHERE request_id=? AND state IN ('pending','uncertain')")
+        .run(now().toISO(), row.request_id);
       return reconcile(context);
     }
   }

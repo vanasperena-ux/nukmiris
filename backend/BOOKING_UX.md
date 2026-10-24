@@ -1,6 +1,6 @@
 # Short appointment choices — v0.2.1
 
-This update changes how customers browse available appointments in both availability and booking modes. It preserves the calendar availability engine, business schedule/mappings, authorization, and confirmed-booking service from the verified v0.2.0 installation. The new menu still needs a real WhatsApp check on the owner's PC.
+This update changes how customers browse available appointments in both availability and booking modes. It preserves the calendar availability engine, business schedule/mappings, authorization, and confirmed-booking service from the verified v0.2.0 installation. On 2026-10-24 the owner accepted these changes (“Ok all good, the changes are accepted”); see [BASELINE.md](BASELINE.md). The subsequent optional rescheduling/cancellation update is documented in [MANAGEMENT_CHECKPOINT.md](MANAGEMENT_CHECKPOINT.md).
 
 ## Customer flow
 
@@ -27,7 +27,7 @@ npm start
 
 Keep the existing `.env`, database, Google tokens, and Meta/tunnel settings. No new packages, permissions, or database preparation are required after v0.2.0. If using a ZIP installation, update the public backend files, including `lib/availability-menu.js`, while keeping private configuration/data in place.
 
-In WhatsApp, send **Menu**, then **Cita**. Try **Más opciones → Elegir fecha → a day → a time** and a typed date. In booking mode, verify that selection still leads to confirmation and that confirming creates exactly one appointment on the selected date in **Juanita's Nailsalon – Juanita**. Selecting a day/time alone must create no event. Use a test appointment; any cleanup is manual, since rescheduling and cancellation remain disabled.
+In WhatsApp, send **Menu**, then **Cita**. Try **Más opciones → Elegir fecha → a day → a time** and a typed date. In booking mode, verify that selection still leads to confirmation and that confirming creates exactly one appointment on the selected date in **Juanita's Nailsalon – Juanita**. Selecting a day/time alone must create no event. Use a test appointment. Rescheduling and cancellation require the separate v0.3.0 opt-in setup.
 
 Old browsing buttons become invalid when another view is shown or a new flow begins. Browsing still expires after 15 minutes. An old availability menu from before the update asks the customer to send **Cita** again; existing booking confirmations retain their durable request identity.
 

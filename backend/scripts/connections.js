@@ -9,7 +9,8 @@ const { checkMeta, listWritableCalendars } = require("../lib/connection-checks")
 
 async function main() {
   loadLocalEnv();
-  const booking = process.argv.includes("--booking");
+  const management = process.argv.includes("--management");
+  const booking = management || process.argv.includes("--booking");
   if (process.argv.includes("--list-calendars")) {
     const calendars = await listWritableCalendars(loadCalendarClient());
     if (!calendars.length) throw new Error("No writable calendars were found");
@@ -36,8 +37,10 @@ async function main() {
       if (!db.prepare("SELECT 1 FROM sqlite_master WHERE name='booking_requests'").get()) throw new Error("Run booking:prepare first");
       await verifyBookingAuthorization();
     }
+    if (management && !db.prepare("SELECT 1 FROM sqlite_master WHERE name='appointment_changes'").get()) throw new Error("Run management:prepare first");
     const result = await createCalendarAvailability({ db, getClient: () => loadCalendarClient({ booking }) }).verify(businessId);
     console.log(`Google Calendar: OK (${result.calendarName}; ${booking ? "new-booking permission verified" : "availability only"}, no events changed).`);
+    if (management) console.log("Appointment management journal: OK. Booking event permission covers confirmed rescheduling/cancellation; no events changed.");
   } catch (error) {
     failed = true;
     console.error(booking ? "Google Calendar: FAILED. Review google:connect:booking, booking:prepare, and the selected business calendar."

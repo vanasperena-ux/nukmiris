@@ -1,10 +1,12 @@
 # Automatic new bookings — v0.2.0 PC checkpoint
 
-The owner verified v0.1.0 availability on Windows on 2026-10-24. This update preserves that mode and adds optional **new appointment creation after customer confirmation**. Rescheduling and cancellation remain disabled. No real booking was created or tested by the cloud agent; automated tests use synthetic customers and simulated services.
+The owner verified v0.1.0 availability on Windows on 2026-10-24. The v0.2.0 checkpoint preserved that mode and added optional **new appointment creation after customer confirmation**. Rescheduling and cancellation were disabled in that checkpoint. No real booking was created or tested by the cloud agent; automated tests use synthetic customers and simulated services.
 
 **Owner verification:** on 2026-10-24, the owner reported this PC checkpoint “tested and all good.” Version 0.2.0 is the verified new-booking baseline. The instructions below remain the upgrade/retest guide; they do not imply an outstanding first test. Detailed scope is recorded in [BASELINE.md](BASELINE.md).
 
 For the subsequent v0.2.1 browsing update, use [shorter appointment choices](BOOKING_UX.md). An already prepared v0.2.0 installation needs only the code update and restart; its existing configuration and booking setup remain usable.
+
+Rescheduling and cancellation are available in the separate opt-in [v0.3.0 management checkpoint](MANAGEMENT_CHECKPOINT.md). The instructions below describe the previously verified new-booking setup.
 
 ## 1. Update without replacing the working configuration
 

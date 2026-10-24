@@ -16,6 +16,8 @@ const { validMetaSignature } = require("./lib/meta-signature");
 const { createCalendarAvailability, loadCalendarClient } = require("./lib/google-calendar");
 const { createBookingService } = require("./lib/booking");
 const { createAvailabilityMenu } = require("./lib/availability-menu");
+const { createAppointmentManagement } = require("./lib/appointment-management");
+const { createManagementMenu } = require("./lib/management-menu");
 
 const app = express();
 app.use(express.json({ limit: "1mb", verify(req, res, bytes) { req.rawBody = bytes; } }));
@@ -28,6 +30,7 @@ const PHONE_ID = process.env.WHATSAPP_PHONE_NUMBER_ID;
 const API_VERSION = process.env.WHATSAPP_API_VERSION || "v26.0";
 const APP_SECRET = process.env.META_APP_SECRET;
 const MODE = process.env.NUKMIRIS_MODE || "support";
+const MANAGEMENT_ENABLED = MODE === "booking" && process.env.NUKMIRIS_ENABLE_MANAGEMENT === "true";
 const ROUTING_MODE = process.env.NUKMIRIS_ROUTING_MODE || "receiving_number";
 
 const ZONE = "America/Mexico_City";
@@ -69,6 +72,7 @@ const requiredTables = [
 if (ROUTING_MODE === "receiving_number") requiredTables.push("business_whatsapp_connections");
 if (["availability", "booking"].includes(MODE)) requiredTables.push("business_settings", "business_calendar_connections");
 if (MODE === "booking") requiredTables.push("booking_requests", "calendar_booking_locks");
+if (MANAGEMENT_ENABLED) requiredTables.push("appointment_changes");
 const presentTables = new Set(db.prepare("SELECT name FROM sqlite_master WHERE type='table'").all().map(r => r.name));
 for (const table of requiredTables) {
   if (!presentTables.has(table)) throw new Error(`Phase 6A prerequisite missing: ${table}`);
@@ -90,6 +94,7 @@ const availability = ["availability", "booking"].includes(MODE) ? createCalendar
   getClient: MODE === "booking" ? () => loadCalendarClient({ booking: true }) : undefined,
 }) : null;
 const bookings = MODE === "booking" ? createBookingService({ db, availability, enabled: true }) : null;
+const management = MANAGEMENT_ENABLED ? createAppointmentManagement({ db, availability, enabled: true, lookaheadDays: LOOKAHEAD_DAYS }) : null;
 function businessFor(from) {
   const context = businessContext.getStore();
   if (context?.sender === from) return context.business;
@@ -1412,6 +1417,10 @@ const availabilityFlow = availability ? createAvailabilityMenu({
   onSelect: selectAvailableSlot, bookingEnabled: !!bookings,
   lookaheadDays: LOOKAHEAD_DAYS, lifetime: OFFER_LIFETIME,
 }) : null;
+const managementMenu = management ? createManagementMenu({
+  management, availability, sessions, businessFor, sendMessage, sendReplyButtons, sendAppointmentList,
+  lookaheadDays: LOOKAHEAD_DAYS, lifetime: OFFER_LIFETIME,
+}) : null;
 
 async function offerAvailability(from) {
   await availabilityFlow.offer(from);
@@ -1522,13 +1531,17 @@ async function handleMessage(message) {
     console.log("Business route:", business.business_id);
     if (bookings && isText && ["hola", "menu", "cita", "horarios", "reagendar", "cancelar"].includes(command)) {
       bookings.invalidateOffers({ businessId: business.business_id, sender: from });
+      if (management) management.invalidateOffers({ businessId: business.business_id, sender: from });
     }
     const consultAvailability = availability && isText && ["cita", "horarios"].includes(command);
     const availabilityMenu = availability && isButton ? /^menu:([0-9a-f-]{36}):book$/.exec(command) : null;
     const isAppointmentAction =
-      (isText && ["cita", "reagendar", "cancelar"].includes(command) && !consultAvailability) ||
-      ((isButton || isList) && /^(book|reschedule|appointment|cancel|manage):/.test(command)) ||
-      (isButton && /^menu:[0-9a-f-]{36}:(book|manage)$/.test(command) && !availabilityMenu);
+      (isText && ["cita", "reagendar", "cancelar"].includes(command) && !consultAvailability &&
+        !(management && ["reagendar", "cancelar"].includes(command))) ||
+      ((isButton || isList) && /^(book|reschedule|appointment|cancel):/.test(command)) ||
+      ((isButton || isList) && command.startsWith("manage:") && !management) ||
+      (isButton && /^menu:[0-9a-f-]{36}:(book|manage)$/.test(command) && !availabilityMenu &&
+        !(management && command.endsWith(":manage")));
     if (isAppointmentAction) {
       sessions.delete(from);
       await sendMessage(from, bookings
@@ -1567,6 +1580,16 @@ async function handleMessage(message) {
         await sendMessage(from, "No pude consultar el calendario en este momento. Intenta más tarde o escribe Menu para recibir ayuda.");
       }
       return;
+    }
+    if (managementMenu && ((isButton || isList) || (isText && !["hola", "menu"].includes(command)))) {
+      try {
+        const handled = isText ? await managementMenu.handleText(from, text) : await managementMenu.handleInteractive(from, command);
+        if (handled) return;
+      } catch (error) {
+        console.error("Appointment management could not be completed or delivered; retry the same confirmation to check a submitted change.");
+        await sendMessage(from, "No pude completar la solicitud. Si ya confirmaste un cambio, pulsa el mismo botón para consultar su estado antes de intentar otro. Si todavía no confirmaste, escribe Reagendar o Cancelar para consultar de nuevo.");
+        return;
+      }
     }
     if (availability && (isButton || isList) && command.startsWith("availability:")) {
       try { await availabilityFlow.handleSelection(from, command); }
@@ -1783,6 +1806,7 @@ app.post("/webhook", (req, res) => {
 async function start() {
   try {
     if (bookings) await bookings.verify();
+    if (management) await management.verify();
     if (availability) {
       const connected = db.prepare("SELECT business_id FROM business_whatsapp_connections").all();
       if (!connected.length) throw new Error("Configure a business connection before starting availability mode");
@@ -1801,8 +1825,8 @@ async function start() {
       console.log("Customer registry: SQLite enabled");
       console.log(availability ? "Availability lookup: Enabled" : "Availability lookup: Disabled");
       console.log(bookings ? "New booking: customer confirmation required" : "New booking: DISABLED for this checkpoint");
-      console.log("Appointment rescheduling: DISABLED for this checkpoint");
-      console.log("Appointment cancellation: DISABLED for this checkpoint");
+      console.log(management ? "Appointment rescheduling: customer confirmation required" : "Appointment rescheduling: DISABLED for this checkpoint");
+      console.log(management ? "Appointment cancellation: customer confirmation required" : "Appointment cancellation: DISABLED for this checkpoint");
       console.log("Booking trigger: cita");
       console.log("Rescheduling trigger: reagendar");
       console.log("Cancellation trigger: cancelar (SI / NO)");
