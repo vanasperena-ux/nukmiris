@@ -2,6 +2,8 @@
 
 The owner verified v0.1.0 availability on Windows on 2026-10-24. This update preserves that mode and adds optional **new appointment creation after customer confirmation**. Rescheduling and cancellation remain disabled. No real booking was created or tested by the cloud agent; automated tests use synthetic customers and simulated services.
 
+**Owner verification:** on 2026-10-24, the owner reported this PC checkpoint “tested and all good.” Version 0.2.0 is the verified new-booking baseline. The instructions below remain the upgrade/retest guide; they do not imply an outstanding first test. Detailed scope is recorded in [BASELINE.md](BASELINE.md).
+
 ## 1. Update without replacing the working configuration
 
 Stop Node with Ctrl+C. Keep your existing `.env`, database, read-only Google token, Meta settings, calendar mapping, and tunnel configuration. Do not replace `.env` with the example or rerun `business:configure` for this upgrade.

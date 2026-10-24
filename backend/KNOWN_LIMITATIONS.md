@@ -13,7 +13,7 @@ Version 0.2.0 preserves the owner-verified v0.1.0 availability mode and adds opt
 
 Remaining limits:
 
-- The owner confirmed real v0.1.0 PC integration on 2026-10-24. The cloud agent has no direct access to the PC, live configuration, or database. Version 0.2.0 automatic booking still needs its own real PC test; its cloud tests use simulated services.
+- The owner confirmed the v0.1.0 availability integration and subsequently reported the v0.2.0 automatic-booking PC checkpoint successful on 2026-10-24. The cloud agent has no direct PC access; its 98 tests use synthetic data/simulated services. Separate live results for each concurrency and crash-recovery case were not supplied, so the limits below still apply.
 - General message queues and deduplication remain in memory; a crash before work is journaled can lose a message. Booking requests and calendar locks now persist in SQLite and coordinate instances sharing that database, but there is no durable message-delivery queue or coordination between independent database copies.
 - One shared test Meta token and Google account are used for this development checkpoint. Real owner onboarding, independent credentials, tenant authorization, and offboarding are not implemented.
 - Availability authorization stays separate. Optional booking consent adds `calendar.events`, whose Google permission also permits edit/delete operations; this app enables only new-event insertion and verification reads. Old grants are not revoked.

@@ -23,7 +23,7 @@ Booking tests additionally cover explicit confirmation, business/customer owners
 
 Checkpoint validation: frozen installation completed and all 68 cloud tests passed, with no skipped tests. On 2026-10-24, the owner also confirmed successful real Windows PC installation/tests, Google and Meta checks, webhook delivery, and calendar busy-time filtering. This v0.1.0 availability flow is the verified baseline; see [BASELINE.md](BASELINE.md) for the recorded evidence.
 
-The v0.2.0 checkpoint subsequently passed all 98 offline tests, with no skipped tests, and `npm audit --omit=dev` reported zero known vulnerabilities. Real automatic appointment creation still needs the separate PC test described in the booking guide; cloud tests did not create real events.
+The v0.2.0 checkpoint subsequently passed all 98 offline tests, with no skipped tests, and `npm audit --omit=dev` reported zero known vulnerabilities. On 2026-10-24 the owner also reported the real PC booking checkpoint tested successfully (“tested and all good”). This is the verified automatic-new-booking baseline. Cloud tests did not create real events; see [BASELINE.md](BASELINE.md) for the evidence and scope.
 
 ## Runtime modes
 

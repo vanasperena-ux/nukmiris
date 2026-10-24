@@ -1,5 +1,15 @@
 # Baseline provenance
 
+## Verified automatic-booking baseline — v0.2.0
+
+On 2026-10-24, after receiving the v0.2.0 upgrade and real-PC booking test instructions, the owner reported: **“tested and all good.”** Treat v0.2.0 as the owner-verified automatic-new-booking baseline, alongside the preserved v0.1.0 availability baseline.
+
+Delivered repository reference: `345cc5a634b3f32ce078225b57ed8c25c43f931c`. No separate PC commit hash or detailed run log was supplied. The report confirms the overall PC checkpoint; it does not provide separate live evidence for every concurrency, crash-recovery, or authorization test case.
+
+The cloud checkpoint separately passed 98 automated tests against synthetic data/simulated integrations, with zero known vulnerabilities reported by the dependency audit. The cloud agent did not access the PC or create live appointments to repeat the owner's test.
+
+Selected business and calendar remain `juanita-nails` and **Juanita's Nailsalon – Juanita**, using the stored explicit calendar ID. Preserve the confirmed-booking flow and availability regressions. Rescheduling and cancellation remain disabled; this verification does not activate another feature.
+
 ## Verified availability baseline — v0.1.0
 
 On 2026-10-24, the owner reported successful real Windows PC integration testing of backend v0.1.0. This is the verified availability baseline for the automatic-booking checkpoint. Preserve its existing availability flow rather than replacing it.
@@ -22,7 +32,7 @@ The evidence above is the owner's PC verification. No live account credentials, 
 
 ## Historical support-only baseline
 
-The v0.2.0 automatic-booking checkpoint is additive and opt-in; see [BOOKING_CHECKPOINT.md](BOOKING_CHECKPOINT.md). Availability mode retains the verified engine, schedule, mappings, and separate read-only authorization. Its real-PC verification above is not a claim that automatic bookings have been verified on the PC.
+The v0.2.0 automatic-booking checkpoint is additive and opt-in; see [BOOKING_CHECKPOINT.md](BOOKING_CHECKPOINT.md). Availability mode retains the verified engine, schedule, mappings, and separate read-only authorization. Availability and automatic-booking PC verification are recorded separately above.
 
 Prepared on 2026-10-24 as the approved follow-up to the read-only audit.
 
