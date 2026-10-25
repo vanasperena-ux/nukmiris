@@ -8,3 +8,5 @@ WhatsApp appointment-management prototype for small businesses.
 - [Current UX checkpoint](backend/UX_CHECKPOINT.md) and [saved project roadmap](docs/ROADMAP.md): the requested improvements now, reliability/restart recovery next.
 
 To work on the backend, use Node 24.19.0, then run `npm ci --ignore-scripts` and `npm test` from `backend/`. No real accounts or database are needed for the tests. Read the backend's documented limitations before any manual live launch.
+
+For the owner's Windows PowerShell setup, use `npm.cmd` instead: `npm.cmd ci --ignore-scripts`, `npm.cmd test`, and `npm.cmd start`. This preference is saved in the [project continuity notes](docs/ROADMAP.md#windows-pc-command-preference) for future release/testing rounds.

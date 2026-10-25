@@ -19,8 +19,8 @@ If using Git, from your repository folder:
 ```powershell
 git pull --ff-only
 cd backend
-npm ci --ignore-scripts
-npm test
+npm.cmd ci --ignore-scripts
+npm.cmd test
 ```
 
 For a ZIP installation, keep the old copy and private settings while updating the backend code. Do not overwrite local configuration with public examples.
@@ -28,7 +28,7 @@ For a ZIP installation, keep the old copy and private settings while updating th
 ## 2. Prepare the booking journal with Node stopped
 
 ```powershell
-npm run booking:prepare
+npm.cmd run booking:prepare
 ```
 
 This creates a timestamped SQLite backup and adds two booking tables and a customer identity index. It does not change schedules, customers, calendar/WhatsApp mappings, or Google events. Repeating it is safe and creates another backup.
@@ -38,7 +38,7 @@ The journal must survive restarts. Do not delete it or use separate database cop
 ## 3. Grant booking permission separately
 
 ```powershell
-npm run google:connect:booking
+npm.cmd run google:connect:booking
 ```
 
 This uses your existing Desktop OAuth credentials path but opens a new explicit consent flow with loopback, state validation, and PKCE. It requests calendar-list/free/busy access plus `calendar.events`. Google may describe the latter as viewing/editing events; the app only inserts new appointments and reads them for verification. No enabled path edits or deletes an event.
@@ -48,7 +48,7 @@ You do not need to revoke the working Google grant. The new authorization defaul
 To repeat booking consent after declining it or receiving insufficient permission:
 
 ```powershell
-npm run google:connect:booking -- --reauthorize
+npm.cmd run google:connect:booking -- --reauthorize
 ```
 
 Do not share credential values or commit authorization files.
@@ -64,8 +64,8 @@ NUKMIRIS_MODE=booking
 Keep receiving-number routing and all verified business/calendar/Meta values. Then:
 
 ```powershell
-npm run connections:check:booking
-npm start
+npm.cmd run connections:check:booking
+npm.cmd start
 ```
 
 Checks verify Meta sender access, the exact calendar and access role, Google availability, journal presence, and actual event permission. They create no test event. Startup rejects missing permission, missing journal tables, or legacy customer-number routing.
@@ -91,7 +91,7 @@ Each request has a persistent identity and deterministic Google event ID. If Goo
 If the outcome remains unclear, the calendar stays protected against further automatic bookings. The customer may press the same confirmation button to check status. An operator may use the request ID from the local log:
 
 ```powershell
-npm run booking:reconcile -- REQUEST_ID_FROM_LOCAL_LOG
+npm.cmd run booking:reconcile -- REQUEST_ID_FROM_LOCAL_LOG
 ```
 
 This only reads Google and updates local status. A missing event after an ambiguous write is insufficient proof that the write cannot finish later, so unresolved requests retain protection. If status stays `uncertain`, return to availability mode and report it for review. Do not clear the journal or force-release a lock.
@@ -100,6 +100,6 @@ This only reads Google and updates local status. A missing event after an ambigu
 
 The SQLite journal coordinates app requests using the same database. Google has no atomic “check availability and reserve” operation: a simultaneous manual edit or another calendar app can still race with insertion. This is not a production distributed booking guarantee. General webhook delivery also remains in memory, so a crash before work is journaled can still lose a message.
 
-To return to the verified read-only behavior: stop Node, set `NUKMIRIS_MODE=availability`, and run `npm start`. The read-only token, schedules, and mappings remain usable. Keep the booking journal and existing Google events; switching modes deletes nothing.
+To return to the verified read-only behavior: stop Node, set `NUKMIRIS_MODE=availability`, and run `npm.cmd start`. The read-only token, schedules, and mappings remain usable. Keep the booking journal and existing Google events; switching modes deletes nothing.
 
 Report connection statuses, whether one event was created in the correct calendar, whether duplicate confirmation kept one event, and whether the adjacent hour remained available. Share no `.env`, tokens, OAuth files, or real database.

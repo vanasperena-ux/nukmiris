@@ -32,13 +32,15 @@ Version metadata and current/historical guides are updated. `docs/ROADMAP.md` sa
 
 ## Update the verified PC installation
 
+PowerShell commands use `npm.cmd`, the working launcher on your PC. Future release/testing instructions should use the same form.
+
 Stop Node with Ctrl+C. From your repository folder:
 
 ```powershell
 git pull --ff-only
 cd backend
-npm test
-npm start
+npm.cmd test
+npm.cmd start
 ```
 
 Keep `.env`, the database, OAuth files, Meta/tunnel settings, booking mode, and the existing `NUKMIRIS_ENABLE_MANAGEMENT=true` setting. An already prepared v0.3.0 installation needs no new setup. The historical booking/management guides describe the older confirmation screens; this guide describes the current behavior.

@@ -15,8 +15,8 @@ Stop Node with Ctrl+C. From the repository folder:
 ```powershell
 git pull --ff-only
 cd backend
-npm test
-npm run management:prepare
+npm.cmd test
+npm.cmd run management:prepare
 ```
 
 The preparation command creates a timestamped SQLite backup, then adds the appointment-change journal. It preserves existing bookings, customers, schedules, calendar mappings, and Google events. Repeating preparation is safe. Startup never prepares the database automatically.
@@ -35,8 +35,8 @@ NUKMIRIS_ENABLE_MANAGEMENT=true
 Then:
 
 ```powershell
-npm run connections:check:management
-npm start
+npm.cmd run connections:check:management
+npm.cmd start
 ```
 
 The connection check reads Google/Meta and checks the local journal; it changes no events. Startup should report customer confirmation required for rescheduling and cancellation. Keep one app instance for this PC checkpoint, using the same database.
@@ -81,7 +81,7 @@ If a write response is lost, NukMiris reads that same event to check the result.
 An operator may check a request ID from the local log:
 
 ```powershell
-npm run management:reconcile -- CHANGE_REQUEST_ID_FROM_LOCAL_LOG
+npm.cmd run management:reconcile -- CHANGE_REQUEST_ID_FROM_LOCAL_LOG
 ```
 
 This only reads Google and updates local status. If the result remains `uncertain`, inspect it before making another reservation/change. Do not delete the journal or force-release locks.

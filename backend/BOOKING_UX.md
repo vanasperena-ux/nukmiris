@@ -23,8 +23,8 @@ Stop Node with Ctrl+C. From the repository folder:
 ```powershell
 git pull --ff-only
 cd backend
-npm test
-npm start
+npm.cmd test
+npm.cmd start
 ```
 
 Keep the existing `.env`, database, Google tokens, and Meta/tunnel settings. No new packages, permissions, or database preparation are required after v0.2.0. If using a ZIP installation, update the public backend files, including `lib/availability-menu.js`, while keeping private configuration/data in place.

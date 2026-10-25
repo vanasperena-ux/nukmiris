@@ -17,6 +17,8 @@ npm ci --ignore-scripts
 npm test
 ```
 
+On the owner's Windows PC in PowerShell, use `npm.cmd` for these commands: `npm.cmd ci --ignore-scripts`, `npm.cmd test`, and `npm.cmd start`. All PC-specific guides use that form; see the [saved command preference](../docs/ROADMAP.md#windows-pc-command-preference).
+
 Tests use real Express/Luxon/SQLite, signed loopback HTTP, disposable synthetic databases, and simulated Google/Meta responses. They skip `.env` loading and never read real credentials or a real business database. They cover busy events, adjacent appointments, closing/lunch boundaries, calendar selection, two-plus-two suggestions, date entry, daily times, navigation, business isolation, stale selections, signature rejection, and disabled writes in availability mode.
 
 Booking tests additionally cover immediate selection-based actions, business/customer ownership, repeated selections, saved-request recovery, separate SQLite connections, persistence after reopening the database, overlapping requests, ambiguous Google responses, and failed reply delivery after an event was saved. Menu tests cover upcoming/past/cancelled appointments, chronological lists, local Spanish dates/times, business isolation, and human chat. OAuth tests cover loopback callbacks, state/PKCE, declined consent, and separation from the verified read-only cache.
@@ -37,7 +39,7 @@ The v0.3.1 UX update passed all **159 offline tests**, with no skipped tests. Th
 - `NUKMIRIS_MODE=support`: support conversations and menus, with appointment actions paused and no Google connection.
 - `NUKMIRIS_MODE=booking`: the same availability engine plus new-event creation when the customer selects a slot, and live upcoming appointment details in recognized customers' menus. Separate booking authorization and backed-up journal preparation are required. This is opt-in; `.env.example` still selects availability mode.
 
-In booking mode, `NUKMIRIS_ENABLE_MANAGEMENT=true` additionally enables **Reagendar**, **Cancelar**, and the management menu after `npm run management:prepare`. Selecting a new time commits the reschedule; selecting an appointment from the cancellation list commits cancellation. The flag defaults to false. Existing booking authorization covers both actions. Read-only/support modes never enable them. The legacy archived handlers remain disabled in every mode.
+In booking mode, `NUKMIRIS_ENABLE_MANAGEMENT=true` additionally enables **Reagendar**, **Cancelar**, and the management menu after the `management:prepare` setup command. Selecting a new time commits the reschedule; selecting an appointment from the cancellation list commits cancellation. The flag defaults to false. Existing booking authorization covers both actions. Read-only/support modes never enable them. The legacy archived handlers remain disabled in every mode.
 
 All modes verify Meta signatures. Receiving-number routing is the default: authenticated `metadata.phone_number_id` selects the business and outbound sender. `NUKMIRIS_ROUTING_MODE=development` retains the customer-number simulation for offline regression tests and deliberate legacy development; booking mode rejects it.
 
@@ -47,12 +49,12 @@ The default search window is 14 days, configurable through `NUKMIRIS_LOOKAHEAD_D
 
 The PC guide explains these commands and the required local settings:
 
-```sh
-npm run google:connect
-npm run calendars:list
-npm run business:configure
-npm run connections:check
-npm start
+```powershell
+npm.cmd run google:connect
+npm.cmd run calendars:list
+npm.cmd run business:configure
+npm.cmd run connections:check
+npm.cmd start
 ```
 
 Stop the old webhook before configuring its database. The configuration command backs up SQLite, adds missing mapping tables, and updates only the selected business. It refuses conflicting mappings and never changes Calendar events. There is no owner dashboard yet; the root website remains separate.

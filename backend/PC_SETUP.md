@@ -1,5 +1,7 @@
 # Connect calendar lookup on your Windows PC
 
+These PowerShell instructions use `npm.cmd`, which is the working launcher on the owner's PC. Use it for installation, tests, and all npm scripts.
+
 This checkpoint shows available times from Juanita's specific calendar in WhatsApp. Automatic appointment creation, rescheduling, and cancellation remain off. The cloud tests use simulations; real Google/Meta connections need verification on your PC.
 
 ## 1. Stop the old app and use a separate copy
@@ -10,13 +12,13 @@ Stop the existing Node webhook with Ctrl+C. Keep the `NukMiris-poc` folder and i
 cd "$env:USERPROFILE\Desktop"
 git clone https://github.com/vanasperena-ux/nukmiris.git NukMiris-next
 cd .\NukMiris-next\backend
-npm ci --ignore-scripts
-npm test
+npm.cmd ci --ignore-scripts
+npm.cmd test
 Copy-Item .env.example .env
 notepad .env
 ```
 
-Use the copy command only for a new folder; preserve any existing `.env`. Use Node 24. `npm test` does not use real accounts or data.
+Use the copy command only for a new folder; preserve any existing `.env`. Use Node 24. `npm.cmd test` does not use real accounts or data.
 
 ## 2. Enter local configuration
 
@@ -36,23 +38,23 @@ Keep the supplied availability mode and receiving-number routing. Keep credentia
 ## 3. Authorize Google and select the exact calendar
 
 ```powershell
-npm run google:connect
-npm run calendars:list
+npm.cmd run google:connect
+npm.cmd run calendars:list
 ```
 
 The first command opens authorization in your PC browser and stores reusable authorization in ignored `.local/google-token.json`. It requests calendar-list and free/busy access, without event-writing permission. Use the Google account that owns or can edit Juanita's calendar.
 
 The second lists calendar names and exact IDs. Find Juanita's calendar and set its ID as `GOOGLE_CALENDAR_ID` in your local `.env`. Use the full calendar ID, which may look like a long address; do not enter `primary` or just the display name.
 
-If existing authorization needs the new scopes, run `npm run google:connect -- --reauthorize`. The Google Calendar API and OAuth consent/test-user configuration must remain enabled, as with your earlier working prototype.
+If existing authorization needs the new scopes, run `npm.cmd run google:connect -- --reauthorize`. The Google Calendar API and OAuth consent/test-user configuration must remain enabled, as with your earlier working prototype.
 
 ## 4. Save the mapping and check both connections
 
 Keep the old webhook stopped:
 
 ```powershell
-npm run business:configure
-npm run connections:check
+npm.cmd run business:configure
+npm.cmd run connections:check
 ```
 
 Configuration creates a timestamped backup beside the existing database, then stores the calendar ID, receiving Meta phone ID, and confirmed schedule for `juanita-nails`: Monday–Friday, 10:00–19:00, 60-minute appointments, zero gap, hourly starts, and lunch 13:00–14:00. It preserves other businesses and refuses conflicting mappings.
@@ -69,7 +71,7 @@ These check Meta token access to the sender and Google's access to the chosen ca
 ## 5. Start the app and reconnect the webhook
 
 ```powershell
-npm start
+npm.cmd start
 ```
 
 Reuse your existing Cloudflare tunnel for port 3000. If you use temporary tunnels, open a second terminal and run your existing Cloudflared installation:
