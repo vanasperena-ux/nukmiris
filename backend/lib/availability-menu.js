@@ -3,14 +3,14 @@
 const { randomUUID } = require("node:crypto");
 const { DateTime } = require("luxon");
 
-// Presentation only: the existing availability engine and booking confirmation
+// Presentation only: the existing availability engine and booking service
 // remain responsible for schedule checks, busy periods, and event creation.
 function createAvailabilityMenu({ availability, sessions, businessFor, sendMessage,
   sendReplyButtons, sendAppointmentList, onSelect, bookingEnabled = false,
   lookaheadDays = 14, lifetime = 15 * 60 * 1000, now = () => DateTime.now() }) {
   const expired = "Esta opción ya no está vigente. Escribe Cita para consultar nuevos horarios.";
   const guidance = bookingEnabled
-    ? "Elige un horario. Te pediremos confirmar antes de reservar."
+    ? "Selecciona el horario que prefieres."
     : "Esta consulta no reserva una cita.";
 
   function context(from) {
@@ -44,7 +44,7 @@ function createAvailabilityMenu({ availability, sessions, businessFor, sendMessa
 
   async function suggestions(from, session, stage) {
     beginView(session, "suggestions");
-    const { zone, business } = context(from);
+    const { zone } = context(from);
     const offset = stage * 2;
     const choices = session.slots.slice(offset, offset + 2).map((slot, index) => ({
       id: action(session, "slot", offset + index),
@@ -55,8 +55,8 @@ function createAvailabilityMenu({ availability, sessions, businessFor, sendMessa
       : { id: action(session, "dates"), title: "Elegir fecha" });
     save(from, session, choices);
     await sendReplyButtons(from,
-      `${stage === 0 ? "¿Qué día y hora te funcionan mejor" : "Aquí tienes otras opciones"} en ${business.business_name}${stage === 0 ? "?" : ":"}\n\n` +
-      guidance + " Escribe Menu para volver.", choices);
+      stage === 0 ? "Elige un horario que te funciona mejor:"
+        : "Te muestro mas opciones. Elige un horario que te funciona mejor:", choices);
   }
 
   async function dates(from, session, page = 0) {
@@ -97,7 +97,8 @@ function createAvailabilityMenu({ availability, sessions, businessFor, sendMessa
     save(from, session, choices);
     const day = local(session.selectedDate, zone).toFormat("cccc d 'de' LLLL yyyy");
     await sendReplyButtons(from, session.slots.length
-      ? `¿Qué hora prefieres para el ${day}?\n\n${guidance} Para cambiar de día, escribe otra fecha como DD/MM/AAAA. Escribe Menu para volver.`
+      ? (page > 0 ? "Te muestro mas opciones. Elige un horario que te funciona mejor:"
+        : `¿Qué hora prefieres para el ${day}?\n\n${guidance} Para cambiar de día, escribe otra fecha como DD/MM/AAAA. Escribe Menu para volver.`)
       : `No hay horarios disponibles para el ${day}. Elige otra fecha o escríbela como DD/MM/AAAA. Escribe Menu para volver.`, choices);
   }
 
@@ -141,7 +142,7 @@ function createAvailabilityMenu({ availability, sessions, businessFor, sendMessa
     if (kind === "days") return dates(from, session, Number(value));
     if (kind === "date") return chooseDate(from, session, value);
     if (kind === "times") return times(from, session, Number(value));
-    if (kind === "slot") return onSelect(from, session.slots[Number(value)], session);
+    if (kind === "slot") return onSelect(from, session.slots[Number(value)], session, command);
   }
 
   async function handleText(from, text) {

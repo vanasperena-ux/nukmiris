@@ -16,8 +16,9 @@ const { validMetaSignature } = require("./lib/meta-signature");
 const { createCalendarAvailability, loadCalendarClient } = require("./lib/google-calendar");
 const { createBookingService } = require("./lib/booking");
 const { createAvailabilityMenu } = require("./lib/availability-menu");
-const { createAppointmentManagement } = require("./lib/appointment-management");
+const { createAppointmentManagement, createAppointmentLookup } = require("./lib/appointment-management");
 const { createManagementMenu } = require("./lib/management-menu");
+const { appointmentSuccess, appointmentOverview, textChunks } = require("./lib/appointment-messages");
 
 const app = express();
 app.use(express.json({ limit: "1mb", verify(req, res, bytes) { req.rawBody = bytes; } }));
@@ -95,6 +96,7 @@ const availability = ["availability", "booking"].includes(MODE) ? createCalendar
 }) : null;
 const bookings = MODE === "booking" ? createBookingService({ db, availability, enabled: true }) : null;
 const management = MANAGEMENT_ENABLED ? createAppointmentManagement({ db, availability, enabled: true, lookaheadDays: LOOKAHEAD_DAYS }) : null;
+const appointmentLookup = bookings ? management || createAppointmentLookup({ db, availability }) : null;
 function businessFor(from) {
   const context = businessContext.getStore();
   if (context?.sender === from) return context.business;
@@ -418,20 +420,37 @@ function slotButtonTitle(iso) {
 // ==================================================
 async function showMainMenu(from) {
   const customer = customers.get(from);
+  const business = businessFor(from);
   const firstLine = customer
-    ? `Hola ${customer.full_name}, bienvenido a ${businessFor(from).business_name}. ¿En qué podemos ayudarte?`
-    : `Hola, bienvenido a ${businessFor(from).business_name}. ¿En qué podemos ayudarte?`;
+    ? `Hola ${customer.full_name}, bienvenido a ${business.business_name}.`
+    : `Hola, bienvenido a ${business.business_name}.`;
+  let details = "";
+  if (customer && appointmentLookup) {
+    try {
+      const appointments = await appointmentLookup.listAppointments({ businessId: business.business_id, sender: from });
+      details = appointmentOverview(appointments, availability.configuration(business.business_id).settings.timeZone);
+    } catch {
+      console.error("Menu appointment lookup failed; no appointment status was assumed.");
+      details = "Por ahora no pude consultar tus citas. Puedes intentar de nuevo más tarde.";
+    }
+  }
+  const actions = '¿En qué podemos ayudarte?\n\n' +
+    'Escribe "cita" para agendar una cita nueva, "reagendar" para cambiar tu cita o "cancelar" para cancelarla.\n\n' +
+    "O escribe tu mensaje para hablar con una persona.";
+  let body = [firstLine, details, actions].filter(Boolean).join("\n\n");
   const menuId = randomUUID();
   sessions.set(from, {
     mode: "main_menu", menuId, expiresAt: Date.now() + OFFER_LIFETIME
   });
   try {
+    if (body.length > 1024) {
+      for (const chunk of textChunks([firstLine, details].filter(Boolean).join("\n\n"))) await sendMessage(from, chunk);
+      body = actions;
+    }
     await sendReplyButtons(from,
-      firstLine + "\n\n" +
-      'Escribe "cita" para hacer una cita nueva, o escribe "reagendar" o "cancelar".\n\n' +
-      "O escribe tu mensaje para hablar con una persona.",
+      body,
       [
-        { id: `menu:${menuId}:book`, title: "Hacer cita nueva" },
+        { id: `menu:${menuId}:book`, title: "Agendar una cita" },
         { id: `menu:${menuId}:manage`, title: "Reagendar / cancelar" },
         { id: `menu:${menuId}:human`, title: "Hablar con alguien" }
       ]
@@ -462,7 +481,7 @@ async function beginHumanSupport(from) {
   sessions.delete(from);
   const customer = customers.get(from);
   humanSupport.open(from, customer?.customer_id);
-  await sendMessage(from, "Escribe tu mensaje.\n\nPara regresar al menú automático, escribe Menu.");
+  await sendMessage(from, 'Escribe tu mensaje.\n\nPara organizar tu cita o cancelar, escribe "menu".');
 }
 
 // ==================================================
@@ -1426,7 +1445,7 @@ async function offerAvailability(from) {
   await availabilityFlow.offer(from);
 }
 
-async function selectAvailableSlot(from, slot, session) {
+async function selectAvailableSlot(from, slot, session, selectionCommand) {
   const fresh = await availability.listSlots(businessFor(from).business_id);
   if (!fresh.some(value => value.start === slot.start && value.end === slot.end)) {
     sessions.delete(from);
@@ -1436,10 +1455,10 @@ async function selectAvailableSlot(from, slot, session) {
   if (bookings) {
     const customer = customers.get(from);
     if (!customer) {
-      sessions.set(from, { mode: "booking_name", slot, calendarId: session.calendarId, expiresAt: Date.now() + OFFER_LIFETIME });
-      await sendMessage(from, "Para reservar este horario, indícanos tu nombre completo. Después te pediremos confirmar la cita. Escribe Menu para volver.");
+      sessions.set(from, { mode: "booking_name", slot, selectionCommand, calendarId: session.calendarId, expiresAt: Date.now() + OFFER_LIFETIME });
+      await sendMessage(from, "Para reservar este horario, indícanos tu nombre completo. Escribe Menu para volver.");
     } else {
-      await showBookingConfirmation(from, slot, session.calendarId);
+      await completeBookingSelection(from, slot, session.calendarId, selectionCommand);
     }
     return;
   }
@@ -1449,7 +1468,7 @@ async function selectAvailableSlot(from, slot, session) {
     ".\n\nLa reserva automática todavía no está activada. Escribe Menu para regresar o hablar con el negocio.");
 }
 
-async function showBookingConfirmation(from, slot, calendarId) {
+async function completeBookingSelection(from, slot, calendarId, selectionCommand) {
   const business = businessFor(from);
   if (availability.configuration(business.business_id).calendarId !== calendarId) {
     sessions.delete(from);
@@ -1463,41 +1482,37 @@ async function showBookingConfirmation(from, slot, calendarId) {
     return;
   }
   const intent = bookings.createIntent({ businessId: business.business_id, sender: from, slot, calendarId });
-  sessions.set(from, { mode: "booking_confirm", requestId: intent.requestId, expiresAt: Date.now() + OFFER_LIFETIME });
-  const zone = availability.configuration(business.business_id).settings.timeZone;
-  await sendReplyButtons(from,
-    `Confirma tu cita en ${business.business_name}:\n\n${intent.name}\n` +
-    DateTime.fromISO(intent.start).setZone(zone).setLocale("es").toFormat("cccc d 'de' LLLL, HH:mm") +
-    `–${DateTime.fromISO(intent.end).setZone(zone).toFormat("HH:mm")}\n\nEl horario se comprobará otra vez al confirmar.`,
-    [{ id: `booking:${intent.requestId}:yes`, title: "Confirmar cita" },
-      { id: `booking:${intent.requestId}:no`, title: "Elegir otro horario" }]);
+  // Bind the selected button to its durable request before the Calendar call.
+  // A repeat tap checks this request instead of creating another intent.
+  sessions.set(from, { mode: "booking_result", requestId: intent.requestId, selectionCommand, expiresAt: Date.now() + OFFER_LIFETIME });
+  await handleBookingDecision(from, `booking:${intent.requestId}:yes`);
 }
 
 async function handleBookingDecision(from, command) {
-  const match = /^booking:([0-9a-f-]{36}):(yes|no)$/.exec(command);
+  const match = /^booking:([0-9a-f-]{36}):(yes|no|retry|status)$/.exec(command);
   if (!match) {
     await sendMessage(from, "Esta opción ya no está vigente. Escribe Cita para comenzar nuevamente.");
     return;
   }
   const context = { businessId: businessFor(from).business_id, sender: from, requestId: match[1] };
-  const outcome = match[2] === "yes" ? await bookings.confirm(context) : bookings.decline(context);
+  const outcome = match[2] === "status" ? await bookings.reconcile(context)
+    : match[2] === "no" ? bookings.decline(context) : await bookings.confirm(context);
   if (outcome.status === "busy") {
-    await sendReplyButtons(from, "Estamos comprobando otra reserva. Intenta confirmar de nuevo en unos momentos.",
-      [{ id: command, title: "Confirmar cita" }, { id: `booking:${match[1]}:no`, title: "Elegir otro horario" }]);
+    await sendReplyButtons(from, "Estamos comprobando otra reserva. Intenta de nuevo en unos momentos.",
+      [{ id: `booking:${match[1]}:retry`, title: "Reintentar" }]);
     return;
   }
   if (["uncertain", "pending"].includes(outcome.status)) {
     console.error("Booking needs verification. Request ID:", match[1]);
-    await sendMessage(from, "Tu solicitud sigue en verificación. Pulsa el mismo botón Confirmar cita para consultar su estado; no hagas otra reserva por ahora.");
+    await sendReplyButtons(from, "Tu solicitud sigue en verificación. Consulta su estado antes de intentar otra reserva.",
+      [{ id: `booking:${match[1]}:status`, title: "Consultar estado" }]);
     return;
   }
   const current = sessions.get(from);
-  if (current?.requestId === match[1]) sessions.delete(from);
+  if (current?.requestId === match[1] && current.mode !== "booking_result") sessions.delete(from);
   if (outcome.status === "confirmed") {
     const zone = availability.configuration(context.businessId).settings.timeZone;
-    await sendMessage(from, "¡Tu cita está confirmada!\n\n" +
-      DateTime.fromISO(outcome.start).setZone(zone).setLocale("es").toFormat("cccc d 'de' LLLL, HH:mm") +
-      `–${DateTime.fromISO(outcome.end).setZone(zone).toFormat("HH:mm")}\n${businessFor(from).business_name}\n\n¡Te esperamos!`);
+    await sendMessage(from, appointmentSuccess({ start: outcome.start, end: outcome.end, zone, businessName: businessFor(from).business_name }));
   } else if (outcome.status === "declined" && match[2] === "no") {
     await offerAvailability(from);
   } else {
@@ -1587,15 +1602,22 @@ async function handleMessage(message) {
         if (handled) return;
       } catch (error) {
         console.error("Appointment management could not be completed or delivered; retry the same confirmation to check a submitted change.");
-        await sendMessage(from, "No pude completar la solicitud. Si ya confirmaste un cambio, pulsa el mismo botón para consultar su estado antes de intentar otro. Si todavía no confirmaste, escribe Reagendar o Cancelar para consultar de nuevo.");
+        await sendMessage(from, 'No pude completar la solicitud. Si ya seleccionaste un horario o una cita, vuelve a seleccionar la misma opción para revisar su estado antes de intentar otro cambio. Escribe "menu" para volver.');
         return;
       }
     }
     if (availability && (isButton || isList) && command.startsWith("availability:")) {
-      try { await availabilityFlow.handleSelection(from, command); }
+      try {
+        const selected = sessions.get(from);
+        if (bookings && selected?.selectionCommand === command && selected.mode === "booking_result") {
+          await handleBookingDecision(from, `booking:${selected.requestId}:yes`);
+        } else if (bookings && selected?.selectionCommand === command && selected.mode === "booking_name") {
+          await sendMessage(from, "Para reservar este horario, indícanos tu nombre completo. Escribe Menu para volver.");
+        } else await availabilityFlow.handleSelection(from, command);
+      }
       catch (error) {
         console.error("Calendar availability selection failed; inspect the local connection configuration.");
-        await sendMessage(from, "No pude comprobar ese horario. Escribe Cita para intentar nuevamente.");
+        await sendMessage(from, "No pude completar la solicitud. Vuelve a seleccionar el mismo horario para revisar su estado antes de intentar otra reserva.");
       }
       return;
     }
@@ -1613,7 +1635,7 @@ async function handleMessage(message) {
       try { await handleBookingDecision(from, command); }
       catch (error) {
         console.error("Booking confirmation could not be completed or delivered. Retry the same confirmation to check its saved status.");
-        await sendMessage(from, "No pude completar o enviar la confirmación. Pulsa el mismo botón para revisar tu solicitud antes de intentar otra reserva.");
+        await sendMessage(from, "No pude completar o enviar el resultado. Usa el mismo botón para revisar tu solicitud antes de intentar otra reserva.");
       }
       return;
     }
@@ -1631,11 +1653,15 @@ async function handleMessage(message) {
           return;
         }
         customers.register(from, name);
-        await showBookingConfirmation(from, pending.slot, pending.calendarId);
+        await completeBookingSelection(from, pending.slot, pending.calendarId, pending.selectionCommand);
         return;
       }
       if (pending?.mode === "booking_confirm") {
         await sendMessage(from, "Usa los botones Confirmar cita o Elegir otro horario. Escribe Menu para volver.");
+        return;
+      }
+      if (pending?.mode === "booking_result") {
+        await sendMessage(from, 'Para organizar tu cita o cancelar, escribe "menu".');
         return;
       }
     }
@@ -1824,12 +1850,12 @@ async function start() {
       console.log("Persistent sessions: SQLite enabled");
       console.log("Customer registry: SQLite enabled");
       console.log(availability ? "Availability lookup: Enabled" : "Availability lookup: Disabled");
-      console.log(bookings ? "New booking: customer confirmation required" : "New booking: DISABLED for this checkpoint");
-      console.log(management ? "Appointment rescheduling: customer confirmation required" : "Appointment rescheduling: DISABLED for this checkpoint");
-      console.log(management ? "Appointment cancellation: customer confirmation required" : "Appointment cancellation: DISABLED for this checkpoint");
+      console.log(bookings ? "New booking: selecting a slot books the appointment" : "New booking: DISABLED for this checkpoint");
+      console.log(management ? "Appointment rescheduling: selecting a new slot applies the change" : "Appointment rescheduling: DISABLED for this checkpoint");
+      console.log(management ? "Appointment cancellation: selecting an appointment cancels it" : "Appointment cancellation: DISABLED for this checkpoint");
       console.log("Booking trigger: cita");
       console.log("Rescheduling trigger: reagendar");
-      console.log("Cancellation trigger: cancelar (SI / NO)");
+      console.log("Cancellation trigger: cancelar");
       console.log("--------------------------------");
       console.log("Waiting for WhatsApp messages...");
     });

@@ -11,7 +11,7 @@ const { fixture } = require("./helpers/management-fixture.cjs");
 const { BOOKING_SCOPES } = require("../lib/google-calendar");
 const nativeFetch = globalThis.fetch, secret = "synthetic-management-signature";
 
-describe("signed customer-confirmed appointment management", { concurrency: false }, () => {
+describe("signed selection-based appointment management", { concurrency: false }, () => {
   let directory, f, runtime, server, origin, failNextText = false;
   const outgoing = [], originals = new Map();
   before(async () => {
@@ -50,6 +50,7 @@ describe("signed customer-confirmed appointment management", { concurrency: fals
         assert(rows.every(row => row.title.length <= 24 && row.id.length <= 200));
       }
       if (interactive) assert(interactive.body.text.length <= 1024);
+      if (payload.type === "text") assert(payload.text.body.length <= 4096);
       outgoing.push({ payload, url: String(url) });
       if (failNextText && payload.type === "text") { failNextText = false; return new Response(JSON.stringify({ error: "synthetic" }), { status: 500 }); }
       return new Response(JSON.stringify({ messages: [{ id: "synthetic-outgoing" }] }), { status: 200 });
@@ -95,154 +96,235 @@ describe("signed customer-confirmed appointment management", { concurrency: fals
   const buttons = () => outgoing.at(-1).payload.interactive.action.buttons.map(button => button.reply);
   const rows = () => outgoing.at(-1).payload.interactive.action.sections[0].rows;
   const click = id => post(id, { kind: "button_reply" });
-  async function choose(kind = "Cancelar") {
-    await post(kind);
-    const choice = buttons().find(button => button.id.includes(":pick:"));
-    await click(choice.id);
-    return buttons();
-  }
+  const body = () => outgoing.at(-1).payload.text?.body || outgoing.at(-1).payload.interactive?.body.text;
+  const noConfirmations = () => assert(!outgoing.some(item => item.payload.interactive?.action.buttons?.some(button =>
+    ["Confirmar cambio", "Conservar mi cita", "Sí, cancelar", "Confirmar cita"].includes(button.reply.title))));
 
-  test("menu cancellation requires confirmation, allows keeping the appointment, and deletes exactly once", async () => {
+  test("menu cancellation keeps one appointment selection and cancels immediately only once", async () => {
     const source = await f.seed();
     await post("Menu");
     await click(buttons().find(button => button.id.endsWith(":manage")).id);
     await click(buttons().find(button => button.id.endsWith(":cancel")).id);
-    await click(buttons()[0].id);
-    const no = buttons().find(button => button.id.endsWith(":no"));
     assert.equal(f.deletes.length, 0);
-    await click(no.id);
-    assert.match(outgoing.at(-1).payload.text.body, /No realizamos cambios/);
-    const yes = (await choose()).find(button => button.id.endsWith(":yes"));
-    assert.equal(f.deletes.length, 0);
-    await click(yes.id); await click(yes.id);
-    assert.match(outgoing.at(-1).payload.text.body, /está cancelada/);
+    assert.match(body(), /Se cancelará al seleccionarla/);
+    const selected = buttons()[0].id;
+    await click(selected); await click(selected);
+    assert.match(body(), /está cancelada/);
     assert.equal(f.deletes.length, 1);
     assert.equal(f.deletes[0].args.eventId, source.eventId);
     assert.equal(f.inserts.length, 1);
+    noConfirmations();
     await post("Cancelar");
-    assert.match(outgoing.at(-1).payload.text.body, /No encontré próximas citas/);
+    assert.match(body(), /No encontré próximas citas/);
   });
-  test("rescheduling reuses the accepted date-first menu and moves the same event after confirmation", async () => {
+  test("one appointment goes straight to reschedule availability and date-first selection moves it once", async () => {
     const source = await f.seed();
-    await choose("Reagendar");
-    assert.equal(buttons()[2].title, "Más opciones");
+    await post("Reagendar");
+    assert.equal(body(), "Elige un horario que te funciona mejor:");
+    assert(buttons().every(button => !button.id.startsWith("owned:")));
     await click(buttons()[2].id);
-    assert.equal(buttons()[2].title, "Elegir fecha");
+    assert.equal(body(), "Te muestro mas opciones. Elige un horario que te funciona mejor:");
     await click(buttons()[2].id);
     const date = rows().filter(row => row.id.includes(":date:")).at(-1);
     const selectedDate = date.id.split(":").at(-1);
     await post(date.id, { kind: "list_reply" });
-    await click(buttons()[0].id);
-    assert.match(outgoing.at(-1).payload.interactive.body.text, /Cita actual:.*\nNueva cita:/);
     assert.equal(f.patches.length, 0);
-    const yes = buttons().find(button => button.id.endsWith(":yes"));
-    await click(yes.id); await click(yes.id);
-    assert.match(outgoing.at(-1).payload.text.body, /cita está reagendada/);
+    const selected = buttons()[0].id;
+    await click(selected); await click(selected);
+    assert.match(body(), /cita está reagendada/);
+    assert.match(body(), /\n\d{2}:\d{2}–\d{2}:\d{2}\n\n¡Te esperamos en Business synthetic-a!$/);
     assert.equal(f.patches.length, 1);
     assert.equal(f.patches[0].args.eventId, source.eventId);
     assert.equal(f.inserts.length, 1);
     assert.equal(DateTime.fromISO(f.patches[0].args.requestBody.start.dateTime).setZone("America/Mexico_City").toISODate(), selectedDate);
+    noConfirmations();
   });
-  test("a typed reschedule date keeps the existing appointment until confirmation", async () => {
-    const source = await f.seed();
-    await choose("Reagendar");
-    await post("27/10/2026");
+  test("multiple appointments require selecting the exact appointment before rescheduling", async () => {
+    const first = await f.seed(), second = await f.seed({ hour: 12 });
+    await post("Reagendar");
+    assert(buttons().every(button => button.id.includes(":pick:")));
+    await click(buttons()[1].id);
+    assert.equal(f.patches.length, 0);
     await click(buttons()[0].id);
+    assert.equal(f.patches.length, 1);
+    assert.equal(f.patches[0].args.eventId, second.eventId);
+    assert.equal(f.events.get(`calendar-synthetic-a:${first.eventId}`).start.dateTime, f.slot(10).start);
+    noConfirmations();
+  });
+  test("a typed date preserves the original appointment until a new slot is selected", async () => {
+    const source = await f.seed();
+    await post("Reagendar"); await post("27/10/2026");
     assert.equal(f.patches.length, 0);
-    await post("sí");
-    assert.match(outgoing.at(-1).payload.text.body, /Usa los botones/);
-    assert.equal(f.patches.length, 0);
-    const row = f.db.prepare("SELECT request_id FROM appointment_changes").get();
-    await click(`change:${row.request_id}:yes`);
+    assert.equal(f.events.get(`calendar-synthetic-a:${source.eventId}`).start.dateTime, f.slot(10).start);
+    await click(buttons()[0].id);
     assert.equal(f.patches.length, 1);
     assert.equal(f.patches[0].args.eventId, source.eventId);
+    assert.match(body(), /Martes 27 de octubre de 2026/);
   });
-  test("foreign business/customer actions and unsigned confirmations cannot change appointments", async () => {
-    await f.seed();
-    await post("Cancelar");
-    const owned = buttons()[0].id;
-    await post(owned, { kind: "button_reply", business: "b" });
-    await post(owned, { kind: "button_reply", sender: "synthetic-two" });
+  test("foreign business/customer actions and unsigned selections cannot change appointments", async () => {
+    await f.seed(); await post("Cancelar");
+    const selected = buttons()[0].id;
+    assert.equal(await post(selected, { kind: "button_reply", signed: false }), 403);
+    await post(selected, { kind: "button_reply", business: "b" });
+    await post(selected, { kind: "button_reply", sender: "synthetic-two" });
     assert.equal(f.db.prepare("SELECT COUNT(*) AS n FROM appointment_changes").get().n, 0);
-    const yes = (await choose()).find(button => button.id.endsWith(":yes")).id;
-    assert.equal(await post(yes, { kind: "button_reply", signed: false }), 403);
-    await post(yes, { kind: "button_reply", business: "b" });
-    await post(yes, { kind: "button_reply", sender: "synthetic-two" });
     assert.equal(f.deletes.length, 0);
+    await click(selected);
+    const row = f.db.prepare("SELECT request_id FROM appointment_changes").get();
+    await post(`change:${row.request_id}:status`, { kind: "button_reply", business: "b" });
+    await post(`change:${row.request_id}:status`, { kind: "button_reply", sender: "synthetic-two" });
+    assert.equal(f.deletes.length, 1);
   });
-  test("Menu and a new booking flow invalidate unconfirmed changes and old appointment choices", async () => {
-    await f.seed();
-    const yes = (await choose()).find(button => button.id.endsWith(":yes")).id;
-    await post("Menu"); await click(yes);
-    assert.equal(f.deletes.length, 0);
-    await post("Cancelar");
-    const old = buttons()[0].id;
-    await post("Cita"); await click(old);
-    assert.match(outgoing.at(-1).payload.text.body, /ya no está vigente/);
+  test("Menu and a new booking flow invalidate old cancellation and reschedule selections", async () => {
+    await f.seed(); await post("Cancelar");
+    const cancellation = buttons()[0].id;
+    await post("Menu"); await click(cancellation);
+    assert.match(body(), /ya no está vigente/);
+    await post("Reagendar");
+    const reschedule = buttons()[0].id;
+    await post("Cita"); await click(reschedule);
+    assert.match(body(), /ya no está vigente/);
     assert.equal(f.deletes.length + f.patches.length, 0);
   });
-  test("a busy target discovered at confirmation leaves the original appointment unchanged", async () => {
-    const source = await f.seed();
-    await choose("Reagendar"); await click(buttons()[0].id);
-    const yes = buttons().find(button => button.id.endsWith(":yes"));
-    const row = f.db.prepare("SELECT * FROM appointment_changes").get();
-    f.events.set("calendar-synthetic-a:external", { id: "external", start: { dateTime: row.target_start }, end: { dateTime: row.target_end } });
-    await click(yes.id);
-    assert.match(outgoing.at(-1).payload.text.body, /No pudimos realizar este cambio/);
+  test("a busy target discovered after the offer leaves the original appointment unchanged", async () => {
+    const source = await f.seed(); await post("Reagendar");
+    const selected = buttons()[0].id;
+    const session = JSON.parse(f.db.prepare("SELECT session_json FROM business_customer_sessions").get().session_json);
+    const target = session.browse.slots[0];
+    f.events.set("calendar-synthetic-a:external", { id: "external", start: { dateTime: target.start }, end: { dateTime: target.end } });
+    await click(selected);
+    assert.match(body(), /No pude completar/);
     assert.equal(f.patches.length, 0);
     assert.equal(f.events.get(`calendar-synthetic-a:${source.eventId}`).start.dateTime, f.slot(10).start);
   });
-  test("failed WhatsApp delivery after a change can be retried without a second calendar mutation", async () => {
-    await f.seed();
-    const yes = (await choose()).find(button => button.id.endsWith(":yes"));
+  test("failed WhatsApp delivery after a cancellation retries the same selection without another delete", async () => {
+    await f.seed(); await post("Cancelar");
+    const selected = buttons()[0].id;
     failNextText = true;
-    await click(yes.id); await click(yes.id);
+    await click(selected); await click(selected);
     assert.equal(f.deletes.length, 1);
-    assert.match(outgoing.at(-1).payload.text.body, /está cancelada/);
+    assert.match(body(), /está cancelada/);
   });
-  test("an ambiguous change asks for verification and repeating confirmation never repeats the write", async () => {
-    await f.seed();
-    const yes = (await choose()).find(button => button.id.endsWith(":yes"));
+  test("an ambiguous change exposes status checking and never repeats the selected write", async () => {
+    await f.seed(); await post("Cancelar");
+    const selected = buttons()[0].id;
     f.controls.deleteError = 503;
-    await click(yes.id); await click(yes.id);
-    assert.match(outgoing.at(-1).payload.text.body, /sigue en verificación/);
+    await click(selected);
+    assert.match(body(), /sigue en verificación/);
+    assert.equal(buttons()[0].title, "Consultar estado");
+    const status = buttons()[0].id;
+    await click(selected); await click(status);
     assert.equal(f.deletes.length, 1);
     assert.equal(f.db.prepare("SELECT COUNT(*) AS n FROM calendar_booking_locks").get().n, 1);
+    noConfirmations();
   });
   test("customers without owned upcoming bookings cannot select unrelated events", async () => {
-    await f.seed({ businessId: "synthetic-b" });
-    await f.seed({ sender: "synthetic-two" });
-    await post("Reagendar");
-    assert.match(outgoing.at(-1).payload.text.body, /No encontré próximas citas/);
-    await post("Cancelar");
-    assert.match(outgoing.at(-1).payload.text.body, /No encontré próximas citas/);
+    await f.seed({ businessId: "synthetic-b" }); await f.seed({ sender: "synthetic-two" });
+    await post("Reagendar"); assert.match(body(), /No encontré próximas citas/);
+    await post("Cancelar"); assert.match(body(), /No encontré próximas citas/);
     assert.equal(f.patches.length + f.deletes.length, 0);
   });
-  test("expired selection and confirmation buttons leave the calendar unchanged", async () => {
-    await f.seed();
-    await post("Cancelar");
-    const selection = buttons()[0].id;
-    const session = JSON.parse(f.db.prepare("SELECT session_json FROM business_customer_sessions").get().session_json);
+  test("expired cancellation and rescheduling selections leave the calendar unchanged", async () => {
+    await f.seed(); await post("Cancelar");
+    const selected = buttons()[0].id;
+    let session = JSON.parse(f.db.prepare("SELECT session_json FROM business_customer_sessions").get().session_json);
     session.expiresAt = Date.now() - 1;
     f.db.prepare("UPDATE business_customer_sessions SET session_json=?").run(JSON.stringify(session));
-    await click(selection);
-    assert.match(outgoing.at(-1).payload.text.body, /ya no está vigente/);
-    const yes = (await choose()).find(button => button.id.endsWith(":yes"));
-    f.db.prepare("UPDATE appointment_changes SET expires_at=?").run(Date.now() - 1);
-    await click(yes.id);
+    await click(selected); assert.match(body(), /ya no está vigente/);
+    await post("Reagendar");
+    const slot = buttons()[0].id;
+    session = JSON.parse(f.db.prepare("SELECT session_json FROM business_customer_sessions").get().session_json);
+    session.browse.expiresAt = Date.now() - 1;
+    f.db.prepare("UPDATE business_customer_sessions SET session_json=?").run(JSON.stringify(session));
+    await click(slot); assert.match(body(), /ya no está vigente/);
     assert.equal(f.patches.length + f.deletes.length, 0);
   });
-  test("more than eight owned appointments stay reachable within WhatsApp list/button limits", async () => {
+  test("more than eight owned appointments stay reachable and selecting the last cancels only that event", async () => {
     for (const hour of [10, 11, 12, 14, 15, 16, 17, 18]) await f.seed({ hour });
     const last = await f.seed({ dayOffset: 1 });
     await post("Cancelar");
     const more = rows().find(row => row.title === "Más citas");
     assert(more); assert.equal(rows().length, 9);
     await post(more.id, { kind: "list_reply" });
-    assert(buttons().some(button => button.title === "Citas anteriores"));
     await click(buttons().find(button => button.id.includes(":pick:")).id);
-    await click(buttons().find(button => button.id.endsWith(":yes")).id);
     assert.equal(f.deletes.length, 1);
     assert.equal(f.deletes[0].args.eventId, last.eventId);
+  });
+  test("Menu displays every upcoming appointment in local chronological order even beyond the button-body limit", async () => {
+    for (const dayOffset of [2, 0, 3, 1]) {
+      for (const hour of [18, 17, 16, 15, 14, 12, 11, 10]) {
+        if (f.inserts.length < 25) await f.seed({ hour, dayOffset });
+      }
+    }
+    const count = outgoing.length;
+    await post("Menu");
+    const sent = outgoing.slice(count);
+    assert(sent.some(item => item.payload.type === "text"));
+    assert.equal(sent.at(-1).payload.interactive.type, "button");
+    const all = sent.map(item => item.payload.text?.body || item.payload.interactive.body.text).join("\n");
+    const expected = [...f.events.values()].map(event => DateTime.fromISO(event.start.dateTime).setZone("America/Mexico_City").setLocale("es"))
+      .sort((a, b) => a.toMillis() - b.toMillis());
+    let previous = -1;
+    for (const start of expected) {
+      const label = start.toFormat("cccc d 'de' LLLL 'de' yyyy, HH:mm");
+      const index = all.indexOf(label);
+      assert(index > previous, label); previous = index;
+    }
+    assert.match(all, /Tus próximas citas/);
+    assert.equal(buttons()[0].title, "Agendar una cita");
+    assert.equal(f.patches.length + f.deletes.length, 0);
+  });
+  test("Menu shows the changed appointment and removes it after cancellation", async () => {
+    await f.seed(); await post("Reagendar"); await click(buttons()[0].id);
+    await post("Menu");
+    assert.match(body(), /de 11:00 a 12:00/);
+    assert(!body().includes("de 10:00 a 11:00"));
+    await post("Cancelar"); await click(buttons()[0].id); await post("Menu");
+    assert(!body().includes("Tu cita actual"));
+  });
+  test("a Calendar lookup failure keeps the menu usable without claiming no appointments", async () => {
+    await f.seed();
+    f.controls.afterGet = async () => { throw f.error(503); };
+    await post("Menu");
+    assert.match(body(), /no pude consultar tus citas/);
+    assert.equal(buttons()[0].title, "Agendar una cita");
+    assert.equal(f.patches.length + f.deletes.length, 0);
+  });
+  test("a selected appointment already deleted or cancelled is handled without deleting another event", async () => {
+    for (const cancelled of [false, true]) {
+      const source = await f.seed(); await post("Cancelar");
+      const selected = buttons()[0].id;
+      if (cancelled) f.events.get(`calendar-synthetic-a:${source.eventId}`).status = "cancelled";
+      else f.events.delete(`calendar-synthetic-a:${source.eventId}`);
+      await click(selected);
+      assert.match(body(), /ya no aparece en el calendario/);
+    }
+    assert.equal(f.deletes.length, 0);
+  });
+  test("definitive reschedule/cancel failures preserve the original and never send success", async () => {
+    const source = await f.seed();
+    f.controls.patchError = 403;
+    await post("Reagendar"); await click(buttons()[0].id);
+    assert.match(body(), /No pudimos realizar este cambio/);
+    assert.equal(f.events.get(`calendar-synthetic-a:${source.eventId}`).start.dateTime, f.slot(10).start);
+    assert(!(await f.availability.listSlots("synthetic-a")).some(slot => slot.start === f.slot(10).start));
+    f.controls.deleteError = 403;
+    await post("Cancelar"); await click(buttons()[0].id);
+    assert.match(body(), /No pudimos realizar este cambio/);
+    assert.equal(f.events.get(`calendar-synthetic-a:${source.eventId}`).status, "confirmed");
+  });
+  test("cancellation success is delivered only after Google accepts the selected operation", async () => {
+    await f.seed(); await post("Cancelar");
+    const selected = buttons()[0].id;
+    let entered, release;
+    const waiting = new Promise(resolve => { entered = resolve; });
+    const gate = new Promise(resolve => { release = resolve; });
+    f.controls.beforeDelete = async () => { entered(); await gate; };
+    const count = outgoing.length;
+    const pending = click(selected);
+    await waiting;
+    assert.equal(outgoing.length, count);
+    release(); await pending;
+    assert.match(body(), /está cancelada/);
   });
 });

@@ -131,6 +131,7 @@ describe("signed WhatsApp calendar availability", { concurrency: false }, () => 
     assert(choices.every(row => /\d{2}:00$/.test(row.title)));
     assert(!choices.some(row => row.title.endsWith("13:00")));
     assert.equal(buttons()[2].title, "Más opciones");
+    assert.equal(outgoing.at(-1).payload.interactive.body.text, "Elige un horario que te funciona mejor:");
     assert(!outgoing.at(-1).payload.interactive.body.text.includes("Página"));
     assert.deepEqual(changes, []);
   });
@@ -138,7 +139,7 @@ describe("signed WhatsApp calendar availability", { concurrency: false }, () => 
     await post("Hola");
     const book = outgoing.at(-1).payload.interactive.action.buttons.find(button => button.reply.id.endsWith(":book"));
     await post(book.reply.id, { kind: "button_reply" });
-    assert(outgoing.at(-1).payload.interactive.body.text.includes("Esta consulta no reserva"));
+    assert.equal(outgoing.at(-1).payload.interactive.body.text, "Elige un horario que te funciona mejor:");
     assert.deepEqual(changes, []);
   });
   test("two more appointments lead to date selection and every available time on that date", async () => {
@@ -146,6 +147,7 @@ describe("signed WhatsApp calendar availability", { concurrency: false }, () => 
     const first = buttons().slice(0, 2).map(button => button.title);
     const all = stored().slots;
     await post(buttons()[2].id, { kind: "button_reply" });
+    assert.equal(outgoing.at(-1).payload.interactive.body.text, "Te muestro mas opciones. Elige un horario que te funciona mejor:");
     assert.equal(buttons().length, 3);
     assert(buttons().slice(0, 2).every(button => !first.includes(button.title)));
     assert.equal(buttons()[2].title, "Elegir fecha");
@@ -309,7 +311,7 @@ describe("signed WhatsApp calendar availability", { concurrency: false }, () => 
     const date = (await openDates()).find(row => row.id.includes(":date:"));
     failNextLookup = true;
     await post(date.id, { kind: "list_reply" });
-    assert.match(outgoing.at(-1).payload.text.body, /No pude comprobar ese horario/);
+    assert.match(outgoing.at(-1).payload.text.body, /No pude completar la solicitud/);
     assert.equal(stored().view, "dates");
     await post(date.id, { kind: "list_reply" });
     assert(buttons().some(button => button.id.includes(":slot:")));

@@ -185,7 +185,7 @@ describe("v6A.4 support-only baseline", { concurrency: false }, () => {
     assert.equal(outgoing.length, 1);
     const menu = outgoing[0].interactive;
     assert.match(menu.body.text, /bienvenido a Synthetic salon A/);
-    assert.deepEqual(menu.action.buttons.map(button => button.reply.title), ["Hacer cita nueva", "Reagendar / cancelar", "Hablar con alguien"]);
+    assert.deepEqual(menu.action.buttons.map(button => button.reply.title), ["Agendar una cita", "Reagendar / cancelar", "Hablar con alguien"]);
     const stored = fixture.prepare("SELECT session_json FROM business_customer_sessions WHERE business_id=? AND whatsapp_id=?").get(businessA, sender);
     assert.equal(JSON.parse(stored.session_json).mode, "main_menu");
   });
@@ -227,6 +227,7 @@ describe("v6A.4 support-only baseline", { concurrency: false }, () => {
     await deliver("Hola");
     const human = outgoing[0].interactive.action.buttons.find(button => button.reply.id.endsWith(":human"));
     await deliver(human.reply.id, "button_reply");
+    assert.equal(outgoing.at(-1).text.body, 'Escribe tu mensaje.\n\nPara organizar tu cita o cancelar, escribe "menu".');
     await deliver("Synthetic support request");
     const stored = fixture.prepare("SELECT * FROM business_support_messages").all();
     assert.equal(stored.length, 1);

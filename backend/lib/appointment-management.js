@@ -81,7 +81,8 @@ function createAppointmentManagement({ db, availability, enabled = false, lookah
     if (!row || row.state !== "confirmed" || !mappingMatches(row)) throw new Error("Appointment does not belong to this customer/calendar");
     const event = (await (await calendar()).events.get({ calendarId: row.calendar_id, eventId: row.event_id })).data;
     const start = DateTime.fromISO(event?.start?.dateTime || ""), end = DateTime.fromISO(event?.end?.dateTime || "");
-    if (!owns(event, row) || event.status === "cancelled" || !event.etag || event.recurringEventId || event.recurrence ||
+    if (event?.status === "cancelled") throw Object.assign(new Error("Appointment changed or is no longer manageable"), { code: "APPOINTMENT_GONE" });
+    if (!owns(event, row) || !event.etag || event.recurringEventId || event.recurrence ||
         !start.isValid || !end.isValid || start <= now() || end <= start ||
         (context.expectedEtag && event.etag !== context.expectedEtag)) throw new Error("Appointment changed or is no longer manageable");
     return { row, event, bookingRequestId: row.request_id, start: event.start.dateTime,
@@ -290,4 +291,11 @@ function createAppointmentManagement({ db, availability, enabled = false, lookah
   return { listAppointments, readAppointment, listSlots, createIntent, confirm, decline, reconcile, invalidateOffers, verify };
 }
 
-module.exports = { prepareManagementSchema, createAppointmentManagement };
+// Reuse the management lookup when only the menu needs appointment details.
+// This adapter exposes no mutation methods and needs no change-journal table.
+function createAppointmentLookup(options) {
+  const { listAppointments } = createAppointmentManagement({ ...options, enabled: true });
+  return { listAppointments };
+}
+
+module.exports = { prepareManagementSchema, createAppointmentManagement, createAppointmentLookup };

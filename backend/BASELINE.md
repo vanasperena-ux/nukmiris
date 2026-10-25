@@ -1,5 +1,13 @@
 # Baseline provenance
 
+## WhatsApp UX update — v0.3.1, awaiting PC verification
+
+The owner requested eight targeted UX changes before the planned reliability checkpoint: menu/copy changes, upcoming appointments in the menu, selection-based booking/rescheduling/cancellation, and consistent Spanish success messages. The current behavior is documented in [UX_CHECKPOINT.md](UX_CHECKPOINT.md); [the roadmap](../docs/ROADMAP.md) preserves reliability/restart recovery as the next planned work.
+
+This request replaces the extra confirmation screens in the verified v0.3.0 UX. The existing availability engine, search window, routing, customer registration, business ownership checks, Google authorization, calendar mutation services, locks, and request journals remain in use. The existing future appointment lookup is reused for menus, including when the management feature is off in connected booking mode. No dependencies or database schema changes are introduced. Only synthetic services/data are used by cloud tests; the new UX has not yet been reported tested on the PC.
+
+Validation: all 159 offline tests passed with no skipped tests. The original schedule, booking-service, and management-service regression tests remain unchanged; the HTTP conversation tests now cover the requested direct-selection UX, messages, menu details, failures, replay, and human handoff.
+
 ## Verified rescheduling/cancellation baseline — v0.3.0
 
 After accepting v0.2.1, the owner requested the next rescheduling/cancellation checkpoint. Version 0.3.0 adds a separate opt-in service for customer-owned future NukMiris appointments, explicit confirmations, ETag-protected updates/deletion, a backed-up change journal, and recovery reads. See [MANAGEMENT_CHECKPOINT.md](MANAGEMENT_CHECKPOINT.md).

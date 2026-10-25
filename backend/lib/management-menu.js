@@ -3,6 +3,7 @@
 const { randomUUID } = require("node:crypto");
 const { DateTime } = require("luxon");
 const { createAvailabilityMenu } = require("./availability-menu");
+const { appointmentSuccess } = require("./appointment-messages");
 
 function createManagementMenu({ management, availability, sessions, businessFor, sendMessage,
   sendReplyButtons, sendAppointmentList, lookaheadDays = 14, lifetime = 15 * 60 * 1000 }) {
@@ -37,7 +38,9 @@ function createManagementMenu({ management, availability, sessions, businessFor,
     if ((page + 1) * 8 < session.appointments.length) rows.push({ id: `owned:${session.selectionId}:page:${page + 1}`, title: "Más citas" });
     session.actions = rows.map(row => row.id);
     sessions.set(from, session);
-    const body = `¿Qué cita deseas ${session.kind === "cancel" ? "cancelar" : "reagendar"}?\n\nEscribe Menu para volver. No se hará ningún cambio sin tu confirmación.`;
+    const body = session.kind === "cancel"
+      ? 'Selecciona la cita que deseas cancelar. Se cancelará al seleccionarla.\n\nEscribe "menu" para volver.'
+      : 'Selecciona la cita que deseas reagendar.\n\nEscribe "menu" para volver.';
     if (rows.length <= 3) await sendReplyButtons(from, body, rows);
     else await sendAppointmentList(from, body, rows);
   }
@@ -49,7 +52,15 @@ function createManagementMenu({ management, availability, sessions, businessFor,
       await sendMessage(from, "No encontré próximas citas de NukMiris para tu número en este negocio. Escribe Cita para hacer una reserva nueva o Menu para recibir ayuda.");
       return;
     }
-    await choices(from, { mode: "management_select", kind, appointments, expiresAt: Date.now() + lifetime });
+    if (kind === "reschedule" && appointments.length === 1) await beginReschedule(from, appointments[0]);
+    else await choices(from, { mode: "management_select", kind, appointments, expiresAt: Date.now() + lifetime });
+  }
+  async function beginReschedule(from, appointment) {
+    const scope = { ...context(from), bookingRequestId: appointment.bookingRequestId, expectedEtag: appointment.etag };
+    await management.readAppointment(scope);
+    sessions.set(from, { mode: "reschedule_browse", bookingRequestId: appointment.bookingRequestId,
+      expectedEtag: appointment.etag, expiresAt: Date.now() + lifetime });
+    await rescheduleFlow(from).offer(from);
   }
   function sourceContext(from) {
     const session = sessions.get(from);
@@ -66,47 +77,58 @@ function createManagementMenu({ management, availability, sessions, businessFor,
         delete: () => sessions.delete(from),
       },
       businessFor, sendMessage, sendReplyButtons, sendAppointmentList, bookingEnabled: true, lookaheadDays, lifetime,
-      onSelect: (to, slot) => confirmation(to, { ...sourceContext(to), kind: "reschedule", slot }),
+      onSelect: (to, slot, session, command) => applySelection(to, { ...sourceContext(to), kind: "reschedule", slot }, command),
     });
   }
-  async function confirmation(from, details) {
-    const intent = await management.createIntent(details);
-    sessions.set(from, { mode: "management_confirm", requestId: intent.requestId, expiresAt: Date.now() + lifetime });
-    const body = intent.kind === "cancel"
-      ? `¿Confirmas que deseas cancelar esta cita en ${businessFor(from).business_name}?\n\n${range(from, intent.originalStart, intent.originalEnd)}`
-      : `Confirma el cambio en ${businessFor(from).business_name}:\n\nCita actual: ${range(from, intent.originalStart, intent.originalEnd)}\nNueva cita: ${range(from, intent.start, intent.end)}`;
-    await sendReplyButtons(from, body + "\n\nTu cita se conserva hasta que confirmes.", [
-      { id: `change:${intent.requestId}:yes`, title: intent.kind === "cancel" ? "Sí, cancelar" : "Confirmar cambio" },
-      { id: `change:${intent.requestId}:no`, title: "Conservar mi cita" },
-    ]);
+  async function applySelection(from, details, selectionCommand) {
+    let intent;
+    try { intent = await management.createIntent(details); }
+    catch (error) {
+      if (details.kind === "cancel" && ([404, 410].includes(Number(error.response?.status || error.code)) || error.code === "APPOINTMENT_GONE")) {
+        sessions.delete(from);
+        await sendMessage(from, 'Esa cita ya no aparece en el calendario. Escribe "menu" para revisar tus citas.');
+        return;
+      }
+      throw error;
+    }
+    sessions.set(from, { mode: "management_result", requestId: intent.requestId, selectionCommand, expiresAt: Date.now() + lifetime });
+    await decide(from, intent.requestId, "retry");
   }
-  async function decide(from, requestId, yes) {
+  async function decide(from, requestId, decision) {
     const scope = { ...context(from), requestId };
-    const outcome = yes ? await management.confirm(scope) : management.decline(scope);
+    const outcome = decision === "status" ? await management.reconcile(scope)
+      : decision === "no" ? management.decline(scope) : await management.confirm(scope);
     if (outcome.status === "busy") {
-      await sendReplyButtons(from, "Estamos comprobando otra solicitud. Confirma de nuevo en unos momentos.", [
-        { id: `change:${requestId}:yes`, title: outcome.kind === "cancel" ? "Sí, cancelar" : "Confirmar cambio" },
-        { id: `change:${requestId}:no`, title: "Conservar mi cita" },
-      ]);
+      await sendReplyButtons(from, "Estamos comprobando otra solicitud. Intenta de nuevo en unos momentos.",
+        [{ id: `change:${requestId}:retry`, title: "Reintentar" }]);
       return;
     }
     if (["pending", "uncertain"].includes(outcome.status)) {
       console.error("Appointment change needs verification. Request ID:", requestId);
-      await sendMessage(from, "Tu cambio sigue en verificación. Pulsa el mismo botón de confirmación para consultar su estado; no solicites otro cambio o reserva por ahora.");
+      await sendReplyButtons(from, "Tu cambio sigue en verificación. Consulta su estado antes de solicitar otro cambio o reserva.",
+        [{ id: `change:${requestId}:status`, title: "Consultar estado" }]);
       return;
     }
-    if (sessions.get(from)?.requestId === requestId) sessions.delete(from);
+    const current = sessions.get(from);
+    if (current?.requestId === requestId && current.mode !== "management_result") sessions.delete(from);
     if (outcome.status === "applied") {
       await sendMessage(from, outcome.kind === "cancel"
         ? `Tu cita del ${range(from, outcome.originalStart, outcome.originalEnd)} en ${businessFor(from).business_name} está cancelada.`
-        : `¡Tu cita está reagendada!\n\n${range(from, outcome.start, outcome.end)}\n${businessFor(from).business_name}`);
+        : appointmentSuccess({ kind: "reschedule", start: outcome.start, end: outcome.end,
+          zone: availability.configuration(context(from).businessId).settings.timeZone, businessName: businessFor(from).business_name }));
     } else if (outcome.status === "declined") {
       await sendMessage(from, "No realizamos cambios en tu cita. Escribe Menu para volver.");
     } else await sendMessage(from, "No pudimos realizar este cambio. Escribe Reagendar o Cancelar para consultar de nuevo tu cita, o Menu para recibir ayuda.");
   }
   async function handleInteractive(from, command) {
-    const change = /^change:([0-9a-f-]{36}):(yes|no)$/.exec(command);
-    if (change) { await decide(from, change[1], change[2] === "yes"); return true; }
+    const current = sessions.get(from);
+    if (current?.mode === "management_result" && current.selectionCommand === command) {
+      await decide(from, current.requestId, "retry"); return true;
+    }
+    // Previously sent v0.3.0 confirmation buttons remain bound to their journal
+    // request; new flows publish only selections and recovery/status actions.
+    const change = /^change:([0-9a-f-]{36}):(yes|no|retry|status)$/.exec(command);
+    if (change) { await decide(from, change[1], change[2]); return true; }
     if (command.startsWith("availability:") && sessions.get(from)?.mode === "reschedule_browse") {
       await rescheduleFlow(from).handleSelection(from, command); return true;
     }
@@ -122,13 +144,8 @@ function createManagementMenu({ management, availability, sessions, businessFor,
       else {
         const appointment = session.appointments[Number(owned[3])];
         const scope = { ...context(from), bookingRequestId: appointment.bookingRequestId, expectedEtag: appointment.etag };
-        if (session.kind === "cancel") await confirmation(from, { ...scope, kind: "cancel" });
-        else {
-          await management.readAppointment(scope);
-          sessions.set(from, { mode: "reschedule_browse", bookingRequestId: appointment.bookingRequestId,
-            expectedEtag: appointment.etag, expiresAt: Date.now() + lifetime });
-          await rescheduleFlow(from).offer(from);
-        }
+        if (session.kind === "cancel") await applySelection(from, { ...scope, kind: "cancel" }, command);
+        else await beginReschedule(from, appointment);
       }
     } else await sendMessage(from, expired);
     return true;
@@ -138,6 +155,10 @@ function createManagementMenu({ management, availability, sessions, businessFor,
     if (["reagendar", "cancelar"].includes(command)) { await start(from, command === "reagendar" ? "reschedule" : "cancel"); return true; }
     const session = sessions.get(from);
     if (session?.mode === "reschedule_browse") return rescheduleFlow(from).handleText(from, text);
+    if (session?.mode === "management_result") {
+      await sendMessage(from, 'Para organizar tu cita o cancelar, escribe "menu".');
+      return true;
+    }
     if (["management_menu", "management_select", "management_confirm"].includes(session?.mode)) {
       await sendMessage(from, Date.now() > session.expiresAt ? expired : "Usa los botones para elegir o confirmar. Escribe Menu para volver.");
       return true;

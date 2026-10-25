@@ -1,5 +1,7 @@
 # Short appointment choices — v0.2.1
 
+**Current UX:** [v0.3.1](UX_CHECKPOINT.md) simplifies the messages, adds upcoming appointment details to the menu, and commits bookings/changes on selection. The two-plus-two/date browsing structure below is retained.
+
 This update changes how customers browse available appointments in both availability and booking modes. It preserves the calendar availability engine, business schedule/mappings, authorization, and confirmed-booking service from the verified v0.2.0 installation. On 2026-10-24 the owner accepted these changes (“Ok all good, the changes are accepted”); see [BASELINE.md](BASELINE.md). The subsequent optional rescheduling/cancellation update is documented in [MANAGEMENT_CHECKPOINT.md](MANAGEMENT_CHECKPOINT.md).
 
 ## Customer flow

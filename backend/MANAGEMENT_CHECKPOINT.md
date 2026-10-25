@@ -1,5 +1,7 @@
 # Rescheduling and cancellation — v0.3.0 PC checkpoint
 
+**Current UX:** v0.3.1 removes the additional confirmation screens after explicit selections. Use [UX_CHECKPOINT.md](UX_CHECKPOINT.md) for current PC checks. The preparation/authorization steps below remain valid; the confirmation-screen examples describe the verified historical v0.3.0 flow.
+
 The owner accepted the v0.2.1 appointment choices after verifying the earlier availability and new-booking checkpoints. This update adds optional **customer-confirmed rescheduling and cancellation**. Automated tests use synthetic data and simulated Google/Meta services.
 
 **Owner verification:** on 2026-10-24, the owner reported the PC checkpoint successful: “that worked, reagendar and cancelar worked well.” Version 0.3.0 is now the verified rescheduling/cancellation baseline. The instructions below remain the setup/retest guide; they do not imply an outstanding first test. See [BASELINE.md](BASELINE.md) for the evidence and scope.

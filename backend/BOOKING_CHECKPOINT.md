@@ -1,5 +1,7 @@
 # Automatic new bookings — v0.2.0 PC checkpoint
 
+**Current UX:** v0.3.1 books when the customer selects a slot, without an extra confirmation screen. See [UX_CHECKPOINT.md](UX_CHECKPOINT.md). The authorization/journal setup below remains valid; the confirmation examples describe the historical v0.2.0 checkpoint.
+
 The owner verified v0.1.0 availability on Windows on 2026-10-24. The v0.2.0 checkpoint preserved that mode and added optional **new appointment creation after customer confirmation**. Rescheduling and cancellation were disabled in that checkpoint. No real booking was created or tested by the cloud agent; automated tests use synthetic customers and simulated services.
 
 **Owner verification:** on 2026-10-24, the owner reported this PC checkpoint “tested and all good.” Version 0.2.0 is the verified new-booking baseline. The instructions below remain the upgrade/retest guide; they do not imply an outstanding first test. Detailed scope is recorded in [BASELINE.md](BASELINE.md).
