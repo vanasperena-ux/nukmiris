@@ -25,6 +25,9 @@ const { readSearchPolicy, selectedDate } = require("./lib/availability-search");
 const { normalizeMessage, recognizeIntent } = require("./lib/intent-recognition");
 const { createIntentMenu } = require("./lib/intent-menu");
 const { MENU_INSTRUCTION } = require("./lib/menu-messages");
+const { createAppointmentReminders, createReminderWorker } = require("./lib/appointment-reminders");
+const { createTemplateVerifier } = require("./lib/reminder-templates");
+const { createReminderMenu } = require("./lib/reminder-menu");
 
 const app = express();
 app.use(express.json({ limit: "1mb", verify(req, res, bytes) { req.rawBody = bytes; } }));
@@ -39,6 +42,7 @@ const APP_SECRET = process.env.META_APP_SECRET;
 const MODE = process.env.NUKMIRIS_MODE || "support";
 const RELIABILITY_ENABLED = process.env.NUKMIRIS_ENABLE_RELIABILITY === "true";
 const MANAGEMENT_ENABLED = MODE === "booking" && process.env.NUKMIRIS_ENABLE_MANAGEMENT === "true";
+const REMINDERS_MODE = process.env.NUKMIRIS_REMINDERS_MODE || "off";
 const ROUTING_MODE = process.env.NUKMIRIS_ROUTING_MODE || "receiving_number";
 
 const ZONE = "America/Mexico_City";
@@ -57,6 +61,10 @@ if (!["support", "availability", "booking"].includes(MODE)) throw new Error("NUK
 if (!["development", "receiving_number"].includes(ROUTING_MODE)) throw new Error("Invalid NUKMIRIS_ROUTING_MODE");
 if (RELIABILITY_ENABLED && ROUTING_MODE !== "receiving_number") throw new Error("Reliable delivery requires receiving-number routing");
 if (MODE === "booking" && ROUTING_MODE !== "receiving_number") throw new Error("Automatic booking requires receiving-number routing");
+if (!["off", "dry-run", "live"].includes(REMINDERS_MODE)) throw new Error("NUKMIRIS_REMINDERS_MODE must be off, dry-run, or live");
+if (REMINDERS_MODE !== "off" && (!MANAGEMENT_ENABLED || !RELIABILITY_ENABLED || ROUTING_MODE !== "receiving_number")) {
+  throw new Error("Reminders require booking mode, enabled management/reliability, and receiving-number routing. No existing flag was enabled automatically.");
+}
 if (!Number.isInteger(PORT) || PORT < 0 || PORT > 65535) {
   throw new Error("PORT must be an integer between 0 and 65535.");
 }
@@ -83,6 +91,7 @@ if (["availability", "booking"].includes(MODE)) requiredTables.push("business_se
 if (MODE === "booking") requiredTables.push("booking_requests", "calendar_booking_locks");
 if (MANAGEMENT_ENABLED) requiredTables.push("appointment_changes");
 if (RELIABILITY_ENABLED) requiredTables.push("message_inbox", "message_outbox", "delivery_worker");
+if (REMINDERS_MODE !== "off") requiredTables.push("reminder_business_settings", "appointment_attendance", "reminder_jobs", "reminder_attempts", "attendance_operations");
 const presentTables = new Set(db.prepare("SELECT name FROM sqlite_master WHERE type='table'").all().map(r => r.name));
 for (const table of requiredTables) {
   if (!presentTables.has(table)) throw new Error(`Phase 6A prerequisite missing: ${table}`);
@@ -108,8 +117,16 @@ const availability = ["availability", "booking"].includes(MODE) ? createCalendar
   db, policy: SEARCH_POLICY,
   getClient: MODE === "booking" ? () => loadCalendarClient({ booking: true }) : undefined,
 }) : null;
-const bookings = MODE === "booking" ? createBookingService({ db, availability, enabled: true }) : null;
-const management = MANAGEMENT_ENABLED ? createAppointmentManagement({ db, availability, enabled: true }) : null;
+const reminders = REMINDERS_MODE !== "off" ? createAppointmentReminders({ db, availability, mode: REMINDERS_MODE,
+  verifyTemplate: createTemplateVerifier({ token: TOKEN, apiVersion: API_VERSION }),
+  send: row => sendStoredReply({ row, token: TOKEN, apiVersion: API_VERSION }),
+}) : null;
+const bookings = MODE === "booking" ? createBookingService({ db, availability, enabled: true,
+  onCommitted: (row, kind) => reminders?.committed(row, kind),
+}) : null;
+const management = MANAGEMENT_ENABLED ? createAppointmentManagement({ db, availability, enabled: true,
+  onCommitted: (row, kind) => reminders?.committed(row, kind), rescheduleFields: event => reminders?.rescheduleFields(event) || {},
+}) : null;
 const appointmentLookup = bookings ? management || createAppointmentLookup({ db, availability }) : null;
 function businessFor(from) {
   const context = businessContext.getStore();
@@ -196,8 +213,9 @@ const humanSupport = new BusinessHumanSupport(db);
 const delivery = RELIABILITY_ENABLED ? createReliableDelivery({ db,
   capabilities: JSON.stringify({ mode: MODE, management: MANAGEMENT_ENABLED }),
   resolveBusiness: phoneId => receivingRoute.get(phoneId),
+  onReceipt: (business, status) => reminders?.receipt(business, status),
 }) : null;
-let deliveryWorker, backupSchedule;
+let deliveryWorker, reminderWorker, backupSchedule;
 function saveContinuation(kind, requestId, decision, saveState = () => {}) {
   if (delivery) {
     const inboxId = businessContext.getStore()?.inboxId;
@@ -1381,6 +1399,10 @@ const managementMenu = management ? createManagementMenu({
   lifetime: OFFER_LIFETIME,
   saveReceipt: (from, receipt) => saveContinuation("management", receipt.requestId, "retry", () => sessions.set(from, receipt)),
   beforeDecision: (from, requestId, decision) => saveContinuation("management", requestId, decision),
+  hasReminders: id => reminders?.hasFutureReminders(id) || false,
+}) : null;
+const reminderMenu = reminders ? createReminderMenu({ reminders, managementMenu, businessFor, sessions, sendMessage, sendReplyButtons,
+  beforeConfirm: (from, token) => saveContinuation("attendance", token, "confirm"),
 }) : null;
 const intentMenu = createIntentMenu({ sessions, sendReplyButtons, sendMessage, lifetime: OFFER_LIFETIME });
 const intentCommands = { BOOK: "cita", RESCHEDULE: "reagendar", CANCEL: "cancelar" };
@@ -1473,7 +1495,8 @@ async function handleBookingDecision(from, command) {
   if (current?.requestId === match[1] && current.mode !== "booking_result") sessions.delete(from);
   if (outcome.status === "confirmed") {
     const zone = availability.configuration(context.businessId).settings.timeZone;
-    await sendMessage(from, appointmentSuccess({ start: outcome.start, end: outcome.end, zone, businessName: businessFor(from).business_name }));
+    await sendMessage(from, appointmentSuccess({ start: outcome.start, end: outcome.end, zone, businessName: businessFor(from).business_name,
+      reminders: reminders?.hasFutureReminders(match[1]) || false }));
   } else if (outcome.status === "rejected") {
     await offerAvailability(from, { notice: "No pude reservar ese horario. Te muestro opciones actualizadas." });
   } else if (outcome.status === "declined" && match[2] === "no") {
@@ -1489,11 +1512,13 @@ async function handleMessage(message) {
     message.interactive?.type === "button_reply";
   const isList = message.type === "interactive" &&
     message.interactive?.type === "list_reply";
-  if (!isText && !isButton && !isList) return;
+  const isTemplateButton = message.type === "button" && typeof message.button?.payload === "string";
+  if (!isText && !isButton && !isList && !isTemplateButton) return;
   if (!delivery && message.id && alreadyProcessed(`${businessFor(message.from).business_id}:${message.id}`)) return;
 
   const from = message.from;
   const text = isText ? (message.text?.body || "").trim() :
+    isTemplateButton ? message.button.payload :
     isButton ? (message.interactive?.button_reply?.id || "") :
       (message.interactive?.list_reply?.id || "");
   let command = text.toLowerCase();
@@ -1531,6 +1556,8 @@ async function handleMessage(message) {
       }
       return;
     }
+    if (reminderMenu && await reminderMenu.handle(from, { command, isText, allowText: acceptsNaturalIntent(from) })) return;
+    if (isTemplateButton) return;
     let intentButton = false;
     if (isButton && command.startsWith("intent:")) {
       const selected = await intentMenu.select(from, command);
@@ -1843,6 +1870,7 @@ async function start() {
     if (delivery) {
       db.exec("PRAGMA journal_mode=WAL; PRAGMA synchronous=FULL; PRAGMA busy_timeout=5000");
       delivery.acquire();
+      reminders?.recover();
       backupSchedule = createBackupSchedule({ db,
         directory: path.resolve(__dirname, process.env.NUKMIRIS_BACKUP_DIR || ".local/backups"),
         intervalHours: Number(process.env.NUKMIRIS_BACKUP_INTERVAL_HOURS || 24),
@@ -1853,6 +1881,7 @@ async function start() {
     }
     if (bookings) await bookings.verify();
     if (management) await management.verify();
+    if (reminders) await reminders.verifyReady();
     if (availability) {
       const connected = db.prepare("SELECT business_id FROM business_whatsapp_connections").all();
       if (!connected.length) throw new Error("Configure a business connection before starting availability mode");
@@ -1868,6 +1897,7 @@ async function start() {
           const { kind, requestId, decision } = input.continuation;
           if (kind === "booking" && bookings) return handleBookingDecision(input.sender, `booking:${requestId}:${decision}`);
           if (kind === "management" && managementMenu) return managementMenu.resume(input.sender, requestId, decision);
+          if (kind === "attendance" && reminderMenu) return reminderMenu.resume(input.sender, requestId);
           throw new Error("The recorded operation cannot run with this configuration");
         },
         runInContext: (input, action) => businessContext.run({ business: input.business, sender: input.sender, inboxId: input.inbox_id }, action),
@@ -1875,11 +1905,16 @@ async function start() {
         onError: () => console.error("Reliable delivery retained work for retry or review."),
       });
     }
+    if (reminders) reminderWorker = createReminderWorker({ reminders,
+      intervalMs: Number(process.env.NUKMIRIS_REMINDER_POLL_MS || 30000),
+      onError: () => console.error("Reminder work retained for retry or review. Run reminders:status for the selected business."),
+    });
     return app.listen(PORT, HOST, () => {
       if (delivery) {
         deliveryWorker.start();
         deliveryWorker.wake();
         backupSchedule.start();
+        reminderWorker?.start();
       }
       console.log("--------------------------------");
       console.log("NukMiris WhatsApp + Google Calendar POC");
@@ -1887,6 +1922,7 @@ async function start() {
       console.log("Webhook server running on port", PORT);
       console.log(bookings ? "Google Calendar: confirmed new bookings" : availability ? "Google Calendar: read-only availability" : "Google Calendar: DISABLED");
       console.log(delivery ? "Reliable delivery: persisted inbox/outbox and automatic backups enabled" : "Reliable delivery: disabled");
+      console.log("Appointment reminders:", REMINDERS_MODE);
       console.log("Persistent sessions: SQLite enabled");
       console.log("Customer registry: SQLite enabled");
       console.log(availability ? "Availability lookup: Enabled" : "Availability lookup: Disabled");
@@ -1902,6 +1938,7 @@ async function start() {
 
   } catch (error) {
     await deliveryWorker?.stop();
+    await reminderWorker?.stop();
     await backupSchedule?.stop();
     delivery?.release();
     console.error("Startup failed:", error.message);
@@ -1911,7 +1948,7 @@ async function start() {
 
 module.exports = { app, start, close: () => {
   if (!delivery) return db.close();
-  return (async () => { await deliveryWorker?.stop(); await backupSchedule?.stop(); delivery.release(); db.close(); })();
+  return (async () => { await reminderWorker?.stop(); await deliveryWorker?.stop(); await backupSchedule?.stop(); delivery.release(); db.close(); })();
 } };
 
 if (require.main === module) {

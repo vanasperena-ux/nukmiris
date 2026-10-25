@@ -41,7 +41,8 @@ function prepareBookingSchema(db) {
 
 function createBookingService({ db, availability, enabled = false,
   getClient = () => loadCalendarClient({ booking: true }),
-  verifyAuthorization = verifyBookingAuthorization, now = () => DateTime.now(), lifetimeMs = 15 * 60 * 1000 }) {
+  verifyAuthorization = verifyBookingAuthorization, now = () => DateTime.now(), lifetimeMs = 15 * 60 * 1000,
+  onCommitted = () => {} }) {
   let client;
   let authorization;
   async function calendar() { return client || (client = await getClient()); }
@@ -68,7 +69,9 @@ function createBookingService({ db, availability, enabled = false,
       // Recovery reads may finish late, after a confirmed appointment has
       // entered another operation. Never release that newer operation's lock.
       if (!["pending", "uncertain"].includes(current.state)) { db.exec("COMMIT"); return result(current); }
-      update(row, state); release(row); db.exec("COMMIT");
+      update(row, state);
+      if (state === "confirmed") onCommitted(row, "booking");
+      release(row); db.exec("COMMIT");
     }
     catch (error) { db.exec("ROLLBACK"); throw error; }
     return result(row);

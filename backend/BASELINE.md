@@ -1,5 +1,15 @@
 # Baseline provenance
 
+## Appointment reminders and attendance — v0.8.0, awaiting PC verification
+
+After verifying v0.7.3, the owner supplied the reminder/attendance task and selected PC testing before hosting, a 15-minute late-send allowance, only appointments booked after activation, and backend preparation for a later dashboard. The owner also retained the concise booking-success message with an applicable reminder sentence. No dashboard or hosting is included.
+
+The opt-in implementation adds business-scoped SQLite reminder schedules/actions/attempts, attendance state and Calendar update journals. It reuses the existing booking/change commit transactions, authorization, calendar locks, Meta transport, signed receiving-number routing and status callbacks. Successful changes invalidate previous schedule versions; nonresponse never cancels an appointment. The original appointment remains until rescheduling succeeds. New appointments get reminders only when enrolled after activation; old/manual events are not imported. Reminders default to off; dry-run is available before template approval.
+
+All **616 offline tests passed**, with zero failures/cancellations/skips, retaining the 540 v0.7.3 regressions and adding 76 reminder cases. Cases cover actual timestamp boundaries/timezones, eligibility/expiry, template verification, receipt ordering, ownership/isolation, normal lifecycle integration, Calendar failures, dry-run, preparation/backup/restore, concurrent claims, signed HTTP and three real process restart/crash scenarios. Services/data remain synthetic; the cloud agent did not send live reminders, submit templates, change credentials/environment settings, or modify an existing business database.
+
+See [REMINDERS.md](REMINDERS.md) and [REMINDER_TEMPLATES.md](REMINDER_TEMPLATES.md) for setup and remaining manual dependencies. Official Meta documentation sites returned proxy 403; Meta-owned sample code was inspected as a limited fallback, not proof of current policy/button restrictions. Current Meta requirements, template approval, real WhatsApp delivery/buttons and Google attendance updates must be checked on the PC before declaring the combined checkpoint verified. **v0.7.3 remains the current owner-verified baseline.**
+
 ## Verified consistent appointment choices baseline — v0.7.3
 
 The owner found that v0.7.2 showed the new month-name format for available slots but retained numeric month labels for existing appointments offered by cancellation/rescheduling. Source inspection and the earlier test expectation confirmed the inconsistency. Version 0.7.3 routes compact existing-appointment titles and end-time descriptions through the same `slotLabel` helper used by available slots. This includes reply buttons, lists and later pages in the business timezone; full messages, IDs, timestamps, ownership, selection semantics, Calendar details and recovery are retained.

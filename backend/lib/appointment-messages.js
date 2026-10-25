@@ -6,11 +6,12 @@ function date(iso, zone) {
   return DateTime.fromISO(iso).setZone(zone).setLocale("es").toFormat("cccc d 'de' LLLL 'de' yyyy");
 }
 function time(iso, zone) { return DateTime.fromISO(iso).setZone(zone).toFormat("HH:mm"); }
-function appointmentSuccess({ kind = "booking", start, end, zone, businessName }) {
+function appointmentSuccess({ kind = "booking", start, end, zone, businessName, reminders = false }) {
   const day = date(start, zone);
   return (kind === "reschedule" ? "¡Tu cita está reagendada!" : "¡Tu cita está agendada!") +
     `\n\n${day[0].toLocaleUpperCase("es")}${day.slice(1)}\n${time(start, zone)}–${time(end, zone)}` +
-    `\n\n¡Te esperamos en ${businessName}!`;
+    `\n\n¡Te esperamos en ${businessName}!` +
+    (reminders ? "\n\nTe enviaremos recordatorios antes de tu cita." : "");
 }
 function appointmentOverview(appointments, zone) {
   if (!appointments.length) return "";

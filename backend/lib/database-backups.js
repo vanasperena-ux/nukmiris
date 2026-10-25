@@ -6,7 +6,8 @@ const { DatabaseSync, backup } = require("node:sqlite");
 
 const backupName = /^nukmiris-(\d+)-[0-9a-f-]{36}\.sqlite\.bak$/;
 const countedTables = ["businesses", "business_customers", "business_customer_sessions", "business_support_conversations",
-  "business_support_messages", "booking_requests", "appointment_changes", "calendar_booking_locks", "message_inbox", "message_outbox"];
+  "business_support_messages", "booking_requests", "appointment_changes", "calendar_booking_locks", "message_inbox", "message_outbox",
+  "reminder_business_settings", "appointment_attendance", "reminder_jobs", "reminder_attempts", "attendance_operations"];
 function inspectDatabase(filename) {
   const db = new DatabaseSync(filename, { readOnly: true });
   try {

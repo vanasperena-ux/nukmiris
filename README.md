@@ -4,6 +4,8 @@ WhatsApp appointment-management prototype for small businesses.
 
 [Read the block-by-block code walkthrough](docs/code-review/README.md): numbered v0.7.3 source, exact line ranges and plain-language explanations, with current and legacy paths clearly identified.
 
+**Latest implementation: [v0.8.0 appointment reminders and attendance](backend/REMINDERS.md), awaiting PC testing.** Reminders ship off, with dry-run and approved-template live modes. The owner-verified working baseline remains v0.7.3. [Meta template setup](backend/REMINDER_TEMPLATES.md) is required before live reminder testing.
+
 - `index.html` and `privacy.html`: the static public website.
 - [`backend/`](backend/README.md): calendar availability through signed WhatsApp webhooks, [short appointment choices with date selection](backend/BOOKING_UX.md), booking, and optional rescheduling/cancellation. The [current UX](backend/UX_CHECKPOINT.md) commits operations when customers select the target and shows upcoming appointments in the menu. Read-only [PC setup](backend/PC_SETUP.md) remains available.
 - [`docs/handoffs/`](docs/handoffs/README.md): the dated engineering handoff and historical source snapshots.

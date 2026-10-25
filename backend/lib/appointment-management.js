@@ -36,7 +36,8 @@ function prepareManagementSchema(db) {
 
 function createAppointmentManagement({ db, availability, enabled = false, lookaheadDays,
   getClient = () => loadCalendarClient({ booking: true }), verifyAuthorization = verifyBookingAuthorization,
-  now = () => DateTime.now(), lifetimeMs = 15 * 60 * 1000 }) {
+  now = () => DateTime.now(), lifetimeMs = 15 * 60 * 1000,
+  onCommitted = () => {}, rescheduleFields = () => ({}) }) {
   let client, authorization;
   async function calendar() { return client || (client = await getClient()); }
   function authorize() {
@@ -198,6 +199,7 @@ function createAppointmentManagement({ db, availability, enabled = false, lookah
         if (row.kind === "cancel") db.prepare("UPDATE booking_requests SET state='removed',updated_at=? WHERE request_id=?").run(now().toISO(), row.booking_request_id);
         else db.prepare("UPDATE booking_requests SET slot_start=?,slot_end=?,start_ms=?,end_ms=?,updated_at=? WHERE request_id=?")
           .run(row.target_start, row.target_end, DateTime.fromISO(row.target_start).toMillis(), DateTime.fromISO(row.target_end).toMillis(), now().toISO(), row.booking_request_id);
+        onCommitted(db.prepare("SELECT * FROM booking_requests WHERE request_id=?").get(row.booking_request_id), row.kind);
       }
       db.prepare("DELETE FROM calendar_booking_locks WHERE calendar_id=? AND request_id=?").run(row.calendar_id, row.booking_request_id);
       db.exec("COMMIT"); return describe(row);
@@ -270,10 +272,13 @@ function createAppointmentManagement({ db, availability, enabled = false, lookah
         return terminal(context, "applied");
       }
       const { settings } = availability.configuration(row.business_id);
+      const attendanceFields = rescheduleFields(source.event);
       const response = await api.events.patch({ calendarId: row.calendar_id, eventId: row.event_id, sendUpdates: "none", requestBody: {
+        ...attendanceFields,
         start: { dateTime: row.target_start, timeZone: settings.timeZone },
         end: { dateTime: row.target_end, timeZone: settings.timeZone },
-        extendedProperties: { private: { ...source.event.extendedProperties.private, nukmirisChangeRequestId: row.request_id } },
+        extendedProperties: { private: { ...source.event.extendedProperties.private,
+          ...attendanceFields.extendedProperties?.private, nukmirisChangeRequestId: row.request_id } },
       } }, options);
       if (!applied(response.data, row)) throw new Error("Reschedule response could not be verified");
       return terminal(context, "applied");

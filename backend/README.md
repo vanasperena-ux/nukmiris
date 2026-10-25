@@ -1,6 +1,8 @@
-# NukMiris consistent appointment choices — v0.7.3
+# NukMiris appointment reminders and attendance — v0.8.0
 
 For a plain-language review of the code, see [the block-by-block walkthrough](../docs/code-review/README.md), including original line ranges, numbered source and explanations of the main program and helpers.
+
+Version 0.8.0 adds opt-in persisted reminders at seven days, 24 hours, 22 hours and two hours, plus attendance confirmation and an exact-appointment entry into existing rescheduling. It uses the business timezone, a 15-minute sending allowance, approved Spanish Utility templates, durable job/action identities, existing Calendar locks/authorization and signed Meta delivery receipts. Enrollment covers only new bookings after business activation. Attendance data and a scoped local report prepare the future dashboard; no dashboard or hosting is added. The existing short success message gains a reminder sentence only when applicable in live mode. **Reminders ship off. v0.8.0 awaits owner PC verification; v0.7.3 remains the verified baseline.** See [REMINDERS.md](REMINDERS.md) for setup/testing and [REMINDER_TEMPLATES.md](REMINDER_TEMPLATES.md) for Meta definitions and the remaining official-documentation check.
 
 Version 0.7.3 corrects the v0.7.2 inconsistency between new available slots and existing-appointment choices for cancellation/rescheduling. Both now use the shared Spanish format, such as `mié 23 jun 11:00`, in the business timezone, including paginated lists and compact end-time descriptions. Calendar details, IDs, timestamps, ownership, immediate actions and full messages are retained. See [APPOINTMENT_LABELS.md](APPOINTMENT_LABELS.md) for findings and PC checks. **The owner confirmed successful testing of the combined v0.7.3 checkpoint; it is the current verified working baseline.**
 
@@ -63,6 +65,10 @@ The complete v0.5.0 suite passed **347 offline tests**, with no failures/skips, 
 
 ## Runtime modes
 
+The v0.8.0 suite passed **616 offline tests**, retaining all 540 v0.7.3 regressions and adding 76 reminder scheduling, attendance, template, signed HTTP, isolation, backup/setup and process-crash cases. Live Meta approvals/delivery and real Google attendance updates remain for owner testing. No credentials, environment values, existing business data or live events were changed by the cloud tests.
+
+`NUKMIRIS_REMINDERS_MODE=off` preserves the verified app. Optional `dry-run`/`live` require booking mode, enabled management/reliability, receiving-number routing and `reminders:prepare` for each intended business. Dry-run previews reminder jobs without sending reminders or changing Calendar attendance; ordinary appointment operations retain their normal behavior. Live startup additionally verifies approved templates. `NUKMIRIS_REMINDER_POLL_MS=30000` sets bounded polling; the 15-minute lateness limit is unchanged. See [the reminder guide](REMINDERS.md) before changing modes.
+
 The v0.7.3 suite passed **540 offline tests**, with zero failures/cancellations/skips: 536 regressions plus four cancellation/rescheduling label cases covering business timezones, year boundaries, pagination and preserved actions/state. Existing event details, ownership and lifecycle/recovery checks continue to pass. On 2026-10-25 (America/Mexico_City), after separately passing the new Google Calendar-entry check, the owner reported **“version v0.7.3 tested and all good”**. This establishes v0.7.3 as the current owner-verified combined baseline; see [BASELINE.md](BASELINE.md) for evidence and scope and [APPOINTMENT_LABELS.md](APPOINTMENT_LABELS.md) for the guide.
 
 The v0.7.2 suite passed **536 offline tests**, with zero failures/cancellations/skips, retaining 525 regressions and adding 11 event-detail/identity/rescheduling/HTTP cases. Existing crash recovery, ownership, cancellation and idempotency checks continue to pass. These changes are included in the owner-verified v0.7.3 checkpoint; use [CALENDAR_DETAILS.md](CALENDAR_DETAILS.md).
@@ -99,6 +105,6 @@ npm.cmd run connections:check
 npm.cmd start
 ```
 
-Stop the old webhook before configuring its database. The configuration command backs up SQLite, adds missing mapping tables, and updates only the selected business. It refuses conflicting mappings and never changes Calendar events. There is no owner dashboard yet; the root website remains separate.
+Stop the old webhook before configuring its database. The configuration command backs up SQLite, adds missing mapping tables, and updates only the selected business. It refuses conflicting mappings and never changes Calendar events. There is no owner dashboard yet; the root website remains separate. v0.8.0 exposes business-scoped attendance data through the backend/local `reminders:status` command for later dashboard work.
 
 See [KNOWN_LIMITATIONS.md](KNOWN_LIMITATIONS.md) for remaining gaps and [BASELINE.md](BASELINE.md) for provenance. Preserve the historical v5C.5 and v6A.4 archive; the booking-enabled rollback must not be used as a multi-business runtime.

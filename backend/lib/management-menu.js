@@ -9,7 +9,7 @@ const { slotLabel } = require("./slot-label");
 
 function createManagementMenu({ management, availability, sessions, businessFor, sendMessage,
   sendReplyButtons, sendAppointmentList, lookaheadDays, lifetime = 15 * 60 * 1000,
-  saveReceipt = (from, receipt) => sessions.set(from, receipt), beforeDecision = () => {} }) {
+  saveReceipt = (from, receipt) => sessions.set(from, receipt), beforeDecision = () => {}, hasReminders = () => false }) {
   const expired = "Esta opción ya no está vigente. Escribe Reagendar o Cancelar para consultar tus citas.";
   function context(from) { return { businessId: businessFor(from).business_id, sender: from }; }
   function format(from, iso, compact = false) {
@@ -123,7 +123,8 @@ function createManagementMenu({ management, availability, sessions, businessFor,
       await sendMessage(from, outcome.kind === "cancel"
         ? `Tu cita del ${range(from, outcome.originalStart, outcome.originalEnd)} en ${businessFor(from).business_name} está cancelada.`
         : appointmentSuccess({ kind: "reschedule", start: outcome.start, end: outcome.end,
-          zone: availability.configuration(context(from).businessId).settings.timeZone, businessName: businessFor(from).business_name }));
+          zone: availability.configuration(context(from).businessId).settings.timeZone, businessName: businessFor(from).business_name,
+          reminders: hasReminders(outcome.bookingRequestId) }));
     } else if (outcome.status === "rejected" && outcome.kind === "reschedule") {
       const appointment = await management.readAppointment({ ...context(from), bookingRequestId: outcome.bookingRequestId });
       await beginReschedule(from, appointment, "No pudimos cambiar tu cita a ese horario. Te muestro otras opciones.");
@@ -176,7 +177,7 @@ function createManagementMenu({ management, availability, sessions, businessFor,
     }
     return false;
   }
-  return { handleInteractive, handleText, resume: decide };
+  return { handleInteractive, handleText, resume: decide, beginReschedule };
 }
 
 module.exports = { createManagementMenu };

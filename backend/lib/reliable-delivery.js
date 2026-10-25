@@ -57,6 +57,9 @@ function supportedMessage(message) {
   if (!message || typeof message.from !== "string" || !message.from || typeof message.id !== "string" || !message.id) return null;
   const base = { id: message.id, from: message.from, type: message.type };
   if (message.type === "text" && typeof message.text?.body === "string") return { ...base, text: { body: message.text.body } };
+  if (message.type === "button" && typeof message.button?.payload === "string") {
+    return { ...base, button: { payload: message.button.payload } };
+  }
   const kind = message.interactive?.type;
   if (message.type === "interactive" && ["button_reply", "list_reply"].includes(kind) && typeof message.interactive[kind]?.id === "string") {
     return { ...base, interactive: { type: kind, [kind]: { id: message.interactive[kind].id } } };
@@ -65,7 +68,7 @@ function supportedMessage(message) {
 }
 function createReliableDelivery({ db, capabilities, resolveBusiness, now = Date.now,
   processAlive = pid => { try { process.kill(pid, 0); return true; } catch (error) { return error.code !== "ESRCH"; } },
-  host = os.hostname(), pid = process.pid }) {
+  host = os.hostname(), pid = process.pid, onReceipt = () => {} }) {
   let owner;
   function assertOwner() {
     const current = db.prepare("SELECT owner FROM delivery_worker WHERE singleton=1").get();
@@ -116,11 +119,14 @@ function createReliableDelivery({ db, capabilities, resolveBusiness, now = Date.
           const phone = change.value?.metadata?.phone_number_id;
           const business = typeof phone === "string" ? resolveBusiness(phone) : null;
           if (!business) continue;
-          for (const status of Array.isArray(change.value?.statuses) ? change.value.statuses : []) receipt(business, status);
+          for (const status of Array.isArray(change.value?.statuses) ? change.value.statuses : []) {
+            receipt(business, status);
+            onReceipt(business, status);
+          }
           for (const raw of Array.isArray(change.value?.messages) ? change.value.messages : []) {
             const message = supportedMessage(raw);
             if (!message) {
-              if (raw?.type === "text" || (raw?.type === "interactive" && ["button_reply", "list_reply"].includes(raw.interactive?.type))) {
+              if (raw?.type === "text" || raw?.type === "button" || (raw?.type === "interactive" && ["button_reply", "list_reply"].includes(raw.interactive?.type))) {
                 throw Object.assign(new Error("A supported message needs a stable ID and sender"), { status: 400 });
               }
               continue;
