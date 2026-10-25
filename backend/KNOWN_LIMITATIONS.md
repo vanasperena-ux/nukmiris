@@ -12,6 +12,8 @@ Version 0.7.1 changes only [available appointment-slot labels](SLOT_LABELS.md); 
 
 Version 0.7.2 adds [new-event customer details and concise empty management results](CALENDAR_DETAILS.md), including the pending v0.7.1 labels. Combined PC verification is pending. New events display the scoped registered name and international WhatsApp number; no service line appears without an actual catalog selection. Existing events are not reformatted, including during rescheduling/reconciliation. The event status text remains `Reservada` when moved; cancellation retains the existing event-deletion behavior. Calendar permissions, ownership/identity, concurrency and recovery limits remain applicable.
 
+Version 0.7.3 [corrects inconsistent existing-appointment choice labels](APPOINTMENT_LABELS.md) left by v0.7.1/v0.7.2. Cancellation and rescheduling choices now share the available-slot formatter, including later pages and compact end-time descriptions. WhatsApp messages already sent retain their old text; a fresh menu/flow displays the corrected choices. The combined checkpoint awaits PC verification, and all lifecycle/integration limits remain applicable.
+
 | Original finding | Current status |
 | --- | --- |
 | Unsigned POST requests accepted | Fixed in this runtime: HMAC-SHA256 over the exact raw body, constant-time comparison, rejection before processing, and a required Meta App Secret. Offline signature tests pass; the owner confirmed real callback verification and delivery on the PC on 2026-10-24. |

@@ -1,5 +1,11 @@
 # Baseline provenance
 
+## Consistent appointment choices — v0.7.3, awaiting PC verification
+
+The owner found that v0.7.2 showed the new month-name format for available slots but retained numeric month labels for existing appointments offered by cancellation/rescheduling. Source inspection and the earlier test expectation confirmed the inconsistency. Version 0.7.3 routes compact existing-appointment titles and end-time descriptions through the same `slotLabel` helper used by available slots. This includes reply buttons, lists and later pages in the business timezone; full messages, IDs, timestamps, ownership, selection semantics, Calendar details and recovery are retained.
+
+All 540 offline tests passed, with zero failures/cancellations/skips, retaining 536 earlier regressions. Four added management-format cases cover cancellation/rescheduling, Mexico City/Tokyo, year boundaries, pagination and preserved state/actions. Signed HTTP expectations also verify single cancellation, multiple rescheduling choices and later-page selection of the same event. See [APPOINTMENT_LABELS.md](APPOINTMENT_LABELS.md) for the findings and combined PC guide. Cloud integrations remain synthetic; v0.7.0 remains owner-verified, while v0.7.1–v0.7.3 await the owner's complete manual result.
+
 ## Calendar customer details and concise empty results — v0.7.2, awaiting PC verification
 
 The owner requested two combined changes for v0.7.2 before testing the pending v0.7.1 labels on the PC. Newly inserted events now use `{Full Name} — Cita` and the description lines `Cliente`, `WhatsApp` in international format, `Estado: Reservada`, and `Origen: NukMiris WhatsApp`. The number is read from the existing business/customer-scoped identity after its customer-ID check. `Servicio` is omitted because no catalog selection exists. Event IDs, private ownership properties, authorization, journals/locks, availability checks and immediate booking remain unchanged. Existing events are not reformatted; the unmodified rescheduling PATCH retains display fields, including legacy descriptions.

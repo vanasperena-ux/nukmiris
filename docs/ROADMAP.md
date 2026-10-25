@@ -1,6 +1,6 @@
 # NukMiris project continuity
 
-Current implementation checkpoint: v0.7.2 Calendar customer details and concise empty management results, including v0.7.1 slot labels; combined PC verification is pending. Current owner-verified baseline: v0.7.0 simple menu instructions (`e1c5370`), retaining the verified v0.6.0 natural dates (`3238e34`), v0.5.0 intent recognition (`b6a9169`), v0.4.1 availability (`8649109`) and v0.4.0 reliability (`9d6358b`) behavior.
+Current implementation checkpoint: v0.7.3 consistent appointment choices, including v0.7.2 Calendar details/empty results and v0.7.1 slot labels; combined PC verification is pending. Current owner-verified baseline: v0.7.0 simple menu instructions (`e1c5370`), retaining the verified v0.6.0 natural dates (`3238e34`), v0.5.0 intent recognition (`b6a9169`), v0.4.1 availability (`8649109`) and v0.4.0 reliability (`9d6358b`) behavior.
 
 ## Windows PC command preference
 
@@ -76,3 +76,9 @@ The owner requested that v0.7.2 combine the pending v0.7.1 labels with new-event
 Use exactly `No encontré citas próximas. Si deseas agendar una nueva cita, escribe "cita".` for empty rescheduling/cancellation results, without a menu suffix. The review found two equivalent disabled legacy responses; standardize their text without enabling the handlers. Keep the shared menu instruction, global command, business/customer isolation and ownership checks. No schema, dependencies, credentials, environment files or live database changes are authorized. The Calendar payload presentation change is authorized by the first task; the second task leaves the integration/client and business rules unchanged.
 
 All 536 offline tests passed, retaining 525 regressions and adding 11 booking-detail/identity/rescheduling/HTTP cases. Existing process-restart, ownership, cancellation and idempotency checks continue to pass. Use the established GitHub and `npm.cmd` PC workflow. v0.7.0 remains the owner-verified baseline until the owner confirms the combined v0.7.2 checkpoint. See [the files, findings and PC guide](../backend/CALENDAR_DETAILS.md).
+
+## Authorized correction — v0.7.3 consistent appointment choices
+
+The owner reported v0.7.2 still displayed numerical month labels for existing appointments offered by cancellation/rescheduling. The earlier availability-only interpretation was too narrow. Use the same shared `slotLabel` formatter for existing-appointment titles and compact end-time descriptions, including list pagination and business timezone/year boundaries. Preserve full messages, IDs, timestamps, appointment ownership, Calendar event details, immediate selection, cancellation/rescheduling logic and recovery. This supersedes the original v0.7.1 interpretation that existing-appointment choices should retain their labels.
+
+All 540 offline tests passed, retaining 536 regressions and adding four management-format cases; the 83 focused checks passed as well. Use the established GitHub and `npm.cmd` PC workflow. v0.7.0 remains the owner-verified baseline until the owner confirms the combined v0.7.3 checkpoint. See [the audit, files and PC guide](../backend/APPOINTMENT_LABELS.md).

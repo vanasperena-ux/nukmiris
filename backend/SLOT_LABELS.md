@@ -2,6 +2,8 @@
 
 Built on the owner-verified v0.7.0 baseline (`e1c5370`). **v0.7.1 awaits PC verification.** This update changes only the labels on available appointment-slot buttons.
 
+**Follow-up correction:** v0.7.1/v0.7.2 left existing-appointment choices for cancellation/rescheduling in the old numerical format. The owner's report confirmed this scope was too narrow. [v0.7.3](APPOINTMENT_LABELS.md) also applies the shared formatter to those choices and their compact end-time descriptions. Use that guide for the current combined PC check; the scope below describes the original v0.7.1 delivery.
+
 | Before | After |
 | --- | --- |
 | `vie 02/04 10:00` | `vie 2 abr 10:00` |

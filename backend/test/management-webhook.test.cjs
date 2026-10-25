@@ -205,6 +205,7 @@ describe("signed selection-based appointment management", { concurrency: false }
     await click(buttons().find(button => button.id.endsWith(":cancel")).id);
     assert.equal(f.deletes.length, 0);
     assert.equal(body(), "Selecciona la cita que deseas cancelar. Se cancelará al seleccionarla.");
+    assert.equal(buttons()[0].title, "lun 26 oct 10:00");
     const selected = buttons()[0].id;
     await click(selected); await click(selected);
     assert.match(body(), /está cancelada/);
@@ -243,7 +244,7 @@ describe("signed selection-based appointment management", { concurrency: false }
     const first = await f.seed(), second = await f.seed({ hour: 12 });
     await post("Reagendar");
     assert.equal(body(), "Selecciona la cita que deseas reagendar.");
-    assert.equal(buttons()[0].title, "lun 26/10 10:00");
+    assert.deepEqual(buttons().map(button => button.title), ["lun 26 oct 10:00", "lun 26 oct 12:00"]);
     assert(buttons().every(button => button.id.includes(":pick:")));
     await click(buttons()[1].id);
     assert.equal(f.patches.length, 0);
@@ -455,7 +456,11 @@ describe("signed selection-based appointment management", { concurrency: false }
     await post("Cancelar");
     const more = rows().find(row => row.title === "Más citas");
     assert(more); assert.equal(rows().length, 9);
+    assert.deepEqual(rows().filter(row => row.id.includes(":pick:")).map(row => row.title),
+      ["10:00", "11:00", "12:00", "14:00", "15:00", "16:00", "17:00", "18:00"].map(time => `lun 26 oct ${time}`));
+    assert.equal(rows()[0].description, "Termina: lun 26 oct 11:00");
     await post(more.id, { kind: "list_reply" });
+    assert.equal(buttons()[0].title, "mar 27 oct 10:00");
     await click(buttons().find(button => button.id.includes(":pick:")).id);
     assert.equal(f.deletes.length, 1);
     assert.equal(f.deletes[0].args.eventId, last.eventId);

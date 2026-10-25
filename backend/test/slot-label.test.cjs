@@ -4,6 +4,7 @@ const assert = require("node:assert/strict");
 const { DateTime } = require("luxon");
 const { slotLabel } = require("../lib/slot-label");
 const { createAvailabilityMenu } = require("../lib/availability-menu");
+const { createManagementMenu } = require("../lib/management-menu");
 const { readSearchPolicy } = require("../lib/availability-search");
 const { DATE_PROMPT } = require("../lib/appointment-date");
 
@@ -98,3 +99,45 @@ for (const [timeZone, date, dayLabel] of [
   assert.deepEqual(selected, [{ slot: original[2], command }]);
   assert.deepEqual(slots, original);
 });
+for (const [timeZone, dayLabel, firstHour] of [
+  [zone, "jue 31 dic", 10], ["Asia/Tokyo", "vie 1 ene", 1],
+]) {
+  for (const command of ["Cancelar", "Reagendar"]) test(`${command} appointment lists and later pages use ${timeZone} at the year boundary`, async () => {
+    const first = DateTime.fromISO("2026-12-31T16:00:00Z", { setZone: true });
+    const appointments = Array.from({ length: 9 }, (_, index) => ({
+      bookingRequestId: `synthetic-request-${index}`, etag: `synthetic-etag-${index}`,
+      start: first.plus({ hours: index }).toISO(), end: first.plus({ hours: index + 1 }).toISO(),
+    }));
+    const original = structuredClone(appointments), outgoing = [];
+    let saved;
+    const sessions = { get: () => structuredClone(saved), set: (from, value) => { saved = structuredClone(value); }, delete: () => { saved = undefined; } };
+    const menu = createManagementMenu({ sessions, businessFor: () => ({ business_id: "synthetic" }),
+      availability: { configuration: () => ({ settings: { timeZone } }) },
+      management: { invalidateOffers() {}, listAppointments: async scope => {
+        assert.deepEqual(scope, { businessId: "synthetic", sender: "synthetic-customer" });
+        return structuredClone(appointments);
+      } },
+      sendReplyButtons: async (from, body, buttons) => outgoing.push({ body, choices: buttons }),
+      sendAppointmentList: async (from, body, rows) => outgoing.push({ body, choices: rows }),
+    });
+    const view = () => outgoing.at(-1);
+    const label = hour => `${dayLabel} ${String(hour).padStart(2, "0")}:00`;
+    await menu.handleText("synthetic-customer", command);
+    assert.equal(view().body, command === "Cancelar"
+      ? "Selecciona la cita que deseas cancelar. Se cancelará al seleccionarla."
+      : "Selecciona la cita que deseas reagendar.");
+    const body = view().body;
+    assert.deepEqual(view().choices.slice(0, 8).map(row => row.title), Array.from({ length: 8 }, (_, index) => label(firstHour + index)));
+    assert.deepEqual(view().choices.slice(0, 8).map(row => row.id), Array.from({ length: 8 }, (_, index) => `owned:${saved.selectionId}:pick:${index}`));
+    assert.equal(view().choices[0].description, `Termina: ${label(firstHour + 1)}`);
+    assert(view().choices.slice(0, 8).every(row => row.title.length <= 20));
+    assert.deepEqual(saved.appointments, original);
+    await menu.handleInteractive("synthetic-customer", view().choices[8].id);
+    assert.equal(view().body, body);
+    assert.equal(view().choices[0].title, label(firstHour + 8));
+    assert.equal(view().choices[0].description, `Termina: ${label(firstHour + 9)}`);
+    assert.equal(view().choices[0].id, `owned:${saved.selectionId}:pick:8`);
+    assert.deepEqual(saved.appointments, original);
+    assert.deepEqual(appointments, original);
+  });
+}

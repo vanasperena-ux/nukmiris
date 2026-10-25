@@ -5,6 +5,7 @@ const { DateTime } = require("luxon");
 const { createAvailabilityMenu } = require("./availability-menu");
 const { appointmentSuccess, NO_UPCOMING_APPOINTMENTS } = require("./appointment-messages");
 const { MENU_INSTRUCTION } = require("./menu-messages");
+const { slotLabel } = require("./slot-label");
 
 function createManagementMenu({ management, availability, sessions, businessFor, sendMessage,
   sendReplyButtons, sendAppointmentList, lookaheadDays, lifetime = 15 * 60 * 1000,
@@ -13,8 +14,8 @@ function createManagementMenu({ management, availability, sessions, businessFor,
   function context(from) { return { businessId: businessFor(from).business_id, sender: from }; }
   function format(from, iso, compact = false) {
     const zone = availability.configuration(context(from).businessId).settings.timeZone;
-    return DateTime.fromISO(iso).setZone(zone).setLocale("es")
-      .toFormat(compact ? "ccc dd/LL HH:mm" : "cccc d 'de' LLLL yyyy, HH:mm");
+    return compact ? slotLabel(iso, zone)
+      : DateTime.fromISO(iso).setZone(zone).setLocale("es").toFormat("cccc d 'de' LLLL yyyy, HH:mm");
   }
   function active(session, mode) { return session?.mode === mode && Date.now() <= session.expiresAt; }
   function range(from, start, end) {
