@@ -35,7 +35,7 @@ test("today's bare weekday after closing uses the same real availability rules a
     await f.menu.handleText("synthetic-customer", "lunes");
     assert.deepEqual(f.calls.map(call => DateTime.fromISO(call.timeMin).setZone("America/Mexico_City").toISODate()), ["2026-10-26", "2026-11-02"]);
     assert.equal(f.session().selectedDate, "2026-11-02");
-    assert.equal(f.outgoing.length, 1); assert.equal(f.outgoing[0].buttons[0].title, "10:00");
+    assert.equal(f.outgoing.length, 1); assert.equal(f.outgoing[0].buttons[0].title, "lun 2 nov 10:00");
   } finally { f.db.close(); }
 });
 test("weekday fallback never queries outside a smaller configured horizon and keeps the current session", async () => {

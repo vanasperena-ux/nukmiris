@@ -220,7 +220,9 @@ describe("signed selection-based appointment management", { concurrency: false }
     await post("Reagendar");
     assert.equal(body(), "Elige un horario que te funciona mejor:");
     assert(buttons().every(button => !button.id.startsWith("owned:")));
+    assert.deepEqual(buttons().slice(0, 2).map(button => button.title), ["lun 26 oct 11:00", "lun 26 oct 12:00"]);
     await click(buttons()[2].id);
+    assert.deepEqual(buttons().slice(0, 2).map(button => button.title), ["lun 26 oct 14:00", "lun 26 oct 15:00"]);
     assert.equal(body(), "Te muestro mas opciones. Elige un horario que te funciona mejor:");
     await click(buttons()[2].id);
     const date = rows().filter(row => row.id.includes(":date:")).at(-1);
@@ -241,6 +243,7 @@ describe("signed selection-based appointment management", { concurrency: false }
     const first = await f.seed(), second = await f.seed({ hour: 12 });
     await post("Reagendar");
     assert.equal(body(), "Selecciona la cita que deseas reagendar.");
+    assert.equal(buttons()[0].title, "lun 26/10 10:00");
     assert(buttons().every(button => button.id.includes(":pick:")));
     await click(buttons()[1].id);
     assert.equal(f.patches.length, 0);
@@ -253,6 +256,7 @@ describe("signed selection-based appointment management", { concurrency: false }
   test("a typed date preserves the original appointment until a new slot is selected", async () => {
     const source = await f.seed();
     await post("Reagendar"); await post("27/10/2026");
+    assert.deepEqual(buttons().slice(0, 2).map(button => button.title), ["mar 27 oct 10:00", "mar 27 oct 11:00"]);
     assert.equal(f.patches.length, 0);
     assert.equal(f.events.get(`calendar-synthetic-a:${source.eventId}`).start.dateTime, f.slot(10).start);
     await click(buttons()[0].id);

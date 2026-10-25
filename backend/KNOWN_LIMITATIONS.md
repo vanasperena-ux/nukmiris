@@ -8,6 +8,8 @@ Version 0.6.0 adds [natural date input](NATURAL_DATES.md) only in active booking
 
 Version 0.7.0 adds [concise menu guidance and global navigation](MENU_UX.md), with 484 passing offline tests; the owner subsequently confirmed successful PC testing. Typing `menu` clears transient selections and declines unused offers, but does not withdraw a Calendar request already submitted or discard uncertain-operation locks. Messages are processed in order, so navigation can follow an earlier in-progress request. The existing read-only appointment overview can query Google when rebuilding the main menu. Services Catalog and reminder workflows are absent from the current runtime and are not introduced or promised by this update.
 
+Version 0.7.1 changes only [available appointment-slot labels](SLOT_LABELS.md); PC verification is pending. Labels use the business timezone and Spanish abbreviations, including `sept` for September, and omit the year as requested. Full dates/timestamps remain in existing state and message bodies. Other appointment labels/messages and all scheduling/integration/recovery limits remain unchanged.
+
 | Original finding | Current status |
 | --- | --- |
 | Unsigned POST requests accepted | Fixed in this runtime: HMAC-SHA256 over the exact raw body, constant-time comparison, rejection before processing, and a required Meta App Secret. Offline signature tests pass; the owner confirmed real callback verification and delivery on the PC on 2026-10-24. |

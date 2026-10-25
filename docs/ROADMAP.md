@@ -1,6 +1,6 @@
 # NukMiris project continuity
 
-Current implementation and owner-verified baseline: v0.7.0 simple menu instructions (`e1c5370`), retaining the verified v0.6.0 natural dates (`3238e34`), v0.5.0 intent recognition (`b6a9169`), v0.4.1 availability (`8649109`) and v0.4.0 reliability (`9d6358b`) behavior.
+Current implementation checkpoint: v0.7.1 Spanish appointment-slot labels, awaiting PC verification. Current owner-verified baseline: v0.7.0 simple menu instructions (`e1c5370`), retaining the verified v0.6.0 natural dates (`3238e34`), v0.5.0 intent recognition (`b6a9169`), v0.4.1 availability (`8649109`) and v0.4.0 reliability (`9d6358b`) behavior.
 
 ## Windows PC command preference
 
@@ -62,3 +62,9 @@ The owner supplied the menu simplification task after verifying v0.6.0. Preserve
 The `booking_confirm` audit found no current state writer: immediate time-selection booking has been active since v0.3.1. Remove its obsolete customer instruction, safely reset saved legacy state, and retain the internal booking decision/journal/recovery mechanisms. New customers still supply their name once; verified success still produces the existing appointment notification. No changes to identity, calendar ownership, date understanding, availability/durations, lifecycle rules, flags, schema or dependencies are authorized. Services Catalog/reminders are not implemented by this checkpoint.
 
 All 484 offline tests passed, retaining 460 regressions and adding 24 navigation/state/failure/duplicate-delivery/restart cases. Delivery used the established GitHub and `npm.cmd` PC workflow. On 2026-10-25 (America/Mexico_City), the owner confirmed **“yes”** when asked whether the latest v0.7.0 menu update tested OK. Record v0.7.0 (`e1c5370061ed268dffe8c17bd8f466182e544b1a`) as the current owner-verified working baseline. No separate PC commit hash or detailed per-case log was supplied; preserve existing technical limits. See [the before/after messages, audit and test guide](../backend/MENU_UX.md) and [verification record](../backend/BASELINE.md). Hosting and unrelated feature work remain separate.
+
+## Authorized checkpoint — v0.7.1 Spanish appointment-slot labels
+
+The owner requested a focused label change from `vie 02/04 10:00` to `vie 2 abr 10:00`: Spanish lowercase abbreviated weekdays/months, unpadded day, 24-hour time, business timezone and the 20-character button limit. Apply it to all available slot choices and alternatives, including date-first time pages, for booking and rescheduling. Preserve IDs, full timestamps, other appointment messages, webhook handling, Calendar data and lifecycle logic. Existing appointment-selection lists are separate from offered availability slots and retain their labels.
+
+All 525 offline tests passed, retaining 484 regressions and adding 41 formatter/view cases. Use the established GitHub and `npm.cmd` PC delivery workflow. v0.7.1 awaits owner PC verification; v0.7.0 remains the verified baseline. See [the scope and test guide](../backend/SLOT_LABELS.md). No other feature work is authorized by this label update.

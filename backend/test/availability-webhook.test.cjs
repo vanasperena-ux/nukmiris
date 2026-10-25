@@ -131,6 +131,7 @@ describe("signed WhatsApp calendar availability", { concurrency: false }, () => 
     assert.equal(outgoing.at(-1).payload.interactive.type, "button");
     const choices = buttons().filter(row => row.id.includes(":slot:"));
     assert.equal(choices.length, 2);
+    assert.deepEqual(choices.map(row => row.title), ["lun 26 oct 10:00", "lun 26 oct 11:00"]);
     assert(choices.every(row => /\d{2}:00$/.test(row.title)));
     assert(!choices.some(row => row.title.endsWith("13:00")));
     assert.equal(buttons()[2].title, "Más opciones");
@@ -163,6 +164,7 @@ describe("signed WhatsApp calendar availability", { concurrency: false }, () => 
     await post(buttons()[2].id, { kind: "button_reply" });
     assert.equal(outgoing.at(-1).payload.interactive.body.text, "Te muestro mas opciones. Elige un horario que te funciona mejor:");
     assert.equal(buttons().length, 3);
+    assert.deepEqual(buttons().slice(0, 2).map(button => button.title), ["lun 26 oct 12:00", "lun 26 oct 14:00"]);
     assert(buttons().slice(0, 2).every(button => !first.includes(button.title)));
     assert.equal(buttons()[2].title, "Elegir fecha");
     await post(buttons()[2].id, { kind: "button_reply" });
@@ -172,8 +174,9 @@ describe("signed WhatsApp calendar availability", { concurrency: false }, () => 
       "¿Para qué día te gustaría tu cita? Puedes escribir, por ejemplo: 13 oct, 13/10 o próximo lunes.");
     const selectedDate = rows().find(row => row.id.includes(":date:"));
     const day = selectedDate.id.split(":").at(-1);
-    const expected = all.filter(slot => dayOf(slot) === day).map(slot => DateTime.fromISO(slot.start).setZone("America/Mexico_City").toFormat("HH:mm"));
+    const expected = ["10:00", "11:00", "12:00", "14:00", "15:00", "16:00", "17:00", "18:00"].map(time => `lun 26 oct ${time}`);
     await post(selectedDate.id, { kind: "list_reply" });
+    assert.deepEqual(stored().slots, all.filter(slot => dayOf(slot) === day));
     const displayed = [];
     while (true) {
       displayed.push(...buttons().filter(button => button.id.includes(":slot:")).map(button => button.title));
@@ -279,7 +282,7 @@ describe("signed WhatsApp calendar availability", { concurrency: false }, () => 
     assert.equal(stored().selectedDate, date.toISODate());
     assert(stored().slots.length > 0);
     assert(stored().slots.every(slot => dayOf(slot) === date.toISODate()));
-    assert(buttons().some(button => button.title === "10:00"));
+    assert(buttons().some(button => button.title.endsWith(" 10:00")));
     assert.deepEqual(changes, []);
   });
   test("natural date formats use one direct-day query, keep the same offer flow, and never reserve in read-only mode", async () => {
@@ -291,7 +294,7 @@ describe("signed WhatsApp calendar availability", { concurrency: false }, () => 
       assert.equal(stored().selectedDate, "2026-10-27");
       assert.equal(calendarCalls.at(-1).timeMin, "2026-10-27T00:00:00.000-06:00");
       assert.equal(calendarCalls.at(-1).timeMax, "2026-10-28T00:00:00.000-06:00");
-      assert.equal(buttons()[0].title, "10:00");
+      assert.equal(buttons()[0].title, "mar 27 oct 10:00");
       assert.doesNotMatch(outgoing.at(-1).payload.interactive.body.text, /DD\/MM|Confirmas|menu/i);
       assert.deepEqual(changes, []);
     }
@@ -344,6 +347,7 @@ describe("signed WhatsApp calendar availability", { concurrency: false }, () => 
       assert.equal(stored().selectedDate, "2026-10-27");
       await post("Cita", { business: "b" }); await post("mañana", { business: "b" });
       assert.equal(stored("b").selectedDate, "2026-10-28");
+      assert.equal(buttons()[0].title, "mié 28 oct 10:00");
       assert.deepEqual(calendarCalls.at(-1).items, [{ id: "calendar-synthetic-b" }]);
       assert.equal(calendarCalls.at(-1).timeZone, "Asia/Tokyo");
       assert.equal(stored().selectedDate, "2026-10-27"); assert.deepEqual(changes, []);

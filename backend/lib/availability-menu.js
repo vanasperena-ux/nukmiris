@@ -4,6 +4,7 @@ const { randomUUID } = require("node:crypto");
 const { DateTime } = require("luxon");
 const { readSearchPolicy } = require("./availability-search");
 const { parseAppointmentDate, dateErrorMessage, DATE_PROMPT } = require("./appointment-date");
+const { slotLabel } = require("./slot-label");
 
 // Presentation only: the existing availability engine and booking service
 // remain responsible for schedule checks, busy periods, and event creation.
@@ -45,7 +46,7 @@ function createAvailabilityMenu({ availability, sessions, businessFor, sendMessa
     const offset = stage * 2;
     const choices = session.slots.slice(offset, offset + 2).map((slot, index) => ({
       id: action(session, "slot", offset + index),
-      title: local(slot.start, zone).toFormat("ccc dd/LL HH:mm"),
+      title: slotLabel(slot.start, zone),
     }));
     choices.push(stage === 0 && session.slots.length > 2
       ? { id: action(session, "more"), title: "Más opciones" }
@@ -100,7 +101,7 @@ function createAvailabilityMenu({ availability, sessions, businessFor, sendMessa
     const offset = page * 2;
     const choices = session.slots.slice(offset, offset + 2).map((slot, index) => ({
       id: action(session, "slot", offset + index),
-      title: local(slot.start, zone).toFormat("HH:mm"),
+      title: slotLabel(slot.start, zone),
     }));
     choices.push(offset + 2 < session.slots.length
       ? { id: action(session, "times", page + 1), title: "Más horarios" }

@@ -1,5 +1,11 @@
 # Baseline provenance
 
+## Spanish appointment-slot labels — v0.7.1, awaiting PC verification
+
+After verifying v0.7.0, the owner requested the label format `vie 2 abr 10:00` for every available appointment-slot button. Version 0.7.1 adds a shared Spanish formatter in the business timezone and replaces only the two slot-title expressions in the existing availability menu. This covers initial/alternative suggestions and date-first time pages for booking and rescheduling. No leading day zero, uppercase name or 12-hour time is introduced; the formatter enforces WhatsApp's 20-character limit. Timestamps, IDs, other messages, existing appointment lists, webhook handling, Calendar data, booking/change logic and recovery remain unchanged.
+
+All 525 offline tests passed, with zero failures/cancellations/skips, retaining the 484 earlier regressions and adding 41 formatter/view cases. Tests cover all months/weekdays, single/double-digit days, 24-hour time, timezone/year boundaries, all leap-year dates and unchanged selection/state data. See [SLOT_LABELS.md](SLOT_LABELS.md) for files and PC checks. Cloud integrations remain synthetic; v0.7.0 remains the owner-verified working baseline until the new PC results are reported.
+
 ## Verified simple menu instructions baseline — v0.7.0
 
 After verifying v0.6.0, the owner requested concise menu instructions and an audit of global menu navigation and immediate booking. Version 0.7.0 removes routine repeated hints, centralizes the exact sentence `Escribe "menu" para volver al menú principal.`, and handles `menu` before all session-specific dispatch. This fixes a legacy-state guard that could intercept the command. Capitalization, accents and existing equivalent commands retain their established normalization.
