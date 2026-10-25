@@ -1,8 +1,10 @@
 # Simple menu instructions — v0.7.0
 
-Built on the owner-verified v0.6.0 baseline (`3238e34`). **v0.7.0 awaits its own PC verification.** Normal appointment conversations no longer repeat how to return to the menu after each question. Helpful escape instructions use exactly:
+Built on the owner-verified v0.6.0 baseline (`3238e34`). **v0.7.0 is now the current owner-verified working baseline.** Normal appointment conversations no longer repeat how to return to the menu after each question. Helpful escape instructions use exactly:
 
 > Escribe "menu" para volver al menú principal.
+
+On 2026-10-25 (America/Mexico_City), the owner confirmed **“yes”** when asked whether the latest v0.7.0 menu update tested OK. Delivered code reference: `e1c5370061ed268dffe8c17bd8f466182e544b1a`. This records the overall manual checkpoint; no separate PC commit hash or detailed per-case log was supplied. See [BASELINE.md](BASELINE.md) for scope. The automated results and technical limits below remain applicable.
 
 ## Customer messages before and after
 
@@ -79,7 +81,7 @@ No new customer confirmation screen or button is added. `handleBookingDecision`,
 
 **All 484 offline tests passed, with zero failures, cancellations or skipped tests.** This retains all 460 v0.6.0 regressions and adds 24 tests: nine booking, nine management, three support/legacy-state, one read-only availability and two real process-restart cases. Parameterized scenarios exercise command capitalization across actual date/time, name, clarification, result and management states, plus active/expired saved legacy states. Existing cases also verify the shorter prompts, immediate booking for registered/new customers, expired selections, Calendar failures, duplicate delivery, repeated selections and recovery without repeated writes.
 
-Tests use synthetic databases, stubbed Google/Meta services, signed loopback HTTP and actual subprocess restarts. The cloud agent does not access the owner's PC or live accounts. `git diff --check` and local documentation links pass; package/lockfile comparison confirms dependency versions and test scripts are unchanged. PC verification remains pending.
+Tests use synthetic databases, stubbed Google/Meta services, signed loopback HTTP and actual subprocess restarts. The cloud agent does not access the owner's PC or live accounts. `git diff --check` and local documentation links pass; package/lockfile comparison confirms dependency versions and test scripts are unchanged. The owner's successful PC checkpoint is recorded above.
 
 The shared availability/date engine, business/customer identity, calendar ownership, lifecycle services, concurrency locks, request journals, schema, flags and dependencies are unchanged. Existing reliability/unknown-result limits still apply. `menu` is processed in order after an earlier message/operation; it cannot recall a submitted Calendar request. It can perform the existing read-only appointment overview lookup when building the main menu.
 
@@ -109,4 +111,4 @@ Use designated test appointments for any checks that intentionally book, move or
 5. Check the shorter reschedule/cancellation selection messages. Normal rescheduling and cancellation must still act on the selected appointment exactly once.
 6. Restart after receiving a name prompt or a date/time option. Type `menu`, restart again and try the old choice; it must stay invalid. Check that existing confirmed appointments remain unchanged.
 
-Calendar/API failure, exact process-interruption timing, duplicate signed deliveries, uncertain outcomes, and active/expired legacy states are tested offline; no PC configuration change is needed to force those failures. Record the owner's manual results separately before declaring v0.7.0 verified.
+Calendar/API failure, exact process-interruption timing, duplicate signed deliveries, uncertain outcomes, and active/expired legacy states are tested offline; no PC configuration change is needed to force those failures. The owner's successful manual checkpoint is recorded above; these checks remain available for future regression testing.
