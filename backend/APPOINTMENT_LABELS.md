@@ -2,6 +2,8 @@
 
 **v0.7.3 awaits PC verification.** It includes the v0.7.1 slot labels and v0.7.2 Calendar details/empty-result message. v0.7.0 remains the last owner-verified baseline.
 
+**PC progress, 2026-10-25 (America/Mexico_City):** the owner reported the new Google Calendar-entry check passed and supplied a screenshot confirming its visible customer details. Detail preservation after rescheduling, corrected management-choice labels, the empty-appointments message and the complete combined checkpoint still await results. See [the recorded evidence](BASELINE.md#partial-pc-result--new-calendar-entry-details-passed).
+
 ## v0.7.2 audit and correction
 
 The owner reported that new available slots used `mié 23 jun 10:00`, while existing appointments offered for cancellation/rescheduling still used `mié 23/06 11:00`. Source inspection confirmed the mismatch: `availability-menu.js` used the shared `slotLabel` formatter, but `management-menu.js` retained its own numerical compact format. The previous scope was too narrow; its tests even expected that old existing-appointment label.

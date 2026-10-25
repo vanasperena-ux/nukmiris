@@ -1,6 +1,8 @@
 # Calendar customer details and concise empty results — v0.7.2
 
-Built on v0.7.1 (`68cda63`), including its Spanish slot labels. **PC verification of v0.7.1/v0.7.2 remains pending; v0.7.0 is the last owner-verified baseline.** The owner plans to test the combined changes on the PC in v0.7.2.
+Built on v0.7.1 (`68cda63`), including its Spanish slot labels. **The new Calendar-entry details passed the owner's PC check; the complete combined checkpoint remains pending. v0.7.0 is the last fully owner-verified baseline.** Use [the v0.7.3 guide](APPOINTMENT_LABELS.md) for the current combined PC checks.
+
+On 2026-10-25 (America/Mexico_City), the owner reported the Calendar-entry check **“PASSED”** and supplied a screenshot showing the requested name/title, international WhatsApp number, reserved status, origin and no service placeholder in the selected Juanita calendar. This verifies new-event visible details only; preservation after rescheduling and the other WhatsApp checks remain pending. See [BASELINE.md](BASELINE.md) for evidence and scope. Customer identifying values are not reproduced here.
 
 ## Newly created Google Calendar appointments
 

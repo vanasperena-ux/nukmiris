@@ -61,7 +61,7 @@ The complete v0.5.0 suite passed **347 offline tests**, with no failures/skips, 
 
 ## Runtime modes
 
-The v0.7.3 suite passed **540 offline tests**, with zero failures/cancellations/skips: 536 regressions plus four cancellation/rescheduling label cases covering business timezones, year boundaries, pagination and preserved actions/state. Existing event details, ownership and lifecycle/recovery checks continue to pass. Combined PC verification is pending; use [APPOINTMENT_LABELS.md](APPOINTMENT_LABELS.md).
+The v0.7.3 suite passed **540 offline tests**, with zero failures/cancellations/skips: 536 regressions plus four cancellation/rescheduling label cases covering business timezones, year boundaries, pagination and preserved actions/state. Existing event details, ownership and lifecycle/recovery checks continue to pass. On 2026-10-25 (America/Mexico_City), the owner reported the new Google Calendar-entry check passed, with a screenshot confirming visible customer details. The remaining combined PC checks are pending; see [BASELINE.md](BASELINE.md) for scope and [APPOINTMENT_LABELS.md](APPOINTMENT_LABELS.md) for the guide.
 
 The v0.7.2 suite passed **536 offline tests**, with zero failures/cancellations/skips, retaining 525 regressions and adding 11 event-detail/identity/rescheduling/HTTP cases. Existing crash recovery, ownership, cancellation and idempotency checks continue to pass. Combined v0.7.1/v0.7.2 PC verification is pending; use [CALENDAR_DETAILS.md](CALENDAR_DETAILS.md).
 
