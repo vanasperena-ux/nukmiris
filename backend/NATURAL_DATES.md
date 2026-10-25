@@ -1,6 +1,8 @@
 # Natural Spanish appointment dates — v0.6.0
 
-Built on the owner-verified v0.5.0 baseline. **v0.6.0 requires its own PC verification.** This update changes date understanding and date guidance in the existing availability menu shared by booking and rescheduling. It retains the two-plus-two choices, time buttons, Calendar services, feature flags, identity, and existing immediate-selection lifecycle.
+Built on the owner-verified v0.5.0 baseline. **v0.6.0 is now the current owner-verified working baseline.** This update changes date understanding and date guidance in the existing availability menu shared by booking and rescheduling. It retains the two-plus-two choices, time buttons, Calendar services, feature flags, identity, and existing immediate-selection lifecycle.
+
+On 2026-10-25 (America/Mexico_City), the owner reported **“v.0.6.0 manually tested and all OK.”** Delivered code reference: `3238e34c5b216ce6b942f61d27e9bb58fa952068`. This records the overall manual checkpoint; no separate PC commit hash or detailed per-case log was supplied. See [BASELINE.md](BASELINE.md) for scope. The automated results and technical limits below remain applicable.
 
 ## Supported input
 
@@ -119,4 +121,4 @@ Use Menu → Agendar to enter the existing availability flow, then type the date
 | In human chat or while a new customer's name is expected, use date-like text/name | Preserve the existing conversation/name handling |
 | Enter an invalid date, restart Node, then correct it; restart again before selecting a shown time | Same flow resumes and the selected appointment is created once |
 
-Separate business timezone/horizon and DST checks are automated with synthetic configurations; the working PC configuration does not need changes to exercise the parser. Record the owner's PC results before declaring v0.6.0 verified.
+Separate business timezone/horizon and DST checks are automated with synthetic configurations; the working PC configuration does not need changes to exercise the parser. The owner's successful manual checkpoint is recorded above; these checks remain available for future regression testing.

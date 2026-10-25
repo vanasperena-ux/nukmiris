@@ -1,12 +1,14 @@
 # Baseline provenance
 
-## Natural Spanish appointment dates — v0.6.0, awaiting PC verification
+## Verified natural Spanish appointment dates baseline — v0.6.0
 
 The owner supplied the flexible-date-input task for the next version after verifying v0.5.0. The shared availability menu previously parsed only `DD/MM/AAAA`; v0.6.0 adds a reusable deterministic date utility for numerical and Spanish month dates, relative days/weeks, and weekdays. Parsing runs only inside the existing appointment-date state for booking/rescheduling, preserving intent routing, name entry, human chat and cancellation. The owner clarified **“Use the next upcoming 13th”** for `el día 13`, so day-only inputs infer the next valid monthly occurrence without asking for a month.
 
 The parser uses the business timezone and existing horizon policy; explicit past dates are rejected, missing years infer the next real occurrence, and invalid/ambiguous input preserves the current state. A bare weekday can use today's real remaining slots or its next-week fallback. Calendar integration, duration/overlap calculations, time selection, lifecycle confirmations, ownership, flags, event metadata, locks/journals and backup/recovery mechanisms remain in place. There is no new dependency, AI call, schema/configuration change, date-confirmation question or separate booking system. See [NATURAL_DATES.md](NATURAL_DATES.md).
 
-Validation: all 460 offline tests passed, with zero failures/skips, retaining the 347 earlier regressions and adding 100 parser, four real-engine menu, eight signed HTTP and one process-restart tests. Fixtures cover calendar formats, all months, rollover/leap years, ambiguity, horizon limits, timezone/DST, protected names/chat, no premature mutations, state preservation and restart continuation. Cloud integrations remain synthetic; real Windows/Google/Meta validation requires the owner. v0.5.0 remains the owner-verified working baseline until the new PC results are reported.
+Validation: all 460 offline tests passed, with zero failures/skips, retaining the 347 earlier regressions and adding 100 parser, four real-engine menu, eight signed HTTP and one process-restart tests. Fixtures cover calendar formats, all months, rollover/leap years, ambiguity, horizon limits, timezone/DST, protected names/chat, no premature mutations, state preservation and restart continuation. Cloud integrations remain synthetic; the cloud agent did not access live accounts or the PC.
+
+On 2026-10-25 (the owner's America/Mexico_City local date), after receiving the v0.6.0 GitHub update and PC testing guide, the owner reported **“v.0.6.0 manually tested and all OK.”** Treat v0.6.0 as the current owner-verified working baseline, retaining the verified v0.5.0 intent recognition and earlier availability, lifecycle and reliability behavior. Delivered code reference: `3238e34c5b216ce6b942f61d27e9bb58fa952068`. No separate PC commit hash or detailed per-case run log was supplied. This verifies the overall manual checkpoint; it does not provide separate live evidence for every simulated timezone/DST, API-failure or exact crash-timing case. Existing technical limits remain applicable.
 
 ## Verified Spanish intent recognition baseline — v0.5.0
 

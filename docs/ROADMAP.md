@@ -1,6 +1,6 @@
 # NukMiris project continuity
 
-Current implementation checkpoint: v0.6.0 natural Spanish appointment dates, awaiting PC verification. Current owner-verified baseline: v0.5.0 deterministic Spanish intent recognition (`b6a9169`), retaining the verified v0.4.1 availability (`8649109`) and v0.4.0 reliability (`9d6358b`) behavior.
+Current implementation and owner-verified baseline: v0.6.0 natural Spanish appointment dates (`3238e34`), retaining the verified v0.5.0 intent recognition (`b6a9169`), v0.4.1 availability (`8649109`) and v0.4.0 reliability (`9d6358b`) behavior.
 
 ## Windows PC command preference
 
@@ -53,4 +53,4 @@ The owner supplied the natural-date-input task for the next version. Replace rig
 
 The owner explicitly selected **“Use the next upcoming 13th”** for `el día 13`. Day-only input therefore uses the next actual occurrence, skipping impossible month days, rather than asking for a month. Missing years infer the next real day/month occurrence; explicit years are respected. Bare weekdays use today only when real valid slots remain, otherwise checking next week within the horizon. The parser runs only where typed dates were already accepted, not in idle intent messages, names or human support.
 
-All 460 offline tests passed, retaining 347 regressions and adding 113 parser/menu/HTTP/restart cases. Use the established GitHub and `npm.cmd` PC update process. v0.6.0 needs owner PC verification; v0.5.0 remains the verified baseline. See [the implementation and test guide](../backend/NATURAL_DATES.md). Hosting and unrelated features remain separate.
+All 460 offline tests passed, retaining 347 regressions and adding 113 parser/menu/HTTP/restart cases. Delivery used the established GitHub and `npm.cmd` PC update process. On 2026-10-25 (America/Mexico_City), the owner reported **“v.0.6.0 manually tested and all OK.”** Record v0.6.0 (`3238e34c5b216ce6b942f61d27e9bb58fa952068`) as the current owner-verified working baseline. No separate PC commit hash or detailed per-case log was supplied; preserve existing technical limits. See [the implementation and test guide](../backend/NATURAL_DATES.md) and [verification record](../backend/BASELINE.md). Hosting and unrelated features remain separate.
