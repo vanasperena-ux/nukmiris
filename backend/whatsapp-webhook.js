@@ -19,6 +19,8 @@ const { createAvailabilityMenu } = require("./lib/availability-menu");
 const { createAppointmentManagement, createAppointmentLookup } = require("./lib/appointment-management");
 const { createManagementMenu } = require("./lib/management-menu");
 const { appointmentSuccess, appointmentOverview, textChunks } = require("./lib/appointment-messages");
+const { createReliableDelivery, createDeliveryWorker, sendStoredReply } = require("./lib/reliable-delivery");
+const { createBackupSchedule } = require("./lib/database-backups");
 
 const app = express();
 app.use(express.json({ limit: "1mb", verify(req, res, bytes) { req.rawBody = bytes; } }));
@@ -31,6 +33,7 @@ const PHONE_ID = process.env.WHATSAPP_PHONE_NUMBER_ID;
 const API_VERSION = process.env.WHATSAPP_API_VERSION || "v26.0";
 const APP_SECRET = process.env.META_APP_SECRET;
 const MODE = process.env.NUKMIRIS_MODE || "support";
+const RELIABILITY_ENABLED = process.env.NUKMIRIS_ENABLE_RELIABILITY === "true";
 const MANAGEMENT_ENABLED = MODE === "booking" && process.env.NUKMIRIS_ENABLE_MANAGEMENT === "true";
 const ROUTING_MODE = process.env.NUKMIRIS_ROUTING_MODE || "receiving_number";
 
@@ -48,6 +51,7 @@ if (!TOKEN || !PHONE_ID || !VERIFY_TOKEN || !APP_SECRET) {
 }
 if (!["support", "availability", "booking"].includes(MODE)) throw new Error("NUKMIRIS_MODE must be support, availability, or booking");
 if (!["development", "receiving_number"].includes(ROUTING_MODE)) throw new Error("Invalid NUKMIRIS_ROUTING_MODE");
+if (RELIABILITY_ENABLED && ROUTING_MODE !== "receiving_number") throw new Error("Reliable delivery requires receiving-number routing");
 if (MODE === "booking" && ROUTING_MODE !== "receiving_number") throw new Error("Automatic booking requires receiving-number routing");
 if (!Number.isInteger(PORT) || PORT < 0 || PORT > 65535) {
   throw new Error("PORT must be an integer between 0 and 65535.");
@@ -74,9 +78,15 @@ if (ROUTING_MODE === "receiving_number") requiredTables.push("business_whatsapp_
 if (["availability", "booking"].includes(MODE)) requiredTables.push("business_settings", "business_calendar_connections");
 if (MODE === "booking") requiredTables.push("booking_requests", "calendar_booking_locks");
 if (MANAGEMENT_ENABLED) requiredTables.push("appointment_changes");
+if (RELIABILITY_ENABLED) requiredTables.push("message_inbox", "message_outbox", "delivery_worker");
 const presentTables = new Set(db.prepare("SELECT name FROM sqlite_master WHERE type='table'").all().map(r => r.name));
 for (const table of requiredTables) {
   if (!presentTables.has(table)) throw new Error(`Phase 6A prerequisite missing: ${table}`);
+}
+if (!RELIABILITY_ENABLED && presentTables.has("message_inbox") && presentTables.has("message_outbox")) {
+  const pending = db.prepare(`SELECT (EXISTS(SELECT 1 FROM message_inbox WHERE state<>'completed') OR
+    EXISTS(SELECT 1 FROM message_outbox WHERE state NOT IN ('accepted','expired'))) AS pending`).get().pending;
+  if (pending) throw new Error("Saved message work is unresolved. Keep NUKMIRIS_ENABLE_RELIABILITY=true to recover it; compatibility mode cannot bypass it.");
 }
 const routeQuery = db.prepare(`
   SELECT r.business_id, b.business_name
@@ -179,6 +189,19 @@ class BusinessHumanSupport {
   }
 }
 const humanSupport = new BusinessHumanSupport(db);
+const delivery = RELIABILITY_ENABLED ? createReliableDelivery({ db,
+  capabilities: JSON.stringify({ mode: MODE, management: MANAGEMENT_ENABLED }),
+  resolveBusiness: phoneId => receivingRoute.get(phoneId),
+}) : null;
+let deliveryWorker, backupSchedule;
+function saveContinuation(kind, requestId, decision, saveState = () => {}) {
+  if (delivery) {
+    const inboxId = businessContext.getStore()?.inboxId;
+    if (!inboxId) throw new Error("Reliable operations require a persisted incoming message");
+    delivery.checkpoint(inboxId, { kind, requestId, decision }, saveState);
+  } else saveState();
+}
+
 
 const SCHEDULING_PAUSED = "Las citas están temporalmente deshabilitadas mientras configuramos el calendario de este negocio. Puedes escribir Menu para regresar o Hablar con alguien para recibir ayuda.";
 
@@ -278,128 +301,44 @@ function validateFullName(input) {
 // WHATSAPP MESSAGE SENDING
 // ==================================================
 
-async function sendMessage(to, body) {
-  const url =
-    `https://graph.facebook.com/${API_VERSION}/` +
-    `${businessFor(to).phone_number_id}/messages`;
-
-  const response = await fetch(url, {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${TOKEN}`,
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      messaging_product: "whatsapp",
-      recipient_type: "individual",
-      to: normalizeRecipient(to),
-      type: "text",
-      text: {
-        preview_url: false,
-        body
-      }
-    })
-  });
-
-  const data = await response.json();
-
-  if (!response.ok) {
-    throw new Error(
-      `WhatsApp API: ${JSON.stringify(data)}`
-    );
+function textPayload(to, body) {
+  return { messaging_product: "whatsapp", recipient_type: "individual", to: normalizeRecipient(to),
+    type: "text", text: { preview_url: false, body } };
+}
+async function sendPayloads(to, payloads) {
+  if (delivery) {
+    const inboxId = businessContext.getStore()?.inboxId;
+    if (!inboxId) throw new Error("Reliable replies require a persisted incoming message");
+    delivery.outputs(inboxId, payloads);
+    return { queued: true };
   }
-
-  console.log("WhatsApp message accepted by Meta.");
+  let data;
+  for (const payload of payloads) {
+    const response = await fetch(`https://graph.facebook.com/${API_VERSION}/${businessFor(to).phone_number_id}/messages`, {
+      method: "POST", headers: { Authorization: `Bearer ${TOKEN}`, "Content-Type": "application/json" }, body: JSON.stringify(payload),
+    });
+    data = await response.json();
+    if (!response.ok) throw new Error(`WhatsApp API: ${JSON.stringify(data)}`);
+    console.log("WhatsApp message accepted by Meta.");
+  }
   return data;
 }
-
-// ==================================================
-// INTERACTIVE WHATSAPP REPLY BUTTONS
-// ==================================================
-
-async function sendReplyButtons(to, body, buttons) {
-  if (!buttons.length || buttons.length > 3) {
-    throw new Error("WhatsApp supports 1 to 3 reply buttons.");
-  }
-  for (const button of buttons) {
-    if (!button.title || button.title.length > 20) {
-      throw new Error("WhatsApp button title must be 1 to 20 characters.");
-    }
-  }
-
-  const response = await fetch(
-    `https://graph.facebook.com/${API_VERSION}/${businessFor(to).phone_number_id}/messages`,
-    {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${TOKEN}`,
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        messaging_product: "whatsapp",
-        recipient_type: "individual",
-        to: normalizeRecipient(to),
-        type: "interactive",
-        interactive: {
-          type: "button",
-          body: { text: body },
-          action: {
-            buttons: buttons.map(button => ({
-              type: "reply",
-              reply: {
-                id: button.id,
-                title: button.title
-              }
-            }))
-          }
-        }
-      })
-    }
-  );
-
-  const data = await response.json();
-  if (!response.ok) {
-    throw new Error(`WhatsApp interactive API: ${JSON.stringify(data)}`);
-  }
-  console.log("WhatsApp interactive buttons accepted by Meta.");
-  return data;
+async function sendMessage(to, body) { return sendPayloads(to, [textPayload(to, body)]); }
+async function sendReplyButtons(to, body, buttons, precedingTexts = []) {
+  if (!buttons.length || buttons.length > 3) throw new Error("WhatsApp supports 1 to 3 reply buttons.");
+  if (buttons.some(button => !button.title || button.title.length > 20)) throw new Error("WhatsApp button title must be 1 to 20 characters.");
+  return sendPayloads(to, [...precedingTexts.map(text => textPayload(to, text)), {
+    messaging_product: "whatsapp", recipient_type: "individual", to: normalizeRecipient(to), type: "interactive",
+    interactive: { type: "button", body: { text: body }, action: {
+      buttons: buttons.map(button => ({ type: "reply", reply: { id: button.id, title: button.title } })),
+    } },
+  }]);
 }
-
-// Interactive list for appointments or choosing a date (at most 10 rows).
 async function sendAppointmentList(to, body, rows, button = "Ver citas", sectionTitle = "Mis citas") {
-  if (rows.length < 1 || rows.length > 10) {
-    throw new Error("WhatsApp list must contain 1-10 rows.");
-  }
-  const response = await fetch(
-    `https://graph.facebook.com/${API_VERSION}/${businessFor(to).phone_number_id}/messages`,
-    {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${TOKEN}`,
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        messaging_product: "whatsapp",
-        recipient_type: "individual",
-        to: normalizeRecipient(to),
-        type: "interactive",
-        interactive: {
-          type: "list",
-          body: { text: body },
-          action: {
-            button,
-            sections: [{ title: sectionTitle, rows }]
-          }
-        }
-      })
-    }
-  );
-  const data = await response.json();
-  if (!response.ok) {
-    throw new Error(`WhatsApp list API: ${JSON.stringify(data)}`);
-  }
-  console.log("WhatsApp appointment list accepted by Meta.");
-  return data;
+  if (rows.length < 1 || rows.length > 10) throw new Error("WhatsApp list must contain 1-10 rows.");
+  return sendPayloads(to, [{ messaging_product: "whatsapp", recipient_type: "individual", to: normalizeRecipient(to), type: "interactive",
+    interactive: { type: "list", body: { text: body }, action: { button, sections: [{ title: sectionTitle, rows }] } },
+  }]);
 }
 
 function slotButtonTitle(iso) {
@@ -443,17 +382,15 @@ async function showMainMenu(from) {
     mode: "main_menu", menuId, expiresAt: Date.now() + OFFER_LIFETIME
   });
   try {
-    if (body.length > 1024) {
-      for (const chunk of textChunks([firstLine, details].filter(Boolean).join("\n\n"))) await sendMessage(from, chunk);
-      body = actions;
-    }
+    const precedingTexts = body.length > 1024 ? textChunks([firstLine, details].filter(Boolean).join("\n\n")) : [];
+    if (precedingTexts.length) body = actions;
     await sendReplyButtons(from,
       body,
       [
         { id: `menu:${menuId}:book`, title: "Agendar una cita" },
         { id: `menu:${menuId}:manage`, title: "Reagendar / cancelar" },
         { id: `menu:${menuId}:human`, title: "Hablar con alguien" }
-      ]
+      ], precedingTexts
     );
   } catch (error) {
     sessions.delete(from);
@@ -477,10 +414,11 @@ async function showManageMenu(from) {
   }
 }
 
-async function beginHumanSupport(from) {
+async function beginHumanSupport(from, initialMessage) {
   sessions.delete(from);
   const customer = customers.get(from);
   humanSupport.open(from, customer?.customer_id);
+  if (initialMessage) humanSupport.saveMessage(from, initialMessage.id, initialMessage.text);
   await sendMessage(from, 'Escribe tu mensaje.\n\nPara organizar tu cita o cancelar, escribe "menu".');
 }
 
@@ -1439,6 +1377,8 @@ const availabilityFlow = availability ? createAvailabilityMenu({
 const managementMenu = management ? createManagementMenu({
   management, availability, sessions, businessFor, sendMessage, sendReplyButtons, sendAppointmentList,
   lookaheadDays: LOOKAHEAD_DAYS, lifetime: OFFER_LIFETIME,
+  saveReceipt: (from, receipt) => saveContinuation("management", receipt.requestId, "retry", () => sessions.set(from, receipt)),
+  beforeDecision: (from, requestId, decision) => saveContinuation("management", requestId, decision),
 }) : null;
 
 async function offerAvailability(from) {
@@ -1484,7 +1424,9 @@ async function completeBookingSelection(from, slot, calendarId, selectionCommand
   const intent = bookings.createIntent({ businessId: business.business_id, sender: from, slot, calendarId });
   // Bind the selected button to its durable request before the Calendar call.
   // A repeat tap checks this request instead of creating another intent.
-  sessions.set(from, { mode: "booking_result", requestId: intent.requestId, selectionCommand, expiresAt: Date.now() + OFFER_LIFETIME });
+  saveContinuation("booking", intent.requestId, "yes", () => sessions.set(from, {
+    mode: "booking_result", requestId: intent.requestId, selectionCommand, expiresAt: Date.now() + OFFER_LIFETIME,
+  }));
   await handleBookingDecision(from, `booking:${intent.requestId}:yes`);
 }
 
@@ -1494,6 +1436,7 @@ async function handleBookingDecision(from, command) {
     await sendMessage(from, "Esta opción ya no está vigente. Escribe Cita para comenzar nuevamente.");
     return;
   }
+  saveContinuation("booking", match[1], match[2]);
   const context = { businessId: businessFor(from).business_id, sender: from, requestId: match[1] };
   const outcome = match[2] === "status" ? await bookings.reconcile(context)
     : match[2] === "no" ? bookings.decline(context) : await bookings.confirm(context);
@@ -1527,7 +1470,7 @@ async function handleMessage(message) {
   const isList = message.type === "interactive" &&
     message.interactive?.type === "list_reply";
   if (!isText && !isButton && !isList) return;
-  if (message.id && alreadyProcessed(`${businessFor(message.from).business_id}:${message.id}`)) return;
+  if (!delivery && message.id && alreadyProcessed(`${businessFor(message.from).business_id}:${message.id}`)) return;
 
   const from = message.from;
   const text = isText ? (message.text?.body || "").trim() :
@@ -1758,13 +1701,13 @@ async function handleMessage(message) {
     } else if (isText && text && activeSession && session.mode === "main_menu") {
       // The invitation in the menu explicitly says to type a message to speak
       // to a person. Preserve that first message rather than discarding it.
-      await beginHumanSupport(from);
-      humanSupport.saveMessage(from, message.id, text);
+      await beginHumanSupport(from, { id: message.id, text });
     } else if (isText && text) {
       // Unrecognized text outside an active workflow opens the main menu.
       await showMainMenu(from);
     }
   } catch (error) {
+    if (delivery) throw error;
     console.error("NukMiris processing error:", error.message);
   } finally {
     busyCustomers.delete(customerKey);
@@ -1795,6 +1738,16 @@ app.get("/webhook", (req, res) => {
 app.post("/webhook", (req, res) => {
   if (!validMetaSignature(req.rawBody, req.get("X-Hub-Signature-256"), APP_SECRET)) {
     return res.sendStatus(403);
+  }
+  if (delivery) {
+    try { delivery.accept(req.body); }
+    catch (error) {
+      console.error("Webhook was not acknowledged because inbox persistence failed.");
+      return res.sendStatus(error.status || 503);
+    }
+    res.sendStatus(200);
+    deliveryWorker?.wake();
+    return;
   }
   res.sendStatus(200);
 
@@ -1831,6 +1784,17 @@ app.post("/webhook", (req, res) => {
 
 async function start() {
   try {
+    if (delivery) {
+      db.exec("PRAGMA journal_mode=WAL; PRAGMA synchronous=FULL; PRAGMA busy_timeout=5000");
+      delivery.acquire();
+      backupSchedule = createBackupSchedule({ db,
+        directory: path.resolve(__dirname, process.env.NUKMIRIS_BACKUP_DIR || ".local/backups"),
+        intervalHours: Number(process.env.NUKMIRIS_BACKUP_INTERVAL_HOURS || 24),
+        keep: Number(process.env.NUKMIRIS_BACKUP_KEEP || 7),
+        onError: () => console.error("Automatic database backup failed; inspect reliability status."),
+      });
+      await backupSchedule.ensure();
+    }
     if (bookings) await bookings.verify();
     if (management) await management.verify();
     if (availability) {
@@ -1841,12 +1805,32 @@ async function start() {
         : "Google Calendar availability connection verified. Event changes remain disabled.");
     }
 
+    if (delivery) {
+      deliveryWorker = createDeliveryWorker({ delivery,
+        handle: input => handleMessage(input.message),
+        resume: input => {
+          const { kind, requestId, decision } = input.continuation;
+          if (kind === "booking" && bookings) return handleBookingDecision(input.sender, `booking:${requestId}:${decision}`);
+          if (kind === "management" && managementMenu) return managementMenu.resume(input.sender, requestId, decision);
+          throw new Error("The recorded operation cannot run with this configuration");
+        },
+        runInContext: (input, action) => businessContext.run({ business: input.business, sender: input.sender, inboxId: input.inbox_id }, action),
+        send: row => sendStoredReply({ row, token: TOKEN, apiVersion: API_VERSION }),
+        onError: () => console.error("Reliable delivery retained work for retry or review."),
+      });
+    }
     return app.listen(PORT, HOST, () => {
+      if (delivery) {
+        deliveryWorker.start();
+        deliveryWorker.wake();
+        backupSchedule.start();
+      }
       console.log("--------------------------------");
       console.log("NukMiris WhatsApp + Google Calendar POC");
       console.log("--------------------------------");
       console.log("Webhook server running on port", PORT);
       console.log(bookings ? "Google Calendar: confirmed new bookings" : availability ? "Google Calendar: read-only availability" : "Google Calendar: DISABLED");
+      console.log(delivery ? "Reliable delivery: persisted inbox/outbox and automatic backups enabled" : "Reliable delivery: disabled");
       console.log("Persistent sessions: SQLite enabled");
       console.log("Customer registry: SQLite enabled");
       console.log(availability ? "Availability lookup: Enabled" : "Availability lookup: Disabled");
@@ -1861,12 +1845,18 @@ async function start() {
     });
 
   } catch (error) {
+    await deliveryWorker?.stop();
+    await backupSchedule?.stop();
+    delivery?.release();
     console.error("Startup failed:", error.message);
     process.exit(1);
   }
 }
 
-module.exports = { app, start, close: () => db.close() };
+module.exports = { app, start, close: () => {
+  if (!delivery) return db.close();
+  return (async () => { await deliveryWorker?.stop(); await backupSchedule?.stop(); delivery.release(); db.close(); })();
+} };
 
 if (require.main === module) {
   start();

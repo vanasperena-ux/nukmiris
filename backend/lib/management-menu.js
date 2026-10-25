@@ -6,7 +6,8 @@ const { createAvailabilityMenu } = require("./availability-menu");
 const { appointmentSuccess } = require("./appointment-messages");
 
 function createManagementMenu({ management, availability, sessions, businessFor, sendMessage,
-  sendReplyButtons, sendAppointmentList, lookaheadDays = 14, lifetime = 15 * 60 * 1000 }) {
+  sendReplyButtons, sendAppointmentList, lookaheadDays = 14, lifetime = 15 * 60 * 1000,
+  saveReceipt = (from, receipt) => sessions.set(from, receipt), beforeDecision = () => {} }) {
   const expired = "Esta opción ya no está vigente. Escribe Reagendar o Cancelar para consultar tus citas.";
   function context(from) { return { businessId: businessFor(from).business_id, sender: from }; }
   function format(from, iso, compact = false) {
@@ -91,10 +92,11 @@ function createManagementMenu({ management, availability, sessions, businessFor,
       }
       throw error;
     }
-    sessions.set(from, { mode: "management_result", requestId: intent.requestId, selectionCommand, expiresAt: Date.now() + lifetime });
+    saveReceipt(from, { mode: "management_result", requestId: intent.requestId, selectionCommand, expiresAt: Date.now() + lifetime });
     await decide(from, intent.requestId, "retry");
   }
   async function decide(from, requestId, decision) {
+    beforeDecision(from, requestId, decision);
     const scope = { ...context(from), requestId };
     const outcome = decision === "status" ? await management.reconcile(scope)
       : decision === "no" ? management.decline(scope) : await management.confirm(scope);
@@ -165,7 +167,7 @@ function createManagementMenu({ management, availability, sessions, businessFor,
     }
     return false;
   }
-  return { handleInteractive, handleText };
+  return { handleInteractive, handleText, resume: decide };
 }
 
 module.exports = { createManagementMenu };

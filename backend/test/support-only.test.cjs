@@ -55,6 +55,7 @@ describe("v6A.4 support-only baseline", { concurrency: false }, () => {
       WHATSAPP_API_VERSION: "v26.0",
       META_APP_SECRET: "synthetic-app-secret",
       NUKMIRIS_MODE: "support",
+      NUKMIRIS_ENABLE_RELIABILITY: "false",
       NUKMIRIS_ROUTING_MODE: "development",
     };
     for (const [key, value] of Object.entries(environment)) {

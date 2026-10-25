@@ -25,7 +25,7 @@ describe("signed selection-based appointment management", { concurrency: false }
     fs.writeFileSync(token, JSON.stringify({ type: "authorized_user", client_id: "synthetic", client_secret: "synthetic", refresh_token: "synthetic" }));
     for (const [key, value] of Object.entries({
       NODE_ENV: "test", HOST: "127.0.0.1", PORT: "0", NUKMIRIS_MODE: "booking", NUKMIRIS_ROUTING_MODE: "receiving_number",
-      NUKMIRIS_ENABLE_MANAGEMENT: "true", NUKMIRIS_DB_PATH: filename, NUKMIRIS_LOOKAHEAD_DAYS: "14", GOOGLE_BOOKING_TOKEN_PATH: token,
+      NUKMIRIS_ENABLE_MANAGEMENT: "true", NUKMIRIS_ENABLE_RELIABILITY: "false", NUKMIRIS_DB_PATH: filename, NUKMIRIS_LOOKAHEAD_DAYS: "14", GOOGLE_BOOKING_TOKEN_PATH: token,
       GOOGLE_OAUTH_TOKEN_PATH: path.join(directory, "unused-read-token.json"),
       WHATSAPP_TOKEN: "synthetic", WHATSAPP_PHONE_NUMBER_ID: "synthetic-unused", WHATSAPP_VERIFY_TOKEN: "synthetic-verify",
       META_APP_SECRET: secret, WHATSAPP_API_VERSION: "v26.0",

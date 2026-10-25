@@ -1,6 +1,6 @@
 {
   "name": "nukmiris-backend",
-  "version": "0.3.1",
+  "version": "0.4.0",
   "private": true,
   "description": "Verified calendar availability plus opt-in, customer-confirmed new bookings",
   "engines": {
@@ -8,7 +8,7 @@
   },
   "scripts": {
     "start": "node whatsapp-webhook.js",
-    "test": "node --test --test-reporter=spec --test-concurrency=1 test/support-only.test.cjs test/availability.test.cjs test/connections.test.cjs test/availability-webhook.test.cjs test/booking.test.cjs test/booking-webhook.test.cjs test/booking-oauth.test.cjs test/management.test.cjs test/management-webhook.test.cjs",
+    "test": "node --test --test-reporter=spec --test-concurrency=1 test/support-only.test.cjs test/availability.test.cjs test/connections.test.cjs test/availability-webhook.test.cjs test/booking.test.cjs test/booking-webhook.test.cjs test/booking-oauth.test.cjs test/management.test.cjs test/management-webhook.test.cjs test/reliability.test.cjs test/backups.test.cjs test/recovery-webhook.test.cjs",
     "google:connect": "node scripts/google-connect.js",
     "calendars:list": "node scripts/connections.js --list-calendars",
     "business:configure": "node scripts/configure-business.js",
@@ -19,7 +19,13 @@
     "booking:reconcile": "node scripts/reconcile-booking.js",
     "management:prepare": "node scripts/prepare-management.js",
     "management:reconcile": "node scripts/reconcile-management.js",
-    "connections:check:management": "node scripts/connections.js --booking --management"
+    "connections:check:management": "node scripts/connections.js --booking --management",
+    "reliability:prepare": "node scripts/reliability.js --prepare",
+    "reliability:status": "node scripts/reliability.js --status",
+    "reliability:retry": "node scripts/reliability.js --retry",
+    "backup:create": "node scripts/database-backup.js --create",
+    "backup:restore-test": "node scripts/database-backup.js --restore-test",
+    "backup:restore": "node scripts/database-backup.js --restore"
   },
   "dependencies": {
     "@google-cloud/local-auth": "3.0.1",

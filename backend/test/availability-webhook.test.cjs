@@ -29,6 +29,7 @@ describe("signed WhatsApp calendar availability", { concurrency: false }, () => 
     for (const [name, value] of Object.entries({
       NODE_ENV: "test", HOST: "127.0.0.1", PORT: "0", NUKMIRIS_DB_PATH: dbPath,
       NUKMIRIS_MODE: "availability", NUKMIRIS_ROUTING_MODE: "receiving_number",
+      NUKMIRIS_ENABLE_RELIABILITY: "false",
       NUKMIRIS_LOOKAHEAD_DAYS: "14", GOOGLE_OAUTH_TOKEN_PATH: token,
       WHATSAPP_TOKEN: "synthetic-unused", WHATSAPP_PHONE_NUMBER_ID: "synthetic-default-not-used",
       WHATSAPP_VERIFY_TOKEN: "synthetic-verify", META_APP_SECRET: secret, WHATSAPP_API_VERSION: "v26.0",

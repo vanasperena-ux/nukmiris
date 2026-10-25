@@ -1,8 +1,10 @@
-# NukMiris bookings and appointment management — v0.3.1
+# NukMiris bookings and restart recovery — v0.4.0
 
 The accepted calendar engine and two-plus-two choices remain in place. `Cita`, `Horarios`, and **Agendar una cita** offer two appointments, then **Más opciones** for two more, then **Elegir fecha** for a day and its times. Version 0.3.1 simplifies the Spanish copy, displays upcoming appointments in a recognized customer's menu, and makes the customer's explicit selection commit booking, rescheduling, or cancellation without an extra confirmation screen. New customers still supply their full name once.
 
-**Current UX checkpoint:** [eight improvements and PC checks](UX_CHECKPOINT.md). **Verified management setup:** [v0.3.0 guide](MANAGEMENT_CHECKPOINT.md). **Accepted appointment choices:** [menu guide](BOOKING_UX.md). **First booking setup:** [v0.2.0 guide](BOOKING_CHECKPOINT.md). **Initial read-only setup:** [PC setup](PC_SETUP.md). **Next planned work:** [saved roadmap](../docs/ROADMAP.md).
+Version 0.4.0 preserves that PC-verified UX and adds optional saved incoming messages/replies, recovery after a process restart, and automatic verified database backups. Calendar writes continue using their existing request journals and verification logic; delivering a saved reply does not create another Calendar request.
+
+**Current PC checkpoint:** [reliability setup and restart tests](RELIABILITY_CHECKPOINT.md). **Verified UX:** [v0.3.1 guide](UX_CHECKPOINT.md). **Verified management setup:** [v0.3.0 guide](MANAGEMENT_CHECKPOINT.md). **First booking setup:** [v0.2.0 guide](BOOKING_CHECKPOINT.md). **Initial read-only setup:** [PC setup](PC_SETUP.md). **Project continuity:** [saved roadmap](../docs/ROADMAP.md).
 
 Juanita's confirmed schedule is Monday–Friday, 10:00–19:00, 60-minute appointments starting on the hour, no buffer between appointments, and lunch 13:00–14:00. On an empty future weekday that gives 10:00, 11:00, 12:00, 14:00, 15:00, 16:00, 17:00, and 18:00. The final appointment ends at 19:00.
 
@@ -31,7 +33,11 @@ The v0.2.1 browsing update passed all 109 offline tests with no skipped tests, a
 
 The complete v0.3.0 offline suite passed all **144 tests**, with no skipped tests. No dependencies changed and no live calendar events or WhatsApp messages were sent by these tests.
 
-The v0.3.1 UX update passed all **159 offline tests**, with no skipped tests. This includes immediate booking/rescheduling/cancellation, exact requested copy, upcoming appointment menus, local dates/times, stale/repeated selections, failed Calendar operations, human chat, and selection replay after a webhook restart. Its real WhatsApp UX check remains pending.
+The v0.3.1 UX update passed all **159 offline tests**, with no skipped tests, and the owner subsequently reported the PC checkpoint successful (“OK I tested v0.3.1 all good thanks”). This includes the verified immediate booking/rescheduling/cancellation flow. Detailed live results for each failure/concurrency case were not supplied.
+
+Reliability tests additionally cover committed ingress before acknowledgement, cross-restart deduplication, ordered replies, state/operation recovery, ambiguous Meta delivery, backups/restore, and forcibly terminated separate Node processes. All integrations in the cloud suite remain simulated.
+
+The complete v0.4.0 suite passed all **188 tests**, with zero failures/skipped tests. It retains the 159 earlier regressions and adds 29 reliability/backup/process tests. The real PC checkpoint is still pending.
 
 ## Runtime modes
 
@@ -40,6 +46,8 @@ The v0.3.1 UX update passed all **159 offline tests**, with no skipped tests. Th
 - `NUKMIRIS_MODE=booking`: the same availability engine plus new-event creation when the customer selects a slot, and live upcoming appointment details in recognized customers' menus. Separate booking authorization and backed-up journal preparation are required. This is opt-in; `.env.example` still selects availability mode.
 
 In booking mode, `NUKMIRIS_ENABLE_MANAGEMENT=true` additionally enables **Reagendar**, **Cancelar**, and the management menu after the `management:prepare` setup command. Selecting a new time commits the reschedule; selecting an appointment from the cancellation list commits cancellation. The flag defaults to false. Existing booking authorization covers both actions. Read-only/support modes never enable them. The legacy archived handlers remain disabled in every mode.
+
+`NUKMIRIS_ENABLE_RELIABILITY=true` enables the saved inbox/outbox and automatic backups after `reliability:prepare`. It requires receiving-number routing and a single local worker for the database. Once enabled, keep it on while saved work remains. Unknown Meta send outcomes wait for a matching signed status or explicit operator review; they are not blindly resent. See the [PC guide](RELIABILITY_CHECKPOINT.md) for recovery and restore limits.
 
 All modes verify Meta signatures. Receiving-number routing is the default: authenticated `metadata.phone_number_id` selects the business and outbound sender. `NUKMIRIS_ROUTING_MODE=development` retains the customer-number simulation for offline regression tests and deliberate legacy development; booking mode rejects it.
 

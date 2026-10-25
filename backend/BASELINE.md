@@ -1,10 +1,20 @@
 # Baseline provenance
 
-## WhatsApp UX update — v0.3.1, awaiting PC verification
+## Reliability/restart recovery — v0.4.0, awaiting PC verification
+
+After verifying v0.3.1, the owner explicitly authorized the reliability/restart-recovery checkpoint. Version 0.4.0 adds an opt-in durable inbox/outbox, persisted operation continuations, saved local conversation checkpoints, signed Meta receipt handling, one local worker owner, automatic verified SQLite backups, and isolated restore commands. Setup and PC checks are in [RELIABILITY_CHECKPOINT.md](RELIABILITY_CHECKPOINT.md).
+
+The verified v0.3.1 conversation flow, calendar availability engine, business/customer isolation, authorization, schedule, mutation algorithms, and request locks remain in place. Reliability preparation is additive and backed up; startup requires explicit preparation and `NUKMIRIS_ENABLE_RELIABILITY=true`. No live accounts, calendar events, or customer messages were used by the cloud agent for validation. Real PC reliability verification remains pending.
+
+Validation: all 188 offline tests passed, with zero failures/skipped tests. The 159 prior regressions remain covered; 29 added tests exercise ingress persistence, deduplication, ordered delivery, atomic checkpoints, unknown send outcomes, scoped recovery, backup/restore, and separate Node processes forcibly killed at recovery checkpoints. Disabling reliability cannot bypass unresolved saved work. The core availability, Calendar authorization, booking/change services, settings, and their regression tests are unchanged from the verified code baseline.
+
+## Verified WhatsApp UX baseline — v0.3.1
 
 The owner requested eight targeted UX changes before the planned reliability checkpoint: menu/copy changes, upcoming appointments in the menu, selection-based booking/rescheduling/cancellation, and consistent Spanish success messages. The current behavior is documented in [UX_CHECKPOINT.md](UX_CHECKPOINT.md); [the roadmap](../docs/ROADMAP.md) preserves reliability/restart recovery as the next planned work.
 
-This request replaces the extra confirmation screens in the verified v0.3.0 UX. The existing availability engine, search window, routing, customer registration, business ownership checks, Google authorization, calendar mutation services, locks, and request journals remain in use. The existing future appointment lookup is reused for menus, including when the management feature is off in connected booking mode. No dependencies or database schema changes are introduced. Only synthetic services/data are used by cloud tests; the new UX has not yet been reported tested on the PC.
+This request replaces the extra confirmation screens in the verified v0.3.0 UX. The existing availability engine, search window, routing, customer registration, business ownership checks, Google authorization, calendar mutation services, locks, and request journals remain in use. The existing future appointment lookup is reused for menus, including when the management feature is off in connected booking mode. No dependencies or database schema changes were introduced in that checkpoint.
+
+The owner subsequently reported **“OK I tested v0.3.1 all good thanks”** and authorized v0.4.0. Treat v0.3.1 as the verified UX baseline. Delivered code reference: `7530df0`; the subsequent documentation-only `7e5cbbf` records use of `npm.cmd` on Windows. No separate PC commit hash or detailed run log was supplied. This verifies the overall checkpoint, not separate live evidence for every automated failure/concurrency case.
 
 Validation: all 159 offline tests passed with no skipped tests. The original schedule, booking-service, and management-service regression tests remain unchanged; the HTTP conversation tests now cover the requested direct-selection UX, messages, menu details, failures, replay, and human handoff.
 

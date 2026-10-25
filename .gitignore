@@ -19,6 +19,7 @@ service-account*.json
 *.db-*
 *.bak
 *.bak-*
+*.partial
 
 # Dependencies and generated/local files
 node_modules/

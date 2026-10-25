@@ -1,6 +1,6 @@
 # WhatsApp UX improvements — v0.3.1
 
-This checkpoint implements the owner's eight requested improvements on top of the PC-verified v0.3.0 baseline. The new UX still needs a WhatsApp check on the PC.
+This checkpoint implements the owner's eight requested improvements on top of the PC-verified v0.3.0 baseline. The owner subsequently verified v0.3.1 (“OK I tested v0.3.1 all good thanks”). The instructions below remain the UX/retest guide; the next [v0.4.0 reliability checkpoint](RELIABILITY_CHECKPOINT.md) preserves these interactions.
 
 ## Customer behavior
 
@@ -63,4 +63,4 @@ The cloud tests use synthetic databases and simulated services, not your PC or r
 
 All **159 offline tests passed**, with zero failures/skipped tests. The availability-engine, booking-service, and management-service regression tests remain unchanged. Updated HTTP tests cover the eight requested improvements, failures, stale/repeated selections, and replay after a webhook restart.
 
-The [saved roadmap](../docs/ROADMAP.md) keeps reliability/restart recovery as the next planned checkpoint after these UX changes are accepted.
+The [saved roadmap](../docs/ROADMAP.md) records the owner's authorization to proceed with reliability/restart recovery after accepting these UX changes.
