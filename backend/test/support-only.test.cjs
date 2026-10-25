@@ -246,6 +246,18 @@ describe("v6A.4 support-only baseline", { concurrency: false }, () => {
     }
   }
 
+  for (const expired of [false, true]) test(`menu bypasses ${expired ? "expired" : "active"} legacy states with all supported capitalization`, async () => {
+    for (const mode of ["book", "reschedule", "cancel", "choose_cancel", "choose_reschedule", "registration", "manage_menu", "booking_confirm", "management_confirm"]) {
+      for (const command of ["menu", "Menu", "MENU", "  MeNú  "]) {
+        fixture.exec("DELETE FROM business_customer_sessions");
+        saveSession(mode, Date.now() + (expired ? -60000 : 60000));
+        await deliver(command);
+        assert.equal(JSON.parse(fixture.prepare("SELECT session_json FROM business_customer_sessions").get().session_json).mode, "main_menu");
+        assert.equal(outgoing.at(-1).interactive.action.buttons[0].reply.title, "Agendar una cita");
+      }
+    }
+  });
+
   test("a stale human-support button is rejected without opening a conversation", async () => {
     await deliver(`menu:${buttonId}:human`, "button_reply");
     assert.match(outgoing[0].text.body, /ya no está vigente/);
@@ -256,7 +268,7 @@ describe("v6A.4 support-only baseline", { concurrency: false }, () => {
     await deliver("Hola");
     const human = outgoing[0].interactive.action.buttons.find(button => button.reply.id.endsWith(":human"));
     await deliver(human.reply.id, "button_reply");
-    assert.equal(outgoing.at(-1).text.body, 'Escribe tu mensaje.\n\nPara organizar tu cita o cancelar, escribe "menu".');
+    assert.equal(outgoing.at(-1).text.body, 'Escribe tu mensaje.\n\nEscribe "menu" para volver al menú principal.');
     await deliver("Synthetic support request");
     const stored = fixture.prepare("SELECT * FROM business_support_messages").all();
     assert.equal(stored.length, 1);
@@ -266,6 +278,20 @@ describe("v6A.4 support-only baseline", { concurrency: false }, () => {
     await deliver("Menu");
     assert.equal(fixture.prepare("SELECT status FROM business_support_conversations WHERE business_id=? AND whatsapp_id=?").get(businessA, sender).status, "closed");
     assert.equal(outgoing.at(-1).interactive.type, "button");
+  });
+
+  test("menu capitalization exits human chat and stale interactive messages receive the standardized escape instruction", async () => {
+    for (const command of ["menu", "Menu", "MENU"]) {
+      await deliver("menu");
+      const human = outgoing.at(-1).interactive.action.buttons[2].reply.id;
+      await deliver(human, "button_reply");
+      await deliver(human, "button_reply");
+      assert.equal(outgoing.at(-1).text.body, 'Tu conversación está en atención personal. Escribe tu mensaje.\n\nEscribe "menu" para volver al menú principal.');
+      await deliver(command);
+      assert.equal(fixture.prepare("SELECT status FROM business_support_conversations").get().status, "closed");
+      assert.equal(outgoing.at(-1).interactive.action.buttons[0].reply.title, "Agendar una cita");
+    }
+    assert.equal(fixture.prepare("SELECT COUNT(*) AS n FROM business_support_messages").get().n, 0);
   });
 
   test("support data stays separate when the development route changes between businesses", async () => {

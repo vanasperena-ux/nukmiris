@@ -292,7 +292,7 @@ describe("signed WhatsApp calendar availability", { concurrency: false }, () => 
       assert.equal(calendarCalls.at(-1).timeMin, "2026-10-27T00:00:00.000-06:00");
       assert.equal(calendarCalls.at(-1).timeMax, "2026-10-28T00:00:00.000-06:00");
       assert.equal(buttons()[0].title, "10:00");
-      assert.doesNotMatch(outgoing.at(-1).payload.interactive.body.text, /DD\/MM|Confirmas/);
+      assert.doesNotMatch(outgoing.at(-1).payload.interactive.body.text, /DD\/MM|Confirmas|menu/i);
       assert.deepEqual(changes, []);
     }
   });
@@ -428,8 +428,25 @@ describe("signed WhatsApp calendar availability", { concurrency: false }, () => 
       await post("Cita");
       assert.equal(calendarCalls.length, callNumber);
       assert.match(outgoing.at(-1).payload.text.body, /No pude consultar el calendario/);
+      assert(outgoing.at(-1).payload.text.body.endsWith('Escribe "menu" para volver al menú principal.'));
       assert.doesNotMatch(outgoing.at(-1).payload.text.body, /No encontré horarios|llamar al negocio/);
       assert.equal(db.prepare("SELECT COUNT(*) AS n FROM business_customer_sessions").get().n, 0);
+    }
+    assert.deepEqual(changes, []);
+    await post("MENU");
+    assert.equal(buttons()[0].title, "Agendar una cita");
+  });
+  test("menu capitalization leaves read-only date/time browsing and invalidates old choices without calendar writes", async () => {
+    for (const command of ["menu", "Menu", "MENU"]) {
+      await openDates(); await post("mañana");
+      const old = buttons()[0].id;
+      const calls = calendarCalls.length;
+      await post(command);
+      assert.equal(buttons()[0].title, "Agendar una cita");
+      assert.equal(stored().mode, "main_menu");
+      await post(old, { kind: "button_reply" });
+      assert.match(outgoing.at(-1).payload.text.body, /ya no está vigente/);
+      assert.equal(calendarCalls.length, calls);
     }
     assert.deepEqual(changes, []);
   });

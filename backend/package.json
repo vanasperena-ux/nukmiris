@@ -1,8 +1,8 @@
 {
   "name": "nukmiris-backend",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "private": true,
-  "description": "Verified calendar availability plus opt-in, customer-confirmed new bookings",
+  "description": "Verified calendar availability plus opt-in, slot-selected new bookings",
   "engines": {
     "node": ">=24 <25"
   },

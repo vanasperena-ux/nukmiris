@@ -1,6 +1,6 @@
 # NukMiris project continuity
 
-Current implementation and owner-verified baseline: v0.6.0 natural Spanish appointment dates (`3238e34`), retaining the verified v0.5.0 intent recognition (`b6a9169`), v0.4.1 availability (`8649109`) and v0.4.0 reliability (`9d6358b`) behavior.
+Current implementation checkpoint: v0.7.0 simple menu instructions, awaiting PC verification. Current owner-verified baseline: v0.6.0 natural Spanish appointment dates (`3238e34`), retaining the verified v0.5.0 intent recognition (`b6a9169`), v0.4.1 availability (`8649109`) and v0.4.0 reliability (`9d6358b`) behavior.
 
 ## Windows PC command preference
 
@@ -54,3 +54,11 @@ The owner supplied the natural-date-input task for the next version. Replace rig
 The owner explicitly selected **“Use the next upcoming 13th”** for `el día 13`. Day-only input therefore uses the next actual occurrence, skipping impossible month days, rather than asking for a month. Missing years infer the next real day/month occurrence; explicit years are respected. Bare weekdays use today only when real valid slots remain, otherwise checking next week within the horizon. The parser runs only where typed dates were already accepted, not in idle intent messages, names or human support.
 
 All 460 offline tests passed, retaining 347 regressions and adding 113 parser/menu/HTTP/restart cases. Delivery used the established GitHub and `npm.cmd` PC update process. On 2026-10-25 (America/Mexico_City), the owner reported **“v.0.6.0 manually tested and all OK.”** Record v0.6.0 (`3238e34c5b216ce6b942f61d27e9bb58fa952068`) as the current owner-verified working baseline. No separate PC commit hash or detailed per-case log was supplied; preserve existing technical limits. See [the implementation and test guide](../backend/NATURAL_DATES.md) and [verification record](../backend/BASELINE.md). Hosting and unrelated features remain separate.
+
+## Authorized checkpoint — v0.7.0 simple menu instructions
+
+The owner supplied the menu simplification task after verifying v0.6.0. Preserve that baseline, use the existing checkout without a worktree, remove repeated routine hints, and use exactly `Escribe "menu" para volver al menú principal.` where useful for escape/recovery. Handle the text command before any current or legacy session state; invalidate unused selections without changing confirmed appointments or discarding pending/uncertain operations.
+
+The `booking_confirm` audit found no current state writer: immediate time-selection booking has been active since v0.3.1. Remove its obsolete customer instruction, safely reset saved legacy state, and retain the internal booking decision/journal/recovery mechanisms. New customers still supply their name once; verified success still produces the existing appointment notification. No changes to identity, calendar ownership, date understanding, availability/durations, lifecycle rules, flags, schema or dependencies are authorized. Services Catalog/reminders are not implemented by this checkpoint.
+
+All 484 offline tests passed, retaining 460 regressions and adding 24 navigation/state/failure/duplicate-delivery/restart cases. Use the established GitHub and `npm.cmd` PC delivery workflow. v0.7.0 awaits owner PC verification; v0.6.0 remains the verified baseline. See [the before/after messages, audit and test guide](../backend/MENU_UX.md). Hosting and unrelated feature work remain separate.

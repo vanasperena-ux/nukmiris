@@ -1,5 +1,13 @@
 # Baseline provenance
 
+## Simple menu instructions — v0.7.0, awaiting PC verification
+
+After verifying v0.6.0, the owner requested concise menu instructions and an audit of global menu navigation and immediate booking. Version 0.7.0 removes routine repeated hints, centralizes the exact sentence `Escribe "menu" para volver al menú principal.`, and handles `menu` before all session-specific dispatch. This fixes a legacy-state guard that could intercept the command. Capitalization, accents and existing equivalent commands retain their established normalization.
+
+Returning to the menu closes human support, replaces transient state and declines only unused request offers for the current business/customer. Confirmed appointments, pending/uncertain operations, request identity, locks and status recovery remain intact. No current flow created `booking_confirm`; its obsolete free-text confirmation instruction is replaced by safe stale-state recovery. Slot selection still initiates booking automatically, after name entry only for a new customer, and only verified success produces the appointment notification.
+
+Validation: all 484 offline tests passed, with zero failures/cancellations/skips, retaining 460 earlier regressions and adding nine booking, nine management, three support/legacy-state, one read-only availability and two real process-restart tests. Cases verify capitalization, active/expired states, concise prompts, immediate booking, scoped offer invalidation, preserved confirmed appointments/uncertain requests/locks, Calendar failures, duplicate deliveries and recovery without repeated mutations. Scope, before/after messages, files, limits and PC instructions are in [MENU_UX.md](MENU_UX.md). Cloud integrations remain synthetic. v0.6.0 remains the owner-verified working baseline until v0.7.0 PC results are reported.
+
 ## Verified natural Spanish appointment dates baseline — v0.6.0
 
 The owner supplied the flexible-date-input task for the next version after verifying v0.5.0. The shared availability menu previously parsed only `DD/MM/AAAA`; v0.6.0 adds a reusable deterministic date utility for numerical and Spanish month dates, relative days/weeks, and weekdays. Parsing runs only inside the existing appointment-date state for booking/rescheduling, preserving intent routing, name entry, human chat and cancellation. The owner clarified **“Use the next upcoming 13th”** for `el día 13`, so day-only inputs infer the next valid monthly occurrence without asking for a month.

@@ -1,4 +1,6 @@
-# NukMiris natural Spanish appointment dates — v0.6.0
+# NukMiris simple menu instructions — v0.7.0
+
+Version 0.7.0 removes repeated menu instructions from normal name/date/time and appointment-selection prompts. Helpful escape instructions use exactly `Escribe "menu" para volver al menú principal.` A global text-command handler returns to the main menu before current or legacy session handlers, clears transient selections and closes human support while preserving confirmed appointments and saved operations. The obsolete `booking_confirm` instruction is removed; selecting a time still initiates booking immediately, with name entry only for new customers. See [MENU_UX.md](MENU_UX.md) for the message comparison, code audit, limits and PC tests. **v0.7.0 PC verification is pending; v0.6.0 remains the owner-verified baseline.**
 
 Version 0.6.0 accepts dates such as `13 oct`, `13/10`, `mañana`, `próximo lunes`, and `en dos semanas` inside the existing booking/rescheduling availability flow. It uses the business timezone, infers the next year when needed, and validates real dates against the existing booking horizon. As confirmed by the owner, `el día 13` means the next actual 13th. Invalid dates keep the conversation in place; valid dates show available times without a date-confirmation question. See [NATURAL_DATES.md](NATURAL_DATES.md) for rules, limitations and PC tests. **The owner manually tested v0.6.0 successfully; it is the current PC-verified working baseline.**
 
@@ -10,7 +12,7 @@ Version 0.4.0 preserves that PC-verified UX and adds optional saved incoming mes
 
 The v0.4.1 update extends availability discovery: check 30 calendar days, then 15 new days at a time until three available dates are found or the 365-day booking horizon is reached. Booking and rescheduling share these rules. The two-plus-two interaction stays in place, specific dates are checked directly, and each selected slot is checked again before the existing Calendar write. See [the implementation and PC update/test guide](DYNAMIC_AVAILABILITY.md). The owner completed that checkpoint successfully; v0.5.0 retains its verified behavior.
 
-**Current PC checkpoint:** [v0.6.0 natural dates](NATURAL_DATES.md). **Verified Spanish intent recognition:** [v0.5.0 guide](INTENT_RECOGNITION.md). **Verified dynamic availability:** [v0.4.1 guide](DYNAMIC_AVAILABILITY.md). **Verified reliability:** [v0.4.0 setup and restart tests](RELIABILITY_CHECKPOINT.md). **Verified UX:** [v0.3.1 guide](UX_CHECKPOINT.md). **Verified management setup:** [v0.3.0 guide](MANAGEMENT_CHECKPOINT.md). **First booking setup:** [v0.2.0 guide](BOOKING_CHECKPOINT.md). **Initial read-only setup:** [PC setup](PC_SETUP.md). **Project continuity:** [saved roadmap](../docs/ROADMAP.md).
+**Current PC checkpoint:** [v0.7.0 simple menu instructions](MENU_UX.md). **Verified natural dates:** [v0.6.0 guide](NATURAL_DATES.md). **Verified Spanish intent recognition:** [v0.5.0 guide](INTENT_RECOGNITION.md). **Verified dynamic availability:** [v0.4.1 guide](DYNAMIC_AVAILABILITY.md). **Verified reliability:** [v0.4.0 setup and restart tests](RELIABILITY_CHECKPOINT.md). **Verified UX:** [v0.3.1 guide](UX_CHECKPOINT.md). **Verified management setup:** [v0.3.0 guide](MANAGEMENT_CHECKPOINT.md). **First booking setup:** [v0.2.0 guide](BOOKING_CHECKPOINT.md). **Initial read-only setup:** [PC setup](PC_SETUP.md). **Project continuity:** [saved roadmap](../docs/ROADMAP.md).
 
 Juanita's confirmed schedule is Monday–Friday, 10:00–19:00, 60-minute appointments starting on the hour, no buffer between appointments, and lunch 13:00–14:00. On an empty future weekday that gives 10:00, 11:00, 12:00, 14:00, 15:00, 16:00, 17:00, and 18:00. The final appointment ends at 19:00.
 
@@ -52,6 +54,8 @@ Following the owner's booking-restart report, five additional process/diagnostic
 The complete v0.5.0 suite passed **347 offline tests**, with no failures/skips, retaining the 214 earlier regressions and adding 133 intent/conversation/recovery cases. The verified v0.4.1 lifecycle services and flags remain unchanged. The owner subsequently reported **“I tested v.0.5.0 and all good!”** See [BASELINE.md](BASELINE.md) for the PC verification record and its scope.
 
 ## Runtime modes
+
+The v0.7.0 suite passed **484 offline tests**, with zero failures/cancellations/skips: 460 earlier regressions plus 24 navigation, state, failure, deduplication and process-restart cases. The menu/wording update leaves the existing calendar lifecycle and recovery services intact. Owner PC verification is pending; use [MENU_UX.md](MENU_UX.md).
 
 The v0.6.0 suite passed **460 offline tests**, with no failures/skips: the 347 earlier regressions plus 113 date-parser/menu/conversation/restart cases. No dependencies, feature flags, database schema, Calendar services or event metadata changed. On 2026-10-25 (America/Mexico_City), the owner reported **“v.0.6.0 manually tested and all OK.”** See [BASELINE.md](BASELINE.md) for the verification record and [NATURAL_DATES.md](NATURAL_DATES.md) for the guide.
 

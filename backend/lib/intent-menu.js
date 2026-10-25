@@ -1,5 +1,6 @@
 "use strict";
 const { randomUUID } = require("node:crypto");
+const { MENU_INSTRUCTION } = require("./menu-messages");
 const labels = { BOOK: "Agendar una cita", RESCHEDULE: "Reagendar mi cita", CANCEL: "Cancelar mi cita" };
 
 function createIntentMenu({ sessions, sendReplyButtons, sendMessage, lifetime = 15 * 60 * 1000 }) {
@@ -16,7 +17,7 @@ function createIntentMenu({ sessions, sendReplyButtons, sendMessage, lifetime = 
   async function select(from, command) {
     const session = sessions.get(from);
     if (session?.mode !== "intent_clarification" || Date.now() > session.expiresAt || !session.actions?.includes(command)) {
-      await sendMessage(from, "Esta opción ya no está vigente. Escribe Menu para ver las opciones actuales.");
+      await sendMessage(from, "Esta opción ya no está vigente. " + MENU_INSTRUCTION);
       return null;
     }
     return command.split(":").at(-1).toUpperCase();

@@ -4,6 +4,7 @@ const { randomUUID } = require("node:crypto");
 const { DateTime } = require("luxon");
 const { createAvailabilityMenu } = require("./availability-menu");
 const { appointmentSuccess } = require("./appointment-messages");
+const { MENU_INSTRUCTION } = require("./menu-messages");
 
 function createManagementMenu({ management, availability, sessions, businessFor, sendMessage,
   sendReplyButtons, sendAppointmentList, lookaheadDays, lifetime = 15 * 60 * 1000,
@@ -40,8 +41,8 @@ function createManagementMenu({ management, availability, sessions, businessFor,
     session.actions = rows.map(row => row.id);
     sessions.set(from, session);
     const body = session.kind === "cancel"
-      ? 'Selecciona la cita que deseas cancelar. Se cancelará al seleccionarla.\n\nEscribe "menu" para volver.'
-      : 'Selecciona la cita que deseas reagendar.\n\nEscribe "menu" para volver.';
+      ? "Selecciona la cita que deseas cancelar. Se cancelará al seleccionarla."
+      : "Selecciona la cita que deseas reagendar.";
     if (rows.length <= 3) await sendReplyButtons(from, body, rows);
     else await sendAppointmentList(from, body, rows);
   }
@@ -50,7 +51,7 @@ function createManagementMenu({ management, availability, sessions, businessFor,
     sessions.delete(from);
     const appointments = await management.listAppointments(context(from));
     if (!appointments.length) {
-      await sendMessage(from, "No encontré próximas citas de NukMiris para tu número en este negocio. Escribe Cita para hacer una reserva nueva o Menu para recibir ayuda.");
+      await sendMessage(from, "No encontré próximas citas de NukMiris para tu número en este negocio. Escribe Cita para hacer una reserva nueva. " + MENU_INSTRUCTION);
       return;
     }
     if (kind === "reschedule" && appointments.length === 1) await beginReschedule(from, appointments[0]);
@@ -91,7 +92,7 @@ function createManagementMenu({ management, availability, sessions, businessFor,
       }
       if (details.kind === "cancel" && ([404, 410].includes(Number(error.response?.status || error.code)) || error.code === "APPOINTMENT_GONE")) {
         sessions.delete(from);
-        await sendMessage(from, 'Esa cita ya no aparece en el calendario. Escribe "menu" para revisar tus citas.');
+        await sendMessage(from, "Esa cita ya no aparece en el calendario. " + MENU_INSTRUCTION);
         return;
       }
       throw error;
@@ -126,8 +127,8 @@ function createManagementMenu({ management, availability, sessions, businessFor,
       const appointment = await management.readAppointment({ ...context(from), bookingRequestId: outcome.bookingRequestId });
       await beginReschedule(from, appointment, "No pudimos cambiar tu cita a ese horario. Te muestro otras opciones.");
     } else if (outcome.status === "declined") {
-      await sendMessage(from, "No realizamos cambios en tu cita. Escribe Menu para volver.");
-    } else await sendMessage(from, "No pudimos realizar este cambio. Escribe Reagendar o Cancelar para consultar de nuevo tu cita, o Menu para recibir ayuda.");
+      await sendMessage(from, "No realizamos cambios en tu cita. " + MENU_INSTRUCTION);
+    } else await sendMessage(from, "No pudimos realizar este cambio. Escribe Reagendar o Cancelar para consultar de nuevo tu cita. " + MENU_INSTRUCTION);
   }
   async function handleInteractive(from, command) {
     const current = sessions.get(from);
@@ -165,11 +166,11 @@ function createManagementMenu({ management, availability, sessions, businessFor,
     const session = sessions.get(from);
     if (session?.mode === "reschedule_browse") return rescheduleFlow(from).handleText(from, text);
     if (session?.mode === "management_result") {
-      await sendMessage(from, 'Para organizar tu cita o cancelar, escribe "menu".');
+      await sendMessage(from, MENU_INSTRUCTION);
       return true;
     }
     if (["management_menu", "management_select", "management_confirm"].includes(session?.mode)) {
-      await sendMessage(from, Date.now() > session.expiresAt ? expired : "Usa los botones para elegir o confirmar. Escribe Menu para volver.");
+      await sendMessage(from, Date.now() > session.expiresAt ? expired : "Selecciona una de las opciones disponibles.");
       return true;
     }
     return false;

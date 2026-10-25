@@ -173,7 +173,7 @@ describe("signed selection-based appointment management", { concurrency: false }
     assert.match(body(), /Se cancelará al seleccionarla/);
     const selections = buttons().map(button => button.id);
     await post("Quiero una cita nueva");
-    assert.match(body(), /Usa los botones/);
+    assert.equal(body(), "Selecciona una de las opciones disponibles.");
     const session = JSON.parse(f.db.prepare("SELECT session_json FROM business_customer_sessions").get().session_json);
     assert.deepEqual(session.actions, selections);
     assert.equal(f.patches.length + f.deletes.length, 0);
@@ -204,7 +204,7 @@ describe("signed selection-based appointment management", { concurrency: false }
     await click(buttons().find(button => button.id.endsWith(":manage")).id);
     await click(buttons().find(button => button.id.endsWith(":cancel")).id);
     assert.equal(f.deletes.length, 0);
-    assert.match(body(), /Se cancelará al seleccionarla/);
+    assert.equal(body(), "Selecciona la cita que deseas cancelar. Se cancelará al seleccionarla.");
     const selected = buttons()[0].id;
     await click(selected); await click(selected);
     assert.match(body(), /está cancelada/);
@@ -240,6 +240,7 @@ describe("signed selection-based appointment management", { concurrency: false }
   test("multiple appointments require selecting the exact appointment before rescheduling", async () => {
     const first = await f.seed(), second = await f.seed({ hour: 12 });
     await post("Reagendar");
+    assert.equal(body(), "Selecciona la cita que deseas reagendar.");
     assert(buttons().every(button => button.id.includes(":pick:")));
     await click(buttons()[1].id);
     assert.equal(f.patches.length, 0);
@@ -306,6 +307,76 @@ describe("signed selection-based appointment management", { concurrency: false }
     await post("Cita"); await click(reschedule);
     assert.match(body(), /ya no está vigente/);
     assert.equal(f.deletes.length + f.patches.length, 0);
+  });
+  for (const state of ["management_menu", "cancel_selection", "reschedule_selection", "reschedule_dates", "reschedule_times", "management_result"]) {
+    test(`menu, Menu and MENU leave ${state} without changing appointments or allowing old selections`, async () => {
+      await f.seed();
+      if (state === "reschedule_selection") await f.seed({ hour: 12 });
+      for (const command of ["menu", "Menu", "MENU"]) {
+        let old;
+        if (state === "management_menu") {
+          await post("menu"); await click(buttons().find(button => button.id.endsWith(":manage")).id);
+          old = buttons()[0].id;
+        } else if (state === "cancel_selection") { await post("Cancelar"); old = buttons()[0].id; }
+        else {
+          await post("Reagendar");
+          if (state === "reschedule_dates") { await click(buttons()[2].id); await click(buttons()[2].id); old = rows()[0].id; }
+          else if (state === "reschedule_times") { await post("mañana"); old = buttons()[0].id; }
+          else { old = buttons()[0].id; if (state === "management_result") await click(old); }
+        }
+        const changes = f.patches.length + f.deletes.length;
+        const calendar = structuredClone([...f.events]);
+        const bookings = f.db.prepare("SELECT * FROM booking_requests ORDER BY request_id").all();
+        await post(command);
+        assert.equal(JSON.parse(f.db.prepare("SELECT session_json FROM business_customer_sessions").get().session_json).mode, "main_menu");
+        assert.equal(buttons()[0].title, "Agendar una cita");
+        assert.deepEqual([...f.events], calendar);
+        assert.deepEqual(f.db.prepare("SELECT * FROM booking_requests ORDER BY request_id").all(), bookings);
+        await post(old, { kind: state === "reschedule_dates" ? "list_reply" : "button_reply" });
+        assert.match(body(), /ya no está vigente/);
+        assert.equal(f.patches.length + f.deletes.length, changes);
+      }
+    });
+  }
+  test("Menu declines only unused offers for the current customer and keeps confirmed appointments intact", async () => {
+    const source = await f.seed();
+    const booking = f.booking.createIntent({ businessId: "synthetic-a", sender: "synthetic-one", calendarId: "calendar-synthetic-a", slot: f.slot(11) });
+    const change = await f.intent(source);
+    const other = f.booking.createIntent({ businessId: "synthetic-b", sender: "synthetic-one", calendarId: "calendar-synthetic-b", slot: f.slot(11) });
+    const otherCustomer = f.booking.createIntent({ businessId: "synthetic-a", sender: "synthetic-two", calendarId: "calendar-synthetic-a", slot: f.slot(12) });
+    const calendar = structuredClone([...f.events]);
+    await post("menu");
+    assert.equal(f.db.prepare("SELECT state FROM booking_requests WHERE request_id=?").get(booking.requestId).state, "declined");
+    assert.equal(f.db.prepare("SELECT state FROM appointment_changes WHERE request_id=?").get(change.requestId).state, "declined");
+    for (const request of [other, otherCustomer]) assert.equal(f.db.prepare("SELECT state FROM booking_requests WHERE request_id=?").get(request.requestId).state, "offered");
+    assert.equal(f.db.prepare("SELECT state FROM booking_requests WHERE request_id=?").get(source.bookingRequestId).state, "confirmed");
+    await click(`booking:${booking.requestId}:yes`);
+    await click(`change:${change.requestId}:yes`);
+    assert.deepEqual([...f.events], calendar);
+    assert.equal(f.inserts.length, 1); assert.equal(f.patches.length + f.deletes.length, 0);
+  });
+  test("Menu preserves an uncertain change and its lock while the original status action stays usable", async () => {
+    await f.seed(); await post("Cancelar");
+    f.controls.deleteError = 503; await click(buttons()[0].id);
+    const status = buttons()[0].id;
+    const change = f.db.prepare("SELECT * FROM appointment_changes").get();
+    const lock = f.db.prepare("SELECT * FROM calendar_booking_locks").all();
+    await post("MENU");
+    assert.equal(buttons()[0].title, "Agendar una cita");
+    assert.deepEqual(f.db.prepare("SELECT * FROM appointment_changes").get(), change);
+    assert.deepEqual(f.db.prepare("SELECT * FROM calendar_booking_locks").all(), lock);
+    await click(status);
+    assert.match(body(), /sigue en verificación/);
+    assert.equal(f.deletes.length, 1);
+  });
+  test("management lookup errors keep recovery guidance and menu returns without changing the source", async () => {
+    await f.seed(); f.controls.failList = true;
+    await post("Reagendar");
+    assert.match(body(), /No pude completar la solicitud/);
+    assert(body().endsWith('Escribe "menu" para volver al menú principal.'));
+    await post("MENU");
+    assert.equal(buttons()[0].title, "Agendar una cita");
+    assert.equal(f.patches.length + f.deletes.length, 0);
   });
   test("a busy target discovered after the offer leaves the original appointment unchanged", async () => {
     const source = await f.seed(); await post("Reagendar");

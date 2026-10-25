@@ -109,8 +109,8 @@ function createAvailabilityMenu({ availability, sessions, businessFor, sendMessa
     const day = local(session.selectedDate, zone).toFormat("cccc d 'de' LLLL yyyy");
     await sendReplyButtons(from, session.slots.length
       ? (page > 0 ? "Te muestro mas opciones. Elige un horario que te funciona mejor:"
-        : `¿Qué hora prefieres para el ${day}?\n\n${guidance} Para cambiar de día, escribe otra fecha. Escribe Menu para volver.`)
-      : `No hay horarios disponibles para el ${day}. Elige otra fecha o escríbela. Escribe Menu para volver.`, choices);
+        : `¿Qué hora prefieres para el ${day}?\n\n${guidance} Para cambiar de día, escribe otra fecha.`)
+      : `No hay horarios disponibles para el ${day}. Elige otra fecha o escríbela.`, choices);
   }
 
   async function chooseDate(from, session, day, fallback) {

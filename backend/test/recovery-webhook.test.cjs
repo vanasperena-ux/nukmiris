@@ -205,6 +205,41 @@ test("a later stale main-menu action is recorded separately from the successful 
     assert.notEqual(records[2].inbox_id, records[3].inbox_id);
   } finally { await f.cleanup(); }
 });
+for (const state of ["booking_name", "human_support"]) test(`global menu recovers after a crash while leaving ${state} without reviving old selections`, async () => {
+  const f = await fixture();
+  try {
+    const sender = "synthetic-new";
+    let old;
+    if (state === "booking_name") {
+      old = f.buttons(await f.post("Cita", { sender }))[0].id;
+      assert.equal((await f.post(old, { sender, kind: "button_reply" })).text.body,
+        "Para reservar este horario, indícanos tu nombre completo.");
+    } else {
+      old = f.buttons(await f.post("menu", { sender })).find(button => button.id.endsWith(":human")).id;
+      assert.equal((await f.post(old, { sender, kind: "button_reply" })).text.body,
+        'Escribe tu mensaje.\n\nEscribe "menu" para volver al menú principal.');
+    }
+    const count = f.messages().length;
+    await f.phase("after_local_state");
+    const input = f.incoming("MENU", { sender });
+    const request = f.postPayload(input).catch(() => {});
+    await waitFor(f.paused); await f.kill(); await request; await f.start();
+    await waitFor(() => f.messages().length === count + 1);
+    // The fixture records a Meta send before its acceptance is committed.
+    // Let that reply finish before the second restart; killing during the send
+    // deliberately leaves an uncertain outbox, covered by the separate test.
+    await waitFor(() => f.db.prepare("SELECT COUNT(*) AS n FROM message_outbox WHERE state IN ('pending','sending')").get().n === 0);
+    assert.equal(f.buttons(f.messages().at(-1).payload)[0].title, "Agendar una cita");
+    assert.equal(JSON.parse(f.db.prepare("SELECT session_json FROM business_customer_sessions WHERE whatsapp_id=?").get(sender).session_json).mode, "main_menu");
+    if (state === "human_support") assert.equal(f.db.prepare("SELECT status FROM business_support_conversations WHERE whatsapp_id=?").get(sender).status, "closed");
+    await f.kill(); await f.start();
+    assert.equal(await f.postPayload(input), 200);
+    assert.match((await f.post(old, { sender, kind: "button_reply" })).text.body, /ya no está vigente/);
+    assert.equal(f.messages().length, count + 2);
+    assert.equal(f.db.prepare("SELECT COUNT(*) AS n FROM booking_requests").get().n, 0);
+    assert.equal(f.calls().filter(call => ["insert", "patch", "delete"].includes(call.method)).length, 0);
+  } finally { await f.cleanup(); }
+});
 for (const operation of ["insert", "patch", "delete"]) test(`real process recovery after Calendar ${operation} does not repeat its mutation`, async () => {
   const f = await fixture();
   try {

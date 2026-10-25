@@ -24,6 +24,7 @@ const { createBackupSchedule } = require("./lib/database-backups");
 const { readSearchPolicy, selectedDate } = require("./lib/availability-search");
 const { normalizeMessage, recognizeIntent } = require("./lib/intent-recognition");
 const { createIntentMenu } = require("./lib/intent-menu");
+const { MENU_INSTRUCTION } = require("./lib/menu-messages");
 
 const app = express();
 app.use(express.json({ limit: "1mb", verify(req, res, bytes) { req.rawBody = bytes; } }));
@@ -206,7 +207,7 @@ function saveContinuation(kind, requestId, decision, saveState = () => {}) {
 }
 
 
-const SCHEDULING_PAUSED = "Las citas están temporalmente deshabilitadas mientras configuramos el calendario de este negocio. Puedes escribir Menu para regresar o Hablar con alguien para recibir ayuda.";
+const SCHEDULING_PAUSED = "Las citas están temporalmente deshabilitadas mientras configuramos el calendario de este negocio. " + MENU_INSTRUCTION;
 
 // Locks remain process-local in Phase 5A.
 const busyCustomers = new Set();
@@ -422,7 +423,7 @@ async function beginHumanSupport(from, initialMessage) {
   const customer = customers.get(from);
   humanSupport.open(from, customer?.customer_id);
   if (initialMessage) humanSupport.saveMessage(from, initialMessage.id, initialMessage.text);
-  await sendMessage(from, 'Escribe tu mensaje.\n\nPara organizar tu cita o cancelar, escribe "menu".');
+  await sendMessage(from, "Escribe tu mensaje.\n\n" + MENU_INSTRUCTION);
 }
 
 // ==================================================
@@ -1421,7 +1422,7 @@ async function selectAvailableSlot(from, slot, session, selectionCommand) {
     const customer = customers.get(from);
     if (!customer) {
       sessions.set(from, { mode: "booking_name", slot, selectionCommand, calendarId: session.calendarId, expiresAt: Date.now() + OFFER_LIFETIME });
-      await sendMessage(from, "Para reservar este horario, indícanos tu nombre completo. Escribe Menu para volver.");
+      await sendMessage(from, "Para reservar este horario, indícanos tu nombre completo.");
     } else {
       await completeBookingSelection(from, slot, session.calendarId, selectionCommand);
     }
@@ -1430,7 +1431,7 @@ async function selectAvailableSlot(from, slot, session, selectionCommand) {
   const zone = availability.configuration(businessFor(from).business_id).settings.timeZone;
   await sendMessage(from, "El horario sigue disponible: " +
     DateTime.fromISO(slot.start).setZone(zone).setLocale("es").toFormat("cccc d 'de' LLLL, HH:mm") +
-    ".\n\nLa reserva automática todavía no está activada. Escribe Menu para regresar o hablar con el negocio.");
+    ".\n\nLa reserva automática todavía no está activada. " + MENU_INSTRUCTION);
 }
 
 async function completeBookingSelection(from, slot, calendarId, selectionCommand) {
@@ -1511,16 +1512,24 @@ async function handleMessage(message) {
     // Only comparison text is normalized; the incoming message and free text
     // passed to registration/support/date handlers retain their original value.
     if (isText && ["hola", "menu"].includes(normalizeMessage(text))) command = normalizeMessage(text);
+    // Global navigation must precede every current or legacy session handler.
+    // Only unused offers are declined; confirmed/uncertain operations and their
+    // durable journals/locks remain intact for normal recovery.
+    if (isText && command === "menu") {
+      if (bookings) bookings.invalidateOffers({ businessId: business.business_id, sender: from });
+      if (management) management.invalidateOffers({ businessId: business.business_id, sender: from });
+      if (humanSupport.isOpen(from)) humanSupport.close(from);
+      sessions.delete(from);
+      await showMainMenu(from);
+      return;
+    }
     // Human chat owns every message except Menu, including appointment words.
     if (humanSupport.isOpen(from)) {
-      if (isText && command === "menu") {
-        humanSupport.close(from);
-        await showMainMenu(from);
-      } else if (isText && text) {
+      if (isText && text) {
         humanSupport.saveMessage(from, message.id, text);
         console.log("Business human-support message stored:", business.business_id);
       } else {
-        await sendMessage(from, "Tu conversación está en atención personal. Escribe tu mensaje o Menu.");
+        await sendMessage(from, "Tu conversación está en atención personal. Escribe tu mensaje.\n\n" + MENU_INSTRUCTION);
       }
       return;
     }
@@ -1538,7 +1547,7 @@ async function handleMessage(message) {
         if (appointmentLookup && customers.get(from)) {
           try { upcoming = (await appointmentLookup.listAppointments({ businessId: business.business_id, sender: from })).length > 0; }
           catch {
-            await sendMessage(from, "No pude consultar tus citas en este momento. Intenta más tarde o escribe Menu para recibir ayuda.");
+            await sendMessage(from, "No pude consultar tus citas en este momento. Intenta más tarde. " + MENU_INSTRUCTION);
             return;
           }
         }
@@ -1564,7 +1573,7 @@ async function handleMessage(message) {
     if (isAppointmentAction) {
       sessions.delete(from);
       await sendMessage(from, bookings
-        ? "Esta opción aún no está disponible. Escribe Cita para hacer una reserva nueva o Menu para recibir ayuda."
+        ? "Esta opción aún no está disponible. Escribe Cita para hacer una reserva nueva. " + MENU_INSTRUCTION
         : SCHEDULING_PAUSED);
       return;
     }
@@ -1581,7 +1590,7 @@ async function handleMessage(message) {
       catch (error) {
         sessions.delete(from);
         console.error("Calendar availability check failed; inspect the local connection configuration.");
-        await sendMessage(from, "No pude consultar el calendario en este momento. Intenta más tarde o escribe Menu para recibir ayuda.");
+        await sendMessage(from, "No pude consultar el calendario en este momento. Intenta más tarde. " + MENU_INSTRUCTION);
       }
       return;
     }
@@ -1592,7 +1601,7 @@ async function handleMessage(message) {
         if (handled) return;
       } catch (error) {
         console.error("Appointment management could not be completed or delivered; retry the same confirmation to check a submitted change.");
-        await sendMessage(from, 'No pude completar la solicitud. Si ya seleccionaste un horario o una cita, vuelve a seleccionar la misma opción para revisar su estado antes de intentar otro cambio. Escribe "menu" para volver.');
+        await sendMessage(from, "No pude completar la solicitud. Si ya seleccionaste un horario o una cita, vuelve a seleccionar la misma opción para revisar su estado antes de intentar otro cambio. " + MENU_INSTRUCTION);
         return;
       }
     }
@@ -1602,7 +1611,7 @@ async function handleMessage(message) {
         if (bookings && selected?.selectionCommand === command && selected.mode === "booking_result") {
           await handleBookingDecision(from, `booking:${selected.requestId}:yes`);
         } else if (bookings && selected?.selectionCommand === command && selected.mode === "booking_name") {
-          await sendMessage(from, "Para reservar este horario, indícanos tu nombre completo. Escribe Menu para volver.");
+          await sendMessage(from, "Para reservar este horario, indícanos tu nombre completo.");
         } else await availabilityFlow.handleSelection(from, command);
       }
       catch (error) {
@@ -1616,7 +1625,7 @@ async function handleMessage(message) {
       try { if (await availabilityFlow.handleText(from, text)) return; }
       catch (error) {
         console.error("Calendar date lookup failed; inspect the local connection configuration.");
-        await sendMessage(from, "No pude consultar esa fecha. Intenta de nuevo o escribe Menu para recibir ayuda.");
+        await sendMessage(from, "No pude consultar esa fecha. Intenta de nuevo. " + MENU_INSTRUCTION);
         return;
       }
     }
@@ -1639,7 +1648,7 @@ async function handleMessage(message) {
         }
         const name = validateFullName(text);
         if (!name) {
-          await sendMessage(from, "Por favor, escribe tu nombre completo (máximo 120 caracteres). Escribe Menu para volver.");
+          await sendMessage(from, "Por favor, escribe tu nombre completo (máximo 120 caracteres).");
           return;
         }
         customers.register(from, name);
@@ -1647,11 +1656,14 @@ async function handleMessage(message) {
         return;
       }
       if (pending?.mode === "booking_confirm") {
-        await sendMessage(from, "Usa los botones Confirmar cita o Elegir otro horario. Escribe Menu para volver.");
+        // No current flow creates this pre-v0.3.1 state. Never turn arbitrary
+        // text in a saved legacy session into permission to create an event.
+        sessions.delete(from);
+        await sendMessage(from, "Esta opción ya no está vigente. " + MENU_INSTRUCTION);
         return;
       }
       if (pending?.mode === "booking_result") {
-        await sendMessage(from, 'Para organizar tu cita o cancelar, escribe "menu".');
+        await sendMessage(from, MENU_INSTRUCTION);
         return;
       }
     }
@@ -1699,7 +1711,7 @@ async function handleMessage(message) {
     if ((isButton || isList) && !validSlotButton &&
         !validAppointmentSelection && !validCancellationButton &&
         !validMenuButton && !validManageButton) {
-      await sendMessage(from, "Esta opción ya no está vigente. Escribe Hola para ver el menú actual.");
+      await sendMessage(from, "Esta opción ya no está vigente. " + MENU_INSTRUCTION);
       return;
     }
 
@@ -1724,8 +1736,6 @@ async function handleMessage(message) {
       await showManageMenu(from);
     } else if (validMenuButton && menuMatch[2] === "human") {
       await beginHumanSupport(from);
-    } else if (isText && command === "menu") {
-      await showMainMenu(from);
     } else if (validAppointmentSelection ||
                (isText && activeSession &&
                 (session.mode === "choose_cancel" || session.mode === "choose_reschedule") &&

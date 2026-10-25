@@ -93,10 +93,10 @@ describe("slot-selected WhatsApp bookings", { concurrency: false }, () => {
     for (const [key, value] of originals) { if (value === undefined) delete process.env[key]; else process.env[key] = value; }
     if (directory) fs.rmSync(directory, { recursive: true, force: true });
   });
-  async function post(body, { business = "a", sender = "synthetic-customer", kind = "text", signed = true, expectReply = true } = {}) {
+  async function post(body, { business = "a", sender = "synthetic-customer", kind = "text", signed = true, expectReply = true, id = randomUUID() } = {}) {
     const message = kind === "text" ? { type: "text", text: { body } }
       : { type: "interactive", interactive: { type: kind, [kind]: { id: body } } };
-    Object.assign(message, { id: randomUUID(), from: sender });
+    Object.assign(message, { id, from: sender });
     const payload = JSON.stringify({ entry: [{ changes: [{ value: { metadata: { phone_number_id: `phone-synthetic-${business}` }, messages: [message] } }] }] });
     const count = outgoing.length;
     const response = await nativeFetch(`${origin}/webhook`, { method: "POST", body: payload, headers: {
@@ -171,7 +171,7 @@ describe("slot-selected WhatsApp bookings", { concurrency: false }, () => {
     await select();
     assert.match(menuBody(), /verificación/);
     await post("Quiero otra cita");
-    assert.match(outgoing.at(-1).payload.text.body, /escribe "menu"/);
+    assert.equal(outgoing.at(-1).payload.text.body, 'Escribe "menu" para volver al menú principal.');
     assert.equal(inserts.length, 1);
     assert.equal(JSON.parse(db.prepare("SELECT session_json FROM business_customer_sessions").get().session_json).mode, "booking_result");
   });
@@ -180,15 +180,19 @@ describe("slot-selected WhatsApp bookings", { concurrency: false }, () => {
     await post("Cita");
     const selected = buttons()[0].id;
     await post(selected, { kind: "button_reply" });
-    assert.match(outgoing.at(-1).payload.text.body, /nombre completo/);
+    assert.equal(outgoing.at(-1).payload.text.body, "Para reservar este horario, indícanos tu nombre completo.");
+    await post(selected, { kind: "button_reply" });
+    assert.equal(outgoing.at(-1).payload.text.body, "Para reservar este horario, indícanos tu nombre completo.");
     assert.equal(inserts.length, 0);
     await post("12345");
+    assert.equal(outgoing.at(-1).payload.text.body, "Por favor, escribe tu nombre completo (máximo 120 caracteres).");
     assert.equal(inserts.length, 0);
     await post("Cliente Sintético");
     assert.match(outgoing.at(-1).payload.text.body, /cita está agendada/);
     assert.equal(inserts.length, 1);
     assert.equal(inserts[0].calendarId, "calendar-synthetic-a");
     assert(inserts[0].requestBody.summary.includes("Cliente Sintético"));
+    assert(!outgoing.some(item => item.payload.interactive?.action.buttons?.some(button => button.reply.title === "Confirmar cita")));
     await post(selected, { kind: "button_reply" });
     assert.equal(inserts.length, 1);
   });
@@ -212,6 +216,77 @@ describe("slot-selected WhatsApp bookings", { concurrency: false }, () => {
     await post(old, { kind: "button_reply" });
     assert.match(outgoing.at(-1).payload.text.body, /ya no está vigente/);
     assert.equal(inserts.length, 0);
+  });
+  for (const state of ["suggestions", "dates", "times", "booking_name", "booking_result", "intent_clarification"]) {
+    test(`menu, Menu and MENU leave ${state}, discard old actions and preserve confirmed bookings`, async () => {
+      if (state !== "booking_name") registered();
+      for (const command of ["menu", "Menu", "MENU"]) {
+        let old;
+        if (state === "booking_result") old = await select();
+        else if (state === "intent_clarification") {
+          await post("menu"); await post("Quiero cancelar y agendar una cita"); old = buttons()[0].id;
+        } else {
+          await post("Cita");
+          if (state === "dates") {
+            await post(buttons()[2].id, { kind: "button_reply" });
+            await post(buttons()[2].id, { kind: "button_reply" });
+            old = rows()[0].id;
+          } else if (state === "times") { await post("mañana"); old = buttons()[0].id; }
+          else {
+            old = buttons()[0].id;
+            if (state === "booking_name") await post(old, { kind: "button_reply" });
+          }
+        }
+        const confirmed = db.prepare("SELECT * FROM booking_requests WHERE state='confirmed' ORDER BY request_id").all();
+        const calendar = structuredClone([...events]);
+        const count = inserts.length;
+        await post(command);
+        assert.equal(JSON.parse(db.prepare("SELECT session_json FROM business_customer_sessions").get().session_json).mode, "main_menu");
+        assert.equal(buttons()[0].title, "Agendar una cita");
+        assert.deepEqual([...events], calendar);
+        assert.deepEqual(db.prepare("SELECT * FROM booking_requests WHERE state='confirmed' ORDER BY request_id").all(), confirmed);
+        await post(old, { kind: state === "dates" ? "list_reply" : "button_reply" });
+        assert.match(outgoing.at(-1).payload.text.body, /ya no está vigente/);
+        assert.equal(inserts.length, count);
+      }
+    });
+  }
+  test("a saved legacy booking_confirm never asks for confirmation or books from free text", async () => {
+    registered();
+    const expiresAt = Date.now() + 60000;
+    db.prepare("INSERT INTO business_customer_sessions VALUES (?,?,?,?)").run("synthetic-a", "synthetic-customer",
+      JSON.stringify({ mode: "booking_confirm", requestId: randomUUID(), expiresAt }), expiresAt);
+    await post("Sí, por favor");
+    assert.equal(outgoing.at(-1).payload.text.body, 'Esta opción ya no está vigente. Escribe "menu" para volver al menú principal.');
+    assert.equal(db.prepare("SELECT COUNT(*) AS n FROM business_customer_sessions").get().n, 0);
+    assert.equal(inserts.length, 0);
+    await post("menu");
+    assert.equal(buttons()[0].title, "Agendar una cita");
+  });
+  test("Menu keeps an uncertain booking and its calendar lock available for status recovery", async () => {
+    registered(); insertError = 503; await select();
+    const status = buttons()[0].id;
+    const request = db.prepare("SELECT * FROM booking_requests").get();
+    const lock = db.prepare("SELECT * FROM calendar_booking_locks").all();
+    await post("MENU");
+    assert.equal(buttons()[0].title, "Agendar una cita");
+    assert.deepEqual(db.prepare("SELECT * FROM booking_requests").get(), request);
+    assert.deepEqual(db.prepare("SELECT * FROM calendar_booking_locks").all(), lock);
+    await post(status, { kind: "button_reply" });
+    assert.match(menuBody(), /sigue en verificación/);
+    assert.equal(inserts.length, 1);
+  });
+  test("duplicate Meta deliveries and repeat taps create one appointment and one initial success reply", async () => {
+    registered(); await post("Cita");
+    const selected = buttons()[0].id, id = randomUUID();
+    await post(selected, { kind: "button_reply", id });
+    const replies = outgoing.length;
+    await post(selected, { kind: "button_reply", id, expectReply: false });
+    assert.equal(outgoing.length, replies);
+    await post(selected, { kind: "button_reply" });
+    assert.match(outgoing.at(-1).payload.text.body, /está agendada/);
+    assert.equal(inserts.length, 1);
+    assert.equal(db.prepare("SELECT COUNT(*) AS n FROM booking_requests").get().n, 1);
   });
   test("unsigned, foreign-business, and foreign-customer slot selections cannot book", async () => {
     registered();
@@ -332,7 +407,7 @@ describe("slot-selected WhatsApp bookings", { concurrency: false }, () => {
   test("manual chat wording and case-insensitive menu return remain functional", async () => {
     registered(); await select(); await post("menu");
     await post(buttons().find(button => button.id.endsWith(":human")).id, { kind: "button_reply" });
-    assert.equal(outgoing.at(-1).payload.text.body, 'Escribe tu mensaje.\n\nPara organizar tu cita o cancelar, escribe "menu".');
+    assert.equal(outgoing.at(-1).payload.text.body, 'Escribe tu mensaje.\n\nEscribe "menu" para volver al menú principal.');
     await post("Mensaje de prueba", { expectReply: false }); await post("MeNu");
     assert.equal(db.prepare("SELECT status FROM business_support_conversations").get().status, "closed");
     assert.match(menuBody(), /Tu cita actual/);

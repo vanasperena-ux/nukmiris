@@ -6,6 +6,8 @@ Version 0.5.0 adds [deterministic Spanish intent recognition](INTENT_RECOGNITION
 
 Version 0.6.0 adds [natural date input](NATURAL_DATES.md) only in active booking/rescheduling date states, with 460 passing offline tests; the owner subsequently reported manual testing successful. The deterministic parser supports the listed numerical, month, relative and weekday forms, and day-only input uses the next actual day-of-month as confirmed by the owner. It does not extract times, parse arbitrary prose/date ranges/two-digit years, or interpret a week-only preference as a single date. A valid date may still be closed or fully busy. Existing slot and horizon validation remains authoritative; this does not extend the final partial booking day or enable disabled actions.
 
+Version 0.7.0 adds [concise menu guidance and global navigation](MENU_UX.md); PC verification is pending. Typing `menu` clears transient selections and declines unused offers, but does not withdraw a Calendar request already submitted or discard uncertain-operation locks. Messages are processed in order, so navigation can follow an earlier in-progress request. The existing read-only appointment overview can query Google when rebuilding the main menu. Services Catalog and reminder workflows are absent from the current runtime and are not introduced or promised by this update.
+
 | Original finding | Current status |
 | --- | --- |
 | Unsigned POST requests accepted | Fixed in this runtime: HMAC-SHA256 over the exact raw body, constant-time comparison, rejection before processing, and a required Meta App Secret. Offline signature tests pass; the owner confirmed real callback verification and delivery on the PC on 2026-10-24. |
