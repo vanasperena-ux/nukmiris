@@ -21,6 +21,8 @@ describe("signed WhatsApp calendar availability", { concurrency: false }, () => 
   const originals = new Map();
   let gate, failNextLookup = false, failAtLookup;
   before(async () => {
+    const checkpoint = DateTime.fromISO("2026-10-26T09:00:00-06:00").toMillis();
+    mock.method(Date, "now", () => checkpoint);
     directory = fs.mkdtempSync(path.join(os.tmpdir(), "nukmiris-availability-test-"));
     const dbPath = path.join(directory, "synthetic.sqlite");
     db = createDatabase(dbPath);
@@ -87,9 +89,9 @@ describe("signed WhatsApp calendar availability", { concurrency: false }, () => 
     if (directory) fs.rmSync(directory, { recursive: true, force: true });
   });
   async function settle(condition) {
-    const deadline = Date.now() + 1500;
+    const deadline = performance.now() + 1500;
     while (!condition()) {
-      if (Date.now() >= deadline) throw new Error("Expected asynchronous message result was not produced");
+      if (performance.now() >= deadline) throw new Error("Expected asynchronous message result was not produced");
       await new Promise(resolve => setTimeout(resolve, 5));
     }
     await new Promise(resolve => setImmediate(resolve));
@@ -166,7 +168,8 @@ describe("signed WhatsApp calendar availability", { concurrency: false }, () => 
     await post(buttons()[2].id, { kind: "button_reply" });
     assert.equal(outgoing.at(-1).payload.interactive.action.sections[0].title, "Fechas disponibles");
     assert.equal(calendarCalls.length, 1, "opening the date picker reuses the existing offer");
-    assert.match(outgoing.at(-1).payload.interactive.body.text, /DD\/MM\/AAAA/);
+    assert.equal(outgoing.at(-1).payload.interactive.body.text,
+      "¿Para qué día te gustaría tu cita? Puedes escribir, por ejemplo: 13 oct, 13/10 o próximo lunes.");
     const selectedDate = rows().find(row => row.id.includes(":date:"));
     const day = selectedDate.id.split(":").at(-1);
     const expected = all.filter(slot => dayOf(slot) === day).map(slot => DateTime.fromISO(slot.start).setZone("America/Mexico_City").toFormat("HH:mm"));
@@ -240,9 +243,11 @@ describe("signed WhatsApp calendar availability", { concurrency: false }, () => 
     const slots = stored().slots;
     const queries = calendarCalls.length;
     const today = DateTime.now().setZone("America/Mexico_City");
-    for (const invalid of ["31/02/2027", "mañana", today.minus({ days: 1 }).toFormat("dd/LL/yyyy"), today.plus({ days: 400 }).toFormat("dd/LL/yyyy")]) {
+    for (const [invalid, expected] of [["31/02/2027", /No pude identificar bien la fecha/], ["algún día", /No pude identificar bien la fecha/],
+      [today.minus({ days: 1 }).toFormat("dd/LL/yyyy"), /Esa fecha ya pasó/],
+      [today.plus({ days: 400 }).toFormat("dd/LL/yyyy"), /próximos 365 días/]]) {
       await post(invalid);
-      assert.match(outgoing.at(-1).payload.text.body, /DD\/MM\/AAAA/);
+      assert.match(outgoing.at(-1).payload.text.body, expected);
       assert.equal(calendarCalls.length, queries);
     }
     const day = dayOf(slots.at(-1));
@@ -276,6 +281,73 @@ describe("signed WhatsApp calendar availability", { concurrency: false }, () => 
     assert(stored().slots.every(slot => dayOf(slot) === date.toISODate()));
     assert(buttons().some(button => button.title === "10:00"));
     assert.deepEqual(changes, []);
+  });
+  test("natural date formats use one direct-day query, keep the same offer flow, and never reserve in read-only mode", async () => {
+    await openDates();
+    for (const text of ["27/10", "27-10-2026", "27.10", "27 10", "27 octubre", "27 de oct", "quiero el 27 de octubre", "mañana"]) {
+      const count = calendarCalls.length;
+      await post(text);
+      assert.equal(calendarCalls.length, count + 1);
+      assert.equal(stored().selectedDate, "2026-10-27");
+      assert.equal(calendarCalls.at(-1).timeMin, "2026-10-27T00:00:00.000-06:00");
+      assert.equal(calendarCalls.at(-1).timeMax, "2026-10-28T00:00:00.000-06:00");
+      assert.equal(buttons()[0].title, "10:00");
+      assert.doesNotMatch(outgoing.at(-1).payload.interactive.body.text, /DD\/MM|Confirmas/);
+      assert.deepEqual(changes, []);
+    }
+  });
+  test("invalid, ambiguous, past, and distant dates keep the current dates and actions without querying Google", async () => {
+    await openDates();
+    const original = stored(), count = calendarCalls.length;
+    for (const [text, expected] of [["31 febrero", /No pude identificar/], ["lunes o martes", /No pude identificar/],
+      ["ayer", /Esa fecha ya pasó/], ["13 oct 2025", /Esa fecha ya pasó/], ["en 366 días", /próximos 365 días/],
+      ["13:10", /No pude identificar/], ["mi teléfono es 5512345678", /No pude identificar/], ["60 minutos", /No pude identificar/]]) {
+      await post(text);
+      assert.match(outgoing.at(-1).payload.text.body, expected);
+      assert.equal(calendarCalls.length, count);
+      assert.deepEqual(stored(), original);
+    }
+    await post("27 oct");
+    assert.equal(stored().selectedDate, "2026-10-27"); assert.equal(calendarCalls.length, count + 1);
+  });
+  test("day-only input goes directly to the next upcoming occurrence without another question", async () => {
+    await openDates();
+    const original = stored(), count = calendarCalls.length;
+    await post("el día 13");
+    assert.match(outgoing.at(-1).payload.interactive.body.text, /viernes 13 de noviembre 2026/);
+    assert.equal(stored().selectedDate, "2026-11-13");
+    assert.equal(stored().calendarId, original.calendarId);
+    assert.equal(calendarCalls.length, count + 1);
+  });
+  test("a bare weekday uses today's remaining real slots or next week when today is fully busy", async () => {
+    await post("Cita");
+    let count = calendarCalls.length;
+    await post("lunes");
+    assert.equal(stored().selectedDate, "2026-10-26"); assert.equal(calendarCalls.length, count + 1);
+    busy["calendar-synthetic-a"] = [{ start: "2026-10-26T00:00:00-06:00", end: "2026-10-27T00:00:00-06:00" }];
+    count = calendarCalls.length;
+    await post("lunes");
+    assert.equal(stored().selectedDate, "2026-11-02"); assert.equal(calendarCalls.length, count + 2);
+    assert.deepEqual(changes, []);
+  });
+  test("próximo weekday always means a future occurrence, without an availability confirmation question", async () => {
+    await post("Cita");
+    const count = calendarCalls.length;
+    await post("el próximo lunes");
+    assert.equal(stored().selectedDate, "2026-11-02"); assert.equal(calendarCalls.length, count + 1);
+    assert.match(outgoing.at(-1).payload.interactive.body.text, /lunes 2 de noviembre 2026/);
+  });
+  test("the same sender's relative date uses each receiving business's timezone", async () => {
+    db.prepare("UPDATE businesses SET time_zone='Asia/Tokyo' WHERE business_id='synthetic-b'").run();
+    try {
+      await post("Cita"); await post("mañana");
+      assert.equal(stored().selectedDate, "2026-10-27");
+      await post("Cita", { business: "b" }); await post("mañana", { business: "b" });
+      assert.equal(stored("b").selectedDate, "2026-10-28");
+      assert.deepEqual(calendarCalls.at(-1).items, [{ id: "calendar-synthetic-b" }]);
+      assert.equal(calendarCalls.at(-1).timeZone, "Asia/Tokyo");
+      assert.equal(stored().selectedDate, "2026-10-27"); assert.deepEqual(changes, []);
+    } finally { db.prepare("UPDATE businesses SET time_zone='America/Mexico_City' WHERE business_id='synthetic-b'").run(); }
   });
   test("date lists allow later dates and return navigation within WhatsApp's row limit", async () => {
     const initial = await openDates();

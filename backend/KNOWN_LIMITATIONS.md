@@ -4,6 +4,8 @@ Version 0.4.0 preserves the PC-verified v0.3.1 UX and adds optional durable deli
 
 Version 0.5.0 adds [deterministic Spanish intent recognition](INTENT_RECOGNITION.md), with 347 passing offline tests; the owner subsequently reported PC testing successful. It uses bounded phrase/negation rules rather than a general language parser, so unsupported conjugations, typos, complex negation and implicit requests can need clarification. It does not extract dates/times. Active input states and human chat take precedence over new natural phrases; Menu and existing exact commands retain their established control behavior. No feature flag, authorization, or Calendar lifecycle capability is enabled by recognition.
 
+Version 0.6.0 adds [natural date input](NATURAL_DATES.md) only in active booking/rescheduling date states, with 460 passing offline tests; PC verification is pending. The deterministic parser supports the listed numerical, month, relative and weekday forms, and day-only input uses the next actual day-of-month as confirmed by the owner. It does not extract times, parse arbitrary prose/date ranges/two-digit years, or interpret a week-only preference as a single date. A valid date may still be closed or fully busy. Existing slot and horizon validation remains authoritative; this does not extend the final partial booking day or enable disabled actions.
+
 | Original finding | Current status |
 | --- | --- |
 | Unsigned POST requests accepted | Fixed in this runtime: HMAC-SHA256 over the exact raw body, constant-time comparison, rejection before processing, and a required Meta App Secret. Offline signature tests pass; the owner confirmed real callback verification and delivery on the PC on 2026-10-24. |

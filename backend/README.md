@@ -1,4 +1,6 @@
-# NukMiris Spanish intent recognition — v0.5.0
+# NukMiris natural Spanish appointment dates — v0.6.0
+
+Version 0.6.0 accepts dates such as `13 oct`, `13/10`, `mañana`, `próximo lunes`, and `en dos semanas` inside the existing booking/rescheduling availability flow. It uses the business timezone, infers the next year when needed, and validates real dates against the existing booking horizon. As confirmed by the owner, `el día 13` means the next actual 13th. Invalid dates keep the conversation in place; valid dates show available times without a date-confirmation question. See [NATURAL_DATES.md](NATURAL_DATES.md) for rules, limitations and PC tests. **v0.6.0 PC verification remains pending; v0.5.0 is the owner-verified baseline.**
 
 Version 0.5.0 recognizes natural Spanish booking, rescheduling, and cancellation requests through deterministic local rules. “Hola, quiero una cita”, “Necesito cambiar la hora”, and “Cancélame la cita por favor” enter the existing workflows. Conflicting requests ask which action to start; inability to attend uses the existing owned-appointment context before clarification. Names, date/time responses, pending results, and human chat keep their existing handlers. No AI calls, dependencies, feature flags, Calendar mutation changes, or extra booking confirmation are added. See [INTENT_RECOGNITION.md](INTENT_RECOGNITION.md) for phrases, state precedence, limitations, and PC update/testing steps. **The owner tested v0.5.0 successfully; it is the current PC-verified working baseline.**
 
@@ -8,7 +10,7 @@ Version 0.4.0 preserves that PC-verified UX and adds optional saved incoming mes
 
 The v0.4.1 update extends availability discovery: check 30 calendar days, then 15 new days at a time until three available dates are found or the 365-day booking horizon is reached. Booking and rescheduling share these rules. The two-plus-two interaction stays in place, specific dates are checked directly, and each selected slot is checked again before the existing Calendar write. See [the implementation and PC update/test guide](DYNAMIC_AVAILABILITY.md). The owner completed that checkpoint successfully; v0.5.0 retains its verified behavior.
 
-**Verified Spanish intent recognition:** [v0.5.0 guide](INTENT_RECOGNITION.md). **Verified dynamic availability:** [v0.4.1 guide](DYNAMIC_AVAILABILITY.md). **Verified reliability:** [v0.4.0 setup and restart tests](RELIABILITY_CHECKPOINT.md). **Verified UX:** [v0.3.1 guide](UX_CHECKPOINT.md). **Verified management setup:** [v0.3.0 guide](MANAGEMENT_CHECKPOINT.md). **First booking setup:** [v0.2.0 guide](BOOKING_CHECKPOINT.md). **Initial read-only setup:** [PC setup](PC_SETUP.md). **Project continuity:** [saved roadmap](../docs/ROADMAP.md).
+**Current PC checkpoint:** [v0.6.0 natural dates](NATURAL_DATES.md). **Verified Spanish intent recognition:** [v0.5.0 guide](INTENT_RECOGNITION.md). **Verified dynamic availability:** [v0.4.1 guide](DYNAMIC_AVAILABILITY.md). **Verified reliability:** [v0.4.0 setup and restart tests](RELIABILITY_CHECKPOINT.md). **Verified UX:** [v0.3.1 guide](UX_CHECKPOINT.md). **Verified management setup:** [v0.3.0 guide](MANAGEMENT_CHECKPOINT.md). **First booking setup:** [v0.2.0 guide](BOOKING_CHECKPOINT.md). **Initial read-only setup:** [PC setup](PC_SETUP.md). **Project continuity:** [saved roadmap](../docs/ROADMAP.md).
 
 Juanita's confirmed schedule is Monday–Friday, 10:00–19:00, 60-minute appointments starting on the hour, no buffer between appointments, and lunch 13:00–14:00. On an empty future weekday that gives 10:00, 11:00, 12:00, 14:00, 15:00, 16:00, 17:00, and 18:00. The final appointment ends at 19:00.
 
@@ -50,6 +52,8 @@ Following the owner's booking-restart report, five additional process/diagnostic
 The complete v0.5.0 suite passed **347 offline tests**, with no failures/skips, retaining the 214 earlier regressions and adding 133 intent/conversation/recovery cases. The verified v0.4.1 lifecycle services and flags remain unchanged. The owner subsequently reported **“I tested v.0.5.0 and all good!”** See [BASELINE.md](BASELINE.md) for the PC verification record and its scope.
 
 ## Runtime modes
+
+The v0.6.0 suite passed **460 offline tests**, with no failures/skips: the 347 earlier regressions plus 113 date-parser/menu/conversation/restart cases. No dependencies, feature flags, database schema, Calendar services or event metadata changed. Owner PC verification of this update is pending; use [NATURAL_DATES.md](NATURAL_DATES.md).
 
 - `NUKMIRIS_MODE=availability`: verify the configured calendar at startup, then answer availability requests. Local Google authorization and database mappings are required.
 - `NUKMIRIS_MODE=support`: support conversations and menus, with appointment actions paused and no Google connection.

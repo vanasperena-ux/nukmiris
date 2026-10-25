@@ -3,6 +3,7 @@
 const { randomUUID } = require("node:crypto");
 const { DateTime } = require("luxon");
 const { readSearchPolicy } = require("./availability-search");
+const { parseAppointmentDate, dateErrorMessage, DATE_PROMPT } = require("./appointment-date");
 
 // Presentation only: the existing availability engine and booking service
 // remain responsible for schedule checks, busy periods, and event creation.
@@ -36,14 +37,7 @@ function createAvailabilityMenu({ availability, sessions, businessFor, sendMessa
     session.actions = choices.map(choice => choice.id);
     sessions.set(from, session);
   }
-  function datePrompt(from) {
-    const { zone, horizonDays } = context(from);
-    const today = now().setZone(zone).startOf("day");
-    return "¿Qué día te viene mejor? Elige una fecha o escríbela como DD/MM/AAAA " +
-      `(por ejemplo, ${today.toFormat("dd/LL/yyyy")}).\n\n` +
-      `Buscamos del ${today.toFormat("dd/LL/yyyy")} al ${today.plus({ days: horizonDays }).toFormat("dd/LL/yyyy")}. ` +
-      "Escribe Menu para volver.";
-  }
+  function datePrompt() { return DATE_PROMPT; }
 
   async function suggestions(from, session, stage, notice) {
     beginView(session, "suggestions");
@@ -115,22 +109,31 @@ function createAvailabilityMenu({ availability, sessions, businessFor, sendMessa
     const day = local(session.selectedDate, zone).toFormat("cccc d 'de' LLLL yyyy");
     await sendReplyButtons(from, session.slots.length
       ? (page > 0 ? "Te muestro mas opciones. Elige un horario que te funciona mejor:"
-        : `¿Qué hora prefieres para el ${day}?\n\n${guidance} Para cambiar de día, escribe otra fecha como DD/MM/AAAA. Escribe Menu para volver.`)
-      : `No hay horarios disponibles para el ${day}. Elige otra fecha o escríbela como DD/MM/AAAA. Escribe Menu para volver.`, choices);
+        : `¿Qué hora prefieres para el ${day}?\n\n${guidance} Para cambiar de día, escribe otra fecha. Escribe Menu para volver.`)
+      : `No hay horarios disponibles para el ${day}. Elige otra fecha o escríbela. Escribe Menu para volver.`, choices);
   }
 
-  async function chooseDate(from, session, day) {
+  async function chooseDate(from, session, day, fallback) {
     const { zone, horizonDays } = context(from);
     const current = now().setZone(zone);
     const today = current.startOf("day");
     const selected = DateTime.fromISO(day, { zone });
     if (!selected.isValid || selected.toISODate() !== day || selected < today || selected >= current.plus({ days: horizonDays })) {
-      await sendMessage(from, "Esa fecha no está dentro del periodo de búsqueda.\n\n" + datePrompt(from));
+      const error = !selected.isValid || selected.toISODate() !== day ? "INVALID" : selected < today ? "PAST" : "OUT_OF_HORIZON";
+      await sendMessage(from, dateErrorMessage({ error }, horizonDays));
       return;
     }
     // Recheck Google after the customer picks a day; never reuse cached times
     // to claim a newly busy appointment is still available.
-    const fresh = await availability.listSlots(businessFor(from).business_id, { date: day });
+    let fresh = await availability.listSlots(businessFor(from).business_id, { date: day });
+    if (!fresh.length && fallback) {
+      if (!fallback.success) {
+        await sendMessage(from, dateErrorMessage(fallback, horizonDays));
+        return;
+      }
+      day = fallback.date;
+      fresh = await availability.listSlots(businessFor(from).business_id, { date: day });
+    }
     session.slots = fresh.filter(slot => local(slot.start, zone).toISODate() === day);
     session.selectedDate = day;
     await times(from, session);
@@ -174,13 +177,13 @@ function createAvailabilityMenu({ availability, sessions, businessFor, sendMessa
       await openDates(from, session);
       return true;
     }
-    const match = /^(\d{1,2})\/(\d{1,2})\/(\d{4})$/.exec(text);
-    const day = match ? `${match[3]}-${match[2].padStart(2, "0")}-${match[1].padStart(2, "0")}` : "";
-    if (!day || !DateTime.fromISO(day, { zone: context(from).zone }).isValid) {
-      await sendMessage(from, "Usa los botones o escribe una fecha válida como DD/MM/AAAA.\n\n" + datePrompt(from));
+    const { zone, horizonDays } = context(from);
+    const parsed = parseAppointmentDate(text, { now: now(), timeZone: zone, maxBookingHorizonDays: horizonDays });
+    if (!parsed.success) {
+      await sendMessage(from, dateErrorMessage(parsed, horizonDays));
       return true;
     }
-    await chooseDate(from, session, day);
+    await chooseDate(from, session, parsed.date, parsed.fallback);
     return true;
   }
   return { offer, handleSelection, handleText };

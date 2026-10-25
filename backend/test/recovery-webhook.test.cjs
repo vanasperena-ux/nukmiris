@@ -110,6 +110,25 @@ test("real process recovery restores a partially advanced browsing session befor
     assert.equal(f.messages().at(-1).payload.interactive.body.text, "Te muestro mas opciones. Elige un horario que te funciona mejor:");
   } finally { await f.cleanup(); }
 });
+test("natural date retry and slot selection survive restart without adding a confirmation or a second event", async () => {
+  const f = await fixture();
+  try {
+    await f.post("Cita");
+    const original = f.db.prepare("SELECT session_json FROM business_customer_sessions").get().session_json;
+    const invalid = await f.post("31 febrero");
+    assert.match(invalid.text.body, /No pude identificar bien la fecha/);
+    assert.equal(f.db.prepare("SELECT session_json FROM business_customer_sessions").get().session_json, original);
+    await f.kill(); await f.start();
+    const times = await f.post("puede ser mañana");
+    assert.match(times.interactive.body.text, /martes 27 de octubre 2026/);
+    assert.equal(f.calls().filter(call => call.method === "insert").length, 0);
+    const selected = f.buttons(times)[0].id;
+    await f.kill(); await f.start();
+    const result = await f.post(selected, { kind: "button_reply" });
+    assert.match(result.text.body, /está agendada/);
+    assert.equal(f.calls().filter(call => call.method === "insert").length, 1);
+  } finally { await f.cleanup(); }
+});
 test("natural intent clarification survives restart and choosing BOOK only opens the existing workflow", async () => {
   const f = await fixture();
   try {

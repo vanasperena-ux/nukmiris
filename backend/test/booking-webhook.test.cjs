@@ -127,6 +127,21 @@ describe("slot-selected WhatsApp bookings", { concurrency: false }, () => {
   }
   const menuBody = () => outgoing.at(-1).payload.interactive.body.text;
 
+  test("natural date input books only after time selection and date-like names remain names", async () => {
+    await post("Quiero una cita");
+    await post("puede ser mañana");
+    const session = JSON.parse(db.prepare("SELECT session_json FROM business_customer_sessions").get().session_json);
+    assert.equal(session.selectedDate, "2026-10-27");
+    assert.equal(inserts.length, 0);
+    await post(buttons()[0].id, { kind: "button_reply" });
+    assert.match(outgoing.at(-1).payload.text.body, /nombre completo/);
+    await post("Mañana Octubre García");
+    assert.equal(db.prepare("SELECT full_name FROM business_customers").get().full_name, "Mañana Octubre García");
+    assert.equal(inserts.length, 1);
+    assert.equal(DateTime.fromISO(inserts[0].requestBody.start.dateTime).toISODate(), "2026-10-27");
+    assert.match(outgoing.at(-1).payload.text.body, /está agendada/);
+  });
+
   test("names containing appointment words stay names and book only the selected slot", async () => {
     await post("Hola, quiero agendar una cita");
     await post(buttons()[0].id, { kind: "button_reply" });

@@ -1,5 +1,13 @@
 # Baseline provenance
 
+## Natural Spanish appointment dates — v0.6.0, awaiting PC verification
+
+The owner supplied the flexible-date-input task for the next version after verifying v0.5.0. The shared availability menu previously parsed only `DD/MM/AAAA`; v0.6.0 adds a reusable deterministic date utility for numerical and Spanish month dates, relative days/weeks, and weekdays. Parsing runs only inside the existing appointment-date state for booking/rescheduling, preserving intent routing, name entry, human chat and cancellation. The owner clarified **“Use the next upcoming 13th”** for `el día 13`, so day-only inputs infer the next valid monthly occurrence without asking for a month.
+
+The parser uses the business timezone and existing horizon policy; explicit past dates are rejected, missing years infer the next real occurrence, and invalid/ambiguous input preserves the current state. A bare weekday can use today's real remaining slots or its next-week fallback. Calendar integration, duration/overlap calculations, time selection, lifecycle confirmations, ownership, flags, event metadata, locks/journals and backup/recovery mechanisms remain in place. There is no new dependency, AI call, schema/configuration change, date-confirmation question or separate booking system. See [NATURAL_DATES.md](NATURAL_DATES.md).
+
+Validation: all 460 offline tests passed, with zero failures/skips, retaining the 347 earlier regressions and adding 100 parser, four real-engine menu, eight signed HTTP and one process-restart tests. Fixtures cover calendar formats, all months, rollover/leap years, ambiguity, horizon limits, timezone/DST, protected names/chat, no premature mutations, state preservation and restart continuation. Cloud integrations remain synthetic; real Windows/Google/Meta validation requires the owner. v0.5.0 remains the owner-verified working baseline until the new PC results are reported.
+
 ## Verified Spanish intent recognition baseline — v0.5.0
 
 The owner requested natural Spanish appointment intent recognition for v0.5.0, building on the verified v0.4.1 baseline. A centralized deterministic classifier normalizes comparison text, recognizes booking/rescheduling/cancellation expressions and LATAM terminology, handles negation and conflicts, and requests existing owned-appointment context only for attendance-dependent messages. The existing router/state storage supplies clarification buttons and protects names, date/time browsing, pending results, and human chat. See [INTENT_RECOGNITION.md](INTENT_RECOGNITION.md).

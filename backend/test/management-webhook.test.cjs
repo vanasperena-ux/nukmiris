@@ -165,7 +165,7 @@ describe("signed selection-based appointment management", { concurrency: false }
     await f.seed(); await post("Reagendar");
     const before = f.db.prepare("SELECT session_json FROM business_customer_sessions").get().session_json;
     await post("Quiero cancelar mi cita");
-    assert.match(body(), /DD\/MM\/AAAA/);
+    assert.match(body(), /No pude identificar bien la fecha/);
     assert.equal(f.db.prepare("SELECT session_json FROM business_customer_sessions").get().session_json, before);
     await post("27/10/2026");
     assert.match(body(), /Qué hora prefieres/);
@@ -258,6 +258,29 @@ describe("signed selection-based appointment management", { concurrency: false }
     assert.equal(f.patches.length, 1);
     assert.equal(f.patches[0].args.eventId, source.eventId);
     assert.match(body(), /Martes 27 de octubre de 2026/);
+  });
+  test("natural dates reuse rescheduling and keep the original event until a target time is chosen", async () => {
+    const source = await f.seed(); await post("Reagendar");
+    const current = f.db.prepare("SELECT session_json FROM business_customer_sessions").get().session_json;
+    for (const text of ["31 febrero", "lunes o martes", "ayer", "en 366 días"]) {
+      const count = f.lists.length;
+      await post(text);
+      assert.equal(f.lists.length, count);
+      assert.equal(f.db.prepare("SELECT session_json FROM business_customer_sessions").get().session_json, current);
+      assert.equal(f.patches.length + f.deletes.length, 0);
+    }
+    await post("puede ser mañana");
+    let session = JSON.parse(f.db.prepare("SELECT session_json FROM business_customer_sessions").get().session_json);
+    assert.equal(session.browse.selectedDate, "2026-10-27");
+    assert.equal(f.events.get(`calendar-synthetic-a:${source.eventId}`).start.dateTime, f.slot(10).start);
+    await post("el día 13");
+    session = JSON.parse(f.db.prepare("SELECT session_json FROM business_customer_sessions").get().session_json);
+    assert.equal(session.browse.selectedDate, "2026-11-13");
+    assert.equal(f.patches.length, 0);
+    await click(buttons()[0].id);
+    assert.equal(f.patches.length, 1); assert.equal(f.patches[0].args.eventId, source.eventId);
+    assert.equal(DateTime.fromISO(f.patches[0].args.requestBody.start.dateTime).toISODate(), "2026-11-13");
+    assert.equal(f.inserts.length, 1); noConfirmations();
   });
   test("foreign business/customer actions and unsigned selections cannot change appointments", async () => {
     await f.seed(); await post("Cancelar");

@@ -224,7 +224,7 @@ describe("v6A.4 support-only baseline", { concurrency: false }, () => {
   test("human chat retains natural and exact appointment messages verbatim until Menu", async () => {
     await deliver("Menu");
     await deliver(outgoing.at(-1).interactive.action.buttons[2].reply.id, "button_reply");
-    const messages = ["¡Quiero AGENDAR una cita!", "No puedo mañana", "Cancelar"];
+    const messages = ["¡Quiero AGENDAR una cita!", "No puedo mañana", "Cancelar", "mañana", "13 oct"];
     const count = outgoing.length;
     for (const message of messages) await deliver(message);
     assert.equal(outgoing.length, count);

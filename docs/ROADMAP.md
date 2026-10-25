@@ -1,6 +1,6 @@
 # NukMiris project continuity
 
-Current owner-verified baseline: v0.5.0 deterministic Spanish intent recognition (`b6a9169`), retaining the verified v0.4.1 availability (`8649109`) and v0.4.0 reliability (`9d6358b`) behavior.
+Current implementation checkpoint: v0.6.0 natural Spanish appointment dates, awaiting PC verification. Current owner-verified baseline: v0.5.0 deterministic Spanish intent recognition (`b6a9169`), retaining the verified v0.4.1 availability (`8649109`) and v0.4.0 reliability (`9d6358b`) behavior.
 
 ## Windows PC command preference
 
@@ -46,3 +46,11 @@ After the GitHub update, the owner reported **“great I tested all as you propo
 The owner subsequently supplied the Spanish WhatsApp intent-recognition task for version 0.5. Reuse the current checkout and verified v0.4.1 workflows. The implementation recognizes natural BOOK/RESCHEDULE/CANCEL requests and LATAM terminology using centralized local rules, handles negation/conflicts/context, and offers existing-style scoped clarification buttons. Preserve original text, human chat, protected name/date/time states, existing controls, flags, ownership, Calendar services, lifecycle metadata and safeguards. No LLM, external AI dependency, date extraction, schema change, or additional booking confirmation is authorized.
 
 All 347 offline tests passed, retaining 214 regressions and adding 133 classifier/conversation/recovery cases. Delivery used the established GitHub update and `npm.cmd` PC workflow. On the owner's local date 2026-10-24 (America/Mexico_City), the owner reported **“I tested v.0.5.0 and all good!”** Record v0.5.0 as the new owner-verified working baseline. No separate PC commit hash or detailed per-case log was supplied; preserve the established technical limits and do not equate the report with independent live verification of every simulated failure case. See [the implementation and PC test guide](../backend/INTENT_RECOGNITION.md). Always-on hosting and other feature work remain separate and are not authorized by this success report alone.
+
+## Authorized checkpoint — v0.6.0 natural Spanish date input
+
+The owner supplied the natural-date-input task for the next version. Replace rigid date entry inside the existing availability state shared by booking/rescheduling; preserve the verified v0.5.0 intent, lifecycle, identity, feature flags, Calendar services, duration/overlap rules, state isolation and immediate time-selection behavior. Support LATAM numerical dates, Spanish months, relative days/weeks and weekdays using the configured business timezone and existing horizon. Keep invalid dates in the same flow and avoid a new date-confirmation step. No new AI/dependency, schema, settings interface or independent scheduling mechanism is authorized.
+
+The owner explicitly selected **“Use the next upcoming 13th”** for `el día 13`. Day-only input therefore uses the next actual occurrence, skipping impossible month days, rather than asking for a month. Missing years infer the next real day/month occurrence; explicit years are respected. Bare weekdays use today only when real valid slots remain, otherwise checking next week within the horizon. The parser runs only where typed dates were already accepted, not in idle intent messages, names or human support.
+
+All 460 offline tests passed, retaining 347 regressions and adding 113 parser/menu/HTTP/restart cases. Use the established GitHub and `npm.cmd` PC update process. v0.6.0 needs owner PC verification; v0.5.0 remains the verified baseline. See [the implementation and test guide](../backend/NATURAL_DATES.md). Hosting and unrelated features remain separate.
