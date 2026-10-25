@@ -110,6 +110,48 @@ test("real process recovery restores a partially advanced browsing session befor
     assert.equal(f.messages().at(-1).payload.interactive.body.text, "Te muestro mas opciones. Elige un horario que te funciona mejor:");
   } finally { await f.cleanup(); }
 });
+test("Menu booking choices survive a restart before selection and send only the successful result", async () => {
+  const f = await fixture();
+  try {
+    const menu = await f.post("Menu");
+    const book = f.buttons(menu).find(button => button.id.endsWith(":book"));
+    const offer = await f.post(book.id, { kind: "button_reply" });
+    const body = f.incoming(f.buttons(offer)[0].id, { kind: "button_reply" });
+    await f.kill(); await f.start();
+    assert.equal(await f.postPayload(body), 200);
+    await waitFor(() => f.messages().length === 3);
+    await waitFor(() => f.db.prepare("SELECT COUNT(*) AS n FROM message_outbox WHERE state IN ('pending','sending')").get().n === 0);
+    assert.match(f.messages().at(-1).payload.text.body, /está agendada/);
+    assert.equal(f.db.prepare("SELECT state FROM booking_requests").get().state, "confirmed");
+    assert.equal(f.calls().filter(call => call.method === "insert").length, 1);
+    // Meta redelivery retains the same incoming ID; it must not generate a
+    // stale-option reply after the successful result, even across restarts.
+    await f.kill(); await f.start();
+    assert.equal(await f.postPayload(body), 200);
+    await new Promise(resolve => setTimeout(resolve, 1100));
+    assert.equal(f.messages().length, 3);
+    assert.equal(f.db.prepare("SELECT COUNT(*) AS n FROM message_inbox").get().n, 3);
+    assert.equal(f.calls().filter(call => call.method === "insert").length, 1);
+  } finally { await f.cleanup(); }
+});
+test("a later stale main-menu action is recorded separately from the successful booking", async () => {
+  const f = await fixture();
+  try {
+    const book = f.buttons(await f.post("Menu")).find(button => button.id.endsWith(":book"));
+    const offer = await f.post(book.id, { kind: "button_reply" });
+    await f.kill(); await f.start();
+    assert.match((await f.post(f.buttons(offer)[0].id, { kind: "button_reply" })).text.body, /está agendada/);
+    const expired = await f.post(book.id, { kind: "button_reply" });
+    assert.equal(expired.text.body, "Esta opción ya no está vigente. Escribe Cita para consultar horarios.");
+    assert.equal(f.calls().filter(call => call.method === "insert").length, 1);
+    const records = f.db.prepare(`SELECT i.inbox_id,i.message_json,o.payload_json FROM message_inbox i
+      JOIN message_outbox o USING(inbox_id) ORDER BY i.inbox_id`).all();
+    assert.equal(records.length, 4);
+    assert.match(JSON.parse(records[2].message_json).interactive.button_reply.id, /^availability:/);
+    assert.match(JSON.parse(records[3].message_json).interactive.button_reply.id, /^menu:/);
+    assert.notEqual(records[2].inbox_id, records[3].inbox_id);
+  } finally { await f.cleanup(); }
+});
 for (const operation of ["insert", "patch", "delete"]) test(`real process recovery after Calendar ${operation} does not repeat its mutation`, async () => {
   const f = await fixture();
   try {

@@ -2,7 +2,13 @@
 
 The owner verified v0.3.1 on the Windows PC (“OK I tested v0.3.1 all good thanks”) and authorized this checkpoint. Its menus, direct booking/rescheduling/cancellation, calendar selection, schedules, and permissions remain in place. v0.4.0 adds an optional saved inbox, saved replies, restart recovery, and automatic database backups.
 
-Cloud tests use synthetic customers and simulated services. The new reliability mode still needs the real PC checks below. PowerShell commands deliberately use **`npm.cmd`**.
+Cloud tests use synthetic customers and simulated services. The owner has now completed the requested PC checks below. PowerShell commands deliberately use **`npm.cmd`**.
+
+**PC follow-up, 2026-10-25:** the owner reported that saved booking/rescheduling/cancellation choices worked after restart. The supplied diagnostic explains the later booking warning: a separate action received about 51 seconds after successful booking targeted a different stale main-menu button. The booking remains confirmed; the report does not establish whether the later action was another tap or a delayed message. See [the recorded findings](RESTART_INVESTIGATION.md).
+
+**Backup/restore PC check passed:** the owner's v0.4.0 PowerShell screenshot confirms a verified backup and an isolated restore with matching integrity, foreign keys, and row counts. The live database was not replaced; the command reported no app worker or external calls were started.
+
+**Requested PC checkpoint passed:** the owner subsequently reported **“Restart immediately after selecting: OK; Human chat: OK”** for the remaining checks. Treat v0.4.0 (`9d6358b`) as the owner-verified reliability baseline. This report does not establish exact crash timing, each simulated transport-failure case, or 24-hour backup scheduling/retention on the PC. The limits below remain applicable. Next is [v0.4.1 dynamic availability testing](DYNAMIC_AVAILABILITY.md).
 
 All **188 automated tests passed**, with zero failures/skipped tests: the 159 earlier regressions plus 29 reliability, backup, and process-based integration tests. The calendar engine, mutation services, authorization, and their existing regression tests remain unchanged.
 

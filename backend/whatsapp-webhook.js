@@ -21,6 +21,7 @@ const { createManagementMenu } = require("./lib/management-menu");
 const { appointmentSuccess, appointmentOverview, textChunks } = require("./lib/appointment-messages");
 const { createReliableDelivery, createDeliveryWorker, sendStoredReply } = require("./lib/reliable-delivery");
 const { createBackupSchedule } = require("./lib/database-backups");
+const { readSearchPolicy, selectedDate } = require("./lib/availability-search");
 
 const app = express();
 app.use(express.json({ limit: "1mb", verify(req, res, bytes) { req.rawBody = bytes; } }));
@@ -41,7 +42,7 @@ const ZONE = "America/Mexico_City";
 const CALENDAR_ID = "primary";
 const HOURS = [10, 11, 15];
 const OFFER_LIFETIME = 15 * 60 * 1000;
-const LOOKAHEAD_DAYS = Number(process.env.NUKMIRIS_LOOKAHEAD_DAYS || 14);
+const SEARCH_POLICY = readSearchPolicy();
 
 const CREDENTIALS = path.join(__dirname, "credentials.json");
 const DB_PATH = path.resolve(__dirname, process.env.NUKMIRIS_DB_PATH || "data/nukmiris-sessions.sqlite");
@@ -101,11 +102,11 @@ const receivingRoute = ROUTING_MODE === "receiving_number" ? db.prepare(`
 const businessContext = new AsyncLocalStorage();
 const messageQueues = new Map();
 const availability = ["availability", "booking"].includes(MODE) ? createCalendarAvailability({
-  db, lookaheadDays: LOOKAHEAD_DAYS,
+  db, policy: SEARCH_POLICY,
   getClient: MODE === "booking" ? () => loadCalendarClient({ booking: true }) : undefined,
 }) : null;
 const bookings = MODE === "booking" ? createBookingService({ db, availability, enabled: true }) : null;
-const management = MANAGEMENT_ENABLED ? createAppointmentManagement({ db, availability, enabled: true, lookaheadDays: LOOKAHEAD_DAYS }) : null;
+const management = MANAGEMENT_ENABLED ? createAppointmentManagement({ db, availability, enabled: true }) : null;
 const appointmentLookup = bookings ? management || createAppointmentLookup({ db, availability }) : null;
 function businessFor(from) {
   const context = businessContext.getStore();
@@ -1372,25 +1373,28 @@ function alreadyProcessed(id) {
 const availabilityFlow = availability ? createAvailabilityMenu({
   availability, sessions, businessFor, sendMessage, sendReplyButtons, sendAppointmentList,
   onSelect: selectAvailableSlot, bookingEnabled: !!bookings,
-  lookaheadDays: LOOKAHEAD_DAYS, lifetime: OFFER_LIFETIME,
+  lifetime: OFFER_LIFETIME,
 }) : null;
 const managementMenu = management ? createManagementMenu({
   management, availability, sessions, businessFor, sendMessage, sendReplyButtons, sendAppointmentList,
-  lookaheadDays: LOOKAHEAD_DAYS, lifetime: OFFER_LIFETIME,
+  lifetime: OFFER_LIFETIME,
   saveReceipt: (from, receipt) => saveContinuation("management", receipt.requestId, "retry", () => sessions.set(from, receipt)),
   beforeDecision: (from, requestId, decision) => saveContinuation("management", requestId, decision),
 }) : null;
 
-async function offerAvailability(from) {
-  await availabilityFlow.offer(from);
+async function offerAvailability(from, options) {
+  await availabilityFlow.offer(from, options);
 }
 
 async function selectAvailableSlot(from, slot, session, selectionCommand) {
-  const fresh = await availability.listSlots(businessFor(from).business_id);
-  if (!fresh.some(value => value.start === slot.start && value.end === slot.end)) {
-    sessions.delete(from);
-    await sendMessage(from, "Ese horario ya no está disponible. Escribe Cita para consultar nuevamente.");
-    return;
+  // Recognized customers are checked by the booking service under its calendar
+  // lock. Read-only/name-collection paths still need a direct-day check here.
+  if (!bookings || !customers.get(from)) {
+    const fresh = await availability.listSlots(businessFor(from).business_id, selectedDate(slot, availability.configuration(businessFor(from).business_id).settings.timeZone));
+    if (!fresh.some(value => value.start === slot.start && value.end === slot.end)) {
+      await offerAvailability(from, { notice: "Ese horario ya no está disponible. Te muestro otras opciones." });
+      return;
+    }
   }
   if (bookings) {
     const customer = customers.get(from);
@@ -1413,12 +1417,6 @@ async function completeBookingSelection(from, slot, calendarId, selectionCommand
   if (availability.configuration(business.business_id).calendarId !== calendarId) {
     sessions.delete(from);
     await sendMessage(from, "La configuración cambió. Escribe Cita para consultar nuevamente.");
-    return;
-  }
-  const fresh = await availability.listSlots(business.business_id);
-  if (!fresh.some(value => value.start === slot.start && value.end === slot.end)) {
-    sessions.delete(from);
-    await sendMessage(from, "Ese horario ya no está disponible. Escribe Cita para consultar nuevamente.");
     return;
   }
   const intent = bookings.createIntent({ businessId: business.business_id, sender: from, slot, calendarId });
@@ -1456,6 +1454,8 @@ async function handleBookingDecision(from, command) {
   if (outcome.status === "confirmed") {
     const zone = availability.configuration(context.businessId).settings.timeZone;
     await sendMessage(from, appointmentSuccess({ start: outcome.start, end: outcome.end, zone, businessName: businessFor(from).business_name }));
+  } else if (outcome.status === "rejected") {
+    await offerAvailability(from, { notice: "No pude reservar ese horario. Te muestro opciones actualizadas." });
   } else if (outcome.status === "declined" && match[2] === "no") {
     await offerAvailability(from);
   } else {

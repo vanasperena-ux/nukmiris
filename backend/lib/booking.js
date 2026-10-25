@@ -3,6 +3,7 @@
 const { createHash, randomUUID } = require("node:crypto");
 const { DateTime } = require("luxon");
 const { loadCalendarClient, verifyBookingAuthorization } = require("./google-calendar");
+const { selectedDate } = require("./availability-search");
 
 function prepareBookingSchema(db) {
   db.exec("PRAGMA foreign_keys=ON; BEGIN IMMEDIATE");
@@ -177,7 +178,7 @@ function createBookingService({ db, availability, enabled = false,
     try {
       const customer = db.prepare("SELECT customer_id FROM business_customers WHERE business_id=? AND whatsapp_id=?").get(row.business_id, row.sender_whatsapp_id);
       if (customer?.customer_id !== row.customer_id) return terminal(row, "rejected");
-      const available = await availability.listSlots(row.business_id);
+      const available = await availability.listSlots(row.business_id, selectedDate({ start: row.slot_start }, availability.configuration(row.business_id).settings.timeZone));
       const valid = available.some(slot => DateTime.fromISO(slot.start).toMillis() === row.start_ms && DateTime.fromISO(slot.end).toMillis() === row.end_ms);
       if (!valid || !mappingMatches(row)) return terminal(row, "rejected");
       const { settings } = availability.configuration(row.business_id);

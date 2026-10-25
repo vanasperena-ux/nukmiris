@@ -5,7 +5,7 @@ const path = require("node:path");
 const { google } = require("googleapis");
 const { DateTime } = require("luxon");
 const { readBusinessSettings } = require("./business-config");
-const { findAvailableSlots } = require("./availability");
+const { readSearchPolicy, validateSearchPolicy, searchAvailableSlots } = require("./availability-search");
 
 const READ_SCOPES = [
   "https://www.googleapis.com/auth/calendar.calendarlist.readonly",
@@ -49,27 +49,32 @@ async function verifyBookingAuthorization(getAuthorization = () => loadGoogleAut
   }
 }
 
-function createCalendarAvailability({ db, getClient = loadCalendarClient, now = () => DateTime.now(), lookaheadDays = 14 }) {
-  if (!Number.isInteger(lookaheadDays) || lookaheadDays < 1 || lookaheadDays > 90) throw new Error("Lookahead must be between 1 and 90 days");
+function createCalendarAvailability({ db, getClient = loadCalendarClient, now = () => DateTime.now(),
+  policy = readSearchPolicy(), getSearchPolicy, lookaheadDays }) {
+  // Retain the injected legacy bound for older fixtures/callers. The runtime
+  // uses one explicit search policy; its old 14-day environment value is retired.
+  policy = validateSearchPolicy({ ...policy, ...(lookaheadDays === undefined ? {} : { maxBookingHorizonDays: lookaheadDays }) });
   let client;
   async function calendar() { return client || (client = await getClient()); }
   function configuration(businessId) {
     const mapping = db.prepare("SELECT google_calendar_id FROM business_calendar_connections WHERE business_id=?").get(businessId);
     if (!mapping?.google_calendar_id || mapping.google_calendar_id === "primary") throw new Error("An explicit business calendar mapping is required");
-    return { calendarId: mapping.google_calendar_id, settings: readBusinessSettings(db, businessId) };
+    return { calendarId: mapping.google_calendar_id, settings: readBusinessSettings(db, businessId),
+      searchPolicy: validateSearchPolicy({ ...policy, ...getSearchPolicy?.(businessId) }) };
   }
-  async function listSlots(businessId) {
-    const { calendarId, settings } = configuration(businessId);
-    const current = now().setZone(settings.timeZone);
+  async function listSlots(businessId, query = {}) {
+    const { calendarId, settings, searchPolicy } = configuration(businessId);
     const api = await calendar();
-    const result = await api.freebusy.query({ requestBody: {
-      timeMin: current.minus({ minutes: settings.bufferMinutes }).toISO(),
-      timeMax: current.plus({ days: lookaheadDays }).toISO(),
-      timeZone: settings.timeZone, items: [{ id: calendarId }],
-    } });
-    const selected = result.data.calendars?.[calendarId];
-    if (!selected || selected.errors?.length || !Array.isArray(selected.busy)) throw new Error("The selected Google Calendar could not be checked");
-    return findAvailableSlots({ settings, busyPeriods: selected.busy, now: current, lookaheadDays });
+    return searchAvailableSlots({ settings, now: now(), policy: searchPolicy, query,
+      readBusy: async ({ start, end }) => {
+        const result = await api.freebusy.query({ requestBody: {
+          timeMin: start.toISO(), timeMax: end.toISO(), timeZone: settings.timeZone, items: [{ id: calendarId }],
+        } }, { timeout: 15000, retry: false });
+        const selected = result.data.calendars?.[calendarId];
+        if (!selected || selected.errors?.length || !Array.isArray(selected.busy)) throw new Error("The selected Google Calendar could not be checked");
+        return selected.busy;
+      },
+    });
   }
   async function verify(businessId) {
     const { calendarId } = configuration(businessId);
@@ -78,7 +83,8 @@ function createCalendarAvailability({ db, getClient = loadCalendarClient, now = 
     if (!result.data?.id || result.data.id !== calendarId || !["owner", "writer"].includes(result.data.accessRole)) {
       throw new Error("The selected business calendar requires owner or writer access");
     }
-    await listSlots(businessId);
+    // Readiness is a single direct-day check, never a year-long discovery scan.
+    await listSlots(businessId, { date: now().setZone(configuration(businessId).settings.timeZone).toISODate() });
     return { businessId, calendarName: result.data.summary || "Selected calendar" };
   }
   return { listSlots, verify, configuration };

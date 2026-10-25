@@ -6,7 +6,7 @@ const { createAvailabilityMenu } = require("./availability-menu");
 const { appointmentSuccess } = require("./appointment-messages");
 
 function createManagementMenu({ management, availability, sessions, businessFor, sendMessage,
-  sendReplyButtons, sendAppointmentList, lookaheadDays = 14, lifetime = 15 * 60 * 1000,
+  sendReplyButtons, sendAppointmentList, lookaheadDays, lifetime = 15 * 60 * 1000,
   saveReceipt = (from, receipt) => sessions.set(from, receipt), beforeDecision = () => {} }) {
   const expired = "Esta opción ya no está vigente. Escribe Reagendar o Cancelar para consultar tus citas.";
   function context(from) { return { businessId: businessFor(from).business_id, sender: from }; }
@@ -56,12 +56,12 @@ function createManagementMenu({ management, availability, sessions, businessFor,
     if (kind === "reschedule" && appointments.length === 1) await beginReschedule(from, appointments[0]);
     else await choices(from, { mode: "management_select", kind, appointments, expiresAt: Date.now() + lifetime });
   }
-  async function beginReschedule(from, appointment) {
+  async function beginReschedule(from, appointment, notice) {
     const scope = { ...context(from), bookingRequestId: appointment.bookingRequestId, expectedEtag: appointment.etag };
     await management.readAppointment(scope);
     sessions.set(from, { mode: "reschedule_browse", bookingRequestId: appointment.bookingRequestId,
       expectedEtag: appointment.etag, expiresAt: Date.now() + lifetime });
-    await rescheduleFlow(from).offer(from);
+    await rescheduleFlow(from).offer(from, { notice });
   }
   function sourceContext(from) {
     const session = sessions.get(from);
@@ -71,7 +71,7 @@ function createManagementMenu({ management, availability, sessions, businessFor,
   function rescheduleFlow(from) {
     return createAvailabilityMenu({
       availability: { configuration: businessId => availability.configuration(businessId),
-        listSlots: () => management.listSlots(sourceContext(from)) },
+        listSlots: (businessId, query) => management.listSlots(sourceContext(from), query) },
       sessions: {
         get: () => sessions.get(from)?.mode === "reschedule_browse" ? sessions.get(from).browse : undefined,
         set: (to, browse) => sessions.set(from, { ...sessions.get(from), browse }),
@@ -85,6 +85,10 @@ function createManagementMenu({ management, availability, sessions, businessFor,
     let intent;
     try { intent = await management.createIntent(details); }
     catch (error) {
+      if (details.kind === "reschedule" && error.code === "SLOT_UNAVAILABLE") {
+        await rescheduleFlow(from).offer(from, { notice: "Ese horario ya no está disponible. Te muestro otras opciones." });
+        return;
+      }
       if (details.kind === "cancel" && ([404, 410].includes(Number(error.response?.status || error.code)) || error.code === "APPOINTMENT_GONE")) {
         sessions.delete(from);
         await sendMessage(from, 'Esa cita ya no aparece en el calendario. Escribe "menu" para revisar tus citas.');
@@ -118,6 +122,9 @@ function createManagementMenu({ management, availability, sessions, businessFor,
         ? `Tu cita del ${range(from, outcome.originalStart, outcome.originalEnd)} en ${businessFor(from).business_name} está cancelada.`
         : appointmentSuccess({ kind: "reschedule", start: outcome.start, end: outcome.end,
           zone: availability.configuration(context(from).businessId).settings.timeZone, businessName: businessFor(from).business_name }));
+    } else if (outcome.status === "rejected" && outcome.kind === "reschedule") {
+      const appointment = await management.readAppointment({ ...context(from), bookingRequestId: outcome.bookingRequestId });
+      await beginReschedule(from, appointment, "No pudimos cambiar tu cita a ese horario. Te muestro otras opciones.");
     } else if (outcome.status === "declined") {
       await sendMessage(from, "No realizamos cambios en tu cita. Escribe Menu para volver.");
     } else await sendMessage(from, "No pudimos realizar este cambio. Escribe Reagendar o Cancelar para consultar de nuevo tu cita, o Menu para recibir ayuda.");

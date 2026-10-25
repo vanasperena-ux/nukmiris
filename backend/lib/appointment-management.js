@@ -3,7 +3,7 @@
 const { randomUUID } = require("node:crypto");
 const { DateTime } = require("luxon");
 const { loadCalendarClient, verifyBookingAuthorization } = require("./google-calendar");
-const { findAvailableSlots } = require("./availability");
+const { searchAvailableSlots, selectedDate, readSearchPolicy, validateSearchPolicy } = require("./availability-search");
 
 function prepareManagementSchema(db) {
   db.exec("PRAGMA foreign_keys=ON; BEGIN IMMEDIATE");
@@ -34,7 +34,7 @@ function prepareManagementSchema(db) {
   } catch (error) { db.exec("ROLLBACK"); throw error; }
 }
 
-function createAppointmentManagement({ db, availability, enabled = false, lookaheadDays = 14,
+function createAppointmentManagement({ db, availability, enabled = false, lookaheadDays,
   getClient = () => loadCalendarClient({ booking: true }), verifyAuthorization = verifyBookingAuthorization,
   now = () => DateTime.now(), lifetimeMs = 15 * 60 * 1000 }) {
   let client, authorization;
@@ -106,33 +106,38 @@ function createAppointmentManagement({ db, availability, enabled = false, lookah
     return appointments.sort((a, b) => DateTime.fromISO(a.start).toMillis() - DateTime.fromISO(b.start).toMillis())
       .map(({ row, event, ...item }) => item);
   }
-  async function listSlots(context) {
+  async function listSlots(context, query = {}) {
     const source = await readAppointment(context);
-    const { settings } = availability.configuration(context.businessId);
-    const current = now().setZone(settings.timeZone);
-    const api = await calendar(), periods = [], seen = new Set();
-    let pageToken;
-    do {
-      const response = await api.events.list({ calendarId: source.calendarId, singleEvents: true, showDeleted: false,
-        timeMin: current.minus({ minutes: settings.bufferMinutes }).toISO(),
-        timeMax: current.plus({ days: lookaheadDays }).toISO(), timeZone: settings.timeZone,
-        maxResults: 2500, ...(pageToken ? { pageToken } : {}) });
-      const items = response.data.items || [];
-      if (!Array.isArray(items)) throw new Error("Calendar events could not be checked");
-      for (const event of items) {
-        if (event.id === source.row.event_id || event.status === "cancelled" || event.transparency === "transparent") continue;
-        const start = DateTime.fromISO(event.start?.dateTime || event.start?.date || "", { zone: settings.timeZone });
-        const end = DateTime.fromISO(event.end?.dateTime || event.end?.date || "", { zone: settings.timeZone });
-        if (!start.isValid || !end.isValid || end <= start) throw new Error("Calendar returned an invalid busy event");
-        periods.push({ start: start.toISO(), end: end.toISO() });
-      }
-      pageToken = response.data.nextPageToken;
-      if (pageToken && seen.has(pageToken)) throw new Error("Calendar returned repeated pagination");
-      if (pageToken) seen.add(pageToken);
-    } while (pageToken);
-    return findAvailableSlots({ settings, busyPeriods: periods, now: current, lookaheadDays })
-      .filter(slot => !sameTime(slot.start, source.start) || !sameTime(slot.end, source.end));
+    const { settings, searchPolicy } = availability.configuration(context.businessId);
+    const policy = validateSearchPolicy({ ...(searchPolicy || readSearchPolicy()),
+      ...(lookaheadDays === undefined ? {} : { maxBookingHorizonDays: lookaheadDays }) });
+    const api = await calendar();
+    return searchAvailableSlots({ settings, now: now(), policy, query, excludeSlot: { start: source.start, end: source.end },
+      readBusy: async ({ start, end }) => {
+        const periods = [], seen = new Set();
+        let pageToken;
+        do {
+          const response = await api.events.list({ calendarId: source.calendarId, singleEvents: true, showDeleted: false,
+            timeMin: start.toISO(), timeMax: end.toISO(), timeZone: settings.timeZone,
+            maxResults: 2500, ...(pageToken ? { pageToken } : {}) }, { timeout: 15000, retry: false });
+          const items = response.data.items || [];
+          if (!Array.isArray(items)) throw new Error("Calendar events could not be checked");
+          for (const event of items) {
+            if (event.id === source.row.event_id || event.status === "cancelled" || event.transparency === "transparent") continue;
+            const first = DateTime.fromISO(event.start?.dateTime || event.start?.date || "", { zone: settings.timeZone });
+            const last = DateTime.fromISO(event.end?.dateTime || event.end?.date || "", { zone: settings.timeZone });
+            if (!first.isValid || !last.isValid || last <= first) throw new Error("Calendar returned an invalid busy event");
+            periods.push({ start: first.toISO(), end: last.toISO() });
+          }
+          pageToken = response.data.nextPageToken;
+          if (pageToken && seen.has(pageToken)) throw new Error("Calendar returned repeated pagination");
+          if (pageToken) seen.add(pageToken);
+        } while (pageToken);
+        return periods;
+      },
+    });
   }
+
   function invalidateOffers({ businessId, sender }) {
     db.prepare("UPDATE appointment_changes SET state='declined',updated_at=? WHERE business_id=? AND sender_whatsapp_id=? AND state='offered'")
       .run(now().toISO(), businessId, sender);
@@ -143,8 +148,8 @@ function createAppointmentManagement({ db, availability, enabled = false, lookah
     const context = { businessId, sender, bookingRequestId, expectedEtag };
     const source = await readAppointment(context);
     if (kind === "reschedule") {
-      if (!slot || !(await listSlots(context)).some(item => sameTime(item.start, slot.start) && sameTime(item.end, slot.end))) {
-        throw new Error("The selected new time is unavailable");
+      if (!slot || !(await listSlots(context, selectedDate(slot, availability.configuration(businessId).settings.timeZone))).some(item => sameTime(item.start, slot.start) && sameTime(item.end, slot.end))) {
+        throw Object.assign(new Error("The selected new time is unavailable"), { code: "SLOT_UNAVAILABLE" });
       }
     }
     const requestId = randomUUID();
@@ -253,7 +258,7 @@ function createAppointmentManagement({ db, availability, enabled = false, lookah
       if (!sameTime(source.start, row.original_start) || !sameTime(source.end, row.original_end)) return terminal(context, "rejected");
       const api = await calendar();
       if (row.kind === "reschedule") {
-        const slots = await listSlots(sourceContext);
+        const slots = await listSlots(sourceContext, selectedDate({ start: row.target_start }, availability.configuration(row.business_id).settings.timeZone));
         if (!slots.some(slot => sameTime(slot.start, row.target_start) && sameTime(slot.end, row.target_end)) ||
             await journalConflict(row, api)) return terminal(context, "rejected");
       }

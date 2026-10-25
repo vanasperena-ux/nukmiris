@@ -193,7 +193,8 @@ describe("signed selection-based appointment management", { concurrency: false }
     const target = session.browse.slots[0];
     f.events.set("calendar-synthetic-a:external", { id: "external", start: { dateTime: target.start }, end: { dateTime: target.end } });
     await click(selected);
-    assert.match(body(), /No pude completar/);
+    assert.match(body(), /Ese horario ya no está disponible/);
+    assert(buttons().some(button => button.id.includes(":slot:")));
     assert.equal(f.patches.length, 0);
     assert.equal(f.events.get(`calendar-synthetic-a:${source.eventId}`).start.dateTime, f.slot(10).start);
   });
@@ -305,7 +306,7 @@ describe("signed selection-based appointment management", { concurrency: false }
     const source = await f.seed();
     f.controls.patchError = 403;
     await post("Reagendar"); await click(buttons()[0].id);
-    assert.match(body(), /No pudimos realizar este cambio/);
+    assert.match(body(), /No pudimos cambiar tu cita/);
     assert.equal(f.events.get(`calendar-synthetic-a:${source.eventId}`).start.dateTime, f.slot(10).start);
     assert(!(await f.availability.listSlots("synthetic-a")).some(slot => slot.start === f.slot(10).start));
     f.controls.deleteError = 403;

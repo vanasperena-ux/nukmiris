@@ -43,13 +43,18 @@ function overlaps(start, end, blockedStart, blockedEnd) {
   return start < blockedEnd && end > blockedStart;
 }
 
-function findAvailableSlots({ settings, busyPeriods, now = DateTime.now(), lookaheadDays = 14 }) {
+function findAvailableSlots({ settings, busyPeriods, now = DateTime.now(), lookaheadDays = 14, rangeStart, rangeEnd }) {
   validateSettings(settings);
-  if (!Number.isInteger(lookaheadDays) || lookaheadDays < 1 || lookaheadDays > 90) throw new Error("Lookahead must be between 1 and 90 days");
+  if (!Number.isInteger(lookaheadDays) || lookaheadDays < 1 || lookaheadDays > 365) throw new Error("Booking horizon must be between 1 and 365 days");
   if (!Array.isArray(busyPeriods)) throw new Error("Calendar busy periods are required");
   const current = (typeof now === "string" ? DateTime.fromISO(now) : now).setZone(settings.timeZone);
   if (!current.isValid) throw new Error("Current time is invalid");
-  const until = current.plus({ days: lookaheadDays });
+  const parse = value => (typeof value === "string" ? DateTime.fromISO(value) : value).setZone(settings.timeZone);
+  const first = rangeStart ? parse(rangeStart) : current;
+  const last = rangeEnd ? parse(rangeEnd) : current.plus({ days: lookaheadDays });
+  if (!first.isValid || !last.isValid) throw new Error("Availability range is invalid");
+  const from = DateTime.max(first, current);
+  const until = DateTime.min(last, current.plus({ days: lookaheadDays }));
   const busy = busyPeriods.map(period => {
     const start = DateTime.fromISO(period.start, { setZone: true });
     const end = DateTime.fromISO(period.end, { setZone: true });
@@ -59,8 +64,7 @@ function findAvailableSlots({ settings, busyPeriods, now = DateTime.now(), looka
   const opening = minutes(settings.openingTime, "Opening time");
   const closing = minutes(settings.closingTime, "Closing time");
   const slots = [];
-  for (let index = 0; index <= lookaheadDays; index++) {
-    const day = current.startOf("day").plus({ days: index });
+  for (let day = from.startOf("day"); day <= until.startOf("day"); day = day.plus({ days: 1 })) {
     if (!settings.workingDays.includes(day.weekday)) continue;
     const close = atMinute(day, closing);
     if (!close) continue;
@@ -71,7 +75,7 @@ function findAvailableSlots({ settings, busyPeriods, now = DateTime.now(), looka
     if (breaks.some(pause => !pause.start || !pause.end)) continue;
     for (let minute = opening; minute < closing; minute += settings.startIntervalMinutes) {
       const start = atMinute(day, minute);
-      if (!start || start <= current) continue;
+      if (!start || start <= current || start < from || start >= until) continue;
       const end = start.plus({ minutes: settings.durationMinutes });
       const occupiedEnd = end.plus({ minutes: settings.bufferMinutes });
       if (occupiedEnd > close || occupiedEnd > until) continue;

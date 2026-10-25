@@ -19,7 +19,7 @@ describe("signed WhatsApp calendar availability", { concurrency: false }, () => 
   const changes = [];
   const busy = {};
   const originals = new Map();
-  let gate, failNextLookup = false;
+  let gate, failNextLookup = false, failAtLookup;
   before(async () => {
     directory = fs.mkdtempSync(path.join(os.tmpdir(), "nukmiris-availability-test-"));
     const dbPath = path.join(directory, "synthetic.sqlite");
@@ -40,7 +40,7 @@ describe("signed WhatsApp calendar availability", { concurrency: false }, () => 
       calendarList: { get: async ({ calendarId }) => ({ data: { id: calendarId, summary: "Synthetic business calendar", accessRole: "writer" } }) },
       freebusy: { query: async args => {
         calendarCalls.push(args.requestBody);
-        if (failNextLookup) { failNextLookup = false; throw new Error("Synthetic Google failure"); }
+        if (failNextLookup || calendarCalls.length === failAtLookup) { failNextLookup = false; throw new Error("Synthetic Google failure"); }
         const id = args.requestBody.items[0].id;
         return { data: { calendars: { [id]: { busy: busy[id] || [] } } } };
       } },
@@ -74,7 +74,7 @@ describe("signed WhatsApp calendar availability", { concurrency: false }, () => 
     origin = `http://127.0.0.1:${server.address().port}`;
   });
   beforeEach(() => {
-    outgoing.length = 0; calendarCalls.length = 0; changes.length = 0; gate = undefined; failNextLookup = false;
+    outgoing.length = 0; calendarCalls.length = 0; changes.length = 0; gate = undefined; failNextLookup = false; failAtLookup = undefined;
     for (const key of Object.keys(busy)) delete busy[key];
     db.exec("DELETE FROM business_support_messages; DELETE FROM business_support_conversations; DELETE FROM business_customer_sessions;");
   });
@@ -154,6 +154,7 @@ describe("signed WhatsApp calendar availability", { concurrency: false }, () => 
     assert.equal(buttons()[2].title, "Elegir fecha");
     await post(buttons()[2].id, { kind: "button_reply" });
     assert.equal(outgoing.at(-1).payload.interactive.action.sections[0].title, "Fechas disponibles");
+    assert.equal(calendarCalls.length, 1, "opening the date picker reuses the existing offer");
     assert.match(outgoing.at(-1).payload.interactive.body.text, /DD\/MM\/AAAA/);
     const selectedDate = rows().find(row => row.id.includes(":date:"));
     const day = selectedDate.id.split(":").at(-1);
@@ -198,7 +199,8 @@ describe("signed WhatsApp calendar availability", { concurrency: false }, () => 
     const choice = buttons()[0].id;
     busy["calendar-synthetic-a"] = [stored().slots[0]];
     await post(choice, { kind: "button_reply" });
-    assert.match(outgoing.at(-1).payload.text.body, /ya no está disponible/);
+    assert.match(outgoing.at(-1).payload.interactive.body.text, /ya no está disponible/);
+    assert(buttons().some(button => button.id.includes(":slot:")));
     assert.deepEqual(changes, []);
   });
   test("choosing a date queries Google again and removes newly busy times", async () => {
@@ -227,7 +229,7 @@ describe("signed WhatsApp calendar availability", { concurrency: false }, () => 
     const slots = stored().slots;
     const queries = calendarCalls.length;
     const today = DateTime.now().setZone("America/Mexico_City");
-    for (const invalid of ["31/02/2027", "mañana", today.minus({ days: 1 }).toFormat("dd/LL/yyyy"), today.plus({ days: 100 }).toFormat("dd/LL/yyyy")]) {
+    for (const invalid of ["31/02/2027", "mañana", today.minus({ days: 1 }).toFormat("dd/LL/yyyy"), today.plus({ days: 400 }).toFormat("dd/LL/yyyy")]) {
       await post(invalid);
       assert.match(outgoing.at(-1).payload.text.body, /DD\/MM\/AAAA/);
       assert.equal(calendarCalls.length, queries);
@@ -248,6 +250,21 @@ describe("signed WhatsApp calendar availability", { concurrency: false }, () => 
     assert.equal(stored().selectedDate, closed.toISODate());
     await post("otra fecha");
     assert(rows().some(row => row.id.includes(":date:")));
+  });
+  test("a typed date six months away checks that day directly and displays its times", async () => {
+    await openDates();
+    let date = DateTime.now().setZone("America/Mexico_City").startOf("day").plus({ days: 180 });
+    while (date.weekday > 5) date = date.plus({ days: 1 });
+    const count = calendarCalls.length;
+    await post(date.toFormat("dd/LL/yyyy"));
+    assert.equal(calendarCalls.length, count + 1);
+    assert.equal(calendarCalls.at(-1).timeMin, date.toISO());
+    assert.equal(calendarCalls.at(-1).timeMax, date.plus({ days: 1 }).toISO());
+    assert.equal(stored().selectedDate, date.toISODate());
+    assert(stored().slots.length > 0);
+    assert(stored().slots.every(slot => dayOf(slot) === date.toISODate()));
+    assert(buttons().some(button => button.title === "10:00"));
+    assert.deepEqual(changes, []);
   });
   test("date lists allow later dates and return navigation within WhatsApp's row limit", async () => {
     const initial = await openDates();
@@ -290,9 +307,11 @@ describe("signed WhatsApp calendar availability", { concurrency: false }, () => 
     assert.deepEqual(changes, []);
   });
   test("the entire search window being busy produces no appointment choices", async () => {
-    busy["calendar-synthetic-a"] = [{ start: DateTime.now().minus({ days: 1 }).toISO(), end: DateTime.now().plus({ days: 100 }).toISO() }];
+    busy["calendar-synthetic-a"] = [{ start: DateTime.now().minus({ days: 1 }).toISO(), end: DateTime.now().plus({ days: 400 }).toISO() }];
     await post("Cita");
     assert.match(outgoing.at(-1).payload.text.body, /No encontré horarios disponibles/);
+    assert.match(outgoing.at(-1).payload.text.body, /llamar al negocio/);
+    assert.equal(calendarCalls.length, 24);
     assert.equal(db.prepare("SELECT COUNT(*) AS n FROM business_customer_sessions").get().n, 0);
     assert.deepEqual(changes, []);
   });
@@ -300,7 +319,7 @@ describe("signed WhatsApp calendar availability", { concurrency: false }, () => 
     await post("Cita");
     const all = stored().slots;
     for (const remaining of [2, 1]) {
-      busy["calendar-synthetic-a"] = all.slice(0, -remaining);
+      busy["calendar-synthetic-a"] = [...all.slice(0, -remaining), { start: all.at(-1).end, end: DateTime.now().plus({ days: 400 }).toISO() }];
       await post("Cita");
       assert.equal(buttons().filter(button => button.id.includes(":slot:")).length, remaining);
       assert.equal(buttons().at(-1).title, "Elegir fecha");
@@ -316,6 +335,19 @@ describe("signed WhatsApp calendar availability", { concurrency: false }, () => 
     assert.equal(stored().view, "dates");
     await post(date.id, { kind: "list_reply" });
     assert(buttons().some(button => button.id.includes(":slot:")));
+    assert.deepEqual(changes, []);
+  });
+  test("a failure in either the initial or an extended search reports an error rather than no availability", async () => {
+    busy["calendar-synthetic-a"] = [{ start: DateTime.now().minus({ days: 1 }).toISO(),
+      end: DateTime.now().setZone("America/Mexico_City").startOf("day").plus({ days: 30 }).toISO() }];
+    for (const callNumber of [1, 2]) {
+      calendarCalls.length = 0; failAtLookup = callNumber;
+      await post("Cita");
+      assert.equal(calendarCalls.length, callNumber);
+      assert.match(outgoing.at(-1).payload.text.body, /No pude consultar el calendario/);
+      assert.doesNotMatch(outgoing.at(-1).payload.text.body, /No encontré horarios|llamar al negocio/);
+      assert.equal(db.prepare("SELECT COUNT(*) AS n FROM business_customer_sessions").get().n, 0);
+    }
     assert.deepEqual(changes, []);
   });
   test("queued concurrent messages are both processed instead of dropping the second", async () => {

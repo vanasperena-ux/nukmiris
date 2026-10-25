@@ -1,6 +1,6 @@
 {
   "name": "nukmiris-backend",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "private": true,
   "description": "Verified calendar availability plus opt-in, customer-confirmed new bookings",
   "engines": {
@@ -8,7 +8,7 @@
   },
   "scripts": {
     "start": "node whatsapp-webhook.js",
-    "test": "node --test --test-reporter=spec --test-concurrency=1 test/support-only.test.cjs test/availability.test.cjs test/connections.test.cjs test/availability-webhook.test.cjs test/booking.test.cjs test/booking-webhook.test.cjs test/booking-oauth.test.cjs test/management.test.cjs test/management-webhook.test.cjs test/reliability.test.cjs test/backups.test.cjs test/recovery-webhook.test.cjs",
+    "test": "node --test --test-reporter=spec --test-concurrency=1 test/support-only.test.cjs test/availability.test.cjs test/dynamic-availability.test.cjs test/connections.test.cjs test/availability-webhook.test.cjs test/booking.test.cjs test/booking-webhook.test.cjs test/booking-oauth.test.cjs test/management.test.cjs test/management-webhook.test.cjs test/reliability.test.cjs test/backups.test.cjs test/recovery-webhook.test.cjs test/restart-inspection.test.cjs",
     "google:connect": "node scripts/google-connect.js",
     "calendars:list": "node scripts/connections.js --list-calendars",
     "business:configure": "node scripts/configure-business.js",

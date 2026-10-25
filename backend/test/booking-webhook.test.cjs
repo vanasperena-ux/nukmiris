@@ -181,7 +181,8 @@ describe("slot-selected WhatsApp bookings", { concurrency: false }, () => {
     events.set("synthetic-external", { calendarId: "calendar-synthetic-a", start: { dateTime: session.slots[0].start }, end: { dateTime: session.slots[0].end } });
     await post(choice, { kind: "button_reply" });
     assert.equal(inserts.length, 0);
-    assert.match(outgoing.at(-1).payload.text.body, /ya no está disponible/);
+    assert.match(outgoing.at(-1).payload.interactive.body.text, /No pude reservar ese horario/);
+    assert(buttons().some(button => button.id.includes(":slot:")));
   });
   test("date-first selection books the chosen day directly without a confirmation screen", async () => {
     registered(); await post("Cita");
@@ -227,7 +228,7 @@ describe("slot-selected WhatsApp bookings", { concurrency: false }, () => {
     assert.match(outgoing.at(-1).payload.text.body, /cita está agendada/);
     beforeInsert = undefined; insertError = 403;
     await post("Cita"); await post(buttons()[0].id, { kind: "button_reply" });
-    assert.match(outgoing.at(-1).payload.text.body, /No pudimos confirmar/);
+    assert.match(outgoing.at(-1).payload.interactive.body.text, /No pude reservar ese horario/);
     assert.equal(events.size, 1);
   });
   test("an unresolved insert keeps its request and recovery reads never repeat the write", async () => {

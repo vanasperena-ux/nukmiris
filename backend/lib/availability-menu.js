@@ -2,12 +2,13 @@
 
 const { randomUUID } = require("node:crypto");
 const { DateTime } = require("luxon");
+const { readSearchPolicy } = require("./availability-search");
 
 // Presentation only: the existing availability engine and booking service
 // remain responsible for schedule checks, busy periods, and event creation.
 function createAvailabilityMenu({ availability, sessions, businessFor, sendMessage,
   sendReplyButtons, sendAppointmentList, onSelect, bookingEnabled = false,
-  lookaheadDays = 14, lifetime = 15 * 60 * 1000, now = () => DateTime.now() }) {
+  lookaheadDays, lifetime = 15 * 60 * 1000, now = () => DateTime.now() }) {
   const expired = "Esta opción ya no está vigente. Escribe Cita para consultar nuevos horarios.";
   const guidance = bookingEnabled
     ? "Selecciona el horario que prefieres."
@@ -15,8 +16,9 @@ function createAvailabilityMenu({ availability, sessions, businessFor, sendMessa
 
   function context(from) {
     const business = businessFor(from);
-    const { calendarId, settings } = availability.configuration(business.business_id);
-    return { business, calendarId, zone: settings.timeZone };
+    const { calendarId, settings, searchPolicy = readSearchPolicy() } = availability.configuration(business.business_id);
+    return { business, calendarId, zone: settings.timeZone, policy: searchPolicy,
+      horizonDays: lookaheadDays ?? searchPolicy.maxBookingHorizonDays };
   }
   function valid(from, session) {
     return session?.mode === "availability" && session.flowVersion === 2 &&
@@ -35,14 +37,15 @@ function createAvailabilityMenu({ availability, sessions, businessFor, sendMessa
     sessions.set(from, session);
   }
   function datePrompt(from) {
-    const today = now().setZone(context(from).zone).startOf("day");
+    const { zone, horizonDays } = context(from);
+    const today = now().setZone(zone).startOf("day");
     return "¿Qué día te viene mejor? Elige una fecha o escríbela como DD/MM/AAAA " +
       `(por ejemplo, ${today.toFormat("dd/LL/yyyy")}).\n\n` +
-      `Buscamos del ${today.toFormat("dd/LL/yyyy")} al ${today.plus({ days: lookaheadDays }).toFormat("dd/LL/yyyy")}. ` +
+      `Buscamos del ${today.toFormat("dd/LL/yyyy")} al ${today.plus({ days: horizonDays }).toFormat("dd/LL/yyyy")}. ` +
       "Escribe Menu para volver.";
   }
 
-  async function suggestions(from, session, stage) {
+  async function suggestions(from, session, stage, notice) {
     beginView(session, "suggestions");
     const { zone } = context(from);
     const offset = stage * 2;
@@ -55,31 +58,45 @@ function createAvailabilityMenu({ availability, sessions, businessFor, sendMessa
       : { id: action(session, "dates"), title: "Elegir fecha" });
     save(from, session, choices);
     await sendReplyButtons(from,
-      stage === 0 ? "Elige un horario que te funciona mejor:"
-        : "Te muestro mas opciones. Elige un horario que te funciona mejor:", choices);
+      (notice ? notice + "\n\n" : "") + (stage === 0 ? "Elige un horario que te funciona mejor:"
+        : "Te muestro mas opciones. Elige un horario que te funciona mejor:"), choices);
   }
 
   async function dates(from, session, page = 0) {
     beginView(session, "dates");
-    const { zone } = context(from);
-    const days = [...new Set(session.slots.map(slot => local(slot.start, zone).toISODate()))];
-    const rows = days.slice(page * 8, (page + 1) * 8).map(day => ({
+    const { zone, policy, horizonDays } = context(from);
+    session.datePages ||= [session.slots];
+    if (!session.datePages[page]) {
+      const previous = session.datePages[page - 1];
+      if (!previous?.length) throw new Error("Invalid date page");
+      const afterDate = local(previous.at(-1).start, zone).toISODate();
+      session.datePages[page] = await availability.listSlots(businessFor(from).business_id, { afterDate });
+    }
+    session.slots = session.datePages[page];
+    const days = [...new Set(session.slots.map(slot => local(slot.start, zone).toISODate()))].slice(0, policy.targetDates);
+    const rows = days.map(day => ({
       id: action(session, "date", day),
       title: local(day, zone).toFormat("ccc d 'de' LLLL"),
       description: "Ver horarios de este día",
     }));
     if (page > 0) rows.push({ id: action(session, "days", page - 1), title: "Fechas anteriores" });
-    if ((page + 1) * 8 < days.length) rows.push({ id: action(session, "days", page + 1), title: "Más fechas" });
+    const lastDay = days.at(-1);
+    if (lastDay && days.length >= policy.targetDates && local(lastDay, zone).plus({ days: 1 }) < now().setZone(zone).plus({ days: horizonDays })) {
+      rows.push({ id: action(session, "days", page + 1), title: "Más fechas" });
+    }
     save(from, session, rows);
     if (!rows.length) {
       await sendMessage(from, "No encontré horarios disponibles en los próximos días.\n\n" + datePrompt(from));
       return;
     }
-    await sendAppointmentList(from, datePrompt(from), rows, "Elegir fecha", "Fechas disponibles");
+    await sendAppointmentList(from, (days.length ? "" : "No encontré más fechas disponibles.\n\n") + datePrompt(from), rows, "Elegir fecha", "Fechas disponibles");
   }
 
   async function openDates(from, session) {
-    session.slots = await availability.listSlots(businessFor(from).business_id);
+    // The current offer already contains these first dates. Reuse that existing
+    // session snapshot; the chosen day and final slot are checked afresh later.
+    if (session.view !== "suggestions") session.slots = await availability.listSlots(businessFor(from).business_id);
+    session.datePages = [session.slots];
     await dates(from, session);
   }
 
@@ -103,31 +120,32 @@ function createAvailabilityMenu({ availability, sessions, businessFor, sendMessa
   }
 
   async function chooseDate(from, session, day) {
-    const { zone } = context(from);
-    const today = now().setZone(zone).startOf("day");
+    const { zone, horizonDays } = context(from);
+    const current = now().setZone(zone);
+    const today = current.startOf("day");
     const selected = DateTime.fromISO(day, { zone });
-    if (!selected.isValid || selected.toISODate() !== day || selected < today || selected > today.plus({ days: lookaheadDays })) {
+    if (!selected.isValid || selected.toISODate() !== day || selected < today || selected >= current.plus({ days: horizonDays })) {
       await sendMessage(from, "Esa fecha no está dentro del periodo de búsqueda.\n\n" + datePrompt(from));
       return;
     }
     // Recheck Google after the customer picks a day; never reuse cached times
     // to claim a newly busy appointment is still available.
-    const fresh = await availability.listSlots(businessFor(from).business_id);
+    const fresh = await availability.listSlots(businessFor(from).business_id, { date: day });
     session.slots = fresh.filter(slot => local(slot.start, zone).toISODate() === day);
     session.selectedDate = day;
     await times(from, session);
   }
 
-  async function offer(from) {
+  async function offer(from, { notice } = {}) {
     const { business, calendarId } = context(from);
     const slots = await availability.listSlots(business.business_id);
     if (!slots.length) {
       sessions.delete(from);
-      await sendMessage(from, "No encontré horarios disponibles en los próximos días. Escribe Menu para volver o intenta más tarde.");
+      await sendMessage(from, (notice ? notice + "\n\n" : "") + "No encontré horarios disponibles por ahora. Puedes llamar al negocio para consultar más opciones.");
       return;
     }
     await suggestions(from, { mode: "availability", flowVersion: 2, slots, calendarId,
-      expiresAt: now().toMillis() + lifetime }, 0);
+      expiresAt: now().toMillis() + lifetime }, 0, notice);
   }
 
   async function handleSelection(from, command) {
