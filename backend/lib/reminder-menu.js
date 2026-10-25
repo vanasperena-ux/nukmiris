@@ -30,7 +30,7 @@ function createReminderMenu({ reminders, managementMenu, businessFor, sessions, 
       await sendMessage(from, "No pude guardar tu confirmación. Tu cita sigue reservada; puedes volver a usar el mismo botón para intentarlo.");
     } else await sendMessage(from, expired);
   }
-  async function handle(from, { command, isText, allowText }) {
+  async function handle(from, { command, isText, allowText, replyToId, sentAt }) {
     const match = /^reminder:([0-9a-f-]{36}):(confirm|reschedule)$/.exec(command);
     if (!isText && match) { await execute(from, match[1], match[2]); return true; }
     if (!isText && command.startsWith("reminder:")) {
@@ -38,9 +38,9 @@ function createReminderMenu({ reminders, managementMenu, businessFor, sessions, 
     }
     const normalized = normalizeMessage(command);
     if (!isText || !allowText || (!CONFIRM.has(normalized) && !RESCHEDULE.has(normalized))) return false;
-    const target = reminders.textTarget(scope(from));
+    const target = reminders.textTarget(scope(from), { replyToId, sentAt });
     if (!target) {
-      if (CONFIRM.has(normalized)) {
+      if (CONFIRM.has(normalized) || replyToId) {
         await sendMessage(from, "Para confirmar una cita, usa el botón del recordatorio correspondiente."); return true;
       }
       return false;

@@ -28,6 +28,7 @@ const { MENU_INSTRUCTION } = require("./lib/menu-messages");
 const { createAppointmentReminders, createReminderWorker } = require("./lib/appointment-reminders");
 const { createTemplateVerifier } = require("./lib/reminder-templates");
 const { createReminderMenu } = require("./lib/reminder-menu");
+const { recordReminderPermission, isReminderOptOut } = require("./lib/reminder-permissions");
 
 const app = express();
 app.use(express.json({ limit: "1mb", verify(req, res, bytes) { req.rawBody = bytes; } }));
@@ -91,7 +92,7 @@ if (["availability", "booking"].includes(MODE)) requiredTables.push("business_se
 if (MODE === "booking") requiredTables.push("booking_requests", "calendar_booking_locks");
 if (MANAGEMENT_ENABLED) requiredTables.push("appointment_changes");
 if (RELIABILITY_ENABLED) requiredTables.push("message_inbox", "message_outbox", "delivery_worker");
-if (REMINDERS_MODE !== "off") requiredTables.push("reminder_business_settings", "appointment_attendance", "reminder_jobs", "reminder_attempts", "attendance_operations");
+if (REMINDERS_MODE !== "off") requiredTables.push("reminder_business_settings", "appointment_attendance", "reminder_jobs", "reminder_attempts", "attendance_operations", "reminder_permission_events");
 const presentTables = new Set(db.prepare("SELECT name FROM sqlite_master WHERE type='table'").all().map(r => r.name));
 for (const table of requiredTables) {
   if (!presentTables.has(table)) throw new Error(`Phase 6A prerequisite missing: ${table}`);
@@ -1546,7 +1547,20 @@ async function handleMessage(message) {
       await showMainMenu(from);
       return;
     }
-    // Human chat owns every message except Menu, including appointment words.
+    // Honor an explicit reminder opt-out even while support owns the conversation.
+    // This never grants permission and never changes an appointment or session.
+    if (isText && presentTables.has("reminder_permission_events") && isReminderOptOut(text)) {
+      const supplied = Number(message.timestamp) * 1000;
+      const inboxId = businessContext.getStore()?.inboxId;
+      const received = inboxId ? db.prepare("SELECT customer_time FROM message_inbox WHERE inbox_id=?").get(inboxId)?.customer_time : Date.now();
+      recordReminderPermission(db, { businessId: business.business_id, sender: from, decision: "revoked",
+        occurredAt: Number.isFinite(supplied) && supplied <= Date.now() ? supplied : Math.min(received || Date.now(), Date.now()),
+        source: "whatsapp_message", wording: text, evidence: message.id, recordedBy: "verified_whatsapp_customer" });
+      if (humanSupport.isOpen(from)) humanSupport.saveMessage(from, message.id, text);
+      else await sendMessage(from, "Dejarás de recibir recordatorios. Tus citas siguen reservadas.");
+      return;
+    }
+    // Human chat owns every other message except Menu, including appointment words.
     if (humanSupport.isOpen(from)) {
       if (isText && text) {
         humanSupport.saveMessage(from, message.id, text);
@@ -1556,7 +1570,8 @@ async function handleMessage(message) {
       }
       return;
     }
-    if (reminderMenu && await reminderMenu.handle(from, { command, isText, allowText: acceptsNaturalIntent(from) })) return;
+    if (reminderMenu && await reminderMenu.handle(from, { command, isText, allowText: acceptsNaturalIntent(from),
+      replyToId: message.context?.id, sentAt: Number(message.timestamp) * 1000 })) return;
     if (isTemplateButton) return;
     let intentButton = false;
     if (isButton && command.startsWith("intent:")) {

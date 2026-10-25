@@ -69,6 +69,12 @@ test("scheduled templates are accepted once; final reminder needs no attendance 
   const source = await f.book();
   for (const kind of ["seven_day", "confirmation", "followup", "final"]) {
     await f.at(source.requestId, kind);
+    if (kind === "confirmation") {
+      const job = f.jobs(source.requestId).find(j => j.kind === "confirmation");
+      f.reminders.receipt({ business_id: source.businessId, phone_number_id: "phone-synthetic-a" }, {
+        biz_opaque_callback_data: `nukmiris-reminder:${job.job_id}`, id: job.meta_message_id, status: "delivered", recipient_id: "523312345678",
+      });
+    }
     await f.reminders.tick();
   }
   assert.equal(f.sent.length, 4);

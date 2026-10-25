@@ -4,6 +4,8 @@ Current owner-verified baseline: v0.7.3 consistent appointment choices (`9c9e1a9
 
 Latest implementation is now **v0.8.0 reminders and attendance, awaiting PC verification**; **v0.7.3 remains owner-verified**. The earlier implementation references above identify the verified baseline, not the pending reminder checkpoint. See [the reminder guide](../backend/REMINDERS.md).
 
+Its subsequent [production compliance review](../backend/META_COMPLIANCE_REPORT.md) preserves the accepted four templates and adds safe Meta TTLs, permission evidence/withdrawal, per-WABA sender membership, uncached template status, delivered-message follow-up eligibility and quoted-reply protection. The owner supplied official excerpts to overcome blocked documentation access. All 648 offline tests pass; no production activation or live-account approval is implied. Repeat backed-up reminder preparation for the additive permission table before PC testing; continue using `npm.cmd` in PowerShell.
+
 PC result: after separately passing the new Calendar-entry check, the owner reported **“version v0.7.3 tested and all good”** on 2026-10-25 (America/Mexico_City). Record the overall combined v0.7.3 checkpoint as passed. See [the verification record](../backend/BASELINE.md) for evidence and scope; no application changes or new installation are needed for this documentation update.
 
 ## Windows PC command preference

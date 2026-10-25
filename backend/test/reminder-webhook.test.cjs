@@ -25,8 +25,9 @@ describe("signed reminder webhook and existing appointment workflows", { concurr
     return nativeFetch(origin + "/webhook", { method: "POST", body: raw,
       headers: { "Content-Type": "application/json", "X-Hub-Signature-256": signature } });
   }
-  async function post(content, { type = "text", business = "synthetic-a", id = randomUUID(), sender } = {}) {
+  async function post(content, { type = "text", business = "synthetic-a", id = randomUUID(), sender, replyTo } = {}) {
     const raw = { id, from: sender || f.sender, timestamp: String(Math.floor(f.now() / 1000)), type };
+    if (replyTo) raw.context = { id: replyTo };
     if (type === "text") raw.text = { body: content };
     else if (type === "button") raw.button = { payload: content, text: "Ignored visible title" };
     else raw.interactive = { type: "button_reply", button_reply: { id: content } };
@@ -63,6 +64,9 @@ describe("signed reminder webhook and existing appointment workflows", { concurr
     mock.method(require("node:https"), "request", () => { throw new Error("Live external requests forbidden"); });
     mock.method(require("@google-cloud/local-auth"), "authenticate", () => { throw new Error("Live OAuth forbidden"); });
     mock.method(globalThis, "fetch", async (url, options) => {
+      if (String(url).includes("/phone_numbers?")) {
+        return new Response(JSON.stringify({ data: [{ id: String(url).includes("/123456/") ? "phone-synthetic-a" : "phone-synthetic-b" }] }));
+      }
       if (String(url).includes("/message_templates?")) {
         assert.match(String(url), /^https:\/\/graph\.facebook\.com\/v26\.0\/(123456|654321)\/message_templates\?/);
         return new Response(JSON.stringify({ data: templateDefinitions().map(item => ({ ...item, status: "APPROVED" })) }));
@@ -83,6 +87,8 @@ describe("signed reminder webhook and existing appointment workflows", { concurr
       DELETE FROM appointment_attendance; DELETE FROM calendar_booking_locks; DELETE FROM appointment_changes;
       DELETE FROM booking_requests; DELETE FROM message_outbox; DELETE FROM message_inbox;
       DELETE FROM business_support_messages; DELETE FROM business_support_conversations; DELETE FROM business_customer_sessions;`);
+    f.db.exec("DELETE FROM reminder_permission_events");
+    for (const business of ["synthetic-a", "synthetic-b"]) for (const sender of [f.sender, f.other]) f.grant(business, sender);
     f.events.clear(); f.patches.length = 0; f.inserts.length = 0; outgoing.length = 0;
   });
   after(async () => {
@@ -170,5 +176,42 @@ describe("signed reminder webhook and existing appointment workflows", { concurr
     assert.equal(f.db.prepare("SELECT status FROM business_support_conversations").get().status, "closed");
     await post(command, { type: "button" });
     assert.equal(f.row(source.requestId).attendance, "CONFIRMED");
+  });
+
+  test("quoted text on an old reminder cannot confirm a replacement; the current quoted reminder can", async () => {
+    const source = await f.book(); await sendRequest(source);
+    const old = f.jobs(source.requestId).find(job => job.kind === "confirmation");
+    const appointment = await f.management.readAppointment(source);
+    const intent = await f.management.createIntent({ ...source, kind: "reschedule", expectedEtag: appointment.etag,
+      slot: { start: "2026-11-06T18:00:00-06:00", end: "2026-11-06T19:00:00-06:00" } });
+    await f.management.confirm({ ...source, requestId: intent.requestId });
+    f.setNow(f.jobs(source.requestId).findLast(job => job.kind === "confirmation").due_at);
+    await waitFor(() => f.jobs(source.requestId).findLast(job => job.kind === "confirmation").state === "accepted");
+    const latest = f.jobs(source.requestId).findLast(job => job.kind === "confirmation");
+    await post("Sí", { replyTo: old.meta_message_id });
+    assert.match(outgoing.at(-1).payload.text.body, /botón del recordatorio/);
+    assert.equal(f.row(source.requestId).attendance, "PENDING");
+    await post("Sí", { replyTo: latest.meta_message_id });
+    assert.equal(f.row(source.requestId).attendance, "CONFIRMED");
+    const persisted = f.db.prepare("SELECT message_json FROM message_inbox ORDER BY inbox_id DESC LIMIT 1").get();
+    assert.equal(JSON.parse(persisted.message_json).context.id, latest.meta_message_id);
+    assert.equal(f.patches.length, 2); // one move, one attendance update
+  });
+
+  test("STOP records withdrawal during human chat, preserves appointments and suppresses later reminders", async () => {
+    const source = await f.book(); await sendRequest(source);
+    f.db.prepare(`INSERT INTO business_support_conversations
+      (business_id,whatsapp_id,customer_id,status,created_at,updated_at) VALUES (?, ?, ?, 'waiting','fixture','fixture')`)
+      .run("synthetic-a", f.sender, f.row(source.requestId).customer_id);
+    const count = outgoing.length;
+    await post("STOP");
+    assert.equal(outgoing.length, count);
+    assert.equal(f.db.prepare("SELECT COUNT(*) AS n FROM business_support_messages").get().n, 1);
+    assert.equal(f.db.prepare("SELECT decision FROM reminder_permission_events WHERE business_id=? AND whatsapp_id=? ORDER BY event_id DESC LIMIT 1")
+      .get(source.businessId, f.sender).decision, "revoked");
+    f.setNow(f.jobs(source.requestId).find(job => job.kind === "final").due_at);
+    await waitFor(() => f.jobs(source.requestId).find(job => job.kind === "final").state === "skipped");
+    assert.equal(f.row(source.requestId).lifecycle, "ACTIVE"); assert.equal(f.deletes.length, 0);
+    assert.equal(outgoing.filter(item => item.payload.type === "template").length, 1);
   });
 });

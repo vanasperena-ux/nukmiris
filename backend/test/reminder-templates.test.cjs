@@ -32,29 +32,31 @@ for (const invalid of ["missing", "rejected", "marketing", "language", "body", "
   });
 }
 
-test("live approval checks use the correct business WABA, exact name/language and bounded approval cache", async () => {
+test("live approval checks verify sender WABA membership and never cache template approval", async () => {
   const expected = templateDefinitions()[1], calls = [];
   let clock = 0;
   const verify = createTemplateVerifier({ token: "synthetic", now: () => clock, request: async (url, options) => {
-    calls.push({ url, options }); return new Response(JSON.stringify({ data: [{ ...expected, status: "APPROVED" }] }));
+    calls.push({ url, options });
+    return new Response(JSON.stringify({ data: String(url).includes("/phone_numbers?")
+      ? [{ id: "synthetic-phone" }] : [{ ...expected, status: "APPROVED" }] }));
   } });
-  const settings = { business_id: "synthetic-a", waba_id: "123456", language: "es_MX",
+  const settings = { business_id: "synthetic-a", waba_id: "123456", phone_number_id: "synthetic-phone", language: "es_MX",
     templates_json: JSON.stringify({ confirmation: expected.name }) };
   await verify(settings, "confirmation"); await verify(settings, "confirmation");
-  assert.equal(calls.length, 1);
-  assert.equal(new URL(calls[0].url).pathname, "/v26.0/123456/message_templates");
-  assert.equal(new URL(calls[0].url).searchParams.get("name"), expected.name);
+  assert.equal(calls.length, 4);
+  assert.equal(new URL(calls[0].url).pathname, "/v26.0/123456/phone_numbers");
+  assert.equal(new URL(calls[1].url).searchParams.get("name"), expected.name);
   await verify({ ...settings, business_id: "synthetic-b", waba_id: "654321" }, "confirmation");
-  assert.equal(calls.length, 2);
-  clock += 60001; await verify(settings, "confirmation"); assert.equal(calls.length, 3);
+  assert.equal(calls.length, 6);
+  clock += 60001; await verify(settings, "confirmation"); assert.equal(calls.length, 8);
 });
 
 test("missing WABA, approval and management permissions fail explicitly", async () => {
   for (const code of [200, 403]) {
-    const verify = createTemplateVerifier({ token: "synthetic", request: async () => new Response(JSON.stringify({ data: [] }), { status: code }) });
-    const settings = { business_id: "synthetic-a", waba_id: "123456", language: "es_MX",
+    const verify = createTemplateVerifier({ token: "synthetic", request: async url => new Response(JSON.stringify({ data: String(url).includes("/phone_numbers?") ? [{ id: "synthetic-phone" }] : [] }), { status: code }) });
+    const settings = { business_id: "synthetic-a", waba_id: "123456", phone_number_id: "synthetic-phone", language: "es_MX",
       templates_json: JSON.stringify({ confirmation: "nukmiris_confirmation_v1" }) };
-    await assert.rejects(verify(settings, "confirmation"), /reminder_template_/);
+    await assert.rejects(verify(settings, "confirmation"), /reminder_(template|waba)_/);
     await assert.rejects(verify({ ...settings, waba_id: null }, "confirmation"), /waba_id_missing/);
   }
 });

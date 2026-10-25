@@ -4,8 +4,9 @@ const { randomUUID } = require("node:crypto");
 const { DateTime } = require("luxon");
 const { loadCalendarClient } = require("./google-calendar");
 const { insertSchedule } = require("./reminder-schedule");
-const { templatePayload } = require("./reminder-templates");
+const { templatePayload, TEMPLATE_TTL_SECONDS } = require("./reminder-templates");
 const { normalizedRecipient } = require("./reliable-delivery");
+const { reminderPermission } = require("./reminder-permissions");
 
 const SUFFIX = " — Confirmada";
 function transaction(db, action) {
@@ -22,7 +23,8 @@ function createAppointmentReminders({ db, availability, mode = "off", now = Date
   if (!["off", "dry-run", "live"].includes(mode)) throw new Error("Invalid reminder mode");
   let client;
   const calendar = async () => client || (client = await getClient());
-  const settings = businessId => db.prepare("SELECT * FROM reminder_business_settings WHERE business_id=? AND enabled=1").get(businessId);
+  const settings = businessId => db.prepare(`SELECT r.*,w.phone_number_id FROM reminder_business_settings r
+    JOIN business_whatsapp_connections w USING(business_id) WHERE r.business_id=? AND r.enabled=1`).get(businessId);
   const tracked = id => db.prepare("SELECT * FROM appointment_attendance WHERE booking_request_id=?").get(id);
   const jobRow = id => db.prepare("SELECT * FROM reminder_jobs WHERE job_id=?").get(id);
   function validIdentity(row) {
@@ -109,7 +111,8 @@ function createAppointmentReminders({ db, availability, mode = "off", now = Date
     } } };
   }
   function hasFutureReminders(id) {
-    return mode === "live" && !!db.prepare(`SELECT 1 FROM reminder_jobs WHERE booking_request_id=?
+    const row = mode === "live" && tracked(id);
+    return !!row && reminderPermission(db, row.business_id, row.sender, now()).allowed && !!db.prepare(`SELECT 1 FROM reminder_jobs WHERE booking_request_id=?
       AND state='pending' AND due_at>?`).get(id, now());
   }
   async function readEvent(row) {
@@ -207,6 +210,7 @@ function createAppointmentReminders({ db, availability, mode = "off", now = Date
       const original = db.prepare(`SELECT * FROM reminder_jobs WHERE booking_request_id=? AND schedule_version=? AND kind='confirmation'`)
         .get(row.booking_request_id, row.schedule_version);
       if (!original || !(original.state === "accepted" || (mode === "dry-run" && original.state === "dry_run")) || original.meta_status === "failed") return "original_request_not_dispatched";
+      if (mode === "live" && !["delivered", "read"].includes(original.meta_status)) return "original_request_not_delivered";
     }
     return null;
   }
@@ -216,6 +220,8 @@ function createAppointmentReminders({ db, availability, mode = "off", now = Date
     if (skip) { finish(job, { state: "skipped", error: skip }); return; }
     const config = settings(row.business_id);
     if (!config) { finish(job, { state: "skipped", error: "business_reminders_disabled" }); return; }
+    const permission = reminderPermission(db, row.business_id, row.sender, now());
+    if (mode === "live" && !permission.allowed) { finish(job, { state: "skipped", error: permission.reason }); return; }
     try {
       if (mode === "live") await verifyTemplate(config, job.kind);
       const checked = await synchronize(row);
@@ -226,16 +232,24 @@ function createAppointmentReminders({ db, availability, mode = "off", now = Date
       row = checked.row;
       const reason = eligible(row, job);
       if (reason) { finish(job, { state: "skipped", error: reason }); return; }
+      const currentPermission = reminderPermission(db, row.business_id, row.sender, now());
+      if (mode === "live" && !currentPermission.allowed) { finish(job, { state: "skipped", error: currentPermission.reason }); return; }
+      // Include the shared transport timeout in the budget. A fixed template TTL
+      // cannot be shortened per send; skip instead of posting a late reminder.
+      if (mode === "live" && now() + TEMPLATE_TTL_SECONDS[job.kind] * 1000 + 15000 >= row.start_ms) {
+        finish(job, { state: "skipped", error: "template_ttl_would_outlive_appointment" }); return;
+      }
       const payload = templatePayload(row, job, config, checked.identity.business_name);
       if (mode === "dry-run") {
         onDryRun({ businessId: row.business_id, customer: row.sender, name: row.customer_name,
           kind: job.kind, dueAt: new Date(job.due_at).toISOString(), appointmentStart: row.start_iso,
-          template: payload.template.name, language: config.language });
+          template: payload.template.name, language: config.language,
+          customerPermission: currentPermission.allowed ? "granted" : currentPermission.reason });
         finish(job, { state: "dry_run" });
       } else finish(job, await send({ ...job, phone_number_id: row.phone_number_id, payload }));
     } catch (error) {
-      const templateError = /reminder_(?:template|waba)/.test(error.message || "") &&
-        !/reminder_template_check_http_(?:429|5\d\d)/.test(error.message);
+      const templateError = /reminder_(?:template|waba|sender)/.test(error.message || "") &&
+        !/reminder_(?:template|waba)_check_http_(?:429|5\d\d)/.test(error.message);
       finish(job, { state: templateError ? "failed" : "pending", error: templateError ? error.message : "reminder_check_failed" });
     }
   }
@@ -270,13 +284,33 @@ function createAppointmentReminders({ db, availability, mode = "off", now = Date
       AND kind IN ('confirmation','followup') AND state='accepted' AND meta_status IS NOT 'failed'`)
       .get(row.booking_request_id, row.schedule_version);
   }
-  function textTarget(context) {
+  function textTarget(context, { replyToId, sentAt } = {}) {
+    if (replyToId) {
+      const row = db.prepare(`SELECT a.* FROM appointment_attendance a JOIN reminder_jobs j USING(booking_request_id)
+        WHERE a.business_id=? AND a.sender=? AND j.meta_message_id=? AND j.kind IN ('confirmation','followup')
+          AND j.schedule_version=a.schedule_version AND a.lifecycle='ACTIVE' AND a.start_ms>?
+          AND j.state='accepted' AND j.meta_status IS NOT 'failed'`).get(context.businessId, context.sender, replyToId, now());
+      return row || null; // Never fall back from an obsolete quoted message.
+    }
     // A reply must refer to one actually dispatched request. Two outstanding
     // appointments are deliberately ambiguous; never choose the latest one.
     const rows = db.prepare(`SELECT * FROM appointment_attendance WHERE business_id=? AND sender=?
       AND lifecycle='ACTIVE' AND start_ms>? AND attendance='PENDING'`).all(context.businessId, context.sender, now())
       .filter(requestWasSent);
-    return rows.length === 1 ? rows[0] : null;
+    if (rows.length !== 1) return null;
+    const row = rows[0];
+    // Without a quote, an old accepted/uncertain request could have arrived
+    // after a newer request. Do not equate "only one pending now" with intent.
+    const obsolete = db.prepare(`SELECT 1 FROM reminder_jobs j JOIN appointment_attendance a USING(booking_request_id)
+      WHERE a.business_id=? AND a.sender=? AND j.kind IN ('confirmation','followup')
+        AND (j.accepted_at IS NOT NULL OR j.meta_message_id IS NOT NULL OR j.state='uncertain')
+        AND (j.booking_request_id<>? OR j.schedule_version<>?) LIMIT 1`)
+      .get(context.businessId, context.sender, row.booking_request_id, row.schedule_version);
+    if (obsolete) return null;
+    const first = db.prepare(`SELECT MIN(accepted_at) AS at FROM reminder_jobs WHERE booking_request_id=? AND schedule_version=?
+      AND kind IN ('confirmation','followup') AND state='accepted'`).get(row.booking_request_id, row.schedule_version).at;
+    if (Number.isFinite(sentAt) && first !== null && sentAt < first - 1000) return null;
+    return row;
   }
   function confirmationMatches(event, row, operation) {
     const p = event?.extendedProperties?.private;
@@ -382,7 +416,9 @@ function createAppointmentReminders({ db, availability, mode = "off", now = Date
   }
   async function verifyReady() {
     if (mode !== "live") return;
-    for (const config of db.prepare("SELECT * FROM reminder_business_settings WHERE enabled=1").all()) {
+    for (const business of db.prepare("SELECT business_id FROM reminder_business_settings WHERE enabled=1").all()) {
+      const config = settings(business.business_id);
+      if (!config) throw new Error("reminder_sender_mapping_missing");
       for (const kind of ["seven_day", "confirmation", "followup", "final"]) await verifyTemplate(config, kind);
     }
   }

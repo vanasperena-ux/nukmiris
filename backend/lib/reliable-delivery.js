@@ -56,6 +56,8 @@ function normalizedRecipient(sender) { return /^521\d{10}$/.test(sender) ? "52" 
 function supportedMessage(message) {
   if (!message || typeof message.from !== "string" || !message.from || typeof message.id !== "string" || !message.id) return null;
   const base = { id: message.id, from: message.from, type: message.type };
+  if (typeof message.context?.id === "string" && message.context.id) base.context = { id: message.context.id };
+  if (typeof message.timestamp === "string" && /^\d+$/.test(message.timestamp)) base.timestamp = message.timestamp;
   if (message.type === "text" && typeof message.text?.body === "string") return { ...base, text: { body: message.text.body } };
   if (message.type === "button" && typeof message.button?.payload === "string") {
     return { ...base, button: { payload: message.button.payload } };
@@ -132,9 +134,16 @@ function createReliableDelivery({ db, capabilities, resolveBusiness, now = Date.
               continue;
             }
             const json = JSON.stringify(message), hash = createHash("sha256").update(json).digest("hex");
-            const existing = db.prepare("SELECT content_hash FROM message_inbox WHERE business_id=? AND message_id=?").get(business.business_id, message.id);
+            const existing = db.prepare("SELECT content_hash,message_json FROM message_inbox WHERE business_id=? AND message_id=?").get(business.business_id, message.id);
             if (existing) {
-              if (existing.content_hash !== hash) throw Object.assign(new Error("Conflicting message identity"), { status: 409 });
+              // v0.8.0 stored only the content fields. Keep old deliveries
+              // deduplicated across this metadata-preserving upgrade, while
+              // still rejecting changed content or changed newly stored context.
+              const previous = JSON.parse(existing.message_json), comparable = { ...message };
+              if (!Object.hasOwn(previous, "context")) delete comparable.context;
+              if (!Object.hasOwn(previous, "timestamp")) delete comparable.timestamp;
+              const compatibleHash = createHash("sha256").update(JSON.stringify(comparable)).digest("hex");
+              if (existing.content_hash !== hash && existing.content_hash !== compatibleHash) throw Object.assign(new Error("Conflicting message identity"), { status: 409 });
               continue;
             }
             const timestamp = Number(raw.timestamp) * 1000;

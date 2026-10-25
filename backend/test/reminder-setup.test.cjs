@@ -50,6 +50,25 @@ test("preparation refuses a running backend instead of changing its database", t
   f.db.close();
 });
 
+test("permission CLI records attributable evidence without enabling sending or changing appointments", async t => {
+  const directory = fs.mkdtempSync(path.join(os.tmpdir(), "nukmiris-permission-cli-"));
+  t.after(() => fs.rmSync(directory, { recursive: true, force: true }));
+  const filename = path.join(directory, "synthetic.sqlite"), f = reminderFixture({ filename });
+  t.after(() => f.db.close());
+  f.db.exec("DELETE FROM reminder_permission_events");
+  const args = ["--permission", "--business-id", "synthetic-a", "--whatsapp-id", f.sender, "--grant",
+    "--occurred-at", "2026-10-24T10:00:00-06:00", "--source", "synthetic-form", "--wording", "Recibiré actualizaciones de mis citas de Business synthetic-a.",
+    "--evidence", "synthetic-form-reference", "--recorded-by", "synthetic-owner"];
+  const result = command(filename, args);
+  assert.equal(result.status, 0, result.stderr);
+  const evidence = f.db.prepare("SELECT * FROM reminder_permission_events").get();
+  assert.equal(evidence.decision, "granted"); assert.equal(evidence.recorded_by, "synthetic-owner");
+  assert.equal(evidence.business_id, "synthetic-a"); assert.equal(evidence.evidence_reference, "synthetic-form-reference");
+  assert.equal(f.db.prepare("SELECT COUNT(*) AS n FROM booking_requests").get().n, 0);
+  assert.equal(command(filename, args).status, 0);
+  assert.equal(f.db.prepare("SELECT COUNT(*) AS n FROM reminder_permission_events").get().n, 1);
+});
+
 test("automatic backup and isolated restore include all reminder and attendance tables", async t => {
   const directory = fs.mkdtempSync(path.join(os.tmpdir(), "nukmiris-reminder-backup-"));
   t.after(() => fs.rmSync(directory, { recursive: true, force: true }));

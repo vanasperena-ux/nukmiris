@@ -1,6 +1,7 @@
 "use strict";
 
 const { randomUUID } = require("node:crypto");
+const { prepareReminderPermissionSchema } = require("./reminder-permissions");
 const HOUR = 3600000;
 const GRACE_MS = 15 * 60000;
 const DEFAULT_INTERVALS = Object.freeze({ seven_day: 168, confirmation: 24, followup: 22, final: 2 });
@@ -94,6 +95,7 @@ function prepareReminderSchema(db) {
         UNIQUE(booking_request_id,schedule_version)
       );
     `);
+    prepareReminderPermissionSchema(db);
     db.exec("COMMIT");
   } catch (error) { db.exec("ROLLBACK"); throw error; }
 }

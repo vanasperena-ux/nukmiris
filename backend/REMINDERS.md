@@ -2,6 +2,8 @@
 
 **Implementation checkpoint; owner PC verification is pending. v0.7.3 remains the verified working baseline.** This release adds opt-in appointment reminders and attendance confirmation. It prepares backend data for a future owner dashboard; it adds no dashboard, owner web endpoint or hosting deployment.
 
+The [production compliance review](META_COMPLIANCE_REPORT.md) adds safe Meta TTL validation, auditable customer permission, sender/WABA membership checks, fresh template availability reads and quoted-reply/delivery sequencing protection. Existing v0.8.0 installations must repeat the backed-up preparation command for the additive permission table. Production reminders remain off until explicitly enabled by the owner.
+
 ## Agreed scope
 
 The owner selected PC testing first, hosting afterward; a maximum 15-minute sending delay; and enrollment of only appointments booked after reminders are activated. Existing upcoming appointments and manually created Calendar events are not imported. The owner specifically requested backend preparation for the later dashboard.
@@ -14,7 +16,7 @@ Keep the existing immediate booking flow and concise success message. Append `Te
 | --- | --- | --- |
 | Seven-day reminder | Start minus 168 hours | Booking/replacement committed more than 168 hours before start |
 | Attendance request | Start minus 24 hours | Scheduled instant is still future when booking/replacement commits |
-| Follow-up | Start minus 22 hours | The 24-hour request was API-accepted, has no known delivery failure, and the customer has neither confirmed nor requested a change |
+| Follow-up | Start minus 22 hours | A correlated `delivered`/`read` receipt proves the 24-hour request arrived, and the customer has neither confirmed nor requested a change |
 | Final reminder | Start minus 2 hours | Scheduled instant is still future; appointment remains active, including when unconfirmed |
 
 No job is created at or before the commit/reconciliation time. Thus a booking exactly seven days ahead skips the seven-day reminder; exactly 24 hours ahead skips the request/follow-up; exactly two hours ahead has no reminder. Intervals are elapsed hours against the actual timestamp, including across daylight-saving changes. Dates and 24-hour times in messages use the business timezone.
@@ -42,6 +44,8 @@ Preparation adds five tables, without rewriting existing tables/data:
 | `reminder_jobs` | Unique appointment/version/job kind, due/deadline, claim state, retry timing and Meta result |
 | `reminder_attempts` | Persistent attempt/outcome/message-ID history |
 | `attendance_operations` | Idempotent Calendar attendance-update journal and recovery identity |
+
+The compliance correction adds a sixth table, `reminder_permission_events`, to retain permission/withdrawal evidence by business and customer. No permissions are inferred or backfilled. General permission for communications from the named business can qualify; it need not be WhatsApp-specific. The owner records actual evidence through `reminders:permission`; see [the permission assessment and command](META_COMPLIANCE_REPORT.md#permission-assessment-and-recording). Missing/withdrawn permission prevents proactive sends, while normal bookings/attendance replies continue to work. STOP and explicit reminder withdrawal are honored without cancelling appointments, including during human chat.
 
 Enrollment and schedule replacement run **inside the existing booking/change transaction**, including recovery that proves a previously uncertain Calendar write succeeded. A crash cannot commit the local confirmed booking without its reminder schedule. Old bookings are never enrolled by a startup scan or a later reschedule. Automatic backups/isolated restore now count and verify the new tables too.
 
@@ -78,7 +82,7 @@ npm.cmd run backup:create
 npm.cmd run reminders:prepare -- --business-id juanita-nails
 ```
 
-Expect **0.8.0** and **616 passing tests**, zero failures/skips. If Git reports existing local changes, preserve them before pulling. There are no new dependencies, so a dependency reinstall or Google reconnection is not required for this update.
+Expect **0.8.0** and **648 passing tests**, zero failures/skips. If Git reports existing local changes, preserve them before pulling. There are no new dependencies, so a dependency reinstall or Google reconnection is not required for this update.
 
 Preparation refuses a running backend, creates a dated pre-upgrade database backup, adds the metadata tables and activates enrollment for the selected business. Repeating it preserves the activation time and existing reminders. It does not call Google/Meta, send anything, import old appointments, edit `.env`, or enable sending. Other businesses remain unconfigured.
 
@@ -112,7 +116,7 @@ Keep Node running through a due time. A `Reminder dry-run:` line identifies the 
 See [REMINDER_TEMPLATES.md](REMINDER_TEMPLATES.md) for exact Spanish text, four names, `es_MX`, variable order, payloads, official references and the remaining documentation check.
 
 1. Export the local definitions with `npm.cmd run reminders:templates -- --business-id juanita-nails`. This does not submit or modify templates.
-2. In WhatsApp Manager, the owner submits those four Utility templates in the **correct business's WhatsApp Business Account** and waits for approval. Verify current Meta policies, customer permission requirements and button restrictions there. No templates are submitted by this release.
+2. In WhatsApp Manager, the owner submits those four Utility templates in the **correct business's WhatsApp Business Account** with the exported custom TTLs (900 seconds, or 300 for the final reminder), and waits for approval. Existing templates need their TTL metadata configured and checked too; the accepted text/buttons remain unchanged. The official rules supplied during review and the owner's remaining actions are in [the compliance report](META_COMPLIANCE_REPORT.md). No templates are submitted or modified by this release.
 3. Stop Node, then add the account's WABA ID locally. This is the Business Account ID, not the phone-number ID:
 
    ```powershell
@@ -121,7 +125,7 @@ See [REMINDER_TEMPLATES.md](REMINDER_TEMPLATES.md) for exact Spanish text, four 
    ```
 
    The read-only check needs a token authorized to inspect that WABA's templates (normally `whatsapp_business_management`), in addition to sending permission. Do not post tokens or OAuth files in chat/GitHub. Existing development credentials are not changed by the code.
-4. Only after the approval checks pass and the intended test recipient/business is ready, set `NUKMIRIS_REMINDERS_MODE=live` in your local `.env` and restart. Startup checks all four approved matching Utility templates for each activated business. A missing/unapproved/mismatched template stops live startup with its name/language in the error; dry-run can still be used. Per-job checks refresh the approval cache within one minute. There is no free-form proactive fallback.
+4. Record genuine permission for the intended test recipient using the [permission command](META_COMPLIANCE_REPORT.md#permission-assessment-and-recording). Only after the account/approval/TTL checks pass and that permission exists, the owner may set `NUKMIRIS_REMINDERS_MODE=live` in the local `.env` and restart. Startup checks all four approved matching Utility templates and their safe TTLs for each activated business, including sender/WABA membership. A missing/unapproved/mismatched template stops live startup with its name/language in the error; dry-run can still be used. Every job reads sender membership and template status fresh; neither is cached. There is no free-form proactive fallback.
 5. Create a new test appointment with an applicable future request. The status report shows the due instant; keep Node/tunnel online then. Confirm actual delivery of the template/buttons on WhatsApp, click **Sí, confirmo**, inspect the title plus acknowledgment, and click again to check it stays single. Inspect `meta_status` for actual delivery/read proof, not just `accepted`.
 6. Check **Necesito reagendar** with two designated appointments: only the reminder's appointment should enter availability. Complete a change, confirm details/ID remain, and verify old buttons are rejected. Test cancellation and ensure pending reminders stop. Check the normal final reminder still sends without attendance confirmation.
 7. Leave a designated request unanswered to check the single follow-up two hours later; confirm attendance before another follow-up to check suppression. Interval boundaries, timezone/DST, concurrency, uncertain responses and crash timing have automated coverage and need not be forced against real customers.
@@ -142,10 +146,10 @@ The current deployment still uses shared development Google/Meta authorization. 
 - The database has one local runtime owner. Atomic job claims are tested with separate connections, but independent database copies/multi-host production workers are not coordinated. Batches are bounded at ten jobs/checks per poll; this is preparation for future scale, not proof of thousands of hosted owners.
 - The PC, Node, internet and webhook tunnel must remain available for live reminders/status replies. Offline deadlines older than 15 minutes are skipped. Production requires later always-on hosting.
 - API acceptance cannot prove device delivery; unknown sends stay uncertain to avoid duplicates. Delivery failures and unresolved Calendar writes appear in `reminders:status`. There is no guarantee of exactly-once external delivery across a lost provider response.
-- No owner dashboard, owner authentication, reminder opt-out conversation, new service catalog or automatic old-appointment migration is included. The business must satisfy applicable Meta/customer permission requirements before live use.
+- No owner dashboard, owner authentication, new service catalog or automatic old-appointment migration is included. Reminder withdrawal supports STOP/explicit listed phrases and local evidence recording; arbitrary-language opt-out understanding is not claimed. The business must obtain and record qualifying permission before live sends.
 
 ## Validation
 
-All **616 offline tests** pass with zero failures/cancellations/skips: the 540 v0.7.3 regressions plus 76 reminder cases. Coverage includes interval boundaries, dry-run, template approval/payloads, contextual replies, real signed HTTP, booking/change integration, scope and ownership, manual edits, transient/unknown failures, concurrent claims, preparation/backup/restore, and three real subprocess restart/crash scenarios.
+All **648 offline tests** pass with zero failures/cancellations/skips: the initial 616 tests plus 32 production compliance cases. Coverage includes interval boundaries, dry-run, template approval/payloads/TTL, permission and withdrawal, WABA membership/status changes, delivered-message prerequisites, contextual/quoted replies, real signed HTTP, booking/change integration, scope and ownership, manual edits, transient/unknown failures, concurrent claims, preparation/backup/restore, and three real subprocess restart/crash scenarios.
 
 Google/Meta services and customer data in these tests are synthetic. Live reminder delivery, Meta approval and attendance updates on the owner's PC remain **unverified until the owner confirms them**. The existing v0.7.3 owner verification is retained.

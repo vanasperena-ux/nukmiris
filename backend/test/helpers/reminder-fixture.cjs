@@ -8,6 +8,7 @@ const { createCalendarAvailability } = require("../../lib/google-calendar");
 const { createBookingService } = require("../../lib/booking");
 const { createAppointmentManagement } = require("../../lib/appointment-management");
 const { createAppointmentReminders } = require("../../lib/appointment-reminders");
+const { recordReminderPermission } = require("../../lib/reminder-permissions");
 const SENDER = "5213312345678", OTHER = "5213398765432";
 
 function reminderFixture({ filename = ":memory:", mode = "live" } = {}) {
@@ -22,6 +23,12 @@ function reminderFixture({ filename = ":memory:", mode = "live" } = {}) {
       (business_id,activated_at,waba_id,language,templates_json,intervals_json) VALUES (?,?,?,'es_MX',?,?)`)
       .run(business, clock - 1, business === "synthetic-a" ? "123456" : "654321", JSON.stringify(DEFAULT_TEMPLATES), JSON.stringify(DEFAULT_INTERVALS));
   }
+  function grant(businessId = "synthetic-a", sender = SENDER, occurredAt = clock - 1, evidence = `synthetic-opt-in-${businessId}-${sender}-${occurredAt}`) {
+    return recordReminderPermission(f.db, { businessId, sender, decision: "granted", occurredAt,
+      source: "synthetic_external_opt_in", wording: `Quiero recibir recordatorios de mis citas de Business ${businessId} por WhatsApp.`,
+      evidence, recordedBy: "synthetic-business-owner" }, clock);
+  }
+  for (const business of ["synthetic-a", "synthetic-b"]) for (const sender of [SENDER, OTHER]) grant(business, sender);
   const availability = createCalendarAvailability({ db: f.db, getClient: () => f.api, now: () => DateTime.fromMillis(clock) });
   const options = { db: f.db, availability, mode, now: () => clock, getClient: () => f.api,
     verifyTemplate: async () => { if (f.controls.templateError) throw new Error("reminder_template_unapproved_or_mismatched: synthetic"); },
@@ -50,6 +57,6 @@ function reminderFixture({ filename = ":memory:", mode = "live" } = {}) {
     await reminders.tick();
   }
   return { ...f, reminders, options, availability, booking, management, book, scope, row, jobs, at, setNow,
-    now: () => clock, sent, dryRuns, sender: SENDER, other: OTHER };
+    now: () => clock, sent, dryRuns, sender: SENDER, other: OTHER, grant };
 }
 module.exports = { reminderFixture, SENDER, OTHER };

@@ -8,7 +8,7 @@
   },
   "scripts": {
     "start": "node whatsapp-webhook.js",
-    "test": "node --test --test-reporter=spec --test-concurrency=1 test/slot-label.test.cjs test/appointment-date.test.cjs test/date-menu.test.cjs test/intent-recognition.test.cjs test/support-only.test.cjs test/availability.test.cjs test/dynamic-availability.test.cjs test/connections.test.cjs test/availability-webhook.test.cjs test/booking.test.cjs test/booking-webhook.test.cjs test/booking-oauth.test.cjs test/management.test.cjs test/management-webhook.test.cjs test/reliability.test.cjs test/backups.test.cjs test/recovery-webhook.test.cjs test/restart-inspection.test.cjs test/reminders.test.cjs test/reminder-templates.test.cjs test/reminder-webhook.test.cjs test/reminder-recovery.test.cjs test/reminder-setup.test.cjs",
+    "test": "node --test --test-reporter=spec --test-concurrency=1 test/slot-label.test.cjs test/appointment-date.test.cjs test/date-menu.test.cjs test/intent-recognition.test.cjs test/support-only.test.cjs test/availability.test.cjs test/dynamic-availability.test.cjs test/connections.test.cjs test/availability-webhook.test.cjs test/booking.test.cjs test/booking-webhook.test.cjs test/booking-oauth.test.cjs test/management.test.cjs test/management-webhook.test.cjs test/reliability.test.cjs test/backups.test.cjs test/recovery-webhook.test.cjs test/restart-inspection.test.cjs test/reminders.test.cjs test/reminder-templates.test.cjs test/reminder-webhook.test.cjs test/reminder-recovery.test.cjs test/reminder-setup.test.cjs test/reminder-compliance.test.cjs",
     "google:connect": "node scripts/google-connect.js",
     "calendars:list": "node scripts/connections.js --list-calendars",
     "business:configure": "node scripts/configure-business.js",
@@ -28,7 +28,8 @@
     "backup:restore": "node scripts/database-backup.js --restore",
     "reminders:prepare": "node scripts/reminders.js --prepare",
     "reminders:status": "node scripts/reminders.js --status",
-    "reminders:templates": "node scripts/reminders.js --templates"
+    "reminders:templates": "node scripts/reminders.js --templates",
+    "reminders:permission": "node scripts/reminders.js --permission"
   },
   "dependencies": {
     "@google-cloud/local-auth": "3.0.1",
