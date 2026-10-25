@@ -7,8 +7,8 @@ WhatsApp appointment-management prototype for small businesses.
 - [`docs/handoffs/`](docs/handoffs/README.md): the dated engineering handoff and historical source snapshots.
 - [Verified UX checkpoint](backend/UX_CHECKPOINT.md) and [saved project roadmap](docs/ROADMAP.md): accepted behavior and the authorized reliability work.
 - [PC-verified v0.4.0 reliability checkpoint](backend/RELIABILITY_CHECKPOINT.md): saved incoming messages/replies, restart recovery, verified backup creation, and an isolated restore test.
-- [PC-verified v0.4.1 dynamic availability](backend/DYNAMIC_AVAILABILITY.md): search 30 days, extend by 15 for three available dates, capped at 365 days for booking and rescheduling. The current two-plus-two UX is retained. The owner reported all testing-guide checks successful; this is the current working baseline.
-- [v0.5.0 Spanish intent recognition](backend/INTENT_RECOGNITION.md): natural booking/rescheduling/cancellation phrases, negation/conflict handling, and context-aware clarification while preserving existing workflows and feature gates. All 347 offline tests pass; PC verification is next.
+- [PC-verified v0.4.1 dynamic availability](backend/DYNAMIC_AVAILABILITY.md): search 30 days, extend by 15 for three available dates, capped at 365 days for booking and rescheduling. The current two-plus-two UX is retained. The owner reported all testing-guide checks successful.
+- [PC-verified v0.5.0 Spanish intent recognition](backend/INTENT_RECOGNITION.md): natural booking/rescheduling/cancellation phrases, negation/conflict handling, and context-aware clarification while preserving existing workflows and feature gates. All 347 offline tests pass, and the owner reported PC testing successful; this is the current working baseline.
 
 To work on the backend, use Node 24.19.0, then run `npm ci --ignore-scripts` and `npm test` from `backend/`. No real accounts or database are needed for the tests. Read the backend's documented limitations before any manual live launch.
 

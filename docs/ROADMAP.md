@@ -1,6 +1,6 @@
 # NukMiris project continuity
 
-Current implementation checkpoint: v0.5.0 deterministic Spanish intent recognition, awaiting PC verification. Current owner-verified baseline: v0.4.1 dynamic availability (`8649109`), retaining the verified v0.4.0 reliability baseline (`9d6358b`).
+Current owner-verified baseline: v0.5.0 deterministic Spanish intent recognition (`b6a9169`), retaining the verified v0.4.1 availability (`8649109`) and v0.4.0 reliability (`9d6358b`) behavior.
 
 ## Windows PC command preference
 
@@ -45,4 +45,4 @@ After the GitHub update, the owner reported **“great I tested all as you propo
 
 The owner subsequently supplied the Spanish WhatsApp intent-recognition task for version 0.5. Reuse the current checkout and verified v0.4.1 workflows. The implementation recognizes natural BOOK/RESCHEDULE/CANCEL requests and LATAM terminology using centralized local rules, handles negation/conflicts/context, and offers existing-style scoped clarification buttons. Preserve original text, human chat, protected name/date/time states, existing controls, flags, ownership, Calendar services, lifecycle metadata and safeguards. No LLM, external AI dependency, date extraction, schema change, or additional booking confirmation is authorized.
 
-All 347 offline tests passed, retaining 214 regressions and adding 133 classifier/conversation/recovery cases. Deliver through the established GitHub update and `npm.cmd` PC workflow. Owner verification of v0.5.0 remains pending; v0.4.1 stays the verified baseline. See [the implementation and PC test guide](../backend/INTENT_RECOGNITION.md). Always-on hosting and other feature work remain separate.
+All 347 offline tests passed, retaining 214 regressions and adding 133 classifier/conversation/recovery cases. Delivery used the established GitHub update and `npm.cmd` PC workflow. On the owner's local date 2026-10-24 (America/Mexico_City), the owner reported **“I tested v.0.5.0 and all good!”** Record v0.5.0 as the new owner-verified working baseline. No separate PC commit hash or detailed per-case log was supplied; preserve the established technical limits and do not equate the report with independent live verification of every simulated failure case. See [the implementation and PC test guide](../backend/INTENT_RECOGNITION.md). Always-on hosting and other feature work remain separate and are not authorized by this success report alone.

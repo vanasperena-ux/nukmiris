@@ -1,12 +1,14 @@
 # Baseline provenance
 
-## Spanish intent recognition — v0.5.0, awaiting PC verification
+## Verified Spanish intent recognition baseline — v0.5.0
 
 The owner requested natural Spanish appointment intent recognition for v0.5.0, building on the verified v0.4.1 baseline. A centralized deterministic classifier normalizes comparison text, recognizes booking/rescheduling/cancellation expressions and LATAM terminology, handles negation and conflicts, and requests existing owned-appointment context only for attendance-dependent messages. The existing router/state storage supplies clarification buttons and protects names, date/time browsing, pending results, and human chat. See [INTENT_RECOGNITION.md](INTENT_RECOGNITION.md).
 
 Calendar clients and mutation services, dynamic availability, identity/ownership checks, event formats/metadata, journals/locks, feature flags, and immediate-selection UX remain in place. No disabled operation is enabled. No LLM/service/dependency, schema change, natural-language date extraction, or new identity/booking confirmation is introduced. The only delivery change applies the existing prompt expiry to intent clarification buttons.
 
-Validation: all 347 offline tests passed, with zero failures/skips: the 214 earlier regressions plus 116 classifier cases, 14 signed HTTP conversation cases, and three clarification expiry/restart cases. Simulated integrations cover disabled modes, original message storage, protected names/dates, ambiguity, context failures, cross-business/customer and stale-action checks, and real subprocess restarts. The cloud agent did not access live accounts or the PC; owner verification of v0.5.0 remains pending. v0.4.1 remains the owner-verified working baseline until then.
+Cloud validation: all 347 offline tests passed, with zero failures/skips: the 214 earlier regressions plus 116 classifier cases, 14 signed HTTP conversation cases, and three clarification expiry/restart cases. Simulated integrations cover disabled modes, original message storage, protected names/dates, ambiguity, context failures, cross-business/customer and stale-action checks, and real subprocess restarts. The cloud agent did not access live accounts or the PC.
+
+On 2026-10-24 (the owner's America/Mexico_City local date), after receiving the v0.5.0 GitHub update and PC testing guide, the owner reported **“I tested v.0.5.0 and all good!”** Treat v0.5.0 as the owner-verified working baseline, retaining the verified v0.4.1 availability and earlier lifecycle/reliability behavior. Delivered code reference: `b6a91692e83c6ba8a4a98522ccd38a3d91b3e328`. No separate PC commit hash or detailed per-case run log was supplied. This verifies the overall checkpoint rather than providing separate live evidence for every classifier, feature-disabled, transport-failure, or exact crash-timing case; existing limits remain applicable.
 
 ## Verified dynamic availability baseline — v0.4.1
 

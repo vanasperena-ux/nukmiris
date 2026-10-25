@@ -1,6 +1,6 @@
 # Spanish WhatsApp intent recognition — v0.5.0
 
-Built on the owner-verified v0.4.1 availability/reliability baseline. **v0.5.0 still needs its own Windows PC verification.** This checkpoint improves understanding of messages, using deterministic local rules with no LLM, AI service, new dependency, schema migration, or feature flag.
+Built on the owner-verified v0.4.1 availability/reliability baseline. **v0.5.0 is now owner-verified on the Windows PC.** After the GitHub update at `b6a9169` and testing instructions, the owner reported **“I tested v.0.5.0 and all good!”** See [BASELINE.md](BASELINE.md) for evidence and scope; the guide remains available for regression testing. This checkpoint improves understanding of messages, using deterministic local rules with no LLM, AI service, new dependency, schema migration, or feature flag.
 
 ## Supported requests
 
@@ -60,7 +60,7 @@ No disabled operation is enabled. Support mode retains its paused-appointment me
 
 ## Validation and limitations
 
-The complete offline suite covers existing booking, availability, rescheduling, cancellation, authorization, concurrency, backup/restore and real subprocess crash-recovery tests, plus the new intent/conversation tests. All Google/Meta integrations are synthetic; cloud validation sends no real WhatsApp messages or Calendar writes. Real account and Windows tests remain for the owner below.
+The complete offline suite covers existing booking, availability, rescheduling, cancellation, authorization, concurrency, backup/restore and real subprocess crash-recovery tests, plus the new intent/conversation tests. All Google/Meta integrations in that suite are synthetic; cloud validation sends no real WhatsApp messages or Calendar writes. The owner subsequently reported the PC checkpoint successful; individual per-case logs were not supplied.
 
 **Result: all 347 tests passed, with zero failures or skipped tests.** This retains the 214 existing regressions and adds 133 cases: 116 classifier tests, 14 signed HTTP conversation cases, and three clarification-expiry/restart cases. No live integration tests were possible in the cloud workspace. `git diff --check` passed.
 
@@ -102,4 +102,4 @@ Use test appointments. Start a new scenario with **Menu** unless the scenario de
 | Reuse an older clarification button after Menu, or after its expiry | Friendly stale-option response; no appointment changes |
 | Repeat normal booking/rescheduling/cancellation and restart smoke checks | Verified lifecycle, identity and reliability behavior remains intact |
 
-Feature-disabled behavior is covered offline; do not change the working PC's feature flags just to test recognition. Report the PC results before marking v0.5.0 verified.
+Feature-disabled behavior is covered offline; do not change the working PC's feature flags just to test recognition. The owner has reported this checkpoint successful; retain the existing configuration and technical limits.
