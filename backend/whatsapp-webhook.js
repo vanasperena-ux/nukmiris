@@ -22,6 +22,8 @@ const { appointmentSuccess, appointmentOverview, textChunks } = require("./lib/a
 const { createReliableDelivery, createDeliveryWorker, sendStoredReply } = require("./lib/reliable-delivery");
 const { createBackupSchedule } = require("./lib/database-backups");
 const { readSearchPolicy, selectedDate } = require("./lib/availability-search");
+const { normalizeMessage, recognizeIntent } = require("./lib/intent-recognition");
+const { createIntentMenu } = require("./lib/intent-menu");
 
 const app = express();
 app.use(express.json({ limit: "1mb", verify(req, res, bytes) { req.rawBody = bytes; } }));
@@ -1381,6 +1383,25 @@ const managementMenu = management ? createManagementMenu({
   saveReceipt: (from, receipt) => saveContinuation("management", receipt.requestId, "retry", () => sessions.set(from, receipt)),
   beforeDecision: (from, requestId, decision) => saveContinuation("management", requestId, decision),
 }) : null;
+const intentMenu = createIntentMenu({ sessions, sendReplyButtons, sendMessage, lifetime: OFFER_LIFETIME });
+const intentCommands = { BOOK: "cita", RESCHEDULE: "reagendar", CANCEL: "cancelar" };
+function acceptsNaturalIntent(from) {
+  const session = sessions.get(from);
+  if (!session) return true;
+  if (["booking_name", "registration", "availability", "reschedule_browse", "management_select",
+    "booking_confirm", "management_confirm", "book", "reschedule", "cancel", "choose_cancel", "choose_reschedule"].includes(session.mode)) return false;
+  if (session.mode === "booking_result") {
+    const row = bookings && db.prepare("SELECT state FROM booking_requests WHERE request_id=? AND business_id=? AND sender_whatsapp_id=?")
+      .get(session.requestId, businessFor(from).business_id, from);
+    return !!row && !["offered", "pending", "uncertain"].includes(row.state);
+  }
+  if (session.mode === "management_result") {
+    const row = management && db.prepare("SELECT state FROM appointment_changes WHERE request_id=? AND business_id=? AND sender_whatsapp_id=?")
+      .get(session.requestId, businessFor(from).business_id, from);
+    return !!row && !["offered", "pending", "uncertain"].includes(row.state);
+  }
+  return true;
+}
 
 async function offerAvailability(from, options) {
   await availabilityFlow.offer(from, options);
@@ -1476,7 +1497,7 @@ async function handleMessage(message) {
   const text = isText ? (message.text?.body || "").trim() :
     isButton ? (message.interactive?.button_reply?.id || "") :
       (message.interactive?.list_reply?.id || "");
-  const command = text.toLowerCase();
+  let command = text.toLowerCase();
 
   const customerKey = `${businessFor(from).business_id}:${from}`;
   if (busyCustomers.has(customerKey)) {
@@ -1487,14 +1508,54 @@ async function handleMessage(message) {
   try {
     const business = businessFor(from); // Fail closed for unassigned test numbers.
     console.log("Business route:", business.business_id);
-    if (bookings && isText && ["hola", "menu", "cita", "horarios", "reagendar", "cancelar"].includes(command)) {
+    // Only comparison text is normalized; the incoming message and free text
+    // passed to registration/support/date handlers retain their original value.
+    if (isText && ["hola", "menu"].includes(normalizeMessage(text))) command = normalizeMessage(text);
+    // Human chat owns every message except Menu, including appointment words.
+    if (humanSupport.isOpen(from)) {
+      if (isText && command === "menu") {
+        humanSupport.close(from);
+        await showMainMenu(from);
+      } else if (isText && text) {
+        humanSupport.saveMessage(from, message.id, text);
+        console.log("Business human-support message stored:", business.business_id);
+      } else {
+        await sendMessage(from, "Tu conversación está en atención personal. Escribe tu mensaje o Menu.");
+      }
+      return;
+    }
+    let intentButton = false;
+    if (isButton && command.startsWith("intent:")) {
+      const selected = await intentMenu.select(from, command);
+      if (!selected) return;
+      command = intentCommands[selected];
+      intentButton = true;
+    } else if (isText && !["hola", "menu"].includes(command) &&
+        (["cita", "horarios", "reagendar", "cancelar"].includes(normalizeMessage(text)) || acceptsNaturalIntent(from))) {
+      let recognition = recognizeIntent(text);
+      if (recognition.needsAppointmentContext) {
+        let upcoming = false;
+        if (appointmentLookup && customers.get(from)) {
+          try { upcoming = (await appointmentLookup.listAppointments({ businessId: business.business_id, sender: from })).length > 0; }
+          catch {
+            await sendMessage(from, "No pude consultar tus citas en este momento. Intenta más tarde o escribe Menu para recibir ayuda.");
+            return;
+          }
+        }
+        recognition = recognizeIntent(text, { hasUpcomingAppointment: upcoming });
+      }
+      if (recognition.intent === "AMBIGUOUS") { await intentMenu.offer(from, recognition); return; }
+      if (intentCommands[recognition.intent]) command = intentCommands[recognition.intent];
+    }
+    const textAction = isText || intentButton;
+    if (bookings && textAction && ["hola", "menu", "cita", "horarios", "reagendar", "cancelar"].includes(command)) {
       bookings.invalidateOffers({ businessId: business.business_id, sender: from });
       if (management) management.invalidateOffers({ businessId: business.business_id, sender: from });
     }
-    const consultAvailability = availability && isText && ["cita", "horarios"].includes(command);
+    const consultAvailability = availability && textAction && ["cita", "horarios"].includes(command);
     const availabilityMenu = availability && isButton ? /^menu:([0-9a-f-]{36}):book$/.exec(command) : null;
     const isAppointmentAction =
-      (isText && ["cita", "reagendar", "cancelar"].includes(command) && !consultAvailability &&
+      (textAction && ["cita", "reagendar", "cancelar"].includes(command) && !consultAvailability &&
         !(management && ["reagendar", "cancelar"].includes(command))) ||
       ((isButton || isList) && /^(book|reschedule|appointment|cancel):/.test(command)) ||
       ((isButton || isList) && command.startsWith("manage:") && !management) ||
@@ -1507,21 +1568,6 @@ async function handleMessage(message) {
         : SCHEDULING_PAUSED);
       return;
     }
-    // Human support is a persistent state, independent of 15-minute sessions.
-    // No appointment automation runs until Menu or an eventual operator close.
-    if (humanSupport.isOpen(from)) {
-      if (isText && command === "menu") {
-        humanSupport.close(from);
-        await showMainMenu(from);
-      } else if (isText && text) {
-        humanSupport.saveMessage(from, message.id, text);
-        console.log("Business human-support message stored:", businessFor(from).business_id);
-      } else {
-        await sendMessage(from, "Tu conversación está en atención personal. Escribe tu mensaje o Menu.");
-      }
-      return;
-    }
-
     if (consultAvailability || availabilityMenu) {
       if (availabilityMenu) {
         const currentMenu = sessions.get(from);
@@ -1541,7 +1587,8 @@ async function handleMessage(message) {
     }
     if (managementMenu && ((isButton || isList) || (isText && !["hola", "menu"].includes(command)))) {
       try {
-        const handled = isText ? await managementMenu.handleText(from, text) : await managementMenu.handleInteractive(from, command);
+        const handled = textAction ? await managementMenu.handleText(from, ["reagendar", "cancelar"].includes(command) ? command : text)
+          : await managementMenu.handleInteractive(from, command);
         if (handled) return;
       } catch (error) {
         console.error("Appointment management could not be completed or delivered; retry the same confirmation to check a submitted change.");
@@ -1703,8 +1750,9 @@ async function handleMessage(message) {
       // to a person. Preserve that first message rather than discarding it.
       await beginHumanSupport(from, { id: message.id, text });
     } else if (isText && text) {
-      // Unrecognized text outside an active workflow opens the main menu.
-      await showMainMenu(from);
+      // Active flows handled their expected input above. Only otherwise idle
+      // unknown text gets the intent clarification, preserving manual chat.
+      await intentMenu.offer(from);
     }
   } catch (error) {
     if (delivery) throw error;

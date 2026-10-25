@@ -110,6 +110,40 @@ test("real process recovery restores a partially advanced browsing session befor
     assert.equal(f.messages().at(-1).payload.interactive.body.text, "Te muestro mas opciones. Elige un horario que te funciona mejor:");
   } finally { await f.cleanup(); }
 });
+test("natural intent clarification survives restart and choosing BOOK only opens the existing workflow", async () => {
+  const f = await fixture();
+  try {
+    const offer = await f.post("Necesito información");
+    assert.equal(offer.interactive.body.text, "No entendí qué necesitas. ¿En qué puedo ayudarte?");
+    const book = f.buttons(offer).find(button => button.title === "Agendar una cita");
+    await f.kill(); await f.start();
+    const slots = await f.post(book.id, { kind: "button_reply" });
+    assert.equal(slots.interactive.body.text, "Elige un horario que te funciona mejor:");
+    assert.equal(f.calls().filter(call => call.method === "insert").length, 0);
+    const result = await f.post(f.buttons(slots)[0].id, { kind: "button_reply" });
+    assert.match(result.text.body, /está agendada/);
+    assert.equal(f.calls().filter(call => call.method === "insert").length, 1);
+  } finally { await f.cleanup(); }
+});
+test("contextual reschedule clarification survives restart and incoming Spanish text is preserved", async () => {
+  const f = await fixture();
+  try {
+    await f.book();
+    const offer = await f.post("¡Ya no podré asistir!");
+    assert.equal(offer.interactive.body.text, "¿Quieres reagendar o cancelar tu cita?");
+    const reschedule = f.buttons(offer)[0].id;
+    const saved = f.db.prepare("SELECT message_json FROM message_inbox ORDER BY inbox_id DESC LIMIT 1").get();
+    assert.equal(JSON.parse(saved.message_json).text.body, "¡Ya no podré asistir!");
+    await f.kill(); await f.start();
+    const slots = await f.post(reschedule, { kind: "button_reply" });
+    assert.equal(slots.interactive.body.text, "Elige un horario que te funciona mejor:");
+    assert.equal(f.calls().filter(call => call.method === "patch").length, 0);
+    const result = await f.post(f.buttons(slots)[0].id, { kind: "button_reply" });
+    assert.match(result.text.body, /está reagendada/);
+    assert.equal(f.calls().filter(call => call.method === "insert").length, 1);
+    assert.equal(f.calls().filter(call => call.method === "patch").length, 1);
+  } finally { await f.cleanup(); }
+});
 test("Menu booking choices survive a restart before selection and send only the successful result", async () => {
   const f = await fixture();
   try {

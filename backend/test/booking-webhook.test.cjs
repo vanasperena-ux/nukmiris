@@ -127,6 +127,40 @@ describe("slot-selected WhatsApp bookings", { concurrency: false }, () => {
   }
   const menuBody = () => outgoing.at(-1).payload.interactive.body.text;
 
+  test("names containing appointment words stay names and book only the selected slot", async () => {
+    await post("Hola, quiero agendar una cita");
+    await post(buttons()[0].id, { kind: "button_reply" });
+    await post("Cita Reagendar Cancelar García");
+    assert.match(outgoing.at(-1).payload.text.body, /está agendada/);
+    assert.equal(inserts.length, 1);
+    assert.equal(db.prepare("SELECT full_name FROM business_customers").get().full_name, "Cita Reagendar Cancelar García");
+    assert.match(inserts[0].requestBody.summary, /Cita Reagendar Cancelar García/);
+    await post("Quiero otra cita");
+    assert.equal(menuBody(), "Elige un horario que te funciona mejor:");
+    assert.equal(inserts.length, 1, "a new natural request only offers times");
+  });
+  test("natural management requests and clarification buttons preserve the disabled-management response", async () => {
+    registered();
+    for (const phrase of ["Quiero cambiar mi cita", "Cancélame la cita por favor"]) {
+      await post(phrase);
+      assert.match(outgoing.at(-1).payload.text.body, /Esta opción aún no está disponible/);
+    }
+    await post("Necesita información");
+    const cancel = buttons().find(button => button.title === "Cancelar mi cita");
+    await post(cancel.id, { kind: "button_reply" });
+    assert.match(outgoing.at(-1).payload.text.body, /Esta opción aún no está disponible/);
+    assert.equal(inserts.length, 0);
+  });
+  test("uncertain booking results keep natural requests inside the existing recovery state", async () => {
+    registered(); insertError = 503;
+    await select();
+    assert.match(menuBody(), /verificación/);
+    await post("Quiero otra cita");
+    assert.match(outgoing.at(-1).payload.text.body, /escribe "menu"/);
+    assert.equal(inserts.length, 1);
+    assert.equal(JSON.parse(db.prepare("SELECT session_json FROM business_customer_sessions").get().session_json).mode, "booking_result");
+  });
+
   test("a new customer supplies a name once and the selected slot is booked without confirmation", async () => {
     await post("Cita");
     const selected = buttons()[0].id;

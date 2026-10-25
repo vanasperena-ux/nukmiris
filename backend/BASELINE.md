@@ -1,5 +1,13 @@
 # Baseline provenance
 
+## Spanish intent recognition — v0.5.0, awaiting PC verification
+
+The owner requested natural Spanish appointment intent recognition for v0.5.0, building on the verified v0.4.1 baseline. A centralized deterministic classifier normalizes comparison text, recognizes booking/rescheduling/cancellation expressions and LATAM terminology, handles negation and conflicts, and requests existing owned-appointment context only for attendance-dependent messages. The existing router/state storage supplies clarification buttons and protects names, date/time browsing, pending results, and human chat. See [INTENT_RECOGNITION.md](INTENT_RECOGNITION.md).
+
+Calendar clients and mutation services, dynamic availability, identity/ownership checks, event formats/metadata, journals/locks, feature flags, and immediate-selection UX remain in place. No disabled operation is enabled. No LLM/service/dependency, schema change, natural-language date extraction, or new identity/booking confirmation is introduced. The only delivery change applies the existing prompt expiry to intent clarification buttons.
+
+Validation: all 347 offline tests passed, with zero failures/skips: the 214 earlier regressions plus 116 classifier cases, 14 signed HTTP conversation cases, and three clarification expiry/restart cases. Simulated integrations cover disabled modes, original message storage, protected names/dates, ambiguity, context failures, cross-business/customer and stale-action checks, and real subprocess restarts. The cloud agent did not access live accounts or the PC; owner verification of v0.5.0 remains pending. v0.4.1 remains the owner-verified working baseline until then.
+
 ## Verified dynamic availability baseline — v0.4.1
 
 On 2026-10-25, while starting PC testing of v0.4.0, the owner requested dynamic availability discovery. The owner clarified that the current two-plus-two suggestions and date picker must remain, and that booking and rescheduling must share the expanded search and 365-day limit. This checkpoint checks 30 calendar days, then non-overlapping 15-day extensions until three available dates are found or the horizon is reached. Specific-date requests and pre-write validation query the selected day directly, using the existing schedule engine and Calendar integrations.

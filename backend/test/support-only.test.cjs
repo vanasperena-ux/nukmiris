@@ -205,6 +205,34 @@ describe("v6A.4 support-only baseline", { concurrency: false }, () => {
       assert.match(outgoing[0].text.body, /Las citas están temporalmente deshabilitadas/);
     });
   }
+  test("natural Spanish intents and clarification buttons keep all support-only mutations paused", async () => {
+    for (const phrase of ["Hola, quiero una cita", "Quiero cambiar la hora", "Cancélame la cita por favor", "Quiero sacar turno"]) {
+      await deliver(phrase);
+      assert.match(outgoing.at(-1).text.body, /Las citas están temporalmente deshabilitadas/);
+    }
+    await deliver("Necesita información");
+    assert.equal(outgoing.at(-1).interactive.body.text, "No entendí qué necesitas. ¿En qué puedo ayudarte?");
+    const options = outgoing.at(-1).interactive.action.buttons;
+    for (const action of options) {
+      await deliver("Necesita información");
+      const current = outgoing.at(-1).interactive.action.buttons.find(button => button.reply.title === action.reply.title);
+      await deliver(current.reply.id, "button_reply");
+      assert.match(outgoing.at(-1).text.body, /Las citas están temporalmente deshabilitadas/);
+    }
+    assert.deepEqual(integrationCalls, []);
+  });
+  test("human chat retains natural and exact appointment messages verbatim until Menu", async () => {
+    await deliver("Menu");
+    await deliver(outgoing.at(-1).interactive.action.buttons[2].reply.id, "button_reply");
+    const messages = ["¡Quiero AGENDAR una cita!", "No puedo mañana", "Cancelar"];
+    const count = outgoing.length;
+    for (const message of messages) await deliver(message);
+    assert.equal(outgoing.length, count);
+    assert.deepEqual(fixture.prepare("SELECT message_text FROM business_support_messages ORDER BY rowid").all().map(row => row.message_text), messages);
+    await deliver("Menu");
+    assert.equal(outgoing.at(-1).interactive.action.buttons[0].reply.title, "Agendar una cita");
+    assert.deepEqual(integrationCalls, []);
+  });
 
   for (const mode of ["book", "reschedule", "cancel", "choose_cancel", "choose_reschedule", "registration", "manage_menu"]) {
     for (const expired of [false, true]) {

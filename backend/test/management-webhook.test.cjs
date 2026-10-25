@@ -100,6 +100,104 @@ describe("signed selection-based appointment management", { concurrency: false }
   const noConfirmations = () => assert(!outgoing.some(item => item.payload.interactive?.action.buttons?.some(button =>
     ["Confirmar cambio", "Conservar mi cita", "Sí, cancelar", "Confirmar cita"].includes(button.reply.title))));
 
+  test("natural Spanish requests reuse booking and management without mutating on recognition", async () => {
+    await f.seed();
+    for (const phrase of ["Hola, quiero una cita", "Quiero otra cita", "¿Tienen espacio mañana?", "Quiero cambiar la hora", "Puedo pasar mi cita al jueves?", "Cancélame la cita por favor", "Anular turno"]) {
+      await post("Menu"); await post(phrase);
+      if (/canc|anular/i.test(phrase)) assert.match(body(), /Se cancelará al seleccionarla/);
+      else assert.equal(body(), "Elige un horario que te funciona mejor:");
+      assert.equal(f.inserts.length, 1); assert.equal(f.patches.length + f.deletes.length, 0);
+      noConfirmations();
+    }
+  });
+  test("conflicting requests clarify the first action and cancellation still needs its appointment selection", async () => {
+    const source = await f.seed();
+    await post("Quiero cancelar mi cita y hacer otra");
+    assert.equal(body(), "¿Qué quieres hacer primero?");
+    assert.deepEqual(buttons().map(button => button.title), ["Agendar una cita", "Cancelar mi cita"]);
+    assert.equal(f.patches.length + f.deletes.length, 0);
+    await click(buttons().find(button => button.title === "Cancelar mi cita").id);
+    assert.match(body(), /Se cancelará al seleccionarla/);
+    assert.equal(f.deletes.length, 0);
+    await click(buttons()[0].id);
+    assert.equal(f.deletes.length, 1); assert.equal(f.deletes[0].args.eventId, source.eventId);
+  });
+  test("inability to attend uses owned appointment context without guessing cancellation", async () => {
+    await f.seed();
+    await post("No puedo mañana");
+    assert.equal(body(), "¿Quieres reagendar o cancelar tu cita?");
+    assert.deepEqual(buttons().map(button => button.title), ["Reagendar mi cita", "Cancelar mi cita"]);
+    assert.equal(f.patches.length + f.deletes.length, 0);
+    await click(buttons()[0].id);
+    assert.equal(body(), "Elige un horario que te funciona mejor:");
+    await post("Menu"); await post("No puedo mañana, mejor el jueves");
+    assert.equal(body(), "Elige un horario que te funciona mejor:");
+    assert.equal(f.patches.length + f.deletes.length, 0);
+    const session = JSON.parse(f.db.prepare("SELECT session_json FROM business_customer_sessions").get().session_json);
+    assert.equal(session.mode, "reschedule_browse");
+    assert.equal(session.browse.selectedDate, undefined, "no natural-language date is selected");
+  });
+  test("another customer's or another business's appointments cannot supply attendance context", async () => {
+    await f.seed({ sender: "synthetic-two" }); await f.seed({ businessId: "synthetic-b" });
+    await post("No puedo mañana");
+    assert.equal(body(), "No entendí qué necesitas. ¿En qué puedo ayudarte?");
+    assert.equal(buttons().length, 3);
+    assert.equal(f.patches.length + f.deletes.length, 0);
+  });
+  test("negation and information requests do not start cancellation", async () => {
+    await f.seed();
+    for (const phrase of ["No quiero cancelar mi cita", "Necesito información sobre cancelaciones", "No quiero agendar una cita"]) {
+      f.db.exec("DELETE FROM business_customer_sessions");
+      await post(phrase);
+      assert.equal(body(), "No entendí qué necesitas. ¿En qué puedo ayudarte?");
+      assert.equal(f.patches.length + f.deletes.length, 0); assert.equal(f.inserts.length, 1);
+    }
+  });
+  test("an appointment lookup failure during context recognition is an error, not an inferred action", async () => {
+    await f.seed();
+    f.controls.afterGet = async () => { throw f.error(503); };
+    await post("No puedo mañana");
+    assert.match(body(), /No pude consultar tus citas/);
+    assert.equal(f.patches.length + f.deletes.length, 0);
+    assert.equal(f.db.prepare("SELECT COUNT(*) AS n FROM business_customer_sessions").get().n, 0);
+  });
+  test("active date and appointment selections own free text until Menu or an exact legacy command", async () => {
+    await f.seed(); await post("Reagendar");
+    const before = f.db.prepare("SELECT session_json FROM business_customer_sessions").get().session_json;
+    await post("Quiero cancelar mi cita");
+    assert.match(body(), /DD\/MM\/AAAA/);
+    assert.equal(f.db.prepare("SELECT session_json FROM business_customer_sessions").get().session_json, before);
+    await post("27/10/2026");
+    assert.match(body(), /Qué hora prefieres/);
+    await post("Cancelar");
+    assert.match(body(), /Se cancelará al seleccionarla/);
+    const selections = buttons().map(button => button.id);
+    await post("Quiero una cita nueva");
+    assert.match(body(), /Usa los botones/);
+    const session = JSON.parse(f.db.prepare("SELECT session_json FROM business_customer_sessions").get().session_json);
+    assert.deepEqual(session.actions, selections);
+    assert.equal(f.patches.length + f.deletes.length, 0);
+  });
+  test("clarification selections reject guessed actions, other businesses, expiry and older menus", async () => {
+    await f.seed(); await post("No puedo mañana");
+    const action = buttons()[0].id;
+    await click(action.replace(/:reschedule$/, ":book"));
+    assert.match(body(), /ya no está vigente/);
+    await post(action, { business: "b", kind: "button_reply" });
+    assert.match(body(), /ya no está vigente/);
+    await post(action, { sender: "synthetic-two", kind: "button_reply" });
+    assert.match(body(), /ya no está vigente/);
+    await post("Menu"); await click(action);
+    assert.match(body(), /ya no está vigente/);
+    await post("No puedo mañana");
+    const expired = buttons()[0].id;
+    const session = JSON.parse(f.db.prepare("SELECT session_json FROM business_customer_sessions").get().session_json);
+    session.expiresAt = Date.now() - 1;
+    f.db.prepare("UPDATE business_customer_sessions SET session_json=?").run(JSON.stringify(session));
+    await click(expired); assert.match(body(), /ya no está vigente/);
+    assert.equal(f.patches.length + f.deletes.length, 0);
+  });
+
   test("menu cancellation keeps one appointment selection and cancels immediately only once", async () => {
     const source = await f.seed();
     await post("Menu");

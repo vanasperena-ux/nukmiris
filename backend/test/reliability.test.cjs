@@ -89,6 +89,23 @@ test("all menu reply chunks and completion are committed together, and a restart
     assert.equal(next.claimOutput().payload.text.body, "Buttons");
   } finally { f.db.close(); }
 });
+test("intent clarification replies expire with their persisted session instead of waiting 24 hours", () => {
+  const f = fixture();
+  try {
+    f.queue.accept(f.payload()); const input = f.queue.claimInput();
+    f.db.prepare("INSERT INTO business_customer_sessions VALUES ('synthetic-a','synthetic-customer',?,?)")
+      .run('{"mode":"intent_clarification"}', 1001000);
+    const payload = { messaging_product: "whatsapp", to: "synthetic-customer", type: "interactive", interactive: {
+      type: "button", body: { text: "¿En qué puedo ayudarte?" }, action: { buttons: [
+        { type: "reply", reply: { id: "intent:synthetic-menu:book", title: "Agendar una cita" } },
+      ] },
+    } };
+    f.queue.outputs(input.inbox_id, [payload]);
+    assert.equal(f.db.prepare("SELECT expires_at FROM message_outbox").get().expires_at, 1001000);
+    f.advance(1001); assert.equal(f.queue.claimOutput(), null);
+    assert.equal(f.db.prepare("SELECT state FROM message_outbox").get().state, "expired");
+  } finally { f.db.close(); }
+});
 test("customer ordering waits for previous replies while other customers and businesses can proceed", () => {
   const f = fixture();
   try {

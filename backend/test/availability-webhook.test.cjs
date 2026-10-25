@@ -143,6 +143,17 @@ describe("signed WhatsApp calendar availability", { concurrency: false }, () => 
     assert.equal(outgoing.at(-1).payload.interactive.body.text, "Elige un horario que te funciona mejor:");
     assert.deepEqual(changes, []);
   });
+  test("natural booking requests retain read-only availability and management remains paused", async () => {
+    await post("¿Tienen espacio mañana?");
+    assert.equal(outgoing.at(-1).payload.interactive.body.text, "Elige un horario que te funciona mejor:");
+    await post(buttons()[0].id, { kind: "button_reply" });
+    assert.match(outgoing.at(-1).payload.text.body, /reserva automática todavía no está activada/);
+    await post("Menu"); await post("Quiero cambiar mi cita");
+    assert.match(outgoing.at(-1).payload.text.body, /temporalmente deshabilitadas/);
+    await post("Cancélame la cita por favor");
+    assert.match(outgoing.at(-1).payload.text.body, /temporalmente deshabilitadas/);
+    assert.deepEqual(changes, []);
+  });
   test("two more appointments lead to date selection and every available time on that date", async () => {
     await post("Cita");
     const first = buttons().slice(0, 2).map(button => button.title);

@@ -212,7 +212,7 @@ function createReliableDelivery({ db, capabilities, resolveBusiness, now = Date.
         const id = randomUUID();
         const buttons = payload.interactive?.action.buttons?.map(item => item.reply.id) || [];
         const rows = payload.interactive?.action.sections?.flatMap(section => section.rows.map(item => item.id)) || [];
-        const browsing = [...buttons, ...rows].some(value => /^(availability|menu|manage|owned):/.test(value));
+        const browsing = [...buttons, ...rows].some(value => /^(availability|menu|manage|owned|intent):/.test(value));
         const expires = Math.min(last + 24 * 3600000, browsing && session ? session.expires_at : Infinity);
         db.prepare("INSERT INTO message_outbox (outbox_id,inbox_id,ordinal,payload_json,state,expires_at) VALUES (?,?,?,?,'pending',?)")
           .run(id, inboxId, ordinal, JSON.stringify({ ...payload, biz_opaque_callback_data: `nukmiris:${id}` }), expires);

@@ -1,6 +1,6 @@
 # NukMiris project continuity
 
-Current owner-verified baseline: v0.4.1 dynamic availability (`8649109`), retaining the verified v0.4.0 reliability baseline (`9d6358b`).
+Current implementation checkpoint: v0.5.0 deterministic Spanish intent recognition, awaiting PC verification. Current owner-verified baseline: v0.4.1 dynamic availability (`8649109`), retaining the verified v0.4.0 reliability baseline (`9d6358b`).
 
 ## Windows PC command preference
 
@@ -40,3 +40,9 @@ The owner clarified two requirements: **keep the current two choices → Más op
 The implementation uses a 30-day first search, 15-day non-overlapping extensions, and the earliest three available dates, capped at 365 business-local calendar days from now. Typed/selected dates and final availability checks use direct-day queries. Existing identity, business/customer isolation, authorization, calendar mutation safeguards, cancellation, and reliability/backup mechanisms remain in use. No reminders, hosting, new dependencies, scheduled scans, or settings interface are added. See [the implementation and PC test guide](../backend/DYNAMIC_AVAILABILITY.md).
 
 After the GitHub update, the owner reported **“great I tested all as you proposed in the testing guide. all OK!”** Record the v0.4.1 manual PC guide as passed and preserve this version as the new working baseline. All 214 offline tests also passed before delivery. No separate PC commit hash or detailed per-case log was supplied; retain existing technical limits and do not equate the report with live verification of each simulated API-error/DST case. The logical next planning topic is always-on hosting; no hosting deployment or new feature is authorized by this success report alone.
+
+## Authorized checkpoint — v0.5.0 Spanish intent recognition
+
+The owner subsequently supplied the Spanish WhatsApp intent-recognition task for version 0.5. Reuse the current checkout and verified v0.4.1 workflows. The implementation recognizes natural BOOK/RESCHEDULE/CANCEL requests and LATAM terminology using centralized local rules, handles negation/conflicts/context, and offers existing-style scoped clarification buttons. Preserve original text, human chat, protected name/date/time states, existing controls, flags, ownership, Calendar services, lifecycle metadata and safeguards. No LLM, external AI dependency, date extraction, schema change, or additional booking confirmation is authorized.
+
+All 347 offline tests passed, retaining 214 regressions and adding 133 classifier/conversation/recovery cases. Deliver through the established GitHub update and `npm.cmd` PC workflow. Owner verification of v0.5.0 remains pending; v0.4.1 stays the verified baseline. See [the implementation and PC test guide](../backend/INTENT_RECOGNITION.md). Always-on hosting and other feature work remain separate.
