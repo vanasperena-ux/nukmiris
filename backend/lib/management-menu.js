@@ -3,7 +3,7 @@
 const { randomUUID } = require("node:crypto");
 const { DateTime } = require("luxon");
 const { createAvailabilityMenu } = require("./availability-menu");
-const { appointmentSuccess } = require("./appointment-messages");
+const { appointmentSuccess, NO_UPCOMING_APPOINTMENTS } = require("./appointment-messages");
 const { MENU_INSTRUCTION } = require("./menu-messages");
 
 function createManagementMenu({ management, availability, sessions, businessFor, sendMessage,
@@ -51,7 +51,7 @@ function createManagementMenu({ management, availability, sessions, businessFor,
     sessions.delete(from);
     const appointments = await management.listAppointments(context(from));
     if (!appointments.length) {
-      await sendMessage(from, "No encontré próximas citas de NukMiris para tu número en este negocio. Escribe Cita para hacer una reserva nueva. " + MENU_INSTRUCTION);
+      await sendMessage(from, NO_UPCOMING_APPOINTMENTS);
       return;
     }
     if (kind === "reschedule" && appointments.length === 1) await beginReschedule(from, appointments[0]);

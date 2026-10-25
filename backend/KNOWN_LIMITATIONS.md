@@ -10,6 +10,8 @@ Version 0.7.0 adds [concise menu guidance and global navigation](MENU_UX.md), wi
 
 Version 0.7.1 changes only [available appointment-slot labels](SLOT_LABELS.md); PC verification is pending. Labels use the business timezone and Spanish abbreviations, including `sept` for September, and omit the year as requested. Full dates/timestamps remain in existing state and message bodies. Other appointment labels/messages and all scheduling/integration/recovery limits remain unchanged.
 
+Version 0.7.2 adds [new-event customer details and concise empty management results](CALENDAR_DETAILS.md), including the pending v0.7.1 labels. Combined PC verification is pending. New events display the scoped registered name and international WhatsApp number; no service line appears without an actual catalog selection. Existing events are not reformatted, including during rescheduling/reconciliation. The event status text remains `Reservada` when moved; cancellation retains the existing event-deletion behavior. Calendar permissions, ownership/identity, concurrency and recovery limits remain applicable.
+
 | Original finding | Current status |
 | --- | --- |
 | Unsigned POST requests accepted | Fixed in this runtime: HMAC-SHA256 over the exact raw body, constant-time comparison, rejection before processing, and a required Meta App Secret. Offline signature tests pass; the owner confirmed real callback verification and delivery on the PC on 2026-10-24. |

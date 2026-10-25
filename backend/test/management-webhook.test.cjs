@@ -213,7 +213,7 @@ describe("signed selection-based appointment management", { concurrency: false }
     assert.equal(f.inserts.length, 1);
     noConfirmations();
     await post("Cancelar");
-    assert.match(body(), /No encontré próximas citas/);
+    assert.equal(body(), 'No encontré citas próximas. Si deseas agendar una nueva cita, escribe "cita".');
   });
   test("one appointment goes straight to reschedule availability and date-first selection moves it once", async () => {
     const source = await f.seed();
@@ -417,9 +417,22 @@ describe("signed selection-based appointment management", { concurrency: false }
   });
   test("customers without owned upcoming bookings cannot select unrelated events", async () => {
     await f.seed({ businessId: "synthetic-b" }); await f.seed({ sender: "synthetic-two" });
-    await post("Reagendar"); assert.match(body(), /No encontré próximas citas/);
-    await post("Cancelar"); assert.match(body(), /No encontré próximas citas/);
+    const events = structuredClone([...f.events]);
+    await post("Reagendar"); assert.equal(body(), 'No encontré citas próximas. Si deseas agendar una nueva cita, escribe "cita".');
+    await post("Cancelar"); assert.equal(body(), 'No encontré citas próximas. Si deseas agendar una nueva cita, escribe "cita".');
+    assert.deepEqual([...f.events], events);
     assert.equal(f.patches.length + f.deletes.length, 0);
+  });
+  for (const command of ["Reagendar", "Cancelar"]) test(`${command} without appointments uses the concise message and menu still works`, async () => {
+    await post(command);
+    assert.equal(body(), 'No encontré citas próximas. Si deseas agendar una nueva cita, escribe "cita".');
+    assert.doesNotMatch(body(), /NukMiris|tu número|menu|menú/);
+    assert.equal(outgoing.length, 1);
+    assert.equal(f.inserts.length + f.patches.length + f.deletes.length, 0);
+    assert.equal(f.db.prepare("SELECT COUNT(*) AS n FROM appointment_changes").get().n, 0);
+    await post("MENU");
+    assert.equal(buttons()[0].title, "Agendar una cita");
+    assert.equal(f.inserts.length + f.patches.length + f.deletes.length, 0);
   });
   test("expired cancellation and rescheduling selections leave the calendar unchanged", async () => {
     await f.seed(); await post("Cancelar");

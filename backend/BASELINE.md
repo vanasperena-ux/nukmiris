@@ -1,5 +1,13 @@
 # Baseline provenance
 
+## Calendar customer details and concise empty results — v0.7.2, awaiting PC verification
+
+The owner requested two combined changes for v0.7.2 before testing the pending v0.7.1 labels on the PC. Newly inserted events now use `{Full Name} — Cita` and the description lines `Cliente`, `WhatsApp` in international format, `Estado: Reservada`, and `Origen: NukMiris WhatsApp`. The number is read from the existing business/customer-scoped identity after its customer-ID check. `Servicio` is omitted because no catalog selection exists. Event IDs, private ownership properties, authorization, journals/locks, availability checks and immediate booking remain unchanged. Existing events are not reformatted; the unmodified rescheduling PATCH retains display fields, including legacy descriptions.
+
+Empty owned-appointments results for rescheduling/cancellation use exactly `No encontré citas próximas. Si deseas agendar una nueva cita, escribe "cita".` without `MENU_INSTRUCTION`. Two equivalent disabled legacy responses now share that text. The menu constant, global navigation, ownership checks and routing remain unchanged. No credentials, environment files, existing local database data, schema or live Calendar events were modified by the cloud agent.
+
+All 536 offline tests passed, with zero failures/cancellations/skips: 525 prior regressions plus 11 booking-detail/identity/rescheduling/HTTP cases. Existing process-restart and foreign-appointment tests also verify the new fields and copy. See [CALENDAR_DETAILS.md](CALENDAR_DETAILS.md) for files, wording-review findings and the combined PC guide. Cloud integrations remain synthetic. v0.7.0 remains the last owner-verified baseline; v0.7.1/v0.7.2 await the owner's manual result.
+
 ## Spanish appointment-slot labels — v0.7.1, awaiting PC verification
 
 After verifying v0.7.0, the owner requested the label format `vie 2 abr 10:00` for every available appointment-slot button. Version 0.7.1 adds a shared Spanish formatter in the business timezone and replaces only the two slot-title expressions in the existing availability menu. This covers initial/alternative suggestions and date-first time pages for booking and rescheduling. No leading day zero, uppercase name or 12-hour time is introduced; the formatter enforces WhatsApp's 20-character limit. Timestamps, IDs, other messages, existing appointment lists, webhook handling, Calendar data, booking/change logic and recovery remain unchanged.

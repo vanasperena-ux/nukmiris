@@ -1,4 +1,6 @@
-# NukMiris Spanish appointment-slot labels — v0.7.1
+# NukMiris Calendar customer details — v0.7.2
+
+Version 0.7.2 gives new Calendar events the title `{Full Name} — Cita` and a Spanish description with the registered customer name, international WhatsApp number, reserved status and WhatsApp origin. Service information is omitted until an actual catalog selection exists. Existing events are not upgraded; the unchanged rescheduling PATCH preserves their title/description. Empty rescheduling/cancellation results now say exactly `No encontré citas próximas. Si deseas agendar una nueva cita, escribe "cita".` The global menu command and immediate booking behavior remain in place. See [CALENDAR_DETAILS.md](CALENDAR_DETAILS.md) for files, wording review and combined PC checks. **v0.7.2 includes v0.7.1; both await PC verification. v0.7.0 remains the owner-verified baseline.**
 
 Version 0.7.1 changes available slot titles from `vie 02/04 10:00` to `vie 2 abr 10:00`, using lowercase Spanish abbreviations, unpadded days and 24-hour time in the business timezone. Initial/alternative suggestions and date-first time buttons share this format for booking and rescheduling. Timestamps, IDs, other messages, Calendar data and webhook/booking logic remain unchanged. See [SLOT_LABELS.md](SLOT_LABELS.md) for scope and PC checks. **v0.7.1 PC verification is pending; v0.7.0 remains the owner-verified baseline.**
 
@@ -14,7 +16,7 @@ Version 0.4.0 preserves that PC-verified UX and adds optional saved incoming mes
 
 The v0.4.1 update extends availability discovery: check 30 calendar days, then 15 new days at a time until three available dates are found or the 365-day booking horizon is reached. Booking and rescheduling share these rules. The two-plus-two interaction stays in place, specific dates are checked directly, and each selected slot is checked again before the existing Calendar write. See [the implementation and PC update/test guide](DYNAMIC_AVAILABILITY.md). The owner completed that checkpoint successfully; v0.5.0 retains its verified behavior.
 
-**Current PC checkpoint:** [v0.7.1 Spanish slot labels](SLOT_LABELS.md). **Verified menu guidance:** [v0.7.0 guide](MENU_UX.md). **Verified natural dates:** [v0.6.0 guide](NATURAL_DATES.md). **Verified Spanish intent recognition:** [v0.5.0 guide](INTENT_RECOGNITION.md). **Verified dynamic availability:** [v0.4.1 guide](DYNAMIC_AVAILABILITY.md). **Verified reliability:** [v0.4.0 setup and restart tests](RELIABILITY_CHECKPOINT.md). **Verified UX:** [v0.3.1 guide](UX_CHECKPOINT.md). **Verified management setup:** [v0.3.0 guide](MANAGEMENT_CHECKPOINT.md). **First booking setup:** [v0.2.0 guide](BOOKING_CHECKPOINT.md). **Initial read-only setup:** [PC setup](PC_SETUP.md). **Project continuity:** [saved roadmap](../docs/ROADMAP.md).
+**Current combined PC checkpoint:** [v0.7.2 Calendar details and empty results](CALENDAR_DETAILS.md), including [v0.7.1 slot labels](SLOT_LABELS.md). **Verified menu guidance:** [v0.7.0 guide](MENU_UX.md). **Verified natural dates:** [v0.6.0 guide](NATURAL_DATES.md). **Verified Spanish intent recognition:** [v0.5.0 guide](INTENT_RECOGNITION.md). **Verified dynamic availability:** [v0.4.1 guide](DYNAMIC_AVAILABILITY.md). **Verified reliability:** [v0.4.0 setup and restart tests](RELIABILITY_CHECKPOINT.md). **Verified UX:** [v0.3.1 guide](UX_CHECKPOINT.md). **Verified management setup:** [v0.3.0 guide](MANAGEMENT_CHECKPOINT.md). **First booking setup:** [v0.2.0 guide](BOOKING_CHECKPOINT.md). **Initial read-only setup:** [PC setup](PC_SETUP.md). **Project continuity:** [saved roadmap](../docs/ROADMAP.md).
 
 Juanita's confirmed schedule is Monday–Friday, 10:00–19:00, 60-minute appointments starting on the hour, no buffer between appointments, and lunch 13:00–14:00. On an empty future weekday that gives 10:00, 11:00, 12:00, 14:00, 15:00, 16:00, 17:00, and 18:00. The final appointment ends at 19:00.
 
@@ -56,6 +58,8 @@ Following the owner's booking-restart report, five additional process/diagnostic
 The complete v0.5.0 suite passed **347 offline tests**, with no failures/skips, retaining the 214 earlier regressions and adding 133 intent/conversation/recovery cases. The verified v0.4.1 lifecycle services and flags remain unchanged. The owner subsequently reported **“I tested v.0.5.0 and all good!”** See [BASELINE.md](BASELINE.md) for the PC verification record and its scope.
 
 ## Runtime modes
+
+The v0.7.2 suite passed **536 offline tests**, with zero failures/cancellations/skips, retaining 525 regressions and adding 11 event-detail/identity/rescheduling/HTTP cases. Existing crash recovery, ownership, cancellation and idempotency checks continue to pass. Combined v0.7.1/v0.7.2 PC verification is pending; use [CALENDAR_DETAILS.md](CALENDAR_DETAILS.md).
 
 The v0.7.1 suite passed **525 offline tests**, with zero failures/cancellations/skips: 484 earlier regressions plus 41 formatter/view cases. Only available slot titles change; other messages and scheduling/integration/recovery behavior are retained. Owner PC verification is pending; use [SLOT_LABELS.md](SLOT_LABELS.md).
 

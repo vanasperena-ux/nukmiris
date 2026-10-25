@@ -18,7 +18,7 @@ const { createBookingService } = require("./lib/booking");
 const { createAvailabilityMenu } = require("./lib/availability-menu");
 const { createAppointmentManagement, createAppointmentLookup } = require("./lib/appointment-management");
 const { createManagementMenu } = require("./lib/management-menu");
-const { appointmentSuccess, appointmentOverview, textChunks } = require("./lib/appointment-messages");
+const { appointmentSuccess, appointmentOverview, textChunks, NO_UPCOMING_APPOINTMENTS } = require("./lib/appointment-messages");
 const { createReliableDelivery, createDeliveryWorker, sendStoredReply } = require("./lib/reliable-delivery");
 const { createBackupSchedule } = require("./lib/database-backups");
 const { readSearchPolicy, selectedDate } = require("./lib/availability-search");
@@ -1160,8 +1160,7 @@ async function startRescheduling(from) {
   if (appointments.length === 0) {
     await sendMessage(
       from,
-      "No encontré una cita futura asociada " +
-      "a este WhatsApp. Escribe Cita para agendar una nueva."
+      NO_UPCOMING_APPOINTMENTS
     );
     return;
   }
@@ -1185,8 +1184,7 @@ async function startCancellation(from) {
   if (appointments.length === 0) {
     await sendMessage(
       from,
-      "No encontré una cita futura asociada " +
-      "a este WhatsApp. Escribe Cita para agendar una nueva."
+      NO_UPCOMING_APPOINTMENTS
     );
     return;
   }

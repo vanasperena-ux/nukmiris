@@ -207,6 +207,21 @@ describe("slot-selected WhatsApp bookings", { concurrency: false }, () => {
     await post(selected, { kind: "button_reply" });
     assert.equal(inserts.length, 1);
   });
+  test("a new customer's stored WhatsApp identity supplies Calendar details without another question", async () => {
+    const sender = "5215500000001", options = { sender };
+    await post("Cita", options);
+    const selected = buttons()[0].id;
+    await post(selected, { ...options, kind: "button_reply" });
+    assert.equal(outgoing.at(-1).payload.text.body, "Para reservar este horario, indícanos tu nombre completo.");
+    await post("Cliente de Prueba", options);
+    assert.equal(outgoing.length, 3);
+    assert.match(outgoing.at(-1).payload.text.body, /cita está agendada/);
+    assert.equal(inserts[0].requestBody.summary, "Cliente de Prueba — Cita");
+    assert.equal(inserts[0].requestBody.description, "Cliente: Cliente de Prueba\nWhatsApp: +525500000001\nEstado: Reservada\nOrigen: NukMiris WhatsApp");
+    assert.equal(inserts[0].requestBody.extendedProperties.private.nukmirisCustomerId, sender);
+    await post(selected, { ...options, kind: "button_reply" });
+    assert.equal(inserts.length, 1);
+  });
   test("Menu invalidates old slot selections rather than booking from a stale message", async () => {
     registered();
     await post("Cita");

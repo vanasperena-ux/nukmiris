@@ -1,5 +1,6 @@
 "use strict";
 const { DateTime } = require("luxon");
+const NO_UPCOMING_APPOINTMENTS = 'No encontré citas próximas. Si deseas agendar una nueva cita, escribe "cita".';
 
 function date(iso, zone) {
   return DateTime.fromISO(iso).setZone(zone).setLocale("es").toFormat("cccc d 'de' LLLL 'de' yyyy");
@@ -33,4 +34,4 @@ function textChunks(body, limit = 3500) {
   if (body) chunks.push(body);
   return chunks;
 }
-module.exports = { appointmentSuccess, appointmentOverview, textChunks };
+module.exports = { appointmentSuccess, appointmentOverview, textChunks, NO_UPCOMING_APPOINTMENTS };

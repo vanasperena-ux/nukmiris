@@ -263,7 +263,7 @@ for (const operation of ["insert", "patch", "delete"]) test(`real process recove
 test("real process recovery links a new customer's name message to its booking request", async () => {
   const f = await fixture();
   try {
-    const sender = "synthetic-new", offer = await f.post("Cita", { sender });
+    const sender = "525500000003", offer = await f.post("Cita", { sender });
     assert.match((await f.post(f.buttons(offer)[0].id, { sender, kind: "button_reply" })).text.body, /nombre completo/);
     await f.phase("after_calendar_insert"); const count = f.messages().length;
     const request = f.postPayload(f.incoming("Cliente Nuevo", { sender })).catch(() => {});
@@ -271,6 +271,10 @@ test("real process recovery links a new customer's name message to its booking r
     await waitFor(() => f.messages().length > count);
     assert.match(f.messages().at(-1).payload.text.body, /está agendada/);
     assert.equal(f.calls().filter(call => call.method === "insert").length, 1);
+    const event = Object.values(f.events())[0];
+    assert.equal(event.summary, "Cliente Nuevo — Cita");
+    assert.equal(event.description, "Cliente: Cliente Nuevo\nWhatsApp: +525500000003\nEstado: Reservada\nOrigen: NukMiris WhatsApp");
+    assert.equal(event.extendedProperties.private.nukmirisCustomerId, sender);
   } finally { await f.cleanup(); }
 });
 test("real process recovery delivers a stored reply without rerunning the Calendar operation", async () => {

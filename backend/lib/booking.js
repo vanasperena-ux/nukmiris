@@ -176,7 +176,7 @@ function createBookingService({ db, availability, enabled = false,
     row = lookup(context);
     let attempted = false;
     try {
-      const customer = db.prepare("SELECT customer_id FROM business_customers WHERE business_id=? AND whatsapp_id=?").get(row.business_id, row.sender_whatsapp_id);
+      const customer = db.prepare("SELECT customer_id,whatsapp_id FROM business_customers WHERE business_id=? AND whatsapp_id=?").get(row.business_id, row.sender_whatsapp_id);
       if (customer?.customer_id !== row.customer_id) return terminal(row, "rejected");
       const available = await availability.listSlots(row.business_id, selectedDate({ start: row.slot_start }, availability.configuration(row.business_id).settings.timeZone));
       const valid = available.some(slot => DateTime.fromISO(slot.start).toMillis() === row.start_ms && DateTime.fromISO(slot.end).toMillis() === row.end_ms);
@@ -185,10 +185,15 @@ function createBookingService({ db, availability, enabled = false,
       const api = await calendar();
       if (await confirmedConflict(row, api, settings.bufferMinutes)) return terminal(row, "rejected");
       if (!mappingMatches(row)) return terminal(row, "rejected");
-      const business = db.prepare("SELECT business_name FROM businesses WHERE business_id=?").get(row.business_id);
+      // Display the existing scoped identity internationally; keep the original
+      // Meta identifier in the journal and private ownership metadata.
+      const whatsappNumber = customer.whatsapp_id.replace(/^\+/, "").replace(/^521(?=\d{10}$)/, "52");
       const requestBody = {
-        id: row.event_id, summary: `${business.business_name} — ${row.customer_name}`,
-        description: "Appointment confirmed through NukMiris WhatsApp.",
+        id: row.event_id, summary: `${row.customer_name} — Cita`,
+        description: [
+          `Cliente: ${row.customer_name}`, `WhatsApp: +${whatsappNumber}`,
+          "Estado: Reservada", "Origen: NukMiris WhatsApp",
+        ].join("\n"),
         start: { dateTime: row.slot_start, timeZone: settings.timeZone },
         end: { dateTime: row.slot_end, timeZone: settings.timeZone },
         transparency: "opaque",

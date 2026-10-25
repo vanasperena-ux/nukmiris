@@ -1,6 +1,6 @@
 # NukMiris project continuity
 
-Current implementation checkpoint: v0.7.1 Spanish appointment-slot labels, awaiting PC verification. Current owner-verified baseline: v0.7.0 simple menu instructions (`e1c5370`), retaining the verified v0.6.0 natural dates (`3238e34`), v0.5.0 intent recognition (`b6a9169`), v0.4.1 availability (`8649109`) and v0.4.0 reliability (`9d6358b`) behavior.
+Current implementation checkpoint: v0.7.2 Calendar customer details and concise empty management results, including v0.7.1 slot labels; combined PC verification is pending. Current owner-verified baseline: v0.7.0 simple menu instructions (`e1c5370`), retaining the verified v0.6.0 natural dates (`3238e34`), v0.5.0 intent recognition (`b6a9169`), v0.4.1 availability (`8649109`) and v0.4.0 reliability (`9d6358b`) behavior.
 
 ## Windows PC command preference
 
@@ -68,3 +68,11 @@ All 484 offline tests passed, retaining 460 regressions and adding 24 navigation
 The owner requested a focused label change from `vie 02/04 10:00` to `vie 2 abr 10:00`: Spanish lowercase abbreviated weekdays/months, unpadded day, 24-hour time, business timezone and the 20-character button limit. Apply it to all available slot choices and alternatives, including date-first time pages, for booking and rescheduling. Preserve IDs, full timestamps, other appointment messages, webhook handling, Calendar data and lifecycle logic. Existing appointment-selection lists are separate from offered availability slots and retain their labels.
 
 All 525 offline tests passed, retaining 484 regressions and adding 41 formatter/view cases. Use the established GitHub and `npm.cmd` PC delivery workflow. v0.7.1 awaits owner PC verification; v0.7.0 remains the verified baseline. See [the scope and test guide](../backend/SLOT_LABELS.md). No other feature work is authorized by this label update.
+
+## Authorized checkpoint — v0.7.2 Calendar details and concise empty results
+
+The owner requested that v0.7.2 combine the pending v0.7.1 labels with new-event visible details and a simpler no-appointments message, then be tested on the PC. Use `{Full Name} — Cita` and the Spanish customer/WhatsApp/status/origin description. Derive the phone from the existing scoped customer identity; preserve original IDs/private ownership metadata and all booking safeguards. Omit the service field until a real Services Catalog selection exists. Do not reformat old events or alter rescheduling, cancellation, recovery, idempotency, extra questions or confirmations. The existing rescheduling PATCH already preserves the title/description.
+
+Use exactly `No encontré citas próximas. Si deseas agendar una nueva cita, escribe "cita".` for empty rescheduling/cancellation results, without a menu suffix. The review found two equivalent disabled legacy responses; standardize their text without enabling the handlers. Keep the shared menu instruction, global command, business/customer isolation and ownership checks. No schema, dependencies, credentials, environment files or live database changes are authorized. The Calendar payload presentation change is authorized by the first task; the second task leaves the integration/client and business rules unchanged.
+
+All 536 offline tests passed, retaining 525 regressions and adding 11 booking-detail/identity/rescheduling/HTTP cases. Existing process-restart, ownership, cancellation and idempotency checks continue to pass. Use the established GitHub and `npm.cmd` PC workflow. v0.7.0 remains the owner-verified baseline until the owner confirms the combined v0.7.2 checkpoint. See [the files, findings and PC guide](../backend/CALENDAR_DETAILS.md).

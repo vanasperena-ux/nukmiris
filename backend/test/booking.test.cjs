@@ -85,6 +85,83 @@ test("a selection does not write; confirmation creates one owned event on the ex
   } finally { f.db.close(); }
 });
 
+for (const [sender, displayed] of [
+  ["525500000001", "+525500000001"],
+  ["5215500000001", "+525500000001"],
+  ["447700900123", "+447700900123"],
+]) test(`new events include the scoped name and international WhatsApp number for ${sender}`, async () => {
+  const f = fixture();
+  try {
+    f.db.prepare("INSERT INTO business_customers VALUES (?,?,?,?,?,?)")
+      .run("synthetic-phone-customer", "synthetic-a", sender, "María Prueba García", "fixture", "fixture");
+    const request = f.intent({ sender }), scope = f.context(request.requestId, "synthetic-a", sender);
+    assert.equal((await f.booking.confirm(scope)).status, "confirmed");
+    const body = f.inserts[0].args.requestBody;
+    assert.equal(body.summary, "María Prueba García — Cita");
+    assert.equal(body.description, `Cliente: María Prueba García\nWhatsApp: ${displayed}\nEstado: Reservada\nOrigen: NukMiris WhatsApp`);
+    assert.doesNotMatch(body.description, /Servicio|undefined|null|placeholder/i);
+    assert.deepEqual(body.extendedProperties.private, {
+      nukmirisBusinessId: "synthetic-a", nukmirisCustomerId: sender,
+      nukmirisInternalCustomerId: "synthetic-phone-customer", nukmirisBookingRequestId: request.requestId, nukmirisPOC: "true",
+    });
+    assert.equal(body.id, request.eventId);
+    assert.equal((await f.service().confirm(scope)).eventId, body.id);
+    assert.equal(f.inserts.length, 1);
+  } finally { f.db.close(); }
+});
+
+test("new event details cannot mix customer names or phone numbers across businesses", async () => {
+  const f = fixture();
+  try {
+    const identities = [
+      ["synthetic-a", "447700900111", "Cliente Negocio A", 10],
+      ["synthetic-b", "12025550123", "Cliente Negocio B", 10],
+      ["synthetic-b", "447700900111", "Otro Perfil Negocio B", 11],
+    ];
+    for (const [business, sender, name, hour] of identities) {
+      f.db.prepare("INSERT INTO business_customers VALUES (?,?,?,?,?,?)")
+        .run(`${business}-${sender}`, business, sender, name, "fixture", "fixture");
+      const request = f.intent({ businessId: business, sender, hour });
+      assert.equal((await f.booking.confirm(f.context(request.requestId, business, sender))).status, "confirmed");
+      const { calendarId, requestBody } = f.inserts.at(-1).args;
+      assert.equal(calendarId, `calendar-${business}`);
+      assert.equal(requestBody.summary, `${name} — Cita`);
+      assert.equal(requestBody.description, `Cliente: ${name}\nWhatsApp: +${sender}\nEstado: Reservada\nOrigen: NukMiris WhatsApp`);
+      for (const [otherBusiness, otherSender, otherName] of identities) {
+        if (otherBusiness === business && otherSender === sender) continue;
+        assert(!requestBody.description.includes(otherName));
+        if (sender !== otherSender) assert(!requestBody.description.includes(otherSender));
+      }
+      assert.equal((await f.booking.confirm(f.context(request.requestId, business, "synthetic-two"))).status, "invalid");
+    }
+    assert.equal(f.inserts.length, 3);
+  } finally { f.db.close(); }
+});
+
+test("reopening, confirming or reconciling existing appointments never upgrades their visible details", async () => {
+  const f = fixture();
+  try {
+    const request = f.intent(), scope = f.context(request.requestId);
+    await f.booking.confirm(scope);
+    const event = f.events.get(`calendar-synthetic-a:${request.eventId}`);
+    event.summary = "Business synthetic-a — Cliente Sintético";
+    event.description = "Appointment confirmed through NukMiris WhatsApp.";
+    const before = structuredClone(event);
+    await f.service().verify();
+    assert.equal((await f.service().confirm(scope)).status, "confirmed");
+    assert.equal((await f.service().reconcile(scope)).status, "confirmed");
+    assert.deepEqual(event, before);
+    // An older insert with a lost response must also reconcile by ownership
+    // and event ID without rewriting its display fields to match this version.
+    f.db.prepare("UPDATE booking_requests SET state='uncertain' WHERE request_id=?").run(request.requestId);
+    f.db.prepare("INSERT INTO calendar_booking_locks VALUES (?,?,?)").run("calendar-synthetic-a", request.requestId, "fixture");
+    assert.equal((await f.service().confirm(scope)).status, "confirmed");
+    assert.deepEqual(event, before);
+    assert.equal(f.db.prepare("SELECT COUNT(*) AS n FROM calendar_booking_locks").get().n, 0);
+    assert.equal(f.inserts.length, 1);
+  } finally { f.db.close(); }
+});
+
 test("duplicate confirmations and a new service instance reuse the saved outcome", async () => {
   const f = fixture();
   try {

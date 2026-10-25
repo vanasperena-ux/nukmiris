@@ -87,6 +87,45 @@ test("rescheduling moves the same event, preserves its other fields, and updates
     assert(!slots.some(slot => slot.start === f.slot(11).start));
   } finally { f.db.close(); }
 });
+
+for (const lostResponse of [false, true]) test(`rescheduling preserves new customer details and ownership${lostResponse ? " after a lost response" : ""}`, async () => {
+  const f = fixture();
+  try {
+    const sender = "5215500000002";
+    f.db.prepare("INSERT INTO business_customers VALUES (?,?,?,?,?,?)")
+      .run("synthetic-phone-customer", "synthetic-a", sender, "Cliente de Prueba", "fixture", "fixture");
+    const source = await f.seed({ sender });
+    const before = structuredClone(eventFor(f, source));
+    assert.equal(before.summary, "Cliente de Prueba — Cita");
+    assert.equal(before.description, "Cliente: Cliente de Prueba\nWhatsApp: +525500000002\nEstado: Reservada\nOrigen: NukMiris WhatsApp");
+    const offer = await f.intent(source), scope = f.changeScope(offer.requestId, source.businessId, sender);
+    if (lostResponse) f.controls.afterPatchError = 503;
+    assert.equal((await f.management.confirm(scope)).status, "applied");
+    assert.equal((await f.managementService().confirm(scope)).status, "applied");
+    const after = eventFor(f, source);
+    assert.equal(after.summary, before.summary); assert.equal(after.description, before.description);
+    assert.equal(after.id, before.id); assert.equal(after.start.dateTime, f.slot(11).start);
+    assert.deepEqual(after.extendedProperties.private, { ...before.extendedProperties.private, nukmirisChangeRequestId: offer.requestId });
+    assert.deepEqual(Object.keys(f.patches[0].args.requestBody).sort(), ["end", "extendedProperties", "start"]);
+    assert.equal(f.inserts.length, 1); assert.equal(f.patches.length, 1);
+  } finally { f.db.close(); }
+});
+
+test("rescheduling a legacy event does not replace its title or description with the new format", async () => {
+  const f = fixture();
+  try {
+    const source = await f.seed(), event = eventFor(f, source);
+    event.summary = "Business synthetic-a — Cliente Sintético";
+    event.description = "Appointment confirmed through NukMiris WhatsApp.";
+    const before = structuredClone(event);
+    const offer = await f.intent(source);
+    assert.equal((await f.management.confirm(f.changeScope(offer.requestId))).status, "applied");
+    assert.equal(eventFor(f, source).summary, before.summary);
+    assert.equal(eventFor(f, source).description, before.description);
+    assert.equal(eventFor(f, source).id, before.id);
+    assert.equal(f.patches.length, 1); assert.equal(f.inserts.length, 1);
+  } finally { f.db.close(); }
+});
 test("business/customer scope and original ownership are checked for listing and both actions", async () => {
   const f = fixture();
   try {
