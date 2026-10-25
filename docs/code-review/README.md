@@ -4,6 +4,8 @@
 
 It explains **v0.7.3** at the exact [GitHub source snapshot `2d69b62`](https://github.com/vanasperena-ux/nukmiris/commit/2d69b6257064982e1b9b295186eb8ff12cfcbbd5), verified as `main` when this review began on October 25, 2026 (America/Mexico_City).
 
+After this review, the owner confirmed **“version v0.7.3 tested and all good”**. v0.7.3 is now the current owner-verified baseline; see [the verification record](../../backend/BASELINE.md). The walkthrough includes this update while preserving its numbered source and historical snapshot-time status.
+
 The document contains 36 complete application, configuration, utility and website files: 4,726 original source lines in 225 explained blocks. Each block includes its original file/line range, numbered source, a plain-language explanation and a link to those lines in the fixed GitHub snapshot. The introduction provides a topic index, a suggested reading order, a booking journey and a small glossary. Tests have a separate reading map.
 
 For example, in `backend/whatsapp-webhook.js`:

@@ -1,8 +1,8 @@
 # Consistent appointment choices — v0.7.3
 
-**v0.7.3 awaits PC verification.** It includes the v0.7.1 slot labels and v0.7.2 Calendar details/empty-result message. v0.7.0 remains the last owner-verified baseline.
+**v0.7.3 is the current owner-verified working baseline.** It includes the v0.7.1 slot labels and v0.7.2 Calendar details/empty-result message.
 
-**PC progress, 2026-10-25 (America/Mexico_City):** the owner reported the new Google Calendar-entry check passed and supplied a screenshot confirming its visible customer details. Detail preservation after rescheduling, corrected management-choice labels, the empty-appointments message and the complete combined checkpoint still await results. See [the recorded evidence](BASELINE.md#partial-pc-result--new-calendar-entry-details-passed).
+**PC result, 2026-10-25 (America/Mexico_City):** after separately reporting the new Google Calendar-entry check passed, the owner confirmed **“version v0.7.3 tested and all good”**. Delivered application reference: `9c9e1a9`. See [the verification record](BASELINE.md) for the combined checkpoint and evidence scope.
 
 ## v0.7.2 audit and correction
 
@@ -47,4 +47,4 @@ In WhatsApp, start a fresh flow with `menu`. Messages already delivered to Whats
 4. If enough test appointments are already present, check **Más citas**. List titles and `Termina:` descriptions should use month names on every page.
 5. Complete the [v0.7.2 combined Calendar/message checks](CALENDAR_DETAILS.md), including rescheduling/cancellation only when intended. Existing event details and normal success messages should be retained.
 
-Record the owner's complete result before marking the combined checkpoint PC-verified.
+The owner has confirmed this combined checkpoint passed. Retain these checks for future regression testing.

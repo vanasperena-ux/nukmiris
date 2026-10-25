@@ -1,6 +1,6 @@
 # Simple menu instructions — v0.7.0
 
-Built on the owner-verified v0.6.0 baseline (`3238e34`). **v0.7.0 is now the current owner-verified working baseline.** Normal appointment conversations no longer repeat how to return to the menu after each question. Helpful escape instructions use exactly:
+Built on the owner-verified v0.6.0 baseline (`3238e34`). **v0.7.0 is owner-verified; the current working baseline is [v0.7.3](APPOINTMENT_LABELS.md), which retains this menu behavior.** Normal appointment conversations no longer repeat how to return to the menu after each question. Helpful escape instructions use exactly:
 
 > Escribe "menu" para volver al menú principal.
 

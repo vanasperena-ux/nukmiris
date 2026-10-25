@@ -1,8 +1,8 @@
 # Spanish appointment-slot labels — v0.7.1
 
-Built on the owner-verified v0.7.0 baseline (`e1c5370`). **v0.7.1 awaits PC verification.** This update changes only the labels on available appointment-slot buttons.
+Built on the owner-verified v0.7.0 baseline (`e1c5370`). **These labels, with the consistency correction below, are included in owner-verified v0.7.3.** The original v0.7.1 update changed only the labels on available appointment-slot buttons.
 
-**Follow-up correction:** v0.7.1/v0.7.2 left existing-appointment choices for cancellation/rescheduling in the old numerical format. The owner's report confirmed this scope was too narrow. [v0.7.3](APPOINTMENT_LABELS.md) also applies the shared formatter to those choices and their compact end-time descriptions. Use that guide for the current combined PC check; the scope below describes the original v0.7.1 delivery.
+**Follow-up correction:** v0.7.1/v0.7.2 left existing-appointment choices for cancellation/rescheduling in the old numerical format. The owner's report confirmed this scope was too narrow. [v0.7.3](APPOINTMENT_LABELS.md) also applies the shared formatter to those choices and their compact end-time descriptions. Use that guide for the current owner-verified combined checkpoint; the scope and version-specific checks below describe the original v0.7.1 delivery.
 
 | Before | After |
 | --- | --- |
@@ -49,4 +49,4 @@ The version should print **0.7.1**, and `npm.cmd test` should report **525 passe
 3. Enter `reagendar` for a designated test appointment and inspect its available times and alternatives. Existing appointment lists keep their prior labels; the offered new slots use the new format.
 4. If completing a test booking/change, check that the chosen date/time matches Google Calendar and that the normal success message and single-operation behavior are retained.
 
-Month, weekday, midnight, year-boundary and timezone cases are automated with fixed dates; changing your PC clock or business settings is unnecessary. Record the owner's results before marking v0.7.1 verified.
+Month, weekday, midnight, year-boundary and timezone cases are automated with fixed dates; changing your PC clock or business settings is unnecessary. The combined checkpoint passed owner testing in v0.7.3; retain these checks for future regression testing.

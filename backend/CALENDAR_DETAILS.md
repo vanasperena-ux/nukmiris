@@ -1,8 +1,8 @@
 # Calendar customer details and concise empty results — v0.7.2
 
-Built on v0.7.1 (`68cda63`), including its Spanish slot labels. **The new Calendar-entry details passed the owner's PC check; the complete combined checkpoint remains pending. v0.7.0 is the last fully owner-verified baseline.** Use [the v0.7.3 guide](APPOINTMENT_LABELS.md) for the current combined PC checks.
+Built on v0.7.1 (`68cda63`), including its Spanish slot labels. **These changes are included in the owner-verified v0.7.3 combined checkpoint.** Use [the v0.7.3 guide](APPOINTMENT_LABELS.md) for the current baseline and combined PC checks.
 
-On 2026-10-25 (America/Mexico_City), the owner reported the Calendar-entry check **“PASSED”** and supplied a screenshot showing the requested name/title, international WhatsApp number, reserved status, origin and no service placeholder in the selected Juanita calendar. This verifies new-event visible details only; preservation after rescheduling and the other WhatsApp checks remain pending. See [BASELINE.md](BASELINE.md) for evidence and scope. Customer identifying values are not reproduced here.
+On 2026-10-25 (America/Mexico_City), the owner first reported the Calendar-entry check **“PASSED”** and supplied a screenshot showing the requested name/title, international WhatsApp number, reserved status, origin and no service placeholder in the selected Juanita calendar. That initial report covered new-event visible details; the owner subsequently confirmed **“version v0.7.3 tested and all good”**, completing the overall combined checkpoint. See [BASELINE.md](BASELINE.md) for evidence and scope. Customer identifying values are not reproduced here.
 
 ## Newly created Google Calendar appointments
 
@@ -85,4 +85,4 @@ Use designated test appointments when intentionally booking, moving or cancellin
 5. Cancel the test appointment normally. With no remaining upcoming appointments for that test customer, send `Reagendar` and `Cancelar`: both must return the exact new sentence. Then type `MENU` and check the main menu returns.
 6. Inspect an older appointment: updating/restarting the app must not reformat it. If deliberately rescheduling an older test appointment, its existing title/description should remain intact.
 
-Cross-business/customer isolation, ownership tampering, API failures, repeated selections, uncertain writes and process-crash timing are covered offline. Existing Calendar concurrency and uncertain-delivery limits still apply. Record the owner's manual result before declaring this combined checkpoint verified.
+Cross-business/customer isolation, ownership tampering, API failures, repeated selections, uncertain writes and process-crash timing are covered offline. Existing Calendar concurrency and uncertain-delivery limits still apply. The combined checkpoint passed owner testing in v0.7.3; retain these checks for future regression testing.

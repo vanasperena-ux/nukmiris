@@ -11,6 +11,15 @@ This source commit matched GitHub main when the review began. It contains app
 version 0.7.3. The walkthrough is a fixed reading copy: future code edits can move
 line numbers, so use its pinned GitHub source links when following a block.
 
+SUBSEQUENT VERIFICATION UPDATE - October 25, 2026 (America/Mexico_City)
+-------------------------------------------------------------------
+After this review, the owner reported "version v0.7.3 tested and all good".
+Version 0.7.3 is now the current owner-PC-verified working baseline. See
+backend/BASELINE.md for the verification record and scope. The feature-status
+section below describes the earlier moment when this snapshot was taken;
+its pending status was subsequently resolved by this report. The numbered
+source, original line ranges and pinned source links remain unchanged.
+
 HOW TO USE THIS DOCUMENT
 ------------------------
 Every block has its file name, ORIGINAL file line range, actual numbered code,
