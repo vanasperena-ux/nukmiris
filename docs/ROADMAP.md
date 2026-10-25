@@ -1,6 +1,6 @@
 # NukMiris project continuity
 
-Current implementation checkpoint: v0.4.1 dynamic availability, ready for PC testing through the usual GitHub update process. Verified reliability baseline: v0.4.0 (`9d6358b`).
+Current owner-verified baseline: v0.4.1 dynamic availability (`8649109`), retaining the verified v0.4.0 reliability baseline (`9d6358b`).
 
 ## Windows PC command preference
 
@@ -38,3 +38,5 @@ While beginning v0.4.0 PC tests, the owner supplied the dynamic availability tas
 The owner clarified two requirements: **keep the current two choices → Más opciones → two more → Elegir fecha flow**, and **apply the same dynamic search and 365-day booking horizon to both new bookings and rescheduling**. These answers supersede the uploaded example's initial three-date presentation.
 
 The implementation uses a 30-day first search, 15-day non-overlapping extensions, and the earliest three available dates, capped at 365 business-local calendar days from now. Typed/selected dates and final availability checks use direct-day queries. Existing identity, business/customer isolation, authorization, calendar mutation safeguards, cancellation, and reliability/backup mechanisms remain in use. No reminders, hosting, new dependencies, scheduled scans, or settings interface are added. See [the implementation and PC test guide](../backend/DYNAMIC_AVAILABILITY.md).
+
+After the GitHub update, the owner reported **“great I tested all as you proposed in the testing guide. all OK!”** Record the v0.4.1 manual PC guide as passed and preserve this version as the new working baseline. All 214 offline tests also passed before delivery. No separate PC commit hash or detailed per-case log was supplied; retain existing technical limits and do not equate the report with live verification of each simulated API-error/DST case. The logical next planning topic is always-on hosting; no hosting deployment or new feature is authorized by this success report alone.

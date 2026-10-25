@@ -1,14 +1,16 @@
 # Baseline provenance
 
-## Dynamic availability — v0.4.1, awaiting PC verification
+## Verified dynamic availability baseline — v0.4.1
 
 On 2026-10-25, while starting PC testing of v0.4.0, the owner requested dynamic availability discovery. The owner clarified that the current two-plus-two suggestions and date picker must remain, and that booking and rescheduling must share the expanded search and 365-day limit. This checkpoint checks 30 calendar days, then non-overlapping 15-day extensions until three available dates are found or the horizon is reached. Specific-date requests and pre-write validation query the selected day directly, using the existing schedule engine and Calendar integrations.
 
 Customer identification/registration, business relationships, explicit calendar mappings, Google/Meta authorization, event ownership metadata, write locks/journals, cancellation behavior, and v0.4.0 reliability/backup mechanisms are retained. No new dependencies, schema, credentials, or live account changes are involved. Scope, file list, validation, and manual tests are recorded in [DYNAMIC_AVAILABILITY.md](DYNAMIC_AVAILABILITY.md).
 
-Validation: all 209 offline tests passed, with zero failures/skipped tests, including the 188 existing regressions and 21 added cases. Long closures, direct distant dates, non-overlapping ranges, horizon/buffer/DST boundaries, Calendar failures, and both booking/rescheduling paths use synthetic integrations; no live PC or account validation was performed.
+Cloud validation: all 214 offline tests passed, with zero failures/skipped tests, including the 188 v0.4.0 regressions, 21 dynamic-search/WhatsApp cases, and five follow-up restart/diagnostic cases. Long closures, direct distant dates, non-overlapping ranges, horizon/buffer/DST boundaries, Calendar failures, and both booking/rescheduling paths use synthetic integrations. The cloud agent did not access live accounts to repeat the owner's PC checks.
 
-The supplied task originally prohibited automatically committing or pushing this update. After completing the requested v0.4.0 PC checks, the owner explicitly authorized the same GitHub delivery process used for v0.3.1 → v0.4.0, overriding that restriction for v0.4.1. Update the PC through the usual `git pull --ff-only` workflow in [DYNAMIC_AVAILABILITY.md](DYNAMIC_AVAILABILITY.md). The owner-verified v0.4.0 baseline remains at `9d6358b`; publishing v0.4.1 does not establish its PC verification.
+After receiving the v0.4.1 GitHub update and testing-guide instructions, the owner reported **“great I tested all as you proposed in the testing guide. all OK!”** Treat v0.4.1 as the owner-verified dynamic availability baseline, preserving the verified v0.4.0 reliability and earlier booking/rescheduling/cancellation UX. Delivered code reference: `8649109692fcaf32f3e8d536d9d5b404294c690a`. No separate PC commit hash or detailed per-case log was supplied. The report confirms the manual guide as a whole, including its long-range availability checks; it does not add independent live evidence for every simulated API-failure or DST test. Existing technical limits remain applicable.
+
+The supplied task originally prohibited automatically committing or pushing this update. After completing the requested v0.4.0 PC checks, the owner explicitly authorized the same GitHub delivery process used for v0.3.1 → v0.4.0, overriding that restriction for v0.4.1. The owner subsequently verified the PC checkpoint as recorded above. Preserve the usual GitHub update workflow and `npm.cmd` PowerShell preference. The previous verified v0.4.0 baseline remains at `9d6358b`.
 
 ## Verified reliability/restart recovery checkpoint — v0.4.0
 

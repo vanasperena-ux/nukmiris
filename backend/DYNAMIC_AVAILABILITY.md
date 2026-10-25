@@ -1,6 +1,6 @@
 # Dynamic availability — v0.4.1 checkpoint
 
-Prepared on 2026-10-25 against the now owner-verified v0.4.0 baseline (`9d6358b`). The original task prohibited automatically committing or pushing; the owner subsequently authorized the same GitHub update process used for v0.3.1 → v0.4.0. That later instruction authorizes committing/pushing v0.4.1 for the next PC testing round. **v0.4.1 still needs its own PC verification.**
+Prepared on 2026-10-25 against the owner-verified v0.4.0 baseline (`9d6358b`). The original task prohibited automatically committing or pushing; the owner subsequently authorized the same GitHub update process used for v0.3.1 → v0.4.0. Version 0.4.1 was delivered at `8649109`, and the owner subsequently reported **“great I tested all as you proposed in the testing guide. all OK!”** **The manual PC checkpoint is now owner-verified.** See [BASELINE.md](BASELINE.md) for evidence and scope; this guide remains available for regression testing.
 
 ## Customer behavior
 

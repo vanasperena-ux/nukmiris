@@ -1,6 +1,6 @@
 # Current limitations and audit follow-up
 
-Version 0.4.0 preserves the PC-verified v0.3.1 UX and adds optional durable delivery/restart recovery and automatic SQLite backups. The owner has completed the requested v0.4.0 PC checkpoint. Version 0.4.1 adds [dynamic availability search](DYNAMIC_AVAILABILITY.md) and still needs PC verification. Production business onboarding remains out of scope.
+Version 0.4.0 preserves the PC-verified v0.3.1 UX and adds optional durable delivery/restart recovery and automatic SQLite backups. The owner completed that checkpoint and subsequently reported all checks in the v0.4.1 [dynamic availability guide](DYNAMIC_AVAILABILITY.md) successful. Version 0.4.1 is the current owner-verified baseline. The report does not independently establish every simulated failure/DST case; the limits below remain applicable. Production business onboarding remains out of scope.
 
 | Original finding | Current status |
 | --- | --- |
