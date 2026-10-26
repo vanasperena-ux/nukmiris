@@ -1,6 +1,6 @@
 # NukMiris — v0.8.1 Maintenance Review (provisional)
 
-Updated October 26, 2026, America/Mexico_City. **A and B are owner-PC-validated; C removes only the approved Category A regions.** The application package remains **0.8.0**. Neither v0.8.1 acceptance nor any merge is implied. C awaits its own PC verification; D's assessment has not begun.
+Updated October 26, 2026, America/Mexico_City. **A, B and C are owner-PC-validated; D is assessment only and is complete.** The application package remains **0.8.0**. Neither v0.8.1 acceptance nor any merge is implied. No further Category B deletion has been implemented. [D's detailed remaining-legacy assessment](NukMiris-v0.8.1-Remaining-Legacy-Assessment.md) supplies the future recommendation.
 
 ## 1. Baseline and deliverable
 
@@ -18,7 +18,9 @@ Updated October 26, 2026, America/Mexico_City. **A and B are owner-PC-validated;
 | Compatibility branch / base | `test/v0.8.0-legacy-compatibility`, based on the complete A delivery `8c7e8dc4eff4173fed48c3da617ec16822c2abcf` |
 | Owner's B validation / C authorization | “very good, 1,089 tests passed on my PC, please continue” on October 26, 2026. This authorizes C, not a merge or version promotion. |
 | Cleanup branch / base | `cleanup/v0.8.0-category-a`, based on the complete B delivery `93258882c89404cd8142ce49966abbc9f44e3aea` |
-| Delivery gate | Stop after C's results and PC checklist; await owner approval before D or any merge. |
+| Owner's C validation / D authorization | “1,089 passed; zero failures and I did the tests as indicated in PC Checklist. all good, proceed” on October 26, 2026. This validates C's reported PC checkpoint and authorizes D's assessment; it does not approve merging or further deletion. |
+| D assessment branch / base | `audit/v0.8.0-remaining-legacy`, from C's complete delivery `e0af76524069b1973ded8584ef36f035718b13e9` |
+| Delivery gate | D is documentation only. Final integration/version acceptance requires explicit owner approval; Category B removal requires distinct future authorization. |
 
 The correctness branch is published. Automatic draft-PR creation for A was attempted with the prepared scope, validation, risk, rollback and manual-check description, but this environment's GitHub API connection returned **403 Forbidden** for the GraphQL request (the read-only REST attempt was also blocked). This was an API/network response, not a code/test failure or a merge approval. No A PR number was obtained and no PR is claimed to exist. [Review A or open its PR form](https://github.com/vanasperena-ux/nukmiris/compare/main...fix/v0.8.0-reconciliation-reminders?expand=1). Main remains at the acceptance snapshot above. The owner's subsequent PC result satisfies A's gate and authorizes the separate B branch; it does not authorize merging either branch.
 
@@ -94,10 +96,10 @@ The owner subsequently reported Work Package A tested on the PC with zero errors
 | --- | --- |
 | A — reconciliation correctness | Implemented; all 672 cloud tests passed. Owner PC validation reported zero errors; B authorized. Unmerged. |
 | B — general legacy compatibility regressions | Implemented; complete cloud suite: 1,089 passed. Owner explicitly reported 1,089 PC tests passed and authorized C. Unmerged. |
-| C — A01–A09 dead-code removal | Implemented; complete cloud suite: 1,089 passed, zero failures/cancellations/skips. PC verification pending; Section 11 has the checklist. Unmerged. |
-| D — remaining Category B assessment | Not started; deferred until C's approval gate. Assessment only; no B deletion is authorized by this package. |
+| C — A01–A09 dead-code removal | Implemented; complete cloud suite: 1,089 passed, zero failures/cancellations/skips. Owner also reported 1,089 PC tests passed, zero failures and the checklist completed. Unmerged. |
+| D — remaining Category B assessment | Complete, assessment only; Section 12 links the updated inventory/evidence/recommendation. No additional code removed. Final merge/version decision remains with the owner. |
 
-The original audit still governs B01–B19: obsolete formatting/registration/search/selection/management helpers, local locks/fixed-hour list, overlapping dispatcher branches, retired fixture settings and exposed helper API members. A's 24 recovery tests and B's 417 compatibility tests do not themselves authorize reclassification/removal of those candidates. C changes no Category B classification. Compatibility guards, old journal-bound buttons, current recovery and active public/operational entry points remain.
+The original audit remains historical evidence for B01–B19. D updates their post-C ranges/caller graph and recommends future handling without authorizing removal or promoting them to Category A. A's 24 recovery tests and B's 417 compatibility tests do not themselves authorize deletion. Compatibility guards, old journal-bound buttons, current recovery and active public/operational entry points remain. The separate D report distinguishes 503 helper-function lines, three private declarations and a conditional dispatcher projection from protected live code.
 
 ## 7. Remaining risks and limitations
 
@@ -105,7 +107,7 @@ The original audit still governs B01–B19: obsolete formatting/registration/sea
 2. **Existing modes and eligibility remain authoritative.** If reminders are off, their hook is a no-op. Missing/withdrawn permission and template/account checks still control live sending. Invalid metadata/configuration can keep a recovery uncertain or fail the command rather than falsely finalize it.
 3. **Google verification remains required.** Missing, changed or unverifiable events retain the existing uncertain outcome and lock. This package does not repeat an insert, move or delete to force a successful recovery.
 4. **No hosted/multi-worker expansion.** Existing singleton ownership, local SQLite, PC uptime, external race/uncertainty and throughput limits remain. Future correctness, monitoring, credential onboarding or hosting work must be separately scoped.
-5. **No v0.8.1 acceptance.** The review filename is provisional. The owner's B result authorizes only C's approved cleanup. Version promotion, live reminder activation, merge and proceeding beyond C's approval gate still await explicit owner decisions.
+5. **No v0.8.1 acceptance.** The review filenames are provisional. C's owner PC report authorized D's documentation only. Version promotion, live reminder activation, merge and any further Category B cleanup still require their explicit owner decisions.
 
 ## 8. Work Package A manual PC validation (completed by owner report)
 
@@ -138,7 +140,7 @@ The branch starts from the immutable `7215deb` acceptance snapshot; the accepted
 
 Reminder metadata legitimately committed during operator recovery should not be deleted to undo a code change. Both revisions use the same schema; restoring an older database can lose newer bookings. Preserve all requests, jobs, permission evidence, backups and uncertain locks. No version or data migration rollback is required by this package.
 
-The A and B stop gates were honored. Their subsequent successful PC reports authorized B and C respectively. **Stop again after delivering C, its results and the PC checklist; await owner approval before D's assessment or any merge.**
+The A, B and C stop gates were honored. Their subsequent successful PC reports authorized B, C and D respectively. D now documents remaining legacy candidates; **no merge or version acceptance is implied by those reports**.
 
 ## 10. Work Package B — compatibility regression evidence
 
@@ -210,7 +212,7 @@ This package changed no production behavior, so no new live booking experiment w
 
 Rollback B by stopping Node and returning to the approved A branch `fix/v0.8.0-reconciliation-reminders` at `8c7e8dc`, preserving local changes and the same database/environment. Do not reset/restore the database or remove reminder metadata. Main has not received A/B; switching to main also drops A's accepted fix and is not the preferred B-only rollback.
 
-**B's approval gate was honored and the owner authorized C. No merge, version bump or production reminder activation was authorized by that report. D remains deferred until C's approval gate.**
+**B's approval gate was honored and the owner authorized C. C's gate was subsequently met and D's assessment is documented in Section 12. No merge, version bump or production reminder activation was authorized by those reports.**
 
 ## 11. Work Package C — exact Category A cleanup
 
@@ -266,15 +268,15 @@ Platform: **Linux x64, Node v24.19.0**. Test source: `62726af92ae42602ebde92ed48
 | --- | --- | --- | --- | --- | --- |
 | Complete `npm test` | **1,089** | **0** | **0** | **0** | **247.97 seconds**, 27 suites |
 
-Syntax checks passed for both changed JavaScript files; whitespace and exact-deletion checks passed. The package remains **0.8.0**, with all **1,089** existing tests retained and no new test declarations needed for this deletion. C's results match approved B's passing count with zero unexpected skips. In particular, the suite starts the actual app with synthetic providers across supported mode/routing/management/reliability combinations; checks current immediate booking and two-plus-two/date menus; rejects old/foreign/guessed actions; exercises normal management, reminders/permission/template gates and dry-run; and tests real subprocess restart/crash recovery plus A's standalone reconciliation integration. No provider/client startup error or deleted-test gap was observed. This is cloud validation; C's owner PC verification remains pending.
+Syntax checks passed for both changed JavaScript files; whitespace and exact-deletion checks passed. The package remains **0.8.0**, with all **1,089** existing tests retained and no new test declarations needed for this deletion. C's results match approved B's passing count with zero unexpected skips. In particular, the suite starts the actual app with synthetic providers across supported mode/routing/management/reliability combinations; checks current immediate booking and two-plus-two/date menus; rejects old/foreign/guessed actions; exercises normal management, reminders/permission/template gates and dry-run; and tests real subprocess restart/crash recovery plus A's standalone reconciliation integration. No provider/client startup error or deleted-test gap was observed. The owner subsequently reported **1,089 passed, zero failures and all indicated PC checklist tests completed successfully**. No separate PC execution log or exact PC commit SHA was supplied; this records the owner's checkpoint report separately from cloud verification.
 
 ### Remaining legacy and risks
 
-All original B01–B19 candidates remain retained; their classifications have not been reassessed in C. The original estimated 503 helper-function lines plus the separately listed dispatcher/binding/API-surface candidates are **not authorized deletions**. Keeping the seven stopping stubs and compatibility guards is intentional even though their obsolete consumers remain visible. D will be a separate assessment after C's approval gate; it will not remove Category B code.
+All original B01–B19 candidates were retained in C; C itself did not reassess their classifications. The 503 helper-function lines plus separately listed dispatcher/binding/API-surface candidates are **not authorized deletions**. Keeping the seven stopping stubs and compatibility guards is intentional even though their obsolete consumers remain visible. D's subsequent assessment is linked in Section 12 and removes no Category B code.
 
-Tests and byte comparisons support behavior preservation; new owner PC validation is still required for C. Synthetic startup/provider tests do not establish live template approval/delivery, account permissions, attendance writes, hosting or independent multi-PC safety. The original accepted v0.8.0 deployment limits remain. There is no new feature, service catalog, additional WhatsApp interaction, event migration, reminder activation or version acceptance.
+Tests, byte comparisons and the owner's reported C PC checklist support behavior preservation. Synthetic startup/provider tests and the reported ordinary-flow/off-or-dry-run checkpoint do not establish new live template approval/delivery, account permissions, attendance writes, hosting or independent multi-PC safety. The original accepted v0.8.0 deployment limits remain. There is no new feature, service catalog, additional WhatsApp interaction, event migration, reminder activation or version acceptance.
 
-### C owner PC verification checklist
+### C owner PC verification checklist (completed by owner report)
 
 Stop Node before switching code and preserve any local changes. Use the same PC database/settings and **`npm.cmd`**. From the existing `backend` folder:
 
@@ -302,4 +304,18 @@ These are owner-run ordinary-flow checks. No real Calendar event was created or 
 
 Rollback C by stopping Node, preserving local changes and switching back to approved B at `93258882c89404cd8142ce49966abbc9f44e3aea` (`test/v0.8.0-legacy-compatibility`), then restarting one backend with the same database/environment. This preserves A's accepted reconciliation fix and B's tests. Do not restore an older database, delete appointments/reminder/permission/recovery records, clear locks or reset credentials; C has no migration to undo. Main still lacks these unmerged packages and is not the preferred C-only rollback.
 
-**Stop after C's branch/review delivery, full test results and this checklist. Await the owner's PC validation and approval before D's assessment, merging or version promotion.**
+**C's delivery gate was honored. The owner's successful suite/checklist report authorized D's assessment; merging and version promotion remain separate final decisions.**
+
+## 12. Work Package D — remaining legacy assessment and final handoff
+
+[Read the complete post-C assessment](NukMiris-v0.8.1-Remaining-Legacy-Assessment.md). D is on the separate documentation-only branch `audit/v0.8.0-remaining-legacy`, based on C's `e0af76524069b1973ded8584ef36f035718b13e9`. Its only changed files are that new assessment and this review recording C's successful PC checkpoint. No application, test, package, dependency, schema, configuration, credential or data change is included.
+
+The assessment maps all B01–B19 candidates to current line ranges and references. Eight of the fifteen old helpers have only other legacy callers; seven still have late dispatcher references intercepted by earlier current-flow/compatibility gates. Current `booking:`/`change:` decisions, stored continuations, old-message hash/context support, reminder action versions and Menu/human support remain active and must be retained. Three associated private declarations remain candidates; the old dispatcher windows also contain live validation/rejection code and cannot be deleted wholesale.
+
+The measured future candidate inventory is **503 helper-function lines + 3 private declaration lines = 506 gross lines**. A separately reviewed equivalent dispatcher rewrite could conditionally save another **63 net lines**, for a **569-line projection before replacement adapters**. This is a planning estimate only; no additional deletion is implemented or authorized, and no original Category B candidate is promoted automatically to A. The report identifies specific additional comparison/text/restart/action-shape/reminder-context tests before such a rewrite. B19's public members are recommended for retention because their size benefit is negligible and external consumers cannot be ruled out.
+
+**Recommendation:** finish this authorized maintenance round with A–C's owner-verified changes and D's assessment. Keep further Category B cleanup as optional, separately authorized work. The Services Catalog remains intentionally absent; production reminder activation and hosting are separate decisions.
+
+D's backend tree is verified byte-for-byte identical to C's inspected source (`e0af765`) and tested code/test tree (`62726af`). Source links/ranges, function/line arithmetic and documentation whitespace were checked. The full suite was not rerun for documentation-only D; the exact unchanged app/test tree retains C's **1,089 passed, zero failures/cancellations/skips** cloud result and the owner's successful additional PC suite/checklist report. No further PC installation or test round is required for D's documents; the owner may keep running C's accepted checkout.
+
+All work is prepared for the final integration decision. The original task explicitly requires: **“Do not merge any pull request without explicit owner approval.”** Main and the delivered A/B/C branches remain unchanged/unmerged. Version stays **0.8.0**; the v0.8.1 filenames are provisional. D does not merge, publish a release, enable live reminders or authorize further code removal. Documentation-only rollback is a return to C's checkout; do not restore/delete existing database records.
