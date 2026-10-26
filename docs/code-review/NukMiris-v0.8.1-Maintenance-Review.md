@@ -1,6 +1,6 @@
 # NukMiris — v0.8.1 Maintenance Review (provisional)
 
-Updated October 26, 2026, America/Mexico_City. **Work Package A is owner-PC-validated; Work Package B adds tests only.** The application package remains **0.8.0**. Neither v0.8.1 acceptance nor any merge is implied. Work Packages C/D have not begun.
+Updated October 26, 2026, America/Mexico_City. **A and B are owner-PC-validated; C removes only the approved Category A regions.** The application package remains **0.8.0**. Neither v0.8.1 acceptance nor any merge is implied. C awaits its own PC verification; D's assessment has not begun.
 
 ## 1. Baseline and deliverable
 
@@ -12,10 +12,13 @@ Updated October 26, 2026, America/Mexico_City. **Work Package A is owner-PC-vali
 | Correctness branch | `fix/v0.8.0-reconciliation-reminders`, based on `7215deb` |
 | A code/test commit | `02c887c4a76bc259830ea83bfca956d8ca776d79` |
 | B code/test commit | `4cba14f4e3d26ec00d317cb6f92d07446fdf961a` |
+| C code/test commit | `62726af92ae42602ebde92ed489cd77ecda2b8fe` |
 | Baseline check | Version 0.8.0, clean working tree; the only difference on the audit branch was its Markdown report. No newer application changes were overwritten. |
 | Owner's A validation / B authorization | “work package A tested on PC, 0 errors, continue” on October 26, 2026. This authorizes B, not a merge or Category A deletion. |
 | Compatibility branch / base | `test/v0.8.0-legacy-compatibility`, based on the complete A delivery `8c7e8dc4eff4173fed48c3da617ec16822c2abcf` |
-| Delivery gate | Review and validate B before authorizing C. No automatic merge. |
+| Owner's B validation / C authorization | “very good, 1,089 tests passed on my PC, please continue” on October 26, 2026. This authorizes C, not a merge or version promotion. |
+| Cleanup branch / base | `cleanup/v0.8.0-category-a`, based on the complete B delivery `93258882c89404cd8142ce49966abbc9f44e3aea` |
+| Delivery gate | Stop after C's results and PC checklist; await owner approval before D or any merge. |
 
 The correctness branch is published. Automatic draft-PR creation for A was attempted with the prepared scope, validation, risk, rollback and manual-check description, but this environment's GitHub API connection returned **403 Forbidden** for the GraphQL request (the read-only REST attempt was also blocked). This was an API/network response, not a code/test failure or a merge approval. No A PR number was obtained and no PR is claimed to exist. [Review A or open its PR form](https://github.com/vanasperena-ux/nukmiris/compare/main...fix/v0.8.0-reconciliation-reminders?expand=1). Main remains at the acceptance snapshot above. The owner's subsequent PC result satisfies A's gate and authorizes the separate B branch; it does not authorize merging either branch.
 
@@ -85,16 +88,16 @@ The owner subsequently reported Work Package A tested on the PC with zero errors
 
 ## 6. Category A removal and remaining legacy work
 
-**Actual legacy lines removed: 0.** All seven disabling function signatures/throws, unreachable tails, supporting bindings, existing callers and the entire legacy dispatcher remain unchanged. No Category B, C or D code was removed or refactored.
+**Actual legacy lines removed by C: 403 from `backend/whatsapp-webhook.js`, plus one unused test import binding.** The 403 comprise 398 unreachable tail lines and five unused binding lines. All seven disabling function signatures/throws/closing braces, existing retained callers and the entire dispatcher remain unchanged. The test import occupies the same physical line; no test is removed. No Category B, C or D code was removed or refactored. See Section 11 for exact regions and verification.
 
 | Work package | Current status |
 | --- | --- |
 | A — reconciliation correctness | Implemented; all 672 cloud tests passed. Owner PC validation reported zero errors; B authorized. Unmerged. |
-| B — general legacy compatibility regressions | Implemented on its separate tests-only branch; complete suite: 1,089 passed, zero failures/cancellations/skips. New Windows tests and owner review pending before C. |
-| C — A01–A09 dead-code removal | Not started; requires the preceding approval gates. The original estimate remains approximately 403 main-file lines plus one unused imported name, subject to fresh range checks. |
-| D — remaining Category B assessment | Deferred until approved Category A cleanup. Assessment only; no B deletion is authorized by this package. |
+| B — general legacy compatibility regressions | Implemented; complete cloud suite: 1,089 passed. Owner explicitly reported 1,089 PC tests passed and authorized C. Unmerged. |
+| C — A01–A09 dead-code removal | Implemented; complete cloud suite: 1,089 passed, zero failures/cancellations/skips. PC verification pending; Section 11 has the checklist. Unmerged. |
+| D — remaining Category B assessment | Not started; deferred until C's approval gate. Assessment only; no B deletion is authorized by this package. |
 
-The original audit still governs B01–B19: obsolete formatting/registration/search/selection/management helpers, local locks/fixed-hour list, overlapping dispatcher branches, retired fixture settings and exposed helper API members. Their classifications are not changed by this correctness fix. The 24 recovery tests are not evidence to promote those candidates to A. Compatibility guards, old journal-bound buttons, current recovery and active public/operational entry points must remain.
+The original audit still governs B01–B19: obsolete formatting/registration/search/selection/management helpers, local locks/fixed-hour list, overlapping dispatcher branches, retired fixture settings and exposed helper API members. A's 24 recovery tests and B's 417 compatibility tests do not themselves authorize reclassification/removal of those candidates. C changes no Category B classification. Compatibility guards, old journal-bound buttons, current recovery and active public/operational entry points remain.
 
 ## 7. Remaining risks and limitations
 
@@ -102,7 +105,7 @@ The original audit still governs B01–B19: obsolete formatting/registration/sea
 2. **Existing modes and eligibility remain authoritative.** If reminders are off, their hook is a no-op. Missing/withdrawn permission and template/account checks still control live sending. Invalid metadata/configuration can keep a recovery uncertain or fail the command rather than falsely finalize it.
 3. **Google verification remains required.** Missing, changed or unverifiable events retain the existing uncertain outcome and lock. This package does not repeat an insert, move or delete to force a successful recovery.
 4. **No hosted/multi-worker expansion.** Existing singleton ownership, local SQLite, PC uptime, external race/uncertainty and throughput limits remain. Future correctness, monitoring, credential onboarding or hosting work must be separately scoped.
-5. **No v0.8.1 acceptance.** The review filename is provisional. Version promotion, live reminder activation, merge and Category A deletion all await explicit owner decisions. B alone is authorized by the owner's A result.
+5. **No v0.8.1 acceptance.** The review filename is provisional. The owner's B result authorizes only C's approved cleanup. Version promotion, live reminder activation, merge and proceeding beyond C's approval gate still await explicit owner decisions.
 
 ## 8. Work Package A manual PC validation (completed by owner report)
 
@@ -135,13 +138,13 @@ The branch starts from the immutable `7215deb` acceptance snapshot; the accepted
 
 Reminder metadata legitimately committed during operator recovery should not be deleted to undo a code change. Both revisions use the same schema; restoring an older database can lose newer bookings. Preserve all requests, jobs, permission evidence, backups and uncertain locks. No version or data migration rollback is required by this package.
 
-The original A stop gate was honored. The owner's subsequent successful PC report authorized B. **Stop again after delivering B and its results; await owner approval before Category A cleanup, further assessment or any merge.**
+The A and B stop gates were honored. Their subsequent successful PC reports authorized B and C respectively. **Stop again after delivering C, its results and the PC checklist; await owner approval before D's assessment or any merge.**
 
 ## 10. Work Package B — compatibility regression evidence
 
 ### Scope and review boundary
 
-B is a tests-only change relative to A's complete delivery at `8c7e8dc`. Its comparison/PR base is `fix/v0.8.0-reconciliation-reminders`, not `main`, so a reviewer sees only B. The branch retains A's correctness fix without merging it. The v0.8.0 baseline, original audit, frozen v0.7.3 walkthrough, existing tests, production libraries/scripts/webhook, dependencies, package version, schemas and environment examples are unchanged by B. No Category A/B/C/D code is removed. **Actual legacy lines removed remains zero.**
+B was a tests-only change relative to A's complete delivery at `8c7e8dc`. Its comparison/PR base is `fix/v0.8.0-reconciliation-reminders`, not `main`, so a reviewer sees only B. The branch retains A's correctness fix without merging it. The v0.8.0 baseline, original audit, frozen v0.7.3 walkthrough, existing tests, production libraries/scripts/webhook, dependencies, package version, schemas and environment examples were unchanged by B. No Category A/B/C/D code was removed in B. **Legacy lines removed at B's delivery: zero.** C's subsequent authorized deletion is recorded separately in Section 11.
 
 The B branch is published. Creating its draft PR with the complete scope/test/risk/rollback/checklist description was attempted after validation and push; GitHub's GraphQL endpoint returned **403 Forbidden**. No B PR number was obtained and no PR is claimed to exist. This is an API/network block, not an automatic approval-review rejection. [Review B's changes or open its PR form](https://github.com/vanasperena-ux/nukmiris/compare/fix/v0.8.0-reconciliation-reminders...test/v0.8.0-legacy-compatibility?expand=1). The prepared PR description is retained locally at `/tmp/nukmiris-work-package-b-pr.md`; this section supplies the same review information on GitHub. A's branch and `main` remain unchanged and unmerged.
 
@@ -176,7 +179,7 @@ All data is generated inside OS temporary folders. Token JSON contains only synt
 
 ### Verification, limits and risks
 
-Code/test commit: [`4cba14f4e3d26ec00d317cb6f92d07446fdf961a`](https://github.com/vanasperena-ux/nukmiris/commit/4cba14f4e3d26ec00d317cb6f92d07446fdf961a). Platform: Linux x64, Node **v24.19.0**. No code/test changes followed this commit; subsequent changes document validation only.
+Code/test commit: [`4cba14f4e3d26ec00d317cb6f92d07446fdf961a`](https://github.com/vanasperena-ux/nukmiris/commit/4cba14f4e3d26ec00d317cb6f92d07446fdf961a). Platform: Linux x64, Node **v24.19.0**. Within B's delivery through `9325888`, subsequent commits documented validation only; C changes the code in its separate commit/branch.
 
 | Run | Passed | Failed | Cancelled | Skipped | Duration |
 | --- | --- | --- | --- | --- | --- |
@@ -185,11 +188,11 @@ Code/test commit: [`4cba14f4e3d26ec00d317cb6f92d07446fdf961a`](https://github.co
 
 The complete run retains all **672** tests from approved A and adds **417** B tests: **284** mode/state compatibility tests and **133** journal/startup tests. The 284 tests group many inputs, including the 1,728 historical state cases above; these are not an additional 1,728 Node test declarations. Syntax checks for all four new JavaScript files and `git diff --check` passed. A structured package comparison verified that only the two test paths were appended; the version, dependency/override declarations and every pre-existing test path remain unchanged. Direct Git comparisons confirmed all production libraries, scripts, webhook, lockfile, environment example, original baseline and frozen walkthrough unchanged from A's `8c7e8dc`.
 
-B is not PC-verified until the owner confirms its new tests. Early development failures were assertions/test-fixture mistakes (reply wording, cumulative call accounting and a test mapping violating the existing unique-Calendar constraint); they do not establish application defects and required no business-logic changes.
+B is now owner-PC-verified: the owner explicitly reported **1,089 tests passed** and authorized continuation. No separate PC execution log or exact PC commit SHA was supplied. Early development failures were assertions/test-fixture mistakes (reply wording, cumulative call accounting and a test mapping violating the existing unique-Calendar constraint); they do not establish application defects and required no business-logic changes.
 
 This is table-driven compatibility evidence, not an exhaustive product of every journal state, malformed input, reminder policy, race and transport failure. Current Menu tests deliberately use saved state shapes; active valid selection/name/journal paths additionally use real service-created data and restart processes. Existing recovery/crash tests continue supplying hard-crash coverage; B's additional restarts are orderly. No hosted/multi-PC coordination, live WhatsApp session history or actual Meta/Google outage is simulated as proven production behavior. Category B candidates are **not** promoted to safe removal by these tests.
 
-### PC checklist and rollback
+### B PC checklist and rollback (completed by owner report)
 
 After reviewing B, stop the normal backend and preserve local changes. From its existing `backend` folder in PowerShell:
 
@@ -203,8 +206,98 @@ npm.cmd test
 
 Expect package **0.8.0** and **1,089 passing tests**, with zero failures/cancellations/skips. Run the complete suite to its final summary; the new subprocess/combination tests take additional time (the cloud run took about four minutes; Windows time can differ). No reinstall, configuration edit, reminder preparation, schema change, database reset or Google/Meta reconnection is required. Keep production reminder settings off/dry-run. Tests do not require the normal app, tunnel or live accounts to be running and must not create real appointments.
 
-This package changes no production behavior, so there is no new live booking experiment required for B. If desired after tests, `npm.cmd start` and the ordinary Menu check are sufficient as a startup smoke check with the existing settings. Owner confirmation is still needed for the new Windows tests.
+This package changed no production behavior, so no new live booking experiment was required for B. The owner has now confirmed the Windows tests. C has its own subsequent checklist below.
 
 Rollback B by stopping Node and returning to the approved A branch `fix/v0.8.0-reconciliation-reminders` at `8c7e8dc`, preserving local changes and the same database/environment. Do not reset/restore the database or remove reminder metadata. Main has not received A/B; switching to main also drops A's accepted fix and is not the preferred B-only rollback.
 
-**B's delivery ends at its own owner approval gate. C's A01–A09 deletion and D's assessment have not begun; no merge, version bump or production reminder activation is authorized by passing B's tests.**
+**B's approval gate was honored and the owner authorized C. No merge, version bump or production reminder activation was authorized by that report. D remains deferred until C's approval gate.**
+
+## 11. Work Package C — exact Category A cleanup
+
+### Source, scope and changed files
+
+Branch: `cleanup/v0.8.0-category-a`; comparison/PR base: the approved B branch `test/v0.8.0-legacy-compatibility` at `93258882c89404cd8142ce49966abbc9f44e3aea`. Code/test commit: [`62726af92ae42602ebde92ed489cd77ecda2b8fe`](https://github.com/vanasperena-ux/nukmiris/commit/62726af92ae42602ebde92ed489cd77ecda2b8fe). The working tree was clean at C's start; version was 0.8.0. Remote main/A/B still matched their recorded deliveries. No new worktree, merge or version change was made.
+
+The two target files were byte-identical to the audited `7215deb` before cleanup. A and B therefore required no adjustment to the approved removal ranges. Each range was checked again against its signature, unconditional throw and closing brace before deletion. The audit estimate is confirmed exactly; no extra tidy-up was added to reach a line target.
+
+Only three files differ from B:
+
+| File | C change |
+| --- | --- |
+| `backend/whatsapp-webhook.js` | Delete exactly 403 approved lines: the seven dead tails and their five unused bindings. No replacement logic. File shrinks from **1,971 to 1,568 physical lines**. |
+| `backend/test/dynamic-availability.test.cjs` | Remove only `selectedDate` from its destructured import. The import of `readSearchPolicy`/`dayOf`, all test declarations/assertions and the exported production function remain. **Zero net physical lines removed** from this file. |
+| This maintenance review | Record B's PC acceptance, exact deletion/preservation evidence, tests and C's owner checklist/rollback. |
+
+### Exact approved removals and retained stops
+
+The original line numbers below refer to B's unchanged pre-cleanup source at `9325888`, also identical to the audit's `7215deb` for these files. Post-cleanup links refer to the tested C code.
+
+| Audit item | Removed pre-cleanup lines | Removed count | Preserved post-cleanup stub |
+| --- | --- | --- | --- |
+| A01 — `connectCalendar` | 244–260 | 17 | [237–239](https://github.com/vanasperena-ux/nukmiris/blob/62726af92ae42602ebde92ed489cd77ecda2b8fe/backend/whatsapp-webhook.js#L237-L239) |
+| A02 — `getBusyPeriods` | 530–545 | 16 | [506–508](https://github.com/vanasperena-ux/nukmiris/blob/62726af92ae42602ebde92ed489cd77ecda2b8fe/backend/whatsapp-webhook.js#L506-L508) |
+| A03 — `findCustomerAppointments` | 632–653 | 22 | [592–594](https://github.com/vanasperena-ux/nukmiris/blob/62726af92ae42602ebde92ed489cd77ecda2b8fe/backend/whatsapp-webhook.js#L592-L594) |
+| A04 — `createAppointment` | 740–786 | 47 | [678–680](https://github.com/vanasperena-ux/nukmiris/blob/62726af92ae42602ebde92ed489cd77ecda2b8fe/backend/whatsapp-webhook.js#L678-L680) |
+| A05 — `rescheduleAppointment` | 795–875 | 81 | [686–688](https://github.com/vanasperena-ux/nukmiris/blob/62726af92ae42602ebde92ed489cd77ecda2b8fe/backend/whatsapp-webhook.js#L686-L688) |
+| A06 — `chooseAppointment` | 1094–1168 | 75 | [904–906](https://github.com/vanasperena-ux/nukmiris/blob/62726af92ae42602ebde92ed489cd77ecda2b8fe/backend/whatsapp-webhook.js#L904-L906) |
+| A07 — `confirmCancellation` | 1225–1364 | 140 | [960–962](https://github.com/vanasperena-ux/nukmiris/blob/62726af92ae42602ebde92ed489cd77ecda2b8fe/backend/whatsapp-webhook.js#L960-L962) |
+| **A01–A07 subtotal** | Code/blank lines strictly after the throw and before the closing brace | **398** | All seven exact signatures/error strings/closing braces retained |
+| A08 — five unused bindings | 10, 11, 50, 55, 76 | **5** | Remove local `authenticate`, `google`, `CALENDAR_ID`, `CREDENTIALS`, `calendar` only; active modules' imports and all six installed dependencies remain |
+| **Main-file total** | Only A01–A08 | **403** | No Category B/C/D deletion |
+| A09 — unused test import name | `dynamic-availability.test.cjs:8` | **One binding; zero net lines** | [Remaining import](https://github.com/vanasperena-ux/nukmiris/blob/62726af92ae42602ebde92ed489cd77ecda2b8fe/backend/test/dynamic-availability.test.cjs#L8) |
+
+The before/after behavior is the same for these functions: invoking a retained stub immediately rejects with its original error. No code after that throw could execute before cleanup. Previously supported modern operations continue through the business-scoped libraries, not these stubs. A08 removes local unused imports/declarations only; it does not remove packages or alter OAuth scopes/credentials.
+
+### Preservation checks and validation
+
+A one-off structural verification reconstructed the entire expected main file by filtering only the exact approved pre-cleanup line numbers, then compared every remaining byte to C. It also compared each three-line stub to the original signature/throw/closing brace, and verified that A09's entire file is identical after its one exact import-name substitution. These checks passed. This is inspection evidence, not a new npm test or an altered application feature.
+
+The complete suffix from `async function handleMessage(message) {` through the end of the file is byte-identical to B: SHA-256 `737ceb094910216645e55a0e302e560cd7eff115b34095c1d02c0ff9b720e1c1`. This covers the full dispatcher, Meta ingress/signature behavior and startup/close lifecycle. The all-file reconstruction additionally proves that retained legacy callers, Category B helper bodies, customer/session stores, current factories and compatibility guards outside that suffix are unchanged.
+
+Active integration remains in the same factories at [main lines 112–128](https://github.com/vanasperena-ux/nukmiris/blob/62726af92ae42602ebde92ed489cd77ecda2b8fe/backend/whatsapp-webhook.js#L112-L128): `createCalendarAvailability`, scoped booking/management and reminder commit hooks, template verification and the shared sender. Current `lib/google-calendar.js` still imports `googleapis`; `scripts/google-connect.js` still imports the active authenticator; booking/management still use the actual `selectedDate` export. No reference to a removed local binding remains in the main file.
+
+Direct Git comparisons against B confirm no changes to production libraries, operational scripts (including A's reconciliation fix), configuration, schemas, package/lockfile, existing test helpers, credentials/environment examples, baseline or frozen walkthrough. The original audit remains unchanged on its historical branch. No installed dependency is removed. No customer database, existing backup, `.env`, Google event or Meta asset is changed by cloud work; full tests use disposable synthetic integrations/data.
+
+Platform: **Linux x64, Node v24.19.0**. Test source: `62726af92ae42602ebde92ed489cd77ecda2b8fe`. No code/test changes followed this commit; later commits document validation and delivery only.
+
+| C validation | Passed | Failed | Cancelled | Skipped | Duration |
+| --- | --- | --- | --- | --- | --- |
+| Complete `npm test` | **1,089** | **0** | **0** | **0** | **247.97 seconds**, 27 suites |
+
+Syntax checks passed for both changed JavaScript files; whitespace and exact-deletion checks passed. The package remains **0.8.0**, with all **1,089** existing tests retained and no new test declarations needed for this deletion. C's results match approved B's passing count with zero unexpected skips. In particular, the suite starts the actual app with synthetic providers across supported mode/routing/management/reliability combinations; checks current immediate booking and two-plus-two/date menus; rejects old/foreign/guessed actions; exercises normal management, reminders/permission/template gates and dry-run; and tests real subprocess restart/crash recovery plus A's standalone reconciliation integration. No provider/client startup error or deleted-test gap was observed. This is cloud validation; C's owner PC verification remains pending.
+
+### Remaining legacy and risks
+
+All original B01–B19 candidates remain retained; their classifications have not been reassessed in C. The original estimated 503 helper-function lines plus the separately listed dispatcher/binding/API-surface candidates are **not authorized deletions**. Keeping the seven stopping stubs and compatibility guards is intentional even though their obsolete consumers remain visible. D will be a separate assessment after C's approval gate; it will not remove Category B code.
+
+Tests and byte comparisons support behavior preservation; new owner PC validation is still required for C. Synthetic startup/provider tests do not establish live template approval/delivery, account permissions, attendance writes, hosting or independent multi-PC safety. The original accepted v0.8.0 deployment limits remain. There is no new feature, service catalog, additional WhatsApp interaction, event migration, reminder activation or version acceptance.
+
+### C owner PC verification checklist
+
+Stop Node before switching code and preserve any local changes. Use the same PC database/settings and **`npm.cmd`**. From the existing `backend` folder:
+
+```powershell
+git status --short
+git fetch origin
+git switch cleanup/v0.8.0-category-a
+node -p "require('./package.json').version"
+npm.cmd test
+```
+
+Expect **0.8.0** and **1,089 passed**, with zero failures/cancellations/skips. No dependency reinstall, authorization reset, reminder preparation, environment change, schema migration or data clearing is required by C.
+
+After the suite, use `npm.cmd start` with the existing off/dry-run reminder setting. For the normal-flow check, use designated test appointments/identities rather than other customers' appointments:
+
+1. Check startup, `menu`, two immediate time choices, “Más opciones”, the next choices and date selection. A natural-language date must still use the business's available hours, timezone and existing compact labels.
+2. Book once as an existing test customer. If a designated new-customer identity is available, check selection → name collection → immediate booking once. Do not delete customer/journal records to manufacture a new identity. Verify one Calendar event per booking with the existing customer title/description; there must be no added confirmation screen.
+3. For a newly booked reminder-eligible test appointment, run `npm.cmd run reminders:status -- --business-id juanita-nails`. Its applicable future jobs should be present once; old/manual events should not be imported. Keep live reminders disabled. Do not change the PC clock or reminder intervals to force a due time.
+4. Reschedule and cancel designated test appointments using the existing choices. Verify one move/deletion, correct customer details after the move and the expected replacement/invalidation of pending reminders. Other appointments must remain unchanged.
+5. Check `Hablar con alguien`: appointment words stay in human chat; `menu` returns to the main menu. Restart after receiving a current availability choice, then select it within its existing validity period; the selected operation must not duplicate a Calendar event/change.
+
+These are owner-run ordinary-flow checks. No real Calendar event was created or edited by the cloud review. There is no need to manufacture uncertain requests, edit database rows, clear locks, reauthorize providers or enable live reminders to test C. Existing synthetic tests cover the failure/recovery cases.
+
+### C rollback and approval
+
+Rollback C by stopping Node, preserving local changes and switching back to approved B at `93258882c89404cd8142ce49966abbc9f44e3aea` (`test/v0.8.0-legacy-compatibility`), then restarting one backend with the same database/environment. This preserves A's accepted reconciliation fix and B's tests. Do not restore an older database, delete appointments/reminder/permission/recovery records, clear locks or reset credentials; C has no migration to undo. Main still lacks these unmerged packages and is not the preferred C-only rollback.
+
+**Stop after C's branch/review delivery, full test results and this checklist. Await the owner's PC validation and approval before D's assessment, merging or version promotion.**
