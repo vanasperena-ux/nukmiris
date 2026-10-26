@@ -332,11 +332,16 @@ test("dry-run records a preview without WhatsApp sends, template reads, or Calen
 
 test("persistent jobs survive reopening and concurrent workers claim a job only once", async t => {
   const directory = fs.mkdtempSync(path.join(os.tmpdir(), "nukmiris-reminder-jobs-"));
-  t.after(() => fs.rmSync(directory, { recursive: true, force: true }));
+  const databases = [];
+  t.after(() => {
+    for (const db of databases) if (db.isOpen) db.close();
+    fs.rmSync(directory, { recursive: true, force: true, maxRetries: 5, retryDelay: 100 });
+  });
   const filename = path.join(directory, "synthetic.sqlite"), f = reminderFixture({ filename });
+  databases.push(f.db);
   const source = await f.book();
   f.setNow(f.jobs(source.requestId).find(j => j.kind === "confirmation").due_at);
-  const second = new DatabaseSync(filename); t.after(() => { if (second.isOpen) second.close(); f.db.close(); });
+  const second = new DatabaseSync(filename); databases.push(second);
   const worker2 = createAppointmentReminders({ ...f.options, db: second });
   await Promise.all([f.reminders.tick(), worker2.tick()]);
   assert.equal(f.sent.length, 1);
@@ -344,6 +349,7 @@ test("persistent jobs survive reopening and concurrent workers claim a job only 
   assert.equal(job.attempts, 1);
   second.close();
   const reopened = new DatabaseSync(filename);
+  databases.push(reopened);
   assert.equal(reopened.prepare("SELECT state FROM reminder_jobs WHERE job_id=?").get(job.job_id).state, "accepted");
   reopened.close();
 });

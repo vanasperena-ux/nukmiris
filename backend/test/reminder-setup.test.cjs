@@ -18,8 +18,13 @@ function command(filename, args) {
 
 test("backed-up reminder preparation is additive, repeatable, scoped, and performs no external calls", t => {
   const directory = fs.mkdtempSync(path.join(os.tmpdir(), "nukmiris-reminder-setup-"));
-  t.after(() => fs.rmSync(directory, { recursive: true, force: true }));
+  const databases = [];
+  t.after(() => {
+    for (const db of databases) if (db.isOpen) db.close();
+    fs.rmSync(directory, { recursive: true, force: true, maxRetries: 5, retryDelay: 100 });
+  });
   const filename = path.join(directory, "synthetic.sqlite"), f = fixture(filename);
+  databases.push(f.db);
   prepareReliabilitySchema(f.db);
   const count = f.db.prepare("SELECT COUNT(*) AS n FROM business_customers").get().n;
   f.db.close();
@@ -27,7 +32,7 @@ test("backed-up reminder preparation is additive, repeatable, scoped, and perfor
     const result = command(filename, ["--prepare", "--business-id", "synthetic-a"]);
     assert.equal(result.status, 0, result.stderr); assert.match(result.stdout, /Pre-upgrade backup created/);
   }
-  const db = new DatabaseSync(filename); t.after(() => db.close());
+  const db = new DatabaseSync(filename); databases.push(db);
   assert.equal(db.prepare("SELECT COUNT(*) AS n FROM business_customers").get().n, count);
   assert.equal(db.prepare("SELECT COUNT(*) AS n FROM appointment_attendance").get().n, 0);
   assert.equal(db.prepare("SELECT COUNT(*) AS n FROM reminder_business_settings").get().n, 1);
@@ -40,8 +45,13 @@ test("backed-up reminder preparation is additive, repeatable, scoped, and perfor
 
 test("preparation refuses a running backend instead of changing its database", t => {
   const directory = fs.mkdtempSync(path.join(os.tmpdir(), "nukmiris-reminder-owner-"));
-  t.after(() => fs.rmSync(directory, { recursive: true, force: true }));
+  let db;
+  t.after(() => {
+    if (db?.isOpen) db.close();
+    fs.rmSync(directory, { recursive: true, force: true, maxRetries: 5, retryDelay: 100 });
+  });
   const filename = path.join(directory, "synthetic.sqlite"), f = fixture(filename);
+  db = f.db;
   prepareReliabilitySchema(f.db);
   f.db.prepare("INSERT INTO delivery_worker VALUES (1,?,?,?)").run(os.hostname(), process.pid, "synthetic-owner");
   const result = command(filename, ["--prepare"]);
@@ -52,9 +62,13 @@ test("preparation refuses a running backend instead of changing its database", t
 
 test("permission CLI records attributable evidence without enabling sending or changing appointments", async t => {
   const directory = fs.mkdtempSync(path.join(os.tmpdir(), "nukmiris-permission-cli-"));
-  t.after(() => fs.rmSync(directory, { recursive: true, force: true }));
+  let db;
+  t.after(() => {
+    if (db?.isOpen) db.close();
+    fs.rmSync(directory, { recursive: true, force: true, maxRetries: 5, retryDelay: 100 });
+  });
   const filename = path.join(directory, "synthetic.sqlite"), f = reminderFixture({ filename });
-  t.after(() => f.db.close());
+  db = f.db;
   f.db.exec("DELETE FROM reminder_permission_events");
   const args = ["--permission", "--business-id", "synthetic-a", "--whatsapp-id", f.sender, "--grant",
     "--occurred-at", "2026-10-24T10:00:00-06:00", "--source", "synthetic-form", "--wording", "Recibiré actualizaciones de mis citas de Business synthetic-a.",
