@@ -84,6 +84,19 @@ npm.cmd run reminders:prepare -- --business-id juanita-nails
 
 Expect **0.8.0** and **648 passing tests**, zero failures/skips. If Git reports existing local changes, preserve them before pulling. There are no new dependencies, so a dependency reinstall or Google reconnection is not required for this update.
 
+If an older checkout stops at the three reminder restart/crash tests with `EPERM` while removing `nukmiris-reminder-process-*` from the Windows temporary directory, press Ctrl+C and answer `Y` if PowerShell asks to terminate the batch job. This was a test-cleanup defect: the temporary database directory was deleted before its subprocess stopped, leaving the runner waiting. It is corrected by stopping all test subprocesses and waiting for their handles to close before removing the directory. These tests use synthetic databases and mocked services; they do not load your `.env`. Saving `NUKMIRIS_REMINDERS_MODE=dry-run` during that run did not cause those failures. Other test files reported as cancelled after interruption still need to run.
+
+From `backend/`, update and first rerun the affected tests, then the complete suite:
+
+```powershell
+git status --short
+git pull --ff-only
+node --test --test-reporter=spec test/reminder-recovery.test.cjs
+npm.cmd test
+```
+
+Expect three passing recovery tests followed by 648 passing tests in the complete run. Keep Node stopped until the checks pass, then continue with `backup:create` and `reminders:prepare` above. If a test fails again, preserve its error details; no database reset, administrator session or credential changes are part of this fix.
+
 Preparation refuses a running backend, creates a dated pre-upgrade database backup, adds the metadata tables and activates enrollment for the selected business. Repeating it preserves the activation time and existing reminders. It does not call Google/Meta, send anything, import old appointments, edit `.env`, or enable sending. Other businesses remain unconfigured.
 
 In your local `.env`, deliberately add:
@@ -151,5 +164,7 @@ The current deployment still uses shared development Google/Meta authorization. 
 ## Validation
 
 All **648 offline tests** pass with zero failures/cancellations/skips: the initial 616 tests plus 32 production compliance cases. Coverage includes interval boundaries, dry-run, template approval/payloads/TTL, permission and withdrawal, WABA membership/status changes, delivered-message prerequisites, contextual/quoted replies, real signed HTTP, booking/change integration, scope and ownership, manual edits, transient/unknown failures, concurrent claims, preparation/backup/restore, and three real subprocess restart/crash scenarios.
+
+The owner subsequently reported Windows `EPERM` errors in the temporary-folder cleanup of all three reminder subprocess tests, followed by a hung runner. The cleanup correction was checked in the cloud using a guard that rejects folder removal until every fixture subprocess has closed: the old code reproduced the three failures/hang, and the corrected tests all passed and exited. This is a simulated Windows file-lock check, not a Windows PC verification. The fix changes test infrastructure only; the app remains version 0.8.0 and the owner's retest is pending.
 
 Google/Meta services and customer data in these tests are synthetic. Live reminder delivery, Meta approval and attendance updates on the owner's PC remain **unverified until the owner confirms them**. The existing v0.7.3 owner verification is retained.

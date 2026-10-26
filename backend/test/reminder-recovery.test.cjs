@@ -11,35 +11,61 @@ const { prepareReliabilitySchema } = require("../lib/reliable-delivery");
 
 async function setup(t, { accepted = false } = {}) {
   const directory = fs.mkdtempSync(path.join(os.tmpdir(), "nukmiris-reminder-process-"));
-  t.after(() => fs.rmSync(directory, { recursive: true, force: true }));
+  const children = new Map();
+  let db;
+  async function stop(child) {
+    const state = children.get(child);
+    if (state.closed) return;
+    if (child.exitCode === null && !child.signalCode) child.kill("SIGKILL");
+    await state.closePromise;
+  }
+  // Test hooks run in registration order. Windows cannot remove an open SQLite
+  // file, and a failing earlier hook prevents the child-cleanup hook from running.
+  t.after(async () => {
+    await Promise.all([...children.keys()].map(stop));
+    if (db?.isOpen) db.close();
+    fs.rmSync(directory, { recursive: true, force: true, maxRetries: 5, retryDelay: 100 });
+  });
   const f = reminderFixture({ filename: path.join(directory, "synthetic.sqlite") });
+  db = f.db;
   prepareReliabilitySchema(f.db);
   const source = await f.book();
   if (accepted) await f.at(source.requestId, "confirmation");
   const job = f.jobs(source.requestId).find(j => j.kind === "confirmation"), token = f.row(source.requestId).action_token;
   fs.writeFileSync(path.join(directory, "events.json"), JSON.stringify(Object.fromEntries(f.events)));
   f.db.close();
-  const children = [];
-  t.after(async () => {
-    for (const child of children) if (child.exitCode === null && !child.signalCode) { child.kill("SIGKILL"); await once(child, "exit"); }
-  });
   async function start(clock = job.due_at, crash = "") {
     const child = fork(path.join(__dirname, "helpers/reminder-runtime.cjs"), [], {
       env: { ...process.env, SYNTHETIC_REMINDER_DIRECTORY: directory, SYNTHETIC_REMINDER_CLOCK: String(clock), SYNTHETIC_REMINDER_CRASH: crash },
       stdio: ["ignore", "pipe", "pipe", "ipc"],
     });
-    children.push(child);
-    const result = await Promise.race([
-      once(child, "message"), once(child, "exit").then(([code]) => { throw new Error(`Synthetic child exited early: ${code}`); }),
-    ]);
-    assert.equal(result[0].ready, true);
+    const state = { closed: false, stderr: "" };
+    state.closePromise = new Promise(resolve => child.once("close", () => { state.closed = true; resolve(); }));
+    children.set(child, state);
+    child.stdout.resume();
+    child.stderr.on("data", data => { state.stderr = (state.stderr + data).slice(-8000); });
+    await new Promise((resolve, reject) => {
+      const cleanup = () => {
+        clearTimeout(timer); child.off("message", ready); child.off("exit", exited); child.off("error", failed);
+      };
+      const ready = message => { cleanup(); message.ready ? resolve() : reject(new Error("Synthetic child did not report ready")); };
+      const failed = error => { cleanup(); reject(error); };
+      const exited = (code, signal) => failed(new Error(`Synthetic child exited early: ${code ?? signal}. ${state.stderr}`));
+      const timer = setTimeout(() => failed(new Error(`Synthetic child startup timeout. ${state.stderr}`)), 10000);
+      child.on("message", ready); child.once("exit", exited); child.once("error", failed);
+    });
     return child;
   }
   function command(child, payload) {
     return new Promise((resolve, reject) => {
       const id = randomUUID();
-      const listener = message => { if (message.done !== id) return; child.off("message", listener); message.error ? reject(new Error(message.error)) : resolve(message.result); };
-      child.on("message", listener); child.send({ ...payload, id });
+      const cleanup = () => { clearTimeout(timer); child.off("message", listener); child.off("close", closed); };
+      const failed = error => { cleanup(); reject(error); };
+      const listener = message => { if (message.done !== id) return; cleanup(); message.error ? reject(new Error(message.error)) : resolve(message.result); };
+      const closed = () => failed(new Error(`Synthetic child closed during ${payload.action}. ${children.get(child).stderr}`));
+      const timer = setTimeout(() => failed(new Error(`Synthetic child command timeout: ${payload.action}. ${children.get(child).stderr}`)), 10000);
+      child.on("message", listener); child.once("close", closed);
+      child.send({ ...payload, id }, error => { if (error) failed(error); });
     });
   }
   async function killAtPause(child) {
@@ -48,7 +74,7 @@ async function setup(t, { accepted = false } = {}) {
       if (performance.now() > deadline) throw new Error("Synthetic crash checkpoint timeout");
       await new Promise(resolve => setTimeout(resolve, 10));
     }
-    child.kill("SIGKILL"); await once(child, "exit");
+    await stop(child);
     fs.unlinkSync(path.join(directory, "paused"));
   }
   const calls = kind => fs.existsSync(path.join(directory, "calls.jsonl"))
