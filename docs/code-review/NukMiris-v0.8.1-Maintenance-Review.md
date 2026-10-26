@@ -218,6 +218,8 @@ Rollback B by stopping Node and returning to the approved A branch `fix/v0.8.0-r
 
 Branch: `cleanup/v0.8.0-category-a`; comparison/PR base: the approved B branch `test/v0.8.0-legacy-compatibility` at `93258882c89404cd8142ce49966abbc9f44e3aea`. Code/test commit: [`62726af92ae42602ebde92ed489cd77ecda2b8fe`](https://github.com/vanasperena-ux/nukmiris/commit/62726af92ae42602ebde92ed489cd77ecda2b8fe). The working tree was clean at C's start; version was 0.8.0. Remote main/A/B still matched their recorded deliveries. No new worktree, merge or version change was made.
 
+The C branch is published. After completing validation and pushing the reviewable result, draft-PR creation with the prepared scope/results/risk/rollback/checklist description was attempted. GitHub's GraphQL endpoint returned **403 Forbidden**; no C PR number was obtained and no PR is claimed to exist. This is an API/network block, not an automatic approval-review rejection. [Review C's exact changes or open its PR form](https://github.com/vanasperena-ux/nukmiris/compare/test/v0.8.0-legacy-compatibility...cleanup/v0.8.0-category-a?expand=1). The prepared description is retained at `/tmp/nukmiris-work-package-c-pr.md`; this section supplies the same information on GitHub. Main, A and B remain unchanged and unmerged.
+
 The two target files were byte-identical to the audited `7215deb` before cleanup. A and B therefore required no adjustment to the approved removal ranges. Each range was checked again against its signature, unconditional throw and closing brace before deletion. The audit estimate is confirmed exactly; no extra tidy-up was added to reach a line target.
 
 Only three files differ from B:
