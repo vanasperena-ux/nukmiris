@@ -1,8 +1,18 @@
 # Baseline provenance
 
-## Appointment reminders and attendance — v0.8.0, awaiting PC verification
+## Current owner-accepted baseline — v0.8.0
 
-The subsequent [production compliance review](META_COMPLIANCE_REPORT.md) retains the four accepted templates and adds safe Meta TTL validation, auditable permission/withdrawal, sender/WABA membership checks, fresh approval reads, delivery prerequisites and quoted-reply protection. Its 648 offline tests include the initial 616 plus 32 compliance cases. The owner supplied current official documentation excerpts after direct Meta pages remained blocked; official v26 SDK source was independently inspected. No real account/template/permission was altered or approved by the cloud agent. v0.8.0 remains unverified on the PC; v0.7.3 remains the owner-verified baseline. The paragraphs below retain the original delivery evidence.
+On 2026-10-26 (America/Mexico_City), the owner explicitly stated **“v0.8.0 is tested and OK”**, clarified that the first reminder was created, and instructed that it become the new baseline. **Use v0.8.0 as the current working baseline for future work.** It supersedes v0.7.3 as the current baseline while retaining that earlier verification history.
+
+Application/test reference: [`52b0ded7979480905daca470368cb044618c53a7`](https://github.com/vanasperena-ux/nukmiris/commit/52b0ded7979480905daca470368cb044618c53a7). After the Windows temporary-file cleanup corrections, the owner reported all 648 automated tests passing on the PC. The reminder screenshots then showed the final two-hour reminder preview for an active appointment, followed by the persisted status `dry_run: 1`, no pending scheduled jobs, no reminder failures requiring review and no confirmation operations. Customer identifying values are not copied into this record.
+
+This acceptance verifies the initial reminder creation, processing and saved dry-run result. It does not claim real WhatsApp reminder delivery, Meta template approval/TTL validation, attendance-button handling, Google attendance updates or manual verification of all four reminder intervals. Those remain separate live checks; production reminders remain disabled until explicitly activated by the owner after the required template and permission checks. The status report still showed missing customer permission, as allowed for dry-run.
+
+The owner stopped the requested legacy-code audit before a report or cleanup was produced. Do not resume it or make cleanup changes without further instructions. Any future assessment must start from the accepted v0.8.0 baseline rather than assuming v0.7.3 is still current. This baseline update changes documentation only.
+
+## Initial appointment-reminder delivery — v0.8.0, historical record
+
+The subsequent [production compliance review](META_COMPLIANCE_REPORT.md) retains the four accepted templates and adds safe Meta TTL validation, auditable permission/withdrawal, sender/WABA membership checks, fresh approval reads, delivery prerequisites and quoted-reply protection. Its 648 offline tests include the initial 616 plus 32 compliance cases. The owner supplied current official documentation excerpts after direct Meta pages remained blocked; official v26 SDK source was independently inspected. No real account/template/permission was altered or approved by the cloud agent. At initial delivery, v0.8.0 awaited PC testing and v0.7.3 was the owner-verified baseline; the acceptance above supersedes that status. The paragraphs below retain the original delivery evidence.
 
 After verifying v0.7.3, the owner supplied the reminder/attendance task and selected PC testing before hosting, a 15-minute late-send allowance, only appointments booked after activation, and backend preparation for a later dashboard. The owner also retained the concise booking-success message with an applicable reminder sentence. No dashboard or hosting is included.
 
@@ -10,7 +20,7 @@ The opt-in implementation adds business-scoped SQLite reminder schedules/actions
 
 All **616 offline tests passed**, with zero failures/cancellations/skips, retaining the 540 v0.7.3 regressions and adding 76 reminder cases. Cases cover actual timestamp boundaries/timezones, eligibility/expiry, template verification, receipt ordering, ownership/isolation, normal lifecycle integration, Calendar failures, dry-run, preparation/backup/restore, concurrent claims, signed HTTP and three real process restart/crash scenarios. Services/data remain synthetic; the cloud agent did not send live reminders, submit templates, change credentials/environment settings, or modify an existing business database.
 
-See [REMINDERS.md](REMINDERS.md) and [REMINDER_TEMPLATES.md](REMINDER_TEMPLATES.md) for setup and remaining manual dependencies. Official Meta documentation sites returned proxy 403; Meta-owned sample code was inspected as a limited fallback, not proof of current policy/button restrictions. Current Meta requirements, template approval, real WhatsApp delivery/buttons and Google attendance updates must be checked on the PC before declaring the combined checkpoint verified. **v0.7.3 remains the current owner-verified baseline.**
+See [REMINDERS.md](REMINDERS.md) and [REMINDER_TEMPLATES.md](REMINDER_TEMPLATES.md) for setup and remaining manual dependencies. Official Meta documentation sites returned proxy 403; Meta-owned sample code was inspected as a limited fallback, not proof of current policy/button restrictions. Template approval, real WhatsApp delivery/buttons and Google attendance updates remain separate live checks. **The current accepted baseline is v0.8.0, with the scope recorded above.**
 
 ## Verified consistent appointment choices baseline — v0.7.3
 
@@ -18,7 +28,7 @@ The owner found that v0.7.2 showed the new month-name format for available slots
 
 All 540 offline tests passed, with zero failures/cancellations/skips, retaining 536 earlier regressions. Four added management-format cases cover cancellation/rescheduling, Mexico City/Tokyo, year boundaries, pagination and preserved state/actions. Signed HTTP expectations also verify single cancellation, multiple rescheduling choices and later-page selection of the same event. See [APPOINTMENT_LABELS.md](APPOINTMENT_LABELS.md) for the findings and combined PC guide. Cloud integrations remain synthetic.
 
-On 2026-10-25 (America/Mexico_City), the owner reported **“version v0.7.3 tested and all good”**. This establishes **v0.7.3 as the current owner-verified working baseline**, including the v0.7.1 slot labels with the v0.7.3 consistency correction, v0.7.2 Calendar customer details and concise empty results, and earlier verified behavior. This is verification of the combined v0.7.3 checkpoint, not separate successful tests of the earlier v0.7.1/v0.7.2 builds.
+On 2026-10-25 (America/Mexico_City), the owner reported **“version v0.7.3 tested and all good”**. This established **v0.7.3 as the then-current owner-verified working baseline**, including the v0.7.1 slot labels with the v0.7.3 consistency correction, v0.7.2 Calendar customer details and concise empty results, and earlier verified behavior. This is verification of the combined v0.7.3 checkpoint, not separate successful tests of the earlier v0.7.1/v0.7.2 builds.
 
 Delivered application reference: `9c9e1a92e661707c2bd0162f7e7dabc75c7a633a`; subsequent Calendar-check and code-walkthrough commits changed documentation only. No separate PC commit hash or detailed per-case run log was supplied. The report verifies the overall manual checkpoint; it does not independently establish every simulated API-failure, uncertain-delivery or exact crash-timing case. Existing technical limits remain applicable. The cloud agent did not access live accounts or repeat the PC actions.
 

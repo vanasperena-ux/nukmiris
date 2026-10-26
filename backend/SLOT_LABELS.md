@@ -2,7 +2,7 @@
 
 Built on the owner-verified v0.7.0 baseline (`e1c5370`). **These labels, with the consistency correction below, are included in owner-verified v0.7.3.** The original v0.7.1 update changed only the labels on available appointment-slot buttons.
 
-**Follow-up correction:** v0.7.1/v0.7.2 left existing-appointment choices for cancellation/rescheduling in the old numerical format. The owner's report confirmed this scope was too narrow. [v0.7.3](APPOINTMENT_LABELS.md) also applies the shared formatter to those choices and their compact end-time descriptions. Use that guide for the current owner-verified combined checkpoint; the scope and version-specific checks below describe the original v0.7.1 delivery.
+**Follow-up correction:** v0.7.1/v0.7.2 left existing-appointment choices for cancellation/rescheduling in the old numerical format. The owner's report confirmed this scope was too narrow. [v0.7.3](APPOINTMENT_LABELS.md) also applies the shared formatter to those choices and their compact end-time descriptions. Use that guide for the owner-verified v0.7.3 combined checkpoint; the scope and version-specific checks below describe the original v0.7.1 delivery.
 
 | Before | After |
 | --- | --- |

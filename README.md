@@ -4,7 +4,7 @@ WhatsApp appointment-management prototype for small businesses.
 
 [Read the block-by-block code walkthrough](docs/code-review/README.md): numbered v0.7.3 source, exact line ranges and plain-language explanations, with current and legacy paths clearly identified.
 
-**Latest implementation: [v0.8.0 appointment reminders and attendance](backend/REMINDERS.md), awaiting PC testing.** Reminders ship off, with dry-run and approved-template live modes. The owner-verified working baseline remains v0.7.3. [Meta template setup](backend/REMINDER_TEMPLATES.md) is required before live reminder testing.
+**Current owner-accepted baseline: [v0.8.0 appointment reminders and attendance](backend/REMINDERS.md).** On October 26, 2026, the owner accepted v0.8.0 after all 648 PC tests passed and the first reminder was created, previewed and saved in dry-run. See [the verification scope](backend/BASELINE.md). Reminders ship off; [Meta template setup](backend/REMINDER_TEMPLATES.md), recorded customer permission and live delivery/attendance tests remain separate steps.
 
 [Read the Meta production compliance report](backend/META_COMPLIANCE_REPORT.md): reviewed official rules, safe TTLs, permission evidence, per-WABA approval/sender checks, fresh template status and delivery/quoted-reply protection. Production sending remains off until explicitly activated by the owner.
 

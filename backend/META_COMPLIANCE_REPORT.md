@@ -1,6 +1,6 @@
 # NukMiris v0.8.0 — Meta WhatsApp production compliance review
 
-Reviewed October 25, 2026, America/Mexico_City. Original application reference: [`9cd776a`](https://github.com/vanasperena-ux/nukmiris/commit/9cd776ad9c2d32089c6cdc1826bd60bee09f876d). This report covers the compliance corrections following that commit; the package remains v0.8.0 and awaits owner PC verification. v0.7.3 remains the owner-verified baseline.
+Reviewed October 25, 2026, America/Mexico_City. Original application reference: [`9cd776a`](https://github.com/vanasperena-ux/nukmiris/commit/9cd776ad9c2d32089c6cdc1826bd60bee09f876d). This report covers the compliance corrections following that commit; the package remains v0.8.0. At review time it awaited PC verification. On October 26, 2026, the owner accepted v0.8.0 as the new baseline after passing the 648 PC tests and verifying the first reminder's saved dry-run result; see [the acceptance record](BASELINE.md). Live approvals, delivery and attendance verification remain separate from that acceptance.
 
 **Production reminders remain off by default.** No live credentials, owner environment settings, existing business database, Meta templates or Google events were changed during this review. The four template names, Spanish bodies, variable order and two quick-reply labels remain the accepted functional baseline.
 

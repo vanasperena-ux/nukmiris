@@ -1,6 +1,6 @@
 # Consistent appointment choices — v0.7.3
 
-**v0.7.3 is the current owner-verified working baseline.** It includes the v0.7.1 slot labels and v0.7.2 Calendar details/empty-result message.
+**v0.7.3 is a previous owner-verified checkpoint; [v0.8.0 is now the accepted working baseline](BASELINE.md).** It includes the v0.7.1 slot labels and v0.7.2 Calendar details/empty-result message.
 
 **PC result, 2026-10-25 (America/Mexico_City):** after separately reporting the new Google Calendar-entry check passed, the owner confirmed **“version v0.7.3 tested and all good”**. Delivered application reference: `9c9e1a9`. See [the verification record](BASELINE.md) for the combined checkpoint and evidence scope.
 
