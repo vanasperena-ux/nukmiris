@@ -14,6 +14,8 @@ Prepared October 26, 2026, America/Mexico_City. **Work Package A only.** The app
 | Baseline check | Version 0.8.0, clean working tree; the only difference on the audit branch was its Markdown report. No newer application changes were overwritten. |
 | Delivery gate | Review Work Package A before authorizing B. No automatic merge. |
 
+The correctness branch is published. Automatic draft-PR creation was attempted with the prepared scope, validation, risk, rollback and manual-check description, but this environment's GitHub API connection returned **403 Forbidden** for the GraphQL request (the read-only REST attempt was also blocked). This was an API/network response, not a code/test failure or a merge approval. No PR number was obtained and no PR is claimed to exist. [Review the branch or open the PR form](https://github.com/vanasperena-ux/nukmiris/compare/main...fix/v0.8.0-reconciliation-reminders?expand=1). Main remains at the acceptance snapshot above. Owner review/approval is still required before proceeding.
+
 The owner accepted v0.8.0 after all 648 PC tests and the first reminder's saved dry-run result passed. That acceptance and the original audit remain historical evidence. The Services Catalog is intentionally absent and belongs to a future feature release; its absence is **not a defect** and no catalog work is included.
 
 ## 2. Root cause and investigation
