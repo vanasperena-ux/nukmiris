@@ -143,6 +143,8 @@ The original A stop gate was honored. The owner's subsequent successful PC repor
 
 B is a tests-only change relative to A's complete delivery at `8c7e8dc`. Its comparison/PR base is `fix/v0.8.0-reconciliation-reminders`, not `main`, so a reviewer sees only B. The branch retains A's correctness fix without merging it. The v0.8.0 baseline, original audit, frozen v0.7.3 walkthrough, existing tests, production libraries/scripts/webhook, dependencies, package version, schemas and environment examples are unchanged by B. No Category A/B/C/D code is removed. **Actual legacy lines removed remains zero.**
 
+The B branch is published. Creating its draft PR with the complete scope/test/risk/rollback/checklist description was attempted after validation and push; GitHub's GraphQL endpoint returned **403 Forbidden**. No B PR number was obtained and no PR is claimed to exist. This is an API/network block, not an automatic approval-review rejection. [Review B's changes or open its PR form](https://github.com/vanasperena-ux/nukmiris/compare/fix/v0.8.0-reconciliation-reminders...test/v0.8.0-legacy-compatibility?expand=1). The prepared PR description is retained locally at `/tmp/nukmiris-work-package-b-pr.md`; this section supplies the same review information on GitHub. A's branch and `main` remain unchanged and unmerged.
+
 Changed files:
 
 | File | Purpose |
