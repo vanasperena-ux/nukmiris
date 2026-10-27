@@ -7,8 +7,6 @@ if (process.env.NODE_ENV !== "test") {
 
 const express = require("express");
 const { randomUUID } = require("node:crypto");
-const { authenticate } = require("@google-cloud/local-auth");
-const { google } = require("googleapis");
 const { DateTime } = require("luxon");
 const { DatabaseSync } = require("node:sqlite");
 const { AsyncLocalStorage } = require("node:async_hooks");
@@ -47,12 +45,10 @@ const REMINDERS_MODE = process.env.NUKMIRIS_REMINDERS_MODE || "off";
 const ROUTING_MODE = process.env.NUKMIRIS_ROUTING_MODE || "receiving_number";
 
 const ZONE = "America/Mexico_City";
-const CALENDAR_ID = "primary";
 const HOURS = [10, 11, 15];
 const OFFER_LIFETIME = 15 * 60 * 1000;
 const SEARCH_POLICY = readSearchPolicy();
 
-const CREDENTIALS = path.join(__dirname, "credentials.json");
 const DB_PATH = path.resolve(__dirname, process.env.NUKMIRIS_DB_PATH || "data/nukmiris-sessions.sqlite");
 
 if (!TOKEN || !PHONE_ID || !VERIFY_TOKEN || !APP_SECRET) {
@@ -73,7 +69,6 @@ if (!fs.existsSync(DB_PATH)) {
   throw new Error("Existing Phase 6A.3 database required. Set NUKMIRIS_DB_PATH; no database was created.");
 }
 
-let calendar;
 
 // ==================================================
 // BUSINESS ROUTING AND SCOPED STORAGE
@@ -241,23 +236,6 @@ const processedMessages = new Map();
 
 async function connectCalendar() {
   throw new Error("Legacy Calendar connection is disabled; use the read-only availability connection");
-  console.log("Connecting to Google Calendar...");
-
-  const auth = await authenticate({
-    scopes: ["https://www.googleapis.com/auth/calendar"],
-    keyfilePath: CREDENTIALS
-  });
-
-  calendar = google.calendar({
-    version: "v3",
-    auth
-  });
-
-  await calendar.calendarList.list({ maxResults: 1 });
-
-  console.log("Google Calendar connected successfully.");
-  console.log("Persistent sessions: SQLite enabled");
-  console.log("Customer registry: SQLite enabled");
 }
 
 // ==================================================
@@ -527,22 +505,6 @@ async function receiveName(from, text, session) {
 
 async function getBusyPeriods(start, end) {
   throw new Error("Calendar actions disabled during Phase 6A.4 tenant isolation tests");
-  const response = await calendar.freebusy.query({
-    requestBody: {
-      timeMin: start,
-      timeMax: end,
-      timeZone: ZONE,
-      items: [{ id: CALENDAR_ID }]
-    }
-  });
-
-  const result = response.data.calendars?.[CALENDAR_ID];
-
-  if (!result || result.errors?.length) {
-    throw new Error("Google Calendar availability error.");
-  }
-
-  return result.busy || [];
 }
 
 // IMPORTANT RESCHEDULING FIX:
@@ -629,28 +591,6 @@ async function findSlots() {
 
 async function findCustomerAppointments(customerId) {
   throw new Error("Calendar actions disabled during Phase 6A.4 tenant isolation tests");
-  const now = DateTime.now().setZone(ZONE);
-
-  const response = await calendar.events.list({
-    calendarId: CALENDAR_ID,
-    timeMin: now.toISO(),
-    timeMax: now.plus({ days: 45 }).toISO(),
-    singleEvents: true,
-    orderBy: "startTime",
-    maxResults: 250,
-    privateExtendedProperty: [
-      `nukmirisCustomerId=${customerId}`
-    ]
-  });
-
-  return (response.data.items || []).filter(event => {
-    return (
-      event.status !== "cancelled" &&
-      event.start?.dateTime &&
-      event.extendedProperties?.private
-        ?.nukmirisCustomerId === customerId
-    );
-  });
 }
 
 // ==================================================
@@ -737,53 +677,6 @@ async function offerSlots(from, mode, originalEvent = null) {
 
 async function createAppointment(from, slot) {
   throw new Error("Calendar actions disabled during Phase 6A.4 tenant isolation tests");
-  const customer = customers.get(from);
-
-  const title = customer
-    ? `NukMiris POC - ${customer.full_name}`
-    : "NukMiris POC - Cita WhatsApp";
-
-  const description = customer
-    ? (
-        `Cliente: ${customer.full_name}\n` +
-        `WhatsApp: ${displayWhatsAppNumber(from)}\n` +
-        "Origen: WhatsApp Automation POC"
-      )
-    : "Appointment created through NukMiris WhatsApp POC.";
-
-  const event = await calendar.events.insert({
-    calendarId: CALENDAR_ID,
-    requestBody: {
-      summary: title,
-      description,
-
-      start: {
-        dateTime: slot.start,
-        timeZone: ZONE
-      },
-
-      end: {
-        dateTime: slot.end,
-        timeZone: ZONE
-      },
-
-      extendedProperties: {
-        private: {
-          // Retain original field for old/new appointments.
-          nukmirisCustomerId: from,
-          nukmirisInternalCustomerId:
-            customer?.customer_id || "",
-          nukmirisPOC: "true"
-        }
-      }
-    },
-    sendUpdates: "none"
-  });
-
-  console.log("APPOINTMENT CREATED SUCCESSFULLY");
-  console.log("Google Event ID:", event.data.id);
-
-  return event.data;
 }
 
 // ==================================================
@@ -792,87 +685,6 @@ async function createAppointment(from, slot) {
 
 async function rescheduleAppointment(from, session, slot) {
   throw new Error("Calendar actions disabled during Phase 6A.4 tenant isolation tests");
-  const eventId = session.originalEventId;
-
-  if (!eventId) {
-    throw new Error("No original appointment was selected.");
-  }
-
-  if (lockedEvents.has(eventId)) {
-    throw new Error(
-      "This appointment is already being updated."
-    );
-  }
-
-  lockedEvents.add(eventId);
-
-  try {
-    const response = await calendar.events.get({
-      calendarId: CALENDAR_ID,
-      eventId
-    });
-
-    const original = response.data;
-
-    if (
-      original.status === "cancelled" ||
-      original.extendedProperties?.private
-        ?.nukmirisCustomerId !== from ||
-      !original.start?.dateTime
-    ) {
-      throw new Error("Appointment no longer valid.");
-    }
-
-    const currentStart = DateTime
-      .fromISO(original.start.dateTime)
-      .toMillis();
-
-    const offeredStart = DateTime
-      .fromISO(session.originalStart)
-      .toMillis();
-
-    if (currentStart !== offeredStart) {
-      throw new Error(
-        "Appointment changed since the offer was made."
-      );
-    }
-
-    // Preserve the previously tested lock correction.
-    if (!(await isFreeOnCalendar(slot))) {
-      console.log(
-        "New appointment time is no longer available."
-      );
-
-      return null;
-    }
-
-    const updated = await calendar.events.patch({
-      calendarId: CALENDAR_ID,
-      eventId,
-
-      requestBody: {
-        start: {
-          dateTime: slot.start,
-          timeZone: ZONE
-        },
-
-        end: {
-          dateTime: slot.end,
-          timeZone: ZONE
-        }
-      },
-
-      sendUpdates: "none"
-    });
-
-    console.log("APPOINTMENT RESCHEDULED SUCCESSFULLY");
-    console.log("Google Event ID:", updated.data.id);
-
-    return updated.data;
-
-  } finally {
-    lockedEvents.delete(eventId);
-  }
 }
 
 // ==================================================
@@ -1091,81 +903,6 @@ async function offerCancellationConfirmation(from, appointment) {
 
 async function chooseAppointment(from, input, session) {
   throw new Error("Calendar actions disabled while business calendar integration is verified");
-  if (Date.now() > session.expiresAt) {
-    sessions.delete(from);
-    await sendMessage(
-      from,
-      "La selección ha vencido. Escribe Cancelar o Reagendar " +
-      "para consultar nuevamente."
-    );
-    return;
-  }
-
-  const number = Number(input);
-  const choice = Number.isSafeInteger(number) && number >= 1
-    ? session.appointments[number - 1]
-    : null;
-
-  if (!choice) {
-    await sendMessage(
-      from,
-      `Selecciona un número entre 1 y ${session.appointments.length}.`
-    );
-    return;
-  }
-
-  // Consume choice before any Google Calendar operations.
-  sessions.delete(from);
-
-  if (lockedEvents.has(choice.id)) {
-    await sendMessage(
-      from,
-      "Esta cita está siendo modificada. Intenta nuevamente."
-    );
-    return;
-  }
-
-  let event;
-  try {
-    const response = await calendar.events.get({
-      calendarId: CALENDAR_ID,
-      eventId: choice.id
-    });
-    event = response.data;
-  } catch (error) {
-    if (error.code === 404 || error.response?.status === 404) {
-      await sendMessage(
-        from,
-        "Esta cita ya no existe. Consulta tus citas nuevamente."
-      );
-      return;
-    }
-    throw error;
-  }
-
-  const currentStart = event.start?.dateTime;
-  if (
-    event.status === "cancelled" ||
-    event.extendedProperties?.private?.nukmirisCustomerId !== from ||
-    event.extendedProperties?.private?.nukmirisPOC !== "true" ||
-    !currentStart ||
-    DateTime.fromISO(currentStart).toMillis() !==
-      DateTime.fromISO(choice.start).toMillis() ||
-    DateTime.fromISO(currentStart).toMillis() <= Date.now()
-  ) {
-    await sendMessage(
-      from,
-      "La cita cambió o ya no está disponible. " +
-      "Escribe Cancelar o Reagendar para consultar nuevamente."
-    );
-    return;
-  }
-
-  if (session.mode === "choose_cancel") {
-    await offerCancellationConfirmation(from, event);
-  } else {
-    await offerSlots(from, "reschedule", event);
-  }
 }
 
 // ==================================================
@@ -1222,146 +959,6 @@ async function startCancellation(from) {
 
 async function confirmCancellation(from, answer) {
   throw new Error("Calendar actions disabled while business calendar integration is verified");
-  const session = sessions.get(from);
-
-  if (!session || session.mode !== "cancel") return;
-
-  sessions.delete(from);
-
-  if (Date.now() > session.expiresAt) {
-    await sendMessage(
-      from,
-      "La confirmación de cancelación ha vencido. " +
-      "Escribe Cancelar para consultar nuevamente."
-    );
-    return;
-  }
-
-  if (answer === "no") {
-    await sendMessage(
-      from,
-      "Tu cita se mantiene sin cambios.\n\n" +
-      "Fecha y hora:\n" +
-      formatTime(session.originalStart)
-    );
-    return;
-  }
-
-  const eventId = session.originalEventId;
-
-  if (lockedEvents.has(eventId)) {
-    await sendMessage(
-      from,
-      "Tu cita está siendo modificada. " +
-      "Escribe Cancelar para volver a intentarlo."
-    );
-    return;
-  }
-
-  lockedEvents.add(eventId);
-
-  let deleteAttempted = false;
-
-  try {
-    const response = await calendar.events.get({
-      calendarId: CALENDAR_ID,
-      eventId
-    });
-
-    const current = response.data;
-
-    if (
-      current.status === "cancelled" ||
-      current.extendedProperties?.private
-        ?.nukmirisCustomerId !== from ||
-      current.extendedProperties?.private
-        ?.nukmirisPOC !== "true" ||
-      !current.start?.dateTime
-    ) {
-      await sendMessage(
-        from,
-        "Ya no encontré una cita válida para cancelar. " +
-        "Escribe Cancelar para consultar nuevamente."
-      );
-      return;
-    }
-
-    const currentStart = DateTime
-      .fromISO(current.start.dateTime)
-      .toMillis();
-
-    const offeredStart = DateTime
-      .fromISO(session.originalStart)
-      .toMillis();
-
-    if (
-      currentStart !== offeredStart ||
-      currentStart <= Date.now()
-    ) {
-      await sendMessage(
-        from,
-        "La cita cambió o ya pasó. " +
-        "Escribe Cancelar para consultar nuevamente."
-      );
-      return;
-    }
-
-    deleteAttempted = true;
-
-    await calendar.events.delete({
-      calendarId: CALENDAR_ID,
-      eventId,
-      sendUpdates: "none"
-    });
-
-    console.log("APPOINTMENT CANCELLED SUCCESSFULLY");
-    console.log("Google Event ID:", eventId);
-
-    try {
-      await sendMessage(
-        from,
-        "Tu cita ha sido cancelada exitosamente.\n\n" +
-        "Cita cancelada:\n" +
-        formatTime(session.originalStart) +
-        "\n\nSi deseas programar una nueva cita, " +
-        "escribe Cita."
-      );
-    } catch (messageError) {
-      console.error(
-        "Cancellation succeeded but WhatsApp confirmation failed:",
-        messageError.message
-      );
-    }
-
-  } catch (error) {
-    console.error(
-      "Cancellation operation error:",
-      error.message
-    );
-
-    if (deleteAttempted) {
-      console.error(
-        "Check Google Calendar before retrying: deletion " +
-        "might have succeeded without confirmation."
-      );
-    } else {
-      try {
-        await sendMessage(
-          from,
-          "No pude cancelar tu cita. " +
-          "Intenta nuevamente más tarde."
-        );
-      } catch (messageError) {
-        console.error(
-          "Could not send cancellation error message:",
-          messageError.message
-        );
-      }
-    }
-
-  } finally {
-    lockedEvents.delete(eventId);
-  }
 }
 
 // ==================================================

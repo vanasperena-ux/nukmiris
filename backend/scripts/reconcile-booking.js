@@ -5,6 +5,7 @@ const { DatabaseSync } = require("node:sqlite");
 const { loadLocalEnv } = require("../lib/local-env");
 const { loadCalendarClient, createCalendarAvailability } = require("../lib/google-calendar");
 const { createBookingService } = require("../lib/booking");
+const { createAppointmentReminders } = require("../lib/appointment-reminders");
 
 async function main() {
   loadLocalEnv();
@@ -18,7 +19,9 @@ async function main() {
     const row = db.prepare("SELECT sender_whatsapp_id FROM booking_requests WHERE request_id=? AND business_id=?").get(requestId, businessId);
     if (!row) throw new Error("Request does not belong to the selected business");
     const availability = createCalendarAvailability({ db, getClient: () => loadCalendarClient({ booking: true }) });
-    const service = createBookingService({ db, availability, enabled: true });
+    // Commit reminder metadata in the booking transaction; do not start a worker.
+    const reminders = createAppointmentReminders({ db, availability, mode: process.env.NUKMIRIS_REMINDERS_MODE || "off" });
+    const service = createBookingService({ db, availability, enabled: true, onCommitted: reminders.committed });
     const result = await service.reconcile({ requestId, businessId, sender: row.sender_whatsapp_id });
     console.log(`Booking status: ${result.status}. This command never creates, changes, or deletes Google events.`);
     if (result.status === "uncertain") console.log("The calendar remains protected. Do not issue a new booking for this request; inspect the recorded event ID locally.");

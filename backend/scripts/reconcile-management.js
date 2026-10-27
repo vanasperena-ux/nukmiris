@@ -5,6 +5,7 @@ const { DatabaseSync } = require("node:sqlite");
 const { loadLocalEnv } = require("../lib/local-env");
 const { loadCalendarClient, createCalendarAvailability } = require("../lib/google-calendar");
 const { createAppointmentManagement } = require("../lib/appointment-management");
+const { createAppointmentReminders } = require("../lib/appointment-reminders");
 
 async function main() {
   loadLocalEnv();
@@ -18,7 +19,9 @@ async function main() {
     const row = db.prepare("SELECT sender_whatsapp_id FROM appointment_changes WHERE request_id=? AND business_id=?").get(requestId, businessId);
     if (!row) throw new Error("Change does not belong to the selected business");
     const availability = createCalendarAvailability({ db, getClient: () => loadCalendarClient({ booking: true }) });
-    const service = createAppointmentManagement({ db, availability, enabled: true });
+    // Apply reminder invalidation/replacement in the existing change transaction.
+    const reminders = createAppointmentReminders({ db, availability, mode: process.env.NUKMIRIS_REMINDERS_MODE || "off" });
+    const service = createAppointmentManagement({ db, availability, enabled: true, onCommitted: reminders.committed });
     const result = await service.reconcile({ requestId, businessId, sender: row.sender_whatsapp_id });
     console.log(`Appointment change status: ${result.status}. This command only reads Google and updates local status.`);
     if (result.status === "uncertain") console.log("The calendar remains protected. Do not clear the journal or release locks manually; inspect the recorded event locally.");
