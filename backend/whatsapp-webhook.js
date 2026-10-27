@@ -27,6 +27,7 @@ const { createAppointmentReminders, createReminderWorker } = require("./lib/appo
 const { createTemplateVerifier } = require("./lib/reminder-templates");
 const { createReminderMenu } = require("./lib/reminder-menu");
 const { recordReminderPermission, isReminderOptOut } = require("./lib/reminder-permissions");
+const { readReminderTestScope } = require("./lib/reminder-live-test");
 
 const app = express();
 app.use(express.json({ limit: "1mb", verify(req, res, bytes) { req.rawBody = bytes; } }));
@@ -42,6 +43,7 @@ const MODE = process.env.NUKMIRIS_MODE || "support";
 const RELIABILITY_ENABLED = process.env.NUKMIRIS_ENABLE_RELIABILITY === "true";
 const MANAGEMENT_ENABLED = MODE === "booking" && process.env.NUKMIRIS_ENABLE_MANAGEMENT === "true";
 const REMINDERS_MODE = process.env.NUKMIRIS_REMINDERS_MODE || "off";
+const REMINDER_TEST_SCOPE = readReminderTestScope();
 const ROUTING_MODE = process.env.NUKMIRIS_ROUTING_MODE || "receiving_number";
 
 const ZONE = "America/Mexico_City";
@@ -114,6 +116,7 @@ const availability = ["availability", "booking"].includes(MODE) ? createCalendar
   getClient: MODE === "booking" ? () => loadCalendarClient({ booking: true }) : undefined,
 }) : null;
 const reminders = REMINDERS_MODE !== "off" ? createAppointmentReminders({ db, availability, mode: REMINDERS_MODE,
+  testScope: REMINDER_TEST_SCOPE || undefined,
   verifyTemplate: createTemplateVerifier({ token: TOKEN, apiVersion: API_VERSION }),
   send: row => sendStoredReply({ row, token: TOKEN, apiVersion: API_VERSION }),
 }) : null;
@@ -1535,6 +1538,7 @@ async function start() {
       console.log(bookings ? "Google Calendar: confirmed new bookings" : availability ? "Google Calendar: read-only availability" : "Google Calendar: DISABLED");
       console.log(delivery ? "Reliable delivery: persisted inbox/outbox and automatic backups enabled" : "Reliable delivery: disabled");
       console.log("Appointment reminders:", REMINDERS_MODE);
+      if (REMINDER_TEST_SCOPE) console.log("Reminder live-test restriction: one test business, authorized recipient and booking only; all other reminders are held.");
       console.log("Persistent sessions: SQLite enabled");
       console.log("Customer registry: SQLite enabled");
       console.log(availability ? "Availability lookup: Enabled" : "Availability lookup: Disabled");

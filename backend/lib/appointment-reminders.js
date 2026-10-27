@@ -19,8 +19,30 @@ function errorCode(error) { return Number(error.response?.status || error.code);
 
 function createAppointmentReminders({ db, availability, mode = "off", now = Date.now,
   getClient = () => loadCalendarClient({ booking: true }), verifyTemplate = async () => { throw new Error("reminder_template_verification_unavailable"); },
-  send, onDryRun = info => console.log("Reminder dry-run:", JSON.stringify(info)) }) {
+  send, onDryRun = info => console.log("Reminder dry-run:", JSON.stringify(info)), testScope }) {
   if (!["off", "dry-run", "live"].includes(mode)) throw new Error("Invalid reminder mode");
+  let scope;
+  if (testScope !== undefined) {
+    if (!testScope || Array.isArray(testScope) || typeof testScope !== "object" ||
+        ![testScope.businessId, testScope.sender, testScope.bookingRequestId].every(value => typeof value === "string" && value.trim() === value && value.length > 0) ||
+        !/^[1-9]\d{7,14}$/.test(testScope.sender)) throw new Error("Reminder test scope requires an exact business, international WhatsApp identity and booking identity");
+    scope = Object.freeze({ businessId: testScope.businessId, sender: testScope.sender, bookingRequestId: testScope.bookingRequestId });
+    const selected = db.prepare(`SELECT 1 FROM appointment_attendance a
+      JOIN businesses b ON b.business_id=a.business_id AND b.status='test'
+      JOIN business_customers c ON c.business_id=a.business_id AND c.customer_id=a.customer_id AND c.whatsapp_id=a.sender
+      JOIN booking_requests r ON r.request_id=a.booking_request_id AND r.business_id=a.business_id
+        AND r.sender_whatsapp_id=a.sender AND r.customer_id=a.customer_id
+      WHERE a.business_id=? AND a.sender=? AND a.booking_request_id=?`).get(scope.businessId, scope.sender, scope.bookingRequestId);
+    if (!selected) throw new Error("Reminder test scope must match a registered customer and tracked booking in a test business");
+  }
+  const scopeValues = scope ? [scope.businessId, scope.sender, scope.bookingRequestId] : [];
+  const scopeFilter = column => scope ? ` AND ${column} IN (SELECT a.booking_request_id FROM appointment_attendance a
+    JOIN businesses b ON b.business_id=a.business_id AND b.status='test'
+    WHERE a.business_id=? AND a.sender=? AND a.booking_request_id=?)` : "";
+  function inScope(row) {
+    return !scope || !!row && row.business_id === scope.businessId && row.sender === scope.sender &&
+      row.booking_request_id === scope.bookingRequestId && !!db.prepare("SELECT 1 FROM businesses WHERE business_id=? AND status='test'").get(scope.businessId);
+  }
   let client;
   const calendar = async () => client || (client = await getClient());
   const settings = businessId => db.prepare(`SELECT r.*,w.phone_number_id FROM reminder_business_settings r
@@ -28,6 +50,7 @@ function createAppointmentReminders({ db, availability, mode = "off", now = Date
   const tracked = id => db.prepare("SELECT * FROM appointment_attendance WHERE booking_request_id=?").get(id);
   const jobRow = id => db.prepare("SELECT * FROM reminder_jobs WHERE job_id=?").get(id);
   function validIdentity(row) {
+    if (!inScope(row)) return null;
     const identity = db.prepare(`SELECT b.state,c.full_name,w.phone_number_id,bus.business_name,bus.time_zone
       FROM booking_requests b JOIN business_customers c ON c.business_id=b.business_id
         AND c.customer_id=b.customer_id AND c.whatsapp_id=b.sender_whatsapp_id
@@ -112,7 +135,7 @@ function createAppointmentReminders({ db, availability, mode = "off", now = Date
   }
   function hasFutureReminders(id) {
     const row = mode === "live" && tracked(id);
-    return !!row && reminderPermission(db, row.business_id, row.sender, now()).allowed && !!db.prepare(`SELECT 1 FROM reminder_jobs WHERE booking_request_id=?
+    return !!row && inScope(row) && reminderPermission(db, row.business_id, row.sender, now()).allowed && !!db.prepare(`SELECT 1 FROM reminder_jobs WHERE booking_request_id=?
       AND state='pending' AND due_at>?`).get(id, now());
   }
   async function readEvent(row) {
@@ -126,7 +149,7 @@ function createAppointmentReminders({ db, availability, mode = "off", now = Date
         review ? "PENDING" : "CANCELLED", randomUUID(), reason, row.booking_request_id);
   }
   async function synchronize(row) {
-    if (!row || row.lifecycle !== "ACTIVE") return null;
+    if (!row || !inScope(row) || row.lifecycle !== "ACTIVE") return null;
     if (db.prepare("SELECT 1 FROM calendar_booking_locks WHERE calendar_id=?").get(row.calendar_id)) {
       db.prepare("UPDATE appointment_attendance SET next_check_at=? WHERE booking_request_id=?").run(now() + 60000, row.booking_request_id);
       return null;
@@ -144,7 +167,7 @@ function createAppointmentReminders({ db, availability, mode = "off", now = Date
     }
     // Recheck local version/lock after the network await.
     const current = tracked(row.booking_request_id);
-    if (current.schedule_version !== row.schedule_version || current.lifecycle !== "ACTIVE" ||
+    if (!current || !inScope(current) || current.schedule_version !== row.schedule_version || current.lifecycle !== "ACTIVE" ||
         db.prepare("SELECT 1 FROM calendar_booking_locks WHERE calendar_id=?").get(row.calendar_id)) return null;
     if (identity.state === "removed" || event?.status === "cancelled") {
       transaction(db, () => cancelTracking(current, "appointment_cancelled")); return null;
@@ -179,9 +202,10 @@ function createAppointmentReminders({ db, availability, mode = "off", now = Date
   }
   function claimJob() {
     return transaction(db, () => {
-      db.prepare("UPDATE reminder_jobs SET state='skipped',last_error='reminder_expired' WHERE state='pending' AND expires_at<?").run(now());
+      db.prepare(`UPDATE reminder_jobs SET state='skipped',last_error='reminder_expired' WHERE state='pending' AND expires_at<?${scopeFilter("booking_request_id")}`)
+        .run(now(), ...scopeValues);
       const job = db.prepare(`SELECT * FROM reminder_jobs WHERE state='pending' AND due_at<=? AND next_attempt_at<=?
-        ORDER BY due_at,job_id LIMIT 1`).get(now(), now());
+        ${scopeFilter("booking_request_id")} ORDER BY due_at,job_id LIMIT 1`).get(now(), now(), ...scopeValues);
       if (!job) return null;
       db.prepare("UPDATE reminder_jobs SET state='sending',attempts=attempts+1 WHERE job_id=? AND state='pending'").run(job.job_id);
       job.attempts++;
@@ -203,7 +227,7 @@ function createAppointmentReminders({ db, availability, mode = "off", now = Date
     });
   }
   function eligible(row, job) {
-    if (!row || row.lifecycle !== "ACTIVE" || row.schedule_version !== job.schedule_version || row.start_ms <= now()) return "obsolete_schedule";
+    if (!row || !inScope(row) || row.lifecycle !== "ACTIVE" || row.schedule_version !== job.schedule_version || row.start_ms <= now()) return "obsolete_schedule";
     if (now() > job.expires_at) return "reminder_expired";
     if (job.kind === "followup") {
       if (row.attendance !== "PENDING" || row.responded_at !== null) return "customer_already_responded";
@@ -222,6 +246,7 @@ function createAppointmentReminders({ db, availability, mode = "off", now = Date
     if (!config) { finish(job, { state: "skipped", error: "business_reminders_disabled" }); return; }
     const permission = reminderPermission(db, row.business_id, row.sender, now());
     if (mode === "live" && !permission.allowed) { finish(job, { state: "skipped", error: permission.reason }); return; }
+    let payload;
     try {
       if (mode === "live") await verifyTemplate(config, job.kind);
       const checked = await synchronize(row);
@@ -239,18 +264,30 @@ function createAppointmentReminders({ db, availability, mode = "off", now = Date
       if (mode === "live" && now() + TEMPLATE_TTL_SECONDS[job.kind] * 1000 + 15000 >= row.start_ms) {
         finish(job, { state: "skipped", error: "template_ttl_would_outlive_appointment" }); return;
       }
-      const payload = templatePayload(row, job, config, checked.identity.business_name);
+      payload = templatePayload(row, job, config, checked.identity.business_name);
       if (mode === "dry-run") {
         onDryRun({ businessId: row.business_id, customer: row.sender, name: row.customer_name,
           kind: job.kind, dueAt: new Date(job.due_at).toISOString(), appointmentStart: row.start_iso,
           template: payload.template.name, language: config.language,
           customerPermission: currentPermission.allowed ? "granted" : currentPermission.reason });
         finish(job, { state: "dry_run" });
-      } else finish(job, await send({ ...job, phone_number_id: row.phone_number_id, payload }));
+        return;
+      }
     } catch (error) {
       const templateError = /reminder_(?:template|waba|sender)/.test(error.message || "") &&
         !/reminder_(?:template|waba)_check_http_(?:429|5\d\d)/.test(error.message);
       finish(job, { state: templateError ? "failed" : "pending", error: templateError ? error.message : "reminder_check_failed" });
+      return;
+    }
+    // From this point Meta may have accepted the message. Neither an adapter
+    // exception nor failure to save its result permits another automatic send.
+    let result;
+    try { result = await send({ ...job, phone_number_id: row.phone_number_id, payload }); }
+    catch { result = { state: "uncertain", error: "reminder_send_unknown" }; }
+    try { finish(job, result); }
+    catch {
+      try { finish(job, { state: "uncertain", error: "reminder_result_not_saved", metaMessageId: result?.metaMessageId }); }
+      catch { throw new Error("Reminder send result could not be saved; retain this work for recovery"); }
     }
   }
   function receipt(business, status) {
@@ -276,8 +313,9 @@ function createAppointmentReminders({ db, availability, mode = "off", now = Date
       .run(latest.state, latest.last_error, latest.meta_message_id, job.job_id, job.attempts);
   }
   function actionRow({ businessId, sender }, token) {
-    return db.prepare(`SELECT * FROM appointment_attendance WHERE action_token=? AND business_id=? AND sender=?
+    const row = db.prepare(`SELECT * FROM appointment_attendance WHERE action_token=? AND business_id=? AND sender=?
       AND lifecycle='ACTIVE' AND start_ms>?`).get(token, businessId, sender, now());
+    return row && inScope(row) ? row : null;
   }
   function requestWasSent(row) {
     return !!db.prepare(`SELECT 1 FROM reminder_jobs WHERE booking_request_id=? AND schedule_version=?
@@ -290,14 +328,14 @@ function createAppointmentReminders({ db, availability, mode = "off", now = Date
         WHERE a.business_id=? AND a.sender=? AND j.meta_message_id=? AND j.kind IN ('confirmation','followup')
           AND j.schedule_version=a.schedule_version AND a.lifecycle='ACTIVE' AND a.start_ms>?
           AND j.state='accepted' AND j.meta_status IS NOT 'failed'`).get(context.businessId, context.sender, replyToId, now());
-      return row || null; // Never fall back from an obsolete quoted message.
+      return row && inScope(row) ? row : null; // Never fall back from an obsolete/foreign quoted message.
     }
     // A reply must refer to one actually dispatched request. Two outstanding
     // appointments are deliberately ambiguous; never choose the latest one.
     const rows = db.prepare(`SELECT * FROM appointment_attendance WHERE business_id=? AND sender=?
       AND lifecycle='ACTIVE' AND start_ms>? AND attendance='PENDING'`).all(context.businessId, context.sender, now())
       .filter(requestWasSent);
-    if (rows.length !== 1) return null;
+    if (rows.length !== 1 || !inScope(rows[0])) return null;
     const row = rows[0];
     // Without a quote, an old accepted/uncertain request could have arrived
     // after a newer request. Do not equate "only one pending now" with intent.
@@ -412,11 +450,12 @@ function createAppointmentReminders({ db, availability, mode = "off", now = Date
     // A customer who requested a change has responded: never send copy saying
     // they did not. Their original appointment and final reminder remain active.
     db.prepare(`UPDATE appointment_attendance SET attendance=CASE WHEN confirmed_at IS NULL THEN 'PENDING' ELSE 'CONFIRMED' END,
-      reschedule_until=NULL WHERE attendance='RESCHEDULE_REQUESTED' AND reschedule_until<=?`).run(now());
+      reschedule_until=NULL WHERE attendance='RESCHEDULE_REQUESTED' AND reschedule_until<=?${scopeFilter("booking_request_id")}`).run(now(), ...scopeValues);
   }
   async function verifyReady() {
     if (mode !== "live") return;
-    for (const business of db.prepare("SELECT business_id FROM reminder_business_settings WHERE enabled=1").all()) {
+    const businesses = scope ? [{ business_id: scope.businessId }] : db.prepare("SELECT business_id FROM reminder_business_settings WHERE enabled=1").all();
+    for (const business of businesses) {
       const config = settings(business.business_id);
       if (!config) throw new Error("reminder_sender_mapping_missing");
       for (const kind of ["seven_day", "confirmation", "followup", "final"]) await verifyTemplate(config, kind);
@@ -428,7 +467,8 @@ function createAppointmentReminders({ db, availability, mode = "off", now = Date
     // Reconciliation is read-only until Google proves the original operation.
     // It never repeats a possibly accepted Calendar patch.
     if (mode === "live") {
-      const operations = db.prepare("SELECT * FROM attendance_operations WHERE state IN ('pending','uncertain') ORDER BY created_at LIMIT ?").all(limit);
+      const operations = db.prepare(`SELECT * FROM attendance_operations WHERE state IN ('pending','uncertain')${scopeFilter("booking_request_id")}
+        ORDER BY created_at LIMIT ?`).all(...scopeValues, limit);
       for (const operation of operations) {
         const row = tracked(operation.booking_request_id);
         if (!row || row.schedule_version !== operation.schedule_version || !validIdentity(row)) continue;
@@ -439,7 +479,7 @@ function createAppointmentReminders({ db, availability, mode = "off", now = Date
       }
     }
     const rows = db.prepare(`SELECT * FROM appointment_attendance WHERE lifecycle='ACTIVE' AND start_ms>?
-      AND next_check_at<=? ORDER BY next_check_at LIMIT ?`).all(now(), now(), limit);
+      AND next_check_at<=?${scopeFilter("booking_request_id")} ORDER BY next_check_at LIMIT ?`).all(now(), now(), ...scopeValues, limit);
     for (const row of rows) await synchronize(row);
     for (let index = 0; index < limit; index++) {
       const job = claimJob();
@@ -450,7 +490,7 @@ function createAppointmentReminders({ db, availability, mode = "off", now = Date
   function report(businessId) {
     return db.prepare(`SELECT booking_request_id,customer_name,sender,start_iso,end_iso,time_zone,lifecycle,attendance,
       confirmed_at,schedule_version,last_error FROM appointment_attendance WHERE business_id=? AND start_ms>?
-      ORDER BY start_ms LIMIT 1000`).all(businessId, now());
+      ${scopeFilter("booking_request_id")} ORDER BY start_ms LIMIT 1000`).all(businessId, now(), ...scopeValues);
   }
   return { committed, rescheduleFields, hasFutureReminders, recover, tick, receipt, confirm, requestReschedule, textTarget, report, verifyReady };
 }

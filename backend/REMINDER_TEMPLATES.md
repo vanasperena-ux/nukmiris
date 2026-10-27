@@ -1,6 +1,8 @@
-# Spanish reminder templates — v0.8.0
+# Spanish reminder templates — v0.8.1 activation candidate
 
-These are prepared definitions, **not submitted or approved templates**. The owner submits them through the correct account's WhatsApp Manager. The app uses templates for every proactive reminder, including inside the service window, and never falls back to an arbitrary free-form proactive message.
+The owner reports that Meta has approved all four templates below for **Spanish (Mexico), `es_MX`**, with **Active – Quality pending** status. That is compatible with API status `APPROVED`; pending quality does not block sending. This report does not verify the actual account, text, buttons or custom TTL. Run the read-only check against that business's WABA before activation. The app uses templates for every proactive reminder, including inside the service window, and never falls back to an arbitrary free-form proactive message.
+
+Use [the controlled live-test guide](REMINDER_LIVE_TEST.md) for current Windows commands, recipient/appointment restrictions, accelerated test occurrences and the acceptance checklist. No architectural redesign, new release baseline or automatic production activation is included.
 
 See the [v0.8.0 production compliance report](META_COMPLIANCE_REPORT.md) for the reviewed official excerpts, source/test references, TTL and permission corrections, and exact remaining live-verification boundary. The four names, Spanish bodies, variable order and buttons are unchanged.
 
@@ -67,7 +69,7 @@ The titles are **12 and 18 characters**, below WhatsApp's documented **25-charac
 
 Template replies use `messages[].type: button` with `button.payload`, corroborated by the official WhatsApp SDK; the app persists these in the same signed inbox as ordinary messages. Existing `interactive.button_reply.id` handling also supports reminder recovery/status buttons. Unknown, foreign, cancelled and old-schedule tokens cannot select a different appointment. Quoted text uses the exact `context.id` of its reminder and cannot fall back from a stale quote to a newer appointment. Generic Spanish confirmation needs an unambiguous current request without conflicting earlier request history, outside protected name/date input and human chat. The dependent 22-hour follow-up requires a `delivered`/`read` receipt for the 24-hour request, not just API acceptance.
 
-## Submission and checking
+## Approved assets and read-only checking
 
 Use PowerShell from `backend/`:
 
@@ -75,15 +77,18 @@ Use PowerShell from `backend/`:
 npm.cmd run reminders:templates -- --business-id juanita-nails
 ```
 
-The JSON contains all four definitions, example variable values and buttons. It is local output only; the command has no template creation/update request. Copy the exact body, category, language and buttons into WhatsApp Manager's template creation form, under the business account that owns its configured sending number. Supply meaningful synthetic sample variable values. Wait for Meta's approval; approval is external and cannot be promised by NukMiris.
+The JSON contains all four expected definitions, example values, buttons and TTL caps. It is local output only; the command has no template creation/update request. Compare it with the already approved assets under the WABA that owns the configured sending number. Do not recreate matching approved templates. If an asset differs, resolve the specific mismatch before sending; this command does not edit or resubmit it.
 
 After locally configuring that account's WABA ID using the preparation command described in [REMINDERS.md](REMINDERS.md), run:
 
 ```powershell
 npm.cmd run reminders:templates -- --business-id juanita-nails --check
+npm.cmd run reminders:templates -- --business-id juanita-nails --check --json
 ```
 
 This makes read-only `GET /{WABA_ID}/phone_numbers` and `GET /{WABA_ID}/message_templates` requests. It verifies that the sending number belongs to that WABA, then checks the exact names, `APPROVED`, `UTILITY`, language, body variables/text, safe custom TTL and button types/order/titles. It reports returned quality information; approved low-quality templates remain eligible under Meta's supplied guidance until their status changes. The access token must have permission to inspect that WABA (normally `whatsapp_business_management`) as well as sending permission for actual reminders (`whatsapp_business_messaging`). No token or account ID is embedded in source code. An HTTP permission error or mismatched/unavailable template produces an explicit actionable error.
+
+All four results are reported even if one fails; any failure gives a nonzero command exit code. JSON includes `ready`, per-kind `ok`, expected/observed safe metadata and mismatch codes such as `ttl_missing`, `ttl_out_of_range`, `body_text_mismatch` or `button_order_mismatch`. Body content is compared exactly but diagnostics expose only a match flag, length and fingerprint. The default/30-day TTL remains a blocker despite approval; configure safe template TTL metadata using Meta's current controls/API, then rerun the check. Never bypass that validation or invent a per-message TTL.
 
 Live startup runs these checks before accepting bookings under live reminder mode. Every job reads sending-number membership and template status fresh; neither ownership nor positive approval is cached. Null TTL after automatic category changes, non-Utility category and any non-APPROVED/unavailable template prevent sending. Actual sends continue through the existing configured `/{PHONE_NUMBER_ID}/messages` Cloud API transport and shared `WHATSAPP_API_VERSION`, currently `v26.0`. A POST rejection for an unavailable template is recorded; there is no free-form fallback. Known transient failures retry only within the original deadline and bounded attempt count.
 

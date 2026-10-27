@@ -7,9 +7,67 @@ const { randomUUID } = require("node:crypto");
 const { DatabaseSync, backup } = require("node:sqlite");
 const { loadLocalEnv } = require("../lib/local-env");
 const { prepareReminderSchema, DEFAULT_INTERVALS } = require("../lib/reminder-schedule");
-const { DEFAULT_TEMPLATES, templateDefinitions, createTemplateVerifier } = require("../lib/reminder-templates");
+const { DEFAULT_TEMPLATES, templateDefinitions, templateMetadata, createTemplateVerifier } = require("../lib/reminder-templates");
 const { createAppointmentReminders } = require("../lib/appointment-reminders");
 const { recordReminderPermission, reminderPermission } = require("../lib/reminder-permissions");
+
+function diagnosticError(error) {
+  // Network/JSON errors can contain response fragments. Never print those or
+  // arbitrary provider objects as a template-readiness diagnostic.
+  return /^(reminder_[a-z_]+(?:\d{3})?)(?=[:\s]|$)/.exec(error?.message || "")?.[1] || "reminder_template_check_unavailable";
+}
+async function checkTemplates(config, verify) {
+  const templates = [];
+  for (const [index, kind] of Object.keys(DEFAULT_TEMPLATES).entries()) {
+    let expected = null;
+    try {
+      const definition = templateDefinitions(config.language, JSON.parse(config.templates_json))[index];
+      expected = templateMetadata({ ...definition, status: "APPROVED" }, definition);
+    } catch { /* The verifier supplies the safe configuration failure below. */ }
+    try {
+      const result = await verify(config, kind);
+      templates.push({ kind, ok: true, ...result, expected: result.expected || expected });
+    } catch (error) {
+      templates.push({ kind, ok: false, error: diagnosticError(error), expected,
+        observed: error.templateCheck?.observed || null, mismatches: error.templateCheck?.mismatches || [] });
+    }
+  }
+  return { businessId: config.business_id, ready: templates.every(item => item.ok), templates };
+}
+function safeStoredError(value) {
+  if (value === null || value === undefined) return null;
+  return /^[a-z][a-z0-9_]{0,95}$/.test(value) ? value :
+    /^(reminder_[a-z_]+(?:\d{3})?)(?=[:\s]|$)/.exec(value)?.[1] || "unclassified_error";
+}
+function reminderStatus(db, businessId, config) {
+  const reminders = createAppointmentReminders({ db, availability: null });
+  const recentJobs = db.prepare(`SELECT j.booking_request_id,j.job_id,j.kind,j.schedule_version,j.due_at,j.expires_at,
+    j.state,j.attempts,j.accepted_at,j.meta_message_id,j.meta_status,j.last_error
+    FROM reminder_jobs j JOIN appointment_attendance a USING(booking_request_id)
+    LEFT JOIN (SELECT job_id,MAX(attempted_at) AS latest FROM reminder_attempts GROUP BY job_id) t USING(job_id)
+    WHERE a.business_id=? ORDER BY COALESCE(t.latest,j.accepted_at,0) DESC,j.due_at DESC,j.job_id LIMIT 200`)
+    .all(businessId).map(row => ({ ...row, last_error: safeStoredError(row.last_error) }));
+  const attempts = recentJobs.length ? db.prepare(`SELECT t.job_id,j.booking_request_id,j.kind,j.schedule_version,
+    t.attempt,t.attempted_at,t.outcome,t.error,t.meta_message_id
+    FROM reminder_attempts t JOIN reminder_jobs j USING(job_id) JOIN appointment_attendance a USING(booking_request_id)
+    WHERE a.business_id=? AND t.job_id IN (${recentJobs.map(() => "?").join(",")})
+    ORDER BY t.attempted_at DESC,t.job_id,t.attempt DESC LIMIT 200`)
+    .all(businessId, ...recentJobs.map(row => row.job_id)).map(row => ({ ...row, error: safeStoredError(row.error) })) : [];
+  return { businessId, businessStatus: db.prepare("SELECT status FROM businesses WHERE business_id=?").get(businessId)?.status,
+    enabled: !!config.enabled, activatedAt: new Date(config.activated_at).toISOString(),
+    attendance: reminders.report(businessId).map(row => ({ ...row,
+      reminderPermission: reminderPermission(db, businessId, row.sender).allowed ? "granted" : reminderPermission(db, businessId, row.sender).reason })),
+    jobs: db.prepare(`SELECT j.state,COUNT(*) AS count FROM reminder_jobs j JOIN appointment_attendance a USING(booking_request_id)
+      WHERE a.business_id=? GROUP BY j.state`).all(businessId),
+    scheduled: db.prepare(`SELECT a.customer_name,j.job_id,j.kind,j.schedule_version,j.due_at,j.expires_at,j.state,j.meta_status
+      FROM reminder_jobs j JOIN appointment_attendance a USING(booking_request_id)
+      WHERE a.business_id=? AND j.state='pending' ORDER BY j.due_at LIMIT 1000`).all(businessId),
+    needsReview: db.prepare(`SELECT j.job_id,j.kind,j.state,j.meta_status,j.last_error FROM reminder_jobs j
+      JOIN appointment_attendance a USING(booking_request_id) WHERE a.business_id=? AND j.state IN ('failed','uncertain') LIMIT 1000`).all(businessId),
+    confirmationOperations: db.prepare(`SELECT o.operation_id,o.state,o.last_error FROM attendance_operations o
+      JOIN appointment_attendance a USING(booking_request_id) WHERE a.business_id=? AND o.state IN ('pending','uncertain','rejected') LIMIT 1000`).all(businessId),
+    recentJobs, attempts };
+}
 
 async function main() {
   loadLocalEnv();
@@ -66,34 +124,25 @@ async function main() {
       return;
     }
     if (action === "--templates") {
-      const definitions = templateDefinitions(config.language, JSON.parse(config.templates_json));
       if (args.includes("--check")) {
-        const verify = createTemplateVerifier({ token: process.env.WHATSAPP_TOKEN, apiVersion: process.env.WHATSAPP_API_VERSION || "v26.0" });
-        for (const kind of Object.keys(DEFAULT_TEMPLATES)) {
-          const result = await verify(config, kind);
-          console.log(`Approved matching Utility template: ${kind}`, JSON.stringify(result));
+        const apiVersion = process.env.WHATSAPP_API_VERSION || "v26.0";
+        const verify = createTemplateVerifier({ token: process.env.WHATSAPP_TOKEN, apiVersion });
+        const report = { ...await checkTemplates(config, verify), apiVersion };
+        if (args.includes("--json")) console.log(JSON.stringify(report, null, 2));
+        else {
+          for (const result of report.templates) console.log(result.ok
+            ? `Approved matching Utility template: ${result.kind}` : `Template check blocked: ${result.kind}`, JSON.stringify(result));
+          console.log(`Template checks: ${report.templates.filter(item => item.ok).length}/4 verified. No messages or template updates were sent.`);
         }
-      } else console.log(JSON.stringify(definitions, null, 2));
+        if (!report.ready) process.exitCode = 1;
+      } else console.log(JSON.stringify(templateDefinitions(config.language, JSON.parse(config.templates_json)), null, 2));
       return;
     }
-    const reminders = createAppointmentReminders({ db, availability: null });
-    console.log(JSON.stringify({ businessId, enabled: !!config.enabled, activatedAt: new Date(config.activated_at).toISOString(),
-      attendance: reminders.report(businessId).map(row => ({ ...row,
-        reminderPermission: reminderPermission(db, businessId, row.sender).allowed ? "granted" : reminderPermission(db, businessId, row.sender).reason })),
-      jobs: db.prepare(`SELECT j.state,COUNT(*) AS count FROM reminder_jobs j JOIN appointment_attendance a USING(booking_request_id)
-        WHERE a.business_id=? GROUP BY j.state`).all(businessId),
-      scheduled: db.prepare(`SELECT a.customer_name,j.job_id,j.kind,j.schedule_version,j.due_at,j.expires_at,j.state,j.meta_status
-        FROM reminder_jobs j JOIN appointment_attendance a USING(booking_request_id)
-        WHERE a.business_id=? AND j.state='pending' ORDER BY j.due_at LIMIT 1000`).all(businessId),
-      needsReview: db.prepare(`SELECT j.job_id,j.kind,j.state,j.meta_status,j.last_error FROM reminder_jobs j
-        JOIN appointment_attendance a USING(booking_request_id) WHERE a.business_id=? AND j.state IN ('failed','uncertain') LIMIT 1000`).all(businessId),
-      confirmationOperations: db.prepare(`SELECT o.operation_id,o.state,o.last_error FROM attendance_operations o
-        JOIN appointment_attendance a USING(booking_request_id) WHERE a.business_id=? AND o.state IN ('pending','uncertain','rejected') LIMIT 1000`).all(businessId),
-    }, null, 2));
+    console.log(JSON.stringify(reminderStatus(db, businessId, config), null, 2));
   } finally { db.close(); }
 }
 if (require.main === module) main().catch(error => {
   console.error("Reminder command stopped:", error.message);
   process.exitCode = 1;
 });
-module.exports = { main };
+module.exports = { main, checkTemplates, reminderStatus };

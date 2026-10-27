@@ -1,6 +1,7 @@
 "use strict";
 
 const { DateTime } = require("luxon");
+const { createHash } = require("node:crypto");
 const { normalizedRecipient } = require("./reliable-delivery");
 const BUTTONS = ["Sí, confirmo", "Necesito reagendar"];
 // Meta's template-creation property; this is NOT a send-message parameter.
@@ -48,20 +49,59 @@ function templatePayload(row, job, settings, businessName) {
       })) : []),
     ] } };
 }
-function validTemplate(actual, expected) {
-  if (!actual || actual.status !== "APPROVED" || actual.category !== "UTILITY" || actual.language !== expected.language ||
-      actual.name !== expected.name) return false;
-  if (!Number.isInteger(actual.message_send_ttl_seconds) || actual.message_send_ttl_seconds < 30 ||
-      actual.message_send_ttl_seconds > expected.message_send_ttl_seconds ||
-      (actual.parameter_format && actual.parameter_format !== "POSITIONAL")) return false;
-  const body = actual.components?.find(item => item.type === "BODY");
-  const buttons = actual.components?.find(item => item.type === "BUTTONS")?.buttons || [];
-  const expectedButtons = expected.components.find(item => item.type === "BUTTONS")?.buttons || [];
+function templateMismatches(actual, expected) {
+  if (!actual || typeof actual !== "object") return ["template_missing"];
+  const reasons = [];
+  for (const [field, value] of Object.entries({ status: "APPROVED", category: "UTILITY", language: expected.language, name: expected.name })) {
+    if (actual[field] !== value) reasons.push(`${field}_mismatch`);
+  }
+  const ttl = actual.message_send_ttl_seconds;
+  if (ttl === null || ttl === undefined) reasons.push("ttl_missing");
+  else if (!Number.isInteger(ttl)) reasons.push("ttl_invalid");
+  else if (ttl < 30 || ttl > expected.message_send_ttl_seconds) reasons.push("ttl_out_of_range");
+  if (actual.parameter_format && actual.parameter_format !== "POSITIONAL") reasons.push("parameter_format_mismatch");
+  if (!Array.isArray(actual.components)) return [...reasons, "components_invalid"];
+  if (actual.components.length !== expected.components.length) reasons.push("component_count_mismatch");
+  if (actual.components.some(item => !item || !["BODY", "BUTTONS"].includes(item.type))) reasons.push("component_type_mismatch");
+  const bodies = actual.components.filter(item => item?.type === "BODY");
+  if (bodies.length !== 1) reasons.push("body_component_count_mismatch");
   // Exact copy/positions prevent a reused name from sending unrelated content.
-  return body?.text === expected.components[0].text && buttons.length === expectedButtons.length &&
-    buttons.every((button, index) => button.type === "QUICK_REPLY" && button.text === expectedButtons[index].text) &&
-    actual.components.length === expected.components.length &&
-    actual.components.every(item => ["BODY", "BUTTONS"].includes(item.type));
+  if (bodies[0]?.text !== expected.components[0].text) reasons.push("body_text_mismatch");
+  const buttonComponents = actual.components.filter(item => item?.type === "BUTTONS");
+  const expectedButtons = expected.components.find(item => item.type === "BUTTONS")?.buttons || [];
+  if (buttonComponents.length !== Number(expectedButtons.length > 0)) reasons.push("button_component_count_mismatch");
+  const buttons = buttonComponents[0]?.buttons || [];
+  if (!Array.isArray(buttons)) return [...reasons, "buttons_invalid"];
+  if (buttons.length !== expectedButtons.length) reasons.push("button_count_mismatch");
+  if (buttons.length === expectedButtons.length && buttons.some((button, index) => button?.text !== expectedButtons[index].text) &&
+      buttons.every(button => expectedButtons.some(expectedButton => button?.text === expectedButton.text))) reasons.push("button_order_mismatch");
+  for (const [index, button] of buttons.entries()) {
+    if (button?.type !== "QUICK_REPLY") reasons.push(`button_${index}_type_mismatch`);
+    if (button?.text !== expectedButtons[index]?.text) reasons.push(`button_${index}_text_mismatch`);
+  }
+  return reasons;
+}
+function validTemplate(actual, expected) { return templateMismatches(actual, expected).length === 0; }
+function safeMetadataText(value, limit = 100) {
+  return typeof value === "string" && value.length <= limit && /^[\p{L}\p{N} _.,¿?¡!\-]+$/u.test(value) ? value : null;
+}
+function templateMetadata(actual, expected) {
+  if (!actual || typeof actual !== "object") return null;
+  const components = Array.isArray(actual.components) ? actual.components : [];
+  const body = components.find(item => item?.type === "BODY");
+  const buttons = components.find(item => item?.type === "BUTTONS")?.buttons;
+  return {
+    templateId: safeMetadataText(actual.id), name: safeMetadataText(actual.name, 512), language: safeMetadataText(actual.language),
+    status: safeMetadataText(actual.status), category: safeMetadataText(actual.category),
+    parameterFormat: safeMetadataText(actual.parameter_format),
+    ttlSeconds: Number.isInteger(actual.message_send_ttl_seconds) ? actual.message_send_ttl_seconds : null,
+    quality: { score: safeMetadataText(actual.quality_score?.score) },
+    componentTypes: components.slice(0, 10).map(item => safeMetadataText(item?.type)),
+    bodyMatches: body?.text === expected.components[0].text,
+    bodyLength: typeof body?.text === "string" ? body.text.length : null,
+    bodyFingerprint: typeof body?.text === "string" ? createHash("sha256").update(body.text).digest("hex").slice(0, 16) : null,
+    buttons: Array.isArray(buttons) ? buttons.slice(0, 10).map(button => ({ type: safeMetadataText(button?.type), text: safeMetadataText(button?.text, 25) })) : [],
+  };
 }
 function createTemplateVerifier({ token, apiVersion = "v26.0", request = fetch }) {
   // Neither tenant ownership nor positive approval is cached: a moved number or
@@ -83,19 +123,32 @@ function createTemplateVerifier({ token, apiVersion = "v26.0", request = fetch }
       }
       if (!found) throw new Error("reminder_sender_waba_mismatch: the configured sending number was not found in this WABA");
     }
-    const expected = templateDefinitions(settings.language, JSON.parse(settings.templates_json)).find(item => item.name === JSON.parse(settings.templates_json)[kind]);
+    let expected;
+    try {
+      const index = Object.keys(DEFAULT_TEMPLATES).indexOf(kind);
+      expected = templateDefinitions(settings.language, JSON.parse(settings.templates_json))[index];
+      if (!expected || !/^[a-z0-9_]{1,512}$/.test(expected.name || "") || !/^[a-z]{2,3}(?:_[A-Za-z0-9]{2,8})?$/.test(expected.language || "")) throw new Error();
+    } catch { throw new Error("reminder_template_configuration_invalid: verify the configured template kind, name and language"); }
     const url = new URL(`https://graph.facebook.com/${apiVersion}/${settings.waba_id}/message_templates`);
     url.search = new URLSearchParams({ name: expected.name,
       fields: "id,name,language,status,category,components,parameter_format,message_send_ttl_seconds,quality_score", limit: "100" }).toString();
     const response = await request(url.toString(), { headers: { Authorization: `Bearer ${token}` }, signal: AbortSignal.timeout(15000) });
     if (!response.ok) throw new Error(`reminder_template_check_http_${response.status}: check template-management permissions and WABA mapping`);
     const data = await response.json();
-    if (!Array.isArray(data.data) || !data.data.some(item => validTemplate(item, expected))) {
-      throw new Error(`reminder_template_unapproved_or_mismatched: ${expected.name}/${settings.language}; verify APPROVED Utility status, exact content and safe TTL`);
+    const candidates = Array.isArray(data.data) ? data.data : [];
+    const actual = candidates.find(item => validTemplate(item, expected));
+    if (!actual) {
+      const observed = candidates.find(item => item?.name === expected.name && item.language === expected.language) ||
+        candidates.find(item => item?.name === expected.name) || candidates[0];
+      const mismatches = templateMismatches(observed, expected);
+      const error = new Error(`reminder_template_unapproved_or_mismatched: ${expected.name}/${settings.language}; ${mismatches.join(", ")}`);
+      error.templateCheck = { expected: templateMetadata({ ...expected, status: "APPROVED" }, expected), observed: templateMetadata(observed, expected), mismatches };
+      throw error;
     }
-    const actual = data.data.find(item => validTemplate(item, expected));
-    return { templateId: actual.id || null, ttlSeconds: actual.message_send_ttl_seconds, quality: actual.quality_score || null };
+    const observed = templateMetadata(actual, expected);
+    return { templateId: observed.templateId, ttlSeconds: actual.message_send_ttl_seconds, quality: actual.quality_score ? observed.quality : null,
+      expected: templateMetadata({ ...expected, status: "APPROVED" }, expected), observed };
   };
 }
 module.exports = { BUTTONS, BODIES, DEFAULT_TEMPLATES, templateDefinitions, templatePayload,
-  appointmentDate, appointmentTime, actionPayload, validTemplate, createTemplateVerifier, TEMPLATE_TTL_SECONDS };
+  appointmentDate, appointmentTime, actionPayload, validTemplate, templateMismatches, templateMetadata, createTemplateVerifier, TEMPLATE_TTL_SECONDS };
