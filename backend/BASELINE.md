@@ -1,6 +1,22 @@
 # Baseline provenance
 
-## Current owner-accepted baseline — v0.8.0
+## Current owner-accepted baseline — v0.8.1
+
+On 2026-10-26 (America/Mexico_City; October 27 UTC), the owner stated **“I approve. I did the pull request and tested 0.8.1 on my PC. All tests passed.”** Treat **v0.8.1 as the current working baseline** for future work. It incorporates the separately accepted A/B/C checkpoints and D's assessment, and supersedes v0.8.0 as the current baseline while preserving its history below.
+
+GitHub confirms [PR #1](https://github.com/vanasperena-ux/nukmiris/pull/1) merged into `main` at [`7b19c4df2b83a9eb5b4878ed1f4eaad73b8c0487`](https://github.com/vanasperena-ux/nukmiris/commit/7b19c4df2b83a9eb5b4878ed1f4eaad73b8c0487). Its entire backend tree matches the previously cloud-tested C tree at `62726af92ae42602ebde92ed489cd77ecda2b8fe`. The owner had explicitly reported 1,089 passing PC tests, zero failures and completion of C's ordinary-flow checklist, then approved the merged v0.8.1 maintenance update. No separate PC commit hash or execution log was supplied; owner reports and cloud checks remain distinct evidence.
+
+The maintenance changes correct standalone booking/change reconciliation's transaction-bound reminder hooks; retain idempotency, ownership, eligibility and sending gates; add 417 compatibility regressions; and remove exactly 403 audited unreachable/unused-binding lines plus one unused test import. All seven stopping stubs and the complete dispatcher remain. D assesses the remaining legacy code without removing it. Current availability/date UX, immediate booking, registration, management, recovery and off/dry-run reminder behavior remain protected. Further Category B removal and the intentionally absent Services Catalog require separate authorization.
+
+At the owner's merge, the repository's package/lockfile labels still said 0.8.0 despite the PR's v0.8.1 title. Release commit [`fe8e9adc7d0a72fd65a26f589508e6e72788ed52`](https://github.com/vanasperena-ux/nukmiris/commit/fe8e9adc7d0a72fd65a26f589508e6e72788ed52) changes only those three version metadata fields to 0.8.1. Dependencies, executable source, tests, schemas and configuration remain identical to the owner-merged code. This does not assert which version label the owner saw locally; it records the verified GitHub metadata correction.
+
+The complete release-label suite at `fe8e9ad` passed **1,089 cloud tests**, zero failures/cancellations/skips, 27 suites, **249.59 seconds**, on Linux x64/Node v24.19.0. Further release details are in [the v0.8.1 release guide](../docs/releases/v0.8.1.md). The owner additionally confirmed the PC checks described above. This acceptance does not newly establish real Meta approval/TTL responses, recorded customer permission, live proactive reminder delivery/attendance updates, hosting or multi-PC coordination. No live reminder activation, credential/environment/database changes or service catalog implementation is included.
+
+Use **`npm.cmd`** for the owner's Windows PowerShell commands. Existing v0.8.0 installations need no additional migration, dependency reinstall, provider reauthorization or reminder preparation for this maintenance update. Preserve existing data, jobs, permissions and uncertain locks. See the [release/update instructions](../docs/releases/v0.8.1.md) and [maintenance evidence](../docs/code-review/NukMiris-v0.8.1-Maintenance-Review.md).
+
+## Historical owner-accepted baseline — v0.8.0
+
+The original record below is preserved as historical evidence; the v0.8.1 acceptance above supersedes its then-current baseline and stopped-audit status.
 
 On 2026-10-26 (America/Mexico_City), the owner explicitly stated **“v0.8.0 is tested and OK”**, clarified that the first reminder was created, and instructed that it become the new baseline. **Use v0.8.0 as the current working baseline for future work.** It supersedes v0.7.3 as the current baseline while retaining that earlier verification history.
 

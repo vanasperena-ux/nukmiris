@@ -1,6 +1,8 @@
-# NukMiris — v0.8.1 Maintenance Review (provisional)
+# NukMiris — v0.8.1 Maintenance Review
 
-Updated October 26, 2026, America/Mexico_City. **A, B and C are owner-PC-validated; D is assessment only and is complete.** The application package remains **0.8.0**. Neither v0.8.1 acceptance nor any merge is implied. No further Category B deletion has been implemented. [D's detailed remaining-legacy assessment](NukMiris-v0.8.1-Remaining-Legacy-Assessment.md) supplies the future recommendation.
+**Final status: owner-approved v0.8.1, merged through [PR #1](https://github.com/vanasperena-ux/nukmiris/pull/1), with all PC tests reported passed.** See [the current release/update guide](../releases/v0.8.1.md) and Section 13 below. The dated A–D preparation sections retain their original delivery-time versions, unmerged states and approval gates as historical evidence; they do not override this final acceptance.
+
+Preparation status before final approval, October 26, 2026, America/Mexico_City: **A, B and C were owner-PC-validated; D was assessment only and complete.** The application package then remained **0.8.0** and awaited final acceptance/merge. No further Category B deletion was implemented. [D's detailed remaining-legacy assessment](NukMiris-v0.8.1-Remaining-Legacy-Assessment.md) supplies the future recommendation.
 
 ## 1. Baseline and deliverable
 
@@ -108,7 +110,7 @@ The original audit remains historical evidence for B01–B19. D updates their po
 2. **Existing modes and eligibility remain authoritative.** If reminders are off, their hook is a no-op. Missing/withdrawn permission and template/account checks still control live sending. Invalid metadata/configuration can keep a recovery uncertain or fail the command rather than falsely finalize it.
 3. **Google verification remains required.** Missing, changed or unverifiable events retain the existing uncertain outcome and lock. This package does not repeat an insert, move or delete to force a successful recovery.
 4. **No hosted/multi-worker expansion.** Existing singleton ownership, local SQLite, PC uptime, external race/uncertainty and throughput limits remain. Future correctness, monitoring, credential onboarding or hosting work must be separately scoped.
-5. **No v0.8.1 acceptance.** The review filenames are provisional. C's owner PC report authorized D's documentation only. Version promotion, live reminder activation, merge and any further Category B cleanup still require their explicit owner decisions.
+5. **Version gate at the initial A–D delivery (historical).** The filenames were provisional and C's PC report authorized D's documentation only. The owner's later final approval/merge supersedes that pending integration/version status; see Section 13. Live reminder activation and further Category B cleanup still require separate decisions.
 
 ## 8. Work Package A manual PC validation (completed by owner report)
 
@@ -321,4 +323,12 @@ The measured future candidate inventory is **503 helper-function lines + 3 priva
 
 D's backend tree is verified byte-for-byte identical to C's inspected source (`e0af765`) and tested code/test tree (`62726af`). Source links/ranges, function/line arithmetic and documentation whitespace were checked. The full suite was not rerun for documentation-only D; the exact unchanged app/test tree retains C's **1,089 passed, zero failures/cancellations/skips** cloud result and the owner's successful additional PC suite/checklist report. No further PC installation or test round is required for D's documents; the owner may keep running C's accepted checkout.
 
-All work is prepared for the final integration decision. The original task explicitly requires: **“Do not merge any pull request without explicit owner approval.”** Main and the delivered A/B/C branches remain unchanged/unmerged. Version stays **0.8.0**; the v0.8.1 filenames are provisional. D does not merge, publish a release, enable live reminders or authorize further code removal. Documentation-only rollback is a return to C's checkout; do not restore/delete existing database records.
+At D's initial handoff, all work was prepared for the final integration decision. The original task explicitly required: **“Do not merge any pull request without explicit owner approval.”** Main was then unchanged/unmerged, the package still said **0.8.0**, and the v0.8.1 filenames were provisional. The later final approval/merge in Section 13 supersedes those historical pending states. D itself did not merge, publish a release, enable live reminders or authorize further code removal. Documentation-only rollback is a return to C's checkout; do not restore/delete existing database records.
+
+## 13. Final owner approval and v0.8.1 baseline
+
+After the branch handoff, the owner explicitly stated **“I approve. I did the pull request and tested 0.8.1 on my PC. All tests passed.”** This supplies the final integration/version approval. GitHub's actual merge commit confirms [PR #1](https://github.com/vanasperena-ux/nukmiris/pull/1) merged `audit/v0.8.0-remaining-legacy` into `main` at `7b19c4df2b83a9eb5b4878ed1f4eaad73b8c0487` on October 26, 2026, America/Mexico_City. The earlier API-block notes describe the cloud delivery attempts; the owner completed the PR through GitHub.
+
+The merged backend is byte-identical to C's accepted/tested `62726af` tree. At merge time, the repository still labeled the package/lockfile 0.8.0. Release commit `fe8e9adc7d0a72fd65a26f589508e6e72788ed52` updates only those version metadata fields to **0.8.1**, leaving dependencies, runtime code, tests, schema and configuration unchanged. Current baseline/continuity documents now record the owner's acceptance while retaining historical records. No exact PC commit hash or detailed run log was supplied; the reported PC results remain separate from cloud validation.
+
+The complete release-label suite at `fe8e9ad` passed **1,089 tests**, zero failures/cancellations/skips, 27 suites, **249.59 seconds**, Linux x64/Node v24.19.0. Further release details are recorded in [the release guide](../releases/v0.8.1.md). The current baseline is **v0.8.1**. No additional business feature, Category B removal, credential/environment/database change or live reminder activation is included. These remain separately scoped decisions; final approval of this maintenance release is not approval for further legacy deletion.

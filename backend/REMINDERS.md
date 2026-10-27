@@ -1,6 +1,8 @@
-# Appointment reminders and attendance — v0.8.0
+# Appointment reminders and attendance — v0.8.0 feature/setup history
 
-**v0.8.0 is the current owner-accepted baseline, confirmed October 26, 2026.** All 648 PC tests passed and the first two-hour reminder was created, previewed and saved as `dry_run`, with no pending jobs or review errors in the supplied status report. See [the acceptance record](BASELINE.md). Live reminder delivery and attendance confirmation remain separate checks. This release adds opt-in appointment reminders and attendance confirmation. It prepares backend data for a future owner dashboard; it adds no dashboard, owner web endpoint or hosting deployment.
+**Current owner-accepted baseline: [v0.8.1 maintenance](../docs/releases/v0.8.1.md).** This guide retains v0.8.0's feature/setup and 648-test upgrade history. Use the v0.8.1 release guide for the current 1,089-test maintenance update; an already prepared v0.8.0 installation needs no additional reminder/schema preparation for v0.8.1.
+
+**Historical v0.8.0 acceptance, confirmed October 26, 2026.** All 648 PC tests passed and the first two-hour reminder was created, previewed and saved as `dry_run`, with no pending jobs or review errors in the supplied status report. See [the acceptance record](BASELINE.md). Live reminder delivery and attendance confirmation remain separate checks. This release adds opt-in appointment reminders and attendance confirmation. It prepares backend data for a future owner dashboard; it adds no dashboard, owner web endpoint or hosting deployment.
 
 The [production compliance review](META_COMPLIANCE_REPORT.md) adds safe Meta TTL validation, auditable customer permission, sender/WABA membership checks, fresh template availability reads and quoted-reply/delivery sequencing protection. Existing v0.8.0 installations must repeat the backed-up preparation command for the additive permission table. Production reminders remain off until explicitly enabled by the owner.
 

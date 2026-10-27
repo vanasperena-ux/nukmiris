@@ -1,14 +1,18 @@
 # NukMiris project continuity
 
+Current owner-accepted baseline: **v0.8.1 reliability maintenance**. The owner approved it, merged PR #1 and reported all PC tests passed after accepting A/B/C and the ordinary-flow checklist. [Release/update instructions](releases/v0.8.1.md) and [exact acceptance evidence](../backend/BASELINE.md) govern future work. Preserve the accepted behavior; further Category B deletion needs separate authorization. Keep using `npm.cmd` in Windows PowerShell.
+
 Previous owner-verified baseline: v0.7.3 consistent appointment choices (`9c9e1a9`), including v0.7.2 Calendar details/empty results and v0.7.1 slot labels. It retains the verified v0.7.0 simple menu instructions (`e1c5370`), v0.6.0 natural dates (`3238e34`), v0.5.0 intent recognition (`b6a9169`), v0.4.1 availability (`8649109`) and v0.4.0 reliability (`9d6358b`) behavior.
 
-Current owner-accepted baseline: **v0.8.0 reminders and attendance**, application/test reference `52b0ded7979480905daca470368cb044618c53a7`. On October 26, 2026 (America/Mexico_City), the owner accepted it after all 648 PC tests passed and the first reminder was created, previewed and saved in dry-run. Earlier verified behavior remains protected. Meta approval/TTL checks, recorded permission and actual reminder delivery/attendance tests remain separate. See [the acceptance scope](../backend/BASELINE.md) and [the reminder guide](../backend/REMINDERS.md).
+Historical owner-accepted baseline: **v0.8.0 reminders and attendance**, application/test reference `52b0ded7979480905daca470368cb044618c53a7`. On October 26, 2026 (America/Mexico_City), the owner accepted it after all 648 PC tests passed and the first reminder was created, previewed and saved in dry-run. Earlier verified behavior remains protected. Meta approval/TTL checks, recorded permission and actual reminder delivery/attendance tests remain separate. See [the acceptance scope](../backend/BASELINE.md) and [the reminder guide](../backend/REMINDERS.md).
 
 Its subsequent [production compliance review](../backend/META_COMPLIANCE_REPORT.md) preserves the accepted four templates and adds safe Meta TTLs, permission evidence/withdrawal, per-WABA sender membership, uncached template status, delivered-message follow-up eligibility and quoted-reply protection. The owner supplied official excerpts to overcome blocked documentation access. All 648 offline tests pass; no production activation or live-account approval is implied. Repeat backed-up reminder preparation for the additive permission table before PC testing; continue using `npm.cmd` in PowerShell.
 
 PC result: after separately passing the new Calendar-entry check, the owner reported **“version v0.7.3 tested and all good”** on 2026-10-25 (America/Mexico_City). Record the overall combined v0.7.3 checkpoint as passed. See [the verification record](../backend/BASELINE.md) for evidence and scope; no application changes or new installation are needed for this documentation update.
 
-## Stopped work — legacy-code audit
+## Historical stop — subsequently resumed and completed
+
+The owner later resumed the audit, authorized the controlled A–D maintenance work, accepted the PC checkpoints and merged PR #1. That work is incorporated in v0.8.1; the original stop below is historical. The remaining Category B assessment does not authorize further removal.
 
 On October 26, 2026, the owner stopped the audit before its report or cleanup was produced. Do not resume it without further instructions. No application cleanup was made. Any future audit must use the accepted v0.8.0 baseline; v0.7.3 remains a historical comparison.
 
