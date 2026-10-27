@@ -14,6 +14,8 @@ The complete release-label suite at `fe8e9ad` passed **1,089 cloud tests**, zero
 
 Use **`npm.cmd`** for the owner's Windows PowerShell commands. Existing v0.8.0 installations need no additional migration, dependency reinstall, provider reauthorization or reminder preparation for this maintenance update. Preserve existing data, jobs, permissions and uncertain locks. See the [release/update instructions](../docs/releases/v0.8.1.md) and [maintenance evidence](../docs/code-review/NukMiris-v0.8.1-Maintenance-Review.md).
 
+Publication reference: `main` was fast-forwarded from the owner's merge to `95decc812c228f25171ecfe647200447c83e2e45`, and annotated tag `v0.8.1` points to that release commit. Later documentation-only commits may follow on main. GitHub's API returned 403 when creating the separate Release page; the tag and source publication succeeded. See the release guide's artifact status; this limitation does not change the owner's baseline acceptance.
+
 ## Historical owner-accepted baseline — v0.8.0
 
 The original record below is preserved as historical evidence; the v0.8.1 acceptance above supersedes its then-current baseline and stopped-audit status.
