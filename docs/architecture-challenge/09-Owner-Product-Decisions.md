@@ -38,3 +38,33 @@ The accepted **v0.8.1 functional parity** remains the baseline for a rebuild unl
 ## Change control
 
 This is a requirements/owner-decision record only. No deployment, implementation, live Meta/Google change, approved feature expansion or modification of the original Codex/Claude reports is implied.
+
+## Additional owner decisions — 2026-10-27
+
+**Status:** Future product direction; not implemented v0.8.1 parity. Changes require separately approved feature scope.
+
+### F-01: employees and scheduling
+
+For a multi-employee business, ask the customer whether they prefer a particular employee. If yes, filter availability to that employee. If no, randomly assign **among employees available for the selected appointment**; only one appointment per employee at a time, while multiple employees may share one Google Calendar. Add employee name to the Calendar event title and identify employee with color/tag where feasible. The business owner must be able to reassign the appointment to an available employee from a future NukMiris webapp. Preserve assignment identity and transactional safety on reassignment; investigate specific staff schedules, availability and notification.
+
+### F-11: native WhatsApp chat preservation
+
+The desired product is a scheduling **add-on** to ordinary WhatsApp Business conversations (including owner chats with friends), not an automatic takeover. When a customer sends their first message, or a new inbound message arrives more than 24 hours after their previous inbound message, send **at most one** concise introduction explaining that typing `menu` or `cita` starts the appointment assistant. Do **not** automatically display the full menu. Display the appropriate menu or management flow only after explicit commands `menu`, `cita`, `reagendar`, `cancelar` or supported variants; ordinary text should pass through to the owner. The 24-hour introductory-message UX rule is distinct from Meta's 24-hour customer-service-window rule. Validate WhatsApp Business App/API coexistence, message echoes, owner handoff and throttling before implementing. For now the existing v0.8.1 recorded handoff remains parity baseline.
+
+### F-06: manually created appointments and reminder consent
+
+Juanita can create appointments in Google Calendar; customer phone number is proposed in the event **description/body**. Detect the event, validate/normalize the number, match an existing business-scoped WhatsApp customer or flag a candidate new identity. A typed number alone is not evidence of verified WhatsApp identity. If valid existing reminder permission exists, review eligibility to enroll the manual appointment; if consent is absent, mark **authorization pending** and alert Juanita rather than sending reminders.
+
+Owner proposes sending an outbound permission request to an unconsented new customer. **Compliance constraint:** Meta's WhatsApp Business Messaging Policy requires prior opt-in to contact people proactively and approved templates for business-initiated messaging outside the 24-hour service window. Therefore do not implement automatic permission solicitation to a new unconsented number merely because it appears in a Calendar event. Explore compliant customer-initiated and in-person permission workflows instead.
+
+Support customer-initiated `da mi permiso` (plus sensible Spanish variants) that triggers a concise, business-specific Accept/Decline reminder-permission question. Record the verified inbound customer identity, consent scope and exact wording/version, timestamp, provider evidence and opt-out; permission must remain revocable and distinct from marketing permission. Juanita may invite the customer to initiate this flow via normal chat. Track **pending authorization** in a Needs Attention queue. Customer consent and delivery eligibility must be reviewed for all manually entered appointments, edits and cancellations.
+
+**Feature Register (planned/not done):** Manual Calendar appointment ingestion; phone matching; consent/opt-in lifecycle; `da mi permiso` trigger; Accept/Decline evidence; pending-authorization Needs Attention; opt-out handling; manual-appointment reminder enrollment.
+
+### F-02: Meta billing is OPEN for brainstorming
+
+Compare (A) NukMiris subscription including a message allowance, NukMiris bearing eligible Meta charges, with larger packages, versus (B) business directly pays Meta usage while NukMiris charges a flat software subscription. No decision yet. Validate actual Tech Provider/Solution Partner billing arrangements, customer WABA ownership, cost predictability and pricing transparency. Tech Provider status alone is not a guarantee that Meta invoices NukMiris.
+
+### F-12 and scalability
+
+Privacy/retention/residency, response/recovery targets, alerts, on-call and hosting economics are parked for a later proposal; architects should recommend suitable scale-ready options, but numerical targets are not owner-approved. No feature implementation or main-branch change is authorized by this note.
