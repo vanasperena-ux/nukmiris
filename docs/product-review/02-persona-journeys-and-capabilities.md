@@ -19,10 +19,10 @@
 ## Persona-based scenario inventory
 | ID | Persona | Scenario | Stage | Decision refs | Review |
 |---|---|---|---|---|---|
-| C01 | Customer | New appointment via `cita`, one service | P0+MVP | 30/147, 140–146 | ☐ |
-| C02 | Customer | Existing appointment shown on `menu` | P0+MVP | 65, 148 | ☐ |
-| C03 | Customer | Reschedule existing appointment | P0+MVP | 63, 149 | ☐ |
-| C04 | Customer | Cancel existing appointment | P0+MVP | 64, 150 | ☐ |
+| C01 | Customer | New appointment via `cita`, one service; collect new customer's name after slot selection; ask reminder consent when unknown | P0+MVP | 19, 30/147, 140–146, 155–161 | Δ Owner requested revision; wording/branch validation pending |
+| C02 | Customer | Existing appointment shown on `menu` | P0+MVP | 65, 148 | ✓ Approved 2026-10-30 |
+| C03 | Customer | Reschedule existing appointment | P0+MVP | 63, 149 | ✓ Approved 2026-10-30 |
+| C04 | Customer | Cancel existing appointment | P0+MVP | 64, 150 | ✓ Approved 2026-10-30 |
 | C05 | Customer | All requested slots unavailable; more choices/waitlist | MVP | 31, 33, 68–73, 141 | ☐ |
 | C06 | Customer | Past employee preference vs available alternatives | MVP | 21, 142–146 | ☐ |
 | C07 | Customer | Appointment reminders and 1-day confirmation | P0+MVP | 36–38 | ☐ |
@@ -66,9 +66,11 @@
 | 2 | Chooses service where business has a service choice | Validate service and one-service-per-appointment rule; duration+buffer, qualified staff | Service catalog maintained in dashboard |
 | 3 | For returning customer, may favor last completed same-service employee; first-time customer assigned randomly if no preference | Verify eligible employee and calendar blocks; preserve choice logic of Decisions 143–146 | No intervention |
 | 4 | Sees next **two** available slots, requests more if needed; no unapproved date-first redesign | Compute per-employee availability, calendar busy intervals, hours, closure, buffer, horizon | Existing events block time |
-| 5 | Chooses a slot and confirms according to baseline flow | Protect chosen slot, write event safely to Google, reconcile uncertain outcome | Appointment visible on shared Google Calendar and NukMiris dashboard |
-| 6 | Receives booking confirmation | Persist identity/status and schedule reminders **only if valid consent** | Sees assigned employee and appointment |
-**Exceptions:** slot taken after offer; calendar unavailable; uncertain create; duplicate inbound; consent absent; multiple existing bookings limit. Never claim success or release protected slot on uncertainty.
+| 5 | Chooses preferred date/time. **If new customer**, then provides their name after slot selection; returning customers skip name collection when verified | Use authenticated sender number, collect name only for new customer, preserve chosen slot context; do not commit before booking confirmation | None |
+| 6 | Confirms the booking according to existing v0.8.1 flow | Protect chosen slot, safely write event to Google Calendar, reconcile uncertain outcome | Appointment visible on shared Google Calendar and NukMiris dashboard |
+| 7 | Receives booking confirmation | Persist verified appointment identity/status. If reminder permission is valid, schedule enabled reminders; if declined, do not prompt again | Sees assigned employee and appointment |
+| 8 | **Only when reminder permission is unknown:** sees an explicit optional Accept/Decline reminder-consent question after the booking confirmation; can also ignore it | Save affirmative consent durably before enabling still-eligible reminders. Decline/silence leaves appointment booked without reminders. Keep this distinct from permission for the current customer-initiated response | No extra task merely due to unknown consent |
+**Owner review (2026-10-30):** C01 marked **Revise**. Explicit change request: *new customer name is requested only after customer selects the date/time; after successful booking confirmation, if reminder consent is unclear, ask for permission*. Updated expected flow above is proposed for reapproval; **not yet marked Approved**. C02, C03 and C04 approved. **Exceptions:** slot taken after offer; calendar unavailable; uncertain create; duplicate inbound; declined/unknown consent; multiple existing bookings limit. Never claim success or release protected slot on uncertainty.
 
 ### C03. Customer reschedules
 | Step | Customer | NukMiris | Owner |
@@ -245,3 +247,11 @@ For each scenario mark **Approved / Revise / Not applicable** and record: expect
 3. Resolve launch-critical G-issues only; codify exact requirements and acceptance scenarios.
 4. Codex proposes stages P0 → commercial MVP → pilot with estimates/test IDs.
 5. Claude independently reviews implementation readiness, evidence and contradictions. **No code merge, deployment, provider activation or release without separate owner approval.**
+
+## Owner-review log
+| Date | Scenario | Result | Clarification |
+|---|---|---|---|
+| 2026-10-30 | C01 | **Revise** | New customers: ask name after date/time selection; after confirmed booking, if reminder permission unknown, offer explicit opt-in/decline without blocking appointment |
+| 2026-10-30 | C02 | **Approved** | Upcoming appointments + existing menu |
+| 2026-10-30 | C03 | **Approved** | Reschedule using existing selection and safe Google synchronization |
+| 2026-10-30 | C04 | **Approved** | Cancellation using existing selection and safe Google synchronization |
