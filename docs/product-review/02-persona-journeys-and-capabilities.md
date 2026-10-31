@@ -35,10 +35,10 @@
 | O02 | Owner | Import calendar customer history 3/6/12 months | MVP | 20, 54, 178 | ✓ Approved 2026-10-30 |
 | O03 | Owner | Configure services, employee qualifications/hours | MVP | 28–29, 133–139 | Δ Revision requested 2026-10-30 |
 | O04 | Owner | Create appointment in NukMiris calendar | MVP | 151–157, 177 | Δ Revision requested 2026-10-30 |
-| O05 | Owner | Create event in Google without phone | MVP | 54, 93, 177 | ☐ |
-| O06 | Owner | Reschedule/modify service through dashboard | MVP | 154, 170–172 | ☐ |
-| O07 | Owner | Modify managed appointment in Google | MVP | 91, 173–174 | ☐ |
-| O08 | Owner | Delete managed Google Calendar event | MVP | 92; 175 withdrawn | ☐ |
+| O05 | Owner | Create event in Google without phone | MVP | 54, 93, 177 | ✓ Approved 2026-10-31 |
+| O06 | Owner | Reschedule/modify service through dashboard | MVP | 154, 170–172 | ✓ Approved 2026-10-31 |
+| O07 | Owner | Modify managed appointment in Google | MVP | 91, 173–174 | ✓ Approved 2026-10-31 |
+| O08 | Owner | Delete managed Google Calendar event | MVP | 92; 175 withdrawn | ✓ Approved 2026-10-31 |
 | O09 | Owner | Manually overlap employee appointments | MVP | 172, 176 | ☐ |
 | O10 | Owner | Manage no-show and auto-complete | MVP | 34–35, 168–169 | ☐ |
 | O11 | Owner | Daily combined calendar, filters, Needs Attention | MVP | 39, 153, 167 | ☐ |
@@ -319,3 +319,13 @@ For each scenario mark **Approved / Revise / Not applicable** and record: expect
 
 **Design/proof gap:** Define reliable event fields and parsing conventions, copied-event detection, manual-correction UX, and whether/how a newly ingested calendar event produces a customer confirmation without duplicating messages. Do not automatically rewrite Juanita's event title/description unless explicitly approved. Never treat a typed telephone number as verified consent.
 
+
+## Owner-review log — O05–O08 (2026-10-31)
+| Date | Scenario | Result | Scope |
+|---|---|---|---|
+| 2026-10-31 | O05 | **Approved** | Google Calendar events with no phone remain unmanaged availability blockers, no automatic WhatsApp sends |
+| 2026-10-31 | O06 | **Approved** | NukMiris appointment edit with controlled override, service checks and authorized notification; secondary to Google Calendar owner workflow |
+| 2026-10-31 | O07 | **Approved** | Google Calendar verified edits, immediate availability sync, short notification consolidation and authorized updated message |
+| 2026-10-31 | O08 | **Approved** | Preserve Decision 92; deletion triggers protected owner resolution, not auto cancellation |
+
+**Pending owner reapproval remains: O03 (optional solo-first staff mode) and O04 (Google Calendar-first manual booking and safe parsing). Do not mark these approved based on O05–O08.**
