@@ -39,10 +39,10 @@
 | O06 | Owner | Reschedule/modify service through dashboard | MVP | 154, 170–172 | ✓ Approved 2026-10-31 |
 | O07 | Owner | Modify managed appointment in Google | MVP | 91, 173–174 | ✓ Approved 2026-10-31 |
 | O08 | Owner | Delete managed Google Calendar event | MVP | 92; 175 withdrawn | ✓ Approved 2026-10-31 |
-| O09 | Owner | Manually overlap employee appointments | MVP | 172, 176 | ☐ |
-| O10 | Owner | Manage no-show and auto-complete | MVP | 34–35, 168–169 | ☐ |
-| O11 | Owner | Daily combined calendar, filters, Needs Attention | MVP | 39, 153, 167 | ☐ |
-| O12 | Owner | Record consent in person and start authorized messaging | MVP | 155–157 | ☐ |
+| O09 | Owner | Manually overlap employee appointments | MVP | 172, 176 | ✓ Approved 2026-10-31 |
+| O10 | Owner | Manage no-show and auto-complete | MVP | 34–35, 168–169 | ✓ Approved 2026-10-31 |
+| O11 | Owner | Daily combined calendar, filters, Needs Attention | MVP | 39, 153, 167 | ✓ Approved 2026-10-31 |
+| O12 | Owner | Record consent in person and start authorized messaging | MVP | 155–157 | Δ Revision requested 2026-10-31 |
 | O13 | Owner | Change customer's WhatsApp phone number | MVP | 162–165 | ☐ |
 | O14 | Owner | Closures, staff absences and breaks | MVP | 24–27, 134–138 | ☐ |
 | O15 | Owner | Business with multiple locations | MVP | 58–60 | ☐ |
@@ -329,3 +329,13 @@ For each scenario mark **Approved / Revise / Not applicable** and record: expect
 | 2026-10-31 | O08 | **Approved** | Preserve Decision 92; deletion triggers protected owner resolution, not auto cancellation |
 
 **Pending owner reapproval remains: O03 (optional solo-first staff mode) and O04 (Google Calendar-first manual booking and safe parsing). Do not mark these approved based on O05–O08.**
+
+## Owner-review log — O09–O12 (2026-10-31)
+| Date | Scenario | Result | Scope |
+|---|---|---|---|
+| 2026-10-31 | O09 | **Approved** | Authorized manual overlaps with dashboard warning and confirmation; Google Calendar overlaps accepted as-is |
+| 2026-10-31 | O10 | **Approved** | No-show quick action and automatic completion distinct from verified attendance |
+| 2026-10-31 | O11 | **Approved** | Combined daily NukMiris calendar, employee/status filters, Needs Attention; Google Calendar remains preferred scheduling tool |
+| 2026-10-31 | O12 | **Revision requested** | In-person consent workflow for appointments booked first in Google Calendar remains unresolved; do not assume a Google event constitutes consent |
+
+**Open for later reapproval:** O03 solo-first employee configuration; O04 Google Calendar-first manual booking/parsing; O12 recording verbal consent without adding burdensome owner steps. This entry does not amend earlier approved consent protections.
