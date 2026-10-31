@@ -1,5 +1,5 @@
 # NukMiris — Persona-Based User Journeys & Capability Validation
-**Draft 1 — 2026-10-30** | **Status:** PENDING OWNER APPROVAL  
+**Draft 1 — 2026-10-30; updated 2026-10-31** | **Status:** 36/37 scenarios approved; C01 pending formal reapproval  
 **Purpose:** End-to-end functional blueprint and review gate before commercial MVP implementation roadmap.  
 **Companion:** [Decision reconciliation](01-decision-reconciliation.md).  
 **Evidence:** Owner Decisions 1–178, with later amendments; v0.8.1 baseline in `main` and prior architecture challenge. **Design intent, not proof of implemented behavior.**  
@@ -34,7 +34,7 @@
 | O01 | Owner | Create business, connect WhatsApp and Google Calendar | MVP | 52–54, 116 | ✓ Approved 2026-10-30 |
 | O02 | Owner | Import calendar customer history 3/6/12 months | MVP | 20, 54, 178 | ✓ Approved 2026-10-30 |
 | O03 | Owner | Configure services, employee qualifications/hours | MVP | 28–29, 133–139 | ✓ Revised workflow approved 2026-10-31 |
-| O04 | Owner | Create appointment in NukMiris calendar | MVP | 151–157, 177 | ✓ Revised workflow approved 2026-10-31 |
+| O04 | Owner | Google Calendar-first manual booking; NukMiris alternative | MVP | 151–157, 177 | ✓ Revised workflow approved 2026-10-31 |
 | O05 | Owner | Create event in Google without phone | MVP | 54, 93, 177 | ✓ Approved 2026-10-31 |
 | O06 | Owner | Reschedule/modify service through dashboard | MVP | 154, 170–172 | ✓ Approved 2026-10-31 |
 | O07 | Owner | Modify managed appointment in Google | MVP | 91, 173–174 | ✓ Approved 2026-10-31 |
@@ -50,12 +50,12 @@
 | S01 | Manager/Receptionist | Search customer and manage bookings | MVP | 151–154, 164–165 | ✓ Approved 2026-10-31 |
 | S02 | Employee | Restricted own schedule and permitted booking | MVP | 55–57, 176 | ✓ Approved 2026-10-31 |
 | S03 | Owner | Invite/revoke staff and manage role | MVP | 55–57, 131–132 | ✓ Approved 2026-10-31 |
-| A01 | Platform Admin | Integration down, alerts and safe recovery | P0+MVP | 83–90, 97–110 | ☐ |
-| A02 | Platform Admin | Human support tickets and knowledge base | MVP | 120–127 | ☐ |
-| A03 | Platform Admin | Tenant-level administrative access and audit | MVP | 127–130 | ☐ |
-| B01 | Owner | Trial, subscription, spend cap, failed payment | MVP | 47–51 | ☐ |
-| B02 | Owner | Subscription cancellation, export and retention | MVP | 12–13, 80–82 | ☐ |
-| P01 | Platform/Owner | Pre-pilot readiness, evidence and approval | MVP→pilot | 110–119 | ☐ |
+| A01 | Platform Admin | Integration down, alerts and safe recovery | P0+MVP | 83–90, 97–110 | ✓ Approved 2026-10-31 |
+| A02 | Platform Admin | Human support tickets and knowledge base | MVP | 120–127 | ✓ Approved 2026-10-31 |
+| A03 | Platform Admin | Tenant-level administrative access and audit | MVP | 127–130 | ✓ Approved 2026-10-31 |
+| B01 | Owner | Trial, subscription, spend cap, failed payment | MVP | 47–51 | ✓ Approved 2026-10-31 |
+| B02 | Owner | Subscription cancellation, export and retention | MVP | 12–13, 80–82 | ✓ Approved 2026-10-31 |
+| P01 | Platform/Owner | Pre-pilot readiness, evidence and approval | MVP→pilot | 110–119 | ✓ Approved 2026-10-31 |
 
 ## Detailed review tables — core journeys
 
@@ -106,7 +106,9 @@
 | 5 | No manual action unless ambiguity | Record explicit consent decision; if declined/no response continue booking/chat without reminders | May accept, decline, or book directly |
 **Critical note:** Phone match from event text is not automatically verified WhatsApp identity. Never reveal past appointments on an ambiguous match.
 
-### O04. Owner creates appointment through NukMiris calendar
+**Current controlling O04 approval:** The consolidated 2026-10-31 Google Calendar-first journey below supersedes the original dashboard-first detailed example. The dashboard flow here is a supported *secondary* alternative, not the primary process.
+
+### O04. Owner creates appointment through NukMiris calendar — secondary pathway
 | Step | Owner/authorized staff | NukMiris | Customer |
 |---|---|---|---|
 | 1 | Open mobile daily or combined employee calendar; choose slot | Employee filters, visible statuses | None |
@@ -378,3 +380,15 @@ For each scenario mark **Approved / Revise / Not applicable** and record: expect
 | 2026-10-31 | S03 | **Approved** | Owner invites, configures/revokes staff; solo-to-team transition preserves appointments; departed staff future bookings require review |
 
 **Next review requested:** Platform A01–A03, commercial B01–B02, pilot readiness P01. All previously approved customer/owner scenarios remain unchanged. C01 remains pending reapproval of the requested first-time name collection and post-confirmation permission prompt.
+
+## Final group review — Platform, Commercial and Pilot (2026-10-31)
+| Date | Scenario | Result | Scope |
+|---|---|---|---|
+| 2026-10-31 | A01 | **Approved** | Integration incident detection, protected uncertainty and verified reconciliation; never blind retry uncertain sends |
+| 2026-10-31 | A02 | **Approved** | Owner human-support case and knowledge base; AI support deferred |
+| 2026-10-31 | A03 | **Approved** | MFA-protected platform administration, tenant-scoped audited actions |
+| 2026-10-31 | B01 | **Approved** | 30-day no-card trial, monthly allowance/overage, cap, 7-day payment grace and controlled suspension |
+| 2026-10-31 | B02 | **Approved** | Subscription cancellation, customer export, appropriate retention/deletion and safe integration revocation |
+| 2026-10-31 | P01 | **Approved** | Commercial-MVP readiness evidence, independent Claude review and explicit pilot go/no-go |
+
+**Inventory audit (2026-10-31):** 37 unique scenarios (C=12; O=16; S=3; A=3; B=2; P=1). **36 approved; C01 alone pending formal owner reapproval.** Previous "pending" notes in the chronological review log are historical and superseded by later dated approvals. **Open engineering verification and design gaps do not equal unapproved owner journeys.** A separate closure report records them.
