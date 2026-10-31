@@ -27,10 +27,10 @@
 | C06 | Customer | Past employee preference vs available alternatives | MVP | 21, 142–146 | ✓ Approved 2026-10-30 |
 | C07 | Customer | Appointment reminders and 1-day confirmation | P0+MVP | 36–38 | ✓ Approved 2026-10-30 |
 | C08 | Customer | `permisos`: view, enable, disable, restore consent | MVP | 19, 158–161 | ✓ Approved 2026-10-30 |
-| C09 | Customer | Imported customer first inbound WhatsApp message | MVP | 148, 178 | ☐ |
+| C09 | Customer | Imported customer's first inbound; migration-intro flag independent of consent; direct commands uninterrupted | MVP | 148, 158–161, 178 | ✓ Approved with revision 2026-10-30 |
 | C10 | Customer | Normal chat and human assistance | P0+MVP | 41–45, 121 | ☐ |
 | C11 | Customer | Staff-initiated employee reassignment | MVP | 22–23 | ☐ |
-| C12 | Customer | Post-visit satisfaction/review invitation | MVP | 75–77 | ☐ |
+| C12 | Customer | Optional authorized attendance-and-feedback question; customer-reported attendance or absence; no reply leaves attendance unverified | MVP | 35, 75–77, 168 | ✓ Approved with revision 2026-10-30; template eligibility to verify |
 | O01 | Owner | Create business, connect WhatsApp and Google Calendar | MVP | 52–54, 116 | ☐ |
 | O02 | Owner | Import calendar customer history 3/6/12 months | MVP | 20, 54, 178 | ☐ |
 | O03 | Owner | Configure services, employee qualifications/hours | MVP | 28–29, 133–139 | ☐ |
@@ -248,6 +248,32 @@ For each scenario mark **Approved / Revise / Not applicable** and record: expect
 4. Codex proposes stages P0 → commercial MVP → pilot with estimates/test IDs.
 5. Claude independently reviews implementation readiness, evidence and contradictions. **No code merge, deployment, provider activation or release without separate owner approval.**
 
+## Approved owner refinements — Customer C09 and C12 (2026-10-30)
+
+### C09 — Migration-introduction flag, distinct from consent
+**Owner approved revision.** For customer profiles imported from Google Calendar history, record an explicit migration-introduction state (e.g. `migration_intro_pending`) separately from business-specific `reminder_consent` (unknown/granted/declined). When a **reliably matched** imported customer next initiates WhatsApp interaction, provide one concise introduction about `menu` and `cita`, plus an optional reminder opt-in **only if consent is unknown**. Customers not marked for migration introduction do not receive a new-feature explanation. Previously opted-out customers are not automatically re-solicited. Explicit commands such as `cita`, `reagendar`, `cancelar`, `menu`, `permisos` must be handled first, without hijacking or blocking the requested flow; any introduction is deferred to an appropriate moment. Normal human conversation must remain supported.
+
+**Delivery invariant:** Do not mark the introduction completed merely because an outbound message was attempted; use safe verified result handling and avoid duplicate introduction sends. Customer profile import and existing WhatsApp-number matches are not evidence of consent.
+
+| Step | Imported customer | NukMiris | Owner |
+|---|---|---|---|
+| 1 | Sends first WhatsApp message since migration | Checks reliable business-scoped identity and migration-intro flag | Can still chat naturally |
+| 2 | If ordinary greeting, receives a one-time feature introduction; if explicit appointment command, runs requested flow first | Presents `menu`/`cita` introduction once when safe, without taking over human chat | No action |
+| 3 | If consent unknown, accepts or declines reminders, or ignores question | Records explicit grant/decline only; silence stays unknown and no reminders | Consent view reflects evidence |
+| 4 | Returns later | No repeated migration announcement after verified introduction; existing menu/commands work normally | No action |
+
+### C12 — Optional post-appointment attendance and feedback
+**Owner approved revision**, replacing the earlier assumption that an Automatically Completed appointment proves attendance. Following an automatically completed appointment, where a business has enabled this feature and relevant WhatsApp communication is permitted, NukMiris may send an appropriately approved transaction-specific post-appointment question such as: **“¿Qué te pareció tu servicio de [servicio]?”** with two choices **“Sí, quiero calificar”** and **“No asistí.”** Exact message type, copy and buttons require Meta eligibility/approval validation; do **not** send proactively based solely on a phone number, calendar event or an appointment's auto-completed status.
+
+| Customer action | NukMiris action | Owner impact |
+|---|---|---|
+| “Sí, quiero calificar” | Records customer-*reported* attendance and opens optional 1–5 satisfaction response | Feedback appears in reports |
+| “No asistí” | Records customer-*reported* nonattendance; does not request rating; marks discrepancy for staff review if needed, rather than silently overwriting verified conflicting staff state | Owner can review disagreement |
+| Silence | Leaves Automatically Completed and attendance **unverified** | No fabricated attended status |
+| No applicable permission/template | No proactive survey sent | No customer contact |
+
+**Constraints:** no automatic sanctions; respect business-specific permissions and opt-outs, avoid survey spam, no selective public-review solicitation based on favorable scores. Survey content must not be bundled into an unauthorized Utility notification or inferred as covered by appointment-reminder consent without checking scope. Does not modify Decision 168's choice not to require staff positive attendance marks.
+
 ## Owner-review log
 | Date | Scenario | Result | Clarification |
 |---|---|---|---|
@@ -260,3 +286,6 @@ For each scenario mark **Approved / Revise / Not applicable** and record: expect
 | 2026-10-30 | C06 | **Approved** | Preferred employee |
 | 2026-10-30 | C07 | **Approved** | Reminders and confirmation |
 | 2026-10-30 | C08 | **Approved** | Per-business reminder permission |
+
+| 2026-10-30 | C09 | **Approved with revision** | One-time migration introduction only for flagged imported customers; consent state independent; preserve explicit commands and human chat |
+| 2026-10-30 | C12 | **Approved with revision** | Optional permission-gated post-service attendance-and-feedback question; self-reported absent or rating; no reply remains unverified |
