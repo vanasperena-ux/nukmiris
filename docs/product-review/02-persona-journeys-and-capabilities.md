@@ -47,9 +47,9 @@
 | O14 | Owner | Closures, staff absences and breaks | MVP | 24–27, 134–138 | ✓ Approved 2026-10-31 |
 | O15 | Owner | Business with multiple locations | MVP | 58–60 | ✓ Approved 2026-10-31 |
 | O16 | Owner | Review reports, customer export and deletion | MVP | 77–81 | ✓ Approved 2026-10-31 |
-| S01 | Manager/Receptionist | Search customer and manage bookings | MVP | 151–154, 164–165 | ☐ |
-| S02 | Employee | Restricted own schedule and permitted booking | MVP | 55–57, 176 | ☐ |
-| S03 | Owner | Invite/revoke staff and manage role | MVP | 55–57, 131–132 | ☐ |
+| S01 | Manager/Receptionist | Search customer and manage bookings | MVP | 151–154, 164–165 | ✓ Approved 2026-10-31 |
+| S02 | Employee | Restricted own schedule and permitted booking | MVP | 55–57, 176 | ✓ Approved 2026-10-31 |
+| S03 | Owner | Invite/revoke staff and manage role | MVP | 55–57, 131–132 | ✓ Approved 2026-10-31 |
 | A01 | Platform Admin | Integration down, alerts and safe recovery | P0+MVP | 83–90, 97–110 | ☐ |
 | A02 | Platform Admin | Human support tickets and knowledge base | MVP | 120–127 | ☐ |
 | A03 | Platform Admin | Tenant-level administrative access and audit | MVP | 127–130 | ☐ |
@@ -369,3 +369,12 @@ For each scenario mark **Approved / Revise / Not applicable** and record: expect
 6. Dashboard calendar-first booking remains supported as a **secondary option**.
 
 **Provider feasibility / tests remain required:** Google copied-event patterns, identity/employee/service parsing, change detection, Meta coexistence, suitable templates, consent capture and audit. Approval is not proof of technical implementation.
+
+## Staff persona owner-review log — S01–S03 (2026-10-31)
+| Date | Scenario | Result | Scope |
+|---|---|---|---|
+| 2026-10-31 | S01 | **Approved** | Receptionist searches customers, manages authorized bookings and No-shows, with booking-level overlap safeguards and audit |
+| 2026-10-31 | S02 | **Approved** | Employee limited to permitted schedule, optional booking permission; Google Calendar permission is independent |
+| 2026-10-31 | S03 | **Approved** | Owner invites, configures/revokes staff; solo-to-team transition preserves appointments; departed staff future bookings require review |
+
+**Next review requested:** Platform A01–A03, commercial B01–B02, pilot readiness P01. All previously approved customer/owner scenarios remain unchanged. C01 remains pending reapproval of the requested first-time name collection and post-confirmation permission prompt.
