@@ -63,3 +63,6 @@
 
 ## Review workflow
 Owner marks each journey Approved / Change requested / Not applicable; Codex traces to requirements and tests; Claude verifies conflict resolution and implementation evidence. The register itself is **not** approval to change baseline code.
+
+## Post-closure product policy — G06 (2026-10-31)
+**Owner approved Option A** for service suspension after the previously agreed seven-day payment grace period: stop automated bookings, proactive notifications and reminders; preserve bookings and Google Calendar records; warn owner before suspension; on verified payment restoration resume only future eligible actions, **no retroactive or uncertain-message retries**. This supplements Decisions 47–51/B01 without reopening other approvals. See [Step 2B gap register](04-step-2b-high-impact-gap-review.md).
