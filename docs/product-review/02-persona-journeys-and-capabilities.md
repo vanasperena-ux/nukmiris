@@ -43,10 +43,10 @@
 | O10 | Owner | Manage no-show and auto-complete | MVP | 34–35, 168–169 | ✓ Approved 2026-10-31 |
 | O11 | Owner | Daily combined calendar, filters, Needs Attention | MVP | 39, 153, 167 | ✓ Approved 2026-10-31 |
 | O12 | Owner | Record consent in person and start authorized messaging | MVP | 155–157 | Δ Revision requested 2026-10-31 |
-| O13 | Owner | Change customer's WhatsApp phone number | MVP | 162–165 | ☐ |
-| O14 | Owner | Closures, staff absences and breaks | MVP | 24–27, 134–138 | ☐ |
-| O15 | Owner | Business with multiple locations | MVP | 58–60 | ☐ |
-| O16 | Owner | Review reports, customer export and deletion | MVP | 77–81 | ☐ |
+| O13 | Owner | Change customer's WhatsApp phone number | MVP | 162–165 | ✓ Approved 2026-10-31 |
+| O14 | Owner | Closures, staff absences and breaks | MVP | 24–27, 134–138 | ✓ Approved 2026-10-31 |
+| O15 | Owner | Business with multiple locations | MVP | 58–60 | ✓ Approved 2026-10-31 |
+| O16 | Owner | Review reports, customer export and deletion | MVP | 77–81 | ✓ Approved 2026-10-31 |
 | S01 | Manager/Receptionist | Search customer and manage bookings | MVP | 151–154, 164–165 | ☐ |
 | S02 | Employee | Restricted own schedule and permitted booking | MVP | 55–57, 176 | ☐ |
 | S03 | Owner | Invite/revoke staff and manage role | MVP | 55–57, 131–132 | ☐ |
@@ -339,3 +339,13 @@ For each scenario mark **Approved / Revise / Not applicable** and record: expect
 | 2026-10-31 | O12 | **Revision requested** | In-person consent workflow for appointments booked first in Google Calendar remains unresolved; do not assume a Google event constitutes consent |
 
 **Open for later reapproval:** O03 solo-first employee configuration; O04 Google Calendar-first manual booking/parsing; O12 recording verbal consent without adding burdensome owner steps. This entry does not amend earlier approved consent protections.
+
+## Owner-review log — O13–O16 (2026-10-31)
+| Date | Scenario | Result | Scope |
+|---|---|---|---|
+| 2026-10-31 | O13 | **Approved** | Verified phone-number change, identity confirmation, new-number consent, preserve existing bookings/history |
+| 2026-10-31 | O14 | **Approved** | Employee absences, busy blocks and business closures managed through Google Calendar |
+| 2026-10-31 | O15 | **Approved** | Multi-location business with shared business customer scope and location-specific employee/calendar resources |
+| 2026-10-31 | O16 | **Approved** | Reporting, authorized exports, basic customer management, distinguish auto-completed from attendance |
+
+**Pending reapproval:** O03, O04, O12. Owner explicitly requested a consolidated Google Calendar-first workflow review before Staff personas. Do not treat subsequent proposals as already approved.
