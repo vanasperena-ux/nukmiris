@@ -28,13 +28,13 @@
 | C07 | Customer | Appointment reminders and 1-day confirmation | P0+MVP | 36–38 | ✓ Approved 2026-10-30 |
 | C08 | Customer | `permisos`: view, enable, disable, restore consent | MVP | 19, 158–161 | ✓ Approved 2026-10-30 |
 | C09 | Customer | Imported customer's first inbound; migration-intro flag independent of consent; direct commands uninterrupted | MVP | 148, 158–161, 178 | ✓ Approved with revision 2026-10-30 |
-| C10 | Customer | Normal chat and human assistance | P0+MVP | 41–45, 121 | ☐ |
-| C11 | Customer | Staff-initiated employee reassignment | MVP | 22–23 | ☐ |
+| C10 | Customer | Normal chat and human assistance | P0+MVP | 41–45, 121 | ✓ Approved 2026-10-30 |
+| C11 | Customer | Staff-initiated employee reassignment | MVP | 22–23 | ✓ Approved 2026-10-30 |
 | C12 | Customer | Optional authorized attendance-and-feedback question; customer-reported attendance or absence; no reply leaves attendance unverified | MVP | 35, 75–77, 168 | ✓ Approved with revision 2026-10-30; template eligibility to verify |
-| O01 | Owner | Create business, connect WhatsApp and Google Calendar | MVP | 52–54, 116 | ☐ |
-| O02 | Owner | Import calendar customer history 3/6/12 months | MVP | 20, 54, 178 | ☐ |
-| O03 | Owner | Configure services, employee qualifications/hours | MVP | 28–29, 133–139 | ☐ |
-| O04 | Owner | Create appointment in NukMiris calendar | MVP | 151–157, 177 | ☐ |
+| O01 | Owner | Create business, connect WhatsApp and Google Calendar | MVP | 52–54, 116 | ✓ Approved 2026-10-30 |
+| O02 | Owner | Import calendar customer history 3/6/12 months | MVP | 20, 54, 178 | ✓ Approved 2026-10-30 |
+| O03 | Owner | Configure services, employee qualifications/hours | MVP | 28–29, 133–139 | Δ Revision requested 2026-10-30 |
+| O04 | Owner | Create appointment in NukMiris calendar | MVP | 151–157, 177 | Δ Revision requested 2026-10-30 |
 | O05 | Owner | Create event in Google without phone | MVP | 54, 93, 177 | ☐ |
 | O06 | Owner | Reschedule/modify service through dashboard | MVP | 154, 170–172 | ☐ |
 | O07 | Owner | Modify managed appointment in Google | MVP | 91, 173–174 | ☐ |
@@ -289,3 +289,33 @@ For each scenario mark **Approved / Revise / Not applicable** and record: expect
 
 | 2026-10-30 | C09 | **Approved with revision** | One-time migration introduction only for flagged imported customers; consent state independent; preserve explicit commands and human chat |
 | 2026-10-30 | C12 | **Approved with revision** | Optional permission-gated post-service attendance-and-feedback question; self-reported absent or rating; no reply remains unverified |
+
+## Owner-review log — Business Owner O01–O04 and Customer C10–C11 (2026-10-30)
+
+| Scenario | Owner review result | Detailed interpretation / next action |
+|---|---|---|
+| C10 | **Approved** | Preserve normal owner/customer chat, explicit command activation and return from automation. Meta coexistence feasibility remains an implementation gate, not evidence of functionality. |
+| C11 | **Approved** | Employee reassignment customer-approval flow retained. |
+| O01 | **Approved** | Onboarding journey approved as presented, with real provider compatibility check. |
+| O02 | **Approved** | Google Calendar import with selectable 3/6/12 months plus future events, review and consent protection. |
+| O03 | **Revision requested** | Employee management must be **optional/configurable**; many businesses are solo operators. Automatically support one implicit/default bookable resource for a solo business, without forcing setup of employee profiles. When staff mode enabled, use multi-employee qualifications and weekly hours. Owner review pending. |
+| O04 | **Revision requested** | **Google Calendar is the owner's preferred/default manual appointment creation/editing interface.** NukMiris dashboard booking remains an alternative, per Decision 151. Owner can create a fresh event or copy a previous event, entering customer name, WhatsApp number and service as available. NukMiris should read the resulting event, normalize/standardize where reliable, detect managed identity/appointment details and safely enroll eligible reminders. Do not silently adopt copied IDs, stale names/numbers, wrong service, wrong employee or old consent; ambiguous data remains unmanaged or flagged contextually. Exact Google-event syntax, copied-event behavior, safe association, owner correction UX and notification timing must be tested/decided; **not yet approved as final O04**. |
+
+### Proposed O03 clarified journey — solo-first
+1. Owner enters business basics and chooses solo operation (default) or enables team/staff scheduling.
+2. Solo mode uses a default internal employee/resource and one business calendar; no manual employee setup is required. Business still configures service duration/buffer, regular available hours and Google exceptions.
+3. Team mode allows employee records, qualifications, schedules and shared-calendar resource allocation.
+4. The customer sees eligible slots without unnecessary employee-selection prompts for solo business. Changing from solo to staff mode must preserve existing booked appointments and resource identity.
+
+### Proposed O04 clarified journey — Google Calendar first
+| Step | Owner (Juanita) | NukMiris | Customer |
+|---|---|---|---|
+| 1 | Opens Google Calendar; creates or copies an appointment | Watches calendar through authorized read/sync path | None |
+| 2 | Adds/updates name, WhatsApp number and service where available; checks time | Parses event fields; safely normalizes numbers and services only when unambiguous; preserves original event | None |
+| 3 | May leave number absent | Treats event as availability blocker, unmanaged for messaging | No messages |
+| 4 | If number present, resolves profile and employee/service/duration | Link only when reliable identity, event ownership, resource, duration and consent evidence meet policy; copied outdated details are never silently trusted | None |
+| 5 | For fully verified managed event and valid consent | Enrolls authorized notifications/reminders and updates dashboard. No unsolicited permission requests to unconsented numbers | Receives permitted notifications |
+| 6 | May instead use NukMiris's calendar-first dashboard | Staff booking alternative with explicit conflict warning/override and WhatsApp number requirement | Can receive authorized confirmation |
+
+**Design/proof gap:** Define reliable event fields and parsing conventions, copied-event detection, manual-correction UX, and whether/how a newly ingested calendar event produces a customer confirmation without duplicating messages. Do not automatically rewrite Juanita's event title/description unless explicitly approved. Never treat a typed telephone number as verified consent.
+
