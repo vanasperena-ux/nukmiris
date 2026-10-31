@@ -23,10 +23,10 @@
 | C02 | Customer | Existing appointment shown on `menu` | P0+MVP | 65, 148 | ✓ Approved 2026-10-30 |
 | C03 | Customer | Reschedule existing appointment | P0+MVP | 63, 149 | ✓ Approved 2026-10-30 |
 | C04 | Customer | Cancel existing appointment | P0+MVP | 64, 150 | ✓ Approved 2026-10-30 |
-| C05 | Customer | All requested slots unavailable; more choices/waitlist | MVP | 31, 33, 68–73, 141 | ☐ |
-| C06 | Customer | Past employee preference vs available alternatives | MVP | 21, 142–146 | ☐ |
-| C07 | Customer | Appointment reminders and 1-day confirmation | P0+MVP | 36–38 | ☐ |
-| C08 | Customer | `permisos`: view, enable, disable, restore consent | MVP | 19, 158–161 | ☐ |
+| C05 | Customer | All requested slots unavailable; more choices/waitlist | MVP | 31, 33, 68–73, 141 | ✓ Approved 2026-10-30 |
+| C06 | Customer | Past employee preference vs available alternatives | MVP | 21, 142–146 | ✓ Approved 2026-10-30 |
+| C07 | Customer | Appointment reminders and 1-day confirmation | P0+MVP | 36–38 | ✓ Approved 2026-10-30 |
+| C08 | Customer | `permisos`: view, enable, disable, restore consent | MVP | 19, 158–161 | ✓ Approved 2026-10-30 |
 | C09 | Customer | Imported customer first inbound WhatsApp message | MVP | 148, 178 | ☐ |
 | C10 | Customer | Normal chat and human assistance | P0+MVP | 41–45, 121 | ☐ |
 | C11 | Customer | Staff-initiated employee reassignment | MVP | 22–23 | ☐ |
@@ -255,3 +255,8 @@ For each scenario mark **Approved / Revise / Not applicable** and record: expect
 | 2026-10-30 | C02 | **Approved** | Upcoming appointments + existing menu |
 | 2026-10-30 | C03 | **Approved** | Reschedule using existing selection and safe Google synchronization |
 | 2026-10-30 | C04 | **Approved** | Cancellation using existing selection and safe Google synchronization |
+
+| 2026-10-30 | C05 | **Approved** | No availability / waiting list |
+| 2026-10-30 | C06 | **Approved** | Preferred employee |
+| 2026-10-30 | C07 | **Approved** | Reminders and confirmation |
+| 2026-10-30 | C08 | **Approved** | Per-business reminder permission |
