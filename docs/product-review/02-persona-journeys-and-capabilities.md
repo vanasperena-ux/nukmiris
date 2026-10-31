@@ -1,5 +1,5 @@
 # NukMiris — Persona-Based User Journeys & Capability Validation
-**Draft 1 — 2026-10-30; updated 2026-10-31** | **Status:** 36/37 scenarios approved; C01 pending formal reapproval  
+**Draft 1 — 2026-10-30; updated 2026-10-31** | **Status:** STEP 2A CLOSED — 37/37 scenarios owner-approved (2026-10-31)  
 **Purpose:** End-to-end functional blueprint and review gate before commercial MVP implementation roadmap.  
 **Companion:** [Decision reconciliation](01-decision-reconciliation.md).  
 **Evidence:** Owner Decisions 1–178, with later amendments; v0.8.1 baseline in `main` and prior architecture challenge. **Design intent, not proof of implemented behavior.**  
@@ -19,7 +19,7 @@
 ## Persona-based scenario inventory
 | ID | Persona | Scenario | Stage | Decision refs | Review |
 |---|---|---|---|---|---|
-| C01 | Customer | New appointment via `cita`, one service; collect new customer's name after slot selection; ask reminder consent when unknown | P0+MVP | 19, 30/147, 140–146, 155–161 | Δ Owner requested revision; wording/branch validation pending |
+| C01 | Customer | New appointment via `cita`, one service; collect new customer's name after slot selection; ask reminder consent when unknown | P0+MVP | 19, 30/147, 140–146, 155–161 | ✓ Revised workflow approved 2026-10-31 |
 | C02 | Customer | Existing appointment shown on `menu` | P0+MVP | 65, 148 | ✓ Approved 2026-10-30 |
 | C03 | Customer | Reschedule existing appointment | P0+MVP | 63, 149 | ✓ Approved 2026-10-30 |
 | C04 | Customer | Cancel existing appointment | P0+MVP | 64, 150 | ✓ Approved 2026-10-30 |
@@ -70,7 +70,7 @@
 | 6 | Confirms the booking according to existing v0.8.1 flow | Protect chosen slot, safely write event to Google Calendar, reconcile uncertain outcome | Appointment visible on shared Google Calendar and NukMiris dashboard |
 | 7 | Receives booking confirmation | Persist verified appointment identity/status. If reminder permission is valid, schedule enabled reminders; if declined, do not prompt again | Sees assigned employee and appointment |
 | 8 | **Only when reminder permission is unknown:** sees an explicit optional Accept/Decline reminder-consent question after the booking confirmation; can also ignore it | Save affirmative consent durably before enabling still-eligible reminders. Decline/silence leaves appointment booked without reminders. Keep this distinct from permission for the current customer-initiated response | No extra task merely due to unknown consent |
-**Owner review (2026-10-30):** C01 marked **Revise**. Explicit change request: *new customer name is requested only after customer selects the date/time; after successful booking confirmation, if reminder consent is unclear, ask for permission*. Updated expected flow above is proposed for reapproval; **not yet marked Approved**. C02, C03 and C04 approved. **Exceptions:** slot taken after offer; calendar unavailable; uncertain create; duplicate inbound; declined/unknown consent; multiple existing bookings limit. Never claim success or release protected slot on uncertainty.
+**Owner review (2026-10-30):** C01 initially marked **Revise**. Explicit change request: *new customer name is requested only after customer selects the date/time; after successful booking confirmation, if reminder consent is unclear, ask for permission*. **Owner explicitly approved the updated flow 2026-10-31.** C02, C03 and C04 approved. **Exceptions:** slot taken after offer; calendar unavailable; uncertain create; duplicate inbound; declined/unknown consent; multiple existing bookings limit. Never claim success or release protected slot on uncertainty.
 
 ### C03. Customer reschedules
 | Step | Customer | NukMiris | Owner |
@@ -391,4 +391,11 @@ For each scenario mark **Approved / Revise / Not applicable** and record: expect
 | 2026-10-31 | B02 | **Approved** | Subscription cancellation, customer export, appropriate retention/deletion and safe integration revocation |
 | 2026-10-31 | P01 | **Approved** | Commercial-MVP readiness evidence, independent Claude review and explicit pilot go/no-go |
 
-**Inventory audit (2026-10-31):** 37 unique scenarios (C=12; O=16; S=3; A=3; B=2; P=1). **36 approved; C01 alone pending formal owner reapproval.** Previous "pending" notes in the chronological review log are historical and superseded by later dated approvals. **Open engineering verification and design gaps do not equal unapproved owner journeys.** A separate closure report records them.
+**Inventory audit (2026-10-31):** 37 unique scenarios (C=12; O=16; S=3; A=3; B=2; P=1). **37 owner-approved; none pending.** Previous "pending" notes in the chronological review log are historical and superseded by later dated approvals. **Open engineering verification and design gaps do not equal unapproved owner journeys.** A separate closure report records them.
+
+## Step 2A final signoff — C01 (2026-10-31)
+| Date | Scenario | Result | Specific owner-approved flow |
+|---|---|---|---|
+| 2026-10-31 | C01 | **Approved with revision; closes Step 2A** | Preserve service selection and existing two-slots/more UX; only for new customers ask name *after* choosing time and before confirmation; complete verified booking and send confirmation; if reminder consent unknown, offer separate optional consent afterward; declined/silent leaves booking intact and sends no reminders. |
+
+**STEP 2A CLOSED: 37/37 unique persona scenarios owner-approved.** This is functional signoff only; provider eligibility, design evidence, integration testing, billing/security proofs and pilot go/no-go remain in Step 2B and subsequent milestones. Draft PR #2 stays unmerged.
