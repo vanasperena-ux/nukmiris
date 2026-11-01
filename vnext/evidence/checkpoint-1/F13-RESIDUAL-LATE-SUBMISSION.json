@@ -1,0 +1,99 @@
+{
+  "result": "REPRODUCED; production physical cutoff NOT PROVEN",
+  "calls": [
+    {
+      "attemptId": "26ef66d9-24e4-4296-8c19-009b17848f90",
+      "budgetSeconds": 2,
+      "businessId": "synthetic-a",
+      "businessRevision": 1,
+      "calendarId": "9eaa2570-ce58-4418-8242-406a7e66d1ac",
+      "calendarRevision": 1,
+      "channelId": "56d387da-8872-4860-9ce7-e3c181925dc2",
+      "channelRevision": 1,
+      "conversationId": "f11d36c7-09ca-4b48-90f9-3f317c7a807c",
+      "deadlineAt": "2030-01-01T09:15:00.000Z",
+      "dueAt": "2030-01-01T09:00:00.000Z",
+      "formatVersion": 1,
+      "grantId": "synthetic-grant-synthetic-a",
+      "numberId": "number-synthetic-a",
+      "payload": {
+        "appointmentId": "0ab89ec0-8e89-4cfc-ad8c-ad157f610da5",
+        "businessId": "synthetic-a",
+        "calendarId": "9eaa2570-ce58-4418-8242-406a7e66d1ac",
+        "customerId": "5f7c600a-efe7-4516-9f18-4ab0b05bba4c",
+        "endAt": "2030-01-02T11:00:00.000Z",
+        "eventId": "28476157-193b-4291-9900-bbadbc0cc574",
+        "kind": "CREATE",
+        "resourceId": "9f0220fe-ac4a-4bb0-b8c4-4b5cc5568d99",
+        "startAt": "2030-01-02T10:00:00.000Z"
+      },
+      "payloadDigest": "1bc57e682a8278dbb864f7436cc7ffb8a4a8f162a8c0fd30b5918c49ec403a22",
+      "permissionRevision": 0,
+      "purpose": "CUSTOMER_REQUEST",
+      "recipient": "customer-synthetic-a",
+      "recoveryEpoch": 1,
+      "remoteId": "28476157-193b-4291-9900-bbadbc0cc574",
+      "waba": "waba-synthetic-a",
+      "windowEnd": "2030-01-02T09:00:00.000Z"
+    }
+  ],
+  "business": [
+    {
+      "business_id": "synthetic-a",
+      "status": "SUSPENDED",
+      "revision": "2",
+      "recovery_epoch": "1",
+      "dispatch_enabled": true
+    }
+  ],
+  "attempts": [
+    {
+      "business_id": "synthetic-a",
+      "id": "26ef66d9-24e4-4296-8c19-009b17848f90",
+      "operation_id": "9a0a1c37-2fa5-4034-8222-6c5cf520e7ef",
+      "output_id": null,
+      "state": "VERIFIED_APPLIED",
+      "owner_id": "166aefbe-b48f-4c55-a48d-24eb92e3c594",
+      "envelope": {
+        "waba": "waba-synthetic-a",
+        "dueAt": "2030-01-01T09:00:00.000Z",
+        "grantId": "synthetic-grant-synthetic-a",
+        "payload": {
+          "kind": "CREATE",
+          "endAt": "2030-01-02T11:00:00.000Z",
+          "eventId": "28476157-193b-4291-9900-bbadbc0cc574",
+          "startAt": "2030-01-02T10:00:00.000Z",
+          "businessId": "synthetic-a",
+          "calendarId": "9eaa2570-ce58-4418-8242-406a7e66d1ac",
+          "customerId": "5f7c600a-efe7-4516-9f18-4ab0b05bba4c",
+          "resourceId": "9f0220fe-ac4a-4bb0-b8c4-4b5cc5568d99",
+          "appointmentId": "0ab89ec0-8e89-4cfc-ad8c-ad157f610da5"
+        },
+        "purpose": "CUSTOMER_REQUEST",
+        "numberId": "number-synthetic-a",
+        "remoteId": "28476157-193b-4291-9900-bbadbc0cc574",
+        "attemptId": "26ef66d9-24e4-4296-8c19-009b17848f90",
+        "channelId": "56d387da-8872-4860-9ce7-e3c181925dc2",
+        "recipient": "customer-synthetic-a",
+        "windowEnd": "2030-01-02T09:00:00.000Z",
+        "businessId": "synthetic-a",
+        "calendarId": "9eaa2570-ce58-4418-8242-406a7e66d1ac",
+        "deadlineAt": "2030-01-01T09:15:00.000Z",
+        "budgetSeconds": 2,
+        "formatVersion": 1,
+        "payloadDigest": "1bc57e682a8278dbb864f7436cc7ffb8a4a8f162a8c0fd30b5918c49ec403a22",
+        "recoveryEpoch": 1,
+        "conversationId": "f11d36c7-09ca-4b48-90f9-3f317c7a807c",
+        "channelRevision": 1,
+        "businessRevision": 1,
+        "calendarRevision": 1,
+        "permissionRevision": 0
+      },
+      "payload_digest": "1bc57e682a8278dbb864f7436cc7ffb8a4a8f162a8c0fd30b5918c49ec403a22",
+      "arm_seal": "arm/synthetic-a/26ef66d9-24e4-4296-8c19-009b17848f90",
+      "meta_message_id": null,
+      "meta_status": null
+    }
+  ],
+  "requiredGate": "OPS01 deployed egress containment before activation"
+}
