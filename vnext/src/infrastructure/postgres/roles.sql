@@ -3,10 +3,16 @@ DECLARE r text;
 BEGIN
  FOREACH r IN ARRAY ARRAY['wp1_owner','wp1_definer','wp1_ingress','wp1_sealer','wp1_reducer','wp1_dispatch','wp1_result','wp1_operator','wp1_recovery','wp1_tenant_a','wp1_tenant_b'] LOOP
   IF NOT EXISTS(SELECT 1 FROM pg_roles WHERE rolname=r) THEN EXECUTE format('CREATE ROLE %I %s',r,CASE WHEN r IN ('wp1_owner','wp1_definer') THEN 'NOLOGIN' ELSE 'LOGIN' END); END IF;
+  IF r NOT IN ('wp1_owner','wp1_definer') THEN
+   EXECUTE format('ALTER ROLE %I SET lock_timeout = %L',r,'3s');
+   EXECUTE format('ALTER ROLE %I SET idle_in_transaction_session_timeout = %L',r,'10s');
+   EXECUTE format('ALTER ROLE %I SET statement_timeout = %L',r,'10s');
+  END IF;
  END LOOP;
  ALTER ROLE wp1_definer BYPASSRLS;
 END $$;
 REVOKE ALL ON SCHEMA public FROM PUBLIC;
+GRANT USAGE ON SCHEMA public TO wp1_definer;
 GRANT USAGE ON SCHEMA core TO wp1_owner,wp1_definer,wp1_ingress,wp1_sealer,wp1_reducer,wp1_dispatch,wp1_result,wp1_operator,wp1_recovery,wp1_tenant_a,wp1_tenant_b;
 GRANT ALL ON ALL TABLES IN SCHEMA core TO wp1_definer;
 GRANT ALL ON ALL SEQUENCES IN SCHEMA core TO wp1_definer;
@@ -17,14 +23,15 @@ CREATE FUNCTION core.restore_snapshot(snap jsonb,evidence jsonb,reason_value tex
 LANGUAGE plpgsql SECURITY DEFINER SET search_path=pg_catalog,core AS $$
 DECLARE t text; item jsonb; b text; subject_value text;
 BEGIN
- IF session_user<>'wp1_recovery' OR snap->>'format'<>'1' THEN RAISE EXCEPTION 'recovery_denied'; END IF;
+ IF snap IS NULL OR evidence IS NULL OR reason_value IS NULL THEN RAISE EXCEPTION 'null_argument'; END IF;
+ IF session_user<>'wp1_recovery' OR snap->>'format' IS DISTINCT FROM '1' THEN RAISE EXCEPTION 'recovery_denied'; END IF;
  IF EXISTS(SELECT 1 FROM core.business) THEN RAISE EXCEPTION 'recovery_destination_not_empty'; END IF;
  FOREACH t IN ARRAY ARRAY['business','channel','calendar','resource','customer','conversation','seal','batch','input','batch_input','permission_head','permission_event','status_event','appointment','operation','mutation_guard','protection','output_intent','attempt','receipt','recovery_case','audit'] LOOP
   -- Protection ranges are serialized by the fixture snapshot as their PG text.
   EXECUTE format('INSERT INTO core.%I OVERRIDING SYSTEM VALUE SELECT * FROM jsonb_populate_recordset(NULL::core.%I,$1)',t,t) USING coalesce(snap->'tables'->t,'[]'::jsonb);
  END LOOP;
  PERFORM setval(pg_get_serial_sequence('core.audit','id'),greatest(1,coalesce((SELECT max(id) FROM core.audit),0)),EXISTS(SELECT 1 FROM core.audit));
- UPDATE core.business SET dispatch_enabled=false,recovery_epoch=recovery_epoch+1;
+ UPDATE core.business SET status='SUSPENDED',revision=revision+1,dispatch_enabled=false,recovery_epoch=recovery_epoch+1;
  UPDATE core.permission_head SET suppressed=true,revision=revision+1;
  UPDATE core.attempt SET state='UNKNOWN' WHERE state IN ('ARMED','SUBMISSION_ENTERED');
  UPDATE core.output_intent SET state='UNKNOWN' WHERE state IN ('ARMED','SUBMISSION_ENTERED');
@@ -69,3 +76,7 @@ GRANT EXECUTE ON FUNCTION core.arm(text,uuid,uuid,text,text),core.enter_submissi
 GRANT EXECUTE ON FUNCTION core.apply_result(text,uuid,jsonb,text,text,text),core.accept_receipt(text,uuid) TO wp1_result;
 GRANT EXECUTE ON FUNCTION core.suppress(text,text,text,text,timestamptz),core.grant_permission(text,text,text,text,bigint,timestamptz,timestamptz,text),core.set_status(text,text,text,text,bigint,text) TO wp1_operator;
 GRANT EXECUTE ON FUNCTION core.restore_snapshot(jsonb,jsonb,text) TO wp1_recovery;
+
+GRANT EXECUTE ON FUNCTION core.abandon_unsent(text,uuid,text,text) TO wp1_operator;
+
+GRANT EXECUTE ON FUNCTION core.hold_input(text,uuid,text,text) TO wp1_operator;

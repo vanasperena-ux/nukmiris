@@ -1,7 +1,7 @@
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
 import {randomUUID} from 'node:crypto';
-import {fixture,plan,apply,admission,raw,evidence,arm,provider} from './support/helpers.js';
+import {fixture,plan,apply,admission,raw,evidence,arm,provider,holdInput} from './support/helpers.js';
 import {text} from '../src/domain/protocol.js';
 import {prepareOperation} from '../src/application/prepare-operation.js';
 import {dispatchOnce} from '../src/application/dispatch-once.js';
@@ -48,6 +48,7 @@ test('SEC03: actual roles deny table writes, PUBLIC definer calls, forged scope 
 test('SEC02/04/F30: cross-business FK and copied/foreign appointment tuple never authorize an operation',async t=>{
   const f=await fixture(t);await assert.rejects(plan(f,{customerId:f.id('customer','synthetic-b')}),/customer_denied/);
   await assert.rejects(plan(f,{resourceId:f.id('resource','synthetic-b')}),/resource_denied/);
+  for(const i of await f.rows('input'))await holdInput(f,text(i['id']));
   const p=await plan(f);await apply(t,f,p);
   await assert.rejects(plan(f,{kind:'MOVE',appointmentId:text(p.body['appointmentId']),eventId:'copied-'+text(p.body['eventId']),expectedRevision:2}),/appointment_denied/);
   await assert.rejects(f.admin.query('INSERT INTO core.resource VALUES($1,$2,$3,false)',['synthetic-a',randomUUID(),f.id('calendar','synthetic-b')]),/foreign key/);

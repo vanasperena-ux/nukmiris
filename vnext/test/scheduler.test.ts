@@ -15,11 +15,13 @@ test('DB06/07/08: 1000 recorded seeded real-PostgreSQL admission/withdrawal/susp
     // Explicit independent-case reset of fixture state. Never reset within a
     // crash/recovery scenario. No provider is invoked by this gate exploration.
     await f.admin.query('BEGIN');
+    await f.admin.query('ALTER TABLE core.permission_event DISABLE TRIGGER append_only; ALTER TABLE core.status_event DISABLE TRIGGER append_only');
     await f.admin.query("UPDATE core.business SET status='ACTIVE',revision=1 WHERE business_id='synthetic-a'");
     await f.admin.query("UPDATE core.permission_head SET suppressed=false,revision=1,last_revoke_at=NULL WHERE business_id='synthetic-a'");
     await f.admin.query("DELETE FROM core.permission_event WHERE decision='REVOKE'");await f.admin.query('DELETE FROM core.status_event');
     await f.admin.query("UPDATE core.attempt SET state='ARMED' WHERE business_id='synthetic-a' AND id=$1",[attemptId]);
     await f.admin.query("UPDATE core.output_intent SET state='PENDING' WHERE business_id='synthetic-a' AND id=$1",[out.body['outputId']]);
+    await f.admin.query('ALTER TABLE core.permission_event ENABLE TRIGGER append_only; ALTER TABLE core.status_event ENABLE TRIGGER append_only');
     await f.admin.query('COMMIT');
     const order=shuffled(seed,['preflightA','preflightB','readHead','STOP','suspend','enterA','enterB','inspect','expireUnsent'] as const);
     distinct.add(order.join(','));let blocked=false,claims=0;const steps:ObjectValue[]=[];

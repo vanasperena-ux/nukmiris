@@ -32,7 +32,7 @@ export async function prepareOperation(args:{request:PlanRequest;reducer:UnitOfW
   if(Date.parse(intent.startAt)>=Date.parse(intent.endAt)||!Number.isInteger(intent.bufferMinutes)||intent.bufferMinutes<0||intent.bufferMinutes>1440)throw new Error('invalid_interval');
   const plan=await archive.ensure(`operation/${b}/${r.inputId}`,'OPERATION_PLAN',{intent},()=>{
     const attemptId=randomUUID(),operationId=randomUUID(),appointmentId=r.appointmentId??randomUUID(),eventId=r.eventId??randomUUID(),outputId=randomUUID();
-    const payload={kind:intent.kind,businessId:b,calendarId:r.calendarId,appointmentId,eventId,customerId:r.customerId,resourceId:r.resourceId,startAt:intent.startAt,endAt:intent.endAt};
+    const payload={kind:intent.kind,businessId:b,calendarId:r.calendarId,appointmentId,eventId,customerId:r.customerId,resourceId:r.resourceId,startAt:intent.startAt,endAt:intent.endAt,bufferMinutes:intent.bufferMinutes};
     const outputPayload={synthetic:'WP1_ONLY',operationId,appointmentId};
     const now=clock.now().toISOString(),deadline=new Date(Math.min(clock.now().getTime()+900000,Date.parse(intent.startAt)-2000)).toISOString();
     const envelope:Envelope={formatVersion:1,businessId:b,attemptId,payloadDigest:digest(payload),recipient:text(context.input['subject']),

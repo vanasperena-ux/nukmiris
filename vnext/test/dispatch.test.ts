@@ -91,10 +91,10 @@ test('F22: an uncertain output head never expires into unsent and blocks later o
   const out=await prepareOutput({businessId:'synthetic-a',outputId:text(p.body['outputId']),reducer:f.role('reducer'),sealer:f.role('sealer'),archive:f.archive,clock:f.clock});
   const {server,client}=await provider(t,f);server.loseResponse=true;const owner=await arm(f,out);
   await dispatchOnce({businessId:'synthetic-a',attemptId:text(out.body['attemptId']),ownerId:owner,dispatcher:f.role('dispatch'),archive:f.archive,provider:client,clock:f.clock});
-  const second=await plan(f,{startAt:'2030-01-03T10:00:00Z',endAt:'2030-01-03T11:00:00Z'});await apply(t,f,second);
-  const out2=await prepareOutput({businessId:'synthetic-a',outputId:text(second.body['outputId']),reducer:f.role('reducer'),sealer:f.role('sealer'),archive:f.archive,clock:f.clock});
-  const owner2=await arm(f,out2);
-  assert.equal((await dispatchOnce({businessId:'synthetic-a',attemptId:text(out2.body['attemptId']),ownerId:owner2,dispatcher:f.role('dispatch'),archive:f.archive,provider:client,clock:f.clock})).state,'HELD');
+  const second=await plan(f,{startAt:'2030-01-03T10:00:00Z',endAt:'2030-01-03T11:00:00Z'});
+  const owner2=await arm(f,second);
+  assert.equal((await dispatchOnce({businessId:'synthetic-a',attemptId:text(second.body['attemptId']),ownerId:owner2,dispatcher:f.role('dispatch'),archive:f.archive,provider:client,clock:f.clock})).state,'HELD');
+  assert.equal((await f.rows('output_intent')).length,1,'later operation is held before a later output can exist');
   const expired=await f.role('dispatch').tx('synthetic-a',async db=>(await db.query<{expired:boolean}>('SELECT core.expire_unsent($1,$2,$3) expired',['synthetic-a',out.body['outputId'],'2030-01-04T10:00:00Z'])).rows[0]!.expired);assert.equal(expired,false);
   await suppress(f);assert.equal((await f.rows('permission_head'))[0]!['suppressed'],true);
   assert.equal((await server.calls()).length,1);

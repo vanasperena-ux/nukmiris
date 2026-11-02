@@ -10,7 +10,7 @@ console.log('WP1 evidence run: '+evidence);
 await fs.writeFile(path.join(evidence,'environment.json'),JSON.stringify({node:process.version,postgres:cluster.version,image:'postgres@sha256:839fbb5a4942a7758dd93e18b42ea5649807491a0545b5eeeb8f0b8bb11857a5',network:'container --network none; Unix socket only',independentReview:'NOT RUN'},null,2));
 let exitCode=1;
 try {
- const files=(await fs.readdir('dist/test')).filter(f=>f.endsWith('.test.js')&&(!process.argv.includes('fault')||/dispatch|permission|restore|process|ingress/.test(f))).sort().map(f=>'dist/test/'+f);
+ const files=(await fs.readdir('dist/test')).filter(f=>f.endsWith('.test.js')&&(!process.argv.includes('fault')||/dispatch|permission|restore|process|ingress|remediation|concurrent/.test(f))).sort().map(f=>'dist/test/'+f);
  const child=spawn(process.execPath,['--test','--test-concurrency=1','--test-reporter=spec',...files],{
   stdio:'inherit',env:{...process.env,WP1_SOCKET_PATH:cluster.socket,WP1_EVIDENCE_DIRECTORY:evidence}
  });

@@ -65,11 +65,25 @@ export class Fixture {
     const cluster=new pg.Client({host:this.socket,database:'postgres',user:'postgres'});await cluster.connect();
     await cluster.query(`CREATE DATABASE "${this.dbname}"`);await cluster.end();
     const root=fileURLToPath(new URL('../../../',import.meta.url));
-    for(const file of ['migrations/001-foundation.sql','migrations/002-execution.sql','roles.sql']) {
+    for(const file of ['migrations/001-foundation.sql','migrations/002-execution.sql','migrations/003-dispositions.sql','roles.sql']) {
       await this.admin.query(await fs.readFile(path.join(root,'src/infrastructure/postgres',file),'utf8'));
     }
+    await this.admin.query(`CREATE SCHEMA fixture_private; REVOKE ALL ON SCHEMA fixture_private FROM PUBLIC;
+      CREATE TABLE fixture_private.clock(at_time timestamptz NOT NULL CHECK(isfinite(at_time)));
+      GRANT USAGE ON SCHEMA fixture_private TO wp1_definer; GRANT SELECT ON fixture_private.clock TO wp1_definer;
+      CREATE OR REPLACE FUNCTION core.authoritative_time() RETURNS timestamptz LANGUAGE sql VOLATILE SECURITY DEFINER
+      SET search_path=pg_catalog,core AS 'SELECT at_time FROM fixture_private.clock';
+      ALTER FUNCTION core.authoritative_time() OWNER TO wp1_definer;`);
+    await this.admin.query('INSERT INTO fixture_private.clock VALUES($1)',[this.clock.now().toISOString()]);
+    const fixture=this;
+    class ClockedUnitOfWork extends UnitOfWork {
+      override async tx<T>(...args:Parameters<UnitOfWork['tx']>):Promise<T> {
+        await fixture.admin.query('UPDATE fixture_private.clock SET at_time=$1',[fixture.clock.now().toISOString()]);
+        return super.tx(...args) as Promise<T>;
+      }
+    }
     for(const role of ['ingress','sealer','reducer','dispatch','result','operator','recovery','tenant_a','tenant_b']) {
-      this.roles[role]=new UnitOfWork({host:this.socket,database:this.dbname,user:'wp1_'+role});
+      this.roles[role]=new ClockedUnitOfWork({host:this.socket,database:this.dbname,user:'wp1_'+role});
     }
     for(const business of ['synthetic-a','synthetic-b']) {
       for(const role of Object.keys(this.roles))if(!role.startsWith('tenant_')||role==='tenant_'+business.at(-1)) {

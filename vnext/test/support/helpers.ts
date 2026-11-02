@@ -1,3 +1,4 @@
+import {setBusinessStatus} from '../../src/application/set-business-status.js';
 import {createHmac,randomUUID} from 'node:crypto';
 import {promises as fs} from 'node:fs';
 import path from 'node:path';
@@ -7,7 +8,7 @@ import {admitInput} from '../../src/application/admit-input.js';
 import {prepareOperation} from '../../src/application/prepare-operation.js';
 import {armAttempt,dispatchOnce} from '../../src/application/dispatch-once.js';
 import {recordResult} from '../../src/application/record-result.js';
-import {digest,text} from '../../src/domain/protocol.js';
+import {text} from '../../src/domain/protocol.js';
 import type {Faults,ObjectValue} from '../../src/domain/protocol.js';
 import type {Seal} from '../../src/ports.js';
 import {FakeProviderServer,FakeProviderClient} from './fake-provider.js';
@@ -52,12 +53,23 @@ export async function grant(f:Fixture,subject='customer-synthetic-a',b='syntheti
 }
 export async function suppress(f:Fixture,b='synthetic-a',subject='customer-'+b):Promise<void> {await admission(f,raw(f,'STOP',b,randomUUID(),subject));}
 export async function status(f:Fixture,value:'ACTIVE'|'SUSPENDED',expected:number,b='synthetic-a'):Promise<void> {
-  const id=randomUUID(),body={businessId:b,value,expected,id},d=digest(body);
-  let key='';
-  if(value==='ACTIVE'){const seal=await f.archive.ensure('reactivate/'+id,'REACTIVATE',body);await f.role('sealer').seal(b,f.archive,seal);key=seal.key;}
-  await f.role('operator').tx(b,async db=>{await db.query('SELECT core.set_status($1,$2,$3,$4,$5,$6)',[b,value,id,d,expected,key]);});
+  await setBusinessStatus({businessId:b,value,expected,evidenceId:randomUUID(),operator:f.role('operator'),sealer:f.role('sealer'),archive:f.archive});
 }
 export async function evidence(id:string,data:ObjectValue):Promise<void> {
   const dir=process.env['WP1_EVIDENCE_DIRECTORY'];if(!dir)return;
   await fs.writeFile(path.join(dir,id+'.json'),JSON.stringify(data,null,2));
+}
+
+export async function abandon(f:Fixture,attemptId:string,reason='Synthetic operator reviewed: never submitted'):Promise<void> {
+ const b='synthetic-a',a=(await f.rows('attempt')).find(a=>a['id']===attemptId)!;
+ const s=await f.archive.ensure('abandon/'+attemptId,'ABANDON',{businessId:b,attemptId,payloadDigest:a['payload_digest']!,reason});
+ await f.role('sealer').seal(b,f.archive,s);
+ await f.role('operator').tx(b,db=>db.query('SELECT core.abandon_unsent($1,$2,$3,$4)',[b,attemptId,s.key,s.digest]));
+}
+
+export async function holdInput(f:Fixture,inputId:string):Promise<void> {
+ const b='synthetic-a',i=(await f.rows('input')).find(i=>i['id']===inputId)!;
+ const seal=await f.archive.ensure('hold/'+inputId,'HOLD_INPUT',{businessId:b,inputId,digest:i['digest']!,reason:'Synthetic reviewed non-execution disposition'});
+ await f.role('sealer').seal(b,f.archive,seal);
+ await f.role('operator').tx(b,db=>db.query('SELECT core.hold_input($1,$2,$3,$4)',[b,inputId,seal.key,seal.digest]));
 }

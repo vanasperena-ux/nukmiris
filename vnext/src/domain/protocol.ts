@@ -10,9 +10,9 @@ export const noFaults: Faults = { async hit() {} };
 export function canonical(value: Json): string {
   if (Array.isArray(value)) return '[' + value.map(canonical).join(',') + ']';
   if (value !== null && typeof value === 'object') {
-    return '{' + Object.keys(value).sort().map(k => JSON.stringify(k) + ':' + canonical(value[k]!)).join(',') + '}';
+    return '{' + Object.keys(value).sort((a,b)=>Buffer.compare(Buffer.from(a),Buffer.from(b))).map(k => JSON.stringify(k) + ':' + canonical(value[k]!)).join(',') + '}';
   }
-  if (typeof value === 'number' && !Number.isFinite(value)) throw new Error('nonfinite_json');
+  if (typeof value === 'number' && !Number.isSafeInteger(value)) throw new Error('nonfinite_json');
   return JSON.stringify(value);
 }
 export function digest(value: Json): string { return createHash('sha256').update(canonical(value)).digest('hex'); }

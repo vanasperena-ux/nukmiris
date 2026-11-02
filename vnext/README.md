@@ -23,7 +23,7 @@ The runner creates **only** its uniquely named `nukmiris-wp1-*` PostgreSQL conta
 pinned to digest `sha256:839fbb5a4942a7758dd93e18b42ea5649807491a0545b5eeeb8f0b8bb11857a5`
 (tested PostgreSQL 17.11). The database container has `--network none`, no published
 ports and no persistent volume; PG clients use its mounted Unix socket. Migrations,
-roles and `btree_gist` run only in disposable `nukmiris_wp1_*` databases. A fixture
+roles, `btree_gist` and `pgcrypto` run only in disposable `nukmiris_wp1_*` databases. A fixture
 superuser creates schema/data; actual restricted roles execute the tested paths.
 Local socket trust is a **fixture setting**, not a production authentication model.
 
@@ -66,8 +66,9 @@ The later P0 Windows smoke remains WP6 work.
 Signed bounded bytes → verified receiving WABA/number → independent original
 identity + batch preparation → SQL STAGED → independent commit seal → ELIGIBLE.
 Only the literal **synthetic fixed command** can prepare an operation. This is a
-test selector, not a new WhatsApp booking flow. Mixed-business batches and other
-message kinds are explicitly rejected; commercial normalization is deferred.
+test selector, not a new WhatsApp booking flow. Signed mixed-business batches are partitioned into durable tenant records linked
+to one exact-byte raw archive record. All validated STOPs commit before archive
+work; ACK waits for every partition. Only synthetic text/receipt shapes are enabled.
 
 Operation preparation takes a scoped appointment guard and finite resource
 protection. Source+target ranges merge during a move. Appointment/customer/calendar
@@ -78,7 +79,10 @@ the fake provider. Re-reading state cannot reissue a permit. No automatic retry
 generation, uncertain release, lease takeover or ETag-bump mechanism exists.
 
 Final admission locks current business/channel/calendar/permission/conversation
-and appointment state. STOP for an unknown sender creates the real shared head;
+and appointment state. Every earlier command must be resolved with terminal outputs
+or explicitly disposed before later execution. Sealed input holds and abandonment
+of never-entered attempts supply an audited operator exit; entered/UNKNOWN work
+retains its protection until read-only proof. STOP for an unknown sender creates the real shared head;
 older grants cannot undo it. G06 suspension blocks both calendar and message
 admission, including queued work. Ordinary customer-request operations do not
 require reminder permission. A status/identity revision change conservatively
@@ -88,7 +92,8 @@ Provider proof seals before atomic appointment/protection/schedule-revision/outp
 finalization. Receipt evidence can precede the HTTP result, is exactly correlated,
 and cannot downgrade delivered/read. Unknown output heads do not expire into
 unsent. Restore is an inert projection: original post-snapshot identities remain
-review cases, permissions stay suppressed, every dispatch head stays false, and
+review cases, permissions stay suppressed, businesses restore SUSPENDED with bumped
+status revision/epoch, every dispatch head stays false, and
 missing chains/heads/keys cannot generate effects. It is **not** full operational
 restore/resumption or a production backup service.
 
@@ -112,7 +117,21 @@ execution revoked. Shared service roles explicitly granted both synthetic
 businesses still span both; this is not isolation from fully compromised shared
 runtime or a production MFA/operator implementation.
 
-Independent Claude CP1/initial CP2 review is **pending**. No connected Claude tool
+Claude completed the initial independent review: GO WITH SPECIFIED REVISIONS.
+This remediation requires independent re-review; CP1/CP2 remain open.
+The new [dispositions and re-review handoff](../docs/greenfield/reviews/02-CODEX-WP1-REMEDIATION-AND-DISPOSITIONS.md) supersede the original pending-review wording.
+
+The SQL recomputes canonical SHA-256 body/payload digests (UTF-8 key ordering;
+safe integral JSON numbers only). A digest establishes integrity, not authenticity.
+The fixture sealer remains a procedural trust root; independent credentials,
+processes and custody are required before production. The source clock uses
+`clock_timestamp()`; fixture postgres alone installs a deterministic private DB
+clock. Runtime roles cannot read/change that clock or replace its function.
+The caller time must be finite and within 5 seconds; admission uses DB time again
+after all locks. No runtime clock override exists. SQL functions reject NULL
+arguments, and role defaults bound statement/lock/idle-transaction waits.
+
+Independent Claude verification of these revisions is **pending**. No connected Claude tool
 or CLI was available; no self-review is presented as independent review. See the
 [actual implementation review handoff](../docs/greenfield/11-WP1-CLAUDE-REVIEW-HANDOFF.md).
 Stop at that checkpoint. No WP2, merge, deploy or real provider activation is included.

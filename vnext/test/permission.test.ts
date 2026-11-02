@@ -2,7 +2,7 @@ import {test} from 'node:test';
 import assert from 'node:assert/strict';
 import {randomUUID} from 'node:crypto';
 import {setTimeout as delay} from 'node:timers/promises';
-import {fixture,plan,apply,arm,provider,grant,suppress,status,admission,raw,evidence} from './support/helpers.js';
+import {fixture,plan,apply,arm,provider,grant,suppress,status,admission,raw,evidence,abandon,holdInput} from './support/helpers.js';
 import {prepareOutput} from '../src/application/prepare-operation.js';
 import {dispatchOnce} from '../src/application/dispatch-once.js';
 import {text} from '../src/domain/protocol.js';
@@ -70,6 +70,9 @@ test('DB08/F12/F27: suspension blocks queued calendar and message admissions; re
   assert.equal((await f.rows('appointment')).length,2);assert.equal((await f.rows('customer')).length,1);
   await status(f,'ACTIVE',2);f.clock.instant+=16*60000;
   assert.equal((await dispatchOnce(args)).state,'HELD');assert.equal((await server.calls()).length,0);
+  await abandon(f,text(args.attemptId));await abandon(f,text(queued.body['attemptId']));
+  const operationInputs=new Set((await f.rows('operation')).map(op=>op['input_id']));
+  for(const i of await f.rows('input'))if(!operationInputs.has(i['id'])&&i['state']==='ELIGIBLE')await holdInput(f,text(i['id']));
   const future=await plan(f,{startAt:'2030-01-05T10:00:00Z',endAt:'2030-01-05T11:00:00Z'});await apply(t,f,future);
   assert.equal((await f.rows('attempt')).find(a=>a['id']===future.body['attemptId'])!['state'],'VERIFIED_APPLIED');
   assert.equal((await f.rows('business'))[0]!['revision'],'3');
