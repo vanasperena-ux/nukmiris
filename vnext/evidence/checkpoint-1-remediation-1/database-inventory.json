@@ -1,0 +1,3235 @@
+{
+  "postgres": "17.11 (Debian 17.11-1.pgdg12+2)",
+  "image": "postgres@sha256:839fbb5a4942a7758dd93e18b42ea5649807491a0545b5eeeb8f0b8bb11857a5",
+  "clock": "fixture postgres bootstrap replaces core.authoritative_time; private table is not granted to runtime",
+  "inventory": {
+    "roles": [
+      {
+        "rolname": "wp1_definer",
+        "rolsuper": false,
+        "rolcanlogin": false,
+        "rolbypassrls": true,
+        "rolconfig": null
+      },
+      {
+        "rolname": "wp1_dispatch",
+        "rolsuper": false,
+        "rolcanlogin": true,
+        "rolbypassrls": false,
+        "rolconfig": [
+          "lock_timeout=3s",
+          "idle_in_transaction_session_timeout=10s",
+          "statement_timeout=10s"
+        ]
+      },
+      {
+        "rolname": "wp1_ingress",
+        "rolsuper": false,
+        "rolcanlogin": true,
+        "rolbypassrls": false,
+        "rolconfig": [
+          "lock_timeout=3s",
+          "idle_in_transaction_session_timeout=10s",
+          "statement_timeout=10s"
+        ]
+      },
+      {
+        "rolname": "wp1_operator",
+        "rolsuper": false,
+        "rolcanlogin": true,
+        "rolbypassrls": false,
+        "rolconfig": [
+          "lock_timeout=3s",
+          "idle_in_transaction_session_timeout=10s",
+          "statement_timeout=10s"
+        ]
+      },
+      {
+        "rolname": "wp1_owner",
+        "rolsuper": false,
+        "rolcanlogin": false,
+        "rolbypassrls": false,
+        "rolconfig": null
+      },
+      {
+        "rolname": "wp1_recovery",
+        "rolsuper": false,
+        "rolcanlogin": true,
+        "rolbypassrls": false,
+        "rolconfig": [
+          "lock_timeout=3s",
+          "idle_in_transaction_session_timeout=10s",
+          "statement_timeout=10s"
+        ]
+      },
+      {
+        "rolname": "wp1_reducer",
+        "rolsuper": false,
+        "rolcanlogin": true,
+        "rolbypassrls": false,
+        "rolconfig": [
+          "lock_timeout=3s",
+          "idle_in_transaction_session_timeout=10s",
+          "statement_timeout=10s"
+        ]
+      },
+      {
+        "rolname": "wp1_result",
+        "rolsuper": false,
+        "rolcanlogin": true,
+        "rolbypassrls": false,
+        "rolconfig": [
+          "lock_timeout=3s",
+          "idle_in_transaction_session_timeout=10s",
+          "statement_timeout=10s"
+        ]
+      },
+      {
+        "rolname": "wp1_sealer",
+        "rolsuper": false,
+        "rolcanlogin": true,
+        "rolbypassrls": false,
+        "rolconfig": [
+          "lock_timeout=3s",
+          "idle_in_transaction_session_timeout=10s",
+          "statement_timeout=10s"
+        ]
+      },
+      {
+        "rolname": "wp1_tenant_a",
+        "rolsuper": false,
+        "rolcanlogin": true,
+        "rolbypassrls": false,
+        "rolconfig": [
+          "lock_timeout=3s",
+          "idle_in_transaction_session_timeout=10s",
+          "statement_timeout=10s"
+        ]
+      },
+      {
+        "rolname": "wp1_tenant_b",
+        "rolsuper": false,
+        "rolcanlogin": true,
+        "rolbypassrls": false,
+        "rolconfig": [
+          "lock_timeout=3s",
+          "idle_in_transaction_session_timeout=10s",
+          "statement_timeout=10s"
+        ]
+      }
+    ],
+    "tables": [
+      {
+        "schemaname": "core",
+        "tablename": "appointment",
+        "tableowner": "wp1_owner",
+        "rowsecurity": true
+      },
+      {
+        "schemaname": "core",
+        "tablename": "attempt",
+        "tableowner": "wp1_owner",
+        "rowsecurity": true
+      },
+      {
+        "schemaname": "core",
+        "tablename": "audit",
+        "tableowner": "wp1_owner",
+        "rowsecurity": true
+      },
+      {
+        "schemaname": "core",
+        "tablename": "batch",
+        "tableowner": "wp1_owner",
+        "rowsecurity": true
+      },
+      {
+        "schemaname": "core",
+        "tablename": "batch_input",
+        "tableowner": "wp1_owner",
+        "rowsecurity": true
+      },
+      {
+        "schemaname": "core",
+        "tablename": "business",
+        "tableowner": "wp1_owner",
+        "rowsecurity": true
+      },
+      {
+        "schemaname": "core",
+        "tablename": "calendar",
+        "tableowner": "wp1_owner",
+        "rowsecurity": true
+      },
+      {
+        "schemaname": "core",
+        "tablename": "channel",
+        "tableowner": "wp1_owner",
+        "rowsecurity": true
+      },
+      {
+        "schemaname": "core",
+        "tablename": "conversation",
+        "tableowner": "wp1_owner",
+        "rowsecurity": true
+      },
+      {
+        "schemaname": "core",
+        "tablename": "customer",
+        "tableowner": "wp1_owner",
+        "rowsecurity": true
+      },
+      {
+        "schemaname": "core",
+        "tablename": "input",
+        "tableowner": "wp1_owner",
+        "rowsecurity": true
+      },
+      {
+        "schemaname": "core",
+        "tablename": "mutation_guard",
+        "tableowner": "wp1_owner",
+        "rowsecurity": true
+      },
+      {
+        "schemaname": "core",
+        "tablename": "operation",
+        "tableowner": "wp1_owner",
+        "rowsecurity": true
+      },
+      {
+        "schemaname": "core",
+        "tablename": "output_intent",
+        "tableowner": "wp1_owner",
+        "rowsecurity": true
+      },
+      {
+        "schemaname": "core",
+        "tablename": "permission_event",
+        "tableowner": "wp1_owner",
+        "rowsecurity": true
+      },
+      {
+        "schemaname": "core",
+        "tablename": "permission_head",
+        "tableowner": "wp1_owner",
+        "rowsecurity": true
+      },
+      {
+        "schemaname": "core",
+        "tablename": "protection",
+        "tableowner": "wp1_owner",
+        "rowsecurity": true
+      },
+      {
+        "schemaname": "core",
+        "tablename": "receipt",
+        "tableowner": "wp1_owner",
+        "rowsecurity": true
+      },
+      {
+        "schemaname": "core",
+        "tablename": "recovery_case",
+        "tableowner": "wp1_owner",
+        "rowsecurity": true
+      },
+      {
+        "schemaname": "core",
+        "tablename": "resource",
+        "tableowner": "wp1_owner",
+        "rowsecurity": true
+      },
+      {
+        "schemaname": "core",
+        "tablename": "role_scope",
+        "tableowner": "wp1_owner",
+        "rowsecurity": false
+      },
+      {
+        "schemaname": "core",
+        "tablename": "seal",
+        "tableowner": "wp1_owner",
+        "rowsecurity": true
+      },
+      {
+        "schemaname": "core",
+        "tablename": "status_event",
+        "tableowner": "wp1_owner",
+        "rowsecurity": true
+      }
+    ],
+    "functions": [
+      {
+        "proname": "abandon_unsent",
+        "arguments": "b text, a_id uuid, seal_key text, seal_digest text",
+        "prosecdef": true,
+        "proconfig": [
+          "search_path=pg_catalog, core"
+        ],
+        "proacl": "{wp1_definer=X/wp1_definer,wp1_operator=X/wp1_definer}"
+      },
+      {
+        "proname": "accept_receipt",
+        "arguments": "b text, input_key uuid",
+        "prosecdef": true,
+        "proconfig": [
+          "search_path=pg_catalog, core"
+        ],
+        "proacl": "{wp1_definer=X/wp1_definer,wp1_result=X/wp1_definer}"
+      },
+      {
+        "proname": "activate_batch",
+        "arguments": "b text, batch_id text, seal_key text, seal_digest text",
+        "prosecdef": true,
+        "proconfig": [
+          "search_path=pg_catalog, core"
+        ],
+        "proacl": "{wp1_definer=X/wp1_definer,wp1_ingress=X/wp1_definer}"
+      },
+      {
+        "proname": "append_only_fields",
+        "arguments": "",
+        "prosecdef": false,
+        "proconfig": [
+          "search_path=pg_catalog, core"
+        ],
+        "proacl": "{wp1_definer=X/wp1_definer}"
+      },
+      {
+        "proname": "apply_result",
+        "arguments": "b text, a_id uuid, proof jsonb, seal_key text, seal_digest text, fail_at text",
+        "prosecdef": true,
+        "proconfig": [
+          "search_path=pg_catalog, core"
+        ],
+        "proacl": "{wp1_definer=X/wp1_definer,wp1_result=X/wp1_definer}"
+      },
+      {
+        "proname": "arm",
+        "arguments": "b text, a_id uuid, owner uuid, seal_key text, seal_digest text",
+        "prosecdef": true,
+        "proconfig": [
+          "search_path=pg_catalog, core"
+        ],
+        "proacl": "{wp1_definer=X/wp1_definer,wp1_dispatch=X/wp1_definer}"
+      },
+      {
+        "proname": "assert_scope",
+        "arguments": "b text",
+        "prosecdef": true,
+        "proconfig": [
+          "search_path=pg_catalog, core"
+        ],
+        "proacl": "{wp1_definer=X/wp1_definer}"
+      },
+      {
+        "proname": "authoritative_time",
+        "arguments": "",
+        "prosecdef": true,
+        "proconfig": [
+          "search_path=pg_catalog, core"
+        ],
+        "proacl": "{wp1_definer=X/wp1_definer}"
+      },
+      {
+        "proname": "canonical_json",
+        "arguments": "v jsonb",
+        "prosecdef": false,
+        "proconfig": [
+          "search_path=pg_catalog, core"
+        ],
+        "proacl": "{wp1_definer=X/wp1_definer}"
+      },
+      {
+        "proname": "conversation_ready",
+        "arguments": "b text, c uuid, n bigint",
+        "prosecdef": true,
+        "proconfig": [
+          "search_path=pg_catalog, core"
+        ],
+        "proacl": "{wp1_definer=X/wp1_definer}"
+      },
+      {
+        "proname": "enter_submission",
+        "arguments": "b text, a_id uuid, owner uuid, at_time timestamp with time zone",
+        "prosecdef": true,
+        "proconfig": [
+          "search_path=pg_catalog, core"
+        ],
+        "proacl": "{wp1_definer=X/wp1_definer,wp1_dispatch=X/wp1_definer}"
+      },
+      {
+        "proname": "envelope_context",
+        "arguments": "b text, e jsonb, input_key uuid, calendar_key uuid, purpose_value text, due timestamp with time zone, deadline timestamp with time zone",
+        "prosecdef": true,
+        "proconfig": [
+          "search_path=pg_catalog, core"
+        ],
+        "proacl": "{wp1_definer=X/wp1_definer}"
+      },
+      {
+        "proname": "expire_unsent",
+        "arguments": "b text, o_id uuid, at_time timestamp with time zone",
+        "prosecdef": true,
+        "proconfig": [
+          "search_path=pg_catalog, core"
+        ],
+        "proacl": "{wp1_definer=X/wp1_definer,wp1_dispatch=X/wp1_definer}"
+      },
+      {
+        "proname": "frozen_membership",
+        "arguments": "",
+        "prosecdef": false,
+        "proconfig": [
+          "search_path=pg_catalog, core"
+        ],
+        "proacl": "{wp1_definer=X/wp1_definer}"
+      },
+      {
+        "proname": "grant_permission",
+        "arguments": "b text, s text, e text, d text, expected bigint, at_time timestamp with time zone, now_time timestamp with time zone, seal_key text",
+        "prosecdef": true,
+        "proconfig": [
+          "search_path=pg_catalog, core"
+        ],
+        "proacl": "{wp1_definer=X/wp1_definer,wp1_operator=X/wp1_definer}"
+      },
+      {
+        "proname": "hold_input",
+        "arguments": "b text, input_key uuid, seal_key text, seal_digest text",
+        "prosecdef": true,
+        "proconfig": [
+          "search_path=pg_catalog, core"
+        ],
+        "proacl": "{wp1_definer=X/wp1_definer,wp1_operator=X/wp1_definer}"
+      },
+      {
+        "proname": "immutable_fields",
+        "arguments": "",
+        "prosecdef": false,
+        "proconfig": [
+          "search_path=pg_catalog, core"
+        ],
+        "proacl": "{wp1_definer=X/wp1_definer}"
+      },
+      {
+        "proname": "json_digest",
+        "arguments": "v jsonb",
+        "prosecdef": false,
+        "proconfig": [
+          "search_path=pg_catalog, core"
+        ],
+        "proacl": "{wp1_definer=X/wp1_definer}"
+      },
+      {
+        "proname": "mark_unknown",
+        "arguments": "b text, a_id uuid",
+        "prosecdef": true,
+        "proconfig": [
+          "search_path=pg_catalog, core"
+        ],
+        "proacl": "{wp1_definer=X/wp1_definer,wp1_dispatch=X/wp1_definer}"
+      },
+      {
+        "proname": "prepare_operation",
+        "arguments": "b text, p jsonb, p_digest text, seal_key text",
+        "prosecdef": true,
+        "proconfig": [
+          "search_path=pg_catalog, core"
+        ],
+        "proacl": "{wp1_definer=X/wp1_definer,wp1_reducer=X/wp1_definer}"
+      },
+      {
+        "proname": "prepare_output",
+        "arguments": "b text, o_id uuid, a_id uuid, e jsonb, d text, seal_key text, seal_digest text",
+        "prosecdef": true,
+        "proconfig": [
+          "search_path=pg_catalog, core"
+        ],
+        "proacl": "{wp1_definer=X/wp1_definer,wp1_reducer=X/wp1_definer}"
+      },
+      {
+        "proname": "register_seal",
+        "arguments": "b text, k text, t text, d text, r jsonb",
+        "prosecdef": true,
+        "proconfig": [
+          "search_path=pg_catalog, core"
+        ],
+        "proacl": "{wp1_definer=X/wp1_definer,wp1_sealer=X/wp1_definer}"
+      },
+      {
+        "proname": "restore_snapshot",
+        "arguments": "snap jsonb, evidence jsonb, reason_value text",
+        "prosecdef": true,
+        "proconfig": [
+          "search_path=pg_catalog, core"
+        ],
+        "proacl": "{wp1_definer=X/wp1_definer,wp1_recovery=X/wp1_definer}"
+      },
+      {
+        "proname": "scope_allowed",
+        "arguments": "b text",
+        "prosecdef": true,
+        "proconfig": [
+          "search_path=pg_catalog, core"
+        ],
+        "proacl": "{wp1_definer=X/wp1_definer,wp1_ingress=X/wp1_definer,wp1_sealer=X/wp1_definer,wp1_reducer=X/wp1_definer,wp1_dispatch=X/wp1_definer,wp1_result=X/wp1_definer,wp1_operator=X/wp1_definer,wp1_recovery=X/wp1_definer,wp1_tenant_a=X/wp1_definer,wp1_tenant_b=X/wp1_definer}"
+      },
+      {
+        "proname": "set_status",
+        "arguments": "b text, status_value text, e text, d text, expected bigint, seal_key text",
+        "prosecdef": true,
+        "proconfig": [
+          "search_path=pg_catalog, core"
+        ],
+        "proacl": "{wp1_definer=X/wp1_definer,wp1_operator=X/wp1_definer}"
+      },
+      {
+        "proname": "stage_batch",
+        "arguments": "b text, batch_id text, batch_digest text, items jsonb",
+        "prosecdef": true,
+        "proconfig": [
+          "search_path=pg_catalog, core"
+        ],
+        "proacl": "{wp1_definer=X/wp1_definer,wp1_ingress=X/wp1_definer}"
+      },
+      {
+        "proname": "suppress",
+        "arguments": "b text, s text, e text, d text, at_time timestamp with time zone",
+        "prosecdef": true,
+        "proconfig": [
+          "search_path=pg_catalog, core"
+        ],
+        "proacl": "{wp1_definer=X/wp1_definer,wp1_ingress=X/wp1_definer,wp1_operator=X/wp1_definer}"
+      }
+    ],
+    "triggers": [
+      {
+        "event_object_table": "attempt",
+        "trigger_name": "immutable_attempt",
+        "event_manipulation": "UPDATE"
+      },
+      {
+        "event_object_table": "audit",
+        "trigger_name": "append_only",
+        "event_manipulation": "DELETE"
+      },
+      {
+        "event_object_table": "audit",
+        "trigger_name": "append_only",
+        "event_manipulation": "UPDATE"
+      },
+      {
+        "event_object_table": "batch_input",
+        "trigger_name": "frozen_membership",
+        "event_manipulation": "DELETE"
+      },
+      {
+        "event_object_table": "batch_input",
+        "trigger_name": "frozen_membership",
+        "event_manipulation": "INSERT"
+      },
+      {
+        "event_object_table": "batch_input",
+        "trigger_name": "frozen_membership",
+        "event_manipulation": "UPDATE"
+      },
+      {
+        "event_object_table": "input",
+        "trigger_name": "append_only",
+        "event_manipulation": "DELETE"
+      },
+      {
+        "event_object_table": "input",
+        "trigger_name": "append_only",
+        "event_manipulation": "UPDATE"
+      },
+      {
+        "event_object_table": "operation",
+        "trigger_name": "append_only",
+        "event_manipulation": "DELETE"
+      },
+      {
+        "event_object_table": "operation",
+        "trigger_name": "append_only",
+        "event_manipulation": "UPDATE"
+      },
+      {
+        "event_object_table": "operation",
+        "trigger_name": "immutable_operation",
+        "event_manipulation": "UPDATE"
+      },
+      {
+        "event_object_table": "output_intent",
+        "trigger_name": "append_only",
+        "event_manipulation": "DELETE"
+      },
+      {
+        "event_object_table": "output_intent",
+        "trigger_name": "append_only",
+        "event_manipulation": "UPDATE"
+      },
+      {
+        "event_object_table": "permission_event",
+        "trigger_name": "append_only",
+        "event_manipulation": "DELETE"
+      },
+      {
+        "event_object_table": "permission_event",
+        "trigger_name": "append_only",
+        "event_manipulation": "UPDATE"
+      },
+      {
+        "event_object_table": "receipt",
+        "trigger_name": "append_only",
+        "event_manipulation": "DELETE"
+      },
+      {
+        "event_object_table": "receipt",
+        "trigger_name": "append_only",
+        "event_manipulation": "UPDATE"
+      },
+      {
+        "event_object_table": "seal",
+        "trigger_name": "append_only",
+        "event_manipulation": "DELETE"
+      },
+      {
+        "event_object_table": "seal",
+        "trigger_name": "append_only",
+        "event_manipulation": "UPDATE"
+      },
+      {
+        "event_object_table": "seal",
+        "trigger_name": "immutable_seal",
+        "event_manipulation": "UPDATE"
+      },
+      {
+        "event_object_table": "status_event",
+        "trigger_name": "append_only",
+        "event_manipulation": "DELETE"
+      },
+      {
+        "event_object_table": "status_event",
+        "trigger_name": "append_only",
+        "event_manipulation": "UPDATE"
+      }
+    ],
+    "tableGrants": [
+      {
+        "grantee": "wp1_definer",
+        "table_name": "appointment",
+        "privilege_type": "DELETE"
+      },
+      {
+        "grantee": "wp1_definer",
+        "table_name": "appointment",
+        "privilege_type": "INSERT"
+      },
+      {
+        "grantee": "wp1_definer",
+        "table_name": "appointment",
+        "privilege_type": "REFERENCES"
+      },
+      {
+        "grantee": "wp1_definer",
+        "table_name": "appointment",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_definer",
+        "table_name": "appointment",
+        "privilege_type": "TRIGGER"
+      },
+      {
+        "grantee": "wp1_definer",
+        "table_name": "appointment",
+        "privilege_type": "TRUNCATE"
+      },
+      {
+        "grantee": "wp1_definer",
+        "table_name": "appointment",
+        "privilege_type": "UPDATE"
+      },
+      {
+        "grantee": "wp1_definer",
+        "table_name": "attempt",
+        "privilege_type": "DELETE"
+      },
+      {
+        "grantee": "wp1_definer",
+        "table_name": "attempt",
+        "privilege_type": "INSERT"
+      },
+      {
+        "grantee": "wp1_definer",
+        "table_name": "attempt",
+        "privilege_type": "REFERENCES"
+      },
+      {
+        "grantee": "wp1_definer",
+        "table_name": "attempt",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_definer",
+        "table_name": "attempt",
+        "privilege_type": "TRIGGER"
+      },
+      {
+        "grantee": "wp1_definer",
+        "table_name": "attempt",
+        "privilege_type": "TRUNCATE"
+      },
+      {
+        "grantee": "wp1_definer",
+        "table_name": "attempt",
+        "privilege_type": "UPDATE"
+      },
+      {
+        "grantee": "wp1_definer",
+        "table_name": "audit",
+        "privilege_type": "DELETE"
+      },
+      {
+        "grantee": "wp1_definer",
+        "table_name": "audit",
+        "privilege_type": "INSERT"
+      },
+      {
+        "grantee": "wp1_definer",
+        "table_name": "audit",
+        "privilege_type": "REFERENCES"
+      },
+      {
+        "grantee": "wp1_definer",
+        "table_name": "audit",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_definer",
+        "table_name": "audit",
+        "privilege_type": "TRIGGER"
+      },
+      {
+        "grantee": "wp1_definer",
+        "table_name": "audit",
+        "privilege_type": "TRUNCATE"
+      },
+      {
+        "grantee": "wp1_definer",
+        "table_name": "audit",
+        "privilege_type": "UPDATE"
+      },
+      {
+        "grantee": "wp1_definer",
+        "table_name": "batch",
+        "privilege_type": "DELETE"
+      },
+      {
+        "grantee": "wp1_definer",
+        "table_name": "batch",
+        "privilege_type": "INSERT"
+      },
+      {
+        "grantee": "wp1_definer",
+        "table_name": "batch",
+        "privilege_type": "REFERENCES"
+      },
+      {
+        "grantee": "wp1_definer",
+        "table_name": "batch",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_definer",
+        "table_name": "batch",
+        "privilege_type": "TRIGGER"
+      },
+      {
+        "grantee": "wp1_definer",
+        "table_name": "batch",
+        "privilege_type": "TRUNCATE"
+      },
+      {
+        "grantee": "wp1_definer",
+        "table_name": "batch",
+        "privilege_type": "UPDATE"
+      },
+      {
+        "grantee": "wp1_definer",
+        "table_name": "batch_input",
+        "privilege_type": "DELETE"
+      },
+      {
+        "grantee": "wp1_definer",
+        "table_name": "batch_input",
+        "privilege_type": "INSERT"
+      },
+      {
+        "grantee": "wp1_definer",
+        "table_name": "batch_input",
+        "privilege_type": "REFERENCES"
+      },
+      {
+        "grantee": "wp1_definer",
+        "table_name": "batch_input",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_definer",
+        "table_name": "batch_input",
+        "privilege_type": "TRIGGER"
+      },
+      {
+        "grantee": "wp1_definer",
+        "table_name": "batch_input",
+        "privilege_type": "TRUNCATE"
+      },
+      {
+        "grantee": "wp1_definer",
+        "table_name": "batch_input",
+        "privilege_type": "UPDATE"
+      },
+      {
+        "grantee": "wp1_definer",
+        "table_name": "business",
+        "privilege_type": "DELETE"
+      },
+      {
+        "grantee": "wp1_definer",
+        "table_name": "business",
+        "privilege_type": "INSERT"
+      },
+      {
+        "grantee": "wp1_definer",
+        "table_name": "business",
+        "privilege_type": "REFERENCES"
+      },
+      {
+        "grantee": "wp1_definer",
+        "table_name": "business",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_definer",
+        "table_name": "business",
+        "privilege_type": "TRIGGER"
+      },
+      {
+        "grantee": "wp1_definer",
+        "table_name": "business",
+        "privilege_type": "TRUNCATE"
+      },
+      {
+        "grantee": "wp1_definer",
+        "table_name": "business",
+        "privilege_type": "UPDATE"
+      },
+      {
+        "grantee": "wp1_definer",
+        "table_name": "calendar",
+        "privilege_type": "DELETE"
+      },
+      {
+        "grantee": "wp1_definer",
+        "table_name": "calendar",
+        "privilege_type": "INSERT"
+      },
+      {
+        "grantee": "wp1_definer",
+        "table_name": "calendar",
+        "privilege_type": "REFERENCES"
+      },
+      {
+        "grantee": "wp1_definer",
+        "table_name": "calendar",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_definer",
+        "table_name": "calendar",
+        "privilege_type": "TRIGGER"
+      },
+      {
+        "grantee": "wp1_definer",
+        "table_name": "calendar",
+        "privilege_type": "TRUNCATE"
+      },
+      {
+        "grantee": "wp1_definer",
+        "table_name": "calendar",
+        "privilege_type": "UPDATE"
+      },
+      {
+        "grantee": "wp1_definer",
+        "table_name": "channel",
+        "privilege_type": "DELETE"
+      },
+      {
+        "grantee": "wp1_definer",
+        "table_name": "channel",
+        "privilege_type": "INSERT"
+      },
+      {
+        "grantee": "wp1_definer",
+        "table_name": "channel",
+        "privilege_type": "REFERENCES"
+      },
+      {
+        "grantee": "wp1_definer",
+        "table_name": "channel",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_definer",
+        "table_name": "channel",
+        "privilege_type": "TRIGGER"
+      },
+      {
+        "grantee": "wp1_definer",
+        "table_name": "channel",
+        "privilege_type": "TRUNCATE"
+      },
+      {
+        "grantee": "wp1_definer",
+        "table_name": "channel",
+        "privilege_type": "UPDATE"
+      },
+      {
+        "grantee": "wp1_definer",
+        "table_name": "conversation",
+        "privilege_type": "DELETE"
+      },
+      {
+        "grantee": "wp1_definer",
+        "table_name": "conversation",
+        "privilege_type": "INSERT"
+      },
+      {
+        "grantee": "wp1_definer",
+        "table_name": "conversation",
+        "privilege_type": "REFERENCES"
+      },
+      {
+        "grantee": "wp1_definer",
+        "table_name": "conversation",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_definer",
+        "table_name": "conversation",
+        "privilege_type": "TRIGGER"
+      },
+      {
+        "grantee": "wp1_definer",
+        "table_name": "conversation",
+        "privilege_type": "TRUNCATE"
+      },
+      {
+        "grantee": "wp1_definer",
+        "table_name": "conversation",
+        "privilege_type": "UPDATE"
+      },
+      {
+        "grantee": "wp1_definer",
+        "table_name": "customer",
+        "privilege_type": "DELETE"
+      },
+      {
+        "grantee": "wp1_definer",
+        "table_name": "customer",
+        "privilege_type": "INSERT"
+      },
+      {
+        "grantee": "wp1_definer",
+        "table_name": "customer",
+        "privilege_type": "REFERENCES"
+      },
+      {
+        "grantee": "wp1_definer",
+        "table_name": "customer",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_definer",
+        "table_name": "customer",
+        "privilege_type": "TRIGGER"
+      },
+      {
+        "grantee": "wp1_definer",
+        "table_name": "customer",
+        "privilege_type": "TRUNCATE"
+      },
+      {
+        "grantee": "wp1_definer",
+        "table_name": "customer",
+        "privilege_type": "UPDATE"
+      },
+      {
+        "grantee": "wp1_definer",
+        "table_name": "input",
+        "privilege_type": "DELETE"
+      },
+      {
+        "grantee": "wp1_definer",
+        "table_name": "input",
+        "privilege_type": "INSERT"
+      },
+      {
+        "grantee": "wp1_definer",
+        "table_name": "input",
+        "privilege_type": "REFERENCES"
+      },
+      {
+        "grantee": "wp1_definer",
+        "table_name": "input",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_definer",
+        "table_name": "input",
+        "privilege_type": "TRIGGER"
+      },
+      {
+        "grantee": "wp1_definer",
+        "table_name": "input",
+        "privilege_type": "TRUNCATE"
+      },
+      {
+        "grantee": "wp1_definer",
+        "table_name": "input",
+        "privilege_type": "UPDATE"
+      },
+      {
+        "grantee": "wp1_definer",
+        "table_name": "mutation_guard",
+        "privilege_type": "DELETE"
+      },
+      {
+        "grantee": "wp1_definer",
+        "table_name": "mutation_guard",
+        "privilege_type": "INSERT"
+      },
+      {
+        "grantee": "wp1_definer",
+        "table_name": "mutation_guard",
+        "privilege_type": "REFERENCES"
+      },
+      {
+        "grantee": "wp1_definer",
+        "table_name": "mutation_guard",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_definer",
+        "table_name": "mutation_guard",
+        "privilege_type": "TRIGGER"
+      },
+      {
+        "grantee": "wp1_definer",
+        "table_name": "mutation_guard",
+        "privilege_type": "TRUNCATE"
+      },
+      {
+        "grantee": "wp1_definer",
+        "table_name": "mutation_guard",
+        "privilege_type": "UPDATE"
+      },
+      {
+        "grantee": "wp1_definer",
+        "table_name": "operation",
+        "privilege_type": "DELETE"
+      },
+      {
+        "grantee": "wp1_definer",
+        "table_name": "operation",
+        "privilege_type": "INSERT"
+      },
+      {
+        "grantee": "wp1_definer",
+        "table_name": "operation",
+        "privilege_type": "REFERENCES"
+      },
+      {
+        "grantee": "wp1_definer",
+        "table_name": "operation",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_definer",
+        "table_name": "operation",
+        "privilege_type": "TRIGGER"
+      },
+      {
+        "grantee": "wp1_definer",
+        "table_name": "operation",
+        "privilege_type": "TRUNCATE"
+      },
+      {
+        "grantee": "wp1_definer",
+        "table_name": "operation",
+        "privilege_type": "UPDATE"
+      },
+      {
+        "grantee": "wp1_definer",
+        "table_name": "output_intent",
+        "privilege_type": "DELETE"
+      },
+      {
+        "grantee": "wp1_definer",
+        "table_name": "output_intent",
+        "privilege_type": "INSERT"
+      },
+      {
+        "grantee": "wp1_definer",
+        "table_name": "output_intent",
+        "privilege_type": "REFERENCES"
+      },
+      {
+        "grantee": "wp1_definer",
+        "table_name": "output_intent",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_definer",
+        "table_name": "output_intent",
+        "privilege_type": "TRIGGER"
+      },
+      {
+        "grantee": "wp1_definer",
+        "table_name": "output_intent",
+        "privilege_type": "TRUNCATE"
+      },
+      {
+        "grantee": "wp1_definer",
+        "table_name": "output_intent",
+        "privilege_type": "UPDATE"
+      },
+      {
+        "grantee": "wp1_definer",
+        "table_name": "permission_event",
+        "privilege_type": "DELETE"
+      },
+      {
+        "grantee": "wp1_definer",
+        "table_name": "permission_event",
+        "privilege_type": "INSERT"
+      },
+      {
+        "grantee": "wp1_definer",
+        "table_name": "permission_event",
+        "privilege_type": "REFERENCES"
+      },
+      {
+        "grantee": "wp1_definer",
+        "table_name": "permission_event",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_definer",
+        "table_name": "permission_event",
+        "privilege_type": "TRIGGER"
+      },
+      {
+        "grantee": "wp1_definer",
+        "table_name": "permission_event",
+        "privilege_type": "TRUNCATE"
+      },
+      {
+        "grantee": "wp1_definer",
+        "table_name": "permission_event",
+        "privilege_type": "UPDATE"
+      },
+      {
+        "grantee": "wp1_definer",
+        "table_name": "permission_head",
+        "privilege_type": "DELETE"
+      },
+      {
+        "grantee": "wp1_definer",
+        "table_name": "permission_head",
+        "privilege_type": "INSERT"
+      },
+      {
+        "grantee": "wp1_definer",
+        "table_name": "permission_head",
+        "privilege_type": "REFERENCES"
+      },
+      {
+        "grantee": "wp1_definer",
+        "table_name": "permission_head",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_definer",
+        "table_name": "permission_head",
+        "privilege_type": "TRIGGER"
+      },
+      {
+        "grantee": "wp1_definer",
+        "table_name": "permission_head",
+        "privilege_type": "TRUNCATE"
+      },
+      {
+        "grantee": "wp1_definer",
+        "table_name": "permission_head",
+        "privilege_type": "UPDATE"
+      },
+      {
+        "grantee": "wp1_definer",
+        "table_name": "protection",
+        "privilege_type": "DELETE"
+      },
+      {
+        "grantee": "wp1_definer",
+        "table_name": "protection",
+        "privilege_type": "INSERT"
+      },
+      {
+        "grantee": "wp1_definer",
+        "table_name": "protection",
+        "privilege_type": "REFERENCES"
+      },
+      {
+        "grantee": "wp1_definer",
+        "table_name": "protection",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_definer",
+        "table_name": "protection",
+        "privilege_type": "TRIGGER"
+      },
+      {
+        "grantee": "wp1_definer",
+        "table_name": "protection",
+        "privilege_type": "TRUNCATE"
+      },
+      {
+        "grantee": "wp1_definer",
+        "table_name": "protection",
+        "privilege_type": "UPDATE"
+      },
+      {
+        "grantee": "wp1_definer",
+        "table_name": "receipt",
+        "privilege_type": "DELETE"
+      },
+      {
+        "grantee": "wp1_definer",
+        "table_name": "receipt",
+        "privilege_type": "INSERT"
+      },
+      {
+        "grantee": "wp1_definer",
+        "table_name": "receipt",
+        "privilege_type": "REFERENCES"
+      },
+      {
+        "grantee": "wp1_definer",
+        "table_name": "receipt",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_definer",
+        "table_name": "receipt",
+        "privilege_type": "TRIGGER"
+      },
+      {
+        "grantee": "wp1_definer",
+        "table_name": "receipt",
+        "privilege_type": "TRUNCATE"
+      },
+      {
+        "grantee": "wp1_definer",
+        "table_name": "receipt",
+        "privilege_type": "UPDATE"
+      },
+      {
+        "grantee": "wp1_definer",
+        "table_name": "recovery_case",
+        "privilege_type": "DELETE"
+      },
+      {
+        "grantee": "wp1_definer",
+        "table_name": "recovery_case",
+        "privilege_type": "INSERT"
+      },
+      {
+        "grantee": "wp1_definer",
+        "table_name": "recovery_case",
+        "privilege_type": "REFERENCES"
+      },
+      {
+        "grantee": "wp1_definer",
+        "table_name": "recovery_case",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_definer",
+        "table_name": "recovery_case",
+        "privilege_type": "TRIGGER"
+      },
+      {
+        "grantee": "wp1_definer",
+        "table_name": "recovery_case",
+        "privilege_type": "TRUNCATE"
+      },
+      {
+        "grantee": "wp1_definer",
+        "table_name": "recovery_case",
+        "privilege_type": "UPDATE"
+      },
+      {
+        "grantee": "wp1_definer",
+        "table_name": "resource",
+        "privilege_type": "DELETE"
+      },
+      {
+        "grantee": "wp1_definer",
+        "table_name": "resource",
+        "privilege_type": "INSERT"
+      },
+      {
+        "grantee": "wp1_definer",
+        "table_name": "resource",
+        "privilege_type": "REFERENCES"
+      },
+      {
+        "grantee": "wp1_definer",
+        "table_name": "resource",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_definer",
+        "table_name": "resource",
+        "privilege_type": "TRIGGER"
+      },
+      {
+        "grantee": "wp1_definer",
+        "table_name": "resource",
+        "privilege_type": "TRUNCATE"
+      },
+      {
+        "grantee": "wp1_definer",
+        "table_name": "resource",
+        "privilege_type": "UPDATE"
+      },
+      {
+        "grantee": "wp1_definer",
+        "table_name": "role_scope",
+        "privilege_type": "DELETE"
+      },
+      {
+        "grantee": "wp1_definer",
+        "table_name": "role_scope",
+        "privilege_type": "INSERT"
+      },
+      {
+        "grantee": "wp1_definer",
+        "table_name": "role_scope",
+        "privilege_type": "REFERENCES"
+      },
+      {
+        "grantee": "wp1_definer",
+        "table_name": "role_scope",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_definer",
+        "table_name": "role_scope",
+        "privilege_type": "TRIGGER"
+      },
+      {
+        "grantee": "wp1_definer",
+        "table_name": "role_scope",
+        "privilege_type": "TRUNCATE"
+      },
+      {
+        "grantee": "wp1_definer",
+        "table_name": "role_scope",
+        "privilege_type": "UPDATE"
+      },
+      {
+        "grantee": "wp1_definer",
+        "table_name": "seal",
+        "privilege_type": "DELETE"
+      },
+      {
+        "grantee": "wp1_definer",
+        "table_name": "seal",
+        "privilege_type": "INSERT"
+      },
+      {
+        "grantee": "wp1_definer",
+        "table_name": "seal",
+        "privilege_type": "REFERENCES"
+      },
+      {
+        "grantee": "wp1_definer",
+        "table_name": "seal",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_definer",
+        "table_name": "seal",
+        "privilege_type": "TRIGGER"
+      },
+      {
+        "grantee": "wp1_definer",
+        "table_name": "seal",
+        "privilege_type": "TRUNCATE"
+      },
+      {
+        "grantee": "wp1_definer",
+        "table_name": "seal",
+        "privilege_type": "UPDATE"
+      },
+      {
+        "grantee": "wp1_definer",
+        "table_name": "status_event",
+        "privilege_type": "DELETE"
+      },
+      {
+        "grantee": "wp1_definer",
+        "table_name": "status_event",
+        "privilege_type": "INSERT"
+      },
+      {
+        "grantee": "wp1_definer",
+        "table_name": "status_event",
+        "privilege_type": "REFERENCES"
+      },
+      {
+        "grantee": "wp1_definer",
+        "table_name": "status_event",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_definer",
+        "table_name": "status_event",
+        "privilege_type": "TRIGGER"
+      },
+      {
+        "grantee": "wp1_definer",
+        "table_name": "status_event",
+        "privilege_type": "TRUNCATE"
+      },
+      {
+        "grantee": "wp1_definer",
+        "table_name": "status_event",
+        "privilege_type": "UPDATE"
+      },
+      {
+        "grantee": "wp1_dispatch",
+        "table_name": "appointment",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_dispatch",
+        "table_name": "attempt",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_dispatch",
+        "table_name": "audit",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_dispatch",
+        "table_name": "batch",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_dispatch",
+        "table_name": "batch_input",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_dispatch",
+        "table_name": "business",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_dispatch",
+        "table_name": "calendar",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_dispatch",
+        "table_name": "channel",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_dispatch",
+        "table_name": "conversation",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_dispatch",
+        "table_name": "customer",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_dispatch",
+        "table_name": "input",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_dispatch",
+        "table_name": "mutation_guard",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_dispatch",
+        "table_name": "operation",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_dispatch",
+        "table_name": "output_intent",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_dispatch",
+        "table_name": "permission_event",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_dispatch",
+        "table_name": "permission_head",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_dispatch",
+        "table_name": "protection",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_dispatch",
+        "table_name": "receipt",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_dispatch",
+        "table_name": "recovery_case",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_dispatch",
+        "table_name": "resource",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_dispatch",
+        "table_name": "seal",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_dispatch",
+        "table_name": "status_event",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_ingress",
+        "table_name": "appointment",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_ingress",
+        "table_name": "attempt",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_ingress",
+        "table_name": "audit",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_ingress",
+        "table_name": "batch",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_ingress",
+        "table_name": "batch_input",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_ingress",
+        "table_name": "business",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_ingress",
+        "table_name": "calendar",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_ingress",
+        "table_name": "channel",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_ingress",
+        "table_name": "conversation",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_ingress",
+        "table_name": "customer",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_ingress",
+        "table_name": "input",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_ingress",
+        "table_name": "mutation_guard",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_ingress",
+        "table_name": "operation",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_ingress",
+        "table_name": "output_intent",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_ingress",
+        "table_name": "permission_event",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_ingress",
+        "table_name": "permission_head",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_ingress",
+        "table_name": "protection",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_ingress",
+        "table_name": "receipt",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_ingress",
+        "table_name": "recovery_case",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_ingress",
+        "table_name": "resource",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_ingress",
+        "table_name": "seal",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_ingress",
+        "table_name": "status_event",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_operator",
+        "table_name": "appointment",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_operator",
+        "table_name": "attempt",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_operator",
+        "table_name": "audit",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_operator",
+        "table_name": "batch",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_operator",
+        "table_name": "batch_input",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_operator",
+        "table_name": "business",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_operator",
+        "table_name": "calendar",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_operator",
+        "table_name": "channel",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_operator",
+        "table_name": "conversation",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_operator",
+        "table_name": "customer",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_operator",
+        "table_name": "input",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_operator",
+        "table_name": "mutation_guard",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_operator",
+        "table_name": "operation",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_operator",
+        "table_name": "output_intent",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_operator",
+        "table_name": "permission_event",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_operator",
+        "table_name": "permission_head",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_operator",
+        "table_name": "protection",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_operator",
+        "table_name": "receipt",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_operator",
+        "table_name": "recovery_case",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_operator",
+        "table_name": "resource",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_operator",
+        "table_name": "seal",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_operator",
+        "table_name": "status_event",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "appointment",
+        "privilege_type": "DELETE"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "appointment",
+        "privilege_type": "INSERT"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "appointment",
+        "privilege_type": "REFERENCES"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "appointment",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "appointment",
+        "privilege_type": "TRIGGER"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "appointment",
+        "privilege_type": "TRUNCATE"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "appointment",
+        "privilege_type": "UPDATE"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "attempt",
+        "privilege_type": "DELETE"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "attempt",
+        "privilege_type": "INSERT"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "attempt",
+        "privilege_type": "REFERENCES"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "attempt",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "attempt",
+        "privilege_type": "TRIGGER"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "attempt",
+        "privilege_type": "TRUNCATE"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "attempt",
+        "privilege_type": "UPDATE"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "audit",
+        "privilege_type": "DELETE"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "audit",
+        "privilege_type": "INSERT"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "audit",
+        "privilege_type": "REFERENCES"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "audit",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "audit",
+        "privilege_type": "TRIGGER"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "audit",
+        "privilege_type": "TRUNCATE"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "audit",
+        "privilege_type": "UPDATE"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "batch",
+        "privilege_type": "DELETE"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "batch",
+        "privilege_type": "INSERT"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "batch",
+        "privilege_type": "REFERENCES"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "batch",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "batch",
+        "privilege_type": "TRIGGER"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "batch",
+        "privilege_type": "TRUNCATE"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "batch",
+        "privilege_type": "UPDATE"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "batch_input",
+        "privilege_type": "DELETE"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "batch_input",
+        "privilege_type": "INSERT"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "batch_input",
+        "privilege_type": "REFERENCES"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "batch_input",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "batch_input",
+        "privilege_type": "TRIGGER"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "batch_input",
+        "privilege_type": "TRUNCATE"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "batch_input",
+        "privilege_type": "UPDATE"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "business",
+        "privilege_type": "DELETE"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "business",
+        "privilege_type": "INSERT"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "business",
+        "privilege_type": "REFERENCES"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "business",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "business",
+        "privilege_type": "TRIGGER"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "business",
+        "privilege_type": "TRUNCATE"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "business",
+        "privilege_type": "UPDATE"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "calendar",
+        "privilege_type": "DELETE"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "calendar",
+        "privilege_type": "INSERT"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "calendar",
+        "privilege_type": "REFERENCES"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "calendar",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "calendar",
+        "privilege_type": "TRIGGER"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "calendar",
+        "privilege_type": "TRUNCATE"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "calendar",
+        "privilege_type": "UPDATE"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "channel",
+        "privilege_type": "DELETE"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "channel",
+        "privilege_type": "INSERT"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "channel",
+        "privilege_type": "REFERENCES"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "channel",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "channel",
+        "privilege_type": "TRIGGER"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "channel",
+        "privilege_type": "TRUNCATE"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "channel",
+        "privilege_type": "UPDATE"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "conversation",
+        "privilege_type": "DELETE"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "conversation",
+        "privilege_type": "INSERT"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "conversation",
+        "privilege_type": "REFERENCES"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "conversation",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "conversation",
+        "privilege_type": "TRIGGER"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "conversation",
+        "privilege_type": "TRUNCATE"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "conversation",
+        "privilege_type": "UPDATE"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "customer",
+        "privilege_type": "DELETE"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "customer",
+        "privilege_type": "INSERT"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "customer",
+        "privilege_type": "REFERENCES"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "customer",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "customer",
+        "privilege_type": "TRIGGER"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "customer",
+        "privilege_type": "TRUNCATE"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "customer",
+        "privilege_type": "UPDATE"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "input",
+        "privilege_type": "DELETE"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "input",
+        "privilege_type": "INSERT"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "input",
+        "privilege_type": "REFERENCES"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "input",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "input",
+        "privilege_type": "TRIGGER"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "input",
+        "privilege_type": "TRUNCATE"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "input",
+        "privilege_type": "UPDATE"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "mutation_guard",
+        "privilege_type": "DELETE"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "mutation_guard",
+        "privilege_type": "INSERT"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "mutation_guard",
+        "privilege_type": "REFERENCES"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "mutation_guard",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "mutation_guard",
+        "privilege_type": "TRIGGER"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "mutation_guard",
+        "privilege_type": "TRUNCATE"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "mutation_guard",
+        "privilege_type": "UPDATE"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "operation",
+        "privilege_type": "DELETE"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "operation",
+        "privilege_type": "INSERT"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "operation",
+        "privilege_type": "REFERENCES"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "operation",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "operation",
+        "privilege_type": "TRIGGER"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "operation",
+        "privilege_type": "TRUNCATE"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "operation",
+        "privilege_type": "UPDATE"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "output_intent",
+        "privilege_type": "DELETE"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "output_intent",
+        "privilege_type": "INSERT"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "output_intent",
+        "privilege_type": "REFERENCES"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "output_intent",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "output_intent",
+        "privilege_type": "TRIGGER"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "output_intent",
+        "privilege_type": "TRUNCATE"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "output_intent",
+        "privilege_type": "UPDATE"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "permission_event",
+        "privilege_type": "DELETE"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "permission_event",
+        "privilege_type": "INSERT"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "permission_event",
+        "privilege_type": "REFERENCES"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "permission_event",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "permission_event",
+        "privilege_type": "TRIGGER"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "permission_event",
+        "privilege_type": "TRUNCATE"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "permission_event",
+        "privilege_type": "UPDATE"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "permission_head",
+        "privilege_type": "DELETE"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "permission_head",
+        "privilege_type": "INSERT"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "permission_head",
+        "privilege_type": "REFERENCES"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "permission_head",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "permission_head",
+        "privilege_type": "TRIGGER"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "permission_head",
+        "privilege_type": "TRUNCATE"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "permission_head",
+        "privilege_type": "UPDATE"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "protection",
+        "privilege_type": "DELETE"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "protection",
+        "privilege_type": "INSERT"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "protection",
+        "privilege_type": "REFERENCES"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "protection",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "protection",
+        "privilege_type": "TRIGGER"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "protection",
+        "privilege_type": "TRUNCATE"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "protection",
+        "privilege_type": "UPDATE"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "receipt",
+        "privilege_type": "DELETE"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "receipt",
+        "privilege_type": "INSERT"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "receipt",
+        "privilege_type": "REFERENCES"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "receipt",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "receipt",
+        "privilege_type": "TRIGGER"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "receipt",
+        "privilege_type": "TRUNCATE"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "receipt",
+        "privilege_type": "UPDATE"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "recovery_case",
+        "privilege_type": "DELETE"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "recovery_case",
+        "privilege_type": "INSERT"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "recovery_case",
+        "privilege_type": "REFERENCES"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "recovery_case",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "recovery_case",
+        "privilege_type": "TRIGGER"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "recovery_case",
+        "privilege_type": "TRUNCATE"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "recovery_case",
+        "privilege_type": "UPDATE"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "resource",
+        "privilege_type": "DELETE"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "resource",
+        "privilege_type": "INSERT"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "resource",
+        "privilege_type": "REFERENCES"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "resource",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "resource",
+        "privilege_type": "TRIGGER"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "resource",
+        "privilege_type": "TRUNCATE"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "resource",
+        "privilege_type": "UPDATE"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "role_scope",
+        "privilege_type": "DELETE"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "role_scope",
+        "privilege_type": "INSERT"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "role_scope",
+        "privilege_type": "REFERENCES"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "role_scope",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "role_scope",
+        "privilege_type": "TRIGGER"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "role_scope",
+        "privilege_type": "TRUNCATE"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "role_scope",
+        "privilege_type": "UPDATE"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "seal",
+        "privilege_type": "DELETE"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "seal",
+        "privilege_type": "INSERT"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "seal",
+        "privilege_type": "REFERENCES"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "seal",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "seal",
+        "privilege_type": "TRIGGER"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "seal",
+        "privilege_type": "TRUNCATE"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "seal",
+        "privilege_type": "UPDATE"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "status_event",
+        "privilege_type": "DELETE"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "status_event",
+        "privilege_type": "INSERT"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "status_event",
+        "privilege_type": "REFERENCES"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "status_event",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "status_event",
+        "privilege_type": "TRIGGER"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "status_event",
+        "privilege_type": "TRUNCATE"
+      },
+      {
+        "grantee": "wp1_owner",
+        "table_name": "status_event",
+        "privilege_type": "UPDATE"
+      },
+      {
+        "grantee": "wp1_recovery",
+        "table_name": "appointment",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_recovery",
+        "table_name": "attempt",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_recovery",
+        "table_name": "audit",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_recovery",
+        "table_name": "batch",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_recovery",
+        "table_name": "batch_input",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_recovery",
+        "table_name": "business",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_recovery",
+        "table_name": "calendar",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_recovery",
+        "table_name": "channel",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_recovery",
+        "table_name": "conversation",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_recovery",
+        "table_name": "customer",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_recovery",
+        "table_name": "input",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_recovery",
+        "table_name": "mutation_guard",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_recovery",
+        "table_name": "operation",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_recovery",
+        "table_name": "output_intent",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_recovery",
+        "table_name": "permission_event",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_recovery",
+        "table_name": "permission_head",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_recovery",
+        "table_name": "protection",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_recovery",
+        "table_name": "receipt",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_recovery",
+        "table_name": "recovery_case",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_recovery",
+        "table_name": "resource",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_recovery",
+        "table_name": "seal",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_recovery",
+        "table_name": "status_event",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_reducer",
+        "table_name": "appointment",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_reducer",
+        "table_name": "attempt",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_reducer",
+        "table_name": "audit",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_reducer",
+        "table_name": "batch",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_reducer",
+        "table_name": "batch_input",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_reducer",
+        "table_name": "business",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_reducer",
+        "table_name": "calendar",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_reducer",
+        "table_name": "channel",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_reducer",
+        "table_name": "conversation",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_reducer",
+        "table_name": "customer",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_reducer",
+        "table_name": "input",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_reducer",
+        "table_name": "mutation_guard",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_reducer",
+        "table_name": "operation",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_reducer",
+        "table_name": "output_intent",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_reducer",
+        "table_name": "permission_event",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_reducer",
+        "table_name": "permission_head",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_reducer",
+        "table_name": "protection",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_reducer",
+        "table_name": "receipt",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_reducer",
+        "table_name": "recovery_case",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_reducer",
+        "table_name": "resource",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_reducer",
+        "table_name": "seal",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_reducer",
+        "table_name": "status_event",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_result",
+        "table_name": "appointment",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_result",
+        "table_name": "attempt",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_result",
+        "table_name": "audit",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_result",
+        "table_name": "batch",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_result",
+        "table_name": "batch_input",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_result",
+        "table_name": "business",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_result",
+        "table_name": "calendar",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_result",
+        "table_name": "channel",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_result",
+        "table_name": "conversation",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_result",
+        "table_name": "customer",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_result",
+        "table_name": "input",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_result",
+        "table_name": "mutation_guard",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_result",
+        "table_name": "operation",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_result",
+        "table_name": "output_intent",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_result",
+        "table_name": "permission_event",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_result",
+        "table_name": "permission_head",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_result",
+        "table_name": "protection",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_result",
+        "table_name": "receipt",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_result",
+        "table_name": "recovery_case",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_result",
+        "table_name": "resource",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_result",
+        "table_name": "seal",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_result",
+        "table_name": "status_event",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_sealer",
+        "table_name": "appointment",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_sealer",
+        "table_name": "attempt",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_sealer",
+        "table_name": "audit",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_sealer",
+        "table_name": "batch",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_sealer",
+        "table_name": "batch_input",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_sealer",
+        "table_name": "business",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_sealer",
+        "table_name": "calendar",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_sealer",
+        "table_name": "channel",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_sealer",
+        "table_name": "conversation",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_sealer",
+        "table_name": "customer",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_sealer",
+        "table_name": "input",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_sealer",
+        "table_name": "mutation_guard",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_sealer",
+        "table_name": "operation",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_sealer",
+        "table_name": "output_intent",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_sealer",
+        "table_name": "permission_event",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_sealer",
+        "table_name": "permission_head",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_sealer",
+        "table_name": "protection",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_sealer",
+        "table_name": "receipt",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_sealer",
+        "table_name": "recovery_case",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_sealer",
+        "table_name": "resource",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_sealer",
+        "table_name": "seal",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_sealer",
+        "table_name": "status_event",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_tenant_a",
+        "table_name": "appointment",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_tenant_a",
+        "table_name": "attempt",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_tenant_a",
+        "table_name": "audit",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_tenant_a",
+        "table_name": "batch",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_tenant_a",
+        "table_name": "batch_input",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_tenant_a",
+        "table_name": "business",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_tenant_a",
+        "table_name": "calendar",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_tenant_a",
+        "table_name": "channel",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_tenant_a",
+        "table_name": "conversation",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_tenant_a",
+        "table_name": "customer",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_tenant_a",
+        "table_name": "input",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_tenant_a",
+        "table_name": "mutation_guard",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_tenant_a",
+        "table_name": "operation",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_tenant_a",
+        "table_name": "output_intent",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_tenant_a",
+        "table_name": "permission_event",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_tenant_a",
+        "table_name": "permission_head",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_tenant_a",
+        "table_name": "protection",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_tenant_a",
+        "table_name": "receipt",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_tenant_a",
+        "table_name": "recovery_case",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_tenant_a",
+        "table_name": "resource",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_tenant_a",
+        "table_name": "seal",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_tenant_a",
+        "table_name": "status_event",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_tenant_b",
+        "table_name": "appointment",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_tenant_b",
+        "table_name": "attempt",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_tenant_b",
+        "table_name": "audit",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_tenant_b",
+        "table_name": "batch",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_tenant_b",
+        "table_name": "batch_input",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_tenant_b",
+        "table_name": "business",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_tenant_b",
+        "table_name": "calendar",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_tenant_b",
+        "table_name": "channel",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_tenant_b",
+        "table_name": "conversation",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_tenant_b",
+        "table_name": "customer",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_tenant_b",
+        "table_name": "input",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_tenant_b",
+        "table_name": "mutation_guard",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_tenant_b",
+        "table_name": "operation",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_tenant_b",
+        "table_name": "output_intent",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_tenant_b",
+        "table_name": "permission_event",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_tenant_b",
+        "table_name": "permission_head",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_tenant_b",
+        "table_name": "protection",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_tenant_b",
+        "table_name": "receipt",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_tenant_b",
+        "table_name": "recovery_case",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_tenant_b",
+        "table_name": "resource",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_tenant_b",
+        "table_name": "seal",
+        "privilege_type": "SELECT"
+      },
+      {
+        "grantee": "wp1_tenant_b",
+        "table_name": "status_event",
+        "privilege_type": "SELECT"
+      }
+    ],
+    "extensions": [
+      {
+        "extname": "btree_gist",
+        "extversion": "1.7"
+      },
+      {
+        "extname": "pgcrypto",
+        "extversion": "1.3"
+      },
+      {
+        "extname": "plpgsql",
+        "extversion": "1.0"
+      }
+    ]
+  }
+}

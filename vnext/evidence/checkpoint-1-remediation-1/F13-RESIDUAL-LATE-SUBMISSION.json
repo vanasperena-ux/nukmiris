@@ -1,0 +1,103 @@
+{
+  "F13-RESIDUAL-LATE-SUBMISSION": {
+    "result": "REPRODUCED; production physical cutoff NOT PROVEN",
+    "calls": [
+      {
+        "attemptId": "06465514-7e06-4f4b-a2d2-008c9cb24ab1",
+        "budgetSeconds": 2,
+        "businessId": "synthetic-a",
+        "businessRevision": 1,
+        "calendarId": "1a673742-69d6-49ab-b1be-0aede9e48297",
+        "calendarRevision": 1,
+        "channelId": "71681ee5-779b-4d66-af4c-9d8c6e3c7fb2",
+        "channelRevision": 1,
+        "conversationId": "fefc4e84-fba5-4e11-ae5b-ebb27db768c0",
+        "deadlineAt": "2030-01-01T09:15:00.000Z",
+        "dueAt": "2030-01-01T09:00:00.000Z",
+        "formatVersion": 1,
+        "grantId": "synthetic-grant-synthetic-a",
+        "numberId": "number-synthetic-a",
+        "payload": {
+          "appointmentId": "08d65256-866a-4fee-87eb-b93bbc8297a1",
+          "bufferMinutes": 0,
+          "businessId": "synthetic-a",
+          "calendarId": "1a673742-69d6-49ab-b1be-0aede9e48297",
+          "customerId": "088bd53f-67be-4822-bc35-8c1d883eff5a",
+          "endAt": "2030-01-02T11:00:00.000Z",
+          "eventId": "bf61d1c1-942e-413b-a497-c0fb9c4ba9c0",
+          "kind": "CREATE",
+          "resourceId": "6769f965-b789-413b-b58a-cc06596e0b12",
+          "startAt": "2030-01-02T10:00:00.000Z"
+        },
+        "payloadDigest": "3826a2f0431a5adf9b608d77aa12a8c7ef3d47074343260e272ef16e802e84da",
+        "permissionRevision": 0,
+        "purpose": "CUSTOMER_REQUEST",
+        "recipient": "customer-synthetic-a",
+        "recoveryEpoch": 1,
+        "remoteId": "bf61d1c1-942e-413b-a497-c0fb9c4ba9c0",
+        "waba": "waba-synthetic-a",
+        "windowEnd": "2030-01-02T09:00:00.000Z"
+      }
+    ],
+    "business": [
+      {
+        "business_id": "synthetic-a",
+        "status": "SUSPENDED",
+        "revision": "2",
+        "recovery_epoch": "1",
+        "dispatch_enabled": true
+      }
+    ],
+    "attempts": [
+      {
+        "business_id": "synthetic-a",
+        "id": "06465514-7e06-4f4b-a2d2-008c9cb24ab1",
+        "operation_id": "b80db266-ed22-41f2-a9a4-d40689385570",
+        "output_id": null,
+        "state": "VERIFIED_APPLIED",
+        "owner_id": "d0827618-d441-4fd0-9e41-dfa47f68d55e",
+        "envelope": {
+          "waba": "waba-synthetic-a",
+          "dueAt": "2030-01-01T09:00:00.000Z",
+          "grantId": "synthetic-grant-synthetic-a",
+          "payload": {
+            "kind": "CREATE",
+            "endAt": "2030-01-02T11:00:00.000Z",
+            "eventId": "bf61d1c1-942e-413b-a497-c0fb9c4ba9c0",
+            "startAt": "2030-01-02T10:00:00.000Z",
+            "businessId": "synthetic-a",
+            "calendarId": "1a673742-69d6-49ab-b1be-0aede9e48297",
+            "customerId": "088bd53f-67be-4822-bc35-8c1d883eff5a",
+            "resourceId": "6769f965-b789-413b-b58a-cc06596e0b12",
+            "appointmentId": "08d65256-866a-4fee-87eb-b93bbc8297a1",
+            "bufferMinutes": 0
+          },
+          "purpose": "CUSTOMER_REQUEST",
+          "numberId": "number-synthetic-a",
+          "remoteId": "bf61d1c1-942e-413b-a497-c0fb9c4ba9c0",
+          "attemptId": "06465514-7e06-4f4b-a2d2-008c9cb24ab1",
+          "channelId": "71681ee5-779b-4d66-af4c-9d8c6e3c7fb2",
+          "recipient": "customer-synthetic-a",
+          "windowEnd": "2030-01-02T09:00:00.000Z",
+          "businessId": "synthetic-a",
+          "calendarId": "1a673742-69d6-49ab-b1be-0aede9e48297",
+          "deadlineAt": "2030-01-01T09:15:00.000Z",
+          "budgetSeconds": 2,
+          "formatVersion": 1,
+          "payloadDigest": "3826a2f0431a5adf9b608d77aa12a8c7ef3d47074343260e272ef16e802e84da",
+          "recoveryEpoch": 1,
+          "conversationId": "fefc4e84-fba5-4e11-ae5b-ebb27db768c0",
+          "channelRevision": 1,
+          "businessRevision": 1,
+          "calendarRevision": 1,
+          "permissionRevision": 0
+        },
+        "payload_digest": "3826a2f0431a5adf9b608d77aa12a8c7ef3d47074343260e272ef16e802e84da",
+        "arm_seal": "arm/synthetic-a/06465514-7e06-4f4b-a2d2-008c9cb24ab1",
+        "meta_message_id": null,
+        "meta_status": null
+      }
+    ],
+    "requiredGate": "OPS01 deployed egress containment before activation"
+  }
+}

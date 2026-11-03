@@ -1,0 +1,17 @@
+$ git diff --exit-code e0b470d8f28bd380c9d6bfdeab0b9aad5e5ab507 -- vnext/evidence/checkpoint-1 docs/greenfield/reviews/01-CLAUDE-WP1-CP1-CP2-REVIEW.md docs/greenfield/reviews/01-CLAUDE-WP1-CP1-CP2-REPRO-SCRIPTS.md
+exit=0
+(empty output)
+$ git diff --name-only e0b470d8f28bd380c9d6bfdeab0b9aad5e5ab507 -- . :!vnext :!docs/greenfield
+exit=0
+(empty output)
+$ git diff --check
+exit=0
+(empty output)
+$ git -C /workspace/nukmiris status --short --branch
+exit=0
+## work
+
+38 tested source files: SHA-256 matches frozen manifest.
+Original checkpoint-1 and Claude review/scripts: unchanged.
+Accepted application diff relative to review start: empty.
+Source tree: 175bbddbb8f26c581f5f365722083f24ade3b7dd

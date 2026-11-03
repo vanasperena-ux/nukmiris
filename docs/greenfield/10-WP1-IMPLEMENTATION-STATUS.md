@@ -1,3 +1,10 @@
+> 2026-11-01 update: Claude completed independent CP1/initial CP2 review with
+> **GO WITH SPECIFIED REVISIONS**. Bounded remediation and all 17 dispositions are
+> in [review 02](reviews/02-CODEX-WP1-REMEDIATION-AND-DISPOSITIONS.md), with new
+> versioned evidence. **CP1/CP2 remain OPEN pending independent re-review.** The
+> historical implementation/evidence report below is retained; its pending-initial-
+> review and mixed-tenant statements are superseded by review 02. No WP2 authorization.
+
 # WP1 implementation candidate — owner approval and checkpoint status
 
 2026-11-01, America/Mexico_City. The owner explicitly approved the bounded charter:
