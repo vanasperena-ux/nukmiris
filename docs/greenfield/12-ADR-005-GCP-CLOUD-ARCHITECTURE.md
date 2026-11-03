@@ -182,21 +182,23 @@ Minimum alerts: **worker heartbeat absence / unexpected zero worker instances**,
 
 **Proposed 3a resource inventory (NOT AUTHORIZED, pricing and feasibility pending):** dedicated `nm-proof3a-run` project: disposable Cloud SQL PG 17 shared-core 10GB for only epoch/ticket fixtures; Cloud Run ingress/sealer and gateway (1vCPU/0.5GiB, min1/max2; gateway revisions for overlap test); one 1vCPU/1GiB worker pool; Direct VPC IPv4 subnet + gateway-only Cloud NAT; firewall and org-policy enforcement; Artifact Registry (under 2GiB). `nm-proof3a-custody`: versioned unlocked evidence bucket plus test KMS key, independent admin. `nm-proof3a-fakeprov`: smallest priced test fake-provider endpoint/VM with static IP and pinned test TLS, durable ledger. Only synthetic signing keys; no real Meta/Google access. At most 72h, proposed $50 ceiling; operator and exact SKU forecast required. Preserve logs/results then delete all proof projects and independently check final charges.
 
-## 11. Approval gates and implementation order
+## 11. Approval gates and implementation order (rev 2)
 
 | Gate | Scope | Exit/stop condition |
 |---|---|---|
-| ADR review (now) | Paper architecture, current issue/repository traceability, IAM/egress/cost/risk | Claude independently reviews; owner resolves material choices. **No resources**. |
-| WP1 finding disposition | Remediate/reproduce CP1/initial CP2 findings in separate authorized WP1 process | Critical/high correctness issues resolved or affected capability disabled; owner approval required for later work. |
-| Synthetic GCP proof (future authorization) | One isolated project, fake providers, original attempt/ledger tests, denial/late-send/recovery drills | Exact inventory, region, 72h and $75 proposed budget, rollback/teardown owner. Failed security invariant → fail closed and preserve evidence. |
-| Controlled provider staging (future separate authorization) | Dedicated test WABA/Calendar/OAuth, permission and receipt correlation | Real send/credentials and account access only after reviewed OPS01 controls and bounded owner sign-off. |
-| Production launch (future separate authorization) | WP2–WP6/CP closure, M2/M5 and all launch-required commercial journeys, support/privacy/cost tests | Owner acceptance of actual release, legal/data residency, on-call, safety and spend. No automatic cutover. |
+| ADR rev-2 delta review (now) | Paper architecture, quantified controls, risks, revised cost and 3a/3b separation | Claude checks RL-1–RL-9; owner resolves choices. **No resources.** |
+| **Phase 3a platform-only design and authorization** | Independent lightweight harness, fake provider, per-epoch network and revision fencing; **no WP1 prerequisite** | Independently review exact test matrix/resource SKUs and receive **separate** owner authorization of project IDs, region, <=72h, proposed $50 cap, named kill/cleanup/billing owners. No real accounts. |
+| **Phase 3a execution** | Measure F13 network/old-revision containment with fake provider | No forbidden effect; preserve timing and failed traces. Do not claim real provider readiness; stop on failed invariant and do not silently extend authorization. |
+| WP1 CP1/initial CP2 remediation in parallel | Separate authorized source remediation and independent review | Critical/high findings disposed before application-integrated proof and before WP2; phase 3a does not imply WP1 acceptance. |
+| **Phase 3b synthetic application proof** | Only after WP1 re-review; execute booking/admission/consent/recovery, uncertain send and tenant tests against fake providers | New scoped charter and owner approval; no real providers. |
+| Controlled provider staging (future) | Dedicated test WABA/Google assets, Meta A/B rotation, Google ETag/deleted-event behavior, permission/correlation | F13 residual G06 disposition, scoped real-asset/spend authorization and independent review. |
+| Production launch (future) | WP2–WP6/CP closure, M2/M5 and launch-required commercial journeys, operations/privacy/cost | Owner acceptance of release, legal/privacy, on-call, security proof and spending; no automatic cutover. |
 
 ## 12. Outstanding decisions / questions for approval
 
 1. Legal/contractual US hosting and key/archive recovery region for Mexico, then country-specific LATAM rollout.
 2. Operator and independent recovery/key custodians; escalation and access/approval separation.
-3. Final exact synthetic project inventory, daily teardown, SKUs, $75 bounded proof authorization and owner of billing.
+3. Final exact Phase 3a synthetic project inventory, priced SKUs, <=72-hour duration, proposed $50 spending authorization, named teardown and billing owners; no resources until approval.
 4. Formal retention schedule: PITR, archive/evidence, redacted logs, customer export/deletion and holds.
 5. GCP Direct VPC/egress topology proven against alternate routes, gateway late submission, established connections and old revisions; whether independent external egress controller is required.
 6. Meta business portfolio/WABA ownership, Tech Provider/coexistence/onboarding, billing; Google OAuth scope verification and calendar ownership.
