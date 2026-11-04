@@ -1,0 +1,9 @@
+
+> nukmiris-wp1-synthetic-core@0.0.0 typecheck
+> tsc -p tsconfig.json --noEmit
+
+
+> nukmiris-wp1-synthetic-core@0.0.0 check:scope
+> node scripts/check-scope.mjs
+
+PASS: source has no HTTP/provider/env/filesystem/child-process client; only pg, no application start command
