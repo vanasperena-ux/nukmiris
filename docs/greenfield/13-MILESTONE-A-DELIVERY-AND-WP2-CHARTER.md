@@ -4,57 +4,53 @@
 **Deliver and accept vNext locally before GCP work.** This is a proposed charter
 and delivery record, not a completed application or an independent review.
 
-## Current verified position
+## Current WP1 position after Claude's conditions review
 
-Checked GitHub at **2026-11-04 00:38 UTC / 2026-11-03 18:38 Mexico City**:
+[Independent review](https://github.com/vanasperena-ux/nukmiris/pull/4#issuecomment-6619904951):
+**GO WITH CONDITIONS C1–C4**, on source `857bb825ac01ca67f303adbe71ef486c276c8923`.
+Claude executed PG16.15/Node22 SQL probes and a canonical differential, but could not
+run the Node24/PG17.11 full/fault suites. Those limits remain explicit.
 
-| Item | Exact evidence | Status |
+| Item | Exact current evidence | Status |
 |---|---|---|
-| Accepted v0.8.1 oracle | `95decc812c228f25171ecfe647200447c83e2e45` | Preserved; no working data/secrets read or changed |
-| Approved product source | `1f4682ccba02fe5d89ce9d671c0114d6f9a0d6e1`; 37 approved journeys | Binding; [WP0 parity contract](05-P0-PARITY-CONTRACT-AND-TEST-PLAN.md) separates P0 from commercial additions |
-| Original independent Claude WP1 review | [review 01](reviews/01-CLAUDE-WP1-CP1-CP2-REVIEW.md), source `108adb62604b9963bd3468ab8b43c36b69fcef6e` | GO WITH SPECIFIED REVISIONS; Claude SQL reproduction was PG 16.15, not 17.11; Node suites not independently rerun |
-| Remediated executable core | `857bb825ac01ca67f303adbe71ef486c276c8923` | Codex verification: 88 full / 78 fault, zero fail/cancel/skip, PG 17.11; not a complete app |
-| Current PR #4 head | `1ca19248f0f26b47a7ed8013d79e75d387f508b3` | Draft; docs/evidence commit, identical tested source |
-| Independent remediation verification | PR review, conversation and inline-comment lists empty; no later independent WP1 report in branch | **CP1/initial CP2 OPEN**; [Claude request posted](https://github.com/vanasperena-ux/nukmiris/pull/4#issuecomment-6619286347) |
-| Cloud ADR | PR #6, `83907db61daa929fa91ed9301c75b92eaa5f5436` | Documentation/review only; its Claude review is not WP1 verification; cloud implementation deferred |
-| Owner Windows application acceptance | No vNext app start script/UI; current fault harness requires Linux sockets/signals | NOT RUN; [Windows delivery contract](14-WINDOWS-LOCAL-RUNTIME-AND-ACCEPTANCE.md) |
+| Accepted v0.8.1 | `95decc812c228f25171ecfe647200447c83e2e45` | Preserved; parity oracle; no working data/secrets touched |
+| Product scope | `1f4682ccba02fe5d89ce9d671c0114d6f9a0d6e1`; 37 journeys and owner-confirmed one service per appointment | Binding; P0 stays separate from commercial increments |
+| C1/C4 follow-up source | `991ca8141ffef3471a955c450e9f789dd8aef1a7` | Codex full 98/98, fault 88/88, Node24.19/PG17.11; not independently accepted yet |
+| PR #4 evidence/docs head | `84ff73d36cc6defc493a30a4f07445e4818ce1c8` | Draft; tested source unchanged by evidence commit |
+| Independent C1 re-verification | [Exact-commit request](https://github.com/vanasperena-ux/nukmiris/pull/4#issuecomment-6620401835) | **PENDING; CP1/initial CP2 OPEN until formal closure** |
+| C2/C3 | [Preserved gates and NEW-2/NEW-3 requirements](https://github.com/vanasperena-ux/nukmiris/blob/991ca8141ffef3471a955c450e9f789dd8aef1a7/docs/greenfield/16-WP2-BOOKING-AND-INBOUND-DESIGN-REQUIREMENTS.md) | Design recorded; no WP2 code implemented |
+| Windows app / owner acceptance | [Runtime contract](14-WINDOWS-LOCAL-RUNTIME-AND-ACCEPTANCE.md) | NOT RUN; no complete local app yet |
+| GCP ADR PR #6 | Documentation/review only | Deferred; no provisioning or costs |
 
-Eleven findings are **Codex-corrected, independently unconfirmed**:
-002, 003, 004, 005, 006, 007, 008, 010, 012, 014, 015. Remaining explicit gates:
-001 F13/OPS01, 009 independent seal custody/roles, 011 archive repair, 013 transport
-budget, 016 real receipt correlation, 017 archive lookup/capacity. See the
-[complete dispositions](reviews/02-CODEX-WP1-REMEDIATION-AND-DISPOSITIONS.md).
-A finding is not accepted by Claude merely because Codex lists it as corrected.
+Claude accepted the earlier 17 dispositions with documented limits and NEW-1–4.
+The new C1 output guard/index/preflight and C4 recovery-case protection are locally
+verified, not independently accepted. See [follow-up report](https://github.com/vanasperena-ux/nukmiris/blob/84ff73d36cc6defc493a30a4f07445e4818ce1c8/docs/greenfield/reviews/04-CODEX-WP1-C1-C4-REMEDIATION.md).
+001/013/016 remain disabled; 009/011/017 and OPS01 remain required. A migration/table
+owner can change lifecycle state and disable its triggers without superuser;
+append-only payload DML protection is not protection from owner compromise.
 
-No callable Claude tool, installed `claude` CLI, configured Anthropic credential
-or identified GitHub Claude reviewer account exists in this session. The posted
-request names the exact diff and requested evidence; it does **not** invoke Claude.
-Do not substitute another Codex run, the GCP ADR review, or an owner milestone
-instruction for that independent review.
-
-The compressed SQL/state evidence remains local under the previously recorded
-automatic approval restriction. Readable logs, source hashes and all-member
-snapshot inventory are public. Reviewers must reproduce unavailable evidence or
-receive the specifically authorized bundle; do not claim it was publicly inspected.
-This issue does not itself approve publishing the withheld archives.
+No Claude tool/CLI is available here; the completed review occurred independently
+outside this session. A posted re-verification request is not a completed review.
+Compressed SQL/state evidence remains unpublished under the prior restriction;
+readable logs, hashes, schema metadata and case summaries are public. No archive
+upload authority is inferred from this milestone.
 
 ## Immediate WP1 closure task
 
-1. Claude reviews `e0b470d…857bb82`, using evidence/docs head `1ca1924`, follows
-   [the exact handoff](reviews/03-CLAUDE-WP1-REMEDIATION-VERIFICATION-HANDOFF.md),
-   and records all 17 dispositions with actual commands/environment and limitations.
-2. Require independent results for the seven primary SQL corrections
-   002/003/004/006/007/008/012, plus safe abandonment/isolation/restore and any new
-   findings. Reproduce on pinned PG 17.11; unavailable executions stay NOT RUN.
-3. Record explicit CP1/initial CP2 recommendation and which remaining gates block
-   which WP2 components. No unaddressed critical/high correctness finding may cross
-   the entry gate; disable the affected capability or correct/re-review it.
-4. Record the independently accepted findings and owner-readable decision in
-   Issue #7 and PR #4, pinned to the reviewed commit. Keep drafts unmerged.
+1. Independently verify C1 on `991ca81` using [handoff 05](https://github.com/vanasperena-ux/nukmiris/blob/84ff73d36cc6defc493a30a4f07445e4818ce1c8/docs/greenfield/reviews/05-CLAUDE-WP1-C1-REVERIFICATION-HANDOFF.md):
+   corrected A4 plus malformed/colliding IDs/purposes, actual output-constraint
+   preflight, real unique-index contention and unchanged idempotent replay.
+2. Record actual environment/results/limits and an explicit C1 accepted/rejected
+   disposition. Verify C4 owner/payload boundary and C2/C3 carried requirements.
+3. Require a formal CP1/initial CP2 closure statement for the bounded synthetic
+   scope before any WP2 code. No unaddressed critical/high correctness issue may
+   cross that entry gate; preserve all remaining provider/custody/repair gates.
+4. Publish the independent decision in PR #4 and Issue #7. Keep drafts unmerged.
 
-**Current stop:** the independent remediation verification is absent. Planning,
-readiness work and posting the review request are completeable now. Broader WP2
-application implementation waits for this gate, as Issue #7 explicitly requires.
+**Current stop:** C1 independent verification and formal WP1 closure are pending.
+The first task after acceptance is L0a's indexed authenticated fixture-archive
+lookup/capacity/repair proof under 017, then L0b sealed input classification and
+head-aware reservation priority. No such implementation has begun.
 
 ## Proposed WP2-L charter: first locally usable parity path
 
@@ -91,6 +87,25 @@ feature. Planning estimate: L0/L1 **1–2 engineer-weeks**, first visible bookin
 **4–8 engineer-weeks total** with overlap, low confidence. Independent review,
 owner-device availability and corrections add elapsed time. These are effort
 ranges, not an agreed budget or launch date; re-estimate after L0/L1 evidence.
+
+### Mandatory NEW-2/NEW-3 requirements before booking implementation
+
+The submission barrier alone cannot establish reservation priority. A later input
+must not reserve the earlier customer's slot: under conversation locking, hold
+later preparation with zero reservations until the earliest unresolved ordinary
+command is eligible. Normal progress cannot require operator HOLD of the first
+request. UNKNOWN protections remain held; no timeout-release or retry is introduced.
+
+Admission produces one sealed, versioned classification of withdrawal/receipt/
+ordinary input, bound to original event digest and scoped identity. SQL reads that
+classification rather than lower(trim(body)); accents/NFD/punctuation must agree
+with the canonical TS normalizer. Context-dependent name/date/intent handling stays
+in the reducer. Ordinary text/navigation/human handoff receives a durable terminal
+reduction when appropriate and must not poison the mutation head. Menu/status paths
+cannot silently resolve uncertainty or permit a resend.
+
+W2-RP01–04 and W2-CL01–04 in [requirements 16](https://github.com/vanasperena-ux/nukmiris/blob/991ca8141ffef3471a955c450e9f789dd8aef1a7/docs/greenfield/16-WP2-BOOKING-AND-INBOUND-DESIGN-REQUIREMENTS.md)
+are required acceptance tests, currently NOT RUN. This is design, not WP2 code.
 
 ### Architecture obligations before adding conversation effects
 
@@ -175,3 +190,54 @@ remains binding; no related schema/workflow exception is authorized.
 
 GCP deployment/provisioning/costs remain deferred under Issue #7. Local completion
 neither proves cloud containment nor authorizes cutover, merge or live sends.
+
+## C2 — verbatim activation prerequisites
+
+001/F13, 013 real transport and 016 real provider/receipt integration stay disabled.
+The following 009/011/017 gates and OPS01 nine cases are carried verbatim from
+requirements 16 and the prior disposition report. They are requirements, not
+authorization to run live tests or to provision GCP.
+
+Mandatory independent OPS01 evidence before any real call:
+
+1. Worker identity has no provider secrets and direct provider egress is denied.
+2. Worker frozen beyond ticket expiry, then suspended/thawed: zero provider calls.
+3. Replayed/second-worker/consumed ticket: zero additional calls, including lost DB commit response.
+4. Suspension at every ticket/recheck/write cut; ≥10,000 recorded randomized runs with provider-observed time versus suspension commit; publish actual lag and stated limits.
+5. Gateway frozen after recheck: reproduce the residual or prove abandonment at enforced deadline; never label a late send as a physical cutoff pass.
+6. Old-instance network fencing, then thaw: zero provider calls from the old identity.
+7. Later authorized sandbox-only credential revocation latency for each provider; publish worst observed refusal lag and uncertainty.
+8. DB unreachable at gateway: deny without provider invocation.
+9. Stalled upstream: enforce overall budget, record UNKNOWN, retain holds, never retry; receipt/result races preserve facts.
+
+
+**009:** digest recomputation binds content; anyone authorized as the fixture sealer
+can still mint a self-consistent record. The test worker intentionally holds several
+fixture role pools. Before production, use separate processes and non-interchangeable
+credentials for ingress/sealer/dispatch/result/operator/recovery, authenticate archive
+receipts (e.g. signed canonical checkpoint verified by an isolated trusted verifier),
+keep signing/MAC keys out of dispatch/worker/DB-client reach, and retain independently
+witnessed monotonic heads/keys. A DB-only HMAC with the same process/key custody is
+not independence. Attack tests: recompute a forged body digest, replay a valid old
+checkpoint, cross tenant/scope, compromise dispatcher credential, and roll back one
+custody domain. Each must deny unauthorized registration/effect; document the trusted
+administrator boundary. None of these production controls has been run here.
+
+**011:** before selecting a real archive, implement a fenced repair operation:
+stop/fence all appenders, retain forensic copies, verify every object/key/version/
+chain link against independently trusted custody, classify object-only/head-only/
+witness-only cuts, and adopt a longer head only when its committed custody is
+proved. A consistent longer local chain alone is insufficient. Record a signed,
+append-only repair decision, update heads through the archive's atomic/CAS primitive,
+then admit again without reallocating IDs. Broken/missing custody stays held with
+an operator report. No age-based append.lock stealing. Kill at every object/head/
+witness/lock release cut, repair twice, crash repair itself, replay old custody,
+and verify continuation with zero unsealed effects. **NOT RUN; production blocked.**
+
+**017:** before WP2 archive-dependent expansion, select an indexed immutable record
+store with keyed reads, authenticated inclusion/checkpoint proofs and monotonic
+witnesses. Verify ordinary lookups do not decrypt all prior records, restore catches
+missing/rolled-back tails, and keys/old versions remain readable under rotation.
+Benchmark increasing histories (1k/10k/100k/1M records), memory and per-admission/
+dispatch latency under concurrency, crash and repair; publish distributions and a
+capacity policy. Fixture's 100k cap/full scan is not the production design.
