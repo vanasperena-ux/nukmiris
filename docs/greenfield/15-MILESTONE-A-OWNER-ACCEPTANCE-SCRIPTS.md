@@ -79,7 +79,7 @@ accepted v0.8.1 installation/data remain untouched.
 | Owner operations / Needs Attention | Only actionable uncertain/disconnected/identity/deletion cases appear, with scoped audit and safe read-only resolution. Ordinary no-phone manual events remain blockers without unwanted contact. | LA3, J.O04–09/O11/A01–03; NOT RUN |
 | Staff access | Restricted own schedule/explicit booking permission, secure invite/revoke, retained default identity; foreign tenant/customer data denied. | LA3, J.S01–03; NOT RUN |
 | Setup UX | Owner sees explicit synthetic channel/calendar/config state, validates hours and errors without editing secrets; real-account connection visibly unavailable until separately authorized. | LA3, J.O01/O03; NOT RUN |
-| Multi-service request | Preserve one service per appointment under decision 147 until the specific Issue #7 conflict is resolved; no inferred approval to restore withdrawn behavior. | Later-scope clarification pending; NOT RUN |
+| One service per appointment | Each service remains a separate booking in P0 and later service/catalog/staff increments under decision 147; multi-service appointments are not planned. | Owner confirmed 2026-11-03; implementation acceptance NOT RUN |
 
 The complete 37-scenario matrix still tracks import, waitlist, locations, billing,
 privacy/export/reporting and other approved work. These do not become implemented

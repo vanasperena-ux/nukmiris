@@ -130,14 +130,28 @@
       "CR-WP1-016",
       "CR-WP1-017"
     ],
-    "archivePublication": "Previously automatically rejected; no retry or approval inferred from Issue 7",
-    "laterMultiServiceScope": "Issue 7 step 3 conflicts with decision 30->147; clarification requested; approved one-service rule retained"
+    "archivePublication": "Previously automatically rejected; no retry or approval inferred from Issue 7"
   },
   "documentSHA256": {
-    "docs/greenfield/13-MILESTONE-A-DELIVERY-AND-WP2-CHARTER.md": "82580f97ccd1e6a53330cc8285986bf22623d83c7705b171b53899bc16c4a57a",
+    "docs/greenfield/13-MILESTONE-A-DELIVERY-AND-WP2-CHARTER.md": "7dc9677ed287fd750f9fbef9e70e14c8d81266b78fb1a1e4109cb2286690d5c4",
     "docs/greenfield/14-WINDOWS-LOCAL-RUNTIME-AND-ACCEPTANCE.md": "c8ac043f80784197d3b00ef65b29f5cbe6d3aa06ab883b133c3b258405cdd4e1",
-    "docs/greenfield/15-MILESTONE-A-OWNER-ACCEPTANCE-SCRIPTS.md": "9a315c8f623ad10ffaebad4bdf352c05f2f835d4c8b039cc22845090947b0cb6",
+    "docs/greenfield/15-MILESTONE-A-OWNER-ACCEPTANCE-SCRIPTS.md": "703e780f44c7f90e8c4334000a4c4545c5a915564ec5e6cb5987c2eb089c3b2b",
     "docs/greenfield/examples/wp2-local-demo.env.example": "bceb341fa8d6c407b3b676a12a1da8e17a4cfe362e5013b037994f2d046d39b3"
   },
-  "staticLogSHA256": "2f7f9e5d72b419deb01429c6c48e3fc3157183258bfc2d3a4ce24fede9aeac9b"
+  "staticLogSHA256": "2f7f9e5d72b419deb01429c6c48e3fc3157183258bfc2d3a4ce24fede9aeac9b",
+  "resolvedDecisions": {
+    "serviceCount": {
+      "status": "OWNER_CONFIRMED",
+      "clarification": "Preserve one service per appointment",
+      "originalDecision": "30->147",
+      "rule": "Each service is a separate booking",
+      "scope": [
+        "P0",
+        "later service/catalog/staff increments"
+      ],
+      "multiServiceAppointmentsPlanned": false,
+      "ownerClarificationLocalDate": "2026-11-03",
+      "record": "https://github.com/vanasperena-ux/nukmiris/issues/7#issuecomment-6619615645"
+    }
+  }
 }

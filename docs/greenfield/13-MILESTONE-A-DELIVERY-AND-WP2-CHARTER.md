@@ -154,12 +154,13 @@ and other approved scenarios remain mapped in [the existing 37-journey matrix](0
 Owner local acceptance must identify which are required before Milestone A is called
 complete; they cannot disappear from scope because they are absent from the first demo.
 
-**One documented later-scope conflict:** Issue #7 step 3 lists “multi-service
-appointments”; approved product decision **30→147** explicitly withdraws multiple
-services per appointment and C01 says one service. Preserve the accepted single-
-service contract in P0 and this charter. Clarification requested for the later
-increment only; do not implement a conflicting schema/workflow or reopen unrelated
-approved choices. Source: [decision register](https://github.com/vanasperena-ux/nukmiris/blob/1f4682ccba02fe5d89ce9d671c0114d6f9a0d6e1/docs/product-review/01-decision-reconciliation.md).
+**Owner clarification — resolved (2026-11-03):** “Preserve one service per
+appointment.” Issue #7's multi-service wording does not amend approved decision
+**30→147**. Each service remains a separate booking in P0 **and later service,
+catalog and staff increments**. Multi-service appointments are not planned.
+[Recorded owner clarification](https://github.com/vanasperena-ux/nukmiris/issues/7#issuecomment-6619615645).
+The original [decision register](https://github.com/vanasperena-ux/nukmiris/blob/1f4682ccba02fe5d89ce9d671c0114d6f9a0d6e1/docs/product-review/01-decision-reconciliation.md)
+remains binding; no related schema/workflow exception is authorized.
 
 ## Live Meta/Google test accounts: separate gate
 
