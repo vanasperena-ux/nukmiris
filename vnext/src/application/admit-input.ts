@@ -45,6 +45,9 @@ export async function admitInput(args:{raw:Buffer;signature:string;secret:Buffer
   for(const w of withdrawals)try {
     await archive.ensure(`permission/${w.businessId}/${w.e}`,'SUPPRESSION',{businessId:w.businessId,subject:w.subject,evidenceId:w.e,digest:w.d},()=>({revision:w.rev,occurredAt:w.at}));
   } catch(error){failures.push(error);}
+  // A single-tenant archive facade cannot retain a mixed-tenant raw batch. Keep
+  // immediate validated withdrawals above; never leak foreign raw bytes to it.
+  if(archive.businessId&&parsed.some(v=>v.route.businessId!==archive.businessId))throw new Error('archive_batch_scope');
   const allItems:ObjectValue[]=[],batchId=createHash('sha256').update(raw).digest('hex');
   const rawSeal=await archive.ensure('raw/'+batchId,'RAW_BATCH',{batchId,rawBase64:raw.toString('base64'),signature});
   for(const b of [...new Set(parsed.map(v=>v.route.businessId))].sort())try {

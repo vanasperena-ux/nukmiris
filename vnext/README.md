@@ -1,9 +1,12 @@
-# WP1 synthetic transactional safety slice
+# vNext synthetic safety core — WP1 and WP2-L0a
 
 Owner authorized on 2026-11-01. This package has **no application start command,
 Google/Meta SDK, real credentials, booking UI or provider deployment**. It is an
 isolated proof of the approved [WP1 charter](../docs/greenfield/08-WP1-BOUNDED-IMPLEMENTATION-CHARTER.md).
-The accepted `backend/` remains unchanged. WP2 has not started.
+The accepted v0.8.1 application remains unchanged. Claude formally accepted WP1 for
+bounded synthetic use ([acceptance](https://github.com/vanasperena-ux/nukmiris/pull/4#issuecomment-6620571487)).
+WP2-L0a adds an indexed authenticated local fixture archive; independent L0a review
+is pending. See [implementation and exact next gate](../docs/greenfield/17-WP2-L0A-INDEXED-ARCHIVE.md).
 
 Use Node 24.x, npm 11, Docker and the local managed daemon. From this directory:
 
@@ -14,6 +17,8 @@ npm run check:scope
 npm test
 npm run test:fault
 npm run test:conditions
+npm run test:archive
+npm run test:archive:capacity
 ```
 
 On a workspace that cannot write npm's default cache, add
@@ -60,7 +65,8 @@ npm.cmd run check:scope
 The full disposable Unix-socket/POSIX-signal harness currently requires Linux
 (including an appropriately configured WSL environment); native Windows execution
 is **not verified**. Do not run the candidate over the owner's accepted PC install.
-The later P0 Windows smoke remains WP6 work.
+Windows runtime/bootstrap/child-lifecycle verification remains the next L0 prerequisite
+under Milestone A; a native Windows owner smoke is still required.
 
 ## Enforced path
 
@@ -118,9 +124,9 @@ execution revoked. Shared service roles explicitly granted both synthetic
 businesses still span both; this is not isolation from fully compromised shared
 runtime or a production MFA/operator implementation.
 
-Claude completed the initial independent review: GO WITH SPECIFIED REVISIONS.
-This remediation requires independent re-review; CP1/CP2 remain open.
-The new [dispositions and re-review handoff](../docs/greenfield/reviews/02-CODEX-WP1-REMEDIATION-AND-DISPOSITIONS.md) supersede the original pending-review wording.
+The prior WP1 review history is retained in the numbered review documents.
+Claude formally closed CP1/initial CP2 for bounded synthetic use; production gates
+remain open. L0a requires its own independent review.
 
 The SQL recomputes canonical SHA-256 body/payload digests (UTF-8 key ordering;
 safe integral JSON numbers only). A digest establishes integrity, not authenticity.
@@ -132,17 +138,10 @@ The caller time must be finite and within 5 seconds; admission uses DB time agai
 after all locks. No runtime clock override exists. SQL functions reject NULL
 arguments, and role defaults bound statement/lock/idle-transaction waits.
 
-Independent Claude verification of these revisions is **pending**. No connected Claude tool
-or CLI was available; no self-review is presented as independent review. See the
-[actual implementation review handoff](../docs/greenfield/11-WP1-CLAUDE-REVIEW-HANDOFF.md).
-Stop at that checkpoint. No WP2, merge, deploy or real provider activation is included.
+## Accepted WP1 remediation
 
-## Claude conditions C1–C4 follow-up
-
-Claude independently reviewed source `857bb82` and recommended GO WITH CONDITIONS
-([review](https://github.com/vanasperena-ux/nukmiris/pull/4#issuecomment-6619904951)).
-C1 needs independent re-verification of the follow-up fix; CP1/initial CP2 remain
-open until that result formally closes the gate. No WP2 code has started.
+Claude accepted C1–C4 at the exact source/evidence pins linked above.
+No existing Draft PR is merged.
 
 Preparation now rejects invalid output purpose/identity before reservation and
 reserves each future output ID through an immutable-operation unique index. It
@@ -160,4 +159,9 @@ and this limit.
 
 [WP2 requirements and unchanged activation gates](../docs/greenfield/16-WP2-BOOKING-AND-INBOUND-DESIGN-REQUIREMENTS.md)
 record NEW-2 reservation priority and NEW-3 sealed admission-time classification.
-This is documentation, not implemented WP2 behavior or provider authorization.
+These remain L0b requirements; L0a does not implement booking/classification or
+provider authorization. The original file archive described above remains a regression
+oracle. The new adapter, signed witness port, authenticated presence/absence index,
+fenced repair, capacity policy and test commands are described in document 17.
+Normal dispatch now uses keyed lookup; cold inert restore retains full completeness
+audit. No production custody or native Windows result is claimed.

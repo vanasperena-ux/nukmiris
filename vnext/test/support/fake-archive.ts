@@ -12,6 +12,7 @@ interface RecordEntry { key: string; kind: string; keyVersion: string; sequence:
 const ROOT='0'.repeat(64);
 /** Local crashable stand-in, NOT independent offsite storage or a vendor guarantee. */
 export class FakeArchive implements EvidenceStore {
+  async lookup(key:string):Promise<Seal|null> { return (await this.records()).find(r=>r.key===key)??null; }
   constructor(readonly directory: string,readonly faults: Faults=noFaults) {
     if (!directory.startsWith('/tmp/nukmiris-wp1-')) throw new Error('fixture_archive_only');
   }
