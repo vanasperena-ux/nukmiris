@@ -36,6 +36,25 @@ proof finalizes once; missing ARM and pre-gate suspension produce zero calls;
 restore stays inert and corruption makes completeness unknown. The native Windows
 process/PG harness remains unverified.
 
+## B2 correction to this baseline evidence
+
+Claude independently reviewed the baseline with **GO WITH CONDITIONS**
+([review](https://github.com/vanasperena-ux/nukmiris/pull/9#issuecomment-6622229074)).
+B1/B2 corrections require re-verification; L0a remains open. This directory retains
+the original source/benchmark pins and measurements, not the later correction run.
+
+The checkpoint witness checks CAS and monotonic size/epoch; it **does not
+independently verify append-only extension of either the record chain or index**.
+History/identity preservation here assumes honest writer code and HMAC/AES keys.
+A writer with those keys plus its CAS capability can obtain a signature over a
+larger rewritten history without the witness private key or repair fence. Original
+ARM ownership can change, an old key can become authenticated absence/reallocatable,
+and cold audit can pass even with a retained older minimum checkpoint. X1 is
+retained as a reproduced production-blocking counterexample. Documentation does
+**not** fix this vulnerability. Before any non-fixture custody, independent chain
+**and** index extension verification is mandatory under production 009/017.
+See [corrections and owned follow-ups](../../../docs/greenfield/18-WP2-L0A-B1-B2-AND-FOLLOWUPS.md).
+
 ## Capacity observations
 
 The actual `ensureBatch` API creates the corpus, capped at 1,000 records per

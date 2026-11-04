@@ -32,6 +32,8 @@ Reads verify every traversed edge and the selected record. Only a verified null
 edge proves absence. Missing SQL rows, altered pointers, deleted records or damaged
 ciphertext throw; none is interpreted as permission to allocate a replacement ID.
 Normal reads are bounded to 64 nodes and one record decryption per hit.
+Those checks authenticate the history the witness signed; they do not prove that
+this history extends any earlier signed history against a writer-level attacker.
 
 The checkpoint witness signs canonical state with Ed25519: archive ID/root/size/tip,
 epoch, NORMAL/REPAIR mode and repair-decision digest. The archive receives its
@@ -41,16 +43,49 @@ cannot regress in epoch/size or change history at the same size. Reopen accepts
 an optional **externally retained** minimum checkpoint. Rolling back archive and
 witness together without such an anchor remains outside this proof.
 
+**B2 trust boundary: the fixture witness checks CAS and monotonic size/epoch; it
+does not independently verify append-only history extension.** A writer holding
+the archive HMAC/AES keys and its read/CAS capability can replace history with a
+larger fork and obtain a valid signature without the witness private key or an
+operator fence. Even a retained older minimum checkpoint, original-key lookup
+and cold audit then accept the rewrite. History integrity depends on honest writer
+code and keys. The retained `B2/X1` regression reproduces a changed original ARM
+owner, authenticated absence of original history, passing audit and reallocation.
+**This production vulnerability remains unresolved. Documentation and the mutex
+do not fix it.** Independent extension verification of both the record chain and
+the index is mandatory under production 009/017; see the additional gate below
+[requirements 16](16-WP2-BOOKING-AND-INBOUND-DESIGN-REQUIREMENTS.md).
+
 Tenant facades enforce configured grants, distinct keyed identities, business
 bindings and scoped results. Facades are capabilities of the trusted service, not
 production user authentication. Full audit checks the global encrypted log before
 returning the facade's tenant records. Restores stay globally inert. A scoped
+facade recursively rejects every foreign/null `businessId` in nested objects and
+arrays, including envelopes and allocated bodies (N4). Opaque raw bytes are not
+recursively parsed by this check; admission binding remains a separate N5 gate. A scoped
 facade refuses mixed-business raw-batch custody, after all authenticated immediate
 withdrawals have been attempted durably; it never stores B's raw bytes in A's view.
 The old shared-service mixed-tenant admission regression remains. Broader inbound
 routing/custody must be reviewed in L0b before expanding admission.
 
 ## Transactions, crash cuts and repair
+
+B1 serializes append/ensureBatch, lookup/verify, records and operator repair on a
+single instance with one FIFO async mutex, held across all awaits and witness I/O
+through confirmation. Its 64-operation bound includes the active operation;
+overflow/active-close raises `ArchiveBusyError`, never a nested SQL transaction.
+Independent instances/processes still coordinate through SQLite and witness CAS;
+SQLite BUSY/LOCKED is mapped to the same typed contention class. No retry or lock
+stealing is added. Failed work releases the mutex without rolling back another
+caller's transaction. The operator instance repair method is not on tenant facades.
+
+`ArchivePendingError` distinguishes pending confirmation from `ArchiveHeldError`
+for a repair fence/checkpoint mismatch. Pending can mean **live or crashed**; it
+does not establish which. Neither a typed busy error nor a timeout proves that a
+write rolled back. Bounded caller handling remains mandatory before L0b inbound
+expansion: [N1 policy and ownership](18-WP2-L0A-B1-B2-AND-FOLLOWUPS.md). Same-instance
+reads wait for their own write/repair; another process still cannot serve a confirmed
+root through an in-place pending index (availability limitation, not solved here).
 
 1. Read/authenticate NORMAL witness; acquire a bounded SQLite write lock. Require
    the archive head to match that checkpoint with no pending append.
@@ -69,17 +104,25 @@ An ACK/result lost after confirmation can be resolved by original-key lookup.
 
 An operator first increments the independently witnessed repair epoch and sets
 REPAIR mode. Old writer CAS continuations cannot advance. A live SQLite lock is
+not a complete data-write fence: a pre-existing transaction may still commit after
+the witness fence, have its CAS refused and leave an authenticated tail that repair
+adopts with its original owner (N3). No dispatch permit follows from that adoption.
+A live SQLite lock is
 never stolen: repair fails busy, keeps the fence, and requires terminating/fencing
-the writer and a new operator attempt. Each attempt retains a coherent SQLite
-backup plus its signed checkpoint under a unique epoch name; it never overwrites
-the forensic copy. These files are local state, **not public review evidence**.
+the writer and a new operator attempt. A completed attempt's SQLite backup is
+coherent, but a killed backup can leave an incomplete final-name copy next to a
+valid signed checkpoint (N2). Atomic temporary-file publication, fsync and a
+forensic digest bound to the repair decision remain production-011 requirements;
+no forensic-completion guarantee is claimed. Files are local state, **not public
+review evidence**.
 
 Repair authenticates/decrypts every record and retained key, verifies every chain
 link, uniqueness and the entire witnessed prefix, and reconstructs the AVL map in
 a staging table. An extra pending tail is adoptable only if its authenticated
 records extend that exact trusted base; consistency of a longer local chain alone
 is insufficient. Rollback, missing records, changed heads, bad keys or missing
-custody stay held. Every original sequence/body/owner/attempt identity is preserved.
+custody stay held. Under honest writer code/keys, original sequence/body/owner/
+attempt identities are preserved. This is not protection against the B2 writer fork.
 No provider, SQL replay, guard release or dispatch-enable operation exists here.
 
 Repair decisions form a separate HMAC-authenticated append-only chain whose final
@@ -107,6 +150,7 @@ npm ci --ignore-scripts
 npm run typecheck
 npm run check:scope
 npm run test:archive
+npm run test:archive:concurrency
 npm test
 npm run test:fault
 npm run test:archive:capacity
@@ -126,6 +170,11 @@ disk and minutes of CPU/I/O; generated state remains ignored and local.
 
 L0a requires independent Claude review of the pinned source and evidence before
 claiming finding 017 satisfied for **local synthetic archive-dependent expansion**.
+[Claude's GO WITH CONDITIONS](https://github.com/vanasperena-ux/nukmiris/pull/9#issuecomment-6622229074)
+requires independent verification of B1/B2 corrections before closure. The
+[B1/B2 and N1–N6 register](18-WP2-L0A-B1-B2-AND-FOLLOWUPS.md) gives explicit owners,
+acceptance criteria and entry gates. N1/N4/N5 must be addressed before inbound
+expansion in L0b; L0a stays open until Claude accepts the corrections.
 Production custody/credential gate 009, real-archive gate 011 and production 017
 remain open. Same-host test witness/storage, POSIX process death and SQLite FULL
 do not prove independent offsite durability, Windows filesystem/power-loss behavior

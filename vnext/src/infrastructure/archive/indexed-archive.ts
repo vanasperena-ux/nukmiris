@@ -5,6 +5,7 @@ import { createCipheriv, createDecipheriv, createHmac, randomBytes, type KeyObje
 import { canonical, depth, digest, object, text, noFaults, type ObjectValue, type Faults } from '../../domain/protocol.js';
 import type { EvidenceStore, Seal } from '../../ports.js';
 import { AuthenticatedTree } from './authenticated-tree.js';
+import { ArchiveMutex, ArchiveBusyError, ArchivePendingError, ArchiveHeldError, archiveError } from './availability.js';
 import { authenticate, emptyHead, headDigest, same, ZERO, type ArchiveWitness, type Checkpoint, type Head, type RepairPermit } from './protocol.js';
 
 interface Entry {
@@ -40,6 +41,7 @@ export class IndexedArchive {
   private readonly config:ArchiveConfig;
   private floor:Checkpoint | undefined;
   private readonly faults:Faults;
+  private readonly mutex=new ArchiveMutex();
   readonly metrics={lookups:0,nodeReads:0,decryptions:0,fullAudits:0};
   private constructor(config:ArchiveConfig, create:boolean) {
     text(config.archiveId);
@@ -52,33 +54,46 @@ export class IndexedArchive {
     if(create) closeSync(openSync(config.file,'wx',0o600)); // Never recreate a lost archive on open.
     else closeSync(openSync(config.file,'r'));
     this.db=new DatabaseSync(config.file);
-    this.db.exec('PRAGMA busy_timeout=250; PRAGMA journal_mode=WAL; PRAGMA synchronous=FULL; PRAGMA foreign_keys=ON;');
-    if(create) { this.db.exec(schema); this.setMeta({head:emptyHead(config.archiveId),pending:null}); }
+    try {
+      this.db.exec('PRAGMA busy_timeout=250; PRAGMA journal_mode=WAL; PRAGMA synchronous=FULL; PRAGMA foreign_keys=ON;');
+      if(create) { this.db.exec(schema); this.setMeta({head:emptyHead(config.archiveId),pending:null}); }
+    }catch(e){this.db.close();throw archiveError(e);}
   }
   static async create(config:ArchiveConfig):Promise<IndexedArchive> {
     const a=new IndexedArchive(config,true);
-    try { const c=await a.checkpoint(); if(c.mode!=='NORMAL'||!same(c.head,emptyHead(config.archiveId))) throw new Error('archive_initial_checkpoint'); return a; }
+    try { await a.serialized(async()=>{const c=await a.checkpoint();if(c.mode!=='NORMAL'||!same(c.head,emptyHead(config.archiveId)))throw new Error('archive_initial_checkpoint');});return a; }
     catch(e) { a.close(); throw e; }
   }
   static async open(config:ArchiveConfig):Promise<IndexedArchive> {
     const a=new IndexedArchive(config,false);
-    try { await a.healthy(); return a; } catch(e) { a.close(); throw e; }
+    try { await a.serialized(()=>a.healthy()); return a; } catch(e) { a.close(); throw e; }
   }
   /** Held archives can only be opened with an externally signed repair fence. */
   static async repair(config:ArchiveConfig,permit:RepairPermit):Promise<{archive:IndexedArchive;repaired:number}> {
     const a=new IndexedArchive(config,false);
-    try {
-      const fence=authenticate(permit.fenced,config.witnessKey,config.archiveId);
-      if(fence.mode!=='REPAIR'||!same(await a.checkpoint(),fence))throw new Error('archive_repair_fence');
-      // Preserve a coherent pre-repair copy including committed WAL pages. Never overwrite it.
-      const forensic=join(config.forensicDirectory??dirname(config.file),basename(config.file)+'.forensic-'+fence.epoch);
+    try {const repaired=await a.repair(permit);return {archive:a,repaired};}catch(e){a.close();throw e;}
+  }
+  /** Operator capability, not exposed by a tenant facade; shares its instance's connection mutex. */
+  async repair(permit:RepairPermit):Promise<number> {
+    return this.serialized(async()=>{
+      const fence=authenticate(permit.fenced,this.config.witnessKey,this.config.archiveId);
+      if(fence.mode!=='REPAIR'||!same(await this.checkpoint(),fence))throw new Error('archive_repair_fence');
+      // Completed backups are coherent. A killed backup can leave a partial final-name
+      // copy: N2 remains a production repair gate (atomic publication + signed digest).
+      const forensic=join(this.config.forensicDirectory??dirname(this.config.file),basename(this.config.file)+'.forensic-'+fence.epoch);
       closeSync(openSync(forensic+'.sqlite','wx',0o600));
       writeFileSync(forensic+'.checkpoint.json',JSON.stringify(permit.fenced),{flag:'wx',mode:0o600});
-      await backup(a.db,forensic+'.sqlite');
-      const repaired=await a.rebuild(permit); return {archive:a,repaired};
-    } catch(e) { a.close(); throw e; }
+      await backup(this.db,forensic+'.sqlite');
+      return this.rebuild(permit);
+    });
   }
-  close():void {this.db.close();}
+  close():void {
+    if(this.mutex.active)throw new ArchiveBusyError('INSTANCE_ACTIVE');
+    this.db.close();
+  }
+  private async serialized<T>(work:()=>Promise<T>):Promise<T> {
+    try{return await this.mutex.run(work);}catch(e){throw archiveError(e);}
+  }
   private meta():Meta {
     const row=this.db.prepare('SELECT value FROM meta WHERE id=1').get() as {value:string}|undefined;
     if(!row) throw new Error('archive_meta_missing');
@@ -92,7 +107,9 @@ export class IndexedArchive {
     this.floor=c; return c;
   }
   private check(meta:Meta,c:Checkpoint):void {
-    if(c.mode!=='NORMAL'||meta.pending||!same(meta.head,c.head)) throw new Error('archive_held');
+    if(c.mode!=='NORMAL')throw new ArchiveHeldError('REPAIR_FENCE');
+    if(meta.pending)throw new ArchivePendingError();
+    if(!same(meta.head,c.head))throw new ArchiveHeldError('CHECKPOINT_MISMATCH');
     const row=this.db.prepare('SELECT value FROM repair_case ORDER BY id DESC LIMIT 1').get() as {value:string}|undefined;
     const last=row?this.repairDecision(JSON.parse(row.value) as ObjectValue).hash:ZERO;
     if(last!==c.repairDigest)throw new Error('archive_repair_audit_head');
@@ -117,11 +134,11 @@ export class IndexedArchive {
     if(!this.allowed.has(tenant)) throw new Error('archive_tenant_denied');
     return Object.freeze({
       businessId:tenant,
-      ensure:(key:string,kind:string,match:ObjectValue,allocate?:()=>ObjectValue)=>this.append(tenant,[{key,kind,match,...(allocate?{allocate}:{})}]).then(s=>s[0]!),
-      ensureBatch:(inputs:readonly ArchiveInput[])=>this.append(tenant,inputs),
-      lookup:(key:string)=>this.lookup(tenant,key),
-      verify:async(seal:Seal)=>{const actual=await this.lookup(tenant,seal.key);if(!actual||!same(actual,seal))throw new Error('unverified_seal');},
-      records:()=>this.records(tenant)
+      ensure:(key:string,kind:string,match:ObjectValue,allocate?:()=>ObjectValue)=>this.serialized(()=>this.append(tenant,[{key,kind,match,...(allocate?{allocate}:{})}])).then(s=>s[0]!),
+      ensureBatch:(inputs:readonly ArchiveInput[])=>this.serialized(()=>this.append(tenant,inputs)),
+      lookup:(key:string)=>this.serialized(()=>this.lookup(tenant,key)),
+      verify:(seal:Seal)=>this.serialized(async()=>{const actual=await this.lookup(tenant,seal.key);if(!actual||!same(actual,seal))throw new Error('unverified_seal');}),
+      records:()=>this.serialized(()=>this.records(tenant))
     });
   }
   private keyHash(tenant:string,key:string):string {return digest({tenant,key});}
@@ -154,9 +171,14 @@ export class IndexedArchive {
     return this.decode(e);
   }
   private bodyTenant(tenant:string,body:ObjectValue):void {
-    if(body['businessId']!==undefined&&body['businessId']!==tenant)throw new Error('archive_foreign_body');
-    const intent=body['intent'];
-    if(intent&&typeof intent==='object'&&!Array.isArray(intent)&&intent['businessId']!==undefined&&intent['businessId']!==tenant)throw new Error('archive_foreign_body');
+    depth(body);
+    const visit=(value:unknown):void=>{
+      if(Array.isArray(value)){for(const item of value)visit(item);}
+      else if(value&&typeof value==='object')for(const [key,item] of Object.entries(value)) {
+        if(key==='businessId'&&item!==tenant)throw new Error('archive_foreign_body');visit(item);
+      }
+    };
+    visit(body);
   }
   private async lookup(tenant:string,key:string):Promise<Seal|null> {
     text(key); const c=await this.checkpoint(); this.db.exec('BEGIN');

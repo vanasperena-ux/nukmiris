@@ -5,7 +5,11 @@ export interface Ref { key: string; hash: string; height: number }
 export interface Head { archiveId: string; size: number; tip: string; root: Ref | null }
 export interface Checkpoint { head: Head; epoch: number; mode: 'NORMAL' | 'REPAIR'; repairDigest: string }
 export interface SignedCheckpoint { value: Checkpoint; signature: string }
-/** Writer capability deliberately excludes fencing/repair and the signing key. */
+/** Writer capability excludes signing key/fence but can obtain signatures over a fork.
+ * The fixture witness checks CAS and monotonic size/epoch, NOT append-only chain/index
+ * extension. History integrity depends on honest writer code/keys; production 009/017
+ * require independent extension verification of BOTH the record chain and the index.
+ */
 export interface ArchiveWitness {
   read(): Promise<SignedCheckpoint>;
   advance(expected: Checkpoint, head: Head): Promise<SignedCheckpoint>;

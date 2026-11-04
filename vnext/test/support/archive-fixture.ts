@@ -8,7 +8,10 @@ import { canonical, object } from '../../src/domain/protocol.js';
 import { IndexedArchive, type ArchiveConfig } from '../../src/infrastructure/archive/indexed-archive.js';
 import { emptyHead, same, ZERO, type ArchiveWitness, type Checkpoint, type Head, type RepairPermit, type SignedCheckpoint } from '../../src/infrastructure/archive/protocol.js';
 
-/** Independent process capability in tests; same-host storage is NOT custody gate 009. */
+/** Separate signing capability, NOT an independent history verifier. It checks CAS
+ * and monotonic size/epoch, not chain/index extension (retained X1 counterexample).
+ * Same-host storage and honest writer code/keys do NOT close custody gate 009.
+ */
 export class FixtureWitness {
   private readonly db:DatabaseSync;
   private readonly keys=generateKeyPairSync('ed25519');

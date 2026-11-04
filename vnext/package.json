@@ -11,7 +11,8 @@
     "test:fault": "npm run build && node scripts/run-tests.mjs fault",
     "test:conditions": "npm run build && node scripts/run-tests.mjs conditions",
     "check:scope": "node scripts/check-scope.mjs",
-    "test:archive": "npm run build && node --test --test-concurrency=1 dist/test/archive.test.js dist/test/archive-process.test.js",
+    "test:archive": "npm run build && node --test --test-concurrency=1 dist/test/archive.test.js dist/test/archive-process.test.js dist/test/archive-concurrency.test.js dist/test/archive-security-boundary.test.js",
+    "test:archive:concurrency": "npm run build && node --test --test-concurrency=1 dist/test/archive-concurrency.test.js dist/test/archive-process.test.js",
     "test:archive:capacity": "npm run build && node scripts/archive-capacity.mjs"
   },
   "dependencies": { "pg": "8.16.3" },

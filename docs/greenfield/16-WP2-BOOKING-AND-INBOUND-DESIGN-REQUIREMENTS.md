@@ -151,3 +151,35 @@ missing/rolled-back tails, and keys/old versions remain readable under rotation.
 Benchmark increasing histories (1k/10k/100k/1M records), memory and per-admission/
 dispatch latency under concurrency, crash and repair; publish distributions and a
 capacity policy. Fixture's 100k cap/full scan is not the production design.
+
+## Mandatory additions from independent L0a review B2 (production 009 / production 017)
+
+The verbatim requirements above remain in force. Before **any non-fixture custody**,
+the witness or a separately trusted verifier must independently verify append-only
+extension of **both the record chain and the authenticated key index**, bound to
+the previously accepted checkpoint and proposed new checkpoint. Chain-tip extension
+alone is insufficient: a writer could re-point an existing key to a later duplicate
+record while extending the chain. A signature and increasing size/epoch alone
+prove neither extension property. Fixture history integrity assumes honest writer
+code and HMAC/AES keys; B2/X1 remains reproducible and production-blocking.
+
+Acceptable evidence must deny a larger rewritten chain, lost/reallocated original
+keys, old-key index re-pointing, duplicate keys, inconsistent/missing proofs,
+rollback and cross-tenant roots **before** signing/accepting a head or allowing an
+effect. Demonstrate consistency/non-membership + recomputed insert-root proofs,
+or independent log replay/auditing of every accepted transition. State the
+independent credential/process/key custody and administrator boundary. Run attacks
+with compromised writer credentials/keys while keeping the verifier independent.
+No such production verifier is implemented or accepted by L0a documentation.
+
+N2/N3 additionally remain mandatory under production repair gate 011: atomically
+publish completed forensic copies using temp files, file/directory fsync and rename;
+bind the forensic digest/completion evidence to the authenticated repair decision;
+kill during backup/publication and prove incomplete copies are unmistakable and
+cannot be accepted as completed. Document that the fixture witness fence stops
+CAS advancement, not all pre-existing durable writes; classify/adopt or hold such
+tails explicitly without reallocating identity or generating dispatch authority.
+
+N1/N4/N5 must be addressed and reviewed **before L0b expands inbound processing**;
+see [explicit owners and acceptance criteria](18-WP2-L0A-B1-B2-AND-FOLLOWUPS.md).
+Existing 001/F13, 013/016, OPS01, Windows and all other activation gates are unchanged.

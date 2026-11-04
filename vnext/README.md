@@ -165,3 +165,23 @@ oracle. The new adapter, signed witness port, authenticated presence/absence ind
 fenced repair, capacity policy and test commands are described in document 17.
 Normal dispatch now uses keyed lookup; cold inert restore retains full completeness
 audit. No production custody or native Windows result is claimed.
+
+
+## L0a GO WITH CONDITIONS — B1/B2 correction
+
+[Claude's independent review](https://github.com/vanasperena-ux/nukmiris/pull/9#issuecomment-6622229074)
+requires re-verification before L0a closure/L0b entry. Archive calls on one instance
+now share a bounded FIFO async mutex; cross-instance SQLite contention is typed,
+and pending confirmation is distinct from an explicit repair fence. Nested tenant
+bindings are checked recursively. Run `npm run test:archive:concurrency`.
+
+The fixture witness checks CAS/monotonic size/epoch, **not append-only history
+extension**. Honest writer code/keys remain a trust root: writer keys plus the CAS
+capability can obtain signatures over a larger rewritten chain/index. The retained
+X1 regression reproduces this production vulnerability; it is **not fixed** by
+documentation. Independent verification of **both** chain and index extension is
+a mandatory 009/production-017 gate before any non-fixture custody.
+[Owned N1–N6 acceptance gates](../docs/greenfield/18-WP2-L0A-B1-B2-AND-FOLLOWUPS.md)
+include bounded caller availability handling and multi-tenant admission binding
+before inbound expansion, partial forensic publication/stale-writer repair limits,
+and unchanged Windows/capacity limitations. No provider gate is relaxed.
