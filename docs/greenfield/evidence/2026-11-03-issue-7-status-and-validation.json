@@ -1,0 +1,182 @@
+{
+  "issue": "https://github.com/vanasperena-ux/nukmiris/issues/7",
+  "clientDate": "2026-11-03",
+  "clientZone": "America/Mexico_City",
+  "thisChange": {
+    "scope": "Documentation and readiness only; no WP2 implementation",
+    "typecheck": "PASS on unchanged source with existing isolated WP1 dependencies",
+    "sourceConfinement": "PASS",
+    "relativeLinkChecks": [
+      {
+        "from": "docs/greenfield/13-MILESTONE-A-DELIVERY-AND-WP2-CHARTER.md",
+        "target": "05-P0-PARITY-CONTRACT-AND-TEST-PLAN.md",
+        "result": "PASS"
+      },
+      {
+        "from": "docs/greenfield/13-MILESTONE-A-DELIVERY-AND-WP2-CHARTER.md",
+        "target": "reviews/01-CLAUDE-WP1-CP1-CP2-REVIEW.md",
+        "result": "PASS"
+      },
+      {
+        "from": "docs/greenfield/13-MILESTONE-A-DELIVERY-AND-WP2-CHARTER.md",
+        "target": "14-WINDOWS-LOCAL-RUNTIME-AND-ACCEPTANCE.md",
+        "result": "PASS"
+      },
+      {
+        "from": "docs/greenfield/13-MILESTONE-A-DELIVERY-AND-WP2-CHARTER.md",
+        "target": "reviews/02-CODEX-WP1-REMEDIATION-AND-DISPOSITIONS.md",
+        "result": "PASS"
+      },
+      {
+        "from": "docs/greenfield/13-MILESTONE-A-DELIVERY-AND-WP2-CHARTER.md",
+        "target": "reviews/03-CLAUDE-WP1-REMEDIATION-VERIFICATION-HANDOFF.md",
+        "result": "PASS"
+      },
+      {
+        "from": "docs/greenfield/13-MILESTONE-A-DELIVERY-AND-WP2-CHARTER.md",
+        "target": "15-MILESTONE-A-OWNER-ACCEPTANCE-SCRIPTS.md",
+        "result": "PASS"
+      },
+      {
+        "from": "docs/greenfield/13-MILESTONE-A-DELIVERY-AND-WP2-CHARTER.md",
+        "target": "02-REQUIREMENTS-TRACEABILITY.md",
+        "result": "PASS"
+      },
+      {
+        "from": "docs/greenfield/14-WINDOWS-LOCAL-RUNTIME-AND-ACCEPTANCE.md",
+        "target": "13-MILESTONE-A-DELIVERY-AND-WP2-CHARTER.md",
+        "result": "PASS"
+      },
+      {
+        "from": "docs/greenfield/14-WINDOWS-LOCAL-RUNTIME-AND-ACCEPTANCE.md",
+        "target": "examples/wp2-local-demo.env.example",
+        "result": "PASS"
+      },
+      {
+        "from": "docs/greenfield/14-WINDOWS-LOCAL-RUNTIME-AND-ACCEPTANCE.md",
+        "target": "15-MILESTONE-A-OWNER-ACCEPTANCE-SCRIPTS.md",
+        "result": "PASS"
+      },
+      {
+        "from": "docs/greenfield/14-WINDOWS-LOCAL-RUNTIME-AND-ACCEPTANCE.md",
+        "target": "13-MILESTONE-A-DELIVERY-AND-WP2-CHARTER.md#live-metagoogle-test-accounts-separate-gate",
+        "result": "PASS"
+      },
+      {
+        "from": "docs/greenfield/15-MILESTONE-A-OWNER-ACCEPTANCE-SCRIPTS.md",
+        "target": "13-MILESTONE-A-DELIVERY-AND-WP2-CHARTER.md",
+        "result": "PASS"
+      },
+      {
+        "from": "docs/greenfield/15-MILESTONE-A-OWNER-ACCEPTANCE-SCRIPTS.md",
+        "target": "05-P0-PARITY-CONTRACT-AND-TEST-PLAN.md",
+        "result": "PASS"
+      },
+      {
+        "from": "docs/greenfield/15-MILESTONE-A-OWNER-ACCEPTANCE-SCRIPTS.md",
+        "target": "14-WINDOWS-LOCAL-RUNTIME-AND-ACCEPTANCE.md",
+        "result": "PASS"
+      }
+    ],
+    "proposedNativeWindowsCommands": [
+      "demo:prepare",
+      "demo:start",
+      "demo:stop",
+      "demo:smoke",
+      "demo:backup",
+      "demo:restore",
+      "demo:reset",
+      "test:parity",
+      "test:local:windows"
+    ],
+    "nativeWindowsExecuted": false,
+    "wslExecuted": false,
+    "ownerDemoCases": {
+      "A01-A14": "NOT RUN / app not implemented"
+    },
+    "exampleEnvironment": "PROPOSED, not loaded by current package; no secret values",
+    "weekdayAndZoneFixture": "PASS: 2030-01-07 Monday 09:00 Mexico City = 15:00Z",
+    "acceptedApplicationDiff": "empty",
+    "wp1CodeAndEvidenceDiff": "empty",
+    "cloudProvisioning": false,
+    "realProviderCalls": 0
+  },
+  "unresolved": {
+    "wp1IndependentVerification": "Independent C1 verification and formal CP1/initial CP2 closure required before WP2",
+    "findingGates": [
+      "CR-WP1-001",
+      "CR-WP1-009",
+      "CR-WP1-011",
+      "CR-WP1-013",
+      "CR-WP1-016",
+      "CR-WP1-017"
+    ],
+    "archivePublication": "Previously automatically rejected; no retry or approval inferred from Issue 7"
+  },
+  "documentSHA256": {
+    "docs/greenfield/13-MILESTONE-A-DELIVERY-AND-WP2-CHARTER.md": "81df1ec1dbffec2e998cfc7f8dfc299c6d6f6cf635c0b41b55da3db09c0deda9",
+    "docs/greenfield/14-WINDOWS-LOCAL-RUNTIME-AND-ACCEPTANCE.md": "c8ac043f80784197d3b00ef65b29f5cbe6d3aa06ab883b133c3b258405cdd4e1",
+    "docs/greenfield/15-MILESTONE-A-OWNER-ACCEPTANCE-SCRIPTS.md": "703e780f44c7f90e8c4334000a4c4545c5a915564ec5e6cb5987c2eb089c3b2b",
+    "docs/greenfield/examples/wp2-local-demo.env.example": "bceb341fa8d6c407b3b676a12a1da8e17a4cfe362e5013b037994f2d046d39b3"
+  },
+  "staticLogSHA256": "2f7f9e5d72b419deb01429c6c48e3fc3157183258bfc2d3a4ce24fede9aeac9b",
+  "resolvedDecisions": {
+    "serviceCount": {
+      "status": "OWNER_CONFIRMED",
+      "clarification": "Preserve one service per appointment",
+      "originalDecision": "30->147",
+      "rule": "Each service is a separate booking",
+      "scope": [
+        "P0",
+        "later service/catalog/staff increments"
+      ],
+      "multiServiceAppointmentsPlanned": false,
+      "ownerClarificationLocalDate": "2026-11-03",
+      "record": "https://github.com/vanasperena-ux/nukmiris/issues/7#issuecomment-6619615645"
+    }
+  },
+  "initialWp1Snapshot": {
+    "sourceCommit": "857bb825ac01ca67f303adbe71ef486c276c8923",
+    "headCommit": "1ca19248f0f26b47a7ed8013d79e75d387f508b3",
+    "independentReview": "OPEN",
+    "originalClaudeSource": "108adb62604b9963bd3468ab8b43c36b69fcef6e",
+    "originalClaudeSQLVersion": "16.15",
+    "originalRecommendation": "GO WITH SPECIFIED REVISIONS",
+    "submittedPRReviews": 0,
+    "submittedRemediationVerification": 0,
+    "reviewRequest": "https://github.com/vanasperena-ux/nukmiris/pull/4#issuecomment-6619286347",
+    "reviewRequestPostedAtUTC": "2026-11-04T00:39:34Z",
+    "claudeInvocationAvailable": false,
+    "priorCodexFullPasses": 88,
+    "priorCodexFaultPasses": 78,
+    "priorSuitePostgres": "17.11",
+    "fullOrFaultRerunThisChange": false,
+    "frozenSourceFilesVerified": 38
+  },
+  "initialStatusCheckedAtUTC": "2026-11-04T00:38:33Z",
+  "statusCheckedAtUTC": "2026-11-04T01:55:20.239607+00:00",
+  "wp1": {
+    "sourceCommit": "991ca8141ffef3471a955c450e9f789dd8aef1a7",
+    "headCommit": "84ff73d36cc6defc493a30a4f07445e4818ce1c8",
+    "priorIndependentReview": "GO WITH CONDITIONS C1-C4 on 857bb825",
+    "independentReviewURL": "https://github.com/vanasperena-ux/nukmiris/pull/4#issuecomment-6619904951",
+    "independentSQLPostgres": "16.15",
+    "independentNode": "22.23.4",
+    "C1IndependentVerification": "PENDING",
+    "formalCP1InitialCP2Closure": "OPEN",
+    "reviewRequest": "https://github.com/vanasperena-ux/nukmiris/pull/4#issuecomment-6620401835",
+    "codexFullPasses": 98,
+    "codexFaultPasses": 88,
+    "codexNode": "24.19.0",
+    "codexPostgres": "17.11",
+    "wp2ApplicationStarted": false
+  },
+  "followUpC2C3": {
+    "requirements": "https://github.com/vanasperena-ux/nukmiris/blob/991ca8141ffef3471a955c450e9f789dd8aef1a7/docs/greenfield/16-WP2-BOOKING-AND-INBOUND-DESIGN-REQUIREMENTS.md",
+    "NEW-2": "Head-aware reservation priority",
+    "NEW-3": "Sealed admission-time classification; explicit terminal ordinary-input reduction",
+    "activationGatesCopiedVerbatim": true,
+    "firstTaskAfterFormalAcceptance": "L0a indexed authenticated fixture-archive lookup/capacity/repair proof under 017; then L0b NEW-2/NEW-3",
+    "execution": "NOT STARTED"
+  }
+}
