@@ -9,6 +9,9 @@ BEGIN
    EXECUTE format('ALTER ROLE %I SET statement_timeout = %L',r,'10s');
   END IF;
  END LOOP;
+ -- Ownership is migration-only. NOLOGIN alone does not prevent an authorized
+ -- migration identity using SET ROLE or exercising owner DDL.
+ ALTER ROLE wp1_owner NOLOGIN;
  ALTER ROLE wp1_definer BYPASSRLS;
 END $$;
 REVOKE ALL ON SCHEMA public FROM PUBLIC;

@@ -64,8 +64,9 @@ BEGIN
  RETURN true;
 END $$;
 
--- Identity/evidence payloads are immutable even for accidental owner DML. This
--- does not claim to withstand a superuser disabling triggers or rewriting DDL.
+-- Payload DML is denied while these triggers are enabled. A table owner can
+-- change permitted state fields or disable triggers/alter DDL without superuser.
+-- NOLOGIN ownership is migration-only; it is not a runtime security boundary.
 CREATE FUNCTION core.append_only_fields() RETURNS trigger
 LANGUAGE plpgsql SET search_path=pg_catalog,core AS $$
 BEGIN
@@ -75,7 +76,7 @@ BEGIN
  RAISE EXCEPTION 'append_only_record';
 END $$;
 DO $$ DECLARE t text; BEGIN
- FOREACH t IN ARRAY ARRAY['input','output_intent','permission_event','status_event','receipt','audit','operation','seal'] LOOP
+ FOREACH t IN ARRAY ARRAY['input','output_intent','permission_event','status_event','receipt','audit','operation','seal','recovery_case'] LOOP
   EXECUTE format('CREATE TRIGGER append_only BEFORE UPDATE OR DELETE ON core.%I FOR EACH ROW EXECUTE FUNCTION core.append_only_fields()',t);
  END LOOP;
 END $$;

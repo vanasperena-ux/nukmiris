@@ -13,6 +13,7 @@ npm run typecheck
 npm run check:scope
 npm test
 npm run test:fault
+npm run test:conditions
 ```
 
 On a workspace that cannot write npm's default cache, add
@@ -135,3 +136,28 @@ Independent Claude verification of these revisions is **pending**. No connected 
 or CLI was available; no self-review is presented as independent review. See the
 [actual implementation review handoff](../docs/greenfield/11-WP1-CLAUDE-REVIEW-HANDOFF.md).
 Stop at that checkpoint. No WP2, merge, deploy or real provider activation is included.
+
+## Claude conditions C1–C4 follow-up
+
+Claude independently reviewed source `857bb82` and recommended GO WITH CONDITIONS
+([review](https://github.com/vanasperena-ux/nukmiris/pull/4#issuecomment-6619904951)).
+C1 needs independent re-verification of the follow-up fix; CP1/initial CP2 remain
+open until that result formally closes the gate. No WP2 code has started.
+
+Preparation now rejects invalid output purpose/identity before reservation and
+reserves each future output ID through an immutable-operation unique index. It
+preflights the shared final output INSERT in a rolled-back subtransaction, validating
+the real current table constraints without exposing an output before provider proof.
+`npm run test:conditions` exercises C1 and C4, including a real unique-index wait.
+
+Nine payload/evidence tables, including `recovery_case`, reject protected payload
+UPDATE/DELETE while triggers are enabled. This is **payload DML protection**, not
+protection from the database owner. The owner can change allowed state fields and
+perform DDL/disable triggers without superuser. Keep `wp1_owner` NOLOGIN,
+migration-only, and unassumable by runtime roles; production credential isolation
+and authenticated custody remain gates. Tests demonstrate both the protection
+and this limit.
+
+[WP2 requirements and unchanged activation gates](../docs/greenfield/16-WP2-BOOKING-AND-INBOUND-DESIGN-REQUIREMENTS.md)
+record NEW-2 reservation priority and NEW-3 sealed admission-time classification.
+This is documentation, not implemented WP2 behavior or provider authorization.

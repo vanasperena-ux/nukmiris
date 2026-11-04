@@ -9,6 +9,7 @@
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "test": "npm run build && node scripts/run-tests.mjs",
     "test:fault": "npm run build && node scripts/run-tests.mjs fault",
+    "test:conditions": "npm run build && node scripts/run-tests.mjs conditions",
     "check:scope": "node scripts/check-scope.mjs"
   },
   "dependencies": { "pg": "8.16.3" },

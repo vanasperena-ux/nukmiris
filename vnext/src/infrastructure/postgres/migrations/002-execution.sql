@@ -18,6 +18,9 @@ CREATE TABLE core.operation (
  FOREIGN KEY(business_id,input_id) REFERENCES core.input(business_id,id),
  FOREIGN KEY(business_id,appointment_id) REFERENCES core.appointment(business_id,id)
 );
+-- Keep output identities reserved even before finalization or after abandonment.
+CREATE UNIQUE INDEX operation_output_identity ON core.operation(business_id,((plan->>'outputId')::uuid));
+
 CREATE TABLE core.mutation_guard (
  business_id text NOT NULL, appointment_id uuid NOT NULL, operation_id uuid NOT NULL,
  PRIMARY KEY(business_id,appointment_id),
@@ -91,10 +94,22 @@ CREATE TRIGGER immutable_operation BEFORE UPDATE ON core.operation FOR EACH ROW 
 CREATE TRIGGER immutable_attempt BEFORE UPDATE ON core.attempt FOR EACH ROW EXECUTE FUNCTION core.immutable_fields();
 CREATE TRIGGER immutable_seal BEFORE UPDATE ON core.seal FOR EACH ROW EXECUTE FUNCTION core.immutable_fields();
 
+-- Internal-only shared final output INSERT. roles.sql revokes PUBLIC and grants
+-- no runtime role direct EXECUTE. Both preparation preflight and finalization
+-- exercise the real table's types, NOT NULL, CHECK, UNIQUE and composite FKs.
+CREATE FUNCTION core.insert_operation_output(b text,p jsonb,operation_key uuid,source_input core.input,appointment_value core.appointment) RETURNS void
+LANGUAGE plpgsql SECURITY DEFINER SET search_path=pg_catalog,core AS $$
+BEGIN
+ PERFORM core.assert_scope(b);
+ INSERT INTO core.output_intent VALUES(b,(p->>'outputId')::uuid,operation_key,source_input.id,appointment_value.id,
+ source_input.conversation_id,source_input.sequence,0,source_input.subject,p->'outputPayload',p->>'outputDigest',
+ appointment_value.schedule_revision,p->>'outputPurpose',(p->>'outputDueAt')::timestamptz,(p->>'outputDeadlineAt')::timestamptz,'PENDING');
+END $$;
+
 CREATE FUNCTION core.prepare_operation(b text,p jsonb,p_digest text,seal_key text) RETURNS uuid
 LANGUAGE plpgsql SECURITY DEFINER SET search_path=pg_catalog,core AS $$
 DECLARE i core.input; a core.appointment; r core.resource; c core.customer;
- prior core.operation; resource_item uuid; ranges tstzmultirange; seg tstzrange;
+ prior core.operation; resource_item uuid; ranges tstzmultirange; seg tstzrange; output_key uuid; projected core.appointment;
 BEGIN
  IF b IS NULL OR p IS NULL OR p_digest IS NULL OR seal_key IS NULL THEN RAISE EXCEPTION 'null_argument'; END IF;
  PERFORM core.assert_scope(b);
@@ -125,6 +140,19 @@ BEGIN
  'appointmentId',p->>'appointmentId','eventId',p->>'eventId','customerId',p->>'customerId','resourceId',p->>'resourceId',
  'startAt',p->>'startAt','endAt',p->>'endAt','bufferMinutes',(p->>'bufferMinutes')::integer)
  THEN RAISE EXCEPTION 'plan_envelope_denied'; END IF;
+ -- Reject future output failures before creating an appointment/guard/protection.
+ IF jsonb_typeof(p->'outputPurpose') IS DISTINCT FROM 'string'
+ OR p->>'outputPurpose' NOT IN ('CUSTOMER_REQUEST','REMINDER')
+ OR jsonb_typeof(p->'outputId') IS DISTINCT FROM 'string' THEN RAISE EXCEPTION 'plan_output_denied'; END IF;
+ BEGIN
+  output_key=(p->>'outputId')::uuid;
+ EXCEPTION WHEN invalid_text_representation THEN RAISE EXCEPTION 'plan_output_denied';
+ END;
+ IF output_key='00000000-0000-0000-0000-000000000000'::uuid
+ OR output_key=(p->>'operationId')::uuid OR output_key=(p->>'attemptId')::uuid
+ OR EXISTS(SELECT 1 FROM core.output_intent WHERE business_id=b AND id=output_key)
+ OR EXISTS(SELECT 1 FROM core.operation WHERE business_id=b AND (plan->>'outputId')::uuid=output_key)
+ THEN RAISE EXCEPTION 'plan_output_denied'; END IF;
  SELECT * INTO c FROM core.customer WHERE business_id=b AND subject=i.subject FOR UPDATE;
  IF c.id IS NULL OR c.id IS DISTINCT FROM (p->>'customerId')::uuid THEN RAISE EXCEPTION 'customer_denied'; END IF;
  SELECT * INTO r FROM core.resource WHERE business_id=b AND id=(p->>'resourceId')::uuid;
@@ -164,6 +192,16 @@ BEGIN
  END IF;
  INSERT INTO core.attempt(business_id,id,operation_id,state,envelope,payload_digest)
  VALUES(b,(p->>'attemptId')::uuid,(p->>'operationId')::uuid,'PREPARED',p->'envelope',p->>'payloadDigest');
+ -- Validate every value destined for the final output using the same INSERT and
+ -- actual schema. Only our successful dry-run sentinel is caught. Constraint
+ -- failures propagate and roll back the entire preparation transaction.
+ projected=a;
+ projected.schedule_revision=a.schedule_revision+CASE WHEN p->>'kind' IN ('CREATE','MOVE','CANCEL') THEN 1 ELSE 0 END;
+ BEGIN
+  PERFORM core.insert_operation_output(b,p,(p->>'operationId')::uuid,i,projected);
+  RAISE EXCEPTION 'output_preflight_rollback' USING ERRCODE='P7501';
+ EXCEPTION WHEN SQLSTATE 'P7501' THEN NULL;
+ END;
  RETURN (p->>'operationId')::uuid;
 END $$;
 
@@ -317,9 +355,7 @@ BEGIN
   IF op.kind<>'CANCEL' THEN INSERT INTO core.protection VALUES(b,ap.id,op.id,ap.resource_id,tstzrange(ap.start_at,ap.end_at+ap.buffer_minutes*interval '1 minute','[)')); END IF;
   IF fail_at='protection' THEN RAISE EXCEPTION 'injected_finalizer_protection'; END IF;
   SELECT * INTO i FROM core.input WHERE business_id=b AND id=op.input_id;
-  INSERT INTO core.output_intent VALUES(b,(p->>'outputId')::uuid,op.id,i.id,ap.id,i.conversation_id,i.sequence,0,i.subject,
-    p->'outputPayload',p->>'outputDigest',ap.schedule_revision,p->>'outputPurpose',(p->>'outputDueAt')::timestamptz,
-    (p->>'outputDeadlineAt')::timestamptz,'PENDING');
+  PERFORM core.insert_operation_output(b,p,op.id,i,ap);
   IF fail_at='output' THEN RAISE EXCEPTION 'injected_finalizer_output'; END IF;
   DELETE FROM core.mutation_guard WHERE business_id=b AND appointment_id=ap.id AND operation_id=op.id;
   IF fail_at='guard' THEN RAISE EXCEPTION 'injected_finalizer_guard'; END IF;
