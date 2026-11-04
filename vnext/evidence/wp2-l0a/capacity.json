@@ -1,0 +1,131 @@
+{
+  "result": "PASS",
+  "node": "v24.19.0",
+  "sqlite": "3.53.3",
+  "platform": "linux",
+  "release": "6.18.57",
+  "cpus": 3,
+  "totalMemoryBytes": 10452459520,
+  "samples": [
+    {
+      "records": 1000,
+      "appendMs": 370,
+      "foundP50Ms": 0.3629280000000108,
+      "foundP95Ms": 0.9968670000000657,
+      "foundP99Ms": 2.454285000000027,
+      "absentP95Ms": 0.5828730000000633,
+      "maxAuthenticatedNodes": 12,
+      "rootHeight": 12,
+      "fileBytes": 1712128,
+      "rssBytes": 64667648
+    },
+    {
+      "records": 10000,
+      "appendMs": 2481,
+      "foundP50Ms": 0.39970199999970646,
+      "foundP95Ms": 0.6547500000001492,
+      "foundP99Ms": 9.296229999999923,
+      "absentP95Ms": 0.5382070000000567,
+      "maxAuthenticatedNodes": 15,
+      "rootHeight": 16,
+      "fileBytes": 16666624,
+      "rssBytes": 153497600
+    },
+    {
+      "records": 100000,
+      "appendMs": 25854,
+      "foundP50Ms": 0.39685800000006566,
+      "foundP95Ms": 0.5177670000011858,
+      "foundP99Ms": 0.763531000000512,
+      "absentP95Ms": 0.4446189999980561,
+      "maxAuthenticatedNodes": 19,
+      "rootHeight": 20,
+      "fileBytes": 166649856,
+      "rssBytes": 311263232
+    },
+    {
+      "records": 1000000,
+      "appendMs": 348211,
+      "foundP50Ms": 0.48212399997282773,
+      "foundP95Ms": 0.8802429999923334,
+      "foundP99Ms": 28.75633200001903,
+      "absentP95Ms": 0.5961230000248179,
+      "maxAuthenticatedNodes": 23,
+      "rootHeight": 24,
+      "fileBytes": 1667801088,
+      "rssBytes": 358408192
+    }
+  ],
+  "workflows": {
+    "postgres": "17.11 (Debian 17.11-1.pgdg12+2)",
+    "admissionMs": {
+      "samples": [
+        29.650054000027012,
+        12.419774000009056,
+        11.798895000014454,
+        15.718108999950346,
+        11.502986999985296,
+        11.213352999999188,
+        10.354295999975875,
+        11.253257000003941,
+        10.164064000011422,
+        11.071157000027597,
+        12.5117409999948,
+        10.655712000036146
+      ],
+      "p50": 11.502986999985296,
+      "p95": 29.650054000027012,
+      "p99": 29.650054000027012
+    },
+    "dispatchMs": {
+      "samples": [
+        21.965460999985225,
+        23.626232000009622,
+        6.5505620000185445,
+        6.839820000051986,
+        7.867136000015307,
+        8.41116299998248,
+        6.557002000045031,
+        6.961741000006441,
+        6.317938000021968,
+        6.719902999990154,
+        6.574316999991424,
+        6.800683000008576,
+        7.38479699997697,
+        8.09848400001647,
+        6.322745000012219,
+        6.340200999984518,
+        5.586905000032857,
+        5.6262229999993,
+        7.210089000000153,
+        7.390627000015229,
+        6.720723000005819,
+        6.7601620000205,
+        5.9959210000233725,
+        6.092533999995794
+      ],
+      "p50": 6.7601620000205,
+      "p95": 21.965460999985225,
+      "p99": 23.626232000009622
+    },
+    "concurrentDispatchers": 2,
+    "attempts": 12,
+    "providerInvocations": 12,
+    "fullArchiveScans": 0
+  },
+  "repair": {
+    "records": 1000097,
+    "repairMs": 340167,
+    "originalArmPreserved": true,
+    "automaticReplay": false,
+    "fenced": true,
+    "processPeakRssBytes": 419860480
+  },
+  "elapsedMs": 723742,
+  "limitations": [
+    "synthetic same-host witness; not custody gate 009",
+    "Linux SIGKILL/process-crash evidence; Windows and power-loss/filesystem guarantees unverified",
+    "latency measurements are observations, not an SLO"
+  ],
+  "rawFixturePublished": false
+}
