@@ -1,0 +1,32 @@
+{
+  "claudeReviewComment": {
+    "id": 6619904951,
+    "url": "https://github.com/vanasperena-ux/nukmiris/pull/4#issuecomment-6619904951",
+    "sourceReviewed": "857bb825ac01ca67f303adbe71ef486c276c8923",
+    "independentSQLPostgres": "16.15",
+    "independentNode": "22.23.4",
+    "independentFullOrFaultSuite": "NOT RUN"
+  },
+  "beforeProbeSQLSource": "1ca19248f0f26b47a7ed8013d79e75d387f508b3",
+  "beforeProbeMigrations": [
+    {
+      "path": "migrations/001-foundation.sql",
+      "sha256": "b1065dccf73ded6f3b91d962c3d2a1585d10a75a672c90f71e67f22be9000468"
+    },
+    {
+      "path": "migrations/002-execution.sql",
+      "sha256": "2e9ed55f2768ee5700e1cbfff9f1724d912c35be3a49bd15e180a027cc9f3e3b"
+    },
+    {
+      "path": "migrations/003-dispositions.sql",
+      "sha256": "ce05310c354e9362c24c0d4a86d58d72358c794f08769037908d8b170d64499d"
+    },
+    {
+      "path": "roles.sql",
+      "sha256": "941c6c9c033b1bc1ce4cc5e776827741b6f6dba1d362934ffcd908e081b7e820"
+    }
+  ],
+  "beforeProbeTestSHA256": "0dd2ed6050dc1f73b7b89e57142911f052fc17604fa4904a7b261e4bb1e806bc",
+  "beforeProbeNote": "Defect assertions unchanged; final follow-up adds internal-helper ACL checks after this baseline run.",
+  "snapshotPublication": "SQL/state archives remain local; no retry of prior blocked uploads."
+}

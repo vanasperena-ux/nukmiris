@@ -1,0 +1,136 @@
+{
+  "postgres": "17.11 (Debian 17.11-1.pgdg12+2)",
+  "node": "v24.19.0",
+  "image": "postgres@sha256:839fbb5a4942a7758dd93e18b42ea5649807491a0545b5eeeb8f0b8bb11857a5",
+  "network": "container none / Unix socket / synthetic only",
+  "outputIdentityIndex": [
+    {
+      "indexdef": "CREATE UNIQUE INDEX operation_output_identity ON core.operation USING btree (business_id, (((plan ->> 'outputId'::text))::uuid))"
+    }
+  ],
+  "outputConstraints": [
+    {
+      "conname": "output_intent_business_id_conversation_id_fkey",
+      "definition": "FOREIGN KEY (business_id, conversation_id) REFERENCES core.conversation(business_id, id)"
+    },
+    {
+      "conname": "output_intent_business_id_conversation_id_sequence_ordinal_key",
+      "definition": "UNIQUE (business_id, conversation_id, sequence, ordinal)"
+    },
+    {
+      "conname": "output_intent_business_id_input_id_fkey",
+      "definition": "FOREIGN KEY (business_id, input_id) REFERENCES core.input(business_id, id)"
+    },
+    {
+      "conname": "output_intent_business_id_parent_operation_id_appointment__fkey",
+      "definition": "FOREIGN KEY (business_id, parent_operation_id, appointment_id) REFERENCES core.operation(business_id, id, appointment_id)"
+    },
+    {
+      "conname": "output_intent_check",
+      "definition": "CHECK ((isfinite(due_at) AND isfinite(deadline_at) AND (due_at < deadline_at)))"
+    },
+    {
+      "conname": "output_intent_id_check",
+      "definition": "CHECK ((id <> '00000000-0000-0000-0000-000000000000'::uuid))"
+    },
+    {
+      "conname": "output_intent_ordinal_check",
+      "definition": "CHECK ((ordinal >= 0))"
+    },
+    {
+      "conname": "output_intent_pkey",
+      "definition": "PRIMARY KEY (business_id, id)"
+    },
+    {
+      "conname": "output_intent_purpose_check",
+      "definition": "CHECK ((purpose = ANY (ARRAY['CUSTOMER_REQUEST'::text, 'REMINDER'::text])))"
+    },
+    {
+      "conname": "output_intent_state_check",
+      "definition": "CHECK ((state = ANY (ARRAY['PENDING'::text, 'ARMED'::text, 'SUBMISSION_ENTERED'::text, 'UNKNOWN'::text, 'ACCEPTED'::text, 'EXPIRED'::text])))"
+    }
+  ],
+  "appendOnlyTables": [
+    {
+      "table_name": "core.audit",
+      "tgenabled": "O"
+    },
+    {
+      "table_name": "core.input",
+      "tgenabled": "O"
+    },
+    {
+      "table_name": "core.operation",
+      "tgenabled": "O"
+    },
+    {
+      "table_name": "core.output_intent",
+      "tgenabled": "O"
+    },
+    {
+      "table_name": "core.permission_event",
+      "tgenabled": "O"
+    },
+    {
+      "table_name": "core.receipt",
+      "tgenabled": "O"
+    },
+    {
+      "table_name": "core.recovery_case",
+      "tgenabled": "O"
+    },
+    {
+      "table_name": "core.seal",
+      "tgenabled": "O"
+    },
+    {
+      "table_name": "core.status_event",
+      "tgenabled": "O"
+    }
+  ],
+  "owner": [
+    {
+      "rolname": "wp1_owner",
+      "rolcanlogin": false,
+      "rolsuper": false
+    }
+  ],
+  "helperPrivileges": [
+    {
+      "rolname": "wp1_ingress",
+      "can_execute": false
+    },
+    {
+      "rolname": "wp1_sealer",
+      "can_execute": false
+    },
+    {
+      "rolname": "wp1_reducer",
+      "can_execute": false
+    },
+    {
+      "rolname": "wp1_dispatch",
+      "can_execute": false
+    },
+    {
+      "rolname": "wp1_result",
+      "can_execute": false
+    },
+    {
+      "rolname": "wp1_operator",
+      "can_execute": false
+    },
+    {
+      "rolname": "wp1_recovery",
+      "can_execute": false
+    },
+    {
+      "rolname": "wp1_tenant_a",
+      "can_execute": false
+    },
+    {
+      "rolname": "wp1_tenant_b",
+      "can_execute": false
+    }
+  ]
+}

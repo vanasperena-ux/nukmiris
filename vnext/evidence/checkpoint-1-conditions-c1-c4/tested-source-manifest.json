@@ -1,0 +1,166 @@
+{
+  "sourceCommit": "991ca8141ffef3471a955c450e9f789dd8aef1a7",
+  "sourceTree": "711b2f1b442a74c29fccd79fb7efb0e5bfca34e4",
+  "files": [
+    {
+      "path": "vnext/.gitignore",
+      "sha256": "ab0450c86d713a89db7ed4eb179677407fe4ef0e9530cfd21d613c21ccf66438"
+    },
+    {
+      "path": "vnext/README.md",
+      "sha256": "17f26e1f0fae3a3ba51902087f0da7345830a31243737188b35d1ff5aca85cb4"
+    },
+    {
+      "path": "vnext/package-lock.json",
+      "sha256": "5d10d05d3ca60daefb2f6eb3586310d780dc9a8cd00a791f0dc3aeeba5afe145"
+    },
+    {
+      "path": "vnext/package.json",
+      "sha256": "6565558687a43d2c42a4a85559f1b26506f6558e829d4e3ce8b135e6a49dbd89"
+    },
+    {
+      "path": "vnext/scripts/check-scope.mjs",
+      "sha256": "7a11cf9a5b3c339df6d6e25c0c2aed0715056717e81b802fd00dd372e3292954"
+    },
+    {
+      "path": "vnext/scripts/run-tests.mjs",
+      "sha256": "1c009dd527525a137aceaff5e61cbce0452a13fa83fa1426220bd8b88b56aa1f"
+    },
+    {
+      "path": "vnext/src/application/admit-input.ts",
+      "sha256": "1d410966488fabfe5cdaa14900cdde0a7e125a3e2e95797b52131f28318e60db"
+    },
+    {
+      "path": "vnext/src/application/dispatch-once.ts",
+      "sha256": "f7dc70081923a920b7597c743bd6b00fa3a44382e89d953f8a40bab634c24f1e"
+    },
+    {
+      "path": "vnext/src/application/prepare-operation.ts",
+      "sha256": "5dcdc4d0f10fcf2d2d5993c10663889033e82d5bcbd672a6dc86a8b2cac511cd"
+    },
+    {
+      "path": "vnext/src/application/record-result.ts",
+      "sha256": "37965413cc3bb5c816ab2385df3fa09415a50f749081ccbc16de5112311f8c1f"
+    },
+    {
+      "path": "vnext/src/application/restore-inert.ts",
+      "sha256": "cf44fadb6f486efdba0738e79b4cb0672047f2965555a32076572653b686c7b0"
+    },
+    {
+      "path": "vnext/src/application/set-business-status.ts",
+      "sha256": "361ac8058efd14c628b4c0d7f46d77723d0be50f3c78ac9ce6898130aa539f82"
+    },
+    {
+      "path": "vnext/src/domain/protocol.ts",
+      "sha256": "19e2a34e2b8eb575d17041a00d957aaf376b9794a027081b867dc81789acb09c"
+    },
+    {
+      "path": "vnext/src/infrastructure/meta-signature.ts",
+      "sha256": "61aec290ad429cf9dc3f6f5fd2b951955047c90a8d786141c6ed396b217abb96"
+    },
+    {
+      "path": "vnext/src/infrastructure/postgres/migrations/001-foundation.sql",
+      "sha256": "b1065dccf73ded6f3b91d962c3d2a1585d10a75a672c90f71e67f22be9000468"
+    },
+    {
+      "path": "vnext/src/infrastructure/postgres/migrations/002-execution.sql",
+      "sha256": "c00e59c115fcdd6441038d75274079f1eecfd8f9d0a76ab3212966af89cf33f6"
+    },
+    {
+      "path": "vnext/src/infrastructure/postgres/migrations/003-dispositions.sql",
+      "sha256": "33681aee587267609954b8058e2458c067d8f12f921fcfc65133584e82eed726"
+    },
+    {
+      "path": "vnext/src/infrastructure/postgres/roles.sql",
+      "sha256": "108062d2163095dcb6c6186f829a82159d509132e3287ac719378494f3ac7ded"
+    },
+    {
+      "path": "vnext/src/infrastructure/postgres/unit-of-work.ts",
+      "sha256": "04f6f0e532f7185a704b2b50c9881ab4c54fae36aca3bcc41787e179bcce0126"
+    },
+    {
+      "path": "vnext/src/ports.ts",
+      "sha256": "7f130f5b54f09dc08e6c5281018c71b2453eef43f2e6944f521ae691ef9c9275"
+    },
+    {
+      "path": "vnext/test/concurrent.test.ts",
+      "sha256": "f91e4dbc7b24a3566f97206926d0ce3552f009caf6adba60ef83e6b77dcc3dad"
+    },
+    {
+      "path": "vnext/test/database.test.ts",
+      "sha256": "4fbd18771757f21c6e96a171378de455f314452f9c6f1e54c337d7b35529e335"
+    },
+    {
+      "path": "vnext/test/dispatch.test.ts",
+      "sha256": "5e3ae46a7327f959220cf337c607aeb6233a8bd6f9d410ec0f78c57695e243e3"
+    },
+    {
+      "path": "vnext/test/ingress.test.ts",
+      "sha256": "71e588ec64abf70bf8a2bf8a029b374ad4ba5b5976b4b5235f5720d46eef2470"
+    },
+    {
+      "path": "vnext/test/permission.test.ts",
+      "sha256": "ca8a955eb6c4f661a80411c3325e55a7e88fe5db8cbbff16f725b6a795e6f173"
+    },
+    {
+      "path": "vnext/test/process.test.ts",
+      "sha256": "922ae27018638add0a69c6666c70d80c8b1c3c5dd43bbe65f2d16026ee4280da"
+    },
+    {
+      "path": "vnext/test/remediation.test.ts",
+      "sha256": "35a24ac7bbbfa9fce5e56406d241437152dac2a13e8b0fce34585dfff2770c78"
+    },
+    {
+      "path": "vnext/test/restore.test.ts",
+      "sha256": "4fa7802df22b0c3dc0625c082edf616d90ed19dbe4192b7f7af2385caf848890"
+    },
+    {
+      "path": "vnext/test/review-conditions.test.ts",
+      "sha256": "b14535757c3d5def05d17a93309c1ccc53c4d312ef88f19986c60127f8881b68"
+    },
+    {
+      "path": "vnext/test/scheduler.test.ts",
+      "sha256": "c0a1f66c5f015934fe97a87474f5ea632bedda535550e85732eac365f6569099"
+    },
+    {
+      "path": "vnext/test/support/cleanup.ts",
+      "sha256": "dc44a8096802cb2bc0e7d98908b78884f76355e0e8170454c8615496c6650d81"
+    },
+    {
+      "path": "vnext/test/support/fake-archive.ts",
+      "sha256": "c7aaca052ec7f52ac8e6a24686b58910fc34eb1e2dab408658bcf887b25785dd"
+    },
+    {
+      "path": "vnext/test/support/fake-provider.ts",
+      "sha256": "326b992f08dc299cdb0f4da62bcb1b288a769c8f7b3c98bf0beac7f86cd29237"
+    },
+    {
+      "path": "vnext/test/support/helpers.ts",
+      "sha256": "43f1b3ef2483aa57cac217f00de95bed412cfcb9a729a9c512101bc95d6f6303"
+    },
+    {
+      "path": "vnext/test/support/postgres-fixture.ts",
+      "sha256": "2e60ae2d999e601b9fc9b49c6a377618b39d3914ae502894fb9a28a9839cee2f"
+    },
+    {
+      "path": "vnext/test/support/process-driver.ts",
+      "sha256": "6d3c5e01bcdf1d6ffb8cf31e577562b682bfb99e6c10f54b1f16a778375fdb56"
+    },
+    {
+      "path": "vnext/test/support/scheduler.ts",
+      "sha256": "f0b12cfe62829dc36556e58a2f1d11f9dd899ce1c3e828bf2dad947264e75cc5"
+    },
+    {
+      "path": "vnext/test/support/worker-process.ts",
+      "sha256": "78049e04d975660c063d3924cf51a2c597661cf647b23734999dc67e63311895"
+    },
+    {
+      "path": "vnext/tsconfig.json",
+      "sha256": "615d1a161e93d572c48d092c4884b8b9ddff309a63634d04dd6ec9120cc82c37"
+    }
+  ],
+  "designRequirements": {
+    "path": "docs/greenfield/16-WP2-BOOKING-AND-INBOUND-DESIGN-REQUIREMENTS.md",
+    "sha256": "bc3810f433fa86178d416f3ec0eaff69f21d17a8391f5bc934ba7f16a0b01baf"
+  }
+}

@@ -1,0 +1,81 @@
+
+> nukmiris-wp1-synthetic-core@0.0.0 test
+> npm run build && node scripts/run-tests.mjs
+
+
+> nukmiris-wp1-synthetic-core@0.0.0 build
+> tsc -p tsconfig.json
+
+WP1 evidence run: /workspace/work/nukmiris-wp1/vnext/evidence/runs/2026-11-01T23-08-29.720Z-full
+✔ DB02/03: competing same-resource bookings reject one; distinct resources on the same Calendar can both reserve (239.635265ms)
+✔ DB02/04: same-event MOVE/CANCEL/ATTENDANCE cannot share the mutation guard; move protects merged source and target (376.915579ms)
+✔ DB03: empty/infinite/bad-bound protections fail at PostgreSQL, zero-buffer touching appointments remain valid (212.6369ms)
+✔ SEC03: actual roles deny table writes, PUBLIC definer calls, forged scope and pooled scope reuse (98.638411ms)
+✔ SEC02/04/F30: cross-business FK and copied/foreign appointment tuple never authorize an operation (355.596068ms)
+✔ DB02/03: two actual sessions released together cannot both reserve the same resource interval (160.549863ms)
+✔ F27/SEC02: changed calendar grant/revision and expired deadline stop final dispatch (410.488193ms)
+✔ DB04: a failed move preparation rolls back its guard and union and cannot shorten the original duration/buffer (298.518945ms)
+✔ DB06: JSON null versions cannot evade the final gate through SQL three-valued comparisons (137.192469ms)
+✔ F11/14/15 DB06: duplicate loops, lost response and later owner never issue a second HTTP invocation (349.210168ms)
+✔ F17: unknown entry COMMIT result returns no invocation permit and cannot be rearmed (166.771878ms)
+✔ F18 DB05: finalizer appointment failure rolls back every operational update and repeats only local finalization (189.631657ms)
+✔ F18 DB05: finalizer protection failure rolls back every operational update and repeats only local finalization (163.407734ms)
+✔ F18 DB05: finalizer output failure rolls back every operational update and repeats only local finalization (258.530061ms)
+✔ F18 DB05: finalizer guard failure rolls back every operational update and repeats only local finalization (280.74356ms)
+✔ F16: result archive failure keeps protection; a read-only proof finalizes after repair without re-sending (183.485623ms)
+✔ F19: late result cannot release a newer appointment mutation guard (197.546687ms)
+✔ F20/21: exact sealed receipt before HTTP timeout wins; late failure cannot downgrade delivered/read (393.006539ms)
+✔ F22: an uncertain output head never expires into unsent and blocks later output while STOP still works (294.729153ms)
+✔ F15 conservative fallback: socket-timeout has one invocation, remains unknown and never automatically retries (241.11019ms)
+✔ F15 conservative fallback: 429 has one invocation, remains unknown and never automatically retries (242.503751ms)
+✔ F15 conservative fallback: 500 has one invocation, remains unknown and never automatically retries (241.365808ms)
+✔ F15 conservative fallback: 409 has one invocation, remains unknown and never automatically retries (135.777147ms)
+✔ F15 conservative fallback: 412 has one invocation, remains unknown and never automatically retries (134.683938ms)
+✔ F30: a mismatched remote proof cannot finalize or free a protected operation (152.434044ms)
+✔ F27 synthetic eligibility: before due (131.149592ms)
+✔ F27 synthetic eligibility: at due (133.983485ms)
+✔ F27 synthetic eligibility: after deadline (237.468104ms)
+✔ F27 transport budget must fit strictly before appointment start even when the local deadline has not elapsed (130.735037ms)
+✔ F01 SEC01/02: exact bytes, WABA and receiving number authenticate before any write (101.899587ms)
+✔ F02: duplicate/repacked batch has one stable input; any original event change conflicts (143.491834ms)
+✔ F03–06 DB01: A1.afterPrepare retains original identity and safe eligibility across retry (116.335243ms)
+✔ F03–06 DB01: A2.beforeCommit retains original identity and safe eligibility across retry (116.235551ms)
+✔ F03–06 DB01: A2.afterCommit retains original identity and safe eligibility across retry (124.684792ms)
+✔ F03–06 DB01: A3.afterSeal retains original identity and safe eligibility across retry (118.156737ms)
+✔ F03–06 DB01: A4.beforeCommit retains original identity and safe eligibility across retry (125.339276ms)
+✔ F03–06 DB01: A4.afterCommit retains original identity and safe eligibility across retry (136.059155ms)
+✔ F03–06 DB01: A5.beforeAck retains original identity and safe eligibility across retry (114.096583ms)
+✔ DB01: staged unsealed input cannot prepare an operation, including a direct guarded-function call (113.18362ms)
+✔ F07: STOP suppresses immediately even when the conflicting batch cannot be acknowledged (115.291904ms)
+✔ F03/F08: archive.beforePut cannot acknowledge or expose executable SQL (109.252888ms)
+✔ F03/F08: archive.afterObject cannot acknowledge or expose executable SQL (108.873877ms)
+✔ F03/F08: archive.afterHead cannot acknowledge or expose executable SQL (88.686915ms)
+✔ F03/F08: archive.afterWitness cannot acknowledge or expose executable SQL (117.991252ms)
+✔ F07/F23 DB07: unknown sender STOP persists a real head even with archive unavailable (113.246043ms)
+✔ F12/23: STOP during slow preflight defeats the last send admission (392.859699ms)
+✔ DB07: READ COMMITTED final admission observes the withdrawal revision after a real row-lock wait (219.353688ms)
+✔ F25: duplicate old grant, same-time tie, stale revision and future evidence cannot revive withdrawal (147.380053ms)
+✔ DB08/F12/F27: suspension blocks queued calendar and message admissions; reactivation never replays stale work (575.623729ms)
+✔ P0 safety boundary: reminder STOP does not cancel appointments or prevent ordinary customer-request execution (295.123249ms)
+✔ F04/F06 process crash after staged SQL retains the original archived input through restart (223.016608ms)
+✔ F11 before-arm freeze: later arm wins once and the stale resumed process cannot submit (375.213374ms)
+✔ F11 armed-process death never transfers possible dispatch authority to a restart (348.370779ms)
+✔ F13 residual counterexample: a frozen process admitted BEFORE suspension can physically invoke later; no successor can (367.21684ms)
+✔ F14/16 process death after actual fake-provider acceptance reconciles read-only without another invocation (372.597049ms)
+✔ F09/24/28 REC01: destructive SQL loss preserves original IDs as inert recovery evidence and never revives consent (382.547423ms)
+✔ F08/26/29: prefix evidence loss restores inertly with global uncertainty (245.318736ms)
+✔ F08/26/29: tail evidence loss restores inertly with global uncertainty (344.541592ms)
+✔ F08/26/29: head evidence loss restores inertly with global uncertainty (241.538331ms)
+✔ F08/26/29: witness evidence loss restores inertly with global uncertainty (241.16926ms)
+✔ F08/26/29: key evidence loss restores inertly with global uncertainty (350.15018ms)
+✔ F08/26/29: format evidence loss restores inertly with global uncertainty (247.71549ms)
+✔ F26: retained old key version remains readable; absent snapshot format refuses restore before writes (204.822087ms)
+✔ DB06/07/08: 1000 recorded seeded real-PostgreSQL admission/withdrawal/suspension schedules (4700.608029ms)
+ℹ tests 64
+ℹ suites 0
+ℹ pass 64
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 19297.291977

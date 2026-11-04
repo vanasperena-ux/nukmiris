@@ -1,0 +1,145 @@
+{
+  "C1-output-values": {
+    "cases": 23,
+    "results": [
+      {
+        "variant": "purpose.\"BOGUS\"",
+        "denied": true,
+        "newReservations": 0
+      },
+      {
+        "variant": "purpose.\"\"",
+        "denied": true,
+        "newReservations": 0
+      },
+      {
+        "variant": "purpose.\"reminder\"",
+        "denied": true,
+        "newReservations": 0
+      },
+      {
+        "variant": "purpose.\"CUSTOMER_REQUEST \"",
+        "denied": true,
+        "newReservations": 0
+      },
+      {
+        "variant": "purpose.true",
+        "denied": true,
+        "newReservations": 0
+      },
+      {
+        "variant": "purpose.1",
+        "denied": true,
+        "newReservations": 0
+      },
+      {
+        "variant": "purpose.{}",
+        "denied": true,
+        "newReservations": 0
+      },
+      {
+        "variant": "purpose.[]",
+        "denied": true,
+        "newReservations": 0
+      },
+      {
+        "variant": "purpose.null",
+        "denied": true,
+        "newReservations": 0
+      },
+      {
+        "variant": "purpose.missing",
+        "denied": true,
+        "newReservations": 0
+      },
+      {
+        "variant": "id.\"00000000-0000-0000-0000-000000000000\"",
+        "denied": true,
+        "newReservations": 0
+      },
+      {
+        "variant": "id.\"\"",
+        "denied": true,
+        "newReservations": 0
+      },
+      {
+        "variant": "id.\"not-a-uuid\"",
+        "denied": true,
+        "newReservations": 0
+      },
+      {
+        "variant": "id.true",
+        "denied": true,
+        "newReservations": 0
+      },
+      {
+        "variant": "id.1",
+        "denied": true,
+        "newReservations": 0
+      },
+      {
+        "variant": "id.{}",
+        "denied": true,
+        "newReservations": 0
+      },
+      {
+        "variant": "id.[]",
+        "denied": true,
+        "newReservations": 0
+      },
+      {
+        "variant": "id.null",
+        "denied": true,
+        "newReservations": 0
+      },
+      {
+        "variant": "id.missing",
+        "denied": true,
+        "newReservations": 0
+      },
+      {
+        "variant": "id.operation",
+        "denied": true,
+        "newReservations": 0
+      },
+      {
+        "variant": "id.attempt",
+        "denied": true,
+        "newReservations": 0
+      },
+      {
+        "variant": "id.uppercase-operation",
+        "denied": true,
+        "newReservations": 0
+      },
+      {
+        "variant": "id.uppercase-attempt",
+        "denied": true,
+        "newReservations": 0
+      }
+    ]
+  },
+  "C1-existing-output": {
+    "rejectedBeforeReservation": true,
+    "newAttempts": 0,
+    "newOperations": 0
+  },
+  "C1-output-id-race": {
+    "contenders": 2,
+    "prepared": 1,
+    "newAttempts": 1,
+    "outputsBeforeResult": 0,
+    "actualUniqueIndexWait": true
+  },
+  "C4-recovery-case": {
+    "ownerPayloadDMLDenied": true,
+    "runtimeDirectDMLDenied": true,
+    "unchanged": true
+  },
+  "C4-owner-boundary": {
+    "ownerNOLOGIN": true,
+    "ownerStateDMLPossible": true,
+    "ownerCanDisableTrigger": true,
+    "runtimeCannotAssumeOwner": true
+  }
+}

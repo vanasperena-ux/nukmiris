@@ -1,0 +1,125 @@
+
+> nukmiris-wp1-synthetic-core@0.0.0 test
+> npm run build && node scripts/run-tests.mjs
+
+
+> nukmiris-wp1-synthetic-core@0.0.0 build
+> tsc -p tsconfig.json
+
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.1
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.1
+npm notice To update run: npm install -g npm@12.2.1
+npm notice
+WP1 evidence run: /workspace/work/nukmiris-wp1/vnext/evidence/runs/2026-11-04T01-43-06.829Z-full
+✔ R-CONCURRENT: 256 seeded overlapping PostgreSQL STOP/suspension/submission schedules preserve linearized gates (1473.915201ms)
+✔ R010-RACE: submission committed before abandonment preserves the unresolved hold (183.351433ms)
+✔ R007-RACE: a held input cannot execute through a preparation that waited on its conversation lock (156.907803ms)
+✔ DB02/03: competing same-resource bookings reject one; distinct resources on the same Calendar can both reserve (409.693958ms)
+✔ DB02/04: same-event MOVE/CANCEL/ATTENDANCE cannot share the mutation guard; move protects merged source and target (459.72ms)
+✔ DB03: empty/infinite/bad-bound protections fail at PostgreSQL, zero-buffer touching appointments remain valid (240.629505ms)
+✔ SEC03: actual roles deny table writes, PUBLIC definer calls, forged scope and pooled scope reuse (103.414272ms)
+✔ SEC02/04/F30: cross-business FK and copied/foreign appointment tuple never authorize an operation (489.779463ms)
+✔ DB02/03: two actual sessions released together cannot both reserve the same resource interval (200.790413ms)
+✔ F27/SEC02: changed calendar grant/revision and expired deadline stop final dispatch (339.989332ms)
+✔ DB04: a failed move preparation rolls back its guard and union and cannot shorten the original duration/buffer (337.013348ms)
+✔ DB06: JSON null versions cannot evade the final gate through SQL three-valued comparisons (149.136719ms)
+✔ F11/14/15 DB06: duplicate loops, lost response and later owner never issue a second HTTP invocation (269.504171ms)
+✔ F17: unknown entry COMMIT result returns no invocation permit and cannot be rearmed (212.98996ms)
+✔ F18 DB05: finalizer appointment failure rolls back every operational update and repeats only local finalization (221.037245ms)
+✔ F18 DB05: finalizer protection failure rolls back every operational update and repeats only local finalization (207.917016ms)
+✔ F18 DB05: finalizer output failure rolls back every operational update and repeats only local finalization (197.154173ms)
+✔ F18 DB05: finalizer guard failure rolls back every operational update and repeats only local finalization (295.997695ms)
+✔ F16: result archive failure keeps protection; a read-only proof finalizes after repair without re-sending (180.19921ms)
+✔ F19: late result cannot release a newer appointment mutation guard (321.734475ms)
+✔ F20/21: exact sealed receipt before HTTP timeout wins; late failure cannot downgrade delivered/read (467.765527ms)
+✔ F22: an uncertain output head never expires into unsent and blocks later output while STOP still works (397.081153ms)
+✔ F15 conservative fallback: socket-timeout has one invocation, remains unknown and never automatically retries (162.011998ms)
+✔ F15 conservative fallback: 429 has one invocation, remains unknown and never automatically retries (163.888918ms)
+✔ F15 conservative fallback: 500 has one invocation, remains unknown and never automatically retries (264.477103ms)
+✔ F15 conservative fallback: 409 has one invocation, remains unknown and never automatically retries (166.282147ms)
+✔ F15 conservative fallback: 412 has one invocation, remains unknown and never automatically retries (169.209799ms)
+✔ F30: a mismatched remote proof cannot finalize or free a protected operation (175.051726ms)
+✔ F27 synthetic eligibility: before due (157.126256ms)
+✔ F27 synthetic eligibility: at due (153.380108ms)
+✔ F27 synthetic eligibility: after deadline (152.826397ms)
+✔ F27 transport budget must fit strictly before appointment start even when the local deadline has not elapsed (263.261177ms)
+✔ F01 SEC01/02: exact bytes, WABA and receiving number authenticate before any write (111.712402ms)
+✔ F02: duplicate/repacked batch has one stable input; any original event change conflicts (174.728723ms)
+✔ F03–06 DB01: A1.afterPrepare retains original identity and safe eligibility across retry (134.67281ms)
+✔ F03–06 DB01: A2.beforeCommit retains original identity and safe eligibility across retry (136.556239ms)
+✔ F03–06 DB01: A2.afterCommit retains original identity and safe eligibility across retry (131.794322ms)
+✔ F03–06 DB01: A3.afterSeal retains original identity and safe eligibility across retry (135.800409ms)
+✔ F03–06 DB01: A4.beforeCommit retains original identity and safe eligibility across retry (140.632026ms)
+✔ F03–06 DB01: A4.afterCommit retains original identity and safe eligibility across retry (132.981715ms)
+✔ F03–06 DB01: A5.beforeAck retains original identity and safe eligibility across retry (143.288106ms)
+✔ DB01: staged unsealed input cannot prepare an operation, including a direct guarded-function call (131.21045ms)
+✔ F07: STOP suppresses immediately even when the conflicting batch cannot be acknowledged (148.538166ms)
+✔ F03/F08: archive.beforePut cannot acknowledge or expose executable SQL (135.543529ms)
+✔ F03/F08: archive.afterObject cannot acknowledge or expose executable SQL (128.805222ms)
+✔ F03/F08: archive.afterHead cannot acknowledge or expose executable SQL (93.597261ms)
+✔ F03/F08: archive.afterWitness cannot acknowledge or expose executable SQL (128.128024ms)
+✔ F07/F23 DB07: unknown sender STOP persists a real head even with archive unavailable (120.690593ms)
+✔ F12/23: STOP during slow preflight defeats the last send admission (328.192184ms)
+✔ DB07: READ COMMITTED final admission observes the withdrawal revision after a real row-lock wait (362.17692ms)
+✔ F25: duplicate old grant, same-time tie, stale revision and future evidence cannot revive withdrawal (176.458683ms)
+✔ DB08/F12/F27: suspension blocks queued calendar and message admissions; reactivation never replays stale work (829.779123ms)
+✔ P0 safety boundary: reminder STOP does not cancel appointments or prevent ordinary customer-request execution (323.885272ms)
+✔ F04/F06 process crash after staged SQL retains the original archived input through restart (247.945993ms)
+✔ F11 before-arm freeze: later arm wins once and the stale resumed process cannot submit (290.266665ms)
+✔ F11 armed-process death never transfers possible dispatch authority to a restart (337.553774ms)
+✔ F13 residual counterexample: a frozen process admitted BEFORE suspension can physically invoke later; no successor can (384.66782ms)
+✔ F14/16 process death after actual fake-provider acceptance reconciles read-only without another invocation (376.616842ms)
+✔ R002: sealed batch rejects extension, wrong manifest/count, missing/extra membership and NULL item fields (270.878022ms)
+✔ R003/R012: NULL, infinities and wrong caller clocks never authorize submission or future grants (204.31893ms)
+✔ R006: operation envelope and digests must match the protected authoritative plan and input (1457.744149ms)
+✔ R004/R006: output row purpose, payload and complete context defeat false CUSTOMER_REQUEST after STOP (1095.174241ms)
+✔ R007: earlier STAGED command blocks later conversation execution (175.459058ms)
+✔ R007: earlier PREPARED command blocks later conversation execution (193.746707ms)
+✔ R007: earlier SUBMISSION_ENTERED command blocks later conversation execution (231.105488ms)
+✔ R007: earlier UNKNOWN command blocks later conversation execution (214.256062ms)
+✔ R008: post-snapshot suspension and lost archive restore SUSPENDED with dispatch disabled (293.291912ms)
+✔ R005: signed mixed-tenant STOP partitions durably, a failing tenant never rolls it back and ACK waits for all (168.660844ms)
+✔ R010: sealed abandonment of never-entered PREPARED releases slot and head without rearming old work (346.967285ms)
+✔ R010: sealed abandonment of never-entered ARMED releases slot and head without rearming old work (360.732708ms)
+✔ R010: UNKNOWN/entered cannot be abandoned; rollback cannot release any protection (269.986113ms)
+✔ R007/R010: sealed input hold resolves a poison head and permanently denies future operation preparation (204.90654ms)
+✔ R009/R014/R015: forged digest, crossed privileges, conflicting status replay and direct evidence DML are refused (120.00209ms)
+✔ R003/R012/SEC: every exposed mutating SQL argument rejects NULL before any state change (520.77611ms)
+✔ R010: abandoning an unsubmitted MOVE restores source protection exactly and retains source identity (375.352209ms)
+✔ R005: archive outage after mixed-business STOPs leaves both SQL withdrawals durable (110.022586ms)
+✔ R015: all eight evidence tables reject owner payload UPDATE and DELETE even with valid RLS scope (347.553974ms)
+✔ R009: SQL/TypeScript canonical digests agree for nested Unicode, escapes, arrays and safe integers (99.496918ms)
+✔ R010-ATOMIC: an abandonment transaction failure restores attempt, appointment, guard, protection and audit together (182.12601ms)
+✔ F09/24/28 REC01: destructive SQL loss preserves original IDs as inert recovery evidence and never revives consent (481.889242ms)
+✔ F08/26/29: prefix evidence loss restores inertly with global uncertainty (296.938915ms)
+✔ F08/26/29: tail evidence loss restores inertly with global uncertainty (276.917829ms)
+✔ F08/26/29: head evidence loss restores inertly with global uncertainty (272.589964ms)
+✔ F08/26/29: witness evidence loss restores inertly with global uncertainty (295.231522ms)
+✔ F08/26/29: key evidence loss restores inertly with global uncertainty (281.225545ms)
+✔ F08/26/29: format evidence loss restores inertly with global uncertainty (266.255742ms)
+✔ F26: retained old key version remains readable; absent snapshot format refuses restore before writes (217.00075ms)
+✔ C1 NEW-1: invalid/missing/NULL output purpose or output identity is denied before any reservation (581.88853ms)
+✔ C1 NEW-1: an existing finalized output ID cannot create new reservations or an attempt (353.081297ms)
+✔ C1 NEW-1: pending and abandoned operation plans retain exclusive output IDs, with exact replay allowed (235.355458ms)
+✔ C1 NEW-1: valid CUSTOMER_REQUEST finalizes once after an output-free preparation (214.323535ms)
+✔ C1 NEW-1: valid REMINDER finalizes once after an output-free preparation (185.786181ms)
+✔ C1 NEW-1: all plan-sourced final output values are validated by preparation (278.883697ms)
+✔ C1 NEW-1: actual output-table constraint changes fail preparation, not post-provider finalization (247.107533ms)
+✔ C1 NEW-1: simultaneous different-conversation plans cannot both reserve the same future output ID (265.370532ms)
+✔ C4 NEW-4: recovery_case payload UPDATE/DELETE denied under actual owner with valid RLS, INSERT retained (111.496493ms)
+✔ C4 NEW-4: owner remains NOLOGIN but can change lifecycle state and disable its triggers (279.221312ms)
+✔ DB06/07/08: 1000 recorded seeded real-PostgreSQL admission/withdrawal/suspension schedules (6826.184586ms)
+ℹ tests 98
+ℹ suites 0
+ℹ pass 98
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 35015.609185
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.1
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.1
+npm notice To update run: npm install -g npm@12.2.1
+npm notice

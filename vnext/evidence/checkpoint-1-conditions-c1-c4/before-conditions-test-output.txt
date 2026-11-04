@@ -1,0 +1,132 @@
+
+> nukmiris-wp1-synthetic-core@0.0.0 test:conditions
+> npm run build && node scripts/run-tests.mjs conditions
+
+
+> nukmiris-wp1-synthetic-core@0.0.0 build
+> tsc -p tsconfig.json
+
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.1
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.1
+npm notice To update run: npm install -g npm@12.2.1
+npm notice
+WP1 evidence run: /workspace/work/wp1-c1c4-before/vnext/evidence/runs/2026-11-04T01-39-26.703Z-conditions
+✖ C1 NEW-1: invalid/missing/NULL output purpose or output identity is denied before any reservation (194.044663ms)
+✖ C1 NEW-1: an existing finalized output ID cannot create new reservations or an attempt (257.532282ms)
+✖ C1 NEW-1: pending and abandoned operation plans retain exclusive output IDs, with exact replay allowed (180.801761ms)
+✔ C1 NEW-1: valid CUSTOMER_REQUEST finalizes once after an output-free preparation (181.997347ms)
+✔ C1 NEW-1: valid REMINDER finalizes once after an output-free preparation (336.772485ms)
+✔ C1 NEW-1: all plan-sourced final output values are validated by preparation (238.068438ms)
+✖ C1 NEW-1: actual output-table constraint changes fail preparation, not post-provider finalization (145.10716ms)
+✖ C1 NEW-1: simultaneous different-conversation plans cannot both reserve the same future output ID (1357.2728ms)
+✖ C4 NEW-4: recovery_case payload UPDATE/DELETE denied under actual owner with valid RLS, inserts/restore retained (86.386021ms)
+✔ C4 NEW-4: owner remains NOLOGIN but can change lifecycle state and disable its triggers (273.653366ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 4
+ℹ fail 6
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3341.728186
+
+✖ failing tests:
+
+test at dist/test/review-conditions.test.js:26:1
+✖ C1 NEW-1: invalid/missing/NULL output purpose or output identity is denied before any reservation (194.044663ms)
+  AssertionError [ERR_ASSERTION]: Missing expected rejection: purpose."BOGUS"
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async TestContext.<anonymous> (file:///workspace/work/wp1-c1c4-before/vnext/dist/test/review-conditions.test.js:42:9)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: undefined,
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at dist/test/review-conditions.test.js:48:1
+✖ C1 NEW-1: an existing finalized output ID cannot create new reservations or an attempt (257.532282ms)
+  AssertionError [ERR_ASSERTION]: Missing expected rejection.
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async TestContext.<anonymous> (file:///workspace/work/wp1-c1c4-before/vnext/dist/test/review-conditions.test.js:56:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /plan_output_denied/,
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at dist/test/review-conditions.test.js:61:1
+✖ C1 NEW-1: pending and abandoned operation plans retain exclusive output IDs, with exact replay allowed (180.801761ms)
+  AssertionError [ERR_ASSERTION]: Missing expected rejection.
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async TestContext.<anonymous> (file:///workspace/work/wp1-c1c4-before/vnext/dist/test/review-conditions.test.js:64:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /plan_output_denied/,
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at dist/test/review-conditions.test.js:97:1
+✖ C1 NEW-1: actual output-table constraint changes fail preparation, not post-provider finalization (145.10716ms)
+  AssertionError [ERR_ASSERTION]: Missing expected rejection.
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async TestContext.<anonymous> (file:///workspace/work/wp1-c1c4-before/vnext/dist/test/review-conditions.test.js:103:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /review_required_marker/,
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at dist/test/review-conditions.test.js:106:1
+✖ C1 NEW-1: simultaneous different-conversation plans cannot both reserve the same future output ID (1357.2728ms)
+  AssertionError [ERR_ASSERTION]: losing preparation must actually wait at the unique index
+  
+  false !== true
+  
+      at TestContext.<anonymous> (file:///workspace/work/wp1-c1c4-before/vnext/dist/test/review-conditions.test.js:139:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at dist/test/review-conditions.test.js:162:1
+✖ C4 NEW-4: recovery_case payload UPDATE/DELETE denied under actual owner with valid RLS, inserts/restore retained (86.386021ms)
+  AssertionError [ERR_ASSERTION]: Missing expected rejection.
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async TestContext.<anonymous> (file:///workspace/work/wp1-c1c4-before/vnext/dist/test/review-conditions.test.js:169:9)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /append_only_record/,
+    operator: 'rejects',
+    diff: 'simple'
+  }
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.1
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.1
+npm notice To update run: npm install -g npm@12.2.1
+npm notice

@@ -1,0 +1,1455 @@
+{
+  "purpose": "Machine inspection of every archived SQL snapshot before public publication. This is a content/fixture-origin check, not independent Claude review.",
+  "archives": {
+    "full-sql-snapshots.tar.gz": {
+      "sha256": "52e2a2b2f91f02292a48c531670ad04e75d43aa51ed7d372042917b3a370b227",
+      "snapshots": 99,
+      "rows": 6289,
+      "tableRowCounts": {
+        "business": 196,
+        "channel": 196,
+        "calendar": 196,
+        "resource": 392,
+        "customer": 198,
+        "conversation": 92,
+        "seal": 462,
+        "batch": 126,
+        "input": 125,
+        "batch_input": 127,
+        "permission_head": 58,
+        "permission_event": 280,
+        "status_event": 267,
+        "appointment": 77,
+        "operation": 80,
+        "mutation_guard": 47,
+        "protection": 74,
+        "output_intent": 28,
+        "attempt": 88,
+        "receipt": 5,
+        "recovery_case": 17,
+        "audit": 3158
+      },
+      "tableFields": {
+        "business": [
+          "business_id",
+          "dispatch_enabled",
+          "recovery_epoch",
+          "revision",
+          "status"
+        ],
+        "channel": [
+          "business_id",
+          "id",
+          "number_id",
+          "revision",
+          "verified",
+          "waba"
+        ],
+        "calendar": [
+          "business_id",
+          "external_id",
+          "grant_id",
+          "id",
+          "revision"
+        ],
+        "resource": [
+          "business_id",
+          "calendar_id",
+          "id",
+          "is_default"
+        ],
+        "customer": [
+          "business_id",
+          "id",
+          "subject"
+        ],
+        "conversation": [
+          "business_id",
+          "channel_id",
+          "id",
+          "next_sequence",
+          "subject"
+        ],
+        "seal": [
+          "business_id",
+          "digest",
+          "kind",
+          "receipt",
+          "stable_key"
+        ],
+        "batch": [
+          "business_id",
+          "digest",
+          "id",
+          "items",
+          "seal_key",
+          "state"
+        ],
+        "input": [
+          "business_id",
+          "channel_id",
+          "conversation_id",
+          "digest",
+          "event",
+          "id",
+          "provider_id",
+          "received_at",
+          "sequence",
+          "state",
+          "subject"
+        ],
+        "batch_input": [
+          "batch_id",
+          "business_id",
+          "input_id"
+        ],
+        "permission_head": [
+          "business_id",
+          "last_revoke_at",
+          "purpose",
+          "revision",
+          "subject",
+          "suppressed"
+        ],
+        "appointment": [
+          "buffer_minutes",
+          "business_id",
+          "calendar_id",
+          "customer_id",
+          "end_at",
+          "event_id",
+          "id",
+          "origin",
+          "resource_id",
+          "revision",
+          "schedule_revision",
+          "start_at",
+          "state"
+        ],
+        "operation": [
+          "appointment_id",
+          "business_id",
+          "expected_revision",
+          "id",
+          "input_id",
+          "kind",
+          "plan",
+          "plan_digest"
+        ],
+        "mutation_guard": [
+          "appointment_id",
+          "business_id",
+          "operation_id"
+        ],
+        "protection": [
+          "appointment_id",
+          "business_id",
+          "operation_id",
+          "protected_range",
+          "resource_id"
+        ],
+        "attempt": [
+          "arm_seal",
+          "business_id",
+          "envelope",
+          "id",
+          "meta_message_id",
+          "meta_status",
+          "operation_id",
+          "output_id",
+          "owner_id",
+          "payload_digest",
+          "state"
+        ],
+        "audit": [
+          "action",
+          "actor",
+          "business_id",
+          "detail",
+          "evidence",
+          "id"
+        ],
+        "permission_event": [
+          "business_id",
+          "decision",
+          "digest",
+          "evidence_id",
+          "occurred_at",
+          "revision",
+          "subject"
+        ],
+        "output_intent": [
+          "appointment_id",
+          "business_id",
+          "conversation_id",
+          "deadline_at",
+          "due_at",
+          "id",
+          "input_id",
+          "ordinal",
+          "parent_operation_id",
+          "payload",
+          "payload_digest",
+          "purpose",
+          "recipient",
+          "schedule_revision",
+          "sequence",
+          "state"
+        ],
+        "status_event": [
+          "business_id",
+          "digest",
+          "evidence_id",
+          "revision",
+          "status_value"
+        ],
+        "receipt": [
+          "attempt_id",
+          "business_id",
+          "correlated",
+          "input_id",
+          "message_id",
+          "status"
+        ],
+        "recovery_case": [
+          "business_id",
+          "original_evidence",
+          "reason",
+          "stable_key"
+        ]
+      },
+      "businesses": [
+        "synthetic-a",
+        "synthetic-b"
+      ],
+      "channelIdentities": [
+        [
+          "waba-synthetic-a",
+          "number-synthetic-a"
+        ],
+        [
+          "waba-synthetic-b",
+          "number-synthetic-b"
+        ]
+      ],
+      "calendarAndGrantIdentities": [
+        [
+          "calendar-synthetic-a",
+          "changed-grant"
+        ],
+        [
+          "calendar-synthetic-a",
+          "synthetic-grant-synthetic-a"
+        ],
+        [
+          "calendar-synthetic-b",
+          "synthetic-grant-synthetic-b"
+        ]
+      ],
+      "customerSubjects": [
+        "customer-synthetic-a",
+        "customer-synthetic-b",
+        "second-person"
+      ],
+      "auditActors": [
+        "wp1_dispatch",
+        "wp1_ingress",
+        "wp1_operator"
+      ],
+      "validatedEmbeddedRawBatches": 0,
+      "snapshotsInspected": [
+        {
+          "snapshot": "nukmiris_wp1_01f6863441ab45cca2a4b377a516ac0b.json.gz",
+          "uncompressedSHA256": "babe8f4fefc79732f99c45cce4543bb9c9c2c4639a7ed6e94cdd59f2931b2020",
+          "rows": 26
+        },
+        {
+          "snapshot": "nukmiris_wp1_03a418f2245f4206a8fe7b1b8624dde6.json.gz",
+          "uncompressedSHA256": "f3de63d03f7c855a30bd02aeeaf29fb3ea85a7e406ce7b2c4b9982684e7a5354",
+          "rows": 25
+        },
+        {
+          "snapshot": "nukmiris_wp1_0b168e0a4a5e4475b2a8af39302deb8e.json.gz",
+          "uncompressedSHA256": "6ea2d9b1baccbcaafb36fc76dda8d4ce99f38e9a7abe5fa089a378f76976157c",
+          "rows": 20
+        },
+        {
+          "snapshot": "nukmiris_wp1_0d0c9b4266e54be8b075dd9d342996da.json.gz",
+          "uncompressedSHA256": "bfc6a1f37e4f7dca1978a241783273c6e5f01c301168996a640e4e6c67f6f028",
+          "rows": 12
+        },
+        {
+          "snapshot": "nukmiris_wp1_0d81569a595c4cbf9b7766b3625fd44c.json.gz",
+          "uncompressedSHA256": "fa2b7a9770bf5c017252b4e7a183676622904de5949acbb40580754746e687b7",
+          "rows": 27
+        },
+        {
+          "snapshot": "nukmiris_wp1_0f2e19d94bb54dc586a529b7756c99ce.json.gz",
+          "uncompressedSHA256": "009d39561c465d6c3daf1f30d6684584c5fa8d2b854be2378aaad58c7700120e",
+          "rows": 17
+        },
+        {
+          "snapshot": "nukmiris_wp1_124e212cf6f7433f83498387f58f3f06.json.gz",
+          "uncompressedSHA256": "78cba0dcce7adb59ae30b55582e9970b6b54514b589587254b14470c09c9ea5d",
+          "rows": 24
+        },
+        {
+          "snapshot": "nukmiris_wp1_1609bc22c98a42a388c8ebfefc8508ae.json.gz",
+          "uncompressedSHA256": "e8cfdd413de7e3bd1600fe97239406bd8efac7ead5b716d21a5d22900484eca0",
+          "rows": 17
+        },
+        {
+          "snapshot": "nukmiris_wp1_175787791df34b75b89a15739b26db67.json.gz",
+          "uncompressedSHA256": "0abafb7e17e272eb14eb2a0062e2bd489352032b2a12c64c3f02640914b7f3ff",
+          "rows": 12
+        },
+        {
+          "snapshot": "nukmiris_wp1_1e6df17ba48040c4a0914d6c7e53d72f.json.gz",
+          "uncompressedSHA256": "75739007945bef0076a0356efc3204b1073f44c234fde2e0d6e76959d4917b5e",
+          "rows": 27
+        },
+        {
+          "snapshot": "nukmiris_wp1_235a9e5482fb441497da11906d602cf5.json.gz",
+          "uncompressedSHA256": "acf985ddea80254e6877598aaa02935c4a71125cc0b6353ebc688f15da1b5a41",
+          "rows": 50
+        },
+        {
+          "snapshot": "nukmiris_wp1_2948ba59908f4524b343997764e77eb8.json.gz",
+          "uncompressedSHA256": "1d9c9cd12015fe604899ca411b71f9b16b0b888b4982b8482885f2de651078d4",
+          "rows": 37
+        },
+        {
+          "snapshot": "nukmiris_wp1_2981aa5b480b4c21b75ddde011f295bc.json.gz",
+          "uncompressedSHA256": "1593f6223bf4df6a062de7de3f1e6eb7edf104d61d13b0fa0c9dcb1d41976f45",
+          "rows": 20
+        },
+        {
+          "snapshot": "nukmiris_wp1_2ab2e5e8e08d43968d095c8f5fae75de.json.gz",
+          "uncompressedSHA256": "fc8faff3a4ea40dc9c2b2ceba59d4da5e9be6526e6a4dd626fa98113a8f36d46",
+          "rows": 26
+        },
+        {
+          "snapshot": "nukmiris_wp1_2bc584a758754829bce644a3bcbfd9d6.json.gz",
+          "uncompressedSHA256": "9ef29b64b8c646c548b52142713e00903f2304125af0f32125add9f1786804d3",
+          "rows": 24
+        },
+        {
+          "snapshot": "nukmiris_wp1_2c9c1db74c1a4e00a6e2e8c1cfa63c96.json.gz",
+          "uncompressedSHA256": "39a6e9b52a937602cac7e4a186e8e273bae3df46b15d16891b369b7e8c7979ac",
+          "rows": 37
+        },
+        {
+          "snapshot": "nukmiris_wp1_2d93fdf41aa34cbc8b562687b52cd5a3.json.gz",
+          "uncompressedSHA256": "92c67eb9efc8f197861f9d32554f10bbf97310c40b1916b0a7bc80b80dc6e7f7",
+          "rows": 27
+        },
+        {
+          "snapshot": "nukmiris_wp1_30e6cd13b0f94bcc9c7420a247da86e8.json.gz",
+          "uncompressedSHA256": "052edbe6960717cce19250a60105c7eefac5400e7d2b7d0b8189e352494927f8",
+          "rows": 36
+        },
+        {
+          "snapshot": "nukmiris_wp1_33f68dc9b73b4d6eb410a6b89e4f8198.json.gz",
+          "uncompressedSHA256": "29aab3dc386546f459b895dc43a4aa8d3fec23673e7e7ad3fb838a36f13208f8",
+          "rows": 42
+        },
+        {
+          "snapshot": "nukmiris_wp1_34cd975cb98644de8daf05cad9035cb8.json.gz",
+          "uncompressedSHA256": "7423e9dc6fd23390e3c8c928ef73a190398a4c6433537a1c939ae79b7db60a4e",
+          "rows": 48
+        },
+        {
+          "snapshot": "nukmiris_wp1_3a7caae3a8e046afafae4965895f8d78.json.gz",
+          "uncompressedSHA256": "ca7d3aaa6c37ed565f7d9994a7ba9f2eb27e2bc09639b5d8b865bdb480540363",
+          "rows": 37
+        },
+        {
+          "snapshot": "nukmiris_wp1_3c10d56ce9b744faa26c78f10144a250.json.gz",
+          "uncompressedSHA256": "fa4e38e85bd64c7c207eb41b3e325c9384278d55480f4100bb95ed24ec5cae0a",
+          "rows": 0
+        },
+        {
+          "snapshot": "nukmiris_wp1_3d47dd412d7d454ba3b1b9268c7b647e.json.gz",
+          "uncompressedSHA256": "b2f10836010cee8daeb58fd5d54ba76d2933d4c25488b977c30c60bc82ad5882",
+          "rows": 24
+        },
+        {
+          "snapshot": "nukmiris_wp1_4104cb9817854380993fa63c47f14af8.json.gz",
+          "uncompressedSHA256": "faf95212fc5000a9e1b0f396240182f78345038a5bb9e61329c335eaa7c3cb03",
+          "rows": 36
+        },
+        {
+          "snapshot": "nukmiris_wp1_434ed369476846088528aff345a96c71.json.gz",
+          "uncompressedSHA256": "8033602b6dda2c461adf6757edf11ea41e7ce0b7ac9396473be633ce962b2626",
+          "rows": 26
+        },
+        {
+          "snapshot": "nukmiris_wp1_461f917bb207434da0433255ce1f3b6d.json.gz",
+          "uncompressedSHA256": "83370651c6f048cbd8d924b8b0566cd6034c5e39c5d12906c52a37e4390d1827",
+          "rows": 27
+        },
+        {
+          "snapshot": "nukmiris_wp1_46a630a25c0b41a29203d8d1abab77ba.json.gz",
+          "uncompressedSHA256": "2ceaf0a1c9eacfa4c86807243ceff253336d777ed7200badfc44d5ea957f27ac",
+          "rows": 24
+        },
+        {
+          "snapshot": "nukmiris_wp1_47df570116b547af997104d129e058e9.json.gz",
+          "uncompressedSHA256": "15bc6c1c65147961a1b8113a35f6301ce015b2e2c88801c8ed75b3fcd625a971",
+          "rows": 17
+        },
+        {
+          "snapshot": "nukmiris_wp1_48edff813d394eb2a981da915b4085b7.json.gz",
+          "uncompressedSHA256": "858d16865416fa144b42c1fc2c286bebd2a2bda3a295f68c82bdbc7380798fa9",
+          "rows": 17
+        },
+        {
+          "snapshot": "nukmiris_wp1_4ab78cf8a1664eb78ecc511f3a9601c9.json.gz",
+          "uncompressedSHA256": "d59f76a8287a300dd3fa8c1114ef717738adf40cd4a8e1c8857ff27abe1df769",
+          "rows": 24
+        },
+        {
+          "snapshot": "nukmiris_wp1_4e488b32562a4ecaaa67be4e5dd528cd.json.gz",
+          "uncompressedSHA256": "67b4e2227da165c6fa432f175aaaf3f6c20b6774a22bacd7f8835fb33f800195",
+          "rows": 33
+        },
+        {
+          "snapshot": "nukmiris_wp1_4e951195f3104f19a26a7083e6b7551d.json.gz",
+          "uncompressedSHA256": "97a4c0d1a4299cffb9b1d9adca158c98d4815e9c933f75371be12aa8c179ee56",
+          "rows": 24
+        },
+        {
+          "snapshot": "nukmiris_wp1_50095fe4965145b98be934a791ae0e2f.json.gz",
+          "uncompressedSHA256": "16e78d7fc53e696f638d905e9cbb28d21924ac2973502d51ceb06ef8cd6f070d",
+          "rows": 17
+        },
+        {
+          "snapshot": "nukmiris_wp1_5362449c648243c0aec44f1aead8bae7.json.gz",
+          "uncompressedSHA256": "4f84ed5cd753c6a041a94919cd43be90ca7f6f9cbaa582dde2a327e46e1db01f",
+          "rows": 24
+        },
+        {
+          "snapshot": "nukmiris_wp1_5601708f9fb6491894a73a286685dfdf.json.gz",
+          "uncompressedSHA256": "114b206eaa9078e32b0f7d52f6a000fcbda57755f21d7a652476a29485fdff98",
+          "rows": 27
+        },
+        {
+          "snapshot": "nukmiris_wp1_56aa063af91c427c9e43569d6e8f0610.json.gz",
+          "uncompressedSHA256": "27889ad6707edc6e64f357e61276fc6047e4107211a5192a0ef69bb6aefb8c2e",
+          "rows": 14
+        },
+        {
+          "snapshot": "nukmiris_wp1_579d29fa8bb64c429bc62739686e0b03.json.gz",
+          "uncompressedSHA256": "da54096c05016b459d6bfab4e8dab8ab4286f6ca4b2346a8c3f13c864ad9da98",
+          "rows": 53
+        },
+        {
+          "snapshot": "nukmiris_wp1_594ab2b73b3b484482dec52be673a46b.json.gz",
+          "uncompressedSHA256": "d92f3fda2433799f7f29ca559d327d42982b837f060c7bfb26a6d7bdee02ee8d",
+          "rows": 43
+        },
+        {
+          "snapshot": "nukmiris_wp1_5a478ac57fad4ff38b42424d3fe12699.json.gz",
+          "uncompressedSHA256": "1a59063a649fb0fc99846f9d4a01112b7b7362c0a5e9bb8e79420e1a598c5ecf",
+          "rows": 27
+        },
+        {
+          "snapshot": "nukmiris_wp1_5f3ebbd160754a23a2c99f039ec8b1c4.json.gz",
+          "uncompressedSHA256": "1b2c9f7c1378401b91cf589e4d194981e434460391cb7288ec72733de236f8b3",
+          "rows": 26
+        },
+        {
+          "snapshot": "nukmiris_wp1_656c40216545499abbd5833a34f4175f.json.gz",
+          "uncompressedSHA256": "293d3a0b6fead41feb433c634854db4f404f5d5178f96e06fe011fd009642ddb",
+          "rows": 12
+        },
+        {
+          "snapshot": "nukmiris_wp1_67eac4f36fa14d5e9407c36283b70aa1.json.gz",
+          "uncompressedSHA256": "132cd21dfa620dba9a80ebe7be9b7a8f846a59a4c62bdc9988d540f3dc153e87",
+          "rows": 20
+        },
+        {
+          "snapshot": "nukmiris_wp1_6aab80fa2be04e668e0f3a3cfdc93c97.json.gz",
+          "uncompressedSHA256": "9563bf2c8e3eb7c634f2c5fc47f8cb1d4e3a5d8a133c478cf177b01a18decc1b",
+          "rows": 25
+        },
+        {
+          "snapshot": "nukmiris_wp1_6eb6c6b4db2a401fae064ab99c82c496.json.gz",
+          "uncompressedSHA256": "37126b29ff95730eb08056fdb439662ca2f3323314c237ba69dd561b0b95648b",
+          "rows": 18
+        },
+        {
+          "snapshot": "nukmiris_wp1_703e2c2cf2044a9f8cc2ef4b4309847b.json.gz",
+          "uncompressedSHA256": "c438bbe3e049bc1e22d937da889e72e45566db75739a26ac6793aaced0991a82",
+          "rows": 75
+        },
+        {
+          "snapshot": "nukmiris_wp1_70daa62e60ed49809a6aa651a9d910ef.json.gz",
+          "uncompressedSHA256": "a0ba574333f40ec9e718effdda8427cff01b06a5528684ef6cfbbbfb625a3e5b",
+          "rows": 29
+        },
+        {
+          "snapshot": "nukmiris_wp1_718f9f1856324efbadf93f80fef457e6.json.gz",
+          "uncompressedSHA256": "8d6056d290b534ae0f8b380f34772b4f6fc5e5160353e721fa67934388695100",
+          "rows": 1100
+        },
+        {
+          "snapshot": "nukmiris_wp1_7279d78c46ec4ceb8b68e254ae44cdcd.json.gz",
+          "uncompressedSHA256": "335afed8b30de4d8426dd8e58ac5ae9e5e7deb0b3f8e20bf0a59f6070db0eda6",
+          "rows": 26
+        },
+        {
+          "snapshot": "nukmiris_wp1_729ea0ecf26f447ea138c7082b56de6e.json.gz",
+          "uncompressedSHA256": "adbf41674d240a9df79be7f05ffe4cf77e24db45f549c1500172149daa1e7d6c",
+          "rows": 30
+        },
+        {
+          "snapshot": "nukmiris_wp1_74b77ecde7cf4eb2947597c9039d9303.json.gz",
+          "uncompressedSHA256": "51392f3fc808be063ddea4c91924cec60de1ac39920fc16e815775d7ff99b485",
+          "rows": 26
+        },
+        {
+          "snapshot": "nukmiris_wp1_795af30b837c4228998aed23d567d949.json.gz",
+          "uncompressedSHA256": "ae2b3a9c493c30b5a48a8c975ed2da3345f0f623d4faa9a81ae3d7c9c7ce9fba",
+          "rows": 46
+        },
+        {
+          "snapshot": "nukmiris_wp1_7b2bfa3c147343d18025ec2b6dd40208.json.gz",
+          "uncompressedSHA256": "a0634e907187cff83d6ca1960335f710350b4afb16d48b4f8dae300f6c98c298",
+          "rows": 13
+        },
+        {
+          "snapshot": "nukmiris_wp1_7feae3b4751643eeb19eb05f006f082a.json.gz",
+          "uncompressedSHA256": "63f9bcdd3fc7c3a7e2f80a6aef30e234896cc6088f1bb7b909ae7f7b53161e83",
+          "rows": 28
+        },
+        {
+          "snapshot": "nukmiris_wp1_814308625e094457b34f552ab9ad3125.json.gz",
+          "uncompressedSHA256": "79807bec3be8282019d43d977785263ab062f260da303413e77dee6b7fe67fe0",
+          "rows": 43
+        },
+        {
+          "snapshot": "nukmiris_wp1_8471fa6d2d6f4ecca035c3f9f91a97da.json.gz",
+          "uncompressedSHA256": "517355d0f41bd10b94eedbb81271d6202c496077dd417ba2d6383d3dca8d473e",
+          "rows": 12
+        },
+        {
+          "snapshot": "nukmiris_wp1_8634ccc788a048a485c47421b3c0226d.json.gz",
+          "uncompressedSHA256": "2971f2310cac4877fc29d0a1fdf0890b60254d6d1c4d5f3933859ec697547b1f",
+          "rows": 24
+        },
+        {
+          "snapshot": "nukmiris_wp1_881ee7258a294d90b482ab6ee077b01f.json.gz",
+          "uncompressedSHA256": "1585ed7df0d68d14ce7ea22f7d9412a9adcc1d6e3cd9ee436b35fe2180851aa5",
+          "rows": 39
+        },
+        {
+          "snapshot": "nukmiris_wp1_8da2c174a7a04bfc9d262b49bf313847.json.gz",
+          "uncompressedSHA256": "1f36897c7770ff0283e2d8575e2c994756fbc1cdb5c9265978dbecc74b1b2c5d",
+          "rows": 24
+        },
+        {
+          "snapshot": "nukmiris_wp1_8ef1fed8f8604cd58b3401f7472a9224.json.gz",
+          "uncompressedSHA256": "078ef03212c06475a5a39c3b117e57c707844bab2fe6ccb3ebda52121002f546",
+          "rows": 24
+        },
+        {
+          "snapshot": "nukmiris_wp1_921f3d7a5c8e4f41beb70cbf6dea7e58.json.gz",
+          "uncompressedSHA256": "d80bafd2ed74744630b71de474b02867c25b859deacfcdde52da11cf9012e75e",
+          "rows": 26
+        },
+        {
+          "snapshot": "nukmiris_wp1_93f9358c87ba43d18e154692b97a865b.json.gz",
+          "uncompressedSHA256": "4bb784daba86feb0d448e84f52254525a698b47baab8016eee445ad0e2e33032",
+          "rows": 17
+        },
+        {
+          "snapshot": "nukmiris_wp1_9661ad31cc654769b375535db9cc79fd.json.gz",
+          "uncompressedSHA256": "9dd7bfcfdf18d85cf94dea085c530df9540caef8880bde49323b197c3065b3e0",
+          "rows": 24
+        },
+        {
+          "snapshot": "nukmiris_wp1_9729c4ffc30944178955a77ecddb36c1.json.gz",
+          "uncompressedSHA256": "a5b6270a98e4ea6c7264705bfa65674a91feae8b9815360c7c5231c53c9c5122",
+          "rows": 25
+        },
+        {
+          "snapshot": "nukmiris_wp1_a4bc486c82094714bfab91194607b0aa.json.gz",
+          "uncompressedSHA256": "710e536b013fc4cf286d0897233a7bb20345542549e12d8ee4149cb26fbfbdd2",
+          "rows": 24
+        },
+        {
+          "snapshot": "nukmiris_wp1_a8a966fef5a74eb4b5e1c2cc382395a2.json.gz",
+          "uncompressedSHA256": "b8025c7d136f61c82bd6803f2cdd470ececb63bdbbc0ee7571c3ca20258e46ac",
+          "rows": 23
+        },
+        {
+          "snapshot": "nukmiris_wp1_b00b847a27bc42eb8a5406fe403e0d9f.json.gz",
+          "uncompressedSHA256": "4e433e32354ad67b8d5fc427a0b87edebc921dcccc3fe980785c2982b3225a48",
+          "rows": 17
+        },
+        {
+          "snapshot": "nukmiris_wp1_b0226d76752c48b28549fbd255ea9d31.json.gz",
+          "uncompressedSHA256": "35b04bae97a7304c3c888012f1417b197ca584a39262fca8265a383da83634dc",
+          "rows": 33
+        },
+        {
+          "snapshot": "nukmiris_wp1_b08d0b8ff91b4e9c87f9001d99a3aa7c.json.gz",
+          "uncompressedSHA256": "8456551e8f33f43dfe040e21fb17a722bab2a37b6070392b6333945af023887e",
+          "rows": 17
+        },
+        {
+          "snapshot": "nukmiris_wp1_b0a17b813d0e48efaf9f500d231872a3.json.gz",
+          "uncompressedSHA256": "4918cb93cabaf94df68197c7a7566ec444e9b5645ae703aac2c411f6e33136d3",
+          "rows": 37
+        },
+        {
+          "snapshot": "nukmiris_wp1_b4b78c4a7afd4338b1e2f1670f39f23f.json.gz",
+          "uncompressedSHA256": "f967bcfca71a3712a20e116ea7151dd5c9b71e1c16515581974bbcd0c85f2c4b",
+          "rows": 2549
+        },
+        {
+          "snapshot": "nukmiris_wp1_b7980dbfa86f4fa08a301642ab072735.json.gz",
+          "uncompressedSHA256": "9df5d92d4ba23af1c2a9e288fb40920d0296400980965cd86738346509286562",
+          "rows": 25
+        },
+        {
+          "snapshot": "nukmiris_wp1_b975f061ae054024a4fb4040b89dac90.json.gz",
+          "uncompressedSHA256": "0f4af23e2101dfcb5a6180eb08194a876d277e2faeffef6cd9ec5c8aaa8c9201",
+          "rows": 15
+        },
+        {
+          "snapshot": "nukmiris_wp1_bba5e5befcf544c89d1a9c58273992da.json.gz",
+          "uncompressedSHA256": "8373e240127f681486d56afa219029d38861509df8461431d255d8d0f9c43ea8",
+          "rows": 12
+        },
+        {
+          "snapshot": "nukmiris_wp1_be0d406dbb74427c88373166addb57d6.json.gz",
+          "uncompressedSHA256": "0c30140dca7de0b2471d91d024588631ac6b25e5aa02665fa6570b55ae1c8789",
+          "rows": 17
+        },
+        {
+          "snapshot": "nukmiris_wp1_beea4a9d448a415888c8f32993031a18.json.gz",
+          "uncompressedSHA256": "7376271c5d4ec0e8624eabaa145d97a2b68724ea5137480389f44ec9753edbdf",
+          "rows": 17
+        },
+        {
+          "snapshot": "nukmiris_wp1_bf3df24d89b249d6856ce6e0c5d6e0c5.json.gz",
+          "uncompressedSHA256": "8f1990e72eeac728cd4313456f64304edab070ec18420c7f70e0ad1da58a1c36",
+          "rows": 17
+        },
+        {
+          "snapshot": "nukmiris_wp1_c209bd762bc14e149743625618cd9c8d.json.gz",
+          "uncompressedSHA256": "4c6a370948c192f3d964a589129b743d89f21c304087605bb14de0e24b302ec7",
+          "rows": 29
+        },
+        {
+          "snapshot": "nukmiris_wp1_c242ab1425744ce184aab4bd8814d0e7.json.gz",
+          "uncompressedSHA256": "a19041420729000ddf62ddf35716c1a9ac19ad446b94267ccd34606b2d119bdf",
+          "rows": 26
+        },
+        {
+          "snapshot": "nukmiris_wp1_c3ad75badc174ead8d60e574635a3590.json.gz",
+          "uncompressedSHA256": "5f18452eeb743718f75eefa4a44a8e3f133ca6fdbb3562ba66885e0414a74bf4",
+          "rows": 40
+        },
+        {
+          "snapshot": "nukmiris_wp1_c4e5dde35ab94c9a89a990c25f337c9f.json.gz",
+          "uncompressedSHA256": "1dba55f99ac7927e77b47079cd865d4e803f3e634e8cf4269ead44a561fb841a",
+          "rows": 35
+        },
+        {
+          "snapshot": "nukmiris_wp1_ce69834564bf4364afe10c8674961e3d.json.gz",
+          "uncompressedSHA256": "fbd6613e525f32caa57e39695c514f87a3d09da0352889bae4c0c217a0c38f8c",
+          "rows": 14
+        },
+        {
+          "snapshot": "nukmiris_wp1_d05cc4e2f50a4b08a01898ad7a160370.json.gz",
+          "uncompressedSHA256": "ee41e181e0f78bf11f335b3e8e1625de9220f96d9f461b32b9a2113aa5609ad5",
+          "rows": 17
+        },
+        {
+          "snapshot": "nukmiris_wp1_d0e7fe4ef87c4feb8577d6cd9befcf8c.json.gz",
+          "uncompressedSHA256": "82db5c89960a1404af22ef116095a06358088ae78aa3df5cafd60504d5e6652a",
+          "rows": 27
+        },
+        {
+          "snapshot": "nukmiris_wp1_d8ccba40c10e48e6b84efd2fbc3e3a27.json.gz",
+          "uncompressedSHA256": "3df2e814832f3ed11023368815bbc38394d4bc58577e16c484ad93f0c792a557",
+          "rows": 26
+        },
+        {
+          "snapshot": "nukmiris_wp1_daecaa70808749a8898f4f2433c909b9.json.gz",
+          "uncompressedSHA256": "c2743aaaf89c459faaebd9b1c94f5b2224a28c83d3f57f4862c7df98da7fa658",
+          "rows": 85
+        },
+        {
+          "snapshot": "nukmiris_wp1_dbb8ce8c22ae4ebbad6abccb339b3eb1.json.gz",
+          "uncompressedSHA256": "e12ee0472fb2a8025e832ee1d4a9efdf337820bfe6449591a6928b3f87373332",
+          "rows": 23
+        },
+        {
+          "snapshot": "nukmiris_wp1_dfd1e3a6dff54bf7b9de2c14d42b4e2a.json.gz",
+          "uncompressedSHA256": "0a4edd7e61795578c678e563fc45e45e60b69438374de7841af6c8f4f28f1509",
+          "rows": 24
+        },
+        {
+          "snapshot": "nukmiris_wp1_e4d6db1369ff438595f7fb28c1cdbd34.json.gz",
+          "uncompressedSHA256": "0e0d97427a8b3a58c747b55712d0376a81a9b70d8e97a343787d752bb817c69c",
+          "rows": 17
+        },
+        {
+          "snapshot": "nukmiris_wp1_e536142fadaa4208a02f2331a834681d.json.gz",
+          "uncompressedSHA256": "236240b239629a606d0606792efb0f78b7d662eb3c626db909986191450faaa4",
+          "rows": 35
+        },
+        {
+          "snapshot": "nukmiris_wp1_e5728b82150f41608f27dab4c2e1b488.json.gz",
+          "uncompressedSHA256": "567161f24bee76583f6ae991611610c3a3f311c1573033c247be8a16c2d2e493",
+          "rows": 27
+        },
+        {
+          "snapshot": "nukmiris_wp1_e6712ff1ce0c491dbbf4ba7393f40d30.json.gz",
+          "uncompressedSHA256": "b6be4118e5f7b07988f613e60e26bbbe63810bb1f823c06884a99a43c8e88135",
+          "rows": 28
+        },
+        {
+          "snapshot": "nukmiris_wp1_ee106db642fe4a2cb827564b986d6bdd.json.gz",
+          "uncompressedSHA256": "822882562355b2c681e48be22b1ce33ce5a224812b8744334ca957a67b2afdb4",
+          "rows": 25
+        },
+        {
+          "snapshot": "nukmiris_wp1_ee6f8489f2f545e980e8911999028a47.json.gz",
+          "uncompressedSHA256": "d4981cd91dcb8cf5e5def06c2493b467a420459b3fe362f3874f317db1d530cf",
+          "rows": 32
+        },
+        {
+          "snapshot": "nukmiris_wp1_f5c2e51c627f4eb69ba7355478c9eac7.json.gz",
+          "uncompressedSHA256": "b35ef95b6cc70b72bbb15e6f3ed8b3c7aee4af1a32e70d9a737e658b53e30376",
+          "rows": 26
+        },
+        {
+          "snapshot": "nukmiris_wp1_f6b5734fe76f4e1a9486280fccae4988.json.gz",
+          "uncompressedSHA256": "fd5738e34d4cf904bf40fefeea46d996afc1a2dc3b7713f4c3f054c93301934b",
+          "rows": 33
+        },
+        {
+          "snapshot": "nukmiris_wp1_f97e2521f9434592b393a28989a94324.json.gz",
+          "uncompressedSHA256": "6b5b2010343abca173784efb0474573c0192801a07bd9a81c27abaeb17678113",
+          "rows": 12
+        },
+        {
+          "snapshot": "nukmiris_wp1_fb471b1191f942de943c52d4e99515d0.json.gz",
+          "uncompressedSHA256": "f2499b1ae6c28cdd2d75904e96293b0b6b6d09e1dd0b76a788b09e46978952f0",
+          "rows": 24
+        },
+        {
+          "snapshot": "nukmiris_wp1_fc19b4f93e60498ca49639177264967b.json.gz",
+          "uncompressedSHA256": "40159a688877ee92174548bd74fda78ad80e761b09ed5bbb9acc4915420e61c0",
+          "rows": 27
+        },
+        {
+          "snapshot": "nukmiris_wp1_fcc1e39aa4bc4b5da6c5a96e531d4fc4.json.gz",
+          "uncompressedSHA256": "4508ab4260b0939d45a4d8e4a18285cad704f07ca6d56ee54615236ce36b744f",
+          "rows": 74
+        }
+      ],
+      "result": "PASS: all archived members are synthetic fixture JSON with expected tables/business/channel/calendar/customer/actor identities; no credential/key fields or credential signatures detected. Zero embedded rawBase64 root bodies were present."
+    },
+    "fault-sql-snapshots.tar.gz": {
+      "sha256": "a3e20c4aac2fc98d7035ec3d3e52abf8da6f16ed97506c446d8ea189cbc328ab",
+      "snapshots": 88,
+      "rows": 3428,
+      "tableRowCounts": {
+        "business": 174,
+        "channel": 174,
+        "calendar": 174,
+        "resource": 348,
+        "customer": 174,
+        "conversation": 80,
+        "seal": 401,
+        "batch": 104,
+        "input": 103,
+        "batch_input": 105,
+        "permission_head": 52,
+        "permission_event": 278,
+        "status_event": 266,
+        "appointment": 65,
+        "operation": 67,
+        "mutation_guard": 39,
+        "protection": 62,
+        "output_intent": 23,
+        "attempt": 74,
+        "receipt": 5,
+        "recovery_case": 17,
+        "audit": 643
+      },
+      "tableFields": {
+        "business": [
+          "business_id",
+          "dispatch_enabled",
+          "recovery_epoch",
+          "revision",
+          "status"
+        ],
+        "channel": [
+          "business_id",
+          "id",
+          "number_id",
+          "revision",
+          "verified",
+          "waba"
+        ],
+        "calendar": [
+          "business_id",
+          "external_id",
+          "grant_id",
+          "id",
+          "revision"
+        ],
+        "resource": [
+          "business_id",
+          "calendar_id",
+          "id",
+          "is_default"
+        ],
+        "customer": [
+          "business_id",
+          "id",
+          "subject"
+        ],
+        "conversation": [
+          "business_id",
+          "channel_id",
+          "id",
+          "next_sequence",
+          "subject"
+        ],
+        "seal": [
+          "business_id",
+          "digest",
+          "kind",
+          "receipt",
+          "stable_key"
+        ],
+        "batch": [
+          "business_id",
+          "digest",
+          "id",
+          "items",
+          "seal_key",
+          "state"
+        ],
+        "input": [
+          "business_id",
+          "channel_id",
+          "conversation_id",
+          "digest",
+          "event",
+          "id",
+          "provider_id",
+          "received_at",
+          "sequence",
+          "state",
+          "subject"
+        ],
+        "batch_input": [
+          "batch_id",
+          "business_id",
+          "input_id"
+        ],
+        "appointment": [
+          "buffer_minutes",
+          "business_id",
+          "calendar_id",
+          "customer_id",
+          "end_at",
+          "event_id",
+          "id",
+          "origin",
+          "resource_id",
+          "revision",
+          "schedule_revision",
+          "start_at",
+          "state"
+        ],
+        "operation": [
+          "appointment_id",
+          "business_id",
+          "expected_revision",
+          "id",
+          "input_id",
+          "kind",
+          "plan",
+          "plan_digest"
+        ],
+        "mutation_guard": [
+          "appointment_id",
+          "business_id",
+          "operation_id"
+        ],
+        "protection": [
+          "appointment_id",
+          "business_id",
+          "operation_id",
+          "protected_range",
+          "resource_id"
+        ],
+        "attempt": [
+          "arm_seal",
+          "business_id",
+          "envelope",
+          "id",
+          "meta_message_id",
+          "meta_status",
+          "operation_id",
+          "output_id",
+          "owner_id",
+          "payload_digest",
+          "state"
+        ],
+        "permission_head": [
+          "business_id",
+          "last_revoke_at",
+          "purpose",
+          "revision",
+          "subject",
+          "suppressed"
+        ],
+        "audit": [
+          "action",
+          "actor",
+          "business_id",
+          "detail",
+          "evidence",
+          "id"
+        ],
+        "permission_event": [
+          "business_id",
+          "decision",
+          "digest",
+          "evidence_id",
+          "occurred_at",
+          "revision",
+          "subject"
+        ],
+        "output_intent": [
+          "appointment_id",
+          "business_id",
+          "conversation_id",
+          "deadline_at",
+          "due_at",
+          "id",
+          "input_id",
+          "ordinal",
+          "parent_operation_id",
+          "payload",
+          "payload_digest",
+          "purpose",
+          "recipient",
+          "schedule_revision",
+          "sequence",
+          "state"
+        ],
+        "status_event": [
+          "business_id",
+          "digest",
+          "evidence_id",
+          "revision",
+          "status_value"
+        ],
+        "recovery_case": [
+          "business_id",
+          "original_evidence",
+          "reason",
+          "stable_key"
+        ],
+        "receipt": [
+          "attempt_id",
+          "business_id",
+          "correlated",
+          "input_id",
+          "message_id",
+          "status"
+        ]
+      },
+      "businesses": [
+        "synthetic-a",
+        "synthetic-b"
+      ],
+      "channelIdentities": [
+        [
+          "waba-synthetic-a",
+          "number-synthetic-a"
+        ],
+        [
+          "waba-synthetic-b",
+          "number-synthetic-b"
+        ]
+      ],
+      "calendarAndGrantIdentities": [
+        [
+          "calendar-synthetic-a",
+          "synthetic-grant-synthetic-a"
+        ],
+        [
+          "calendar-synthetic-b",
+          "synthetic-grant-synthetic-b"
+        ]
+      ],
+      "customerSubjects": [
+        "customer-synthetic-a",
+        "customer-synthetic-b"
+      ],
+      "auditActors": [
+        "wp1_dispatch",
+        "wp1_ingress",
+        "wp1_operator"
+      ],
+      "validatedEmbeddedRawBatches": 0,
+      "snapshotsInspected": [
+        {
+          "snapshot": "nukmiris_wp1_03674a55faa2486798879389dd44b40e.json.gz",
+          "uncompressedSHA256": "1ceaeb9ef05c5b5d43dc5d1370ca78eca970db75d98446380f6355b98f3d372c",
+          "rows": 24
+        },
+        {
+          "snapshot": "nukmiris_wp1_0400dec32a254b9c82cd4572ec0cf505.json.gz",
+          "uncompressedSHA256": "3cf2b5da41956eb1c125e5111fcd171f139f1e89903c0dcf6bf52f5c43315b73",
+          "rows": 12
+        },
+        {
+          "snapshot": "nukmiris_wp1_138b9fc7b5524de5bb0b798b954c38e1.json.gz",
+          "uncompressedSHA256": "6ca9b1a87da0ed046d5ef246a8d952acef62ba07a9a86d03970be9d638c5c009",
+          "rows": 26
+        },
+        {
+          "snapshot": "nukmiris_wp1_15b58784155e4185b5d87857014dd369.json.gz",
+          "uncompressedSHA256": "021abf40d4e8fc1db7352d11ce4808d4f8a3a62e351709d3b0370902b3522322",
+          "rows": 48
+        },
+        {
+          "snapshot": "nukmiris_wp1_16b66788d665414882c848f8ace00321.json.gz",
+          "uncompressedSHA256": "358c7f16056c5fef34df06a3308c93f5bec5d0c55673523ceee64ed7a921c17c",
+          "rows": 26
+        },
+        {
+          "snapshot": "nukmiris_wp1_17810cda9166451f8bdea5355cb1bd07.json.gz",
+          "uncompressedSHA256": "975717b2d036c82b66ebcf62e11051d51e7c8c17ecb0687ed9dbf905c8b38a5a",
+          "rows": 17
+        },
+        {
+          "snapshot": "nukmiris_wp1_18758e3894384795b4811b1e5b61af07.json.gz",
+          "uncompressedSHA256": "fa4e38e85bd64c7c207eb41b3e325c9384278d55480f4100bb95ed24ec5cae0a",
+          "rows": 0
+        },
+        {
+          "snapshot": "nukmiris_wp1_1b95ba4ec3534dd396a3a66a1643baef.json.gz",
+          "uncompressedSHA256": "175c843a73a81a9e667a5c8d3df52d67c0b3c65016eb4f0d9cd30ae405f8c8dd",
+          "rows": 29
+        },
+        {
+          "snapshot": "nukmiris_wp1_1d9ba61436114ff685bf0ee8b6c110d2.json.gz",
+          "uncompressedSHA256": "f67bb395c75e57425ec975985e2605eb93ed8d5c258b6d0bf63a0246560f6094",
+          "rows": 24
+        },
+        {
+          "snapshot": "nukmiris_wp1_202d1c2618b544b6bc0d3102a11a59a1.json.gz",
+          "uncompressedSHA256": "c776bf537204f6cb846a0ba9ec50254a409f7a2a5ef2c4f3245dc5b21e8c32d9",
+          "rows": 29
+        },
+        {
+          "snapshot": "nukmiris_wp1_23ee1b90748d4f9e97740ba87939ae35.json.gz",
+          "uncompressedSHA256": "1ce77f0942bb4191504d4a70d12d352d5e05edb15c7f2ba1d9d9f67de1a7ed1a",
+          "rows": 26
+        },
+        {
+          "snapshot": "nukmiris_wp1_28549398b24d49eaa9c4975804fe5b62.json.gz",
+          "uncompressedSHA256": "4cf7abb75bb42ce31f4f62596079561b729fe2e3f668cf3727758b60b2154350",
+          "rows": 27
+        },
+        {
+          "snapshot": "nukmiris_wp1_289b27522825430fade4b51dbb2ecb99.json.gz",
+          "uncompressedSHA256": "7f0fdda9fa0c5ed8b68bde1e325c0868d51682a71b4f389ae916023f9df6c804",
+          "rows": 25
+        },
+        {
+          "snapshot": "nukmiris_wp1_297a7c026f6d4ec7804b46a8961763ed.json.gz",
+          "uncompressedSHA256": "4da855910d9c680ba7ee515ff57a7be0058f32864b863686c14335b2d8eea16f",
+          "rows": 13
+        },
+        {
+          "snapshot": "nukmiris_wp1_2c23bcc7226a46eabf39a8e328b8e7ff.json.gz",
+          "uncompressedSHA256": "2620bc239698094035374e6daf768fd20bc947b26ac91ac06e83151f093ee741",
+          "rows": 24
+        },
+        {
+          "snapshot": "nukmiris_wp1_2edba2550ece44d5900213b99d01da15.json.gz",
+          "uncompressedSHA256": "16e5ae50530e0a06e59f0f7398cac98e490cbbb6505a92be72aebf1858d0e356",
+          "rows": 33
+        },
+        {
+          "snapshot": "nukmiris_wp1_315e4cdb259f473f9fe69eb6d76ab615.json.gz",
+          "uncompressedSHA256": "96b5dc0d6b9d9d611e778ea6a087213e7b161372b34f14b57ab2f377a21eafe7",
+          "rows": 37
+        },
+        {
+          "snapshot": "nukmiris_wp1_355193b5dd184c55bd83c5eaddbee0b5.json.gz",
+          "uncompressedSHA256": "36e1d424ad03f89b190065c6bb6db76d076b9cb20025b8a149f7c68921a09062",
+          "rows": 28
+        },
+        {
+          "snapshot": "nukmiris_wp1_35e419ff6e8f4ce681f24cc922e6e17a.json.gz",
+          "uncompressedSHA256": "94e717fff1361658e2aeedbc2e26dfd37a99d44c803cd2b56b6708360658e600",
+          "rows": 17
+        },
+        {
+          "snapshot": "nukmiris_wp1_360c406a52f641cea6234f652c5f84cc.json.gz",
+          "uncompressedSHA256": "bda76b75aa98a126e6077a725cc6187b19d39b37485330850ac0c35aff4f0a21",
+          "rows": 25
+        },
+        {
+          "snapshot": "nukmiris_wp1_37fe32a1430a4d14b8167bc5b53c6b2a.json.gz",
+          "uncompressedSHA256": "fb68778b0f1d09d8684b3fd46ba5fe4a83c63bb9a58b3cc59fad6bfa56c9624e",
+          "rows": 23
+        },
+        {
+          "snapshot": "nukmiris_wp1_3d128334264c40f9af3a15742eb4e862.json.gz",
+          "uncompressedSHA256": "8f75f59ac27ca8c600abffd84d28aaec5aed059fec73993d034c9de0a84b8abc",
+          "rows": 26
+        },
+        {
+          "snapshot": "nukmiris_wp1_4320cc87c7e04ac78953f0c035502d88.json.gz",
+          "uncompressedSHA256": "651ba95059fdc3f26b98c968d6b051f51a8de51ff9ece34078b81cdb1c67d0fc",
+          "rows": 26
+        },
+        {
+          "snapshot": "nukmiris_wp1_43b09a36ba084042af84892a331955a4.json.gz",
+          "uncompressedSHA256": "666acbfaf8aa886b666b980ab16b3b84b089895a789144f838b2589c663a79b1",
+          "rows": 17
+        },
+        {
+          "snapshot": "nukmiris_wp1_483a9b6e812f474d980303472074ab99.json.gz",
+          "uncompressedSHA256": "b83518aadc6729e54708dd482d0c9e953fc1e69e4962f94b8d45e80ff5061808",
+          "rows": 17
+        },
+        {
+          "snapshot": "nukmiris_wp1_48f2f4ea1a554fe4b5ce538828f28af6.json.gz",
+          "uncompressedSHA256": "f7eb5fde6255cfca20e83907ef26532eb6d18171b94019c7772c42135073a6d4",
+          "rows": 35
+        },
+        {
+          "snapshot": "nukmiris_wp1_49899cb76da746d38c06ab36339b5d4e.json.gz",
+          "uncompressedSHA256": "b934ec512474dc332a3bc736f3ec8232626842d30e60b78648a3c7a58c0158b3",
+          "rows": 20
+        },
+        {
+          "snapshot": "nukmiris_wp1_4a50bd568581467687da4b720e475afa.json.gz",
+          "uncompressedSHA256": "fea21686c92d506179f59b2eee32ec91d80d59f7e8c1d02fcdf195e6146b358f",
+          "rows": 27
+        },
+        {
+          "snapshot": "nukmiris_wp1_4f5e1d3c81054f03bb0d4fbc20857692.json.gz",
+          "uncompressedSHA256": "2ffeeb243576594a13bfd05e0adafd8a75ec4a9e83f9ee34794d9d8801b36c9d",
+          "rows": 43
+        },
+        {
+          "snapshot": "nukmiris_wp1_4f8c6160b16841fcb8c528b5991ddd95.json.gz",
+          "uncompressedSHA256": "9105987741ace6556da89deaadb0b4d30193600c971ee9405b945562c1c22001",
+          "rows": 27
+        },
+        {
+          "snapshot": "nukmiris_wp1_55a5ee56b6174755bca5e39f203ff15d.json.gz",
+          "uncompressedSHA256": "f762c908acbe83ad03a759046d54ac79cfafdd88b0b08e5264fca60475ae69da",
+          "rows": 37
+        },
+        {
+          "snapshot": "nukmiris_wp1_5bc0e694c2614896a04bbdc6726f9839.json.gz",
+          "uncompressedSHA256": "a94c6bd108ea0cbe867224cad6de698e4110c217a5ba8b86efdce5bdd0160942",
+          "rows": 17
+        },
+        {
+          "snapshot": "nukmiris_wp1_648d1325b7064b5e8fd780cc0eb61edb.json.gz",
+          "uncompressedSHA256": "9b0ef2317dcfda50e979dd5abce94ca2de8926a75ba85e1798f762a4bccee59a",
+          "rows": 27
+        },
+        {
+          "snapshot": "nukmiris_wp1_65c4fd7edd664ba3a75866f52ee4ccaf.json.gz",
+          "uncompressedSHA256": "06051a7ff9248c6e72adceaafe5f52259f5af2fe854ba22ac095862dc9656f2d",
+          "rows": 17
+        },
+        {
+          "snapshot": "nukmiris_wp1_667a8e46ff8f4b82b289db8acfad5d8f.json.gz",
+          "uncompressedSHA256": "a7e921f1eb0e7e7b53cf0339f61cc394bcfee51c4334b1bb4ee117e759936a82",
+          "rows": 24
+        },
+        {
+          "snapshot": "nukmiris_wp1_674205983c6b4368b26a9fbb7eef04bd.json.gz",
+          "uncompressedSHA256": "5cf9c2d8323c7922201dfb83a749259a7bb0d0bda98510fed9ee15330a94cc62",
+          "rows": 24
+        },
+        {
+          "snapshot": "nukmiris_wp1_694f575b14684fe8bb3cf5a2282fdb68.json.gz",
+          "uncompressedSHA256": "516ea379cb506c175a2c9416add84a988664835cc90de37d2e40b734b708feed",
+          "rows": 74
+        },
+        {
+          "snapshot": "nukmiris_wp1_6b9e6b575130469e842c7d1353e4b02f.json.gz",
+          "uncompressedSHA256": "a33a480b843821afe9c30ea3383a1cc29524fc1367d3abe263cb5e19632af3dc",
+          "rows": 17
+        },
+        {
+          "snapshot": "nukmiris_wp1_6bb524212bd447a3888be95db09a90d9.json.gz",
+          "uncompressedSHA256": "0b4bf4800c9e4698e2ab4b82101f539e023e5c27b9c38ee2cd63679947ef50d4",
+          "rows": 17
+        },
+        {
+          "snapshot": "nukmiris_wp1_6cc796680e8f4a8d9a59a659a2710689.json.gz",
+          "uncompressedSHA256": "b343b66600de22148421c921f8c767c10613a96ac0c4cc9d20854f3e61fad014",
+          "rows": 27
+        },
+        {
+          "snapshot": "nukmiris_wp1_6e2e82c462114660b11d8e0a33924277.json.gz",
+          "uncompressedSHA256": "62907c0340088fde63cb3c76b186a2089a41347f4fe167048fe0e0a5fd0c29d1",
+          "rows": 24
+        },
+        {
+          "snapshot": "nukmiris_wp1_745919524d794e3bb68cf73625493785.json.gz",
+          "uncompressedSHA256": "d81cf85be4c5382cb51d319a4c9921da31beeab33b34f51241159c29eb87b3d2",
+          "rows": 24
+        },
+        {
+          "snapshot": "nukmiris_wp1_778a44c58f924746a020d20e025cbafc.json.gz",
+          "uncompressedSHA256": "7806f6a55c8bd66eede129b1cf37b50a81daa0c9f385aa7fc240af450fed4042",
+          "rows": 26
+        },
+        {
+          "snapshot": "nukmiris_wp1_77b7744363984364a6f8f9d636a02273.json.gz",
+          "uncompressedSHA256": "4194b5f62f493eb1cca3af0cf1c056d830d1a275c6ecb0850d315cbefbf897f8",
+          "rows": 33
+        },
+        {
+          "snapshot": "nukmiris_wp1_7ae81d5737114327b76743add11639d9.json.gz",
+          "uncompressedSHA256": "0c2ddc70a76428c2ee60a229654fda92da206afeab47dbbafcca224a12744b3f",
+          "rows": 37
+        },
+        {
+          "snapshot": "nukmiris_wp1_7aeec8eb63f141c3a1e05f24bfd8c690.json.gz",
+          "uncompressedSHA256": "9b7600fda6d3a43024806bf42280f59f90283323fe85f1d06b175f1a06837d17",
+          "rows": 36
+        },
+        {
+          "snapshot": "nukmiris_wp1_7c89ca1d8438411fb348dd5d94531782.json.gz",
+          "uncompressedSHA256": "3408e1349971d53638f749f3398debad3b88f2ef286b898a5878c88d8b349394",
+          "rows": 24
+        },
+        {
+          "snapshot": "nukmiris_wp1_80a888b4b2db4705b8f07a97eaaf172b.json.gz",
+          "uncompressedSHA256": "1d12382f1468c5564102f56365f542cc3d8b0255f17df5f9ababc9e7d1649a77",
+          "rows": 35
+        },
+        {
+          "snapshot": "nukmiris_wp1_813abc2906ba473791d21a91d944c9dc.json.gz",
+          "uncompressedSHA256": "cb13eb8dbf1888c3c11f51f4d2fdedcd3746c1f1a8958510296ac23e005c5d34",
+          "rows": 18
+        },
+        {
+          "snapshot": "nukmiris_wp1_838e43c6c39d47aab9f3bb835ff66b2d.json.gz",
+          "uncompressedSHA256": "8e5ce3177c9dc22839461600604b031b8caa5b46af85c6b738c444fa018a609c",
+          "rows": 27
+        },
+        {
+          "snapshot": "nukmiris_wp1_83ed83ce8edc4444b91f6c877902e65c.json.gz",
+          "uncompressedSHA256": "e2f1b0338f87720297a28087fbbf42aa8bd042c7a7988b688f7e5e713408df8e",
+          "rows": 27
+        },
+        {
+          "snapshot": "nukmiris_wp1_8589406afa3a4345a73624d8cdf97c6c.json.gz",
+          "uncompressedSHA256": "80a889f9264e9f0baacaab7c2443ac8f2ce0dfcb771672108b287dcfb29e1e70",
+          "rows": 24
+        },
+        {
+          "snapshot": "nukmiris_wp1_8a846b379e194371bbc7bf884d42d636.json.gz",
+          "uncompressedSHA256": "ea8f38be7b256c99e3ba955ea47eb896bd0348dd25d5a05b549a5b5841fe2571",
+          "rows": 12
+        },
+        {
+          "snapshot": "nukmiris_wp1_92e0ebed6042439c9a2b4130b10074d6.json.gz",
+          "uncompressedSHA256": "9877f1ad70193fc4de82c2ce05f3e70f65e8b15a5f37e1a08b83f2394b8c1017",
+          "rows": 43
+        },
+        {
+          "snapshot": "nukmiris_wp1_951f2a7e46874664919a507bbddf4246.json.gz",
+          "uncompressedSHA256": "d6059d2091fd050c73e748c3df44dac73d0024d48533ac7a86ba4993f6d3de51",
+          "rows": 12
+        },
+        {
+          "snapshot": "nukmiris_wp1_a154abe7c13647cea7869501a4de8bb0.json.gz",
+          "uncompressedSHA256": "fb9ca5ec43a5d415a93bda092a283199b2325a982e93f0df878822c58886f8e7",
+          "rows": 20
+        },
+        {
+          "snapshot": "nukmiris_wp1_a5c68572feed4401be4069ba5ca13550.json.gz",
+          "uncompressedSHA256": "fc024bc5e1e4bc9745cb47c7107d4b9cf1ee461687cdcd1e98124f7a711163c6",
+          "rows": 26
+        },
+        {
+          "snapshot": "nukmiris_wp1_a633d701563543d2b98d0a0509fd06c2.json.gz",
+          "uncompressedSHA256": "2ecac1c8592293e58b3a921322358d0e72d01459146e0282e2a8ffaa1e4552ee",
+          "rows": 14
+        },
+        {
+          "snapshot": "nukmiris_wp1_a6c506d48b814edab46eaf2b43f7d786.json.gz",
+          "uncompressedSHA256": "a5cb7168e9a3581e2072c40061f1bf7ead7a3498dc78f567928b984eef7eab0c",
+          "rows": 27
+        },
+        {
+          "snapshot": "nukmiris_wp1_a86def706e074432b4c8a6fb7db03f8a.json.gz",
+          "uncompressedSHA256": "b7f22f349d92bf91957e66fb6f3ddf1c9978a1f83dac28e080cf6501a887343b",
+          "rows": 25
+        },
+        {
+          "snapshot": "nukmiris_wp1_a9cf662c28724a1ab9ba3de93062dc87.json.gz",
+          "uncompressedSHA256": "8c218550065f374fd9f5ddf1364be2dffdd3b214402355ccbd48a943eb5faca1",
+          "rows": 17
+        },
+        {
+          "snapshot": "nukmiris_wp1_af004a576cfd48a3806be066dff7cb2d.json.gz",
+          "uncompressedSHA256": "dfae1b7098ee1be576129e86aa1cfb147d8eed308b0d3e7a2e12c07b642dc7dd",
+          "rows": 42
+        },
+        {
+          "snapshot": "nukmiris_wp1_af66b203395c4b5e8a9d991d55f66fa5.json.gz",
+          "uncompressedSHA256": "e4923a1a90ff76621fa311b665f25461adbe43fed731daca4e76adc5aec67a3c",
+          "rows": 33
+        },
+        {
+          "snapshot": "nukmiris_wp1_b03bb4491c434ee48ef489a4e337e3cd.json.gz",
+          "uncompressedSHA256": "125dde91c4b119bac97de0be9384ee140141087a1bcab7721e7d0ec6d96de491",
+          "rows": 24
+        },
+        {
+          "snapshot": "nukmiris_wp1_b05b97166d574f2daa9d20e2d4cf0861.json.gz",
+          "uncompressedSHA256": "5e7e5de4b3469fa527f13a6ef1bea05164ccd3281b7d05c0197acda37bf9c027",
+          "rows": 24
+        },
+        {
+          "snapshot": "nukmiris_wp1_b1f59ca67637444c9334e52e85f75b9a.json.gz",
+          "uncompressedSHA256": "cee7ef2ae117564093724495962aff8141e8562c4dd9f6d6aa604ac5ecb388ea",
+          "rows": 26
+        },
+        {
+          "snapshot": "nukmiris_wp1_b7863a901aed4d63a0caf374520deff7.json.gz",
+          "uncompressedSHA256": "64eecbc0bd6f41c42bdceabe98cce047baaef76880c6f3fdcc7fff973c8eec4b",
+          "rows": 53
+        },
+        {
+          "snapshot": "nukmiris_wp1_b8d27780d4bf4123a6d26653e2b25313.json.gz",
+          "uncompressedSHA256": "215373d142c77b28258e90062bededa90b4572cbbcc52e673260d819647b9b2c",
+          "rows": 28
+        },
+        {
+          "snapshot": "nukmiris_wp1_baba3937b23e4400ae8898510b27cb43.json.gz",
+          "uncompressedSHA256": "607dc6a8f7c97be2f8b02e6c84d96e4450db583bbe26666b7e6ea70ea4fdb6f8",
+          "rows": 24
+        },
+        {
+          "snapshot": "nukmiris_wp1_be6f0d26c73a482ab15a1b4bf8fe7ced.json.gz",
+          "uncompressedSHA256": "19c725b21bebd29c6a5c3149920dbb3a9efaa556eedf2e742d626be80fdff44b",
+          "rows": 39
+        },
+        {
+          "snapshot": "nukmiris_wp1_c3b5edac312c4778a2fa50f3066ae334.json.gz",
+          "uncompressedSHA256": "8bc88d8bfc67e06f0fdf27a0874df2395d70390ff93a8d1b456128a1ffed3d16",
+          "rows": 26
+        },
+        {
+          "snapshot": "nukmiris_wp1_c49980c78d16450c8766e4daed9ff07a.json.gz",
+          "uncompressedSHA256": "8bacff42d0b27b8dd5653ef4075ae03e7190209b6d795f9a5edb460d49b9d63a",
+          "rows": 27
+        },
+        {
+          "snapshot": "nukmiris_wp1_c67c10dd43884003b662db1cbc519af7.json.gz",
+          "uncompressedSHA256": "985a146a8603f00649b56f440e42304135a180ffe5645ecdf415b3badc96de2a",
+          "rows": 85
+        },
+        {
+          "snapshot": "nukmiris_wp1_c8fb1dbac97849b5acb3daec8583576f.json.gz",
+          "uncompressedSHA256": "a4f889abceee2b5a181b24cec6d1c5dbd784e65223f149027142197e527b047c",
+          "rows": 17
+        },
+        {
+          "snapshot": "nukmiris_wp1_cbba4d0f309d449d8177f2e2937c614a.json.gz",
+          "uncompressedSHA256": "361b7924c0ab71b8875b86dcd9b9267d838b80cf53775479ae2d8b16246bf0b2",
+          "rows": 25
+        },
+        {
+          "snapshot": "nukmiris_wp1_cf7f355bf9fd459cbcd551a9561ecf24.json.gz",
+          "uncompressedSHA256": "95a37e928f7e72fd442b501e19328e7a73f30fb509bc26682c7566836060d6b0",
+          "rows": 75
+        },
+        {
+          "snapshot": "nukmiris_wp1_d06b9aa41a914a1db5d3fd2171a0719a.json.gz",
+          "uncompressedSHA256": "b5fe8c45031b56ac1bfcd3af599cba09f98e1d09d041fe05e59bf9ac25a49ac6",
+          "rows": 15
+        },
+        {
+          "snapshot": "nukmiris_wp1_d53bc6a4837a43b4a92ab9f628c11ae0.json.gz",
+          "uncompressedSHA256": "bb9122bca92ea5c58fcd60894f420241c92b2eb77dcf16994067a5e971d3bf98",
+          "rows": 14
+        },
+        {
+          "snapshot": "nukmiris_wp1_dac443c7ff6f4a37aaa22c91dcb9d790.json.gz",
+          "uncompressedSHA256": "c97edf9d0f48925efa35e36366d753d416e4a6250c5c6cda8e250b34a24d1df3",
+          "rows": 1107
+        },
+        {
+          "snapshot": "nukmiris_wp1_df98b0e846ae42fd90c645130425b689.json.gz",
+          "uncompressedSHA256": "a99abce09a3533b231f7752bce9b6e20e10641905be8721e870172169ad7ffab",
+          "rows": 20
+        },
+        {
+          "snapshot": "nukmiris_wp1_e1db59c796ca40d0978e648c1c5deef9.json.gz",
+          "uncompressedSHA256": "1de8d7bbc8037cc7ef9662f5dea02dbc0bff8b678ce6e0dad15ffcbdc8f2d801",
+          "rows": 17
+        },
+        {
+          "snapshot": "nukmiris_wp1_ea263ecb75924b35b9510186a1cc2ab0.json.gz",
+          "uncompressedSHA256": "fe8a89b508659570ce833a647d1cd9b7f4239b68fe6ea08dcdbd07583041f124",
+          "rows": 12
+        },
+        {
+          "snapshot": "nukmiris_wp1_f47b333e6bc148f7aaeec4648a3181cd.json.gz",
+          "uncompressedSHA256": "0f3ec71514bf33a352e482730a8647b08d4e930715911b32f083b75abcc9c004",
+          "rows": 17
+        },
+        {
+          "snapshot": "nukmiris_wp1_f574ae731634417b82a9b918904c44fd.json.gz",
+          "uncompressedSHA256": "55359e8bc045930cd915bc9c16dc004af8ac0d4247000ec2c8b94a913c7260c4",
+          "rows": 36
+        },
+        {
+          "snapshot": "nukmiris_wp1_f80edb0a147e4aa68325b9a55778dc5e.json.gz",
+          "uncompressedSHA256": "e5517ac8b8d2444ec695a73a8092dffe3e9846ce484abe2f1939ddc9d6ef90c9",
+          "rows": 17
+        },
+        {
+          "snapshot": "nukmiris_wp1_f980d53017004d59abd722403ebb2281.json.gz",
+          "uncompressedSHA256": "c5aa274c5382993c81a54d60895c8ec812c1c73661981a7ffd922ef84eb84552",
+          "rows": 26
+        },
+        {
+          "snapshot": "nukmiris_wp1_fe2ab1bf62114ae48f806e3e61f31aa1.json.gz",
+          "uncompressedSHA256": "6bd2ecd50dd55653b0ec2069b4def5715e078301ebbac1f4c571f6ae702d6381",
+          "rows": 12
+        },
+        {
+          "snapshot": "nukmiris_wp1_ffec97d3b1864f1a865144cbfc48ca0e.json.gz",
+          "uncompressedSHA256": "45b381f794fc1aec41aafd2207163da127d92a4b0b6a0003ad8bcaf285251a7d",
+          "rows": 24
+        }
+      ],
+      "result": "PASS: all archived members are synthetic fixture JSON with expected tables/business/channel/calendar/customer/actor identities; no credential/key fields or credential signatures detected. Zero embedded rawBase64 root bodies were present."
+    }
+  }
+}

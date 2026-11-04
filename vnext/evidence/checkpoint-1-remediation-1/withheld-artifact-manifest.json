@@ -1,0 +1,42 @@
+[
+  {
+    "file": "concurrent-schedules.json.gz",
+    "bytes": 4299,
+    "sha256": "bffcc7a5c31d10373ea9a78c3bb957ab504edb2d75d5e89c76eb943c2285c497"
+  },
+  {
+    "file": "development-logs.tar.gz",
+    "bytes": 30004,
+    "sha256": "bdd7f7f679bee6985e4e9ad1d2393f46a1fbbd946cdc68de37b71c4f0c10dfac"
+  },
+  {
+    "file": "fault-boundary-traces.json.gz",
+    "bytes": 25414,
+    "sha256": "747e5e2b124d6276ca9971647e074c05822684fb527417b4ad51c17938579b35"
+  },
+  {
+    "file": "fault-sql-snapshots.tar.gz",
+    "bytes": 249956,
+    "sha256": "a3e20c4aac2fc98d7035ec3d3e52abf8da6f16ed97506c446d8ea189cbc328ab"
+  },
+  {
+    "file": "full-boundary-traces.json.gz",
+    "bytes": 40511,
+    "sha256": "3ffd9f57006236bd9e355e5e066f5c64207ae19e4476a8f29c5744d713719655"
+  },
+  {
+    "file": "full-sql-snapshots.tar.gz",
+    "bytes": 302503,
+    "sha256": "52e2a2b2f91f02292a48c531670ad04e75d43aa51ed7d372042917b3a370b227"
+  },
+  {
+    "file": "remediation-traces.json.gz",
+    "bytes": 19403,
+    "sha256": "cb584643b6614d5d1aca412b6bd7efafd7dd267d79f8a5e1c0ade2f220ef6455"
+  },
+  {
+    "file": "seeded-schedules.json.gz",
+    "bytes": 14404,
+    "sha256": "462cba4d96ac1dc7ebed500bc78c1737d3826886ad01393c9cc7b982fd099360"
+  }
+]

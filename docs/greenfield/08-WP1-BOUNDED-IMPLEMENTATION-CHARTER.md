@@ -1,6 +1,6 @@
 # WP1 bounded implementation charter — proposed for explicit owner approval
 
-Status: **NOT AUTHORIZED; NOT STARTED**. Ready to review as a synthetic proof package. Approval of this charter does not approve WP2, deployment, provider activation or the commercial MVP. Independent Claude WP0 challenge handoff is 09; no new Claude review has occurred in WP0.
+Status update — **owner approved this WP1 charter on 2026-11-01**: “WP1 charter approved.” Synthetic implementation is authorized within this exact bound. The original planning text below is preserved; its former not-started status is superseded by [the implementation record](10-WP1-IMPLEMENTATION-STATUS.md). WP2, merge, deployment, provider activation and the commercial MVP remain unauthorized. Independent Claude CP1/initial CP2 review is pending.
 
 ## Objective, bound and success demonstration
 

@@ -1,0 +1,28 @@
+{
+  "meaning": "intermediate local findings, not independent Claude review",
+  "findings": [
+    {
+      "area": "fixture startup",
+      "disposition": "temporary init-server/custom socket mismatch; switched to its standard mounted Unix socket and readiness marker"
+    },
+    {
+      "area": "schema-owner grant",
+      "disposition": "missing schema USAGE for the no-login table owner; corrected without adding runtime write privileges"
+    },
+    {
+      "area": "teardown",
+      "disposition": "forced DROP raced closing PG clients; changed to child-first cleanup and bounded non-force DROP"
+    },
+    {
+      "area": "PUBLIC privilege assertion",
+      "disposition": "string ACL matching incorrectly counted named-role grants; replaced with aclexplode(grantee=0)"
+    },
+    {
+      "area": "type checking",
+      "disposition": "unused imports and explicit JSON evidence typing corrected before final frozen runs"
+    }
+  ],
+  "finalFull": "64/64",
+  "finalFault": "54/54",
+  "baselineChanged": false
+}
