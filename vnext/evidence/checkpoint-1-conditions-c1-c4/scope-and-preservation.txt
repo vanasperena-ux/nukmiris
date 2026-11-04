@@ -1,0 +1,13 @@
+$ git diff --exit-code 1ca19248f0f26b47a7ed8013d79e75d387f508b3 -- backend static config package.json package-lock.json vnext/evidence/checkpoint-1 vnext/evidence/checkpoint-1-remediation-1 docs/greenfield/reviews/01-CLAUDE-WP1-CP1-CP2-REVIEW.md docs/greenfield/reviews/01-CLAUDE-WP1-CP1-CP2-REPRO-SCRIPTS.md
+exit=0
+(empty)
+$ git diff --check
+exit=0
+(empty)
+$ git -C /workspace/nukmiris status --short --branch
+exit=0
+## work
+
+PASS: all 39 frozen source file hashes unchanged after full/fault runs.
+PASS: C2 OPS01 nine cases and 009/011/017 gate text retained verbatim.
+PASS: follow-up document links and evidence links resolve.

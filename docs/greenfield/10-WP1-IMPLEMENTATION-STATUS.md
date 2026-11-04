@@ -1,3 +1,12 @@
+> Latest: Claude completed the independent remediation review on 2026-11-03 with
+> **GO WITH CONDITIONS C1–C4** ([review](https://github.com/vanasperena-ux/nukmiris/pull/4#issuecomment-6619904951)).
+> C1/NEW-1 output validation and C4/recovery-case protection are implemented at
+> `991ca8141ffef3471a955c450e9f789dd8aef1a7` with 98/98 full and 88/88 fault passes;
+> [follow-up dispositions](reviews/04-CODEX-WP1-C1-C4-REMEDIATION.md).
+> C2/C3 preserve activation gates and define future WP2 requirements.
+> **CP1/initial CP2 remain OPEN pending independent C1 verification and formal closure.**
+> No WP2 implementation, provider access, GCP or merge is authorized by this status.
+
 > 2026-11-01 update: Claude completed independent CP1/initial CP2 review with
 > **GO WITH SPECIFIED REVISIONS**. Bounded remediation and all 17 dispositions are
 > in [review 02](reviews/02-CODEX-WP1-REMEDIATION-AND-DISPOSITIONS.md), with new

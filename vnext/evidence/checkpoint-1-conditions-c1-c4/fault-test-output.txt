@@ -1,0 +1,115 @@
+
+> nukmiris-wp1-synthetic-core@0.0.0 test:fault
+> npm run build && node scripts/run-tests.mjs fault
+
+
+> nukmiris-wp1-synthetic-core@0.0.0 build
+> tsc -p tsconfig.json
+
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.1
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.1
+npm notice To update run: npm install -g npm@12.2.1
+npm notice
+WP1 evidence run: /workspace/work/nukmiris-wp1/vnext/evidence/runs/2026-11-04T01-44-16.696Z-fault
+✔ R-CONCURRENT: 256 seeded overlapping PostgreSQL STOP/suspension/submission schedules preserve linearized gates (1617.134414ms)
+✔ R010-RACE: submission committed before abandonment preserves the unresolved hold (297.625237ms)
+✔ R007-RACE: a held input cannot execute through a preparation that waited on its conversation lock (148.924679ms)
+✔ F11/14/15 DB06: duplicate loops, lost response and later owner never issue a second HTTP invocation (382.341635ms)
+✔ F17: unknown entry COMMIT result returns no invocation permit and cannot be rearmed (214.323409ms)
+✔ F18 DB05: finalizer appointment failure rolls back every operational update and repeats only local finalization (310.034684ms)
+✔ F18 DB05: finalizer protection failure rolls back every operational update and repeats only local finalization (200.377451ms)
+✔ F18 DB05: finalizer output failure rolls back every operational update and repeats only local finalization (196.710986ms)
+✔ F18 DB05: finalizer guard failure rolls back every operational update and repeats only local finalization (303.983003ms)
+✔ F16: result archive failure keeps protection; a read-only proof finalizes after repair without re-sending (173.707326ms)
+✔ F19: late result cannot release a newer appointment mutation guard (211.528802ms)
+✔ F20/21: exact sealed receipt before HTTP timeout wins; late failure cannot downgrade delivered/read (441.375663ms)
+✔ F22: an uncertain output head never expires into unsent and blocks later output while STOP still works (288.477877ms)
+✔ F15 conservative fallback: socket-timeout has one invocation, remains unknown and never automatically retries (159.864449ms)
+✔ F15 conservative fallback: 429 has one invocation, remains unknown and never automatically retries (161.092363ms)
+✔ F15 conservative fallback: 500 has one invocation, remains unknown and never automatically retries (269.048442ms)
+✔ F15 conservative fallback: 409 has one invocation, remains unknown and never automatically retries (160.901761ms)
+✔ F15 conservative fallback: 412 has one invocation, remains unknown and never automatically retries (265.68101ms)
+✔ F30: a mismatched remote proof cannot finalize or free a protected operation (281.51143ms)
+✔ F27 synthetic eligibility: before due (257.738303ms)
+✔ F27 synthetic eligibility: at due (256.351836ms)
+✔ F27 synthetic eligibility: after deadline (266.880691ms)
+✔ F27 transport budget must fit strictly before appointment start even when the local deadline has not elapsed (161.421707ms)
+✔ F01 SEC01/02: exact bytes, WABA and receiving number authenticate before any write (111.747706ms)
+✔ F02: duplicate/repacked batch has one stable input; any original event change conflicts (181.451586ms)
+✔ F03–06 DB01: A1.afterPrepare retains original identity and safe eligibility across retry (137.749962ms)
+✔ F03–06 DB01: A2.beforeCommit retains original identity and safe eligibility across retry (141.600361ms)
+✔ F03–06 DB01: A2.afterCommit retains original identity and safe eligibility across retry (136.277427ms)
+✔ F03–06 DB01: A3.afterSeal retains original identity and safe eligibility across retry (136.933308ms)
+✔ F03–06 DB01: A4.beforeCommit retains original identity and safe eligibility across retry (144.602473ms)
+✔ F03–06 DB01: A4.afterCommit retains original identity and safe eligibility across retry (142.630121ms)
+✔ F03–06 DB01: A5.beforeAck retains original identity and safe eligibility across retry (135.712925ms)
+✔ DB01: staged unsealed input cannot prepare an operation, including a direct guarded-function call (128.782579ms)
+✔ F07: STOP suppresses immediately even when the conflicting batch cannot be acknowledged (134.282256ms)
+✔ F03/F08: archive.beforePut cannot acknowledge or expose executable SQL (130.732228ms)
+✔ F03/F08: archive.afterObject cannot acknowledge or expose executable SQL (118.607528ms)
+✔ F03/F08: archive.afterHead cannot acknowledge or expose executable SQL (87.374043ms)
+✔ F03/F08: archive.afterWitness cannot acknowledge or expose executable SQL (119.059016ms)
+✔ F07/F23 DB07: unknown sender STOP persists a real head even with archive unavailable (119.106046ms)
+✔ F12/23: STOP during slow preflight defeats the last send admission (403.059508ms)
+✔ DB07: READ COMMITTED final admission observes the withdrawal revision after a real row-lock wait (343.735385ms)
+✔ F25: duplicate old grant, same-time tie, stale revision and future evidence cannot revive withdrawal (191.551916ms)
+✔ DB08/F12/F27: suspension blocks queued calendar and message admissions; reactivation never replays stale work (718.002529ms)
+✔ P0 safety boundary: reminder STOP does not cancel appointments or prevent ordinary customer-request execution (226.972204ms)
+✔ F04/F06 process crash after staged SQL retains the original archived input through restart (253.419919ms)
+✔ F11 before-arm freeze: later arm wins once and the stale resumed process cannot submit (286.888755ms)
+✔ F11 armed-process death never transfers possible dispatch authority to a restart (364.272499ms)
+✔ F13 residual counterexample: a frozen process admitted BEFORE suspension can physically invoke later; no successor can (397.781665ms)
+✔ F14/16 process death after actual fake-provider acceptance reconciles read-only without another invocation (375.468715ms)
+✔ R002: sealed batch rejects extension, wrong manifest/count, missing/extra membership and NULL item fields (257.983062ms)
+✔ R003/R012: NULL, infinities and wrong caller clocks never authorize submission or future grants (192.571638ms)
+✔ R006: operation envelope and digests must match the protected authoritative plan and input (1518.573673ms)
+✔ R004/R006: output row purpose, payload and complete context defeat false CUSTOMER_REQUEST after STOP (998.089881ms)
+✔ R007: earlier STAGED command blocks later conversation execution (181.118043ms)
+✔ R007: earlier PREPARED command blocks later conversation execution (310.581698ms)
+✔ R007: earlier SUBMISSION_ENTERED command blocks later conversation execution (313.579091ms)
+✔ R007: earlier UNKNOWN command blocks later conversation execution (328.645113ms)
+✔ R008: post-snapshot suspension and lost archive restore SUSPENDED with dispatch disabled (301.51038ms)
+✔ R005: signed mixed-tenant STOP partitions durably, a failing tenant never rolls it back and ACK waits for all (178.873874ms)
+✔ R010: sealed abandonment of never-entered PREPARED releases slot and head without rearming old work (339.349776ms)
+✔ R010: sealed abandonment of never-entered ARMED releases slot and head without rearming old work (371.755312ms)
+✔ R010: UNKNOWN/entered cannot be abandoned; rollback cannot release any protection (274.814492ms)
+✔ R007/R010: sealed input hold resolves a poison head and permanently denies future operation preparation (314.234345ms)
+✔ R009/R014/R015: forged digest, crossed privileges, conflicting status replay and direct evidence DML are refused (212.099657ms)
+✔ R003/R012/SEC: every exposed mutating SQL argument rejects NULL before any state change (526.309589ms)
+✔ R010: abandoning an unsubmitted MOVE restores source protection exactly and retains source identity (356.750471ms)
+✔ R005: archive outage after mixed-business STOPs leaves both SQL withdrawals durable (102.649698ms)
+✔ R015: all eight evidence tables reject owner payload UPDATE and DELETE even with valid RLS scope (328.829427ms)
+✔ R009: SQL/TypeScript canonical digests agree for nested Unicode, escapes, arrays and safe integers (94.598806ms)
+✔ R010-ATOMIC: an abandonment transaction failure restores attempt, appointment, guard, protection and audit together (169.819789ms)
+✔ F09/24/28 REC01: destructive SQL loss preserves original IDs as inert recovery evidence and never revives consent (518.78285ms)
+✔ F08/26/29: prefix evidence loss restores inertly with global uncertainty (381.804798ms)
+✔ F08/26/29: tail evidence loss restores inertly with global uncertainty (271.965392ms)
+✔ F08/26/29: head evidence loss restores inertly with global uncertainty (368.590348ms)
+✔ F08/26/29: witness evidence loss restores inertly with global uncertainty (270.866111ms)
+✔ F08/26/29: key evidence loss restores inertly with global uncertainty (368.786625ms)
+✔ F08/26/29: format evidence loss restores inertly with global uncertainty (274.378362ms)
+✔ F26: retained old key version remains readable; absent snapshot format refuses restore before writes (202.395077ms)
+✔ C1 NEW-1: invalid/missing/NULL output purpose or output identity is denied before any reservation (593.153902ms)
+✔ C1 NEW-1: an existing finalized output ID cannot create new reservations or an attempt (248.34613ms)
+✔ C1 NEW-1: pending and abandoned operation plans retain exclusive output IDs, with exact replay allowed (215.036868ms)
+✔ C1 NEW-1: valid CUSTOMER_REQUEST finalizes once after an output-free preparation (286.315114ms)
+✔ C1 NEW-1: valid REMINDER finalizes once after an output-free preparation (192.702766ms)
+✔ C1 NEW-1: all plan-sourced final output values are validated by preparation (245.342512ms)
+✔ C1 NEW-1: actual output-table constraint changes fail preparation, not post-provider finalization (244.980154ms)
+✔ C1 NEW-1: simultaneous different-conversation plans cannot both reserve the same future output ID (226.35385ms)
+✔ C4 NEW-4: recovery_case payload UPDATE/DELETE denied under actual owner with valid RLS, INSERT retained (114.710692ms)
+✔ C4 NEW-4: owner remains NOLOGIN but can change lifecycle state and disable its triggers (209.924727ms)
+ℹ tests 88
+ℹ suites 0
+ℹ pass 88
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 26280.159724
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.1
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.1
+npm notice To update run: npm install -g npm@12.2.1
+npm notice

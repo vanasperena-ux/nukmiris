@@ -1,3 +1,9 @@
+> Follow-up: Claude independently verified this source with conditions C1–C4;
+> [review comment](https://github.com/vanasperena-ux/nukmiris/pull/4#issuecomment-6619904951).
+> The historical results below remain scoped to the original remediation. The owner
+> permission wording is corrected: owners can disable triggers without superuser.
+> CP1/initial CP2 remain open pending independent C1 re-verification.
+
 # WP1 remediation and dispositions for independent re-review
 
 Execution record: 2026-11-01; publication follow-up: 2026-11-03,
@@ -35,7 +41,7 @@ All IDs below have prefix **CR-WP1-**. None is disputed.
 | 012 | Corrected and verified | NULL/nonfinite grant times reject; DB authority and skew bound deny forged future “now”; grant time/revocation ordering remains enforced. R003/R012 and argument matrix. |
 | 013 | Capability disabled pending safe implementation | Real transport disabled until enforced overall budget/abort, stalled-upstream test, UNKNOWN/no-retry behavior and OPS01 verification pass. Fixture's 3 s idle timeout is not the envelope's 2 s overall deadline. |
 | 014 | Corrected and verified | status_event stores status value; replay with same id/digest and different value raises status_conflict. R014. |
-| 015 | Corrected and verified | Eight evidence tables reject payload UPDATE/DELETE through append-only triggers; input/output retain deliberate state transitions. Actual table-owner attempts with valid RLS scope denied, not just runtime ACL denial. R015. Superuser/DDL compromise remains outside this claim. |
+| 015 | Corrected and verified | Eight evidence tables reject payload UPDATE/DELETE through append-only triggers; input/output retain deliberate state transitions. Actual table-owner attempts with valid RLS scope denied, not just runtime ACL denial. R015. This is payload DML protection with triggers enabled: the table owner can change permitted state fields and disable triggers/perform DDL **without superuser**. Keep ownership NOLOGIN and migration-only. C4 adds recovery_case; see follow-up 04. |
 | 016 | Capability disabled pending safe implementation | Only synthetic receipt shape enabled. Real Meta statuses/callback correlation requires current documented contract plus sandbox fixtures and signed correlation tests before WP2 webhook work. Acceptance and delivery semantics specified below. |
 | 017 | Accepted with explicit later implementation gate | Fixture full-chain decryption/cap retained. Indexed, independently witnessed archive design and scale/recovery benchmarks required before WP2 archive-dependent expansion. No production performance claim. |
 
