@@ -13,7 +13,17 @@ export function commandPort(s){
 }
 async function record(file){try{const st=await fs.lstat(file);if(st.isSymbolicLink()||!st.isFile())throw Error('unsafe_lock_path');return JSON.parse(await fs.readFile(file,'utf8'));}catch(e){if(e.code==='ENOENT')return null;throw new CommandLockError('CLI_LOCK_RECOVERY_REQUIRED','Legacy or damaged .command.lock: stop candidate CLI commands, then run demo:unlock -- --confirm <instance-id> using the exact instance ID shown in state/health. No automatic deletion was attempted.');}}
 function valid(m,s){return m&&m.format===1&&m.instance===s.id&&Number.isInteger(m.pid)&&m.pid>0&&typeof m.startedAt==='string'&&Number.isFinite(Date.parse(m.startedAt))&&typeof m.owner==='string'&&m.port===commandPort(s);}
-async function publish(file,m){const temp=file+'.'+m.owner+'.tmp';try{await fs.writeFile(temp,JSON.stringify(m)+'\n',{flag:'wx',mode:0o600});const h=await fs.open(temp,'r');try{await h.sync();}finally{await h.close();}await fs.rename(temp,file);}finally{await fs.unlink(temp).catch(()=>{});}}
+/** Windows FlushFileBuffers needs a writable handle. Flush the exclusive creator
+ * before close/rename; never reopen read-only or suppress a failed flush. This is
+ * diagnostic CLI metadata, not archive custody or a dispatch permit. */
+export async function publishCommandMetadata(file,m,io=fs){
+ const temp=file+'.'+m.owner+'.tmp';let created=false;
+ try{
+  const h=await io.open(temp,'wx',0o600);created=true;
+  try{await h.writeFile(JSON.stringify(m)+'\n');await h.sync();}finally{await h.close();}
+  await io.rename(temp,file);
+ }finally{if(created)await io.unlink(temp).catch(()=>{});}
+}
 export async function locked(s,work){
  const file=path.join(s.directory,'.command.lock'),guard=net.createServer(socket=>socket.destroy());
  try{await new Promise((resolve,reject)=>{guard.once('error',reject);guard.listen({host:'127.0.0.1',port:commandPort(s),exclusive:true},resolve);});}
@@ -25,7 +35,7 @@ export async function locked(s,work){
   metadata={format:1,pid:process.pid,instance:s.id,startedAt:new Date().toISOString(),owner:randomUUID(),port:commandPort(s)};
   // Binding the same OS guard proves a compliant previous owner has exited or
   // released it, even if a reboot reused its PID. No elapsed-time inference.
-  await publish(file,metadata);return await work({recovered:old!==null,previousPid:old?.pid});
+  await publishCommandMetadata(file,metadata);return await work({recovered:old!==null,previousPid:old?.pid});
  }finally{
   if(metadata){try{const current=await record(file);if(current?.owner===metadata.owner)await fs.unlink(file);}catch{}}
   await new Promise(r=>guard.close(r));
