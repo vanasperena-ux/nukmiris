@@ -15,7 +15,7 @@ import {armAttempt,dispatchOnce} from '../dist/src/application/dispatch-once.js'
 import {recordResult} from '../dist/src/application/record-result.js';
 import {FakeProviderServer,FakeProviderClient} from '../dist/test/support/fake-provider.js';
 export async function smoke(s){
- await startDatabase(s);const database=s.database+'_test_'+randomBytes(4).toString('hex'),directory=await fs.mkdtemp(path.join(os.tmpdir(),'nukmiris-wp1-tcp-smoke-'));const roles=[];let archive,witness,server;
+ const measured=await startDatabase(s);const database=s.database+'_test_'+randomBytes(4).toString('hex'),directory=await fs.mkdtemp(path.join(os.tmpdir(),'nukmiris-wp1-tcp-smoke-'));const roles=[];let archive,witness,server;
  const role=name=>{const r=new UnitOfWork(connection(s,'wp1_'+name,database));roles.push(r);return r;};
  try{
   const {routes,ids}=await initializeDatabase(s,database,true),b='synthetic-a',seed=ids[b],clock={now:()=>new Date()},secret=randomBytes(32);
@@ -35,7 +35,7 @@ export async function smoke(s){
   const rows=await reducer.tx(b,async db=>(await db.query('SELECT state,count(*)::int n FROM core.appointment WHERE business_id=$1 GROUP BY state',[b])).rows);
   if(rows.find(x=>x.state==='ACTIVE')?.n!==1||rows.find(x=>x.state==='CANCELLED')?.n!==1||(await server.calls()).length!==2)throw Error('smoke_effect_count');
   const zone=await reducer.tx(b,async db=>(await db.query('SHOW TimeZone')).rows[0].TimeZone);if(zone!=='UTC')throw Error('smoke_utc_required');
-  return {result:'PASS',tcp:true,timezone:zone,postgres:'17.11',c1Supersession:true,activeBookings:1,supersededNeverEntered:1,fakeProviderCalls:2,persistentDemoDatabaseMutated:false,nativeWindows:process.platform==='win32'?'EXECUTED':'NOT RUN'};
+  return {result:'PASS',tcp:true,timezone:zone,postgres:measured.v,c1Supersession:true,activeBookings:1,supersededNeverEntered:1,fakeProviderCalls:2,persistentDemoDatabaseMutated:false,nativeWindows:process.platform==='win32'?'EXECUTED':'NOT RUN'};
  }finally{
   await server?.close();await Promise.all(roles.map(r=>r.close()));try{archive?.close();}catch{}witness?.close();
   const admin=new pg.Client({...connection(s),database:'postgres'});try{await admin.connect();await admin.query('DROP DATABASE IF EXISTS '+pg.escapeIdentifier(database));}finally{await admin.end();await fs.rm(directory,{recursive:true,force:true});}

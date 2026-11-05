@@ -12,7 +12,7 @@ export class UnitOfWork {
     // No DATABASE_URL/.env/provider fallback. Only the explicitly named local fixture.
     if (!(config.database.startsWith('nukmiris_wp1_')||/^nukmiris_vnext_[a-f0-9]{32}(?:_test_[a-f0-9]{8})?$/.test(config.database)) || !config.user.startsWith('wp1_') ||
       !(config.host.startsWith('/tmp/nukmiris-wp1-') || (config.host==='127.0.0.1'&&Number.isInteger(config.port)&&config.port!>=1024&&config.port!<=65535&&typeof config.password==='string'&&config.password.length>0))) throw new Error('synthetic_database_only');
-    this.pool=new pg.Pool({...config,max:8,connectionTimeoutMillis:5000,statement_timeout:10000,options:'-c timezone=UTC'});
+    this.pool=new pg.Pool({...config,max:8,connectionTimeoutMillis:5000,statement_timeout:10000,options:'-c timezone=UTC',ssl:false});
   }
   async tx<T>(business: string,body: (db: pg.PoolClient)=>Promise<T>,point='',faults: Faults=noFaults): Promise<T> {
     const db=await this.pool.connect();

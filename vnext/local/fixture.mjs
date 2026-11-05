@@ -1,39 +1,24 @@
 // Local synthetic composition boundary. Never accepts a database URL/provider mode.
-import {execFile} from 'node:child_process';
-import {promisify} from 'node:util';
 import {randomBytes,randomUUID,createHash} from 'node:crypto';
 import {promises as fs} from 'node:fs';
 import path from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {setTimeout as wait} from 'node:timers/promises';
 import pg from 'pg';
-import net from 'node:net';
-const exec=promisify(execFile);
-export const IMAGE='postgres@sha256:839fbb5a4942a7758dd93e18b42ea5649807491a0545b5eeeb8f0b8bb11857a5';
+import {freeLoopbackPort,commandPort} from './command-lock.mjs';
+import {IMAGE,docker,protect,assertPrivate,ensurePinnedImage} from './platform.mjs';
+export {IMAGE,docker,protect,assertPrivate};
 export const ROOT=path.resolve(fileURLToPath(new URL('..',import.meta.url)));
 export const ROLES=['ingress','sealer','reducer','dispatch','result','operator','recovery','tenant_a','tenant_b'];
 const label='nukmiris.vnext.instance';
-export async function docker(args,options={}){
- const env={...process.env};for(const k of ['DOCKER_HOST','DOCKER_CONTEXT','DOCKER_TLS','DOCKER_TLS_VERIFY','DOCKER_CERT_PATH'])delete env[k];
- if(!['linux','win32'].includes(process.platform))throw Error('local_docker_platform_unsupported');
- const endpoint=process.platform==='win32'?'npipe:////./pipe/docker_engine':'unix:///var/run/docker.sock';
- try{return await exec(process.platform==='win32'?'docker.exe':'docker',['--host='+endpoint,...args],{env,maxBuffer:64*1024*1024,timeout:30000,...options});}
- catch{throw Error('local_docker_'+args[0]+'_failed');} // execFile errors include argv; never expose fixture passwords.
-}
-export async function protect(directory){
- if(process.platform==='win32'){
-  const {stdout}=await exec('whoami.exe',['/user','/fo','csv','/nh']);const sid=stdout.match(/S-1-5-(?:\d+-)*\d+/)?.[0];if(!sid)throw Error('windows_user_sid_missing');
-  await exec('icacls.exe',[directory,'/inheritance:r','/grant:r',sid+':(OI)(CI)F']);
- }else await fs.chmod(directory,0o700);
-}
-export async function privateJson(file,value){await fs.writeFile(file,JSON.stringify(value,null,2)+'\n',{mode:0o600,flag:'wx'});}
+export async function privateJson(file,value){const h=await fs.open(file,'wx',0o600);let complete=false;try{await h.writeFile(JSON.stringify(value,null,2)+'\n');await h.sync();complete=true;}finally{await h.close();if(!complete)await fs.unlink(file).catch(()=>{});}}
 export async function readState(directory){
  const resolved=path.resolve(directory),st=await fs.lstat(resolved);if(st.isSymbolicLink()||!st.isDirectory())throw Error('local_state_directory_denied');
  const file=path.join(resolved,'state.json');if((await fs.lstat(file)).isSymbolicLink())throw Error('local_state_symlink_denied');
  const s=JSON.parse(await fs.readFile(file,'utf8'));
  if(s.format!==1||s.mode!=='SYNTHETIC_INERT'||s.directory!==resolved||!/^([a-f0-9]{32})$/.test(s.id)||s.database!=='nukmiris_vnext_'+s.id||s.container!=='nukmiris-vnext-'+s.id||s.network!==s.container||s.volume!==s.container+'-data'||s.host!=='127.0.0.1'||!Number.isInteger(s.port)||s.port<1024||s.port>65535)throw Error('local_state_invalid');
  if(!/^[a-f0-9]{64}$/.test(s.adminPassword??'')||!/^[a-f0-9]{64}$/.test(s.controlToken??'')||ROLES.some(r=>!/^[a-f0-9]{64}$/.test(s.passwords?.['wp1_'+r]??'')))throw Error('local_credentials_missing_or_invalid');
- return s;
+ commandPort(s);return s;
 }
 export async function owned(s,kind='container'){
  const name=kind==='container'?s.container:kind==='network'?s.network:s.volume;
@@ -45,7 +30,7 @@ export function connection(s,user='postgres',database=s.database){
  if(s.host!=='127.0.0.1'||!/^nukmiris_vnext_[a-f0-9]{32}(?:_test_[a-f0-9]{8})?$/.test(database))throw Error('local_connection_denied');
  if(user!=='postgres'&&!ROLES.some(r=>user==='wp1_'+r))throw Error('local_role_denied');
  if(typeof (user==='postgres'?s.adminPassword:s.passwords?.[user])!=='string'||!(user==='postgres'?s.adminPassword:s.passwords[user]))throw Error('local_credentials_required');
- return {host:s.host,port:s.port,database,user,password:user==='postgres'?s.adminPassword:s.passwords[user],options:'-c timezone=UTC',connectionTimeoutMillis:3000};
+ return {host:s.host,port:s.port,database,user,password:user==='postgres'?s.adminPassword:s.passwords[user],options:'-c timezone=UTC',ssl:false,connectionTimeoutMillis:3000};
 }
 export async function ready(s){
  const deadline=performance.now()+25000;let last;
@@ -72,22 +57,28 @@ export async function initializeDatabase(s,database=s.database,active=false){
   return {routes,ids};
  }finally{await db.end();}
 }
-export async function provision(directory,{port=55432,reuseRoot=false}={}){
+export async function provision(directory,{port=55432,reuseRoot=false}={},dependencies={}){
+ const command=dependencies.command??docker,protectDirectory=dependencies.protect??protect;
  const resolved=path.resolve(directory);if(!Number.isInteger(port)||port<0||port>65535||(port!==0&&port<1024)||/[\n\r,]/.test(resolved)||!(path.basename(resolved)==='.local-demo'||path.basename(resolved).startsWith('nukmiris-vnext-')))throw Error('local_fixture_target_denied');
- if(!reuseRoot)await fs.mkdir(resolved,{mode:0o700});else if((await fs.lstat(resolved)).isSymbolicLink()||(await fs.readdir(resolved)).includes('state.json'))throw Error('reset_root_denied');await protect(resolved);
- if(port===0){const probe=net.createServer();await new Promise((r,j)=>{probe.once('error',j);probe.listen(0,'127.0.0.1',r);});port=probe.address().port;await new Promise(r=>probe.close(r));} // Bind races fail explicitly; no fallback/identity change.
  const id=randomUUID().replaceAll('-',''),container='nukmiris-vnext-'+id;
  const s={format:1,mode:'SYNTHETIC_INERT',directory:resolved,id,container,network:container,volume:container+'-data',database:'nukmiris_vnext_'+id,host:'127.0.0.1',port,adminPassword:randomBytes(32).toString('hex'),passwords:Object.fromEntries(ROLES.map(r=>['wp1_'+r,randomBytes(32).toString('hex')])),controlToken:randomBytes(32).toString('hex')};
- let network=false,volume=false,created=false;
+ let network=false,volume=false,created=false,rootCreated=false,stateWritten=false;
  try{
-  const info=await docker(['info','--format','{{.OSType}}']);if(info.stdout.trim()!=='linux')throw Error('docker_linux_containers_required');
+ if(!reuseRoot){await fs.mkdir(resolved,{mode:0o700});rootCreated=true;}else if((await fs.lstat(resolved)).isSymbolicLink()||(await fs.readdir(resolved)).includes('state.json'))throw Error('reset_root_denied');
+ if(port===0)port=await freeLoopbackPort(); // Bind races fail explicitly; no fallback/identity change.
+
+  await protectDirectory(resolved);
+  if(port===0)throw Error('local_fixture_port_unresolved');
+  s.port=port;s.commandPort=await freeLoopbackPort();if([s.port,3000,3077].includes(s.commandPort))throw Error('command_guard_port_collision');
+  const info=await command(['info','--format','{{.OSType}}']);if(info.stdout.trim()!=='linux')throw Error('docker_linux_containers_required');
+  console.error('Pulling/verifying pinned PostgreSQL image (first download budget: 10 minutes).');await ensurePinnedImage(command);
   const labels=['--label',label+'='+id,'--label','nukmiris.vnext.scope=synthetic'];
-  await docker(['network','create',...labels,s.network]);network=true;await docker(['volume','create',...labels,s.volume]);volume=true;
-  await docker(['create','--name',container,...labels,'--network',s.network,'--publish',`127.0.0.1:${port||''}:5432`,'--mount',`type=volume,src=${s.volume},dst=/var/lib/postgresql/data`,
-   '-e','POSTGRES_PASSWORD='+s.adminPassword,'-e','POSTGRES_HOST_AUTH_METHOD=scram-sha-256','-e','POSTGRES_INITDB_ARGS=--auth-host=scram-sha-256',IMAGE,'-c','timezone=UTC','-c','fsync=on','-c','synchronous_commit=on']);created=true;await docker(['start',s.container]);
+  await command(['network','create',...labels,s.network]);network=true;await command(['volume','create',...labels,s.volume]);volume=true;
+  await command(['create','--name',container,...labels,'--network',s.network,'--publish',`127.0.0.1:${port||''}:5432`,'--mount',`type=volume,src=${s.volume},dst=/var/lib/postgresql/data`,
+   '-e','POSTGRES_PASSWORD='+s.adminPassword,'-e','POSTGRES_HOST_AUTH_METHOD=scram-sha-256','-e','POSTGRES_INITDB_ARGS=--auth-host=scram-sha-256',IMAGE,'-c','timezone=UTC','-c','fsync=on','-c','synchronous_commit=on']);created=true;await command(['start',s.container]);
   const inspected=await owned(s),binding=inspected.NetworkSettings.Ports['5432/tcp'];if(!binding||binding.length!==1||binding[0].HostIp!=='127.0.0.1')throw Error('local_port_binding_denied:'+JSON.stringify({state:inspected.State.Status,ports:inspected.NetworkSettings.Ports,requested:inspected.HostConfig.PortBindings}));s.port=Number(binding[0].HostPort);
-  await ready(s);s.seed=await initializeDatabase(s);await privateJson(path.join(resolved,'state.json'),s);return s;
- }catch(e){if(created)await docker(['rm','--force',s.container]).catch(()=>{});if(volume)await docker(['volume','rm',s.volume]).catch(()=>{});if(network)await docker(['network','rm',s.network]).catch(()=>{});throw e;}
+  const observed=await ready(s);s.observed={serverVersion:observed.v,timeZone:observed.z};s.seed=await initializeDatabase(s);await privateJson(path.join(resolved,'state.json'),s);stateWritten=true;await assertPrivate(path.join(resolved,'state.json'));return s;
+ }catch(e){if(stateWritten)await fs.unlink(path.join(resolved,'state.json')).catch(()=>{});if(created)await command(['rm','--force',s.container]).catch(()=>{});if(volume)await command(['volume','rm',s.volume]).catch(()=>{});if(network)await command(['network','rm',s.network]).catch(()=>{});if(rootCreated)await fs.rmdir(resolved).catch(()=>{});throw e;}
 }
 export async function startDatabase(s){await owned(s);await docker(['start',s.container]);return ready(s);}
 export async function stopDatabase(s){await owned(s);await docker(['stop','--time','10',s.container]);}

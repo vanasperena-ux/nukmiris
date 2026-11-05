@@ -27,5 +27,5 @@ export async function reset(s,confirmation){
  // Keep previous diagnostics/backups private and use a new directory/identity.
  const fresh=await provision(s.directory,{port:s.port,reuseRoot:true});return {reset:true,previousInstance:s.id,instance:fresh.id,database:fresh.database,backupsRetained:true,mode:fresh.mode};
 }
-export async function locked(directory,work){const lock=path.join(directory,'.command.lock');const handle=await fs.open(lock,'wx',0o600);try{return await work();}finally{await handle.close();await fs.unlink(lock);}}
+export {locked,recoverLegacyLock} from './command-lock.mjs';
 export {readState,provision,owned};

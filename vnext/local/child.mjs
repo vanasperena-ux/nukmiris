@@ -1,7 +1,8 @@
 import {fork} from 'node:child_process';
 import {setTimeout as wait} from 'node:timers/promises';
-export function childProcess(file,config,{detached=false,stdio=['ignore','pipe','pipe','ipc']}={}){
- const child=fork(file,[],{detached,stdio}),messages=[],listeners=new Set();let exited=false,stderr='';
+export function childOptions({detached=false,stdio=['ignore','pipe','pipe','ipc']}={}){return {detached,stdio,windowsHide:true};}
+export function childProcess(file,config,options={}){
+ const child=fork(file,[],childOptions(options)),messages=[],listeners=new Set();let exited=false,stderr='';
  child.stderr?.on('data',x=>{stderr=(stderr+String(x)).slice(-2000);});
  child.on('message',m=>{messages.push(m);for(const f of listeners)f();});
  const closed=new Promise(resolve=>{child.once('exit',(code,signal)=>{exited=true;for(const f of listeners)f();resolve({code,signal});});});
