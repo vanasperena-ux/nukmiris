@@ -9,5 +9,5 @@ for(const file of files){
  if(forbidden.test(source)||(/from\s+['"]node:(?:fs|sqlite)/.test(source)&&!storageAllowed.has(file.replaceAll('\\','/'))))throw new Error('Effect/import confinement violation: '+file);
 }
 const pkg=JSON.parse(await fs.readFile('package.json','utf8'));
-if(Object.keys(pkg.dependencies).join(',')!=='pg'||pkg.scripts.start)throw new Error('Unexpected dependency/start command');
-console.log('PASS: no HTTP/provider/env/child-process client; fs/sqlite confined to two archive adapter files; only pg, no application start command');
+if(Object.keys(pkg.dependencies).sort().join(',')!=='luxon,pg'||pkg.dependencies.luxon!=='3.7.2'||pkg.scripts.start)throw new Error('Unexpected dependency/start command');
+console.log('PASS: no HTTP/provider/env/child-process client; fs/sqlite confined to two archive adapter files; only pg and pinned Luxon, no application start command');

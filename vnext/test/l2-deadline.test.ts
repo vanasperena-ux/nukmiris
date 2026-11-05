@@ -1,0 +1,41 @@
+import {test} from 'node:test';
+import assert from 'node:assert/strict';
+import {randomUUID} from 'node:crypto';
+import {fixture,plan,arm,admission,raw,provider,cut,apply,confirm} from './support/helpers.js';
+import {worker} from './support/process-driver.js';
+import {text} from '../src/domain/protocol.js';
+import {recoverExpired,RecoveryWorker} from '../src/application/recover-expired.js';
+import {dispatchOnce} from '../src/application/dispatch-once.js';
+const b='synthetic-a';
+for(const point of ['worker.beforeArm','dispatch.beforeGate'])test('R1 dead dispatcher at '+point+' expires by DB deadline and ordinary text progresses with zero calls',async t=>{
+ const f=await fixture(t),p=await plan(f),fake=await provider(t,f),child=worker(t,{mode:'dispatch',socket:f.socket,database:f.dbname,archive:f.archive.directory,businessId:b,attemptId:text(p.body['attemptId']),ownerId:randomUUID(),providerUrl:fake.server.url,now:f.clock.now().toISOString(),pauseAt:point});await child.wait('point',point);await child.kill();f.clock.instant+=86400000;
+ const result=await admission(f,raw(f,'hola'));assert.equal(result.reductions[0]!['outcome'],'NO_EFFECT');assert.equal((await f.rows('attempt'))[0]!['state'],'ABANDONED');assert.equal((await f.rows('appointment'))[0]!['state'],'CANCELLED');assert.equal((await f.rows('protection')).length,0);assert.equal((await f.rows('mutation_guard')).length,0);assert.equal((await fake.server.calls()).length,0);await plan(f,{startAt:'2030-01-03T10:00:00Z',endAt:'2030-01-03T11:00:00Z'});assert.equal((await fake.server.calls()).length,0);
+});
+test('R1 scheduled recovery worker closes expired work without a new inbound message or operator',async t=>{
+ const f=await fixture(t),p=await plan(f);await arm(f,p);f.clock.instant+=3600000;const w=new RecoveryWorker([{businessId:b,reducer:f.role('reducer'),sealer:f.role('sealer'),archive:f.archive.scope(b)}]);const errors:unknown[]=[];w.start(25,e=>errors.push(e));try{for(let i=0;i<200&&(await f.rows('attempt'))[0]!['state']!=='ABANDONED';i++)await new Promise(r=>setTimeout(r,10));}finally{await w.stop();}assert.equal(errors.length,0);assert.equal((await f.rows('attempt'))[0]!['state'],'ABANDONED');assert.equal((await f.rows('audit')).filter(a=>a['action']==='ABANDON_UNSENT').length,1);
+});
+for(const state of ['SUBMISSION_ENTERED','UNKNOWN'])test('R1 never releases '+state+' even after deadline and worker ticks',async t=>{
+ const f=await fixture(t),p=await plan(f),fake=await provider(t,f),ownerId=await arm(f,p),args={businessId:b,attemptId:text(p.body['attemptId']),ownerId,dispatcher:f.role('dispatch'),archive:f.archive,provider:fake.client,clock:f.clock};
+ if(state==='SUBMISSION_ENTERED')await assert.rejects(dispatchOnce({...args,faults:cut('dispatch.afterGate')}));else{fake.server.loseResponse=true;assert.equal((await dispatchOnce(args)).state,'UNKNOWN');}
+ const before=await f.rows('protection');f.clock.instant+=86400000;await new RecoveryWorker([{businessId:b,reducer:f.role('reducer'),sealer:f.role('sealer'),archive:f.archive.scope(b)}]).tick();await admission(f,raw(f,'hola'));assert.equal((await f.rows('attempt'))[0]!['state'],state);assert.deepEqual(await f.rows('protection'),before);await assert.rejects(plan(f,{startAt:'2030-01-03T10:00:00Z',endAt:'2030-01-03T11:00:00Z'}),/conversation_head_held/);
+});
+for(const point of ['deadline-recovery.beforeCommit','deadline-recovery.afterCommit'])test('R1 machine evidence and original identity survive '+point,async t=>{
+ const f=await fixture(t),p=await plan(f),i=(await f.rows('input'))[0]!,aId=text(p.body['attemptId']);await arm(f,p);f.clock.instant+=3600000;const args={businessId:b,conversationId:text(i['conversation_id']),reducer:f.role('reducer'),sealer:f.role('sealer'),archive:f.archive.scope(b)};await assert.rejects(recoverExpired({...args,faults:cut(point)}));await recoverExpired(args);assert.equal((await f.rows('attempt'))[0]!['id'],aId);assert.equal((await f.rows('attempt'))[0]!['state'],'ABANDONED');assert.equal((await f.rows('audit')).filter(a=>a['action']==='ABANDON_UNSENT').length,1);const seals=(await f.archive.records()).filter(s=>s.key==='deadline-expiry/'+b+'/'+aId);assert.equal(seals.length,1);assert.equal(seals[0]!.body['reason'],'DEADLINE_EXPIRED');
+});
+function latch(){let release!:()=>void;const wait=new Promise<void>(r=>{release=r;});return {wait,release};}
+for(const first of ['entry','expiry'])test('R1 concurrent '+first+' wins; entry and deadline expiry cannot both succeed',async t=>{
+ const f=await fixture(t),p=await plan(f),ownerId=await arm(f,p),input=(await f.rows('input'))[0]!,fake=await provider(t,f),reached=latch(),release=latch(),args={businessId:b,conversationId:text(input['conversation_id']),reducer:f.role('reducer'),sealer:f.role('sealer'),archive:f.archive.scope(b)};
+ const send=()=>dispatchOnce({businessId:b,attemptId:text(p.body['attemptId']),ownerId,dispatcher:f.role('dispatch'),archive:f.archive,provider:fake.client,clock:f.clock,faults:{async hit(point){if(point==='entry.beforeCommit'&&first==='entry'){reached.release();await release.wait;}}}});
+ if(first==='entry'){const a=send();await reached.wait;f.clock.instant+=3600000;const recovery=recoverExpired(args);release.release();assert.equal((await a).state,'APPLIED');assert.deepEqual((await recovery).abandoned,[]);assert.equal((await f.rows('attempt'))[0]!['state'],'SUBMISSION_ENTERED');assert.equal((await f.rows('mutation_guard')).length,1);assert.equal((await fake.server.calls()).length,1);}
+ else{f.clock.instant+=3600000;const recovery=recoverExpired({...args,faults:{async hit(point){if(point==='deadline-recovery.beforeCommit'){reached.release();await release.wait;}}}});await reached.wait;const a=send();release.release();assert.equal((await recovery).abandoned.length,1);assert.equal((await a).state,'HELD');assert.equal((await fake.server.calls()).length,0);assert.equal((await f.rows('mutation_guard')).length,0);}
+});
+test('R1 not-yet-expired, unsealed and wrong-tenant expiry calls cannot release work',async t=>{
+ const f=await fixture(t),p=await plan(f),input=(await f.rows('input'))[0]!,args={businessId:b,conversationId:text(input['conversation_id']),reducer:f.role('reducer'),sealer:f.role('sealer'),archive:f.archive.scope(b)};assert.deepEqual((await recoverExpired(args)).abandoned,[]);await assert.rejects(recoverExpired({...args,archive:f.archive.scope('synthetic-b')}),/tenant_archive_binding_required/);f.clock.instant+=3600000;await assert.rejects(f.role('reducer').tx(b,db=>db.query('SELECT core.expire_operation($1,$2,$3,$4)',[b,p.body['attemptId'],'missing','0'.repeat(64)])),/expiry_unsealed/);assert.equal((await f.rows('attempt'))[0]!['state'],'PREPARED');
+});
+
+test('R1 deadline recovery restores a MOVE source and preserves its applied history',async t=>{
+ const f=await fixture(t),original=await plan(f,{bufferMinutes:15});await apply(t,f,original);await confirm(t,f,original);const before=await f.rows('protection');const move=await plan(f,{kind:'MOVE',appointmentId:text(original.body['appointmentId']),eventId:text(original.body['eventId']),expectedRevision:2,startAt:'2030-01-02T12:00:00Z',endAt:'2030-01-02T13:00:00Z',bufferMinutes:15});await arm(f,move);f.clock.instant+=3600000;await admission(f,raw(f,'gracias'));assert.deepEqual(await f.rows('protection'),before);assert.equal((await f.rows('attempt')).find(x=>x['id']===move.body['attemptId'])?.['state'],'ABANDONED');assert.equal((await f.rows('appointment'))[0]!['state'],'ACTIVE');
+});
+test('R1 failed archive custody holds original guards until healthy original-key recovery',async t=>{
+ const f=await fixture(t),p=await plan(f),input=(await f.rows('input'))[0]!;await arm(f,p);f.clock.instant+=3600000;const archive=f.archive.scope(b),ensure=archive.ensure.bind(archive),args={businessId:b,conversationId:text(input['conversation_id']),reducer:f.role('reducer'),sealer:f.role('sealer'),archive};archive.ensure=async()=>{throw Error('custody_unavailable');};await assert.rejects(recoverExpired(args));assert.equal((await f.rows('attempt'))[0]!['state'],'ARMED');assert.equal((await f.rows('mutation_guard')).length,1);archive.ensure=ensure;await recoverExpired(args);assert.equal((await f.rows('attempt'))[0]!['id'],p.body['attemptId']);assert.equal((await f.rows('attempt'))[0]!['state'],'ABANDONED');
+});

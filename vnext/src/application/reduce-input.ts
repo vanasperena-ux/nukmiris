@@ -3,6 +3,7 @@ import type { EvidenceStore } from '../ports.js';
 import { object,text,noFaults,type ObjectValue,type Faults } from '../domain/protocol.js';
 import { ordinaryDecision } from '../domain/classification.js';
 import { boundedArchive } from './archive-policy.js';
+import {recoverExpired} from './recover-expired.js';
 
 export async function reduceInput(args:{businessId:string;inputId:string;reducer:UnitOfWork;sealer:UnitOfWork;archive:EvidenceStore;planDigest?:string;faults?:Faults}):Promise<ObjectValue> {
   const {businessId:b,inputId,reducer,sealer}=args,archive=boundedArchive(args.archive);
@@ -42,6 +43,7 @@ export async function reduceInput(args:{businessId:string;inputId:string;reducer
 }
 /** Normal worker progress after a predecessor resolves; no operator HOLD and no provider calls. */
 export async function drainOrdinary(args:{businessId:string;conversationId:string;reducer:UnitOfWork;sealer:UnitOfWork;archive:EvidenceStore}):Promise<ObjectValue[]> {
+  await recoverExpired(args);
   const inputs=await args.reducer.tx(args.businessId,async db=>(await db.query<{id:string}>(`SELECT i.id FROM core.input i
     WHERE i.business_id=$1 AND i.conversation_id=$2 AND i.state='ELIGIBLE'
     AND NOT EXISTS(SELECT 1 FROM core.input_reduction r WHERE r.business_id=i.business_id AND r.input_id=i.id)

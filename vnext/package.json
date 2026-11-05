@@ -26,12 +26,17 @@
     "demo:backup": "node local/cli.mjs backup",
     "demo:smoke": "npm run build && node local/cli.mjs smoke",
     "test:runtime": "npm run build && node --test --test-concurrency=1 local/platform.test.mjs local/command-lock.test.mjs local/runtime.test.mjs",
-    "demo:unlock": "node local/cli.mjs unlock"
+    "demo:unlock": "node local/cli.mjs unlock",
+    "test:l1": "npm run build && node scripts/run-tests.mjs l1",
+    "demo:transcript": "npm run build && node scripts/availability-transcript.mjs",
+    "test:l2prep": "npm run build && node scripts/run-tests.mjs l2prep"
   },
   "dependencies": {
+    "luxon": "3.7.2",
     "pg": "8.16.3"
   },
   "devDependencies": {
+    "@types/luxon": "3.7.1",
     "@types/node": "24.10.0",
     "@types/pg": "8.15.5",
     "typescript": "5.9.3"
