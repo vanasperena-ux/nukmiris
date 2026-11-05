@@ -1,0 +1,61 @@
+
+> nukmiris-wp1-synthetic-core@0.0.0 test:runtime
+> npm run build && node --test --test-concurrency=1 local/platform.test.mjs local/command-lock.test.mjs local/runtime.test.mjs
+
+
+> nukmiris-wp1-synthetic-core@0.0.0 build
+> tsc -p tsconfig.json
+
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.2
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.2
+npm notice To update run: npm install -g npm@12.2.2
+npm notice
+✔ W3 a live command remains exclusive; contender cannot alter metadata or execute (14.070924ms)
+✔ W3 a crashed real CLI child leaves diagnostic metadata and a new command recovers without PID killing (65.450588ms)
+✔ W3 reboot/PID reuse residue cannot brick commands; concurrent recovery has at most one owner (24.527166ms)
+✔ W3 legacy/corrupt lock is preserved with a recovery command; explicit instance confirmation is required (7.0983ms)
+✔ W1 numeric SID uses wildcard prefix; icacls and SID-normalized ACL are read back; every native process hidden (1.872674ms)
+✔ W1 refuses a successful grant with invalid ACL: extra ACE (0.592338ms)
+✔ W1 refuses a successful grant with invalid ACL: wrong SID (0.253065ms)
+✔ W1 refuses a successful grant with invalid ACL: inherited root (0.356519ms)
+✔ W1 refuses a successful grant with invalid ACL: unprotected root (0.307516ms)
+Pulling/verifying pinned PostgreSQL image (first download budget: 10 minutes).
+✔ W1 failed protection/pull removes only the empty root it created and permits a fresh retry (18.050137ms)
+✔ W2 explicit digest pull has a ten-minute budget and rejects a different reported image (0.437918ms)
+✔ W2 actionable sanitized Docker error: port (0.892212ms)
+✔ W2 actionable sanitized Docker error: desktop (0.38474ms)
+✔ W2 actionable sanitized Docker error: timeout (0.329728ms)
+✔ W2 actionable sanitized Docker error: missing binary (0.24283ms)
+✔ W5 Docker endpoint selection and child creation force hidden windows (0.302749ms)
+﹣ W1 native Windows directory, child file and persisted state privacy (0.054621ms) # Native Windows ACL execution unavailable on this host
+✔ W1 Azure AD numeric SID is supported without account-name resolution (0.329769ms)
+Pulling/verifying pinned PostgreSQL image (first download budget: 10 minutes).
+▶ Windows-targeted local runtime over isolated TCP PostgreSQL17.11 (host execution recorded)
+  ✔ fresh isolated resources use loopback only, SCRAM, UTC and inert businesses (24.970717ms)
+  ✔ E1 every runtime connection overrides a Mexico City role default with UTC (14.665953ms)
+  ✔ W4 loopback connections ignore inherited PGSSLMODE require/verify-full (21.474428ms)
+Pulling/verifying pinned PostgreSQL image (first download budget: 10 minutes).
+  ✔ path/identity checks and occupied DB port fail without fallback or touching the existing fixture (3736.235237ms)
+  ✔ portable child startup, cooperative stop and owned-handle crash need no POSIX signals (190.085873ms)
+  ✔ start/health/authenticated stop/crash/restart keep the original DB and refuse an occupied service port (1188.400086ms)
+  ✔ real indexed-custody/core booking smoke and C1 work over TCP without mutating persistent demo data (486.944828ms)
+  ✔ private backup restores to a separate inert database; corruption fails closed (622.82416ms)
+Pulling/verifying pinned PostgreSQL image (first download budget: 10 minutes).
+  ✔ reset requires exact identity, retains backup and creates fresh isolated IDs (5963.618598ms)
+{"platform":"linux","node":"v24.19.0","postgres":"17.11 (Debian 17.11-1.pgdg12+2)","tcp":true,"utc":true,"nativeWindows":"NOT RUN","generatedStatePublished":false}
+✔ Windows-targeted local runtime over isolated TCP PostgreSQL17.11 (host execution recorded) (18132.215059ms)
+✔ published CLI prepare/start/smoke/backup/stop/reset commands execute with spaces and Unicode paths (13068.060403ms)
+ℹ tests 29
+ℹ suites 0
+ℹ pass 28
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 1
+ℹ todo 0
+ℹ duration_ms 31564.766223
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.2
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.2
+npm notice To update run: npm install -g npm@12.2.2
+npm notice

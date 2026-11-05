@@ -1,0 +1,128 @@
+
+> nukmiris-wp1-synthetic-core@0.0.0 test:l2prep
+> npm run build && node scripts/run-tests.mjs l2prep
+
+
+> nukmiris-wp1-synthetic-core@0.0.0 build
+> tsc -p tsconfig.json
+
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.2
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.2
+npm notice To update run: npm install -g npm@12.2.2
+npm notice
+WP1 evidence run: /workspace/work/nukmiris-l2-prep/vnext/evidence/runs/2026-11-05T21-40-33.491Z-l2prep
+✔ L1 business hours, employee qualification/hours/absence, service duration and buffers restrict every suggested slot (25.001562ms)
+✔ L1 paginated shared-calendar events block only their resource; unassigned and UNKNOWN events remain conservative (9.992917ms)
+✔ L1 30 + 15 day search respects 30-day busy interval and 365-day horizon (97.009138ms)
+✔ L1 30 + 15 day search respects 45-day busy interval and 365-day horizon (80.368637ms)
+✔ L1 30 + 15 day search respects 180-day busy interval and 365-day horizon (249.871786ms)
+✔ L1 30 + 15 day search respects 365-day busy interval and 365-day horizon (379.60368ms)
+✔ L1 failed/incomplete calendar is HELD, never authenticated empty: exception (0.947053ms)
+✔ L1 failed/incomplete calendar is HELD, never authenticated empty: partial (0.33059ms)
+✔ L1 failed/incomplete calendar is HELD, never authenticated empty: foreign (0.31771ms)
+✔ L1 failed/incomplete calendar is HELD, never authenticated empty: changed (0.398681ms)
+✔ L1 failed/incomplete calendar is HELD, never authenticated empty: cursor (0.281287ms)
+✔ L1 failed/incomplete calendar is HELD, never authenticated empty: never (15.023078ms)
+✔ L1 failed/incomplete calendar is HELD, never authenticated empty: malformed (0.386923ms)
+✔ L1 structured date selection rejects unsupported/out-of-range date 2029-12-31 (0.262659ms)
+✔ L1 structured date selection rejects unsupported/out-of-range date 2031-02-01 (0.25612ms)
+✔ L1 structured date selection rejects unsupported/out-of-range date 2030-02-31 (0.414044ms)
+✔ L1 structured date selection rejects unsupported/out-of-range date 31/01/2030 (0.679767ms)
+✔ L1 buffers carry across a 30-day batch edge; exact half-open boundaries remain available (58.070506ms)
+✔ L1 stale selected slot rechecks all pages and returns held if newly busy or scope changes (39.460143ms)
+✔ L1 rejects multiple services, invalid minutes, overnight hours and invalid zone (0.655641ms)
+✔ L1 accepted v0.8.1 engine differential across zones, DST, intervals, breaks and buffers (112.355873ms)
+✔ L1 oracle keeps two + two + date navigation, stale-action denial and direct known-customer booking intent (47.371434ms)
+✔ L1 oracle new customer requests name after slot; name capture rechecks; human owns pending ordinary text until Menu (77.986387ms)
+✔ L1 oracle dates page forward/back, TTL and foreign tenant actions fail without booking effects (76.607375ms)
+✔ L1 DST gap never shifts an offered nonexistent wall-clock time (1.102443ms)
+✔ L1/O3 measured synthetic contention separates resource conflicts, head holds and terminal lock timeouts (744.048562ms)
+✔ L1/O3 measured 50ms lock timeout terminalizes only the original input and preserves reservations atomically (345.887172ms)
+✔ L1/O3 measured 3000ms lock timeout terminalizes only the original input and preserves reservations atomically (3393.142254ms)
+✔ L1-C1 selected service buffer reaches SQL protection; booking at its unbuffered end is refused (389.175293ms)
+✔ L1-C2 PREPARED protections are busy before the calendar is written, with no double buffer (247.48407ms)
+✔ L1-C3 customer-selected time can move to another qualified free employee and maps its core UUID (265.430729ms)
+✔ L1-C4 each displayed view has a fresh 15-minute expiry; prior revision actions stay invalid (60.019264ms)
+✔ L1-C5 unknown calendar resources block everyone only in that interval and emit an operator signal (113.819515ms)
+✔ L1-C5 an unmapped local protection remains blocking-all and is signaled, never interpreted as free (186.327342ms)
+✔ L1-C6 five-choice dates render as a WhatsApp list; suggestions remain at most three reply buttons (96.758804ms)
+✔ L2 composition rejects foreign/missing/ambiguous bindings before reservation (117.783928ms)
+✔ L2 unknown normalization cannot hide a foreign event or failed calendar read (115.332377ms)
+✔ R1 dead dispatcher at worker.beforeArm expires by DB deadline and ordinary text progresses with zero calls (485.156956ms)
+✔ R1 dead dispatcher at dispatch.beforeGate expires by DB deadline and ordinary text progresses with zero calls (501.217595ms)
+✔ R1 scheduled recovery worker closes expired work without a new inbound message or operator (233.621018ms)
+✔ R1 never releases SUBMISSION_ENTERED even after deadline and worker ticks (302.997375ms)
+✔ R1 never releases UNKNOWN even after deadline and worker ticks (443.931971ms)
+✔ R1 machine evidence and original identity survive deadline-recovery.beforeCommit (211.48332ms)
+✔ R1 machine evidence and original identity survive deadline-recovery.afterCommit (306.453814ms)
+✔ R1 concurrent entry wins; entry and deadline expiry cannot both succeed (216.832381ms)
+✔ R1 concurrent expiry wins; entry and deadline expiry cannot both succeed (215.732586ms)
+✔ R1 not-yet-expired, unsealed and wrong-tenant expiry calls cannot release work (180.151787ms)
+✔ R1 deadline recovery restores a MOVE source and preserves its applied history (538.743396ms)
+✔ R1 failed archive custody holds original guards until healthy original-key recovery (232.664057ms)
+✔ C1 menu supersedes PREPARED booking without an operator; next booking progresses (504.932418ms)
+✔ C1 menu supersedes ARMED booking without an operator; next booking progresses (330.583688ms)
+✔ C1 menu supersedes PREPARED confirmation without an operator; next booking progresses (390.038425ms)
+✔ C1 menu supersedes ARMED confirmation without an operator; next booking progresses (444.450658ms)
+✔ C1 humano supersedes PREPARED booking without an operator; next booking progresses (524.731963ms)
+✔ C1 humano supersedes ARMED booking without an operator; next booking progresses (410.529735ms)
+✔ C1 humano supersedes PREPARED confirmation without an operator; next booking progresses (463.043371ms)
+✔ C1 humano supersedes ARMED confirmation without an operator; next booking progresses (470.688592ms)
+✔ C1 menu never releases SUBMISSION_ENTERED booking (330.83817ms)
+✔ C1 humano never releases SUBMISSION_ENTERED booking (412.293946ms)
+✔ C1 menu never releases UNKNOWN booking (416.381597ms)
+✔ C1 humano never releases UNKNOWN booking (401.890401ms)
+✔ C1 menu never releases SUBMISSION_ENTERED confirmation (459.074886ms)
+✔ C1 humano never releases SUBMISSION_ENTERED confirmation (539.047693ms)
+✔ C1 menu never releases UNKNOWN confirmation (480.47081ms)
+✔ C1 humano never releases UNKNOWN confirmation (611.148813ms)
+✔ C1 priority crash cut reduce.beforeCommit reuses sealed supersession and original identities (478.663593ms)
+✔ C1 priority crash cut reduce.afterCommit reuses sealed supersession and original identities (536.097518ms)
+✔ C1 superseding a never-entered MOVE restores source protection, appointment history and frees only its target (531.10275ms)
+✔ C1 normal deadline expiry closes PREPARED confirmation and cannot be rearmed (431.326169ms)
+✔ C1 normal deadline expiry closes ARMED confirmation and cannot be rearmed (409.240326ms)
+✔ C1 normal deadline expiry closes NONE confirmation and cannot be rearmed (430.613461ms)
+✔ C1 failed machine custody rolls back the priority context and all dispositions until original-key recovery (369.419452ms)
+✔ C1 concurrent priority wins the conversation lock; supersession and entry cannot both succeed (269.783656ms)
+✔ C1 concurrent entry wins the conversation lock; supersession and entry cannot both succeed (275.160885ms)
+✔ C1 expiry vs confirmation expiry/entry CAS (236.885933ms)
+✔ C1 entry vs confirmation expiry/entry CAS (254.830216ms)
+✔ C1 menu after dispatcher crash at worker.beforeArm (booking) is safely superseded (351.436972ms)
+✔ C1 menu after dispatcher freeze at worker.beforeArm (booking) is safely superseded (429.646405ms)
+✔ C1 menu after dispatcher crash at worker.beforeArm (confirmation) is safely superseded (422.097929ms)
+✔ C1 menu after dispatcher freeze at worker.beforeArm (confirmation) is safely superseded (574.053669ms)
+✔ C1 menu after dispatcher crash at dispatch.beforeGate (booking) is safely superseded (469.745971ms)
+✔ C1 menu after dispatcher freeze at dispatch.beforeGate (booking) is safely superseded (453.100377ms)
+✔ C1 menu after dispatcher crash at dispatch.beforeGate (confirmation) is safely superseded (658.536509ms)
+✔ C1 menu after dispatcher freeze at dispatch.beforeGate (confirmation) is safely superseded (643.621931ms)
+✔ C1 humano after dispatcher crash at worker.beforeArm (booking) is safely superseded (455.378886ms)
+✔ C1 humano after dispatcher freeze at worker.beforeArm (booking) is safely superseded (488.50564ms)
+✔ C1 humano after dispatcher crash at worker.beforeArm (confirmation) is safely superseded (677.667259ms)
+✔ C1 humano after dispatcher freeze at worker.beforeArm (confirmation) is safely superseded (707.878276ms)
+✔ C1 humano after dispatcher crash at dispatch.beforeGate (booking) is safely superseded (522.910018ms)
+✔ C1 humano after dispatcher freeze at dispatch.beforeGate (booking) is safely superseded (632.372041ms)
+✔ C1 humano after dispatcher crash at dispatch.beforeGate (confirmation) is safely superseded (598.887438ms)
+✔ C1 humano after dispatcher freeze at dispatch.beforeGate (confirmation) is safely superseded (610.768377ms)
+✔ O2 malformed output purpose is PLAN_INVALID, never UNIQUE_CONFLICT; genuine conflicts stay distinct (380.339223ms)
+✔ O4 alternate binding punctuation rejected: business-id (0.339714ms)
+✔ O4 alternate binding punctuation rejected: business.id (0.077154ms)
+✔ O4 alternate binding punctuation rejected: business id (0.059318ms)
+✔ O4 alternate binding punctuation rejected: tenant-id (0.051366ms)
+✔ O4 alternate binding punctuation rejected: tenant.id (0.049473ms)
+✔ O4 alternate binding punctuation rejected: Tenant ID (0.073429ms)
+✔ O4 alternate binding punctuation rejected: business•id (0.12814ms)
+✔ O4 provider-shaped nonbinding field names remain valid, while punctuated aliases fail SQL independently (117.569907ms)
+ℹ tests 101
+ℹ suites 0
+ℹ pass 101
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 32287.77599
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.2
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.2
+npm notice To update run: npm install -g npm@12.2.2
+npm notice

@@ -1,0 +1,21 @@
+{
+  "testedSource": "6c1595ad478f261db75b2956c60c82e0a6f0f642",
+  "testedTree": "c748795dc4b98bfafa994bc858eb9ea1fd9b5ab5",
+  "parentRuntimeEvidenceHead": "6691a554f1d8a2688b18f02528cf16a89350d9d0",
+  "runtimeTestedSource": "8432dd846237efd959e4656ae8ddb2d7ff74adea",
+  "acceptedL1Source": "afa1b74efa8f8edab5d9c4fc115e2ca60daf1f7c",
+  "l1Incorporation": "Selected source/tests and dependency union, not a Git PR merge",
+  "newMigration": "006-deadline-recovery.sql; fresh fixtures only",
+  "preservedByteIdenticalToParent": [
+    "backend",
+    "lib",
+    "vnext/src/infrastructure/postgres/roles.sql",
+    "vnext/src/infrastructure/postgres/migrations/001-foundation.sql",
+    "vnext/src/infrastructure/postgres/migrations/002-execution.sql",
+    "vnext/src/infrastructure/postgres/migrations/003-dispositions.sql",
+    "vnext/src/infrastructure/postgres/migrations/004-classification-and-ordering.sql",
+    "vnext/src/infrastructure/postgres/migrations/005-conversation-progress.sql"
+  ],
+  "sourceFileCount": 89,
+  "generatedStatePublished": false
+}

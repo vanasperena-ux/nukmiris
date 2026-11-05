@@ -1,0 +1,62 @@
+{
+  "source": "6c1595ad478f261db75b2956c60c82e0a6f0f642",
+  "tree": "c748795dc4b98bfafa994bc858eb9ea1fd9b5ab5",
+  "results": {
+    "acceptance": {
+      "tests": 101,
+      "pass": 101,
+      "fail": 0,
+      "skipped": 0,
+      "cancelled": 0
+    },
+    "full": {
+      "tests": 308,
+      "pass": 308,
+      "fail": 0,
+      "skipped": 0,
+      "cancelled": 0
+    },
+    "fault": {
+      "tests": 298,
+      "pass": 298,
+      "fail": 0,
+      "skipped": 0,
+      "cancelled": 0
+    },
+    "concurrency": {
+      "tests": 169,
+      "pass": 169,
+      "fail": 0,
+      "skipped": 0,
+      "cancelled": 0
+    },
+    "runtime": {
+      "tests": 29,
+      "pass": 28,
+      "fail": 0,
+      "skipped": 1,
+      "cancelled": 0
+    }
+  },
+  "typecheck": "PASS",
+  "scope": "PASS",
+  "node": "v24.19.0",
+  "npm": "11.9.0",
+  "postgres": "17.11 (Debian 17.11-1.pgdg12+2)",
+  "measuredRuntime": {
+    "platform": "linux",
+    "node": "v24.19.0",
+    "postgres": "17.11 (Debian 17.11-1.pgdg12+2)",
+    "tcp": true,
+    "utc": true,
+    "nativeWindows": "NOT RUN",
+    "generatedStatePublished": false
+  },
+  "independentReview": "PENDING",
+  "nativeWindows": "NOT RUN; native ACL skipped on Linux",
+  "suitesOverlap": true,
+  "interactiveUI": "NOT IMPLEMENTED in this increment",
+  "persistentProfile": "INERT/health only; worker not activated by default",
+  "realProvidersOrGcpUsed": false,
+  "privateStatePublished": false
+}
