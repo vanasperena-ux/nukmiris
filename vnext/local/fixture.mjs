@@ -32,6 +32,7 @@ export async function readState(directory){
  const file=path.join(resolved,'state.json');if((await fs.lstat(file)).isSymbolicLink())throw Error('local_state_symlink_denied');
  const s=JSON.parse(await fs.readFile(file,'utf8'));
  if(s.format!==1||s.mode!=='SYNTHETIC_INERT'||s.directory!==resolved||!/^([a-f0-9]{32})$/.test(s.id)||s.database!=='nukmiris_vnext_'+s.id||s.container!=='nukmiris-vnext-'+s.id||s.network!==s.container||s.volume!==s.container+'-data'||s.host!=='127.0.0.1'||!Number.isInteger(s.port)||s.port<1024||s.port>65535)throw Error('local_state_invalid');
+ if(!/^[a-f0-9]{64}$/.test(s.adminPassword??'')||!/^[a-f0-9]{64}$/.test(s.controlToken??'')||ROLES.some(r=>!/^[a-f0-9]{64}$/.test(s.passwords?.['wp1_'+r]??'')))throw Error('local_credentials_missing_or_invalid');
  return s;
 }
 export async function owned(s,kind='container'){
@@ -42,6 +43,8 @@ export async function owned(s,kind='container'){
 }
 export function connection(s,user='postgres',database=s.database){
  if(s.host!=='127.0.0.1'||!/^nukmiris_vnext_[a-f0-9]{32}(?:_test_[a-f0-9]{8})?$/.test(database))throw Error('local_connection_denied');
+ if(user!=='postgres'&&!ROLES.some(r=>user==='wp1_'+r))throw Error('local_role_denied');
+ if(typeof (user==='postgres'?s.adminPassword:s.passwords?.[user])!=='string'||!(user==='postgres'?s.adminPassword:s.passwords[user]))throw Error('local_credentials_required');
  return {host:s.host,port:s.port,database,user,password:user==='postgres'?s.adminPassword:s.passwords[user],options:'-c timezone=UTC',connectionTimeoutMillis:3000};
 }
 export async function ready(s){

@@ -27,6 +27,8 @@ test('Windows-targeted local runtime over isolated TCP PostgreSQL17.11 (host exe
   const db=new pg.Client(connection(s));await db.connect();try{await db.query("ALTER ROLE wp1_tenant_a SET TimeZone='America/Mexico_City'");}finally{await db.end();}
   const u=new UnitOfWork(connection(s,'wp1_tenant_a'));try{await u.tx('synthetic-a',async d=>{assert.equal((await d.query('SHOW TimeZone')).rows[0].TimeZone,'UTC');assert.equal((await d.query("SELECT '2030-01-02T10:00:00Z'::timestamptz t")).rows[0].t,'2030-01-02T10:00:00.000Z');});}finally{await u.close();}
   assert.throws(()=>new UnitOfWork({host:'127.0.0.1',database:s.database,user:'wp1_reducer'}),/synthetic_database_only/);
+  assert.throws(()=>new UnitOfWork({host:s.host,port:s.port,database:s.database,user:'wp1_reducer'}),/synthetic_database_only/);assert.throws(()=>connection(s,'unexpected-role'),/local_role_denied/);
+  const file=path.join(s.directory,'state.json'),bytes=await readFile(file);const invalid=JSON.parse(bytes);delete invalid.passwords.wp1_reducer;await writeFile(file,JSON.stringify(invalid));try{await assert.rejects(readState(s.directory),/credentials_missing_or_invalid/);}finally{await writeFile(file,bytes);}
  });
  await t.test('path/identity checks and occupied DB port fail without fallback or touching the existing fixture',async()=>{
   await assert.rejects(provision(path.join(parent,'accepted-v081'),{port:0}),/target_denied/);await assert.rejects(provision(s.directory,{port:0}),/EEXIST/);
