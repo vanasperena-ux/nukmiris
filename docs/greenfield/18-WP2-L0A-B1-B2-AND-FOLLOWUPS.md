@@ -2,19 +2,21 @@
 
 Source: [Claude review](https://github.com/vanasperena-ux/nukmiris/pull/9#issuecomment-6622229074)
 and [X1–X9 reproduction material](https://github.com/vanasperena-ux/nukmiris/pull/9#issuecomment-6622229262).
-Verdict **GO WITH CONDITIONS**, not formal L0a acceptance. B1/B2 corrections must
-be independently verified by Claude. L0a remains OPEN; L0b has not begun.
+The original verdict was **GO WITH CONDITIONS**. Claude subsequently
+[independently accepted B1/B2 and N4 and formally closed L0a for bounded local synthetic use](https://github.com/vanasperena-ux/nukmiris/pull/9#issuecomment-6646622771).
+The owner authorized L0b implementation. Current L0b dispositions are below and in
+[document 19](19-WP2-L0B-IMPLEMENTATION.md); L0b independent acceptance remains pending.
 The accepted WP1 closure and all production/provider/Windows restrictions remain.
 
 | Finding | Owner / independent acceptance | Disposition and measurable acceptance |
 |---|---|---|
-| B1 | Codex L0a implementer / Claude | One bounded FIFO async mutex owns each instance connection through append, lookup/verify, records and repair, including awaits/confirmation. Sixteen distinct-key calls all succeed; sixteen same-key calls allocate once; reads/verification/audit wait across all write cuts and repair; failed work releases ownership; overload and cross-connection BUSY/LOCKED are typed. Existing SIGKILL/recovery cases must still pass. Implemented; independent verification OPEN. |
+| B1 | Codex L0a implementer / Claude | One bounded FIFO async mutex owns each instance connection through append, lookup/verify, records and repair, including awaits/confirmation. Sixteen distinct-key calls all succeed; sixteen same-key calls allocate once; reads/verification/audit wait across all write cuts and repair; failed work releases ownership; overload and cross-connection BUSY/LOCKED are typed. Existing SIGKILL/recovery cases pass. Independently accepted for local synthetic use. |
 | B2 | Codex trust-boundary documentation/tests; future custody-verifier implementer / Claude | Explicit honest-writer/key assumption; retain X1 as a reproduced residual. Witness is CAS/size/epoch monotonicity, not chain/index extension validation. Independent verification of **both** extension properties is mandatory before any non-fixture custody (009/017). Documentation/test correction implemented; the production vulnerability is **NOT FIXED**. |
-| N1 | Codex L0b admission/dispatch implementer / Claude before inbound expansion | Pending, contention and repair/integrity conditions are distinct typed availability states; B1 provides the first part. Implement and test the bounded caller policy below for inbound/dispatch, including cross-process witness/sample races, no ACK on incomplete custody, durable STOP, retained original IDs and zero uncertain resends. Caller wiring remains OPEN; no normal operation retries were added in L0a. Multi-process reads still flap while another writer is pending. |
+| N1 | Codex L0b admission/dispatch implementer / Claude before inbound expansion | Implemented in L0b, independent acceptance pending: typed availability states, five bounded read-only attempts, whole-call deadline, one append invocation, no incomplete ACK, durable STOP and original-key recovery. Composed wrappers preserve the five-read limit. Dispatch exhaustion returns HELD without HTTP. Active/crashed pending and cross-process witness/sample races remain tested. No automatic repair or provider resend. |
 | N2 | Codex production storage/recovery implementer / Claude at gate 011 | OPEN production prerequisite. Temp-name backup, fsync, atomic completion publication/rename and forensic-file digest bound to signed repair evidence. Kill backup, fsync/publication and repair itself; partial copies never appear as trusted completed forensics, and repair twice preserves originals. Current final-name backup can remain partial beside a valid checkpoint; neither is a completion proof. |
 | N3 | Codex recovery-protocol implementer / Claude at gate 011 | Honest-path behavior explicitly documented and regression-tested now: a pre-existing transaction can commit after the witness fence, fail witness CAS and be adopted by repair under its original owner. Production acceptance must classify such tails and document the data/CAS fencing boundary, with kills and stale writers at each cut, no identity replacement, guard release or dispatch authority. Gate remains OPEN. |
-| N4 | Codex archive implementer / Claude before inbound expansion | Recursive check of every nested object/array `businessId`, including envelopes, allocation and decrypted record validation. Foreign/null bindings rejected before sealing; same-tenant nested bodies survive read and repair. Implemented with regressions; independent acceptance OPEN. Opaque raw bytes require N5, not recursive string parsing. |
-| N5 | Codex L0b ingress/custody implementer / Claude before inbound expansion | OPEN entry prerequisite. Bind authenticated route → tenant → configured archive facade, with no user-selected/default fallback. Define protected raw-batch custody separately from tenant partition views; tenant A cannot read B's bytes. Signed mixed-tenant batch with STOP/failing partition must retain every immediate withdrawal, archive each partition through its own authorized binding, preserve original input/permission IDs and ACK only after all required custody succeeds. Missing/foreign archive bindings, replay and archive outage fail closed. Existing single-facade refusal/PG STOP regression is retained, not advertised as this completed routing design. |
+| N4 / A1 | Codex archive/ingress implementer / Claude before inbound expansion | L0a recursive exact-key protection independently accepted; L0b adds canonical lower-case ASCII tenant slugs and rejects alternative binding keys recursively in archive and SQL. Validated inbound schemas reject unsupported fields. Opaque strings stay opaque. Tenant-policy version 2 rejects older metadata (A2). New regressions await L0b acceptance. |
+| N5 | Codex L0b ingress/custody implementer / Claude before inbound expansion | Implemented in L0b, independent acceptance pending: authenticated route → fixed tenant capability, no fallback; separately scoped raw custody excluded from tenant views. Mixed-tenant STOP/failing-partition, missing/wrong facade, outage and replay tests preserve immediate revokes/original IDs and withhold ACK until custody is complete. Fixture same-process/key custody is still not production independence. |
 | N6 | Codex Windows/runtime implementer; owner native-device acceptance / Claude review | OPEN operational gate. Preserve linear rebuild/held-window and disk limitations; measure native Windows storage, WAL/lock/child lifecycle, peak RAM, backup/staging/WAL disk and recovery duration. Baseline: Codex 1,000,097 records / 340.167s / ~400MiB peak; Claude 1,000,001 / 256.518s / ~212MiB (PG workflows skipped). Budget roughly 3× archive disk plus headroom. Linux process death and these host observations are not Windows/power-loss guarantees or SLOs. |
 
 ## N1 bounded caller policy required in L0b
@@ -51,9 +53,28 @@ belong in separately restricted ingress custody; each tenant partition gets its
 own encrypted normalized seals plus a digest/reference to that protected original,
 not a readable copy of all tenants' bytes. Missing binding is an explicit custody
 failure, never the first/default facade. This is a required design/implementation
-contract; no new ingress resolver, shared raw-custody adapter or provider is built
-in this L0a correction. Implement/review this together with sealed classification
-before expanding inbound. The existing fail-closed mixed-batch refusal remains.
+contract. L0a did not build it; L0b now implements and tests it together with sealed
+classification. Its independent review must accept the new safeguards before
+broader inbound expansion. No real provider adapter is built.
+
+## Closure follow-ups A2/A3 and O1/O3
+
+A2 remains under production repair gate 011: quarantine and independently revalidate
+older incompatible archives; never silently reuse pre-N4 synthetic state. L0b
+rejects older metadata before backup/repair and uses freshly created fixtures.
+The production operator workflow remains OPEN.
+
+A3 local deadlines are implemented for queue wait and witness read/advance/repair
+finish. Never-answering and late responses release the instance mutex while pending
+data/repair stays held; repair retains the original identity. A deadline is not a
+remote cancellation or custody proof. Before any remote witness or L2 multi-worker
+deployment, independently verify the actual transport budget, late completion and
+original-key reconciliation. Remote operation and L2 runtime acceptance remain OPEN.
+
+O1 is implemented as an atomic SQL conflict marker plus sealed terminal reduction;
+failure between marker and reduction holds until ordinary reduction reconciliation,
+never retries the rejected plan. O3 rejects migration over existing input/attempt
+state; actual live migration/revalidation remains gated. Both await L0b review.
 
 After Claude accepts B1/B2, begin L0b code under the approved charter: sealed
 versioned classification/terminal reductions (W2-CL01–04), then reservation ordering

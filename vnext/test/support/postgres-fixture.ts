@@ -16,6 +16,7 @@ import {gzipSync} from 'node:zlib';
 import {createHash} from 'node:crypto';
 import {stopFixtureChildren} from './cleanup.js';
 import type { Route } from '../../src/application/admit-input.js';
+import { fixtureCustody } from './custody.js';
 
 const exec=promisify(execFile);
 export const IMAGE='postgres@sha256:839fbb5a4942a7758dd93e18b42ea5649807491a0545b5eeeb8f0b8bb11857a5';
@@ -43,7 +44,7 @@ export async function startCluster():Promise<{directory:string;socket:string;nam
   if(!version){const logs=await docker(['logs',name]);await docker(['rm','--force',name]);throw new Error('fixture_postgres_not_ready: '+logs);}
   return {directory,socket,name,version,stop:async()=>{await docker(['rm','--force',name]);}};
 }
-export const TABLES=['business','channel','calendar','resource','customer','conversation','seal','batch','input','batch_input','permission_head','permission_event','status_event','appointment','operation','mutation_guard','protection','output_intent','attempt','receipt','recovery_case','audit'] as const;
+export const TABLES=['business','channel','calendar','resource','customer','conversation','seal','batch','input','input_classification','conversation_context','input_reduction','plan_rejection','batch_input','permission_head','permission_event','status_event','appointment','operation','mutation_guard','protection','output_intent','attempt','receipt','recovery_case','audit'] as const;
 export class Fixture {
   private closed=false;
   readonly dbname='nukmiris_wp1_'+randomUUID().replaceAll('-','');
@@ -54,6 +55,7 @@ export class Fixture {
   readonly clock={instant:Date.parse('2030-01-01T09:00:00Z'),now(){return new Date(this.instant);}};
   readonly secret=Buffer.from('synthetic-wp1-signature-key-only');
   archive!:FakeArchive;
+  get custody(){return fixtureCustody(this.archive);}
   directory='';
   constructor(readonly socket=process.env['WP1_SOCKET_PATH']??'') {
     if(!socket.startsWith('/tmp/nukmiris-wp1-'))throw new Error('fixture_socket_required');
@@ -65,7 +67,7 @@ export class Fixture {
     const cluster=new pg.Client({host:this.socket,database:'postgres',user:'postgres'});await cluster.connect();
     await cluster.query(`CREATE DATABASE "${this.dbname}"`);await cluster.end();
     const root=fileURLToPath(new URL('../../../',import.meta.url));
-    for(const file of ['migrations/001-foundation.sql','migrations/002-execution.sql','migrations/003-dispositions.sql','roles.sql']) {
+    for(const file of ['migrations/001-foundation.sql','migrations/002-execution.sql','migrations/003-dispositions.sql','roles.sql','migrations/004-classification-and-ordering.sql']) {
       await this.admin.query(await fs.readFile(path.join(root,'src/infrastructure/postgres',file),'utf8'));
     }
     await this.admin.query(`CREATE SCHEMA fixture_private; REVOKE ALL ON SCHEMA fixture_private FROM PUBLIC;

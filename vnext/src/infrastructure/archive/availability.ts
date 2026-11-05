@@ -16,6 +16,19 @@ export class ArchiveHeldError extends Error {
     super('archive_held:'+reason);this.name='ArchiveHeldError';
   }
 }
+export class ArchiveDeadlineError extends Error {
+  readonly code='ARCHIVE_DEADLINE';
+  constructor(readonly phase:'QUEUE'|'WITNESS_READ'|'WITNESS_ADVANCE'|'WITNESS_FINISH'|'CALLER') {super('archive_deadline:'+phase);this.name='ArchiveDeadlineError';}
+}
+export class ArchiveIncompatibleError extends Error {
+  readonly code='ARCHIVE_INCOMPATIBLE';
+  constructor(){super('archive_incompatible:quarantine_and_recreate_synthetic_state');this.name='ArchiveIncompatibleError';}
+}
+export async function archiveDeadline<T>(work:Promise<T>,ms:number,phase:ArchiveDeadlineError['phase']):Promise<T> {
+  let timer:ReturnType<typeof setTimeout>|undefined;
+  try{return await Promise.race([work,new Promise<never>((_,reject)=>{timer=setTimeout(()=>reject(new ArchiveDeadlineError(phase)),Math.max(0,ms));})]);}
+  finally{clearTimeout(timer);}
+}
 export function archiveError(error:unknown):unknown {
   if(error&&typeof error==='object') {
     const e=error as {code?:unknown;errcode?:unknown};
@@ -31,11 +44,13 @@ export class ArchiveMutex {
   private tail:Promise<void>=Promise.resolve();
   private pending=0;
   get active():boolean{return this.pending>0;}
-  async run<T>(work:()=>Promise<T>):Promise<T> {
+  async run<T>(work:()=>Promise<T>,queueTimeoutMs=1000):Promise<T> {
     // Bounded memory, including the active operation; overload is explicit, never a lock steal.
     if(this.pending>=64)throw new ArchiveBusyError('INSTANCE_QUEUE_FULL');
     this.pending++;const before=this.tail;let release!:()=>void;
-    this.tail=new Promise<void>(resolve=>{release=resolve;});await before;
+    this.tail=new Promise<void>(resolve=>{release=resolve;});
+    try{await archiveDeadline(before,queueTimeoutMs,'QUEUE');}
+    catch(e){void before.then(()=>{this.pending--;release();});throw e;} // Expired queued work never runs.
     try{return await work();}finally{this.pending--;release();}
   }
 }

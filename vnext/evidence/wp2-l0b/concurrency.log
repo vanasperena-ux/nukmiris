@@ -1,0 +1,95 @@
+
+> nukmiris-wp1-synthetic-core@0.0.0 test:concurrency
+> npm run build && node scripts/run-tests.mjs concurrency
+
+
+> nukmiris-wp1-synthetic-core@0.0.0 build
+> tsc -p tsconfig.json
+
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.2
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.2
+npm notice To update run: npm install -g npm@12.2.2
+npm notice
+WP1 evidence run: /workspace/work/nukmiris-l0b/vnext/evidence/runs/2026-11-05T02-10-35.371Z-concurrency
+✔ 017 actual process death at archive.beforeDataCommit and explicit restart recovery (61.238759ms)
+✔ 017 actual process death at archive.afterDataCommit and explicit restart recovery (66.507544ms)
+✔ 017 actual process death at archive.afterWitnessCommit and explicit restart recovery (56.677498ms)
+✔ 017 actual process death at archive.afterConfirm and explicit restart recovery (58.628417ms)
+✔ 017 concurrent independent processes converge on one original ARM identity (123.002015ms)
+✔ 017 concurrent distinct appenders hold during pending checkpoint; caller can retry only after known completion (8.054591ms)
+✔ 017 operator cannot steal a live SQL lock; fence persists until writer is terminated (312.478113ms)
+✔ 017 a stale process cannot publish after an independently committed repair fence (55.720132ms)
+✔ R-CONCURRENT: 256 seeded overlapping PostgreSQL STOP/suspension/submission schedules preserve linearized gates (1543.498388ms)
+✔ R010-RACE: submission committed before abandonment preserves the unresolved hold (231.055106ms)
+✔ R007-RACE: a held input cannot execute through a preparation that waited on its conversation lock (291.875322ms)
+✔ N1 bounded read retries revalidate transient state but never convert failure to authenticated absence (456.388211ms)
+✔ N1 whole facade call, including mutex queue wait, has a caller deadline (14.87222ms)
+✔ N1 composing bounded facades does not multiply the five-read bound (384.311338ms)
+✔ A3 a never-answering witness read fails by deadline without allocating or changing archive data (34.302707ms)
+✔ A3 never-answering witness advance releases the mutex, leaves pending state and preserves the original identity on repair (29.166797ms)
+✔ A3 a witness response arriving after its deadline cannot run confirmation or allocate a replacement owner (29.732415ms)
+✔ A3 expired queued writes never run their allocation callback and do not steal active ownership (25.23407ms)
+✔ A3 timed-out repair witness completion releases the mutex while its epoch and data remain held (29.109892ms)
+✔ N4/A1 rejects unsupported tenant-binding key BusinessId (3.151909ms)
+✔ N4/A1 rejects unsupported tenant-binding key business_id (2.392775ms)
+✔ N4/A1 rejects unsupported tenant-binding key BUSINESS__ID (2.329832ms)
+✔ N4/A1 rejects unsupported tenant-binding key tenantId (2.142013ms)
+✔ N4/A1 rejects unsupported tenant-binding key tenant_id (2.006612ms)
+✔ N4/A1 rejects unsupported tenant-binding key Tenant_ID (2.72695ms)
+✔ N4/A1 rejects noncanonical tenant identifier "Synthetic-a" (0.198925ms)
+✔ N4/A1 rejects noncanonical tenant identifier "synthetic_a" (0.05435ms)
+✔ N4/A1 rejects noncanonical tenant identifier " synthetic-a" (0.035723ms)
+✔ N4/A1 rejects noncanonical tenant identifier "synthetic-a\n" (0.031737ms)
+✔ N4/A1 rejects noncanonical tenant identifier "a--b" (0.031457ms)
+✔ N4/A1 rejects noncanonical tenant identifier "a-" (0.029884ms)
+✔ N4/A1 rejects noncanonical tenant identifier "á" (0.029003ms)
+✔ N4/A1 rejects noncanonical tenant identifier "" (0.031306ms)
+✔ N4/A1 rejects noncanonical tenant identifier "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" (0.030475ms)
+✔ A2 older archive policy is quarantined without repair, normalization or original-data deletion (9.485791ms)
+✔ W2-CL01 one sealed classification handles NFC/NFD/accent/space/punctuation withdrawals without poisoning the next head (318.309429ms)
+✔ W2-CL02 ordinary chat, name/date context, human mode and Menu terminate durably with no fabricated appointment (346.870653ms)
+✔ W2-CL03 exact/repacked retries retain original class, IDs and terminal decision (167.099539ms)
+✔ W2-CL03 altered frozen classification rejected {"version":2} (159.250977ms)
+✔ W2-CL03 altered frozen classification rejected {"version":"1"} (161.395784ms)
+✔ W2-CL03 altered frozen classification rejected {"ruleVersion":"NEW-RULE"} (160.558388ms)
+✔ W2-CL03 altered frozen classification rejected {"kind":"WITHDRAWAL"} (156.620821ms)
+✔ W2-CL03 altered frozen classification rejected {"eventDigest":"0000000000000000000000000000000000000000000000000000000000000000"} (264.693063ms)
+✔ W2-CL03 altered frozen classification rejected {"subject":"foreign"} (155.875728ms)
+✔ W2-CL04 authenticated mixed tenants keep raw custody separate; failed binding never falls back and STOP is durable (186.040802ms)
+✔ W2-RP04 held ordinary input drains normally after a predecessor resolves, without operator HOLD (266.416317ms)
+✔ W2-CL recovery after activation COMMIT loss reuses classification and completes the original reduction (169.053487ms)
+✔ N1 admission retries only bounded reads; failed custody leaves STOP durable and cannot ACK or allocate a second input (266.309602ms)
+✔ N1 dispatch retries only original ARM reads; exhaustion holds with zero provider calls and no new owner (646.849044ms)
+✔ N5/A1 untrusted tenant aliases cannot enter the normalized schema; JSON text stays opaque under its authenticated route (150.519537ms)
+✔ N5 distinct authenticated receiving channels namespace withdrawal evidence even with the same provider message ID (257.810218ms)
+✔ W2-RP01 sequence two cannot reserve first through either application or direct SQL (256.319771ms)
+✔ W2-RP02 concurrent workers preserve the lower sequence before reservation (204.584021ms)
+✔ W2-RP02 an earlier STAGED input survives crash cuts and bars later reservation until original activation (223.221616ms)
+✔ W2-RP02 eligible but unreduced ordinary input bars reservation until the normal reducer drains it (314.12209ms)
+✔ W2-RP03 UNKNOWN holds same/different later slots; Menu never releases it; read-only proof and ordered confirmation advance (414.328479ms)
+✔ W2-RP cancellation finalizes once, sends its scoped confirmation and releases the slot for a new input (334.962342ms)
+✔ O1 unique-output conflict is a terminal original-plan outcome, not a same-plan retry (212.468036ms)
+✔ O1 real lock timeout rolls back reservations, records a terminal conflict, and permits a new request without retrying the old plan (284.677399ms)
+✔ O1 a committed conflict marker survives reduction-custody failure and drains without replaying the rejected plan (222.958882ms)
+✔ A1 SQL seal registration independently rejects nested tenant aliases even with a recomputed digest (115.648691ms)
+✔ O3 constraint migration refuses any existing input/in-flight state without modifying the database (164.927529ms)
+✔ reduction custody survives SQL rollback and a later human-priority context without overwriting the newer context (180.54314ms)
+✔ F04/F06 process crash after staged SQL retains the original archived input through restart (309.820951ms)
+✔ F11 before-arm freeze: later arm wins once and the stale resumed process cannot submit (335.574684ms)
+✔ F11 armed-process death never transfers possible dispatch authority to a restart (393.356031ms)
+✔ F13 residual counterexample: a frozen process admitted BEFORE suspension can physically invoke later; no successor can (430.726939ms)
+✔ F14/16 process death after actual fake-provider acceptance reconciles read-only without another invocation (429.232895ms)
+ℹ tests 68
+ℹ suites 0
+ℹ pass 68
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 12977.461068
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.2
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.2
+npm notice To update run: npm install -g npm@12.2.2
+npm notice

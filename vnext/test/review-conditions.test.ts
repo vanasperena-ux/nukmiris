@@ -52,7 +52,10 @@ test('C1 NEW-1: an existing finalized output ID cannot create new reservations o
 });
 
 test('C1 NEW-1: pending and abandoned operation plans retain exclusive output IDs, with exact replay allowed',async t=>{
- const f=await fixture(t),first=await plan(f),base=await candidate(f,{startAt:'2030-01-03T10:00:00Z',endAt:'2030-01-03T11:00:00Z'});
+ const f=await fixture(t),first=await plan(f),customer=randomUUID();
+ await f.admin.query('INSERT INTO core.customer VALUES($1,$2,$3)',[b,customer,'independent-c1']);
+ const input=await admission(f,raw(f,'synthetic fixed command',b,randomUUID(),'independent-c1'));
+ const base=await candidate(f,{inputId:text(input.inputs[0]!['inputId']),customerId:customer,startAt:'2030-01-03T10:00:00Z',endAt:'2030-01-03T11:00:00Z'});
  const p={...base,outputId:first.body['outputId']!},before=await reservationState(f);
  await assert.rejects(prepare(f,p),/plan_output_denied/);assert.deepEqual(await reservationState(f),before);
  await prepare(f,first.body,first);assert.deepEqual(await reservationState(f),before,'exact replay is idempotent');

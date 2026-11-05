@@ -1,0 +1,79 @@
+
+> nukmiris-wp1-synthetic-core@0.0.0 test:l0b
+> npm run build && node scripts/run-tests.mjs l0b
+
+
+> nukmiris-wp1-synthetic-core@0.0.0 build
+> tsc -p tsconfig.json
+
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.2
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.2
+npm notice To update run: npm install -g npm@12.2.2
+npm notice
+WP1 evidence run: /workspace/work/nukmiris-l0b/vnext/evidence/runs/2026-11-05T02-11-58.374Z-l0b
+✔ N1 bounded read retries revalidate transient state but never convert failure to authenticated absence (455.297137ms)
+✔ N1 whole facade call, including mutex queue wait, has a caller deadline (14.846322ms)
+✔ N1 composing bounded facades does not multiply the five-read bound (385.077268ms)
+✔ A3 a never-answering witness read fails by deadline without allocating or changing archive data (29.909315ms)
+✔ A3 never-answering witness advance releases the mutex, leaves pending state and preserves the original identity on repair (28.643047ms)
+✔ A3 a witness response arriving after its deadline cannot run confirmation or allocate a replacement owner (28.549719ms)
+✔ A3 expired queued writes never run their allocation callback and do not steal active ownership (24.760446ms)
+✔ A3 timed-out repair witness completion releases the mutex while its epoch and data remain held (29.235534ms)
+✔ N4/A1 rejects unsupported tenant-binding key BusinessId (2.923741ms)
+✔ N4/A1 rejects unsupported tenant-binding key business_id (2.45055ms)
+✔ N4/A1 rejects unsupported tenant-binding key BUSINESS__ID (2.341358ms)
+✔ N4/A1 rejects unsupported tenant-binding key tenantId (2.107111ms)
+✔ N4/A1 rejects unsupported tenant-binding key tenant_id (2.086431ms)
+✔ N4/A1 rejects unsupported tenant-binding key Tenant_ID (2.64048ms)
+✔ N4/A1 rejects noncanonical tenant identifier "Synthetic-a" (0.198955ms)
+✔ N4/A1 rejects noncanonical tenant identifier "synthetic_a" (0.086778ms)
+✔ N4/A1 rejects noncanonical tenant identifier " synthetic-a" (0.036724ms)
+✔ N4/A1 rejects noncanonical tenant identifier "synthetic-a\n" (0.031917ms)
+✔ N4/A1 rejects noncanonical tenant identifier "a--b" (0.031166ms)
+✔ N4/A1 rejects noncanonical tenant identifier "a-" (0.028612ms)
+✔ N4/A1 rejects noncanonical tenant identifier "á" (0.028492ms)
+✔ N4/A1 rejects noncanonical tenant identifier "" (0.030195ms)
+✔ N4/A1 rejects noncanonical tenant identifier "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" (0.035242ms)
+✔ A2 older archive policy is quarantined without repair, normalization or original-data deletion (8.713497ms)
+✔ W2-CL01 one sealed classification handles NFC/NFD/accent/space/punctuation withdrawals without poisoning the next head (317.243868ms)
+✔ W2-CL02 ordinary chat, name/date context, human mode and Menu terminate durably with no fabricated appointment (346.839965ms)
+✔ W2-CL03 exact/repacked retries retain original class, IDs and terminal decision (176.540114ms)
+✔ W2-CL03 altered frozen classification rejected {"version":2} (155.423571ms)
+✔ W2-CL03 altered frozen classification rejected {"version":"1"} (154.993238ms)
+✔ W2-CL03 altered frozen classification rejected {"ruleVersion":"NEW-RULE"} (158.742161ms)
+✔ W2-CL03 altered frozen classification rejected {"kind":"WITHDRAWAL"} (170.311743ms)
+✔ W2-CL03 altered frozen classification rejected {"eventDigest":"0000000000000000000000000000000000000000000000000000000000000000"} (158.391618ms)
+✔ W2-CL03 altered frozen classification rejected {"subject":"foreign"} (157.422157ms)
+✔ W2-CL04 authenticated mixed tenants keep raw custody separate; failed binding never falls back and STOP is durable (192.287269ms)
+✔ W2-RP04 held ordinary input drains normally after a predecessor resolves, without operator HOLD (358.702448ms)
+✔ W2-CL recovery after activation COMMIT loss reuses classification and completes the original reduction (167.262235ms)
+✔ N1 admission retries only bounded reads; failed custody leaves STOP durable and cannot ACK or allocate a second input (256.445038ms)
+✔ N1 dispatch retries only original ARM reads; exhaustion holds with zero provider calls and no new owner (748.805852ms)
+✔ N5/A1 untrusted tenant aliases cannot enter the normalized schema; JSON text stays opaque under its authenticated route (153.957442ms)
+✔ N5 distinct authenticated receiving channels namespace withdrawal evidence even with the same provider message ID (166.706106ms)
+✔ W2-RP01 sequence two cannot reserve first through either application or direct SQL (247.330089ms)
+✔ W2-RP02 concurrent workers preserve the lower sequence before reservation (204.855221ms)
+✔ W2-RP02 an earlier STAGED input survives crash cuts and bars later reservation until original activation (212.391725ms)
+✔ W2-RP02 eligible but unreduced ordinary input bars reservation until the normal reducer drains it (190.321619ms)
+✔ W2-RP03 UNKNOWN holds same/different later slots; Menu never releases it; read-only proof and ordered confirmation advance (301.059574ms)
+✔ W2-RP cancellation finalizes once, sends its scoped confirmation and releases the slot for a new input (328.005849ms)
+✔ O1 unique-output conflict is a terminal original-plan outcome, not a same-plan retry (213.176863ms)
+✔ O1 real lock timeout rolls back reservations, records a terminal conflict, and permits a new request without retrying the old plan (366.128235ms)
+✔ O1 a committed conflict marker survives reduction-custody failure and drains without replaying the rejected plan (236.908912ms)
+✔ A1 SQL seal registration independently rejects nested tenant aliases even with a recomputed digest (116.618177ms)
+✔ O3 constraint migration refuses any existing input/in-flight state without modifying the database (186.304793ms)
+✔ reduction custody survives SQL rollback and a later human-priority context without overwriting the newer context (196.510465ms)
+ℹ tests 52
+ℹ suites 0
+ℹ pass 52
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 7894.05548
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.2
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.2
+npm notice To update run: npm install -g npm@12.2.2
+npm notice

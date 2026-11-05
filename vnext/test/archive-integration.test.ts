@@ -1,3 +1,5 @@
+import {admissionCustody,RAW_CUSTODY} from '../src/application/admission-custody.js';
+import {fixtureCustody} from './support/custody.js';
 import { test, type TestContext } from 'node:test';
 import assert from 'node:assert/strict';
 import { randomUUID } from 'node:crypto';
@@ -15,7 +17,7 @@ import { capacityWorkflows } from './support/archive-capacity-workflow.js';
 
 async function setup(t:TestContext) {
   const f=await fixture(t),a=await archiveFixture(t),archive=a.scope,body=raw(f);
-  const admitted=await admitInput({raw:body,signature:signature(f,body),secret:f.secret,routes:f.routes,ingress:f.role('ingress'),sealer:f.role('sealer'),archive,clock:f.clock});
+  const admitted=await admitInput({raw:body,signature:signature(f,body),secret:f.secret,routes:f.routes,ingress:f.role('ingress'),sealer:f.role('sealer'),reducer:f.role('reducer'),custody:fixtureCustody(a.archive),clock:f.clock});
   const p=await prepareOperation({request:{businessId:'synthetic-a',inputId:text(admitted.inputs[0]!['inputId']),customerId:f.id('customer'),calendarId:f.id('calendar'),resourceId:f.id('resource'),startAt:'2030-01-02T10:00:00Z',endAt:'2030-01-02T11:00:00Z'},reducer:f.role('reducer'),sealer:f.role('sealer'),archive,clock:f.clock});
   const ownerId=randomUUID(),attemptId=text(p.body['attemptId']);
   const common={businessId:'synthetic-a',attemptId,ownerId,dispatcher:f.role('dispatch'),archive};
@@ -54,15 +56,15 @@ test('017 cold restore keeps original archived identity and remains inert; broke
   corrupt(a.config.file,'DELETE FROM nodes');const brokenTarget=await fixture(t,false),broken=await restoreInert({snapshot,recovery:brokenTarget.role('recovery'),archive});assert.equal(broken.complete,false);assert.equal(broken.newEffects,0);
 });
 
-test('017 scoped archive refuses mixed-tenant raw custody after preserving every validated immediate STOP',async t=>{
+test('017 missing tenant binding refuses ACK after preserving every validated immediate STOP',async t=>{
   const f=await fixture(t),a=await archiveFixture(t);
   const av=object(JSON.parse(raw(f,'STOP','synthetic-a').toString())),bv=object(JSON.parse(raw(f,'STOP','synthetic-b').toString()));
   const body=Buffer.from(JSON.stringify({entry:[...(av['entry'] as []),...(bv['entry'] as [])]}));
-  await assert.rejects(admitInput({raw:body,signature:signature(f,body),secret:f.secret,routes:f.routes,ingress:f.role('ingress'),sealer:f.role('sealer'),archive:a.scope,clock:f.clock}),/archive_batch_scope/);
+  await assert.rejects(admitInput({raw:body,signature:signature(f,body),secret:f.secret,routes:f.routes,ingress:f.role('ingress'),sealer:f.role('sealer'),reducer:f.role('reducer'),custody:admissionCustody(a.archive.scope(RAW_CUSTODY),new Map([['synthetic-a',a.scope]])),clock:f.clock}),/tenant_archive_binding_missing/);
   assert.equal((await f.rows('permission_head','synthetic-a'))[0]!['suppressed'],true);
   assert.equal((await f.rows('permission_head','synthetic-b'))[0]!['suppressed'],true);
-  const records=await a.scope.records();assert.ok(records.length>0);assert.ok(records.every(s=>s.kind==='SUPPRESSION'&&s.body['businessId']==='synthetic-a'));
-  assert.equal((await f.rows('input')).length,0);assert.equal((await f.rows('input','synthetic-b')).length,0);
+  const records=await a.scope.records();assert.ok(records.length>0);assert.ok(records.every(s=>s.kind!=='RAW_BATCH'&&s.body['businessId']==='synthetic-a'));
+  assert.equal((await f.rows('input')).length,1);assert.equal((await f.rows('input','synthetic-b')).length,0);
 });
 
 test('017 capacity workflow oracle measures guarded admission and competing dispatch without bypassing output heads',async t=>{

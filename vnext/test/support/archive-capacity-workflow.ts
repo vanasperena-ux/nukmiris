@@ -1,3 +1,4 @@
+import {fixtureCustody} from './custody.js';
 import assert from 'node:assert/strict';
 import { randomUUID } from 'node:crypto';
 import { join } from 'node:path';
@@ -23,7 +24,7 @@ export async function capacityWorkflows(indexed:IndexedArchive) {
       const customerId=randomUUID(),subject='capacity-customer-'+i;
       await f.admin.query('INSERT INTO core.customer VALUES($1,$2,$3)',['synthetic-a',customerId,subject]);
       const body=raw(f,'synthetic fixed command','synthetic-a',randomUUID(),subject),start=performance.now();
-      const admitted=await admitInput({raw:body,signature:signature(f,body),secret:f.secret,routes:f.routes,ingress:f.role('ingress'),sealer:f.role('sealer'),archive,clock:f.clock});
+      const admitted=await admitInput({raw:body,signature:signature(f,body),secret:f.secret,routes:f.routes,ingress:f.role('ingress'),sealer:f.role('sealer'),reducer:f.role('reducer'),custody:fixtureCustody(indexed),clock:f.clock});
       admissionMs.push(performance.now()-start);
       const startAt=new Date(Date.parse('2030-01-02T10:00:00Z')+i*7_200_000).toISOString(),endAt=new Date(Date.parse(startAt)+3_600_000).toISOString();
       const p=await prepareOperation({request:{businessId:'synthetic-a',inputId:text(admitted.inputs[0]!['inputId']),customerId,calendarId:f.id('calendar'),resourceId:f.id('resource'),startAt,endAt},reducer:f.role('reducer'),sealer:f.role('sealer'),archive,clock:f.clock});

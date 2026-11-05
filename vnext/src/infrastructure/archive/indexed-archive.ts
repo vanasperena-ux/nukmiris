@@ -5,14 +5,15 @@ import { createCipheriv, createDecipheriv, createHmac, randomBytes, type KeyObje
 import { canonical, depth, digest, object, text, noFaults, type ObjectValue, type Faults } from '../../domain/protocol.js';
 import type { EvidenceStore, Seal } from '../../ports.js';
 import { AuthenticatedTree } from './authenticated-tree.js';
-import { ArchiveMutex, ArchiveBusyError, ArchivePendingError, ArchiveHeldError, archiveError } from './availability.js';
+import { ArchiveMutex, ArchiveBusyError, ArchivePendingError, ArchiveHeldError, ArchiveIncompatibleError, archiveDeadline, archiveError } from './availability.js';
+import { tenantId, tenantBindings } from '../../domain/tenant.js';
 import { authenticate, emptyHead, headDigest, same, ZERO, type ArchiveWitness, type Checkpoint, type Head, type RepairPermit } from './protocol.js';
 
 interface Entry {
   sequence:number; tenant:string; keyHash:string; keyVersion:string; prev:string;
   iv:string; tag:string; ciphertext:string; mac:string; hash:string;
 }
-interface Meta { head:Head; pending:{base:Head; epoch:number} | null }
+interface Meta { tenantPolicy:2; head:Head; pending:{base:Head; epoch:number} | null }
 export interface ArchiveConfig {
   file:string; archiveId:string; witness:ArchiveWitness; witnessKey:KeyObject;
   authenticationKey:Buffer; encryptionKeys:ReadonlyMap<string,Buffer>; activeKey:string;
@@ -21,6 +22,8 @@ export interface ArchiveConfig {
   minimumCheckpoint?:Checkpoint;
   /** Existing local directory; forensic data/keys must never be published as evidence. */
   forensicDirectory?:string;
+  witnessTimeoutMs?:number;
+  queueTimeoutMs?:number;
 }
 export interface ArchiveInput { key:string; kind:string; match:ObjectValue; allocate?:()=>ObjectValue }
 const schema = `
@@ -45,18 +48,19 @@ export class IndexedArchive {
   readonly metrics={lookups:0,nodeReads:0,decryptions:0,fullAudits:0};
   private constructor(config:ArchiveConfig, create:boolean) {
     text(config.archiveId);
+    for(const ms of [config.witnessTimeoutMs??1000,config.queueTimeoutMs??1000])if(!Number.isSafeInteger(ms)||ms<1||ms>10000)throw new Error('archive_deadline_configuration');
     if(config.authenticationKey.length!==32 || !config.encryptionKeys.size || !config.tenants.length) throw new Error('archive_configuration');
     if(config.capacity!==undefined&&(!Number.isSafeInteger(config.capacity)||config.capacity<1||config.capacity>1_100_000))throw new Error('archive_capacity_configuration');
     for(const key of config.encryptionKeys.values()) if(key.length!==32) throw new Error('archive_configuration');
     // Copy caller-owned key material and grants; later mutation cannot widen a facade.
     this.config={...config,authenticationKey:Buffer.from(config.authenticationKey),encryptionKeys:new Map([...config.encryptionKeys].map(([v,k])=>[v,Buffer.from(k)]))};
-    this.allowed=new Set(config.tenants.map(text)); this.faults=config.faults??noFaults; this.floor=config.minimumCheckpoint;
+    this.allowed=new Set(config.tenants.map(tenantId)); this.faults=config.faults??noFaults; this.floor=config.minimumCheckpoint;
     if(create) closeSync(openSync(config.file,'wx',0o600)); // Never recreate a lost archive on open.
     else closeSync(openSync(config.file,'r'));
     this.db=new DatabaseSync(config.file);
     try {
       this.db.exec('PRAGMA busy_timeout=250; PRAGMA journal_mode=WAL; PRAGMA synchronous=FULL; PRAGMA foreign_keys=ON;');
-      if(create) { this.db.exec(schema); this.setMeta({head:emptyHead(config.archiveId),pending:null}); }
+      if(create) { this.db.exec(schema); this.setMeta({tenantPolicy:2,head:emptyHead(config.archiveId),pending:null}); }
     }catch(e){this.db.close();throw archiveError(e);}
   }
   static async create(config:ArchiveConfig):Promise<IndexedArchive> {
@@ -77,6 +81,7 @@ export class IndexedArchive {
   async repair(permit:RepairPermit):Promise<number> {
     return this.serialized(async()=>{
       const fence=authenticate(permit.fenced,this.config.witnessKey,this.config.archiveId);
+      this.meta(); // A2: incompatible archives are quarantined, never repaired/normalized in place.
       if(fence.mode!=='REPAIR'||!same(await this.checkpoint(),fence))throw new Error('archive_repair_fence');
       // Completed backups are coherent. A killed backup can leave a partial final-name
       // copy: N2 remains a production repair gate (atomic publication + signed digest).
@@ -92,17 +97,18 @@ export class IndexedArchive {
     this.db.close();
   }
   private async serialized<T>(work:()=>Promise<T>):Promise<T> {
-    try{return await this.mutex.run(work);}catch(e){throw archiveError(e);}
+    try{return await this.mutex.run(work,this.config.queueTimeoutMs??1000);}catch(e){throw archiveError(e);}
   }
   private meta():Meta {
     const row=this.db.prepare('SELECT value FROM meta WHERE id=1').get() as {value:string}|undefined;
     if(!row) throw new Error('archive_meta_missing');
     const m=JSON.parse(row.value) as Meta;
+    if(m.tenantPolicy!==2)throw new ArchiveIncompatibleError();
     if(m.head.archiveId!==this.config.archiveId) throw new Error('archive_identity'); return m;
   }
   private setMeta(meta:Meta):void {this.db.prepare('INSERT INTO meta VALUES(1,?) ON CONFLICT(id) DO UPDATE SET value=excluded.value').run(JSON.stringify(meta));}
   private async checkpoint():Promise<Checkpoint> {
-    const c=authenticate(await this.config.witness.read(),this.config.witnessKey,this.config.archiveId), f=this.floor;
+    const c=authenticate(await archiveDeadline(this.config.witness.read(),this.config.witnessTimeoutMs??1000,'WITNESS_READ'),this.config.witnessKey,this.config.archiveId), f=this.floor;
     if(f&&(c.epoch<f.epoch||c.head.size<f.head.size||(c.head.size===f.head.size&&!same(c.head,f.head)))) throw new Error('archive_witness_rollback');
     this.floor=c; return c;
   }
@@ -171,14 +177,7 @@ export class IndexedArchive {
     return this.decode(e);
   }
   private bodyTenant(tenant:string,body:ObjectValue):void {
-    depth(body);
-    const visit=(value:unknown):void=>{
-      if(Array.isArray(value)){for(const item of value)visit(item);}
-      else if(value&&typeof value==='object')for(const [key,item] of Object.entries(value)) {
-        if(key==='businessId'&&item!==tenant)throw new Error('archive_foreign_body');visit(item);
-      }
-    };
-    visit(body);
+    tenantBindings(body,tenant);
   }
   private async lookup(tenant:string,key:string):Promise<Seal|null> {
     text(key); const c=await this.checkpoint(); this.db.exec('BEGIN');
@@ -222,11 +221,11 @@ export class IndexedArchive {
       }
       tree.flush();this.metrics.nodeReads+=tree.reads;
       if(same(next,m.head)){this.db.exec('COMMIT');return result;}
-      this.setMeta({head:next,pending:{base:m.head,epoch:c.epoch}});
+      this.setMeta({tenantPolicy:2,head:next,pending:{base:m.head,epoch:c.epoch}});
       await this.faults.hit('archive.beforeDataCommit');this.db.exec('COMMIT');committed=true;
     } catch(e) {if(!committed)this.db.exec('ROLLBACK');throw e;}
     await this.faults.hit('archive.afterDataCommit');
-    const signed=await this.config.witness.advance(c,next!);
+    const signed=await archiveDeadline(this.config.witness.advance(c,next!),this.config.witnessTimeoutMs??1000,'WITNESS_ADVANCE');
     const advanced=authenticate(signed,this.config.witnessKey,this.config.archiveId);
     if(advanced.mode!=='NORMAL'||advanced.epoch!==c.epoch||!same(advanced.head,next!)||advanced.repairDigest!==c.repairDigest)throw new Error('archive_advance_unknown');
     this.floor=advanced;await this.faults.hit('archive.afterWitnessCommit');
@@ -236,7 +235,7 @@ export class IndexedArchive {
   }
   private confirm(head:Head):void {
     this.db.exec('BEGIN IMMEDIATE');
-    try {const m=this.meta();if(!same(m.head,head))throw new Error('archive_confirm_mismatch');this.setMeta({head,pending:null});this.db.exec('COMMIT');}
+    try {const m=this.meta();if(!same(m.head,head))throw new Error('archive_confirm_mismatch');this.setMeta({tenantPolicy:2,head,pending:null});this.db.exec('COMMIT');}
     catch(e){this.db.exec('ROLLBACK');throw e;}
   }
   /** Cold completeness audit only. Normal dispatch/verification never scans history. */
@@ -281,11 +280,11 @@ export class IndexedArchive {
       repairDigest=digest({...decision,mac});
       this.db.prepare('INSERT INTO repair_case(value) VALUES(?)').run(JSON.stringify({...decision,mac,digest:repairDigest}));
       this.db.exec('DELETE FROM nodes; INSERT INTO nodes SELECT * FROM repair_nodes; DELETE FROM repair_nodes;');
-      this.setMeta({head:rebuilt,pending:{base:fence.head,epoch:fence.epoch}});
+      this.setMeta({tenantPolicy:2,head:rebuilt,pending:{base:fence.head,epoch:fence.epoch}});
       await this.faults.hit('archive.beforeRepairCommit');this.db.exec('COMMIT');committed=true;
     }catch(e){if(!committed)this.db.exec('ROLLBACK');throw e;}
     await this.faults.hit('archive.afterRepairCommit');
-    const done=authenticate(await permit.finish(rebuilt!,repairDigest!),this.config.witnessKey,this.config.archiveId);
+    const done=authenticate(await archiveDeadline(permit.finish(rebuilt!,repairDigest!),this.config.witnessTimeoutMs??1000,'WITNESS_FINISH'),this.config.witnessKey,this.config.archiveId);
     if(done.mode!=='NORMAL'||done.epoch!==fence.epoch||!same(done.head,rebuilt!)||done.repairDigest!==repairDigest!)throw new Error('archive_repair_finish_unknown');
     this.floor=done;await this.faults.hit('archive.afterRepairWitness');
     const now=await this.checkpoint();if(!same(now,done))throw new Error('archive_fenced');

@@ -1,12 +1,15 @@
-# vNext synthetic safety core — WP1 and WP2-L0a
+# vNext synthetic safety core — WP1, WP2-L0a and WP2-L0b
 
 Owner authorized on 2026-11-01. This package has **no application start command,
 Google/Meta SDK, real credentials, booking UI or provider deployment**. It is an
 isolated proof of the approved [WP1 charter](../docs/greenfield/08-WP1-BOUNDED-IMPLEMENTATION-CHARTER.md).
 The accepted v0.8.1 application remains unchanged. Claude formally accepted WP1 for
 bounded synthetic use ([acceptance](https://github.com/vanasperena-ux/nukmiris/pull/4#issuecomment-6620571487)).
-WP2-L0a adds an indexed authenticated local fixture archive; independent L0a review
-is pending. See [implementation and exact next gate](../docs/greenfield/17-WP2-L0A-INDEXED-ARCHIVE.md).
+Claude formally closed WP2-L0a for bounded local synthetic use
+([acceptance](https://github.com/vanasperena-ux/nukmiris/pull/9#issuecomment-6646622771)).
+WP2-L0b implements sealed classification, durable reductions, reservation ordering
+and required inbound safeguards. Its independent acceptance is **pending**.
+See [implementation and acceptance matrix](../docs/greenfield/19-WP2-L0B-IMPLEMENTATION.md).
 
 Use Node 24.x, npm 11, Docker and the local managed daemon. From this directory:
 
@@ -17,6 +20,8 @@ npm run check:scope
 npm test
 npm run test:fault
 npm run test:conditions
+npm run test:l0b
+npm run test:concurrency
 npm run test:archive
 npm run test:archive:capacity
 ```
@@ -70,14 +75,21 @@ under Milestone A; a native Windows owner smoke is still required.
 
 ## Enforced path
 
-Signed bounded bytes → verified receiving WABA/number → independent original
+Signed bounded bytes → verified receiving WABA/number → configured tenant facade → independent original
 identity + batch preparation → SQL STAGED → independent commit seal → ELIGIBLE.
 Only the literal **synthetic fixed command** can prepare an operation. This is a
-test selector, not a new WhatsApp booking flow. Signed mixed-business batches are partitioned into durable tenant records linked
-to one exact-byte raw archive record. All validated STOPs commit before archive
+test selector, not a new WhatsApp booking flow. One sealed `L0B-CLASS-1` classification
+is authoritative for TypeScript and SQL; ordinary text, context input, human mode,
+Menu and controls have durable outcomes without calendar mutations. Local reductions
+use `LOCAL_ONLY` disposition; they do not claim that a WhatsApp reply was sent.
+Signed mixed-business batches are partitioned into durable tenant records linked
+to one exact-byte raw archive record in the separately scoped `ingress-custody`
+facade. Tenants cannot read that facade through admission's tenant interface.
+All validated STOPs commit before archive
 work; ACK waits for every partition. Only synthetic text/receipt shapes are enabled.
 
-Operation preparation takes a scoped appointment guard and finite resource
+Operation preparation checks the conversation head **before** allocating a plan
+or taking a scoped appointment guard and finite resource
 protection. Source+target ranges merge during a move. Appointment/customer/calendar
 relationships are composite FKs; isolated employees can share one Calendar.
 Immutable original envelope, original IDs and an independent ARM record precede
@@ -125,8 +137,8 @@ businesses still span both; this is not isolation from fully compromised shared
 runtime or a production MFA/operator implementation.
 
 The prior WP1 review history is retained in the numbered review documents.
-Claude formally closed CP1/initial CP2 for bounded synthetic use; production gates
-remain open. L0a requires its own independent review.
+Claude formally closed CP1/initial CP2 and L0a for bounded synthetic use;
+production gates remain open. L0b requires its own independent review.
 
 The SQL recomputes canonical SHA-256 body/payload digests (UTF-8 key ordering;
 safe integral JSON numbers only). A digest establishes integrity, not authenticity.
@@ -159,8 +171,8 @@ and this limit.
 
 [WP2 requirements and unchanged activation gates](../docs/greenfield/16-WP2-BOOKING-AND-INBOUND-DESIGN-REQUIREMENTS.md)
 record NEW-2 reservation priority and NEW-3 sealed admission-time classification.
-These remain L0b requirements; L0a does not implement booking/classification or
-provider authorization. The original file archive described above remains a regression
+L0b implements these requirements in the bounded synthetic core; commercial booking
+UX and provider authorization remain unimplemented. The original file archive described above remains a regression
 oracle. The new adapter, signed witness port, authenticated presence/absence index,
 fenced repair, capacity policy and test commands are described in document 17.
 Normal dispatch now uses keyed lookup; cold inert restore retains full completeness
@@ -170,7 +182,7 @@ audit. No production custody or native Windows result is claimed.
 ## L0a GO WITH CONDITIONS — B1/B2 correction
 
 [Claude's independent review](https://github.com/vanasperena-ux/nukmiris/pull/9#issuecomment-6622229074)
-requires re-verification before L0a closure/L0b entry. Archive calls on one instance
+was independently closed by the acceptance linked above. Archive calls on one instance
 now share a bounded FIFO async mutex; cross-instance SQLite contention is typed,
 and pending confirmation is distinct from an explicit repair fence. Nested tenant
 bindings are checked recursively. Run `npm run test:archive:concurrency`.
@@ -185,3 +197,30 @@ a mandatory 009/production-017 gate before any non-fixture custody.
 include bounded caller availability handling and multi-tenant admission binding
 before inbound expansion, partial forensic publication/stale-writer repair limits,
 and unchanged Windows/capacity limitations. No provider gate is relaxed.
+
+## L0b safety prerequisites and migration boundary
+
+Archive reads use at most five attempts with 25/50/100/200ms backoff inside a
+1,000ms facade-call budget. Appends get one invocation. Pending, contention,
+deadline, repair fence and integrity errors never become authenticated absence.
+No failed archive call authorizes a provider resend or a replacement identity.
+Witness calls and queue waits also have deadlines; a late witness response cannot
+confirm a timed-out append. Pending data remains held for original-key recovery.
+
+Tenant identifiers are lower-case ASCII slugs (maximum 64 characters). Only exact
+`businessId` is supported as a binding key, recursively; aliases such as `tenantId`,
+`business_id` and `BusinessId` are rejected. JSON strings remain opaque data.
+Authenticated route configuration selects the tenant facade without a default.
+Raw custody has a separate capability; this fixture shares a process and keys and
+does **not** establish production custody independence.
+
+Migration 004 is for a **fresh disposable fixture only** and refuses existing
+inputs/attempts. It preserves migrations 001–003 and role definitions. Do not apply
+it to a working installation. Archive tenant-policy version 2 rejects older metadata;
+create fresh local synthetic archives. The adapter refuses incompatible data;
+the operator must keep it quarantined, never silently upgraded/repaired. Production gate 011 still requires an operator
+quarantine and revalidation workflow. Do not reuse pre-N4 synthetic archives.
+
+The exact tested source, commands, results and independent Claude handoff are linked
+from [L0b evidence](evidence/wp2-l0b/README.md). Windows runtime/bootstrap, native
+device performance and the first interactive booking demonstration remain unverified.

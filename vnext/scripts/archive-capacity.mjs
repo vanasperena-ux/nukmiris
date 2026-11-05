@@ -13,7 +13,7 @@ const directory=await mkdtemp(join(tmpdir(),'nukmiris-l0a-capacity-'));
 const evidence=resolve('evidence/runs',new Date().toISOString().replaceAll(':','-')+'-archive-capacity');await mkdir(evidence,{recursive:true});
 const witness=new FixtureWitness(join(directory,'witness.sqlite'),'synthetic-capacity');
 const config={file:join(directory,'archive.sqlite'),forensicDirectory:evidence,archiveId:'synthetic-capacity',witness:witness.writer,witnessKey:witness.publicKey,
- authenticationKey:randomBytes(32),encryptionKeys:new Map([['v1',randomBytes(32)]]),activeKey:'v1',tenants:['synthetic-a']};
+ authenticationKey:randomBytes(32),encryptionKeys:new Map([['v1',randomBytes(32)]]),activeKey:'v1',tenants:['synthetic-a','synthetic-b','ingress-custody']};
 let archive=await IndexedArchive.create(config);const samples=[],start=performance.now();const cleanup=[];
 console.log('Capacity evidence: '+evidence+'; raw fixture retained locally (no keys published).');
 const percentile=(a,p)=>[...a].sort((x,y)=>x-y)[Math.min(a.length-1,Math.floor(a.length*p))];

@@ -7,7 +7,7 @@ import {fixture,raw,signature,admission,cut,evidence} from './support/helpers.js
 
 test('F01 SEC01/02: exact bytes, WABA and receiving number authenticate before any write',async t=>{
   const f=await fixture(t),body=raw(f);
-  await assert.rejects(admitInput({raw:Buffer.concat([body,Buffer.from(' ')]),signature:signature(f,body),secret:f.secret,routes:f.routes,ingress:f.role('ingress'),sealer:f.role('sealer'),archive:f.archive,clock:f.clock}),/signature_rejected/);
+  await assert.rejects(admitInput({raw:Buffer.concat([body,Buffer.from(' ')]),signature:signature(f,body),secret:f.secret,routes:f.routes,ingress:f.role('ingress'),sealer:f.role('sealer'),reducer:f.role('reducer'),custody:f.custody,clock:f.clock}),/signature_rejected/);
   await assert.rejects(admission(f,Buffer.from(body.toString().replace('waba-synthetic-a','waba-foreign'))),/route_rejected/);
   await assert.rejects(admission(f,Buffer.from(body.toString().replace('number-synthetic-a','number-foreign'))),/route_rejected/);
   await assert.rejects(admission(f,Buffer.from(body.toString().replace('"type":"text"','"type":"image"'))),/unsupported_message/);

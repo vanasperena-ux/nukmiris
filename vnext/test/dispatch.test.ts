@@ -1,7 +1,7 @@
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
 import {randomUUID} from 'node:crypto';
-import {fixture,plan,arm,provider,apply,signature,raw,suppress,cut,evidence} from './support/helpers.js';
+import {fixture,plan,confirm,arm,provider,apply,signature,raw,suppress,cut,evidence} from './support/helpers.js';
 import {dispatchOnce,reconcileReadOnly,armAttempt} from '../src/application/dispatch-once.js';
 import {recordResult} from '../src/application/record-result.js';
 import {prepareOutput} from '../src/application/prepare-operation.js';
@@ -60,6 +60,7 @@ test('F16: result archive failure keeps protection; a read-only proof finalizes 
 
 test('F19: late result cannot release a newer appointment mutation guard',async t=>{
   const f=await fixture(t),p=await plan(f);await apply(t,f,p);
+  await confirm(t,f,p);
   const move=await plan(f,{kind:'MOVE',appointmentId:text(p.body['appointmentId']),eventId:text(p.body['eventId']),expectedRevision:2,startAt:'2030-01-02T12:00:00Z',endAt:'2030-01-02T13:00:00Z'});
   const proof={businessId:'synthetic-a',attemptId:text(p.body['attemptId']),payloadDigest:text(p.body['payloadDigest']),remoteId:text(p.body['eventId'])};
   assert.equal(await recordResult({proof,result:f.role('result'),sealer:f.role('sealer'),archive:f.archive}),false);
@@ -73,7 +74,7 @@ test('F20/21: exact sealed receipt before HTTP timeout wins; late failure cannot
   async function receipt(envelope:Envelope,status:string,recipient=envelope.recipient):Promise<boolean> {
     const value=JSON.parse(raw(f).toString()) as {entry:{changes:{value:{messages:unknown[]}}[]}[]};
     value.entry[0]!.changes[0]!.value.messages=[{id:randomUUID(),type:'receipt',attemptId:envelope.attemptId,messageId:envelope.remoteId,recipient,status}];
-    const body=Buffer.from(JSON.stringify(value)),a=await admitInput({raw:body,signature:signature(f,body),secret:f.secret,routes:f.routes,ingress:f.role('ingress'),sealer:f.role('sealer'),archive:f.archive,clock:f.clock});
+    const body=Buffer.from(JSON.stringify(value)),a=await admitInput({raw:body,signature:signature(f,body),secret:f.secret,routes:f.routes,ingress:f.role('ingress'),sealer:f.role('sealer'),reducer:f.role('reducer'),custody:f.custody,clock:f.clock});
     return f.role('result').tx('synthetic-a',async db=>(await db.query<{matched:boolean}>('SELECT core.accept_receipt($1,$2) matched',['synthetic-a',a.inputs[0]!['inputId']])).rows[0]!.matched);
   }
   server.beforeResponse=async envelope=>{assert.equal(await receipt(envelope,'read'),true);};
@@ -91,9 +92,8 @@ test('F22: an uncertain output head never expires into unsent and blocks later o
   const out=await prepareOutput({businessId:'synthetic-a',outputId:text(p.body['outputId']),reducer:f.role('reducer'),sealer:f.role('sealer'),archive:f.archive,clock:f.clock});
   const {server,client}=await provider(t,f);server.loseResponse=true;const owner=await arm(f,out);
   await dispatchOnce({businessId:'synthetic-a',attemptId:text(out.body['attemptId']),ownerId:owner,dispatcher:f.role('dispatch'),archive:f.archive,provider:client,clock:f.clock});
-  const second=await plan(f,{startAt:'2030-01-03T10:00:00Z',endAt:'2030-01-03T11:00:00Z'});
-  const owner2=await arm(f,second);
-  assert.equal((await dispatchOnce({businessId:'synthetic-a',attemptId:text(second.body['attemptId']),ownerId:owner2,dispatcher:f.role('dispatch'),archive:f.archive,provider:client,clock:f.clock})).state,'HELD');
+  await assert.rejects(plan(f,{startAt:'2030-01-03T10:00:00Z',endAt:'2030-01-03T11:00:00Z'}),/conversation_head_held/);
+  assert.equal((await f.rows('operation')).length,1,'later work cannot even reserve');
   assert.equal((await f.rows('output_intent')).length,1,'later operation is held before a later output can exist');
   const expired=await f.role('dispatch').tx('synthetic-a',async db=>(await db.query<{expired:boolean}>('SELECT core.expire_unsent($1,$2,$3) expired',['synthetic-a',out.body['outputId'],'2030-01-04T10:00:00Z'])).rows[0]!.expired);assert.equal(expired,false);
   await suppress(f);assert.equal((await f.rows('permission_head'))[0]!['suppressed'],true);

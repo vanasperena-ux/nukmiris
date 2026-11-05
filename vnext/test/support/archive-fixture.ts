@@ -53,7 +53,7 @@ export async function archiveFixture(t:TestContext,capacity?:number) {
   const directory=await mkdtemp(join(tmpdir(),'nukmiris-l0a-'));
   const witness=new FixtureWitness(join(directory,'witness.sqlite'),'synthetic-archive');
   const config:ArchiveConfig={file:join(directory,'archive.sqlite'),archiveId:'synthetic-archive',witness:witness.writer,witnessKey:witness.publicKey,
-    authenticationKey:randomBytes(32),encryptionKeys:new Map([['v1',randomBytes(32)],['v2',randomBytes(32)]]),activeKey:'v1',tenants:['synthetic-a','synthetic-b'],...(capacity===undefined?{}:{capacity})};
+    authenticationKey:randomBytes(32),encryptionKeys:new Map([['v1',randomBytes(32)],['v2',randomBytes(32)]]),activeKey:'v1',tenants:['synthetic-a','synthetic-b','ingress-custody'],...(capacity===undefined?{}:{capacity})};
   const opened:IndexedArchive[]=[];const archive=await IndexedArchive.create(config);opened.push(archive);
   const open=async(c:ArchiveConfig=config)=>{const a=await IndexedArchive.open(c);opened.push(a);return a;};
   const repair=async(c:ArchiveConfig=config)=>{const r=await IndexedArchive.repair(c,witness.beginRepair());opened.push(r.archive);return r;};

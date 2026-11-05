@@ -2,7 +2,7 @@ import {test} from 'node:test';
 import assert from 'node:assert/strict';
 import {randomUUID} from 'node:crypto';
 import {setTimeout as delay} from 'node:timers/promises';
-import {fixture,plan,apply,arm,provider,grant,suppress,status,admission,raw,evidence,abandon,holdInput} from './support/helpers.js';
+import {fixture,plan,admission,raw,apply,arm,provider,grant,suppress,status,evidence,abandon,holdInput} from './support/helpers.js';
 import {prepareOutput} from '../src/application/prepare-operation.js';
 import {dispatchOnce} from '../src/application/dispatch-once.js';
 import {text} from '../src/domain/protocol.js';
@@ -62,7 +62,11 @@ test('F25: duplicate old grant, same-time tie, stale revision and future evidenc
 });
 
 test('DB08/F12/F27: suspension blocks queued calendar and message admissions; reactivation never replays stale work',async t=>{
-  const {f,args,server}=await reminder(t),queued=await plan(f,{startAt:'2030-01-03T10:00:00Z',endAt:'2030-01-03T11:00:00Z'}),calendarOwner=await arm(f,queued);
+  const {f,args,server}=await reminder(t),channel=randomUUID();
+  await f.admin.query('INSERT INTO core.channel VALUES($1,$2,$3,$4,1,true)',['synthetic-a',channel,'waba-other','number-other']);
+  f.routes.push({businessId:'synthetic-a',channelId:channel,waba:'waba-other',numberId:'number-other',channelRevision:1});
+  const alternate=Buffer.from(raw(f).toString().replace('waba-synthetic-a','waba-other').replace('number-synthetic-a','number-other'));
+  const input=await admission(f,alternate),queued=await plan(f,{inputId:text(input.inputs[0]!['inputId']),startAt:'2030-01-03T10:00:00Z',endAt:'2030-01-03T11:00:00Z'}),calendarOwner=await arm(f,queued);
   await status(f,'SUSPENDED',1);
   assert.equal((await dispatchOnce(args)).state,'HELD');
   assert.equal((await dispatchOnce({...args,attemptId:text(queued.body['attemptId']),ownerId:calendarOwner})).state,'HELD');

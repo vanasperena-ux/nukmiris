@@ -10,6 +10,8 @@
     "test": "npm run build && node scripts/run-tests.mjs",
     "test:fault": "npm run build && node scripts/run-tests.mjs fault",
     "test:conditions": "npm run build && node scripts/run-tests.mjs conditions",
+    "test:l0b": "npm run build && node scripts/run-tests.mjs l0b",
+    "test:concurrency": "npm run build && node scripts/run-tests.mjs concurrency",
     "check:scope": "node scripts/check-scope.mjs",
     "test:archive": "npm run build && node --test --test-concurrency=1 dist/test/archive.test.js dist/test/archive-process.test.js dist/test/archive-concurrency.test.js dist/test/archive-security-boundary.test.js",
     "test:archive:concurrency": "npm run build && node --test --test-concurrency=1 dist/test/archive-concurrency.test.js dist/test/archive-process.test.js",

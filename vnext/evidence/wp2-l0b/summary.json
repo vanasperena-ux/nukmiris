@@ -1,0 +1,97 @@
+{
+  "testedSource": "6a4c3aa1eaea98e2155e9192f573cff1e8bc5c07",
+  "testedTree": "6068beb0b77ceb478830fc8e6a9457b7072e7154",
+  "parent": "de9a9a995a9d6ada4b398806db29d94abfe87364",
+  "evidenceOnlyFollowUp": true,
+  "independentL0bReview": "PENDING",
+  "result": "PASS",
+  "sourceFilesHashed": 63,
+  "environment": {
+    "node": "v24.19.0",
+    "npm": "11.9.0",
+    "sqlite": "3.53.3",
+    "platform": "Linux",
+    "kernel": "6.18.57",
+    "postgres": "17.11 (Debian 17.11-1.pgdg12+2)",
+    "image": "postgres@sha256:839fbb5a4942a7758dd93e18b42ea5649807491a0545b5eeeb8f0b8bb11857a5"
+  },
+  "results": {
+    "full": {
+      "command": "npm test",
+      "exitCode": 0,
+      "tests": 207,
+      "pass": 207,
+      "fail": 0,
+      "skipped": 0,
+      "cancelled": 0,
+      "todo": 0,
+      "durationMs": 57633.057196,
+      "log": "full.log",
+      "runId": "2026-11-05T02-07-41.002Z-full"
+    },
+    "fault": {
+      "command": "npm run test:fault",
+      "exitCode": 0,
+      "tests": 197,
+      "pass": 197,
+      "fail": 0,
+      "skipped": 0,
+      "cancelled": 0,
+      "todo": 0,
+      "durationMs": 48693.029459,
+      "log": "fault.log",
+      "runId": "2026-11-05T02-08-53.129Z-fault"
+    },
+    "concurrency": {
+      "command": "npm run test:concurrency",
+      "exitCode": 0,
+      "tests": 68,
+      "pass": 68,
+      "fail": 0,
+      "skipped": 0,
+      "cancelled": 0,
+      "todo": 0,
+      "durationMs": 12977.461068,
+      "log": "concurrency.log",
+      "runId": "2026-11-05T02-10-35.371Z-concurrency"
+    },
+    "archive-concurrency": {
+      "command": "npm run test:archive:concurrency",
+      "exitCode": 0,
+      "tests": 20,
+      "pass": 20,
+      "fail": 0,
+      "skipped": 0,
+      "cancelled": 0,
+      "todo": 0,
+      "durationMs": 1265.865534,
+      "log": "archive-concurrency.log"
+    },
+    "focused": {
+      "command": "npm run test:l0b",
+      "exitCode": 0,
+      "tests": 52,
+      "pass": 52,
+      "fail": 0,
+      "skipped": 0,
+      "cancelled": 0,
+      "todo": 0,
+      "durationMs": 7894.05548,
+      "log": "focused.log",
+      "runId": "2026-11-05T02-11-58.374Z-l0b"
+    }
+  },
+  "typecheck": "PASS",
+  "confinement": "PASS",
+  "diffWhitespace": "PASS",
+  "residuals": {
+    "B2_X1": "REPRODUCED; production chain AND index extension verification remains mandatory",
+    "F13": "REPRODUCED; physical cutoff/OPS01 remains blocked"
+  },
+  "largeArchiveRegressionRecords": 10000,
+  "millionRecordBenchmarkRerun": false,
+  "nativeWindowsAcceptance": "NOT RUN",
+  "generatedDatabaseOrArchiveStatePublished": false,
+  "noMergeDeploymentProvidersOrCloud": true,
+  "handoffSha256": "74bf8ca6cf772e86255754dec5d28349b3dd9992e9082b69eb890188280a99c8"
+}
