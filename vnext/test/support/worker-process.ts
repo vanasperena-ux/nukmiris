@@ -1,3 +1,4 @@
+import {fixtureCustody} from './custody.js';
 import {UnitOfWork} from '../../src/infrastructure/postgres/unit-of-work.js';
 import {FakeArchive} from './fake-archive.js';
 import {FakeProviderClient} from './fake-provider.js';
@@ -28,7 +29,7 @@ process.once('message',(config:WorkerConfig)=>{void(async()=>{
     const clock={now:()=>new Date(config.now)},faults:Faults={hit:p=>checkpoint(p,config.pauseAt)};
     if(config.mode==='admit') {
       const result=await admitInput({raw:Buffer.from(config.raw!,'base64'),signature:config.signature!,secret:Buffer.from(config.secret!,'base64'),routes:config.routes!,
-        ingress:role('ingress'),sealer,archive,clock,faults});process.send?.({type:'done',result});
+        ingress:role('ingress'),sealer,reducer:role('reducer'),custody:fixtureCustody(archive),clock,faults});process.send?.({type:'done',result});
     } else {
       const dispatcher=role('dispatch');
       const common={businessId:config.businessId,attemptId:config.attemptId,ownerId:config.ownerId,dispatcher,archive};

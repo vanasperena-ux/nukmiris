@@ -5,7 +5,7 @@ import path from 'node:path';
 import type {TestContext} from 'node:test';
 import {Fixture} from './postgres-fixture.js';
 import {admitInput} from '../../src/application/admit-input.js';
-import {prepareOperation} from '../../src/application/prepare-operation.js';
+import {prepareOperation,prepareOutput} from '../../src/application/prepare-operation.js';
 import {armAttempt,dispatchOnce} from '../../src/application/dispatch-once.js';
 import {recordResult} from '../../src/application/record-result.js';
 import {text} from '../../src/domain/protocol.js';
@@ -23,7 +23,7 @@ export function raw(_f:Fixture,message='synthetic fixed command',b='synthetic-a'
 }
 export function signature(f:Fixture,body:Buffer):string {return 'sha256='+createHmac('sha256',f.secret).update(body).digest('hex');}
 export function admission(f:Fixture,body=raw(f),faults?:Faults) {
-  return admitInput({raw:body,signature:signature(f,body),secret:f.secret,routes:f.routes,ingress:f.role('ingress'),sealer:f.role('sealer'),archive:f.archive,clock:f.clock,...(faults?{faults}:{})});
+  return admitInput({raw:body,signature:signature(f,body),secret:f.secret,routes:f.routes,ingress:f.role('ingress'),sealer:f.role('sealer'),reducer:f.role('reducer'),custody:f.custody,clock:f.clock,...(faults?{faults}:{})});
 }
 export function cut(point:string):Faults {return {async hit(actual){if(actual===point)throw new Error('injected:'+point);}};}
 export async function plan(f:Fixture,overrides:Partial<Parameters<typeof prepareOperation>[0]['request']>={},faults?:Faults):Promise<Seal> {
@@ -45,6 +45,12 @@ export async function apply(t:TestContext,f:Fixture,p:Seal):Promise<void> {
   const outcome=await dispatchOnce({businessId:text(p.body['businessId']),attemptId:text(p.body['attemptId']),ownerId,dispatcher:f.role('dispatch'),archive:f.archive,provider:client,clock:f.clock});
   if(outcome.state!=='APPLIED')throw new Error('fixture_expected_apply:'+outcome.state);
   await recordResult({proof:outcome.proof,result:f.role('result'),sealer:f.role('sealer'),archive:f.archive});
+}
+/** Explicitly complete the prior ordered confirmation before starting a later mutation. */
+export async function confirm(t:TestContext,f:Fixture,p:Seal):Promise<void> {
+  const b=text(p.body['businessId']),out=await prepareOutput({businessId:b,outputId:text(p.body['outputId']),reducer:f.role('reducer'),sealer:f.role('sealer'),archive:f.archive,clock:f.clock});
+  const {client}=await provider(t,f),ownerId=await arm(f,out),r=await dispatchOnce({businessId:b,attemptId:text(out.body['attemptId']),ownerId,dispatcher:f.role('dispatch'),archive:f.archive,provider:client,clock:f.clock});
+  if(r.state!=='APPLIED')throw new Error('fixture_confirmation_held');await recordResult({proof:r.proof,result:f.role('result'),sealer:f.role('sealer'),archive:f.archive});
 }
 export async function grant(f:Fixture,subject='customer-synthetic-a',b='synthetic-a',expected=0,occurredAt=f.clock.now().toISOString(),evidenceId=randomUUID()):Promise<void> {
   const body={businessId:b,subject,evidenceId,expected,occurredAt,wording:'SYNTHETIC named-business reminder permission test only'},seal=await f.archive.ensure(`grant/${b}/${evidenceId}`,'GRANT',body);

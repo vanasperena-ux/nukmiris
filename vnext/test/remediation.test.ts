@@ -1,7 +1,7 @@
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
 import {randomUUID} from 'node:crypto';
-import {fixture,plan,arm,apply,admission,raw,cut,suppress,status,abandon,holdInput,evidence} from './support/helpers.js';
+import {fixture,plan,confirm,arm,apply,admission,raw,cut,suppress,status,abandon,holdInput,evidence} from './support/helpers.js';
 import type {Fixture} from './support/postgres-fixture.js';
 import {prepareOutput} from '../src/application/prepare-operation.js';
 import {armAttempt} from '../src/application/dispatch-once.js';
@@ -105,8 +105,9 @@ for(const earlier of ['STAGED','PREPARED','SUBMISSION_ENTERED','UNKNOWN'] as con
  const f=await fixture(t);let first:Seal|undefined;
  if(earlier==='STAGED')await assert.rejects(admission(f,raw(f),cut('A2.afterCommit')));
  else {first=await plan(f);if(earlier!=='PREPARED'){const owner=await arm(f,first);assert.equal(await gate(f,first,owner),true);if(earlier==='UNKNOWN')await f.role('dispatch').tx(b,db=>db.query('SELECT core.mark_unknown($1,$2)',[b,first!.body['attemptId']]));}}
- const next=await plan(f,{startAt:'2030-01-03T10:00:00Z',endAt:'2030-01-03T11:00:00Z'}),owner=await arm(f,next);
- assert.equal(await gate(f,next,owner),false);assert.equal((await f.rows('output_intent')).length,0);
+ const before=(await f.rows('attempt')).length;
+ await assert.rejects(plan(f,{startAt:'2030-01-03T10:00:00Z',endAt:'2030-01-03T11:00:00Z'}),/conversation_head_held/);
+ assert.equal((await f.rows('attempt')).length,before);assert.equal((await f.rows('output_intent')).length,0);
  await evidence('R007-'+earlier,{attempts:await f.rows('attempt'),inputs:await f.rows('input'),outputs:await f.rows('output_intent'),laterEntered:false});
 });
 
@@ -153,9 +154,10 @@ test('R010: UNKNOWN/entered cannot be abandoned; rollback cannot release any pro
  await assert.rejects(abandon(f,text(p.body['attemptId'])),/possibly_submitted_abandon_denied/);assert.deepEqual(await f.rows('protection'),before);assert.equal((await f.rows('mutation_guard')).length,1);
 });
 
-test('R007/R010: sealed input hold resolves a poison head and permanently denies future operation preparation',async t=>{
+test('R007/R010: ordinary unsupported text reduces without a poison head; an explicit sealed hold permanently denies preparation',async t=>{
  const f=await fixture(t),a=await admission(f,raw(f,'unsupported synthetic command'));
- const p=await plan(f),o=await arm(f,p);assert.equal(await gate(f,p,o),false);
+ assert.equal((await f.rows('input_reduction'))[0]!['outcome'],'NO_EFFECT');
+ const p=await plan(f),o=await arm(f,p);
  await holdInput(f,text(a.inputs[0]!['inputId']));assert.equal(await gate(f,p,o),true);
  await assert.rejects(plan(f,{inputId:text(a.inputs[0]!['inputId'])}),/input_not_eligible/);
 });
@@ -198,7 +200,7 @@ test('R003/R012/SEC: every exposed mutating SQL argument rejects NULL before any
 });
 
 test('R010: abandoning an unsubmitted MOVE restores source protection exactly and retains source identity',async t=>{
- const f=await fixture(t),p=await plan(f,{bufferMinutes:15});await apply(t,f,p);const before=await f.rows('protection');
+ const f=await fixture(t),p=await plan(f,{bufferMinutes:15});await apply(t,f,p);await confirm(t,f,p);const before=await f.rows('protection');
  const move=await plan(f,{kind:'MOVE',appointmentId:text(p.body['appointmentId']),eventId:text(p.body['eventId']),expectedRevision:2,startAt:'2030-01-02T12:00:00Z',endAt:'2030-01-02T13:00:00Z',bufferMinutes:15});await arm(f,move);
  await abandon(f,text(move.body['attemptId']));assert.deepEqual(await f.rows('protection'),before);
  assert.equal((await f.rows('appointment'))[0]!['event_id'],p.body['eventId']);assert.equal((await f.rows('appointment'))[0]!['state'],'ACTIVE');

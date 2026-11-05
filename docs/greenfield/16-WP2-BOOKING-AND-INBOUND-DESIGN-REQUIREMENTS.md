@@ -3,9 +3,11 @@
 2026-11-03, America/Mexico_City. Normative review:
 [Claude WP1 remediation verification](https://github.com/vanasperena-ux/nukmiris/pull/4#issuecomment-6619904951),
 with [original reproducible probes](https://github.com/vanasperena-ux/nukmiris/pull/4#issuecomment-6619905185).
-**Design only. No WP2 code is implemented. C1 must be independently verified and
-CP1/initial CP2 formally closed before WP2 begins.** A Codex green test run cannot
-supply that independent decision. Preserve one service per appointment in P0 and
+**Historical WP2 requirement baseline.** WP1 was independently accepted in PR #4;
+Claude also [closed L0a](https://github.com/vanasperena-ux/nukmiris/pull/9#issuecomment-6646622771).
+The owner authorized L0b, now implemented in the bounded synthetic core and awaiting
+independent review; see [requirement-to-test matrix](19-WP2-L0B-IMPLEMENTATION.md).
+A Codex green test run cannot supply that independent decision. Preserve one service per appointment in P0 and
 later increments under the owner's clarification in Issue #7.
 
 ## NEW-2 — reservation priority, not only submission ordering
@@ -32,7 +34,7 @@ Required WP2 behavior:
   resolving/releasing older uncertainty. A status query is not a new booking or
   authority to retry the unknown operation.
 
-Acceptance requirements (NOT RUN / WP2):
+Acceptance requirements (implementation/results now tracked in document 19):
 
 | ID | Adversarial schedule | Required result |
 |---|---|---|
@@ -70,7 +72,7 @@ Required WP2 contract:
 - Rule-version changes cannot reinterpret an already admitted input or allocate a
   new identity to replay it. Conflict/tampering fails closed and is audited.
 
-| ID | Fixture | Required result (NOT RUN / WP2) |
+| ID | Fixture | Required result |
 |---|---|---|
 | W2-CL01 | STOP variants including accents, decomposed characters, punctuation and spaces | One sealed classification drives immediate revoke and head handling consistently; no later command poison or false permission grant. |
 | W2-CL02 | Ordinary chat, name/date input, human-mode text and Menu | Original context/priority preserved, no accidental mutation, durable terminal reduction where appropriate. |
@@ -93,8 +95,9 @@ booking through accepted Spanish slot/name UX in the synthetic localhost simulat
 then move/cancel. Ordinary message output contexts and cancellation-confirmation
 rules identified in the proposed charter must be reviewed, never bypassed.
 
-This identifies the next implementation task; it does not start it or imply that
-any existing gate is already closed.
+This sequence is retained as the original requirement history. L0a is independently
+closed for local synthetic use and L0b code now exists. Production gates below are
+unchanged; implementation is not independent acceptance.
 
 ## C2 — preserved disabled capabilities and gates
 

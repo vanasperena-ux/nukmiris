@@ -1,14 +1,14 @@
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
 import {randomUUID} from 'node:crypto';
-import {fixture,plan,apply,admission,raw,evidence,arm,provider,holdInput} from './support/helpers.js';
+import {fixture,plan,apply,confirm,admission,raw,evidence,arm,provider,holdInput} from './support/helpers.js';
 import {text} from '../src/domain/protocol.js';
 import {prepareOperation} from '../src/application/prepare-operation.js';
 import {dispatchOnce} from '../src/application/dispatch-once.js';
 
 test('DB02/03: competing same-resource bookings reject one; distinct resources on the same Calendar can both reserve',async t=>{
   const f=await fixture(t);await plan(f);
-  await assert.rejects(plan(f),/exclusion|customer_overlap/);
+  await assert.rejects(plan(f),/conversation_head_held/);
   const customer=randomUUID();await f.admin.query('INSERT INTO core.customer VALUES($1,$2,$3)',['synthetic-a',customer,'second-person']);
   const other=await admission(f,raw(f,'synthetic fixed command','synthetic-a',randomUUID(),'second-person'));
   const parallel=await plan(f,{inputId:text(other.inputs[0]!['inputId']),customerId:customer,resourceId:f.id('otherResource')});
@@ -17,15 +17,15 @@ test('DB02/03: competing same-resource bookings reject one; distinct resources o
 });
 
 test('DB02/04: same-event MOVE/CANCEL/ATTENDANCE cannot share the mutation guard; move protects merged source and target',async t=>{
-  const f=await fixture(t),original=await plan(f);await apply(t,f,original);
+  const f=await fixture(t),original=await plan(f);await apply(t,f,original);await confirm(t,f,original);
   const move=await plan(f,{kind:'MOVE',appointmentId:text(original.body['appointmentId']),eventId:text(original.body['eventId']),expectedRevision:2,startAt:'2030-01-02T10:30:00Z',endAt:'2030-01-02T11:30:00Z'});
   const ranges=await f.rows('protection');assert.equal(ranges.length,1);assert.match(String(ranges[0]!['protected_range']),/10:00:00/);assert.match(String(ranges[0]!['protected_range']),/11:30:00/);
-  for(const kind of ['MOVE','CANCEL','ATTENDANCE'] as const)await assert.rejects(plan(f,{kind,appointmentId:text(move.body['appointmentId']),eventId:text(move.body['eventId']),expectedRevision:2}),/mutation_guard|duplicate key/);
+  for(const kind of ['MOVE','CANCEL','ATTENDANCE'] as const)await assert.rejects(plan(f,{kind,appointmentId:text(move.body['appointmentId']),eventId:text(move.body['eventId']),expectedRevision:2}),/conversation_head_held/);
   assert.equal((await f.rows('mutation_guard')).length,1);
 });
 
 test('DB03: empty/infinite/bad-bound protections fail at PostgreSQL, zero-buffer touching appointments remain valid',async t=>{
-  const f=await fixture(t),p=await plan(f);await apply(t,f,p);
+  const f=await fixture(t),p=await plan(f);await apply(t,f,p);await confirm(t,f,p);
   const values=['empty','(,2030-01-02 11:00:00+00)','[2030-01-02 10:00:00+00,infinity)','(2030-01-02 10:00:00+00,2030-01-02 11:00:00+00]'];
   for(const range of values)await assert.rejects(f.admin.query('INSERT INTO core.protection VALUES($1,$2,$3,$4,$5::tstzrange)',['synthetic-a',p.body['appointmentId'],p.body['operationId'],f.id('resource'),range]),/check constraint/);
   await plan(f,{startAt:'2030-01-02T11:00:00Z',endAt:'2030-01-02T12:00:00Z'});
@@ -47,9 +47,10 @@ test('SEC03: actual roles deny table writes, PUBLIC definer calls, forged scope 
 
 test('SEC02/04/F30: cross-business FK and copied/foreign appointment tuple never authorize an operation',async t=>{
   const f=await fixture(t);await assert.rejects(plan(f,{customerId:f.id('customer','synthetic-b')}),/customer_denied/);
+  for(const i of await f.rows('input'))await holdInput(f,text(i['id']));
   await assert.rejects(plan(f,{resourceId:f.id('resource','synthetic-b')}),/resource_denied/);
   for(const i of await f.rows('input'))await holdInput(f,text(i['id']));
-  const p=await plan(f);await apply(t,f,p);
+  const p=await plan(f);await apply(t,f,p);await confirm(t,f,p);
   await assert.rejects(plan(f,{kind:'MOVE',appointmentId:text(p.body['appointmentId']),eventId:'copied-'+text(p.body['eventId']),expectedRevision:2}),/appointment_denied/);
   await assert.rejects(f.admin.query('INSERT INTO core.resource VALUES($1,$2,$3,false)',['synthetic-a',randomUUID(),f.id('calendar','synthetic-b')]),/foreign key/);
 });
@@ -75,7 +76,7 @@ test('F27/SEC02: changed calendar grant/revision and expired deadline stop final
 });
 
 test('DB04: a failed move preparation rolls back its guard and union and cannot shorten the original duration/buffer',async t=>{
-  const f=await fixture(t),p=await plan(f,{bufferMinutes:15});await apply(t,f,p);const before=await f.rows('protection');
+  const f=await fixture(t),p=await plan(f,{bufferMinutes:15});await apply(t,f,p);await confirm(t,f,p);const before=await f.rows('protection');
   await assert.rejects(plan(f,{kind:'MOVE',appointmentId:text(p.body['appointmentId']),eventId:text(p.body['eventId']),expectedRevision:2,startAt:'2030-01-02T12:00:00Z',endAt:'2030-01-02T13:00:00Z',bufferMinutes:0}),/duration_buffer_changed/);
   assert.deepEqual(await f.rows('protection'),before);assert.equal((await f.rows('mutation_guard')).length,0);
 });

@@ -6,12 +6,19 @@ import { canonical,digest,object,text } from '../../src/domain/protocol.js';
 import type { ObjectValue,Faults } from '../../src/domain/protocol.js';
 import { noFaults } from '../../src/domain/protocol.js';
 import type { EvidenceStore,Seal } from '../../src/ports.js';
+import { tenantBindings } from '../../src/domain/tenant.js';
 
 interface Head { sequence: number; hash: string; mac: string }
 interface RecordEntry { key: string; kind: string; keyVersion: string; sequence: number; prev: string; iv: string; tag: string; ciphertext: string; hash: string }
 const ROOT='0'.repeat(64);
 /** Local crashable stand-in, NOT independent offsite storage or a vendor guarantee. */
 export class FakeArchive implements EvidenceStore {
+  scope(businessId:string):EvidenceStore {
+    const belongs=(s:Seal)=>s.body['businessId']===businessId||(s.body['intent']&&object(s.body['intent'])['businessId']===businessId);
+    return {businessId,ensure:async(k,t,m,a)=>{tenantBindings(m,businessId);return this.ensure(k,t,m,()=>{const v=a?.()??{};tenantBindings(v,businessId);return v;});},
+      lookup:async k=>{const s=await this.lookup(k);return s&&belongs(s)?s:null;},
+      verify:async s=>{if(!belongs(s))throw new Error('archive_foreign_body');await this.verify(s);},records:async()=> (await this.records()).filter(belongs)};
+  }
   async lookup(key:string):Promise<Seal|null> { return (await this.records()).find(r=>r.key===key)??null; }
   constructor(readonly directory: string,readonly faults: Faults=noFaults) {
     if (!directory.startsWith('/tmp/nukmiris-wp1-')) throw new Error('fixture_archive_only');
