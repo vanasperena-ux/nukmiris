@@ -21,7 +21,7 @@ export async function dispatchOnce(args:{businessId:string;attemptId:string;owne
   if(provider.mode!=='WP1_SYNTHETIC_ONLY')throw new Error('synthetic_provider_only');
   const a=await dispatcher.tx(b,async db=>(await db.query('SELECT envelope,arm_seal FROM core.attempt WHERE business_id=$1 AND id=$2',[b,attemptId])).rows[0] as {envelope:Envelope;arm_seal:string|null}|undefined);
   if(!a?.arm_seal)return {state:'HELD'};
-  const originalArm=(await archive.records()).find(r=>r.key===a.arm_seal);
+  const originalArm=await archive.lookup(a.arm_seal);
   if(!originalArm||originalArm.body['ownerId']!==ownerId)return {state:'HELD'};
   await archive.verify(originalArm);
   await faults.hit('dispatch.beforeGate');

@@ -1,0 +1,50 @@
+{
+  "sourceCommit": "ff45a8e9b41fa9be99e773ff053c6cd6a1ea38b7",
+  "sourceTree": "4447bea4a410bf570566fd439eeaf9cd29d896fb",
+  "reviewedBaseline": "a376f1eb51205b392e7ec0355bc8ac64525c8319",
+  "independentReview": "PENDING_B1_B2",
+  "B2ProductionVulnerability": "UNRESOLVED_X1_REPRODUCED",
+  "N4": "IMPLEMENTED_AWAITING_REVIEW",
+  "N1": "TYPED_SIGNALS_IMPLEMENTED_CALLER_WIRING_REQUIRED_BEFORE_INBOUND_EXPANSION",
+  "N5": "ROUTE_CUSTODY_BINDING_REQUIRED_BEFORE_INBOUND_EXPANSION",
+  "N2_N3": "PRODUCTION_011_GATES_OPEN",
+  "N6": "WINDOWS_AND_OPERATIONAL_ACCEPTANCE_OPEN",
+  "node": "v24.19.0",
+  "postgres": "17.11 (Debian 17.11-1.pgdg12+2)",
+  "image": "postgres@sha256:839fbb5a4942a7758dd93e18b42ea5649807491a0545b5eeeb8f0b8bb11857a5",
+  "sourceHashCount": 51,
+  "tests": {
+    "archive": {
+      "pass": 51,
+      "fail": 0,
+      "skip": 0
+    },
+    "concurrency": {
+      "pass": 20,
+      "fail": 0,
+      "skip": 0
+    },
+    "full": {
+      "pass": 155,
+      "fail": 0,
+      "skip": 0
+    },
+    "fault": {
+      "pass": 145,
+      "fail": 0,
+      "skip": 0
+    }
+  },
+  "capacity": "PASS",
+  "rawStatePublished": false,
+  "sqlite": "3.53.3",
+  "repair": {
+    "records": 1000097,
+    "repairMs": 334796,
+    "originalArmPreserved": true,
+    "automaticReplay": false,
+    "fenced": true,
+    "processPeakRssBytes": 416493568
+  },
+  "elapsedCapacityMs": 704289
+}

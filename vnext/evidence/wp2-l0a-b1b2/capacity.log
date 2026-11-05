@@ -1,0 +1,18 @@
+Capacity evidence: /workspace/work/nukmiris-l0a/vnext/evidence/runs/2026-11-04T23-51-46.977Z-archive-capacity; raw fixture retained locally (no keys published).
+{"records":1000,"appendMs":184,"foundP50Ms":0.4508580000000393,"foundP95Ms":0.6424719999999979,"foundP99Ms":1.709132000000011,"absentP95Ms":0.4387699999999768,"maxAuthenticatedNodes":12,"rootHeight":12,"fileBytes":1712128,"rssBytes":72347648}
+{"records":10000,"appendMs":2033,"foundP50Ms":0.38534100000015314,"foundP95Ms":0.5097049999999399,"foundP99Ms":17.40756399999964,"absentP95Ms":0.38475000000016735,"maxAuthenticatedNodes":15,"rootHeight":16,"fileBytes":16666624,"rssBytes":156635136}
+{"progress":100000,"elapsedSeconds":28}
+{"records":100000,"appendMs":25895,"foundP50Ms":0.40431900000112364,"foundP95Ms":0.5588079999979527,"foundP99Ms":1.1169249999984459,"absentP95Ms":0.447491999999329,"maxAuthenticatedNodes":19,"rootHeight":20,"fileBytes":166649856,"rssBytes":319512576}
+{"progress":200000,"elapsedSeconds":63}
+{"progress":300000,"elapsedSeconds":100}
+{"progress":400000,"elapsedSeconds":137}
+{"progress":500000,"elapsedSeconds":174}
+{"progress":600000,"elapsedSeconds":211}
+{"progress":700000,"elapsedSeconds":249}
+{"progress":800000,"elapsedSeconds":287}
+{"progress":900000,"elapsedSeconds":325}
+{"progress":1000000,"elapsedSeconds":365}
+{"records":1000000,"appendMs":336708,"foundP50Ms":0.44435799994971603,"foundP95Ms":0.5488030000124127,"foundP99Ms":0.832804000005126,"absentP95Ms":0.4228470000089146,"maxAuthenticatedNodes":23,"rootHeight":24,"fileBytes":1667801088,"rssBytes":316973056}
+{"workflows":{"postgres":"17.11 (Debian 17.11-1.pgdg12+2)","admissionMs":{"samples":[29.34846100001596,13.480497000040486,13.578092999989167,17.460261999978684,12.490921000018716,12.972073999990243,11.395268000022043,23.06384800001979,11.101564000011422,14.921762000012677,11.101682999986224,9.45574599999236],"p50":13.480497000040486,"p95":29.34846100001596,"p99":29.34846100001596},"dispatchMs":{"samples":[18.769280999957118,22.62508299999172,7.805311999982223,8.461283000011463,7.678773999970872,7.852121000003535,7.3099570000194944,7.803247999981977,6.122088000003714,6.564413000014611,7.874695000005886,8.076452999957837,7.0877179999952205,9.627319999970496,6.758510000014212,7.149198999977671,5.515199000015855,5.783366000046954,6.093514999956824,6.692551999993157,8.547039999975823,9.526180999993812,5.76342700002715,5.95386900001904],"p50":7.678773999970872,"p95":18.769280999957118,"p99":22.62508299999172},"concurrentDispatchers":2,"attempts":12,"providerInvocations":12,"fullArchiveScans":0}}
+{"repair":{"records":1000097,"repairMs":334796,"originalArmPreserved":true,"automaticReplay":false,"fenced":true,"processPeakRssBytes":416493568}}
+PASS capacity/repair; report /workspace/work/nukmiris-l0a/vnext/evidence/runs/2026-11-04T23-51-46.977Z-archive-capacity/capacity.json

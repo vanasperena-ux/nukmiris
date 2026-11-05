@@ -5,6 +5,10 @@ export interface Seal {
   sequence: number; hash: string; keyVersion: string;
 }
 export interface EvidenceStore {
+  /** Optional trusted-service binding; never a user-selected tenant authorization. */
+  readonly businessId?: string;
+  /** Authenticated presence/absence. Missing or corrupt backing data must throw. */
+  lookup(key: string): Promise<Seal | null>;
   /** Atomic fixture put-if-absent; factory runs only for original allocation. */
   ensure(key: string,kind: string,match: ObjectValue,allocate?: () => ObjectValue): Promise<Seal>;
   verify(seal: Seal): Promise<void>;

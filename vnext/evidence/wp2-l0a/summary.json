@@ -1,0 +1,32 @@
+{
+  "sourceCommit": "edbb0d226b000761b8e0173470f6e3cae69b25c9",
+  "sourceTree": "a3ce3bf687761655e5df5b3e9191414208fd4b7e",
+  "baseCommit": "84ff73d36cc6defc493a30a4f07445e4818ce1c8",
+  "node": "v24.19.0",
+  "postgres": "17.11 (Debian 17.11-1.pgdg12+2)",
+  "sqlite": "3.53.3",
+  "image": "postgres@sha256:839fbb5a4942a7758dd93e18b42ea5649807491a0545b5eeeb8f0b8bb11857a5",
+  "full": {
+    "pass": 137,
+    "fail": 0,
+    "skip": 0
+  },
+  "fault": {
+    "pass": 127,
+    "fail": 0,
+    "skip": 0
+  },
+  "sourceHashCount": 48,
+  "capacityResult": "PASS",
+  "independentL0aReview": "PENDING",
+  "WP1AcceptedReview": "https://github.com/vanasperena-ux/nukmiris/pull/4#issuecomment-6620571487",
+  "rawStatePublished": false,
+  "commands": [
+    "npm ci --ignore-scripts --offline --cache /workspace/work/wp1-npm-cache",
+    "npm run typecheck",
+    "npm run check:scope",
+    "npm test",
+    "npm run test:fault",
+    "node scripts/archive-capacity.mjs (after build; npm run test:archive:capacity reproduces)"
+  ]
+}
