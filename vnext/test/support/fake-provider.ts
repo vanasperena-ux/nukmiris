@@ -1,6 +1,7 @@
 import http from 'node:http';
 import {promises as fs} from 'node:fs';
 import path from 'node:path';
+import os from 'node:os';
 import {canonical,digest,object} from '../../src/domain/protocol.js';
 import type {Envelope,SyntheticProvider,AppliedProof} from '../../src/ports.js';
 
@@ -11,7 +12,7 @@ export class FakeProviderServer {
   beforeResponse:((envelope:Envelope,proof:AppliedProof)=>Promise<void>)|undefined;
   private chain:Promise<unknown>=Promise.resolve();
   constructor(readonly directory:string) {
-    if(!directory.startsWith('/tmp/nukmiris-wp1-'))throw new Error('fixture_provider_only');
+    if(!path.resolve(directory).startsWith(path.join(os.tmpdir(),'nukmiris-wp1-')))throw new Error('fixture_provider_only');
     this.server=http.createServer((req,res)=>{this.chain=this.chain.then(()=>this.handle(req,res)).catch(()=>{res.destroy();});});
   }
   async start():Promise<this> {
