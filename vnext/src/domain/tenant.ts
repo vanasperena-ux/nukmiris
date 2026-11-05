@@ -12,7 +12,7 @@ export function tenantBindings(value:Json,expected?:string):void {
   function walk(v:Json):void {
     if(Array.isArray(v))for(const item of v)walk(item);
     else if(v&&typeof v==='object')for(const [key,item] of Object.entries(v)) {
-      const normalized=key.replaceAll('_','').toLowerCase();
+      const normalized=key.toLowerCase().replace(/[^a-z0-9]/g,'');
       if(normalized==='businessid'||normalized==='tenantid') {
         if(key!=='businessId')throw new Error('tenant_binding_key_unsupported');
         if(expected!==undefined&&item!==expected)throw new Error('archive_foreign_body');tenantId(item);
