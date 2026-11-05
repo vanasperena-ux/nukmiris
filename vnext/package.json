@@ -3,7 +3,9 @@
   "version": "0.0.0",
   "private": true,
   "type": "module",
-  "engines": { "node": ">=24 <25" },
+  "engines": {
+    "node": ">=24 <25"
+  },
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "typecheck": "tsc -p tsconfig.json --noEmit",
@@ -16,8 +18,18 @@
     "check:scope": "node scripts/check-scope.mjs",
     "test:archive": "npm run build && node --test --test-concurrency=1 dist/test/archive.test.js dist/test/archive-process.test.js dist/test/archive-concurrency.test.js dist/test/archive-security-boundary.test.js",
     "test:archive:concurrency": "npm run build && node --test --test-concurrency=1 dist/test/archive-concurrency.test.js dist/test/archive-process.test.js",
-    "test:archive:capacity": "npm run build && node scripts/archive-capacity.mjs"
+    "test:archive:capacity": "npm run build && node scripts/archive-capacity.mjs",
+    "test:l1": "npm run build && node scripts/run-tests.mjs l1",
+    "demo:transcript": "npm run build && node scripts/availability-transcript.mjs"
   },
-  "dependencies": { "pg": "8.16.3" },
-  "devDependencies": { "@types/node": "24.10.0", "@types/pg": "8.15.5", "typescript": "5.9.3" }
+  "dependencies": {
+    "luxon": "3.7.2",
+    "pg": "8.16.3"
+  },
+  "devDependencies": {
+    "@types/luxon": "3.7.1",
+    "@types/node": "24.10.0",
+    "@types/pg": "8.15.5",
+    "typescript": "5.9.3"
+  }
 }

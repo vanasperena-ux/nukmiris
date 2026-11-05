@@ -1,0 +1,35 @@
+{
+  "source": "afa1b74efa8f8edab5d9c4fc115e2ca60daf1f7c",
+  "tree": "6073fda1fc610f2bc496c7df932edf9e010a2906",
+  "results": {
+    "full": {
+      "pass": 287,
+      "fail": 0,
+      "skipped": 0
+    },
+    "fault": {
+      "pass": 277,
+      "fail": 0,
+      "skipped": 0
+    },
+    "concurrency": {
+      "pass": 148,
+      "fail": 0,
+      "skipped": 0
+    }
+  },
+  "acceptanceCasesInEachSuite": 80,
+  "newL1Cases": 28,
+  "C1CasesCarried": 52,
+  "baselineDifferentialCases": 30,
+  "sourceFiles": 72,
+  "node": "24.19.0",
+  "npm": "11.9.0",
+  "postgres": "17.11",
+  "luxon": "3.7.2",
+  "nativeWindows": "NOT RUN",
+  "interactiveBookingEnabled": false,
+  "independentReview": "PENDING",
+  "C1IndependentAcceptanceBeforeL2": "REQUIRED",
+  "opaqueStatePublished": false
+}

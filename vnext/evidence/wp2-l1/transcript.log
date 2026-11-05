@@ -1,0 +1,109 @@
+
+> nukmiris-wp1-synthetic-core@0.0.0 demo:transcript
+> npm run build && node scripts/availability-transcript.mjs
+
+
+> nukmiris-wp1-synthetic-core@0.0.0 build
+> tsc -p tsconfig.json
+
+{
+  "mode": "READ_ONLY_L1_TRANSCRIPT_ORACLE",
+  "clock": "2030-01-01T14:00:00Z",
+  "timeZone": "America/Mexico_City",
+  "steps": [
+    {
+      "text": "Elige un horario que te funciona mejor:",
+      "choices": [
+        {
+          "id": "synthetic-a:1:slot:0",
+          "title": "mar 1 ene 09:00"
+        },
+        {
+          "id": "synthetic-a:1:slot:1",
+          "title": "mar 1 ene 09:30"
+        },
+        {
+          "id": "synthetic-a:1:more:0",
+          "title": "Más opciones"
+        }
+      ],
+      "outcome": "OFFER"
+    },
+    {
+      "text": "Te muestro mas opciones. Elige un horario que te funciona mejor:",
+      "choices": [
+        {
+          "id": "synthetic-a:2:slot:2",
+          "title": "mar 1 ene 10:00"
+        },
+        {
+          "id": "synthetic-a:2:slot:3",
+          "title": "mar 1 ene 10:30"
+        },
+        {
+          "id": "synthetic-a:2:dates:0",
+          "title": "Elegir fecha"
+        }
+      ],
+      "outcome": "OFFER"
+    },
+    {
+      "text": "¿Para qué día te gustaría tu cita? Puedes escribir, por ejemplo: 13 oct, 13/10 o próximo lunes.",
+      "choices": [
+        {
+          "id": "synthetic-a:3:date:2030-01-01",
+          "title": "mar 1 de enero"
+        },
+        {
+          "id": "synthetic-a:3:date:2030-01-02",
+          "title": "mié 2 de enero"
+        },
+        {
+          "id": "synthetic-a:3:date:2030-01-03",
+          "title": "jue 3 de enero"
+        },
+        {
+          "id": "synthetic-a:3:days:1",
+          "title": "Más fechas"
+        }
+      ],
+      "outcome": "DATES"
+    },
+    {
+      "text": "¿Qué hora prefieres para el martes 1 de enero 2030?\n\nSelecciona el horario que prefieres. Para cambiar de día, escribe otra fecha.",
+      "choices": [
+        {
+          "id": "synthetic-a:4:slot:0",
+          "title": "mar 1 ene 09:00"
+        },
+        {
+          "id": "synthetic-a:4:slot:1",
+          "title": "mar 1 ene 09:30"
+        },
+        {
+          "id": "synthetic-a:4:times:1",
+          "title": "Más horarios"
+        }
+      ],
+      "outcome": "OFFER"
+    },
+    {
+      "text": "",
+      "choices": [],
+      "outcome": "BOOK_REQUEST",
+      "slot": {
+        "businessId": "synthetic-a",
+        "calendarId": "calendar-a",
+        "resourceId": "employee-a",
+        "serviceId": "implicit-p0",
+        "startAt": "2030-01-01T09:00:00.000-06:00",
+        "endAt": "2030-01-01T10:00:00.000-06:00",
+        "bufferMinutes": 15,
+        "snapshotId": "1"
+      }
+    }
+  ],
+  "calendarMutations": 0,
+  "providerCalls": 0,
+  "interactiveBookingEnabled": false
+}

@@ -1,0 +1,8 @@
+{
+  "configuredTimeoutMs": 50,
+  "observedElapsedMs": 110.02694300000007,
+  "terminalReason": "LOCK_TIMEOUT",
+  "sameInputRetryDenied": true,
+  "newCustomerRequestCanProgress": true,
+  "operatorRequired": false
+}
