@@ -1,0 +1,78 @@
+
+> nukmiris-wp1-synthetic-core@0.0.0 test:archive
+> npm run build && node --test --test-concurrency=1 dist/test/archive.test.js dist/test/archive-process.test.js dist/test/archive-concurrency.test.js dist/test/archive-security-boundary.test.js
+
+
+> nukmiris-wp1-synthetic-core@0.0.0 build
+> tsc -p tsconfig.json
+
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.1
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.1
+npm notice To update run: npm install -g npm@12.2.1
+npm notice
+✔ B1/X4 sixteen distinct-key requests on one instance all commit and retain their identities (52.81943ms)
+✔ B1 sixteen identical-key requests on one instance allocate exactly once (11.413785ms)
+✔ B1 lookup, verify and records wait through archive.beforeDataCommit on their own instance (6.528899ms)
+✔ B1 lookup, verify and records wait through archive.afterDataCommit on their own instance (7.582411ms)
+✔ B1 lookup, verify and records wait through archive.afterWitnessCommit on their own instance (9.587861ms)
+✔ B1 repair shares the instance mutex with append and all readers (8.913351ms)
+✔ B1 a rejected append releases its mutex and rolls back only its own transaction (5.469321ms)
+✔ B1 a post-commit failure releases the mutex but pending writes still require an explicit repair (6.381742ms)
+✔ B1 independent connections get typed SQLite contention without nested transactions or lock stealing (257.33014ms)
+✔ B1 instance queue overload is typed, bounded and does not cancel or steal active ownership (26.56133ms)
+✔ N1 pending confirmation is distinct from a repair fence; no pending age proves a crash (5.877625ms)
+✔ N3 fence stops witness advance; a pre-existing transaction can still commit an adoptable original tail (5.50936ms)
+✔ 017 actual process death at archive.beforeDataCommit and explicit restart recovery (49.832978ms)
+✔ 017 actual process death at archive.afterDataCommit and explicit restart recovery (49.29503ms)
+✔ 017 actual process death at archive.afterWitnessCommit and explicit restart recovery (46.787927ms)
+✔ 017 actual process death at archive.afterConfirm and explicit restart recovery (46.928065ms)
+✔ 017 concurrent independent processes converge on one original ARM identity (105.102077ms)
+✔ 017 concurrent distinct appenders hold during pending checkpoint; caller can retry only after known completion (6.080125ms)
+✔ 017 operator cannot steal a live SQL lock; fence persists until writer is terminated (295.887766ms)
+✔ 017 a stale process cannot publish after an independently committed repair fence (49.05751ms)
+✔ B2/X1 RESIDUAL REPRODUCED: writer capability plus writer keys can replace history without a signing key or repair fence (27.807115ms)
+ℹ X1 REPRODUCED: signed larger fork, changed ARM owner, authenticated absence, passing audit and reallocation. Production 009/017 remain BLOCKED.
+✔ N4 recursive tenant validation rejects foreign/null businessId before sealing {"envelope":{"businessId":"synthetic-b"}} (4.579493ms)
+✔ N4 recursive tenant validation rejects foreign/null businessId before sealing {"intent":{"payload":{"businessId":"synthetic-b"}}} (3.169835ms)
+✔ N4 recursive tenant validation rejects foreign/null businessId before sealing {"items":[{"businessId":"synthetic-a"},{"envelope":{"businessId":"synthetic-b"}}]} (3.860537ms)
+✔ N4 recursive tenant validation rejects foreign/null businessId before sealing {"payload":{"businessId":null}} (2.901127ms)
+✔ N4 recursive tenant validation permits same-tenant nested envelopes, arrays and non-businessId text (7.327663ms)
+✔ 017 indexed presence, authenticated absence, idempotence and tenant-scoped identities (25.761846ms)
+✔ 017 large archive uses bounded keyed reads; no normal-path full scan or historical decryption (1884.182334ms)
+✔ 017 deleted record fails closed without reallocating an identity (6.149578ms)
+✔ 017 changed ciphertext fails closed without reallocating an identity (5.393789ms)
+✔ 017 missing index node fails closed without reallocating an identity (4.919998ms)
+✔ 017 forged empty child fails closed without reallocating an identity (4.535747ms)
+✔ 017 changed index sequence fails closed without reallocating an identity (4.340087ms)
+✔ 017 corrupted off-path data is detected on targeted read/full audit; lookup does not claim global health (11.905913ms)
+✔ 017 explicit capacity hold never allocates, evicts or overwrites history (5.100224ms)
+✔ 017 old encryption keys remain necessary after rotation; missing keys and wrong authentication keys hold (9.947082ms)
+✔ 017 archive and witness identity/signature mismatches hold (2.351142ms)
+✔ 017 missing archive does not silently reinitialize; duplicate creation refuses existing data (2.89686ms)
+✔ 017 independently retained checkpoint detects database rollback and paired rollback on reopen (7.62955ms)
+✔ 017 interrupted append archive.beforeDataCommit preserves original identity or rolls back before commit (3.112639ms)
+✔ 017 interrupted append archive.afterDataCommit preserves original identity or rolls back before commit (5.68521ms)
+✔ 017 interrupted append archive.afterWitnessCommit preserves original identity or rolls back before commit (5.902703ms)
+✔ 017 interrupted append archive.afterConfirm preserves original identity or rolls back before commit (3.379695ms)
+✔ 017 authenticated index repair rebuilds cache without changing immutable appointment/ARM history (77.146536ms)
+✔ 017 interrupted repair archive.beforeRepairCommit remains held and resumes under a new explicit fence (7.88004ms)
+✔ 017 interrupted repair archive.afterRepairCommit remains held and resumes under a new explicit fence (8.082441ms)
+✔ 017 interrupted repair archive.afterRepairWitness remains held and resumes under a new explicit fence (7.939268ms)
+✔ 017 an operator fence defeats a stale append continuation; no timed takeover exists (7.142288ms)
+✔ 017 lost/corrupted checkpoint service fails closed; a pending corrupted tail is never adopted (5.036279ms)
+✔ 017 missing tail and changed meta cannot masquerade as authenticated absence (8.839281ms)
+✔ 017 repair decisions are authenticated and witnessed, including interrupted repair history (15.397784ms)
+ℹ tests 51
+ℹ suites 0
+ℹ pass 51
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3491.583148
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.1
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.1
+npm notice To update run: npm install -g npm@12.2.1
+npm notice

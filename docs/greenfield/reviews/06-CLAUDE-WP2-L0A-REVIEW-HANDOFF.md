@@ -1,5 +1,11 @@
 # Independent Claude review — WP2-L0a
 
+**Historical baseline handoff:** Claude completed this review with
+[GO WITH CONDITIONS](https://github.com/vanasperena-ux/nukmiris/pull/9#issuecomment-6622229074).
+The following instructions/pins describe that baseline. B1/B2 re-verification is
+now tracked in [handoff 07](07-CLAUDE-WP2-L0A-B1-B2-REVERIFICATION.md);
+L0a remains open until the corrections are independently accepted.
+
 Please independently review code increment L0a under Issue #7. Do not merge any
 Draft PR, start L0b, enable providers or provision GCP as part of this review.
 

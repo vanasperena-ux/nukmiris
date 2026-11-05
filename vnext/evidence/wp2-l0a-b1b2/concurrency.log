@@ -1,0 +1,46 @@
+
+> nukmiris-wp1-synthetic-core@0.0.0 test:archive:concurrency
+> npm run build && node --test --test-concurrency=1 dist/test/archive-concurrency.test.js dist/test/archive-process.test.js
+
+
+> nukmiris-wp1-synthetic-core@0.0.0 build
+> tsc -p tsconfig.json
+
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.2
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.2
+npm notice To update run: npm install -g npm@12.2.2
+npm notice
+✔ B1/X4 sixteen distinct-key requests on one instance all commit and retain their identities (54.72018ms)
+✔ B1 sixteen identical-key requests on one instance allocate exactly once (11.36118ms)
+✔ B1 lookup, verify and records wait through archive.beforeDataCommit on their own instance (7.207136ms)
+✔ B1 lookup, verify and records wait through archive.afterDataCommit on their own instance (8.54538ms)
+✔ B1 lookup, verify and records wait through archive.afterWitnessCommit on their own instance (6.691332ms)
+✔ B1 repair shares the instance mutex with append and all readers (26.425095ms)
+✔ B1 a rejected append releases its mutex and rolls back only its own transaction (5.942483ms)
+✔ B1 a post-commit failure releases the mutex but pending writes still require an explicit repair (9.40317ms)
+✔ B1 independent connections get typed SQLite contention without nested transactions or lock stealing (257.851231ms)
+✔ B1 instance queue overload is typed, bounded and does not cancel or steal active ownership (28.884108ms)
+✔ N1 pending confirmation is distinct from a repair fence; no pending age proves a crash (10.61231ms)
+✔ N3 fence stops witness advance; a pre-existing transaction can still commit an adoptable original tail (5.81904ms)
+✔ 017 actual process death at archive.beforeDataCommit and explicit restart recovery (63.476511ms)
+✔ 017 actual process death at archive.afterDataCommit and explicit restart recovery (63.92043ms)
+✔ 017 actual process death at archive.afterWitnessCommit and explicit restart recovery (55.111661ms)
+✔ 017 actual process death at archive.afterConfirm and explicit restart recovery (55.435089ms)
+✔ 017 concurrent independent processes converge on one original ARM identity (190.927558ms)
+✔ 017 concurrent distinct appenders hold during pending checkpoint; caller can retry only after known completion (7.073239ms)
+✔ 017 operator cannot steal a live SQL lock; fence persists until writer is terminated (305.722677ms)
+✔ 017 a stale process cannot publish after an independently committed repair fence (51.574571ms)
+ℹ tests 20
+ℹ suites 0
+ℹ pass 20
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1342.125925
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.2
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.2
+npm notice To update run: npm install -g npm@12.2.2
+npm notice
