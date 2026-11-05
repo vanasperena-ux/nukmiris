@@ -1,7 +1,7 @@
 # Windows-targeted TCP/runtime evidence
 
-Exact tested source **21d9bca514ee79e545027e63576821664eabd80d**, tree
-6ac5a2abb399ff0c30b254f22bd37df596bd6240, parent C1 evidence c24b7e4.
+Exact tested source **e04099da54d3e881897a57fbe235ef54aaf56f5a**, tree
+99097a3eaea600aa68b5bf2cd33442d2011f5a61, parent f0fc737 (prior runtime evidence), C1 base c24b7e4.
 Evidence follow-up adds only this directory and handoff10; all tested files match
 [source hashes](source-sha256.txt). [Artifact hashes](artifact-sha256.txt).
 
@@ -43,3 +43,7 @@ C1 must be independently accepted before L2. Windows/N6, X1/F13/OPS01,009/011/
 production017,N2/N3,A2/A3,013/016 and all real provider/cloud/merge gates remain.
 v0.8.1 and migrations001–005/roles are unchanged by this increment.
 
+
+Explicit generated credentials are required before TCP connection. Missing/invalid
+private-state credentials and unknown roles are rejected without pg environment
+fallback; these regressions are included in the local suite.

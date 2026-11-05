@@ -1,6 +1,6 @@
 {
-  "source": "21d9bca514ee79e545027e63576821664eabd80d",
-  "tree": "6ac5a2abb399ff0c30b254f22bd37df596bd6240",
+  "source": "e04099da54d3e881897a57fbe235ef54aaf56f5a",
+  "tree": "99097a3eaea600aa68b5bf2cd33442d2011f5a61",
   "results": {
     "full": {
       "pass": 259,
@@ -33,5 +33,6 @@
   "interactiveBookingEnabled": false,
   "backupScope": "INERT_FIXTURE_ONLY; no persistent archive/provider data",
   "generatedPrivateStatePublished": false,
-  "independentReview": "PENDING"
+  "independentReview": "PENDING",
+  "explicitGeneratedCredentialsRequired": true
 }

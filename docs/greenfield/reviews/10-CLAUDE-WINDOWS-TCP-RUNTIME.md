@@ -1,7 +1,7 @@
 # Independent review — Windows-targeted TCP/runtime
 
-Review exact source **21d9bca514ee79e545027e63576821664eabd80d**, tree
-6ac5a2abb399ff0c30b254f22bd37df596bd6240, parent C1 evidence c24b7e4.
+Review exact source **e04099da54d3e881897a57fbe235ef54aaf56f5a**, tree
+99097a3eaea600aa68b5bf2cd33442d2011f5a61, parent f0fc737 (prior runtime evidence), C1 base c24b7e4.
 The follow-up adds only this handoff and vnext/evidence/wp2-runtime/. Check split
 and source/artifact hashes. Separate Draft PR stacked on C1; no existing PR merged.
 
@@ -38,3 +38,7 @@ C1 independent acceptance remains required before L2 interactive booking. All
 production custody/repair/provider/OPS01/Windows gates, X1/F13, O5/O6 remain.
 No merge, Meta/Google, GCP or v0.8.1 changes. Keep this and existing PRs Draft.
 
+
+Explicit generated credentials are required before TCP connection. Missing/invalid
+private-state credentials and unknown roles are rejected without pg environment
+fallback; these regressions are included in the local suite.
