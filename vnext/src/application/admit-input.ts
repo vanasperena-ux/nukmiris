@@ -64,8 +64,11 @@ export async function admitInput(args:{raw:Buffer;signature:string;secret:Buffer
     const seal=await archive.ensure(`batch-commit/${b}/${batchId}`,'BATCH_COMMIT',{businessId:b,batchId,batchDigest,count:items.length,membershipDigest:digest(items),rawBatchKey:rawSeal.key,rawBatchDigest:rawSeal.digest});
     await faults.hit('A3.afterSeal');await sealer.seal(b,archive,seal);
     await ingress.tx(b,async db=>{await db.query('SELECT core.activate_batch($1,$2,$3,$4)',[b,batchId,seal.key,seal.digest]);},'A4',faults);
+    const reductionStart=reductions.length;
     for(const item of items)reductions.push(await reduceInput({businessId:b,inputId:text(item['inputId']),reducer,sealer,archive,faults}));
-    for(const conversationId of [...new Set(items.map(i=>text(i['conversationId'])))])await drainOrdinary({businessId:b,conversationId,reducer,sealer,archive});
+    for(const conversationId of [...new Set(items.map(i=>text(i['conversationId'])))])for(const final of await drainOrdinary({businessId:b,conversationId,reducer,sealer,archive})){
+      const index=reductions.findIndex((r,n)=>n>=reductionStart&&r['inputId']===final['inputId']);if(index>=0)reductions[index]=final;
+    }
     await faults.hit('A5.beforeAck');allItems.push(...items);
   }catch(error){failures.push(error);}
   if(failures.length)throw new AggregateError(failures,'admission_incomplete: '+failures.map(String).join('; '));
