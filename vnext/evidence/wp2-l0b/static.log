@@ -1,0 +1,11 @@
+
+> nukmiris-wp1-synthetic-core@0.0.0 typecheck
+> tsc -p tsconfig.json --noEmit
+
+
+> nukmiris-wp1-synthetic-core@0.0.0 check:scope
+> node scripts/check-scope.mjs
+
+PASS: no HTTP/provider/env/child-process client; fs/sqlite confined to two archive adapter files; only pg, no application start command
+v24.19.0
+11.9.0
