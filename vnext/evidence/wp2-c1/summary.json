@@ -1,0 +1,30 @@
+{
+  "source": "c46f22949fa996a1a79139218d768c51013dec6b",
+  "tree": "8cbf8143ef413dfd045b703ed393b4f4274d149e",
+  "results": {
+    "full": {
+      "pass": 259,
+      "fail": 0,
+      "skipped": 0,
+      "run": "2026-11-05T04-02-56.314Z-full"
+    },
+    "fault": {
+      "pass": 249,
+      "fail": 0,
+      "skipped": 0,
+      "run": "2026-11-05T04-05-12.505Z-fault"
+    },
+    "concurrency": {
+      "pass": 120,
+      "fail": 0,
+      "skipped": 0,
+      "run": "2026-11-05T04-07-37.448Z-concurrency"
+    }
+  },
+  "focusedCasesInFullAndConcurrency": 52,
+  "independentC1Verification": "PENDING_BEFORE_L2",
+  "sourceFiles": 65,
+  "nativeWindows": "NOT RUN",
+  "X1_F13": "REPRODUCED; production gates unchanged",
+  "opaqueStatePublished": false
+}

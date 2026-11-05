@@ -3,7 +3,7 @@ import { digest,finiteDate,noFaults,object,text,uuid } from '../domain/protocol.
 import type { Clock,Faults,ObjectValue } from '../domain/protocol.js';
 import type { EvidenceStore,Envelope,Seal } from '../ports.js';
 import type { UnitOfWork } from '../infrastructure/postgres/unit-of-work.js';
-import { ConversationHeldError,PlanConflictError,rejectPlan } from './plan-conflict.js';
+import { ConversationHeldError,PlanConflictError,PlanInvalidError,rejectPlan } from './plan-conflict.js';
 import { boundedArchive } from './archive-policy.js';
 
 export interface PlanRequest {
@@ -66,6 +66,7 @@ export async function prepareOperation(args:{request:PlanRequest;reducer:UnitOfW
   }
   if(preparation.state==='REJECTED') {
     let terminal=false;try{terminal=await rejectPlan({businessId:b,inputId:r.inputId,plan,reason:preparation.reason!,reducer,sealer,archive});}catch{/* Committed rejection marker bars any retry until local custody is reconciled. */}
+    if(preparation.reason==='PLAN_INVALID')throw new PlanInvalidError(terminal,new Error(preparation.reason));
     throw new PlanConflictError(preparation.sqlState??'P0001',terminal,new Error(preparation.reason));
   }
   return plan;

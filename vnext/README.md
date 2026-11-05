@@ -7,8 +7,11 @@ The accepted v0.8.1 application remains unchanged. Claude formally accepted WP1 
 bounded synthetic use ([acceptance](https://github.com/vanasperena-ux/nukmiris/pull/4#issuecomment-6620571487)).
 Claude formally closed WP2-L0a for bounded local synthetic use
 ([acceptance](https://github.com/vanasperena-ux/nukmiris/pull/9#issuecomment-6646622771)).
+Claude [closed WP2-L0b subject to C1](https://github.com/vanasperena-ux/nukmiris/pull/10#issuecomment-6649052579)
+for bounded synthetic use. C1 normal-progress correction is implemented separately
+and requires independent verification before L2 interactive booking.
 WP2-L0b implements sealed classification, durable reductions, reservation ordering
-and required inbound safeguards. Its independent acceptance is **pending**.
+and required inbound safeguards.
 See [implementation and acceptance matrix](../docs/greenfield/19-WP2-L0B-IMPLEMENTATION.md).
 
 Use Node 24.x, npm 11, Docker and the local managed daemon. From this directory:
@@ -21,6 +24,7 @@ npm test
 npm run test:fault
 npm run test:conditions
 npm run test:l0b
+npm run test:progress
 npm run test:concurrency
 npm run test:archive
 npm run test:archive:capacity
@@ -214,7 +218,7 @@ Authenticated route configuration selects the tenant facade without a default.
 Raw custody has a separate capability; this fixture shares a process and keys and
 does **not** establish production custody independence.
 
-Migration 004 is for a **fresh disposable fixture only** and refuses existing
+Migrations 004–005 are for a **fresh disposable fixture only** and refuse existing
 inputs/attempts. It preserves migrations 001–003 and role definitions. Do not apply
 it to a working installation. Archive tenant-policy version 2 rejects older metadata;
 create fresh local synthetic archives. The adapter refuses incompatible data;
