@@ -1,0 +1,48 @@
+{
+  "source": "3d8f82bb047e6ed937750b7ce6e81ecd23ab9f42",
+  "tree": "94cf868b87ac48cce783d8c7a5667cedc79b7004",
+  "results": {
+    "runtime": {
+      "tests": 41,
+      "pass": 39,
+      "fail": 0,
+      "skipped": 2,
+      "cancelled": 0
+    },
+    "full": {
+      "tests": 445,
+      "pass": 445,
+      "fail": 0,
+      "skipped": 0,
+      "cancelled": 0
+    },
+    "fault": {
+      "tests": 435,
+      "pass": 435,
+      "fail": 0,
+      "skipped": 0,
+      "cancelled": 0
+    },
+    "concurrency": {
+      "tests": 306,
+      "pass": 306,
+      "fail": 0,
+      "skipped": 0,
+      "cancelled": 0
+    }
+  },
+  "typecheck": "PASS",
+  "scope": "PASS",
+  "node": "v24.19.0",
+  "npm": "11.9.0",
+  "postgres": "17.11 (Debian 17.11-1.pgdg12+2)",
+  "platform": "linux",
+  "sourceFileCount": 107,
+  "ownerNativeReport": "Separate actual Windows source7549:38 PASS/2 FAIL/0 SKIP; native metadata/ACL and interactive recovery passed",
+  "correctedSourceWindows": "NOT EXECUTED BY CODEX; OWNER RE-TEST PENDING",
+  "independentW10Review": "PENDING",
+  "suitesOverlap": true,
+  "onlyTestCodeChanged": true,
+  "privateStatePublished": false,
+  "realProvidersCloudOrProductionActivation": false
+}

@@ -1,0 +1,21 @@
+{
+  "provenance": "ACTUAL OWNER WINDOWS RUN REPORTED IN CHAT; NOT CODEX EXECUTION",
+  "source": "75491d9734def18471bf7b96f5004d7fd4988314",
+  "platform": "Windows",
+  "node": "24.21.0",
+  "postgres": "17.11; measured by owner",
+  "dockerDesktop": "4.98.0",
+  "runtime": {
+    "pass": 38,
+    "fail": 2,
+    "skip": 0
+  },
+  "nativeWindowsMetadataSync": "EXECUTED; PASS",
+  "nativeWindowsAcl": "EXECUTED; PASS",
+  "interactiveLocal": "PASS",
+  "syntheticBookings": 2,
+  "crashRestart": "PASS",
+  "coherentBackupInertRestore": "PASS",
+  "W10": "One high ephemeral-port fixture mismatch plus its enclosing test-group failure; W8 correctly rejected the unsupported port",
+  "correctedSourceNativeRetest": "PENDING"
+}
