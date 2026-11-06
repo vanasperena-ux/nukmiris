@@ -1,0 +1,55 @@
+{
+  "source": "a61e65f7cf794432857fb855836b4d6ca36748d9",
+  "tree": "1afc754275f9418d0f4a20bd317844d25f53ed82",
+  "parent": "6691a554f1d8a2688b18f02528cf16a89350d9d0",
+  "results": {
+    "focused": {
+      "tests": 11,
+      "pass": 10,
+      "fail": 0,
+      "skipped": 1,
+      "cancelled": 0
+    },
+    "runtime": {
+      "tests": 36,
+      "pass": 34,
+      "fail": 0,
+      "skipped": 2,
+      "cancelled": 0
+    },
+    "full": {
+      "tests": 259,
+      "pass": 259,
+      "fail": 0,
+      "skipped": 0,
+      "cancelled": 0
+    },
+    "fault": {
+      "tests": 249,
+      "pass": 249,
+      "fail": 0,
+      "skipped": 0,
+      "cancelled": 0
+    },
+    "concurrency": {
+      "tests": 120,
+      "pass": 120,
+      "fail": 0,
+      "skipped": 0,
+      "cancelled": 0
+    }
+  },
+  "typecheck": "PASS",
+  "scope": "PASS",
+  "node": "v24.19.0",
+  "npm": "11.9.0",
+  "postgres": "17.11 (Debian 17.11-1.pgdg12+2)",
+  "platform": "linux",
+  "sourceFileCount": 77,
+  "fivePreviouslyFailingScenarios": "PASS on Linux; native corrected re-test pending",
+  "nativeWindowsCorrection": "NOT EXECUTED by Codex; two native-only SKIPs",
+  "nativeCorrectionAcceptance": "PENDING OWNER RE-TEST / independent re-verification",
+  "W8": "OPEN for persistent demo; separate L2 implementation",
+  "privateStatePublished": false,
+  "realProvidersOrGcpUsed": false
+}
