@@ -1,8 +1,28 @@
-# vNext synthetic safety core — WP1, WP2-L0a and WP2-L0b
+# NukMiris vNext — local interactive synthetic booking
 
-Owner authorized on 2026-11-01. This package has **no application start command,
-Google/Meta SDK, real credentials, booking UI or provider deployment**. It is an
-isolated proof of the approved [WP1 charter](../docs/greenfield/08-WP1-BOUNDED-IMPLEMENTATION-CHARTER.md).
+The L2 local application now includes a browser chat, durable booking conversations,
+transactional actions, ordered synthetic replies and a fake calendar. From this
+folder with Node24/npm11 and Docker Desktop Linux containers:
+
+```powershell
+npm.cmd ci --ignore-scripts
+npm.cmd run demo:book
+```
+
+Open the private loopback URL printed by the command. Select a synthetic customer,
+then type **menu** or **cita**. Known customers book directly on slot selection;
+new customers enter a name after selecting. The [Windows walkthrough, backup and
+inert restore instructions](../docs/greenfield/25-L2-INTERACTIVE-LOCAL.md) include
+exact acceptance steps and remaining restrictions. There are no real providers.
+Native Windows acceptance remains NOT RUN by Codex; independent L2 review is pending.
+The normal persistent profile is explicit synthetic use only. Restored profiles
+stay inert and cannot activate automatically. Do not share private URLs/state/backups.
+
+## Retained foundation scope and evidence
+
+The following describes the earlier WP1/L0 foundations and their isolated harness.
+The new local composition lives under local/; src/ still imports no network client.
+It implements the approved [WP1 charter](../docs/greenfield/08-WP1-BOUNDED-IMPLEMENTATION-CHARTER.md).
 The accepted v0.8.1 application remains unchanged. Claude formally accepted WP1 for
 bounded synthetic use ([acceptance](https://github.com/vanasperena-ux/nukmiris/pull/4#issuecomment-6620571487)).
 Claude formally closed WP2-L0a for bounded local synthetic use
@@ -10,7 +30,7 @@ Claude formally closed WP2-L0a for bounded local synthetic use
 Claude [closed WP2-L0b subject to C1](https://github.com/vanasperena-ux/nukmiris/pull/10#issuecomment-6649052579)
 for bounded synthetic use. C1 normal-progress correction is independently accepted in
 [PR11](https://github.com/vanasperena-ux/nukmiris/pull/11#issuecomment-6658436709).
-R1 automatic deadline recovery remains an L2 acceptance requirement.
+R1 and L1-C1–C6 were independently accepted in [PR14](https://github.com/vanasperena-ux/nukmiris/pull/14#issuecomment-6671645331). Their runtime/view/reply conditions are implemented by this L2 increment.
 WP2-L0b implements sealed classification, durable reductions, reservation ordering
 and required inbound safeguards.
 See [implementation and acceptance matrix](../docs/greenfield/19-WP2-L0B-IMPLEMENTATION.md).
@@ -82,8 +102,9 @@ under Milestone A; a native Windows owner smoke is still required.
 
 Signed bounded bytes → verified receiving WABA/number → configured tenant facade → independent original
 identity + batch preparation → SQL STAGED → independent commit seal → ELIGIBLE.
-Only the literal **synthetic fixed command** can prepare an operation. This is a
-test selector, not a new WhatsApp booking flow. One sealed `L0B-CLASS-1` classification
+In the retained v1 test path, only the literal **synthetic fixed command** can
+prepare an operation. L2 uses a separate SQL-authoritative LOCAL_CHAT v2 ingress
+and requires a sealed, transactionally consumed local booking intent instead. One sealed `L0B-CLASS-1` classification
 is authoritative for TypeScript and SQL; ordinary text, context input, human mode,
 Menu and controls have durable outcomes without calendar mutations. Local reductions
 use `LOCAL_ONLY` disposition; they do not claim that a WhatsApp reply was sent.
@@ -237,5 +258,5 @@ recoverable CLI ownership, explicit loopback SSL, hidden processes and measured
 version evidence. See [corrections/native commands](../docs/greenfield/23-WINDOWS-W1-W6-CORRECTIONS.md).
 Use `npm.cmd run test:runtime` on Windows; Linux explicitly skips the native ACL
 case. Native Windows remains NOT RUN here. C1 and L1 are independently accepted;
-R1 and L1-C1–C6 must be closed before L2 demo acceptance. Production/provider/OPS01
+PR12 W1–W6 are independently corrected; W8 is addressed here. New L2 code and native Windows acceptance still require independent verification. Production/provider/OPS01
 gates and v0.8.1 protection remain unchanged.

@@ -5,6 +5,7 @@ import path from 'node:path';
 import {setTimeout as wait} from 'node:timers/promises';
 import {readState,provision,owned,startDatabase,stopDatabase,backupDatabase,destroy} from './fixture.mjs';
 import {childProcess} from './child.mjs';
+import {freeLoopbackPort} from './command-lock.mjs';
 export async function request(s,w,action='health'){
  if(w.instance!==s.id||!Number.isInteger(w.port)||w.port<1024||w.port>65535)throw Error('worker_identity_invalid');
  return new Promise((resolve,reject)=>{
@@ -13,19 +14,22 @@ export async function request(s,w,action='health'){
 }
 export async function workerState(s){try{return JSON.parse(await fs.readFile(path.join(s.directory,'worker.json'),'utf8'));}catch(e){if(e.code==='ENOENT')return null;throw e;}}
 export async function start(s,port=3077){
+ if(s.application?.restored)throw Error('restored_profile_is_inert_no_activation');
+ if(port>=49152)throw Error('runtime_port_must_be_below_49152');if(port===0)port=await freeLoopbackPort();
  if(!Number.isInteger(port)||port<0||port>65535||(port&&port<1024))throw Error('runtime_port_invalid');await startDatabase(s);
- const prior=await workerState(s);if(prior){try{return await request(s,prior);}catch(e){if(e.code!=='ECONNREFUSED')throw e;await fs.unlink(path.join(s.directory,'worker.json'));}}
- const log=openSync(path.join(s.directory,'worker.log'),'a',0o600),worker=childProcess(fileURLToPath(new URL('./health-worker.mjs',import.meta.url)),{directory:s.directory,port},{detached:true,stdio:['ignore',log,log,'ipc']});closeSync(log);
- try{const ready=await worker.message('ready');await fs.writeFile(path.join(s.directory,'worker.json'),JSON.stringify(ready),{flag:'wx',mode:0o600});worker.detach();return await request(s,ready);}catch(e){await worker.crash();throw e;}
+ const prior=await workerState(s);if(prior){try{const health=await request(s,prior);return s.application?{...health,url:'http://127.0.0.1:'+prior.port+'/#'+s.application.uiToken}:health;}catch(e){if(e.code!=='ECONNREFUSED')throw e;await fs.unlink(path.join(s.directory,'worker.json'));}}
+ const log=openSync(path.join(s.directory,'worker.log'),'a',0o600),worker=childProcess(fileURLToPath(new URL(s.application?'./booking-worker.mjs':'./health-worker.mjs',import.meta.url)),{directory:s.directory,port},{detached:true,stdio:['ignore',log,log,'ipc']});closeSync(log);
+ try{const ready=await worker.message('ready');await fs.writeFile(path.join(s.directory,'worker.json'),JSON.stringify(ready),{flag:'wx',mode:0o600});worker.detach();const health=await request(s,ready);return s.application?{...health,url:'http://127.0.0.1:'+ready.port+'/#'+s.application.uiToken}:health;}catch(e){await worker.crash();throw e;}
 }
-export async function stopWorker(s){const w=await workerState(s);if(!w)return;try{await request(s,w,'stop');}catch(e){if(e.code!=='ECONNREFUSED')throw e;await fs.unlink(path.join(s.directory,'worker.json'));return;}for(let i=0;i<100;i++){if(!await workerState(s))return;await wait(20);}throw Error('worker_stop_held');}
+export async function stopWorker(s){const w=await workerState(s);if(!w)return;try{await request(s,w,'stop');}catch(e){if(e.code!=='ECONNREFUSED')throw e;await fs.unlink(path.join(s.directory,'worker.json'));return;}for(let i=0;i<1500;i++){if(!await workerState(s))return;await wait(20);}throw Error('worker_stop_held');}
 export async function stop(s){await stopWorker(s);await stopDatabase(s);return {instance:s.id,stopped:true};}
-export async function backup(s){await stopWorker(s);await startDatabase(s);return backupDatabase(s);}
+export async function backup(s){await stopWorker(s);await startDatabase(s);if(s.application){const {backupInteractive}=await import('./coherent-backup.mjs');return backupInteractive(s);}return backupDatabase(s);}
 export async function reset(s,confirmation){
  if(confirmation!==s.id)throw Error('reset_requires_exact_instance_id');await backup(s);await stop(s);await destroy(s);
  const previous=path.join(s.directory,'previous-'+s.id);await fs.mkdir(previous,{mode:0o700});await fs.rename(path.join(s.directory,'state.json'),path.join(previous,'state.json'));
+ for(const file of ['application.json','custody'])try{await fs.rename(path.join(s.directory,file),path.join(previous,file));}catch(e){if(e.code!=='ENOENT')throw e;}
  // Keep previous diagnostics/backups private and use a new directory/identity.
- const fresh=await provision(s.directory,{port:s.port,reuseRoot:true});return {reset:true,previousInstance:s.id,instance:fresh.id,database:fresh.database,backupsRetained:true,mode:fresh.mode};
+ const fresh=await provision(s.directory,{port:s.port<49152?s.port:15432,reuseRoot:true});return {reset:true,previousInstance:s.id,instance:fresh.id,database:fresh.database,backupsRetained:true,mode:fresh.mode};
 }
 export {locked,recoverLegacyLock} from './command-lock.mjs';
 export {readState,provision,owned};

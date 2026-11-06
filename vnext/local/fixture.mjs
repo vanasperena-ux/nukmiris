@@ -42,7 +42,7 @@ export async function initializeDatabase(s,database=s.database,active=false){
  try{await admin.query('CREATE DATABASE '+pg.escapeIdentifier(database));await admin.query('ALTER DATABASE '+pg.escapeIdentifier(database)+" SET TimeZone TO 'UTC'");}finally{await admin.end();}
  const db=new pg.Pool(connection(s,'postgres',database));
  try{
-  for(const f of ['migrations/001-foundation.sql','migrations/002-execution.sql','migrations/003-dispositions.sql','roles.sql','migrations/004-classification-and-ordering.sql','migrations/005-conversation-progress.sql','migrations/006-deadline-recovery.sql'])await db.query(await fs.readFile(path.join(ROOT,'src/infrastructure/postgres',f),'utf8'));
+  for(const f of ['migrations/001-foundation.sql','migrations/002-execution.sql','migrations/003-dispositions.sql','roles.sql','migrations/004-classification-and-ordering.sql','migrations/005-conversation-progress.sql','migrations/006-deadline-recovery.sql','migrations/007-local-interactive.sql'])await db.query(await fs.readFile(path.join(ROOT,'src/infrastructure/postgres',f),'utf8'));
   for(const role of ROLES){const user='wp1_'+role;await db.query('ALTER ROLE '+pg.escapeIdentifier(user)+' PASSWORD '+pg.escapeLiteral(s.passwords[user]));}
   const routes=[],ids={};
   for(const businessId of ['synthetic-a','synthetic-b']){
@@ -57,7 +57,7 @@ export async function initializeDatabase(s,database=s.database,active=false){
   return {routes,ids};
  }finally{await db.end();}
 }
-export async function provision(directory,{port=55432,reuseRoot=false}={},dependencies={}){
+export async function provision(directory,{port=15432,reuseRoot=false}={},dependencies={}){
  const command=dependencies.command??docker,protectDirectory=dependencies.protect??protect;
  const resolved=path.resolve(directory);if(!Number.isInteger(port)||port<0||port>65535||(port!==0&&port<1024)||/[\n\r,]/.test(resolved)||!(path.basename(resolved)==='.local-demo'||path.basename(resolved).startsWith('nukmiris-vnext-')))throw Error('local_fixture_target_denied');
  const id=randomUUID().replaceAll('-',''),container='nukmiris-vnext-'+id;

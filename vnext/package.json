@@ -25,11 +25,16 @@
     "demo:reset": "node local/cli.mjs reset",
     "demo:backup": "node local/cli.mjs backup",
     "demo:smoke": "npm run build && node local/cli.mjs smoke",
-    "test:runtime": "npm run build && node --test --test-concurrency=1 local/platform.test.mjs local/command-lock.test.mjs local/runtime.test.mjs",
+    "test:runtime": "npm run build && node --test --test-concurrency=1 local/platform.test.mjs local/command-lock.test.mjs local/runtime.test.mjs local/interactive.test.mjs",
     "demo:unlock": "node local/cli.mjs unlock",
     "test:l1": "npm run build && node scripts/run-tests.mjs l1",
     "demo:transcript": "npm run build && node scripts/availability-transcript.mjs",
-    "test:l2prep": "npm run build && node scripts/run-tests.mjs l2prep"
+    "test:l2prep": "npm run build && node scripts/run-tests.mjs l2prep",
+    "test:l2": "npm run build && node scripts/run-tests.mjs l2",
+    "demo:book": "npm run build && node local/cli.mjs book",
+    "demo:restore": "npm run build && node local/cli.mjs restore",
+    "test:interactive": "npm run build && node --test --test-concurrency=1 local/interactive.test.mjs",
+    "test:browser": "npm run build && node local/browser-smoke.mjs"
   },
   "dependencies": {
     "luxon": "3.7.2",
