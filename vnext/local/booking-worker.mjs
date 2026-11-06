@@ -27,7 +27,7 @@ process.once('message',config=>{void(async()=>{
   if(req.method==='POST'&&req.headers.origin!==origin){json(403,{error:'same_origin_required'});return;}
   if(req.method==='POST'&&req.url==='/api/auth'){const p=await body(req);if(!exact(p,['token'])||!same(p.token,state.application.uiToken)){json(403,{error:'local_auth_denied'});return;}res.setHeader('Set-Cookie',cookie+'='+state.application.uiToken+'; HttpOnly; SameSite=Strict; Path=/');json(200,{authenticated:true});return;}
   const cookies=String(req.headers.cookie??'').split(';').map(s=>s.trim());if(!cookies.some(c=>same(c,cookie+'='+state.application.uiToken))){json(401,{error:'open_the_private_URL_from_demo_book'});return;}
-  if(req.method==='GET'&&req.url==='/api/businesses'){json(200,{businesses:opened.profile.scopes.map(s=>({id:s.businessId,title:s.title,employees:s.employees}))});return;}
+  if(req.method==='GET'&&req.url==='/api/businesses'){json(200,{businesses:opened.profile.scopes.map(s=>({id:s.businessId,title:s.title,employees:s.employees,timeZone:s.config.timeZone}))});return;}
   if(req.method==='POST'&&req.url==='/api/session'){const p=await body(req);if(!exact(p,['businessId','persona'])||!opened.profile.scopes.some(s=>s.businessId===p.businessId)||!['known','new','new2'].includes(p.persona)){json(400,{error:'local_route_denied'});return;}const v={businessId:p.businessId,subject:({'known':'customer-','new':'new-','new2':'new2-'})[p.persona]+p.businessId},payload=Buffer.from(JSON.stringify(v)).toString('base64url');json(200,{...v,token:payload+'.'+sign(payload)});return;}
   const bound=session(req);
   if(req.method==='GET'&&req.url==='/api/state'){json(200,await opened.app.snapshot(bound.businessId,bound.subject));return;}

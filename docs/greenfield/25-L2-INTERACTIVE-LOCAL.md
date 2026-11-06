@@ -144,12 +144,15 @@ replacement, not a reconciliation decision. Run demo:book to use that fresh fixt
 - C2: persisted displayed UUIDs, revision/expiry and consumed_by are checked under
   DB time and the conversation lock in the consuming transaction. Intent/reservation
   recheck expiry and later sealed Menu/human priority. Restart uses original seal
-  keys/IDs; no dummy appointment is used for navigation replies.
+  keys/IDs; missing claim/session rows fail closed even with a valid seal. No dummy
+  appointment is used for navigation replies. A stale action cannot exit human mode.
 - C3: expired/superseded confirmation retains the ACTIVE appointment and includes it
   in the next reply. Uncertain earlier output blocks later reply entry until proof
   reconciles, preserving customer order.
 - C4: SLOT_UNAVAILABLE, SQL RESOURCE_CONFLICT and LOCK_TIMEOUT all re-offer with
   informative choose-again copy. Invalid plans/custody failures stay held as errors.
+  Never-entered expired/superseded navigation replies expire without being mislabeled
+  UNKNOWN; entered replies still require ledger proof and block later delivery.
 - W8: all allocated/default ports below49152; EACCES guidance, bind-error mapping
   and confirmed guard relocation; no lock stealing or port fallback.
 

@@ -83,7 +83,8 @@ export class InteractiveBooking {
   const operation=await s.reducer.tx(b,async db=>(await db.query<{plan:ObjectValue}>('SELECT plan FROM core.operation WHERE business_id=$1 AND input_id=$2',[b,inputId])).rows[0]);
   if(operation){book=await s.archive.lookup(`operation/${b}/${inputId}`)??undefined;if(!book)throw Error('operation_custody_missing');}
   else try{
-   if(c.error||((c.payload.kind==='ACTION'||basis['outcome']==='NAME_REQUIRED')&&Date.parse(c.expiresAt)<=Date.parse(now))){oracle.menu();view=await oracle.open();view.text='Esa opción venció o ya fue utilizada. Elige un horario de nuevo.\n\n'+view.text;}
+   if(basis['outcome']==='HUMAN_HANDOFF'&&!(c.payload.kind==='TEXT'&&n==='menu'))view=oracle.ordinary();
+   else if(c.error||((c.payload.kind==='ACTION'||basis['outcome']==='NAME_REQUIRED')&&Date.parse(c.expiresAt)<=Date.parse(now))){oracle.menu();view=await oracle.open();view.text='Esa opción venció o ya fue utilizada. Elige un horario de nuevo.\n\n'+view.text;}
    else if(c.payload.kind==='TEXT'&&n==='menu'){oracle.menu();view=await oracle.open();}
    else if(c.payload.kind==='TEXT'&&ordinaryDecision({type:'text',text:{body:c.payload.value}},'BOT','NONE').outcome==='HUMAN_HANDOFF')view=oracle.humano();
    else if(basis['outcome']==='HUMAN_HANDOFF')view=oracle.ordinary();
@@ -142,7 +143,7 @@ export class InteractiveBooking {
  private async replies(s:LocalScope):Promise<void>{
   const b=s.config.businessId,rows=await s.dispatcher.tx(b,async db=>(await db.query<{id:string;state:string}>("SELECT r.id,r.state FROM core.local_reply r JOIN core.input i ON i.business_id=r.business_id AND i.id=r.input_id WHERE r.business_id=$1 AND r.state NOT IN ('DELIVERED','EXPIRED') ORDER BY i.sequence",[b])).rows);
   for(const r of rows){if(r.state==='PENDING'){
-    const entered=await s.dispatcher.tx(b,async db=>(await db.query<{v:boolean}>('SELECT core.local_reply_enter($1,$2) v',[b,r.id])).rows[0]!.v,'local-reply-entry',this.faults);if(entered){await this.faults.hit('local-reply.afterEntry');await s.result.tx(b,async db=>{await db.query('SELECT core.local_provider_apply($1,$2,$3)',[b,{attemptId:r.id},'REPLY']);});await this.faults.hit('local-reply.afterProvider');}
+    const entered=await s.dispatcher.tx(b,async db=>(await db.query<{v:boolean}>('SELECT core.local_reply_enter($1,$2) v',[b,r.id])).rows[0]!.v,'local-reply-entry',this.faults);if(!entered)continue;if(entered){await this.faults.hit('local-reply.afterEntry');await s.result.tx(b,async db=>{await db.query('SELECT core.local_provider_apply($1,$2,$3)',[b,{attemptId:r.id},'REPLY']);});await this.faults.hit('local-reply.afterProvider');}
    }
    const delivered=await s.result.tx(b,async db=>(await db.query<{v:boolean}>('SELECT core.local_reply_result($1,$2) v',[b,r.id])).rows[0]!.v);if(!delivered)await this.attention(s,'reply/'+r.id,'REPLY_UNKNOWN_HELD',{replyId:r.id});
   }

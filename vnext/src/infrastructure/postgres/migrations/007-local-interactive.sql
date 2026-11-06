@@ -61,7 +61,7 @@ BEGIN
  PERFORM core.assert_scope(b);
  IF NOT core.valid_tenant_bindings(p,b) OR p->>'businessId' IS DISTINCT FROM b OR p->>'version' IS DISTINCT FROM '1'
  OR NOT EXISTS(SELECT 1 FROM core.seal s WHERE s.business_id=b AND s.stable_key=k AND s.digest=d AND s.kind='LOCAL_INPUT' AND s.receipt->'body'=p)
- OR p->'payload'->>'kind' IS NULL OR p->'payload'->>'kind' NOT IN ('TEXT','ACTION') OR length(coalesce(p->'payload'->>'value','')) NOT BETWEEN 1 AND 1024
+ OR jsonb_typeof(p->'payload') IS DISTINCT FROM 'object' OR jsonb_typeof(p->'payload'->'value') IS DISTINCT FROM 'string' OR p->'payload'->>'kind' IS NULL OR p->'payload'->>'kind' NOT IN ('TEXT','ACTION') OR length(coalesce(p->'payload'->>'value','')) NOT BETWEEN 1 AND 1024
  OR (p->'payload'->>'kind'='ACTION' AND p->'payload'->>'value' !~ '^[a-f0-9-]{36}$')
  OR coalesce(length(p->>'subject'),0) NOT BETWEEN 1 AND 128 THEN RAISE EXCEPTION 'local_input_denied'; END IF;
  SELECT * INTO old FROM core.local_message WHERE business_id=b AND request_id=(p->>'requestId')::uuid;
@@ -129,7 +129,7 @@ BEGIN
  SELECT * INTO m FROM core.local_message WHERE business_id=b AND input_id=i.id FOR UPDATE;
  IF m.state='DONE' THEN RETURN m.result=p; END IF;
  SELECT * INTO s FROM core.local_session WHERE business_id=b AND conversation_id=i.conversation_id FOR UPDATE;
- IF EXISTS(SELECT 1 FROM core.input later JOIN core.input_reduction red ON red.business_id=b AND red.input_id=later.id WHERE later.business_id=b AND later.conversation_id=i.conversation_id AND later.sequence>i.sequence AND red.outcome IN ('NAVIGATION','HUMAN_HANDOFF')) OR m.state<>'CLAIMED' OR s.revision<>(m.claim->>'revision')::bigint OR (p->>'revision')::bigint<>s.revision+1
+ IF EXISTS(SELECT 1 FROM core.input later JOIN core.input_reduction red ON red.business_id=b AND red.input_id=later.id WHERE later.business_id=b AND later.conversation_id=i.conversation_id AND later.sequence>i.sequence AND red.outcome IN ('NAVIGATION','HUMAN_HANDOFF')) OR m.input_id IS NULL OR s.conversation_id IS NULL OR m.state IS DISTINCT FROM 'CLAIMED' OR s.revision IS DISTINCT FROM (m.claim->>'revision')::bigint OR (p->>'revision')::bigint IS DISTINCT FROM s.revision+1 OR jsonb_typeof(p->'revision') IS DISTINCT FROM 'number' OR jsonb_typeof(p->'state') IS DISTINCT FROM 'object' OR NOT (p ?& ARRAY['businessId','inputId','revision','state','reply','replyId'])
  OR NOT core.valid_tenant_bindings(p,b) OR p->>'businessId' IS DISTINCT FROM b
  OR NOT EXISTS(SELECT 1 FROM core.seal WHERE business_id=b AND stable_key=k AND kind='LOCAL_VIEW' AND digest=d AND receipt->'body'=p) THEN RETURN false; END IF;
  expiry=core.authoritative_time()+interval '15 minutes';
@@ -156,7 +156,7 @@ BEGIN
  SELECT * INTO m FROM core.local_message WHERE business_id=b AND input_id=i.id;
  SELECT * INTO s FROM core.local_session WHERE business_id=b AND conversation_id=i.conversation_id;
  IF s.expires_at<=core.authoritative_time() THEN RAISE EXCEPTION 'local_action_expired'; END IF;
- IF EXISTS(SELECT 1 FROM core.input later JOIN core.input_reduction red ON red.business_id=b AND red.input_id=later.id WHERE later.business_id=b AND later.conversation_id=i.conversation_id AND later.sequence>i.sequence AND red.outcome IN ('NAVIGATION','HUMAN_HANDOFF')) OR m.state<>'CLAIMED' OR s.revision<>(m.claim->>'revision')::bigint OR m.claim->>'error'<>''
+ IF EXISTS(SELECT 1 FROM core.input later JOIN core.input_reduction red ON red.business_id=b AND red.input_id=later.id WHERE later.business_id=b AND later.conversation_id=i.conversation_id AND later.sequence>i.sequence AND red.outcome IN ('NAVIGATION','HUMAN_HANDOFF')) OR m.input_id IS NULL OR s.conversation_id IS NULL OR m.state IS DISTINCT FROM 'CLAIMED' OR s.revision IS DISTINCT FROM (m.claim->>'revision')::bigint OR m.claim->>'error' IS DISTINCT FROM ''
  OR NOT core.valid_tenant_bindings(p,b) OR p->>'businessId' IS DISTINCT FROM b
  OR NOT EXISTS(SELECT 1 FROM core.seal WHERE business_id=b AND stable_key=k AND kind='LOCAL_BOOKING_INTENT' AND digest=d AND receipt->'body'=p)
  OR NOT EXISTS(SELECT 1 FROM core.customer WHERE business_id=b AND id=(p->>'customerId')::uuid AND subject=i.subject) THEN RAISE EXCEPTION 'local_intent_denied'; END IF;
@@ -178,8 +178,8 @@ BEGIN
  IF b IS NULL OR i_id IS NULL OR name_value IS NULL OR customer_key IS NULL THEN RAISE EXCEPTION 'null_argument'; END IF;
  PERFORM core.assert_scope(b);SELECT * INTO i FROM core.input WHERE business_id=b AND id=i_id;IF i.id IS NULL THEN RAISE EXCEPTION 'local_input_missing'; END IF;
  PERFORM core.lock_conversation(b,i.conversation_id);SELECT * INTO m FROM core.local_message WHERE business_id=b AND input_id=i.id;
- IF m.state<>'CLAIMED' OR m.claim->>'error'<>'' OR m.claim->'basis'->>'outcome'<>'NAME_REQUIRED'
- OR length(name_value) NOT BETWEEN 3 AND 120 OR name_value ~ '[0-9<>]' THEN RAISE EXCEPTION 'local_name_denied'; END IF;
+ IF m.input_id IS NULL OR m.state IS DISTINCT FROM 'CLAIMED' OR m.claim->>'error' IS DISTINCT FROM '' OR m.claim->'basis'->>'outcome' IS DISTINCT FROM 'NAME_REQUIRED'
+ OR length(name_value) NOT BETWEEN 3 AND 120 OR name_value ~ '[0-9<>]' OR name_value !~ '[[:alpha:]]' THEN RAISE EXCEPTION 'local_name_denied'; END IF;
  INSERT INTO core.customer VALUES(b,customer_key,i.subject) ON CONFLICT DO NOTHING;
  SELECT id INTO existing FROM core.customer WHERE business_id=b AND subject=i.subject;
  INSERT INTO core.local_customer VALUES(b,existing,name_value) ON CONFLICT DO NOTHING;RETURN existing;
@@ -194,6 +194,7 @@ BEGIN
  IF r.id IS NULL THEN RETURN false; END IF;PERFORM core.lock_conversation(b,r.conversation_id);
  SELECT * INTO r FROM core.local_reply WHERE business_id=b AND id=r_id FOR UPDATE;
  IF r.state<>'PENDING' THEN RETURN false; END IF;
+ IF EXISTS(SELECT 1 FROM core.input later JOIN core.input_reduction red ON red.business_id=b AND red.input_id=later.id JOIN core.input original ON original.business_id=b AND original.id=r.input_id WHERE later.business_id=b AND later.conversation_id=r.conversation_id AND later.sequence>original.sequence AND red.outcome IN ('NAVIGATION','HUMAN_HANDOFF')) THEN UPDATE core.local_reply SET state='EXPIRED' WHERE business_id=b AND id=r_id;RETURN false;END IF;
  IF r.deadline_at<=core.authoritative_time() THEN UPDATE core.local_reply SET state='EXPIRED' WHERE business_id=b AND id=r_id;RETURN false;END IF;
  IF EXISTS(SELECT 1 FROM core.local_reply prev JOIN core.input pi ON pi.business_id=b AND pi.id=prev.input_id JOIN core.input ci ON ci.business_id=b AND ci.id=r.input_id
  WHERE prev.business_id=b AND prev.conversation_id=r.conversation_id AND pi.sequence<ci.sequence AND prev.state NOT IN ('DELIVERED','EXPIRED')) THEN RETURN false;END IF;

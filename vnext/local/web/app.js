@@ -1,6 +1,6 @@
 const $=id=>document.getElementById(id);let session,previous='',businesses=[],selectionRevision=0;const pending=new Map();
 const api=async(url,body)=>{const r=await fetch(url,{method:body?'POST':'GET',credentials:'same-origin',headers:{...(body?{'Content-Type':'application/json'}:{}),...(session?{'x-local-session':session.token}:{})},...(body?{body:JSON.stringify(body)}:{})});const v=await r.json();if(!r.ok)throw Error(v.error||'Solicitud retenida');return v;};
-const date=s=>new Intl.DateTimeFormat('es-MX',{timeZone:'America/Mexico_City',weekday:'short',day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'}).format(new Date(s));
+const date=s=>new Intl.DateTimeFormat('es-MX',{timeZone:businesses.find(b=>b.id===session?.businessId)?.timeZone??'America/Mexico_City',weekday:'short',day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'}).format(new Date(s));
 function node(tag,text,cls){const e=document.createElement(tag);if(text)e.textContent=text;if(cls)e.className=cls;return e;}
 async function send(payload,requestId=crypto.randomUUID()){
  const bound=session;if(!bound)return;if(payload.kind==='TEXT'&&!payload.value.trim()){$('status').textContent='Escribe un mensaje para continuar.';return;}const existing=pending.get(bound.token);if(existing&&existing.requestId!==requestId)return;const record={payload,requestId};pending.set(bound.token,record);sessionStorage.setItem('nukmiris-pending',JSON.stringify({session:bound,...record}));$('status').textContent='Enviando…';
