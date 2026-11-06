@@ -1,0 +1,38 @@
+
+> nukmiris-wp1-synthetic-core@0.0.0 test:runtime
+> npm run build && node --test --test-concurrency=1 local/runtime.test.mjs
+
+
+> nukmiris-wp1-synthetic-core@0.0.0 build
+> tsc -p tsconfig.json
+
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.2
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.2
+npm notice To update run: npm install -g npm@12.2.2
+npm notice
+▶ Windows-targeted local runtime over isolated TCP PostgreSQL17.11 (host execution recorded)
+  ✔ fresh isolated resources use loopback only, SCRAM, UTC and inert businesses (29.105339ms)
+  ✔ E1 every runtime connection overrides a Mexico City role default with UTC (16.884547ms)
+  ✔ path/identity checks and occupied DB port fail without fallback or touching the existing fixture (3779.066871ms)
+  ✔ portable child startup, cooperative stop and owned-handle crash need no POSIX signals (214.844174ms)
+  ✔ start/health/authenticated stop/crash/restart keep the original DB and refuse an occupied service port (1237.397114ms)
+  ✔ real indexed-custody/core booking smoke and C1 work over TCP without mutating persistent demo data (505.802491ms)
+  ✔ private backup restores to a separate inert database; corruption fails closed (634.110201ms)
+{"platform":"linux","node":"v24.19.0","postgres":"17.11","tcp":true,"utc":true,"nativeWindows":"NOT RUN","generatedStatePublished":false}
+  ✔ reset requires exact identity, retains backup and creates fresh isolated IDs (3943.541042ms)
+✔ Windows-targeted local runtime over isolated TCP PostgreSQL17.11 (host execution recorded) (15133.265491ms)
+✔ published CLI prepare/start/smoke/backup/stop/reset commands execute with spaces and Unicode paths (11611.703042ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 10
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 26848.080339
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.2
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.2
+npm notice To update run: npm install -g npm@12.2.2
+npm notice

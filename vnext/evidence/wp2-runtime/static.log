@@ -1,0 +1,14 @@
+
+> nukmiris-wp1-synthetic-core@0.0.0 typecheck
+> tsc -p tsconfig.json --noEmit
+
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.2
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.2
+npm notice To update run: npm install -g npm@12.2.2
+npm notice
+
+> nukmiris-wp1-synthetic-core@0.0.0 check:scope
+> node scripts/check-scope.mjs
+
+PASS: no HTTP/provider/env/child-process client; fs/sqlite confined to two archive adapter files; only pg, no application start command

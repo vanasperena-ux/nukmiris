@@ -8,8 +8,9 @@ bounded synthetic use ([acceptance](https://github.com/vanasperena-ux/nukmiris/p
 Claude formally closed WP2-L0a for bounded local synthetic use
 ([acceptance](https://github.com/vanasperena-ux/nukmiris/pull/9#issuecomment-6646622771)).
 Claude [closed WP2-L0b subject to C1](https://github.com/vanasperena-ux/nukmiris/pull/10#issuecomment-6649052579)
-for bounded synthetic use. C1 normal-progress correction is implemented separately
-and requires independent verification before L2 interactive booking.
+for bounded synthetic use. C1 normal-progress correction is independently accepted in
+[PR11](https://github.com/vanasperena-ux/nukmiris/pull/11#issuecomment-6658436709).
+R1 automatic deadline recovery remains an L2 acceptance requirement.
 WP2-L0b implements sealed classification, durable reductions, reservation ordering
 and required inbound safeguards.
 See [implementation and acceptance matrix](../docs/greenfield/19-WP2-L0B-IMPLEMENTATION.md).
@@ -228,3 +229,13 @@ quarantine and revalidation workflow. Do not reuse pre-N4 synthetic archives.
 The exact tested source, commands, results and independent Claude handoff are linked
 from [L0b evidence](evidence/wp2-l0b/README.md). Windows runtime/bootstrap, native
 device performance and the first interactive booking demonstration remain unverified.
+
+## Windows runtime review corrections
+
+PR12 now implements W1–W6: verified numeric-SID ACLs, explicit pinned image pull,
+recoverable CLI ownership, explicit loopback SSL, hidden processes and measured
+version evidence. See [corrections/native commands](../docs/greenfield/23-WINDOWS-W1-W6-CORRECTIONS.md).
+Use `npm.cmd run test:runtime` on Windows; Linux explicitly skips the native ACL
+case. Native Windows remains NOT RUN here. C1 and L1 are independently accepted;
+R1 and L1-C1–C6 must be closed before L2 demo acceptance. Production/provider/OPS01
+gates and v0.8.1 protection remain unchanged.

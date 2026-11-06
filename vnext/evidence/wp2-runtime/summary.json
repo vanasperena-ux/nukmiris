@@ -1,0 +1,38 @@
+{
+  "source": "e04099da54d3e881897a57fbe235ef54aaf56f5a",
+  "tree": "99097a3eaea600aa68b5bf2cd33442d2011f5a61",
+  "results": {
+    "full": {
+      "pass": 259,
+      "fail": 0,
+      "skipped": 0
+    },
+    "fault": {
+      "pass": 249,
+      "fail": 0,
+      "skipped": 0
+    },
+    "concurrency": {
+      "pass": 120,
+      "fail": 0,
+      "skipped": 0
+    },
+    "local": {
+      "pass": 10,
+      "fail": 0,
+      "skipped": 0
+    }
+  },
+  "sourceFiles": 72,
+  "node": "24.19.0",
+  "postgres": "17.11",
+  "testedHost": "Linux",
+  "nativeWindows": "NOT RUN",
+  "windowsCommandsImplemented": true,
+  "persistentDemoMode": "SYNTHETIC_INERT",
+  "interactiveBookingEnabled": false,
+  "backupScope": "INERT_FIXTURE_ONLY; no persistent archive/provider data",
+  "generatedPrivateStatePublished": false,
+  "independentReview": "PENDING",
+  "explicitGeneratedCredentialsRequired": true
+}

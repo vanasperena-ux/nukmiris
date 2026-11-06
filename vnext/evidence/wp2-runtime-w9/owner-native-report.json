@@ -1,0 +1,23 @@
+{
+  "provenance": "OWNER SUPPLIED IN CHAT; NOT independently executed by Codex",
+  "source": "8432dd846237efd959e4656ae8ddb2d7ff74adea",
+  "os": "Windows 11",
+  "node": "24.21.0",
+  "npm": "11.19.0",
+  "dockerDesktop": "4.98.0; Linux containers",
+  "postgres": "17.11; measured by owner",
+  "checks": {
+    "install": "PASS",
+    "typecheck": "PASS",
+    "scope": "PASS",
+    "runtime": {
+      "pass": 24,
+      "fail": 5,
+      "skip": 0
+    },
+    "nativeWindowsAcl": "EXECUTED; PASS",
+    "TCP_UTC_smoke_backup_restore_lifecycle_isolation": "PASS"
+  },
+  "W9": "Four W3 cases plus published CLI lifecycle: EPERM fsync on read-only temporary metadata handle",
+  "correctedSourceRetest": "PENDING"
+}

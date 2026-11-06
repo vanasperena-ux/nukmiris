@@ -1,0 +1,41 @@
+{
+  "source": "8432dd846237efd959e4656ae8ddb2d7ff74adea",
+  "tree": "5dcce88a1fbc6629e20112713e5b4bb5fd004261",
+  "results": {
+    "runtime": {
+      "pass": 28,
+      "fail": 0,
+      "skipped": 1
+    },
+    "full": {
+      "pass": 259,
+      "fail": 0,
+      "skipped": 0
+    },
+    "fault": {
+      "pass": 249,
+      "fail": 0,
+      "skipped": 0
+    },
+    "concurrency": {
+      "pass": 120,
+      "fail": 0,
+      "skipped": 0
+    }
+  },
+  "sourceFiles": 77,
+  "measuredRuntime": {
+    "platform": "linux",
+    "node": "v24.19.0",
+    "postgres": "17.11 (Debian 17.11-1.pgdg12+2)",
+    "tcp": true,
+    "utc": true,
+    "nativeWindows": "NOT RUN",
+    "generatedStatePublished": false
+  },
+  "windowsNativeAcl": "NOT RUN; explicitly skipped on Linux",
+  "windowsCommandContract": "PASS (mocked native commands)",
+  "W1_W3IndependentVerification": "PENDING",
+  "realProvidersOrGcpUsed": false,
+  "privateStatePublished": false
+}

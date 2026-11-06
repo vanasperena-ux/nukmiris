@@ -1,0 +1,68 @@
+
+> nukmiris-wp1-synthetic-core@0.0.0 test:runtime
+> npm run build && node --test --test-concurrency=1 local/platform.test.mjs local/command-lock.test.mjs local/runtime.test.mjs
+
+
+> nukmiris-wp1-synthetic-core@0.0.0 build
+> tsc -p tsconfig.json
+
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.2
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.2
+npm notice To update run: npm install -g npm@12.2.2
+npm notice
+✔ W3 a live command remains exclusive; contender cannot alter metadata or execute (16.751619ms)
+✔ W3 a crashed real CLI child leaves diagnostic metadata and a new command recovers without PID killing (67.183197ms)
+✔ W3 reboot/PID reuse residue cannot brick commands; concurrent recovery has at most one owner (23.56214ms)
+✔ W3 legacy/corrupt lock is preserved with a recovery command; explicit instance confirmation is required (6.922506ms)
+✔ W9 Windows-shaped flush rejects the former read-only handle; metadata flushes its writable creator (3.909833ms)
+✔ W9 write failure preserves prior metadata, cleans only its temporary file and propagates failure (1.741971ms)
+✔ W9 sync failure preserves prior metadata, cleans only its temporary file and propagates failure (1.515285ms)
+✔ W9 close failure preserves prior metadata, cleans only its temporary file and propagates failure (1.431711ms)
+✔ W9 rename failure preserves prior metadata, cleans only its temporary file and propagates failure (1.531099ms)
+✔ W9 exclusive-create collision never removes a pre-existing temporary file (1.178966ms)
+﹣ W9 native Windows rejects read-only fsync and publishes through a writable exclusive handle (0.142121ms) # SKIP
+✔ W1 numeric SID uses wildcard prefix; icacls and SID-normalized ACL are read back; every native process hidden (2.137227ms)
+✔ W1 refuses a successful grant with invalid ACL: extra ACE (0.593629ms)
+✔ W1 refuses a successful grant with invalid ACL: wrong SID (0.252995ms)
+✔ W1 refuses a successful grant with invalid ACL: inherited root (0.310049ms)
+✔ W1 refuses a successful grant with invalid ACL: unprotected root (0.307155ms)
+Pulling/verifying pinned PostgreSQL image (first download budget: 10 minutes).
+✔ W1 failed protection/pull removes only the empty root it created and permits a fresh retry (15.420347ms)
+✔ W2 explicit digest pull has a ten-minute budget and rejects a different reported image (0.536836ms)
+✔ W2 actionable sanitized Docker error: port (0.956237ms)
+✔ W2 actionable sanitized Docker error: desktop (0.378351ms)
+✔ W2 actionable sanitized Docker error: timeout (0.376699ms)
+✔ W2 actionable sanitized Docker error: missing binary (0.223181ms)
+✔ W5 Docker endpoint selection and child creation force hidden windows (0.253566ms)
+﹣ W1 native Windows directory, child file and persisted state privacy (0.053139ms) # Native Windows ACL execution unavailable on this host
+✔ W1 Azure AD numeric SID is supported without account-name resolution (0.421855ms)
+Pulling/verifying pinned PostgreSQL image (first download budget: 10 minutes).
+▶ Windows-targeted local runtime over isolated TCP PostgreSQL17.11 (host execution recorded)
+  ✔ fresh isolated resources use loopback only, SCRAM, UTC and inert businesses (26.599787ms)
+  ✔ E1 every runtime connection overrides a Mexico City role default with UTC (16.681313ms)
+  ✔ W4 loopback connections ignore inherited PGSSLMODE require/verify-full (28.882408ms)
+Pulling/verifying pinned PostgreSQL image (first download budget: 10 minutes).
+  ✔ path/identity checks and occupied DB port fail without fallback or touching the existing fixture (2311.349459ms)
+  ✔ portable child startup, cooperative stop and owned-handle crash need no POSIX signals (208.863062ms)
+  ✔ start/health/authenticated stop/crash/restart keep the original DB and refuse an occupied service port (1304.180066ms)
+  ✔ real indexed-custody/core booking smoke and C1 work over TCP without mutating persistent demo data (526.900323ms)
+  ✔ private backup restores to a separate inert database; corruption fails closed (636.088744ms)
+Pulling/verifying pinned PostgreSQL image (first download budget: 10 minutes).
+  ✔ reset requires exact identity, retains backup and creates fresh isolated IDs (5834.005287ms)
+{"platform":"linux","node":"v24.19.0","postgres":"17.11 (Debian 17.11-1.pgdg12+2)","tcp":true,"utc":true,"nativeWindows":"NOT RUN","generatedStatePublished":false}
+✔ Windows-targeted local runtime over isolated TCP PostgreSQL17.11 (host execution recorded) (16498.278425ms)
+✔ published CLI prepare/start/smoke/backup/stop/reset commands execute with spaces and Unicode paths (13717.40359ms)
+ℹ tests 36
+ℹ suites 0
+ℹ pass 34
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 2
+ℹ todo 0
+ℹ duration_ms 30602.181964
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.2
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.2
+npm notice To update run: npm install -g npm@12.2.2
+npm notice

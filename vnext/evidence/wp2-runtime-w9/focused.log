@@ -1,0 +1,19 @@
+✔ W3 a live command remains exclusive; contender cannot alter metadata or execute (16.419886ms)
+✔ W3 a crashed real CLI child leaves diagnostic metadata and a new command recovers without PID killing (68.854539ms)
+✔ W3 reboot/PID reuse residue cannot brick commands; concurrent recovery has at most one owner (24.694826ms)
+✔ W3 legacy/corrupt lock is preserved with a recovery command; explicit instance confirmation is required (7.77602ms)
+✔ W9 Windows-shaped flush rejects the former read-only handle; metadata flushes its writable creator (5.612696ms)
+✔ W9 write failure preserves prior metadata, cleans only its temporary file and propagates failure (2.079591ms)
+✔ W9 sync failure preserves prior metadata, cleans only its temporary file and propagates failure (1.676133ms)
+✔ W9 close failure preserves prior metadata, cleans only its temporary file and propagates failure (1.539401ms)
+✔ W9 rename failure preserves prior metadata, cleans only its temporary file and propagates failure (1.737855ms)
+✔ W9 exclusive-create collision never removes a pre-existing temporary file (1.66051ms)
+﹣ W9 native Windows rejects read-only fsync and publishes through a writable exclusive handle (0.126638ms) # SKIP
+ℹ tests 11
+ℹ suites 0
+ℹ pass 10
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 1
+ℹ todo 0
+ℹ duration_ms 211.73872
