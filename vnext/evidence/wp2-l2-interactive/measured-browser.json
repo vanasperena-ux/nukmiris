@@ -1,0 +1,14 @@
+[
+  {
+    "browser": "Chromium/Edge CDP",
+    "platform": "linux",
+    "knownBooking": "PASS",
+    "newNameAfterSlot": "PASS",
+    "directSelection": "PASS",
+    "calendarBookings": 2,
+    "businessIsolation": "PASS",
+    "loopbackOnly": true,
+    "postgres": "17.11 (Debian 17.11-1.pgdg12+2)",
+    "nativeWindows": "NOT RUN"
+  }
+]

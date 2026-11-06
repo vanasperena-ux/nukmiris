@@ -1,12 +1,18 @@
 /** Deterministic read-only reference model; no durable L2 state or effect path. */
 import {DateTime} from 'luxon';
 import {searchAvailability,recheckSlot,type AvailabilityConfig,type Slot,type SyntheticCalendarReader} from '../domain/availability.js';
+import {object,type ObjectValue} from '../domain/protocol.js';
 export interface OracleView {text:string;choices:{id:string;title:string}[];outcome:'OFFER'|'DATES'|'NAME_REQUIRED'|'BOOK_REQUEST'|'HUMAN_HANDOFF'|'MENU';slot?:Slot;viewRevision:number;expiresAt:string;presentation:'TEXT'|'REPLY_BUTTONS'|'LIST'}
 export const DATE_PROMPT='¿Para qué día te gustaría tu cita? Puedes escribir, por ejemplo: 13 oct, 13/10 o próximo lunes.';
 export class AvailabilityOracle {
  private slots:Slot[]=[];private revision=0;private allowed=new Map<string,{kind:string;value:string}>();private human=false;private selected:Slot|undefined;
  private selectedDate:string|undefined;private timePage=0;private datePages:Slot[][]=[];private datePage=0;private expiresAt=0;
  constructor(private readonly config:AvailabilityConfig,private readonly reader:SyntheticCalendarReader,private readonly now:()=>string){}
+ snapshot():ObjectValue{return JSON.parse(JSON.stringify({slots:this.slots,revision:this.revision,allowed:[...this.allowed],human:this.human,selected:this.selected??null,selectedDate:this.selectedDate??null,timePage:this.timePage,datePages:this.datePages,datePage:this.datePage,expiresAt:this.expiresAt})) as ObjectValue;}
+ static resume(config:AvailabilityConfig,reader:SyntheticCalendarReader,now:()=>string,value:ObjectValue,expiresAt:string):AvailabilityOracle{
+  const o=new AvailabilityOracle(config,reader,now);if(!Object.keys(value).length)return o;
+  const v=object(value);o.slots=v['slots'] as unknown as Slot[];o.revision=Number(v['revision']);o.allowed=new Map(v['allowed'] as unknown as [string,{kind:string;value:string}][]);o.human=v['human']===true;o.selected=(v['selected']??undefined) as Slot|undefined;o.selectedDate=(v['selectedDate']??undefined) as string|undefined;o.timePage=Number(v['timePage']);o.datePages=v['datePages'] as unknown as Slot[][];o.datePage=Number(v['datePage']);o.expiresAt=Date.parse(expiresAt);return o;
+ }
  private day(slot:Slot):string{return DateTime.fromISO(slot.startAt).setZone(this.config.timeZone).toISODate()!;}
  private view(text:string,kind:OracleView['outcome'],choices:{kind:string;value:string;title:string}[],slot?:Slot):OracleView{
   this.revision++;this.expiresAt=Date.parse(this.now())+900000;this.allowed.clear();const buttons=choices.map(x=>{const id=`${this.config.businessId}:${this.revision}:${x.kind}:${x.value}`;this.allowed.set(id,x);return {id,title:x.title};});return {text,choices:buttons,outcome:kind,viewRevision:this.revision,expiresAt:new Date(this.expiresAt).toISOString(),presentation:kind==='DATES'?'LIST':buttons.length?'REPLY_BUTTONS':'TEXT',...(slot?{slot}:{})};

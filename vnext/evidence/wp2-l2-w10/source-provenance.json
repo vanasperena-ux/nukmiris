@@ -1,0 +1,13 @@
+{
+  "testedSource": "3d8f82bb047e6ed937750b7ce6e81ecd23ab9f42",
+  "testedTree": "94cf868b87ac48cce783d8c7a5667cedc79b7004",
+  "parent": "2fcbd23c8b966f11277356ec11a76677d6bcb547",
+  "ownerNativeSource": "75491d9734def18471bf7b96f5004d7fd4988314",
+  "sourceChanges": [
+    "vnext/local/runtime.test.mjs"
+  ],
+  "applicationRuntimeW8W9AndLegacyByteIdenticalToParent": true,
+  "sourceFiles": 107,
+  "browserEvidence": "Retained at original source7549; not rerun for test-only change",
+  "privateStatePublished": false
+}

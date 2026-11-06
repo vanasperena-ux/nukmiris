@@ -1,0 +1,64 @@
+{
+  "source": "75491d9734def18471bf7b96f5004d7fd4988314",
+  "tree": "730e29a99b38203852ef255367fd9fe7cc83ecd7",
+  "results": {
+    "focused": {
+      "tests": 158,
+      "pass": 158,
+      "fail": 0,
+      "skipped": 0,
+      "cancelled": 0
+    },
+    "full": {
+      "tests": 445,
+      "pass": 445,
+      "fail": 0,
+      "skipped": 0,
+      "cancelled": 0
+    },
+    "fault": {
+      "tests": 435,
+      "pass": 435,
+      "fail": 0,
+      "skipped": 0,
+      "cancelled": 0
+    },
+    "concurrency": {
+      "tests": 306,
+      "pass": 306,
+      "fail": 0,
+      "skipped": 0,
+      "cancelled": 0
+    },
+    "runtime": {
+      "tests": 40,
+      "pass": 38,
+      "fail": 0,
+      "skipped": 2,
+      "cancelled": 0
+    },
+    "browser": {
+      "tests": 1,
+      "pass": 1,
+      "fail": 0,
+      "skipped": 0,
+      "cancelled": 0
+    }
+  },
+  "typecheck": "PASS",
+  "scope": "PASS",
+  "node": "v24.19.0",
+  "npm": "11.9.0",
+  "postgres": "17.11 (Debian 17.11-1.pgdg12+2)",
+  "platform": "linux",
+  "nativeIntegratedL2": "NOT RUN by Codex",
+  "nativeW9Correction": "PENDING OWNER RE-TEST",
+  "independentL2Review": "PENDING",
+  "suitesOverlap": true,
+  "interactiveBrowser": "ACTUALLY EXECUTED on Linux Chromium via loopback CDP",
+  "sourceFiles": 107,
+  "persistentSyntheticProfile": "implemented and crash/restart tested",
+  "backup": "coherent private SQL/ledger/archive/witness/keys/config; separate inert restore authenticated",
+  "realProvidersOrGcpUsed": false,
+  "privateStatePublished": false
+}

@@ -8,11 +8,28 @@ import pg from 'pg';
 import net from 'node:net';
 import {execFile} from 'node:child_process';
 import {promisify} from 'node:util';
+import {randomInt} from 'node:crypto';
 import {provision,readState,destroy,connection,owned,verifyBackup,ready,assertPrivate} from './fixture.mjs';
 import {start,stop,stopWorker,workerState,request,backup,reset} from './runtime.mjs';
 import {childProcess} from './child.mjs';
 import {smoke} from './smoke.mjs';
 import {UnitOfWork} from '../dist/src/infrastructure/postgres/unit-of-work.js';
+
+// Bind directly and retain the listener: probing/closing a free port would leave
+// a race before the collision assertion. Setup retries do not permit runtime fallback.
+async function occupiedSupportedPort(){
+ for(let attempt=0;attempt<100;attempt++){
+  const server=net.createServer();
+  try{await new Promise((resolve,reject)=>{server.once('error',reject);server.listen({host:'127.0.0.1',port:randomInt(20000,40000),exclusive:true},resolve);});return server;}
+  catch(error){if(!['EADDRINUSE','EACCES'].includes(error.code))throw error;}
+ }
+ throw Error('test_supported_service_port_unavailable');
+}
+
+test('W8 high service ports are rejected before database or worker access',async()=>{
+ const noResources=new Proxy({}, {get(_target,key){if(key==='application')return undefined;throw Error('unexpected_runtime_resource_access:'+String(key));}});
+ for(const port of [49152,55432,65535])await assert.rejects(start(noResources,port),{message:'runtime_port_must_be_below_49152'});
+});
 
 test('Windows-targeted local runtime over isolated TCP PostgreSQL17.11 (host execution recorded)',async t=>{
  const parent=await mkdtemp(path.join(tmpdir(),'nukmiris-vnext- salón space-'));let s;
@@ -49,7 +66,13 @@ test('Windows-targeted local runtime over isolated TCP PostgreSQL17.11 (host exe
   const ready=await start(s,0),w=await workerState(s);assert.equal(ready.instance,s.id);assert.equal(ready.timezone,'UTC');
   await assert.rejects(request({...s,controlToken:'wrong'},w,'stop'),/identity_mismatch/);
   await request(s,w,'crash');await new Promise(r=>setTimeout(r,150));const restarted=await start(s,0);assert.equal(restarted.database,s.database);assert.equal(restarted.mode,'SYNTHETIC_INERT');await stop(s);assert.equal((await owned(s)).State.Running,false);await start(s,0);await stopWorker(s);
-  const occupied=net.createServer();await new Promise(r=>occupied.listen(0,'127.0.0.1',r));try{await assert.rejects(start(s,occupied.address().port),/local_child_failed/);assert.equal(occupied.listening,true);}finally{await new Promise(r=>occupied.close(r));}await start(s,0);
+  const occupied=await occupiedSupportedPort();
+  try{
+   const address=occupied.address();assert.equal(address.address,'127.0.0.1');assert.ok(address.port>=20000&&address.port<40000);
+   await assert.rejects(start(s,address.port),error=>/local_child_failed/.test(error.message)&&/listen (?:EADDRINUSE|EACCES)/.test(error.message));
+   assert.equal(occupied.listening,true);assert.equal(occupied.address().port,address.port);assert.equal(await workerState(s),null);
+   assert.equal((await owned(s)).State.Running,true);assert.equal((await readState(s.directory)).database,s.database);
+  }finally{await new Promise(r=>occupied.close(r));}await start(s,0);
  });
  await t.test('real indexed-custody/core booking smoke and C1 work over TCP without mutating persistent demo data',async()=>{const result=await smoke(s);assert.equal(result.result,'PASS');assert.equal(result.fakeProviderCalls,2);assert.equal(result.c1Supersession,true);assert.equal(result.persistentDemoDatabaseMutated,false);});
  await t.test('private backup restores to a separate inert database; corruption fails closed',async()=>{

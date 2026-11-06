@@ -1,0 +1,29 @@
+
+> nukmiris-wp1-synthetic-core@0.0.0 test:browser
+> npm run build && node local/browser-smoke.mjs /usr/bin/chromium /workspace/work/nukmiris-l2-browser.png
+
+
+> nukmiris-wp1-synthetic-core@0.0.0 build
+> tsc -p tsconfig.json
+
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.2
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.2
+npm notice To update run: npm install -g npm@12.2.2
+npm notice
+Pulling/verifying pinned PostgreSQL image (first download budget: 10 minutes).
+{"browser":"Chromium/Edge CDP","platform":"linux","knownBooking":"PASS","newNameAfterSlot":"PASS","directSelection":"PASS","calendarBookings":2,"businessIsolation":"PASS","loopbackOnly":true,"postgres":"17.11 (Debian 17.11-1.pgdg12+2)","nativeWindows":"NOT RUN"}
+✔ L2 real browser: known/new customer direct booking, calendar and isolated business selector (10854.644562ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 1
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 13843.716851
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.2
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.2
+npm notice To update run: npm install -g npm@12.2.2
+npm notice
