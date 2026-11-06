@@ -1,0 +1,37 @@
+{
+  "workers": 6,
+  "competingSlots": 3,
+  "defaultLockTimeoutMs": 3000,
+  "lockTimeoutCount": 0,
+  "terminalResourceConflicts": 3,
+  "prepared": 3,
+  "p50Ms": 192.11466399999995,
+  "p95Ms": 234.74052900000004,
+  "samples": [
+    {
+      "result": "PREPARED",
+      "elapsedMs": 54.08932600000003
+    },
+    {
+      "result": "RESOURCE_CONFLICT",
+      "elapsedMs": 192.11466399999995
+    },
+    {
+      "result": "RESOURCE_CONFLICT",
+      "elapsedMs": 210.94295599999998
+    },
+    {
+      "result": "RESOURCE_CONFLICT",
+      "elapsedMs": 234.74052900000004
+    },
+    {
+      "result": "PREPARED",
+      "elapsedMs": 84.19106799999997
+    },
+    {
+      "result": "PREPARED",
+      "elapsedMs": 65.94665099999997
+    }
+  ],
+  "claim": "Synthetic host observation, not a Windows SLO. Terminal LOCK_TIMEOUT requires a new customer choice; never retry the rejected plan."
+}

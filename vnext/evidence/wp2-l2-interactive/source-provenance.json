@@ -1,0 +1,24 @@
+{
+  "testedSource": "75491d9734def18471bf7b96f5004d7fd4988314",
+  "testedTree": "730e29a99b38203852ef255367fd9fe7cc83ecd7",
+  "basePR14Evidence": "6e1ae2a6450cef01fedc91e63e8b0d7044a267f1",
+  "acceptedPrepSource": "6c1595ad478f261db75b2956c60c82e0a6f0f642",
+  "W9Source": "a61e65f7cf794432857fb855836b4d6ca36748d9",
+  "W9Incorporation": "same publisher implementation and byte-identical command-lock tests; selective source incorporation, not a PR merge",
+  "W8": "low ports/typed reserved-port diagnostics/confirmed guard relocation added here",
+  "newMigration": "007; empty fixtures only",
+  "preservedByteIdenticalToBase": [
+    "backend",
+    "lib",
+    "vnext/src/infrastructure/postgres/roles.sql",
+    "vnext/src/infrastructure/postgres/migrations/001-foundation.sql",
+    "vnext/src/infrastructure/postgres/migrations/002-execution.sql",
+    "vnext/src/infrastructure/postgres/migrations/003-dispositions.sql",
+    "vnext/src/infrastructure/postgres/migrations/004-classification-and-ordering.sql",
+    "vnext/src/infrastructure/postgres/migrations/005-conversation-progress.sql",
+    "vnext/src/infrastructure/postgres/migrations/006-deadline-recovery.sql"
+  ],
+  "sourceFiles": 107,
+  "legacyRuntimeImported": false,
+  "privateStatePublished": false
+}
