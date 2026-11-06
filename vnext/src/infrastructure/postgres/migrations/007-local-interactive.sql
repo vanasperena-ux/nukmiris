@@ -100,6 +100,10 @@ BEGIN
  IF m.state<>'QUEUED' THEN RETURN jsonb_build_object('status',m.state,'claim',m.claim,'result',m.result); END IF;
  SELECT * INTO s FROM core.local_session WHERE business_id=b AND conversation_id=i.conversation_id FOR UPDATE;
  priority=EXISTS(SELECT 1 FROM core.input_reduction WHERE business_id=b AND input_id=i.id AND outcome IN ('NAVIGATION','HUMAN_HANDOFF'));
+ -- A priority decision can fence unsent work immediately at ingress. Its reply
+ -- must wait for earlier entered booking facts so C3 cannot lose a late ACTIVE fact.
+ IF priority AND EXISTS(SELECT 1 FROM core.operation op JOIN core.input prior ON prior.business_id=b AND prior.id=op.input_id JOIN core.attempt atp ON atp.business_id=b AND atp.operation_id=op.id WHERE op.business_id=b AND prior.conversation_id=i.conversation_id AND prior.sequence<i.sequence AND atp.state IN ('SUBMISSION_ENTERED','UNKNOWN')) THEN RETURN jsonb_build_object('status','HELD'); END IF;
+
  IF NOT priority AND (NOT core.head_ready(b,i.conversation_id,i.sequence)
  OR EXISTS(SELECT 1 FROM core.local_message x JOIN core.input xi ON xi.business_id=b AND xi.id=x.input_id WHERE x.business_id=b AND xi.conversation_id=i.conversation_id AND xi.sequence<i.sequence AND x.state<>'DONE')
  OR EXISTS(SELECT 1 FROM core.local_reply r WHERE r.business_id=b AND r.conversation_id=i.conversation_id AND r.state NOT IN ('DELIVERED','EXPIRED'))) THEN RETURN jsonb_build_object('status','HELD'); END IF;

@@ -147,8 +147,11 @@ replacement, not a reconciliation decision. Run demo:book to use that fresh fixt
   keys/IDs; missing claim/session rows fail closed even with a valid seal. No dummy
   appointment is used for navigation replies. A stale action cannot exit human mode.
 - C3: expired/superseded confirmation retains the ACTIVE appointment and includes it
-  in the next reply. Uncertain earlier output blocks later reply entry until proof
-  reconciles, preserving customer order.
+  in the next reply. Priority reply composition waits for earlier entered booking
+  facts, including a late proof whose original confirmation has expired. Uncertain
+  earlier output blocks later reply entry until proof reconciles, preserving order.
+  The chat shows the most recently applied ACTIVE booking within message limits;
+  full appointment/calendar history remains in the owner viewer.
 - C4: SLOT_UNAVAILABLE, SQL RESOURCE_CONFLICT and LOCK_TIMEOUT all re-offer with
   informative choose-again copy. Invalid plans/custody failures stay held as errors.
   Never-entered expired/superseded navigation replies expire without being mislabeled
