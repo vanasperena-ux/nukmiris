@@ -67,7 +67,7 @@ export class Fixture {
     const cluster=new pg.Client({host:this.socket,database:'postgres',user:'postgres'});await cluster.connect();
     await cluster.query(`CREATE DATABASE "${this.dbname}"`);await cluster.end();
     const root=fileURLToPath(new URL('../../../',import.meta.url));
-    for(const file of ['migrations/001-foundation.sql','migrations/002-execution.sql','migrations/003-dispositions.sql','roles.sql','migrations/004-classification-and-ordering.sql','migrations/005-conversation-progress.sql','migrations/006-deadline-recovery.sql','migrations/007-local-interactive.sql','migrations/008-local-corrections.sql']) {
+    for(const file of ['migrations/001-foundation.sql','migrations/002-execution.sql','migrations/003-dispositions.sql','roles.sql','migrations/004-classification-and-ordering.sql','migrations/005-conversation-progress.sql','migrations/006-deadline-recovery.sql','migrations/007-local-interactive.sql','migrations/008-local-corrections.sql','migrations/009-local-review-corrections.sql']) {
       await this.admin.query(await fs.readFile(path.join(root,'src/infrastructure/postgres',file),'utf8'));
     }
     await this.admin.query(`CREATE SCHEMA fixture_private; REVOKE ALL ON SCHEMA fixture_private FROM PUBLIC;

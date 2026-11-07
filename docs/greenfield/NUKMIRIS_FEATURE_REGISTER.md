@@ -201,3 +201,27 @@ Exact-source results and the independent handoff accompany the Draft PR.
 READY FOR TEST is an implementation claim, never VERIFIED or independent approval.
 The owner's successful41/41 native runtime evidence belongs to baseline3d8f82b;
 corrected-source native Windows acceptance remains pending. Milestone A remains open.
+
+## PR16 independent-review correction addendum — C1–C6
+
+[Claude's GO WITH CONDITIONS](https://github.com/vanasperena-ux/nukmiris/pull/16#issuecomment-6700088878)
+reviewed source6fa5c18 and independently exercised real baseline data preservation,
+rollback and bounded behavior (Node22/PG16; not native Windows). The owner requires
+corrections and new Claude acceptance before the Windows upgrade. The authoritative
+input remains **v1.3 at d1399b90b9c0e3c56e5bdf0fe59f24d925a0d455**; its documentation
+branch is not modified or merged. Earlier addenda are retained as history.
+
+| IDs | Current implementation-branch status | Evidence / remaining gate |
+|---|---|---|
+|009/032 |READY FOR TEST — C1 conversational name safety and command precedence |Negative no-customer/no-booking cases, valid names, commands after expiry, crash/API/browser; new independent acceptance required |
+|033/034 |READY FOR TEST — C2 authoritative support routing/Unicode queue correction |Sealed route metadata,7392-candidate property, legacy identities, backfill/rollback; inbox/replies remain design-only |
+|005/031 |READY FOR TEST — C3 future-only ordinary summaries with historical delayed-confirmation facts |Past/delayed/C3 schedules; no history or UNKNOWN clearing |
+|001/005/031/032 |READY FOR TEST — C4 approved overview, name re-prompt and useful menu instructions |Unchanged legacy overview differential; no deferred natural-language escalation |
+|037/043 |READY FOR TEST — C5 short date-label input and clearer past weekday handling |Round-trip/date-line/year/mismatch/horizon/active-flow checks |
+|030/034/035/038/039/044;006/007/010 |Existing design/owner-decision/deferred boundaries retained (C6) |No acknowledgments bypassing holds, staff inbox, new overlap policy or management activation; business-owner simulator authorization only |
+
+See [correction contract and acceptance matrix](27-PR16-CLAUDE-C1-C5-CORRECTIONS.md).
+Exact tested SHA, reproducible evidence and new focused Claude handoff accompany
+PR16. **Owner Windows upgrade is ON HOLD until Claude accepts the revised source.**
+READY FOR TEST is not VERIFIED; full parity, PR15 independent review, native owner
+acceptance, Milestone A and all production gates remain open.

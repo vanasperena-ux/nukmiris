@@ -186,6 +186,11 @@ No PR merge, legacy data change, real Meta/Google, cloud or production activatio
 
 ## Existing Windows profile upgrade
 
+**Review follow-up: do not upgrade yet.** The owner requires focused Claude
+acceptance of the revised C1–C5 source first. See [doc27](27-PR16-CLAUDE-C1-C5-CORRECTIONS.md).
+The revised upgrade adds009 after008 where needed. After an approved upgrade,
+**never run demo:book from the old checkout against this profile** (C6).
+
 Keep the old checkout and private profile. **Do not reset, delete or reuse an inert
 restore as an active profile.** A fresh code checkout must point explicitly at the
 original vNext state directory, never v0.8.1. Keep backup files and returned digest

@@ -31,7 +31,7 @@ export class AvailabilityOracle {
   return this.view(DATE_PROMPT,'DATES',choices);
  }
  async open():Promise<OracleView>{if(this.human)return this.ordinary();this.slots=await searchAvailability(this.config,this.reader,this.now());this.expiresAt=Date.parse(this.now())+900000;this.selected=undefined;this.selectedDate=undefined;return this.timesOrSuggestions();}
- menu():OracleView{this.human=false;this.selected=undefined;return this.view('¿En qué podemos ayudarte?','MENU',[{kind:'book',value:'0',title:'Agendar una cita'},{kind:'manage',value:'0',title:'Reagendar / cancelar'},{kind:'human',value:'0',title:'Hablar con alguien'}]);}
+ menu():OracleView{this.human=false;this.selected=undefined;return this.view('¿En qué podemos ayudarte?\n\nEscribe "cita" o "agendar" para agendar una cita nueva, "horarios" para ver opciones y "menu" para volver al menú principal.\n\nPara solicitar apoyo, escribe "humano" o elige "Hablar con alguien".\n\n"reagendar" y "cancelar" aún no están disponibles en esta prueba local.','MENU',[{kind:'book',value:'0',title:'Agendar una cita'},{kind:'manage',value:'0',title:'Reagendar / cancelar'},{kind:'human',value:'0',title:'Hablar con alguien'}]);}
  humano():OracleView{this.human=true;this.selected=undefined;return this.view('Escribe tu mensaje.\n\nEscribe "menu" para volver al menú principal.','HUMAN_HANDOFF',[]);}
  management():OracleView{const view=this.menu();view.text='Reagendar y cancelar aún no están disponibles en esta prueba local. No se modificó ninguna cita.\n\n'+view.text;return view;}
  ordinary():OracleView{return this.human?this.view('Atención humana activa.','HUMAN_HANDOFF',[]):this.view('Menú','MENU',[]);}

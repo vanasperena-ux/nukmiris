@@ -9,7 +9,9 @@ import {RecoveryWorker} from './recover-expired.js';
 import {PlanConflictError,ConversationHeldError} from './plan-conflict.js';
 import {AvailabilityHeldError,recheckSlot,type AvailabilityConfig,type SyntheticCalendarReader} from '../domain/availability.js';
 import {parseAppointmentDate,explainDate} from '../domain/appointment-date.js';
-import {normalizedText,ordinaryDecision} from '../domain/classification.js';
+import {normalizedText,ordinaryDecision,localRoutingDecision} from '../domain/classification.js';
+import {bookingCustomerName,NAME_REPROMPT} from '../domain/customer-name.js';
+import {appointmentOverview,delayedConfirmationOverview} from '../domain/appointment-summary.js';
 import {whatsappMessages} from '../domain/whatsapp-presentation.js';
 import {shortDate} from '../domain/short-date.js';
 import {digest,object,text,uuid,type ObjectValue,type Clock,type Faults,noFaults} from '../domain/protocol.js';
@@ -56,10 +58,13 @@ export class InteractiveBooking {
   const existing=await s.reducer.tx(b,async db=>(await db.query<{id:string}>('SELECT id FROM core.conversation WHERE business_id=$1 AND channel_id=$2 AND subject=$3',[b,s.channelId,subject])).rows[0]);
   const conv=await s.archive.ensure(`local-conversation/${b}/${s.channelId}/${digest(subject)}`,'LOCAL_CONVERSATION',{businessId:b,channelId:s.channelId,subject},()=>({conversationId:existing?.id??randomUUID()}));
   const receivedAt=await this.now(s);
-  const input=await s.archive.ensure(`local-input/${b}/${requestId}`,'LOCAL_INPUT',{version:1,businessId:b,requestId,channelId:s.channelId,subject,payload:object(payload)},()=>({inputId:randomUUID(),conversationId:conv.body['conversationId']!,receivedAt}));
+  const routing=localRoutingDecision(payload);
+  // Routing is allocated metadata, not a new stable-key intent: old receipts can
+  // be resumed byte-for-byte without replacing their original admission identity.
+  const input=await s.archive.ensure(`local-input/${b}/${requestId}`,'LOCAL_INPUT',{version:1,businessId:b,requestId,channelId:s.channelId,subject,payload:object(payload)},()=>({inputId:randomUUID(),conversationId:conv.body['conversationId']!,receivedAt,routing}));
   // Only the original admission time is frozen; SQL independently checks DB time.
   await s.sealer.seal(b,s.archive,input);const inputId=await s.ingress.tx(b,async db=>(await db.query<{v:string}>('SELECT core.local_admit($1,$2,$3,$4) v',[b,input.body,input.key,input.digest])).rows[0]!.v);
-  if(payload.kind==='TEXT'&&['NAVIGATION','HUMAN_HANDOFF'].includes(ordinaryDecision({type:'text',text:{body:payload.value}},'BOT','NONE').outcome))await reduceInput({businessId:b,inputId,reducer:s.reducer,sealer:s.sealer,archive:s.archive});
+  if(payload.kind==='TEXT'&&['NAVIGATION','HUMAN_HANDOFF'].includes(routing.outcome))await reduceInput({businessId:b,inputId,reducer:s.reducer,sealer:s.sealer,archive:s.archive});
   return {inputId};
  }
  async tick():Promise<void>{if(this.inFlight)return this.inFlight;const work=this.pass();this.inFlight=work;void work.finally(()=>{if(this.inFlight===work)this.inFlight=undefined;}).catch(()=>{});return work;}
@@ -86,16 +91,15 @@ export class InteractiveBooking {
   if(operation){book=await s.archive.lookup(`operation/${b}/${inputId}`)??undefined;if(!book)throw Error('operation_custody_missing');}
   else try{
    if(basis['outcome']==='HUMAN_HANDOFF'&&!(c.payload.kind==='TEXT'&&n==='menu')){view=oracle.ordinary();silent=true;}
-   else if(c.error||((c.payload.kind==='ACTION'||basis['outcome']==='NAME_REQUIRED')&&Date.parse(c.expiresAt)<=Date.parse(now))){oracle.menu();view=await oracle.open();view.text='Esa opción venció o ya fue utilizada. Elige un horario de nuevo.\n\n'+view.text;}
-   else if(c.payload.kind==='TEXT'&&n==='menu')view=oracle.menu();
+   else if(c.payload.kind==='TEXT'&&['menu','hola'].includes(n))view=oracle.menu();
    else if(c.payload.kind==='TEXT'&&ordinaryDecision({type:'text',text:{body:c.payload.value}},'BOT','NONE').outcome==='HUMAN_HANDOFF')view=oracle.humano();
-   else if(basis['outcome']==='HUMAN_HANDOFF')view=oracle.ordinary();
+   else if(c.payload.kind==='TEXT'&&['cita','agendar','reservar','horarios'].includes(n))view=await oracle.open();
+   else if(c.payload.kind==='TEXT'&&['reagendar','cancelar'].includes(n))view=oracle.management();
+   else if(c.error||((c.payload.kind==='ACTION'||basis['outcome']==='NAME_REQUIRED')&&Date.parse(c.expiresAt)<=Date.parse(now))){oracle.menu();view=await oracle.open();view.text='Esa opción venció o ya fue utilizada. Elige un horario de nuevo.\n\n'+view.text;}
    else if(c.payload.kind==='ACTION')view=await oracle.action(c.action,!!customer?.name);
-   else if(['cita','agendar','reservar'].includes(n))view=await oracle.open();
-   else if(['reagendar','cancelar'].includes(n))view=oracle.management();
    else if(basis['outcome']==='NAME_REQUIRED'){
-    const name=c.payload.value.replace(/\s+/g,' ').trim();
-    if(name.length<3||name.length>120||!/[\p{L}]/u.test(name)||/[0-9<>]/.test(name)){view={...previousView(),text:'Por favor, escribe tu nombre completo (máximo 120 caracteres).',choices:[]};}
+    const name=bookingCustomerName(c.payload.value);
+    if(!name){view={...previousView(),text:NAME_REPROMPT,choices:[]};}
     else{const identity=await s.archive.ensure(`local-name/${b}/${inputId}`,'LOCAL_CUSTOMER',{businessId:b,inputId,name},()=>({customerId:randomUUID()}));await s.reducer.tx(b,async db=>{await db.query('SELECT core.local_name($1,$2,$3,$4)',[b,inputId,name,identity.body['customerId']]);});view=await oracle.nameCaptured();}
    }
    else if(!['OFFER','DATES'].includes(String(basis['outcome'])))view=oracle.menu();
@@ -133,8 +137,21 @@ export class InteractiveBooking {
   const saved=await s.archive.ensure(`local-view/${b}/${inputId}`,'LOCAL_VIEW',{businessId:b,inputId},()=>({revision:c.revision+1,replyId:randomUUID(),reply,state:{oracle:oracle.snapshot(),outcome:book?'BOOKING':view!.outcome,view:reply},...(book?{attemptId:book.body['attemptId']!}:{})}));await this.finish(s,saved);
  }
  private async finish(s:LocalScope,seal:Seal):Promise<void>{await s.sealer.seal(s.config.businessId,s.archive,seal);await s.reducer.tx(s.config.businessId,async db=>{await db.query('SELECT core.local_finish($1,$2,$3,$4)',[s.config.businessId,seal.body,seal.key,seal.digest]);},'local-view',this.faults);}
- private async active(s:LocalScope,subject:string,all=false):Promise<ObjectValue[]>{return s.reducer.tx(s.config.businessId,async db=>(await db.query(`SELECT a.*,max(i.sequence) AS last_sequence FROM core.appointment a JOIN core.customer c ON c.business_id=a.business_id AND c.id=a.customer_id LEFT JOIN core.operation op ON op.business_id=a.business_id AND op.appointment_id=a.id LEFT JOIN core.input i ON i.business_id=op.business_id AND i.id=op.input_id WHERE a.business_id=$1 AND c.subject=$2 AND a.state='ACTIVE' ${all?"AND (a.start_at>=core.local_now($1) OR EXISTS(SELECT 1 FROM core.output_intent oi JOIN core.operation oc ON oc.business_id=oi.business_id AND oc.id=oi.parent_operation_id WHERE oi.business_id=a.business_id AND oc.appointment_id=a.id AND oi.state<>'ACCEPTED'))":''} GROUP BY a.business_id,a.id ORDER BY ${all?'a.start_at,a.id':'max(i.sequence) DESC NULLS LAST,a.start_at DESC LIMIT 1'}`,[s.config.businessId,subject])).rows as ObjectValue[]);}
- private activeText(s:LocalScope,rows:ObjectValue[]):string{const reverse=new Map([...s.bindings.employees].map(([k,v])=>[v,s.employeeNames.get(k)??k]));return rows.map(a=>`Tienes una cita confirmada el ${shortDate(text(a['start_at']),s.config.timeZone)} con ${reverse.get(text(a['resource_id']))??'el equipo'}.`).join('\n');}
+ private async active(s:LocalScope,subject:string,all=false):Promise<ObjectValue[]>{return s.reducer.tx(s.config.businessId,async db=>(await db.query(`
+  SELECT a.*,a.start_at>=core.local_now($1) AS upcoming,max(i.sequence) AS last_sequence
+  FROM core.appointment a JOIN core.customer c ON c.business_id=a.business_id AND c.id=a.customer_id
+  LEFT JOIN core.operation op ON op.business_id=a.business_id AND op.appointment_id=a.id
+  LEFT JOIN core.input i ON i.business_id=op.business_id AND i.id=op.input_id
+  WHERE a.business_id=$1 AND c.subject=$2 AND a.state='ACTIVE'
+  AND (a.start_at>=core.local_now($1) OR EXISTS(
+   SELECT 1 FROM core.output_intent oi JOIN core.operation oc ON oc.business_id=oi.business_id AND oc.id=oi.parent_operation_id
+   WHERE oi.business_id=a.business_id AND oc.appointment_id=a.id AND oi.state<>'ACCEPTED'))
+  GROUP BY a.business_id,a.id
+  ORDER BY ${all?'a.start_at,a.id':'max(i.sequence) DESC NULLS LAST,a.start_at DESC LIMIT 1'}`,[s.config.businessId,subject])).rows as ObjectValue[]);}
+ private activeText(s:LocalScope,rows:ObjectValue[]):string{
+  const item=(r:ObjectValue)=>({start:text(r['start_at']),end:text(r['end_at'])});
+  return [appointmentOverview(rows.filter(r=>r['upcoming']===true).map(item),s.config.timeZone),...rows.filter(r=>r['upcoming']!==true).map(r=>delayedConfirmationOverview(item(r),s.config.timeZone))].filter(Boolean).join('\n\n');
+ }
  private async effects(s:LocalScope):Promise<void>{
   const b=s.config.businessId,provider=this.providers.get(b)!,now=await this.now(s),clock={now:()=>new Date(now)};
   const attempts=await s.dispatcher.tx(b,async db=>(await db.query<{id:string;state:string;envelope:Envelope;owner_id:string|null}>("SELECT id,state,envelope,owner_id FROM core.attempt WHERE business_id=$1 AND state NOT IN ('VERIFIED_APPLIED','ABANDONED') ORDER BY id",[b])).rows);
