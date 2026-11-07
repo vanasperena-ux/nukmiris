@@ -1,0 +1,11 @@
+Pulling/verifying pinned PostgreSQL image (first download budget: 10 minutes).
+{"browser":"Chromium/Edge CDP","platform":"linux","knownBooking":"PASS","newNameAfterSlot":"PASS","directSelection":"PASS","calendarBookings":2,"businessIsolation":"PASS","loopbackOnly":true,"postgres":"17.11 (Debian 17.11-1.pgdg12+2)","nativeWindows":"NOT RUN"}
+✔ L2 real browser: known/new customer direct booking, calendar and isolated business selector (16400.731853ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 1
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 19365.563441
