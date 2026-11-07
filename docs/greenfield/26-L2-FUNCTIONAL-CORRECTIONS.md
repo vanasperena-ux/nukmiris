@@ -221,3 +221,11 @@ slot, manage-unavailable response, all upcoming summaries, short date list, full
 Spanish date/mismatch, entry-only human acknowledgment/quiet text/Menu exit,
 calendar detail, fourth-person race, restart and business isolation. Full corrected
 native Windows/browser acceptance remains pending until the owner runs this source.
+
+## Additional command-precedence correction
+
+Final parity inspection found NAME_REQUIRED processed before explicit booking and
+management commands. That could store cita/agendar/reagendar/cancelar as a customer
+name and book. Explicit commands now precede name capture (human mode still wins);
+four regression schedules assert no customer creation or reservation from those
+commands, then prove correct direct booking or explicit management-unavailable UX.

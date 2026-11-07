@@ -91,13 +91,13 @@ export class InteractiveBooking {
    else if(c.payload.kind==='TEXT'&&ordinaryDecision({type:'text',text:{body:c.payload.value}},'BOT','NONE').outcome==='HUMAN_HANDOFF')view=oracle.humano();
    else if(basis['outcome']==='HUMAN_HANDOFF')view=oracle.ordinary();
    else if(c.payload.kind==='ACTION')view=await oracle.action(c.action,!!customer?.name);
+   else if(['cita','agendar','reservar'].includes(n))view=await oracle.open();
+   else if(['reagendar','cancelar'].includes(n))view=oracle.management();
    else if(basis['outcome']==='NAME_REQUIRED'){
     const name=c.payload.value.replace(/\s+/g,' ').trim();
     if(name.length<3||name.length>120||!/[\p{L}]/u.test(name)||/[0-9<>]/.test(name)){view={...previousView(),text:'Por favor, escribe tu nombre completo (máximo 120 caracteres).',choices:[]};}
     else{const identity=await s.archive.ensure(`local-name/${b}/${inputId}`,'LOCAL_CUSTOMER',{businessId:b,inputId,name},()=>({customerId:randomUUID()}));await s.reducer.tx(b,async db=>{await db.query('SELECT core.local_name($1,$2,$3,$4)',[b,inputId,name,identity.body['customerId']]);});view=await oracle.nameCaptured();}
    }
-   else if(['cita','agendar','reservar'].includes(n))view=await oracle.open();
-   else if(['reagendar','cancelar'].includes(n))view=oracle.management();
    else if(!['OFFER','DATES'].includes(String(basis['outcome'])))view=oracle.menu();
    else{const parsed=parseAppointmentDate(c.payload.value,{now,timeZone:s.config.timeZone});if(parsed.success){view=await oracle.date(parsed.date!);if(view.choices.length===1&&parsed.fallback?.success)view=await oracle.date(parsed.fallback.date!);}else view={...previousView(),text:explainDate(c.payload.value,parsed,365)};}
    if(view?.outcome==='BOOK_REQUEST'){
