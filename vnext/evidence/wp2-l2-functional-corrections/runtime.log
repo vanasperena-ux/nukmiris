@@ -1,0 +1,64 @@
+✔ W3 a live command remains exclusive; contender cannot alter metadata or execute (20.876437ms)
+✔ W3 a crashed real CLI child leaves diagnostic metadata and a new command recovers without PID killing (79.298613ms)
+✔ W3 reboot/PID reuse residue cannot brick commands; concurrent recovery has at most one owner (23.971351ms)
+✔ W3 legacy/corrupt lock is preserved with a recovery command; explicit instance confirmation is required (3.946096ms)
+✔ W9 Windows-shaped flush rejects the former read-only handle; metadata flushes its writable creator (3.901219ms)
+✔ W9 write failure preserves prior metadata, cleans only its temporary file and propagates failure (1.628723ms)
+✔ W9 sync failure preserves prior metadata, cleans only its temporary file and propagates failure (1.342589ms)
+✔ W9 close failure preserves prior metadata, cleans only its temporary file and propagates failure (1.289019ms)
+✔ W9 rename failure preserves prior metadata, cleans only its temporary file and propagates failure (1.615794ms)
+✔ W9 exclusive-create collision never removes a pre-existing temporary file (1.642844ms)
+﹣ W9 native Windows rejects read-only fsync and publishes through a writable exclusive handle (0.125746ms) # SKIP
+Pulling/verifying pinned PostgreSQL image (first download budget: 10 minutes).
+Pulling/verifying pinned PostgreSQL image (first download budget: 10 minutes).
+{"interactiveLocal":"PASS","platform":"linux","node":"v24.19.0","postgres":"17.11 (Debian 17.11-1.pgdg12+2)","tcp":true,"restart":true,"coherentBackup":true,"inertRestore":true,"bookings":2,"realProviders":false,"nativeWindows":"NOT RUN"}
+✔ L2 TCP/browser HTTP: real indexed archive, known/new booking, tenant auth, crash/restart and coherent inert restore (13809.196354ms)
+✔ W8 low ports and confirmed guard relocation from EACCES preserve live-command exclusion (10.353818ms)
+✔ W8 Docker Windows bind-forbidden diagnostics identify the reserved port without daemon advice (0.955105ms)
+✔ L2 published demo:book/start/stop CLI works with spaces/Unicode and reuses the original profile (8683.679959ms)
+Pulling/verifying pinned PostgreSQL image (first download budget: 10 minutes).
+✔ NM-035/040 authenticated details and fourth persona are scoped; no invented phone (6864.754819ms)
+Pulling/verifying pinned PostgreSQL image (first download budget: 10 minutes).
+Pulling/verifying pinned PostgreSQL image (first download budget: 10 minutes).
+{"additiveUpgrade":"PASS","platform":"linux","node":"v24.19.0","postgres":"17.11 (Debian 17.11-1.pgdg12+2)","protectedUnknownPreserved":true,"identityPreserved":true,"coherentBackup":true,"rollbackInert":true,"realProviders":false}
+✔ Additive existing-profile upgrade preserves UNKNOWN identities, history, custody and coherent inert rollback backup (14515.374044ms)
+✔ W1 numeric SID uses wildcard prefix; icacls and SID-normalized ACL are read back; every native process hidden (2.019131ms)
+✔ W1 refuses a successful grant with invalid ACL: extra ACE (0.736171ms)
+✔ W1 refuses a successful grant with invalid ACL: wrong SID (0.226436ms)
+✔ W1 refuses a successful grant with invalid ACL: inherited root (0.380924ms)
+✔ W1 refuses a successful grant with invalid ACL: unprotected root (0.451158ms)
+Pulling/verifying pinned PostgreSQL image (first download budget: 10 minutes).
+✔ W1 failed protection/pull removes only the empty root it created and permits a fresh retry (19.021188ms)
+✔ W2 explicit digest pull has a ten-minute budget and rejects a different reported image (0.832914ms)
+✔ W2 actionable sanitized Docker error: port (1.014613ms)
+✔ W2 actionable sanitized Docker error: desktop (0.747557ms)
+✔ W2 actionable sanitized Docker error: timeout (0.412722ms)
+✔ W2 actionable sanitized Docker error: missing binary (0.318712ms)
+✔ W5 Docker endpoint selection and child creation force hidden windows (0.226245ms)
+﹣ W1 native Windows directory, child file and persisted state privacy (0.04762ms) # Native Windows ACL execution unavailable on this host
+✔ W1 Azure AD numeric SID is supported without account-name resolution (0.334395ms)
+✔ W8 high service ports are rejected before database or worker access (1.654561ms)
+Pulling/verifying pinned PostgreSQL image (first download budget: 10 minutes).
+▶ Windows-targeted local runtime over isolated TCP PostgreSQL17.11 (host execution recorded)
+  ✔ fresh isolated resources use loopback only, SCRAM, UTC and inert businesses (39.838506ms)
+  ✔ E1 every runtime connection overrides a Mexico City role default with UTC (20.9863ms)
+  ✔ W4 loopback connections ignore inherited PGSSLMODE require/verify-full (40.851331ms)
+Pulling/verifying pinned PostgreSQL image (first download budget: 10 minutes).
+  ✔ path/identity checks and occupied DB port fail without fallback or touching the existing fixture (4695.013052ms)
+  ✔ portable child startup, cooperative stop and owned-handle crash need no POSIX signals (339.886201ms)
+  ✔ start/health/authenticated stop/crash/restart keep the original DB and refuse an occupied service port (1667.851454ms)
+  ✔ real indexed-custody/core booking smoke and C1 work over TCP without mutating persistent demo data (746.009239ms)
+  ✔ private backup restores to a separate inert database; corruption fails closed (921.149323ms)
+Pulling/verifying pinned PostgreSQL image (first download budget: 10 minutes).
+  ✔ reset requires exact identity, retains backup and creates fresh isolated IDs (5927.713013ms)
+{"platform":"linux","node":"v24.19.0","postgres":"17.11 (Debian 17.11-1.pgdg12+2)","tcp":true,"utc":true,"nativeWindows":"NOT RUN","generatedStatePublished":false}
+✔ Windows-targeted local runtime over isolated TCP PostgreSQL17.11 (host execution recorded) (20310.665078ms)
+✔ published CLI prepare/start/smoke/backup/stop/reset commands execute with spaces and Unicode paths (14215.388995ms)
+ℹ tests 43
+ℹ suites 0
+ℹ pass 41
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 2
+ℹ todo 0
+ℹ duration_ms 78972.198329

@@ -18,3 +18,8 @@ export function ordinaryDecision(event:ObjectValue,mode:string,phase:string):{ou
   if(phase==='NAME'||phase==='DATE')return {outcome:'CONTEXT_INPUT',value,mode,phase};
   return {outcome:'NO_EFFECT',value,mode,phase};
 }
+/** One application authority for the only human-mode escape. Kept in the sealed
+ * admission so SQL never derives navigation from a second Unicode normalizer. */
+export function localRoutingDecision(payload:{kind:'TEXT'|'ACTION';value:string}):{version:1;outcome:string}{
+ return {version:1,outcome:payload.kind==='TEXT'?ordinaryDecision({type:'text',text:{body:payload.value}},'BOT','NONE').outcome:'NO_EFFECT'};
+}

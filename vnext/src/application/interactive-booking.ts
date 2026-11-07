@@ -1,5 +1,4 @@
 import {randomUUID} from 'node:crypto';
-import {DateTime} from 'luxon';
 import {AvailabilityOracle,type OracleView} from './availability-oracle.js';
 import {protectedCalendar,type BookingBindings,type AvailabilitySignal} from './booking-composition.js';
 import {prepareOperation,prepareOutput} from './prepare-operation.js';
@@ -9,18 +8,23 @@ import {reduceInput} from './reduce-input.js';
 import {RecoveryWorker} from './recover-expired.js';
 import {PlanConflictError,ConversationHeldError} from './plan-conflict.js';
 import {AvailabilityHeldError,recheckSlot,type AvailabilityConfig,type SyntheticCalendarReader} from '../domain/availability.js';
-import {parseAppointmentDate,dateErrorMessage} from '../domain/appointment-date.js';
-import {normalizedText,ordinaryDecision} from '../domain/classification.js';
-import {whatsappPresentation} from '../domain/whatsapp-presentation.js';
+import {parseAppointmentDate,explainDate} from '../domain/appointment-date.js';
+import {normalizedText,ordinaryDecision,localRoutingDecision} from '../domain/classification.js';
+import {bookingCustomerName,NAME_REPROMPT} from '../domain/customer-name.js';
+import {appointmentOverview,delayedConfirmationOverview} from '../domain/appointment-summary.js';
+import {whatsappMessages} from '../domain/whatsapp-presentation.js';
+import {shortDate} from '../domain/short-date.js';
 import {digest,object,text,uuid,type ObjectValue,type Clock,type Faults,noFaults} from '../domain/protocol.js';
 import type {UnitOfWork} from '../infrastructure/postgres/unit-of-work.js';
 import type {EvidenceStore,Seal,Envelope,SyntheticProvider,AppliedProof} from '../ports.js';
 
 export interface LocalScope {
+ businessName?:string;
  config:AvailabilityConfig;bindings:BookingBindings;channelId:string;employeeNames:ReadonlyMap<string,string>;
  archive:EvidenceStore;ingress:UnitOfWork;reducer:UnitOfWork;sealer:UnitOfWork;dispatcher:UnitOfWork;result:UnitOfWork;
 }
 export interface LocalInput {kind:'TEXT'|'ACTION';value:string}
+const safeReason=(e:unknown):string=>{const code=(e as {code?:unknown})?.code;return typeof code==='string'&&/^[A-Z0-9_]{1,64}$/.test(code)?code:'LOCAL_OPERATION_HELD';};
 type Claim={inputId:string;conversationId:string;subject:string;sequence:number;basis:ObjectValue;revision:number;payload:LocalInput;action:string;error:string;now:string;expiresAt:string};
 /** Same-database fake calendar/ledger. It has no remote SDK, URL or provider fallback. */
 export class LocalProvider implements SyntheticProvider {
@@ -54,24 +58,27 @@ export class InteractiveBooking {
   const existing=await s.reducer.tx(b,async db=>(await db.query<{id:string}>('SELECT id FROM core.conversation WHERE business_id=$1 AND channel_id=$2 AND subject=$3',[b,s.channelId,subject])).rows[0]);
   const conv=await s.archive.ensure(`local-conversation/${b}/${s.channelId}/${digest(subject)}`,'LOCAL_CONVERSATION',{businessId:b,channelId:s.channelId,subject},()=>({conversationId:existing?.id??randomUUID()}));
   const receivedAt=await this.now(s);
-  const input=await s.archive.ensure(`local-input/${b}/${requestId}`,'LOCAL_INPUT',{version:1,businessId:b,requestId,channelId:s.channelId,subject,payload:object(payload)},()=>({inputId:randomUUID(),conversationId:conv.body['conversationId']!,receivedAt}));
+  const routing=localRoutingDecision(payload);
+  // Routing is allocated metadata, not a new stable-key intent: old receipts can
+  // be resumed byte-for-byte without replacing their original admission identity.
+  const input=await s.archive.ensure(`local-input/${b}/${requestId}`,'LOCAL_INPUT',{version:1,businessId:b,requestId,channelId:s.channelId,subject,payload:object(payload)},()=>({inputId:randomUUID(),conversationId:conv.body['conversationId']!,receivedAt,routing}));
   // Only the original admission time is frozen; SQL independently checks DB time.
   await s.sealer.seal(b,s.archive,input);const inputId=await s.ingress.tx(b,async db=>(await db.query<{v:string}>('SELECT core.local_admit($1,$2,$3,$4) v',[b,input.body,input.key,input.digest])).rows[0]!.v);
-  if(payload.kind==='TEXT'&&['NAVIGATION','HUMAN_HANDOFF'].includes(ordinaryDecision({type:'text',text:{body:payload.value}},'BOT','NONE').outcome))await reduceInput({businessId:b,inputId,reducer:s.reducer,sealer:s.sealer,archive:s.archive});
+  if(payload.kind==='TEXT'&&['NAVIGATION','HUMAN_HANDOFF'].includes(routing.outcome))await reduceInput({businessId:b,inputId,reducer:s.reducer,sealer:s.sealer,archive:s.archive});
   return {inputId};
  }
  async tick():Promise<void>{if(this.inFlight)return this.inFlight;const work=this.pass();this.inFlight=work;void work.finally(()=>{if(this.inFlight===work)this.inFlight=undefined;}).catch(()=>{});return work;}
- start(interval=250):void{if(this.timer)throw Error('interactive_already_started');this.recovery.start(interval,e=>{for(const s of this.scopes.values())void this.attention(s,'recovery-worker','RECOVERY_HELD',{reason:String(e).slice(0,256)}).catch(()=>{});});this.timer=setInterval(()=>{void this.tick().catch(()=>{});},interval);void this.tick().catch(()=>{});}
+ start(interval=250):void{if(this.timer)throw Error('interactive_already_started');this.recovery.start(interval,e=>{for(const s of this.scopes.values())void this.attention(s,'recovery-worker','RECOVERY_HELD',{reason:safeReason(e)}).catch(()=>{});});this.timer=setInterval(()=>{void this.tick().catch(()=>{});},interval);void this.tick().catch(()=>{});}
  async stop():Promise<void>{clearInterval(this.timer);this.timer=undefined;await this.recovery.stop();await this.inFlight;}
  private async pass():Promise<void>{
   for(const [b,s] of this.scopes){
    try{await this.effects(s);await this.replies(s);
     const pending=await s.reducer.tx(b,async db=>(await db.query<{input_id:string}>(`SELECT m.input_id FROM core.local_message m JOIN core.input i ON i.business_id=m.business_id AND i.id=m.input_id WHERE m.business_id=$1 AND m.state<>'DONE' ORDER BY CASE WHEN EXISTS(SELECT 1 FROM core.input_reduction red WHERE red.business_id=m.business_id AND red.input_id=m.input_id AND red.outcome IN ('NAVIGATION','HUMAN_HANDOFF')) THEN 0 ELSE 1 END,i.sequence,i.id LIMIT 100`,[b])).rows);
-    for(const row of pending)try{await this.process(s,row.input_id);}catch(e){await this.attention(s,'input/'+row.input_id,'INPUT_HELD',{reason:String(e).slice(0,256)});}
+    for(const row of pending)try{await this.process(s,row.input_id);}catch(e){await this.attention(s,'input/'+row.input_id,'INPUT_HELD',{reason:safeReason(e)});}
     const completed=await s.reducer.tx(b,async db=>(await db.query<{input_id:string}>(`SELECT m.input_id FROM core.local_message m JOIN core.input i ON i.business_id=m.business_id AND i.id=m.input_id WHERE m.business_id=$1 AND m.state='DONE' AND NOT EXISTS(SELECT 1 FROM core.operation op WHERE op.business_id=$1 AND op.input_id=m.input_id) AND NOT EXISTS(SELECT 1 FROM core.input_reduction r WHERE r.business_id=$1 AND r.input_id=m.input_id) ORDER BY i.sequence LIMIT 100`,[b])).rows);
     for(const row of completed)await reduceInput({businessId:b,inputId:row.input_id,reducer:s.reducer,sealer:s.sealer,archive:s.archive});
     await this.effects(s);await this.replies(s);
-   }catch(e){await this.attention(s,'runtime-pass','RUNTIME_HELD',{reason:String(e).slice(0,256)}).catch(()=>{});}
+   }catch(e){await this.attention(s,'runtime-pass','RUNTIME_HELD',{reason:safeReason(e)}).catch(()=>{});}
   }
  }
  private async process(s:LocalScope,inputId:string):Promise<void>{
@@ -79,24 +86,24 @@ export class InteractiveBooking {
   const c=claimed.claim,now=await this.now(s),clock:Clock={now:()=>new Date(now)},basis=c.basis??{},oracle=AvailabilityOracle.resume(s.config,this.reader(s,now),()=>now,object(basis['oracle']??{}),c.expiresAt);
   const previousView=()=>{const v=object(basis['view']);return {...v,choices:(v['choices'] as ObjectValue[]).map(x=>({id:text(x['action']??x['id']),title:text(x['title'])}))} as unknown as OracleView;};
   const prior=await s.archive.lookup(`local-view/${b}/${inputId}`);if(prior){await this.finish(s,prior);return;}
-  let view:OracleView|undefined,book:Seal|undefined;const n=normalizedText(c.payload.value),customer=await s.reducer.tx(b,async db=>(await db.query<{id:string;name:string}>('SELECT cu.id,p.name FROM core.customer cu LEFT JOIN core.local_customer p ON p.business_id=$1 AND p.customer_id=cu.id WHERE cu.business_id=$1 AND cu.subject=$2',[b,c.subject])).rows[0]);
+  let view:OracleView|undefined,book:Seal|undefined,silent=false;const n=normalizedText(c.payload.value),customer=await s.reducer.tx(b,async db=>(await db.query<{id:string;name:string}>('SELECT cu.id,p.name FROM core.customer cu LEFT JOIN core.local_customer p ON p.business_id=$1 AND p.customer_id=cu.id WHERE cu.business_id=$1 AND cu.subject=$2',[b,c.subject])).rows[0]);
   const operation=await s.reducer.tx(b,async db=>(await db.query<{plan:ObjectValue}>('SELECT plan FROM core.operation WHERE business_id=$1 AND input_id=$2',[b,inputId])).rows[0]);
   if(operation){book=await s.archive.lookup(`operation/${b}/${inputId}`)??undefined;if(!book)throw Error('operation_custody_missing');}
   else try{
-   if(basis['outcome']==='HUMAN_HANDOFF'&&!(c.payload.kind==='TEXT'&&n==='menu'))view=oracle.ordinary();
-   else if(c.error||((c.payload.kind==='ACTION'||basis['outcome']==='NAME_REQUIRED')&&Date.parse(c.expiresAt)<=Date.parse(now))){oracle.menu();view=await oracle.open();view.text='Esa opción venció o ya fue utilizada. Elige un horario de nuevo.\n\n'+view.text;}
-   else if(c.payload.kind==='TEXT'&&n==='menu'){oracle.menu();view=await oracle.open();}
+   if(basis['outcome']==='HUMAN_HANDOFF'&&!(c.payload.kind==='TEXT'&&n==='menu')){view=oracle.ordinary();silent=true;}
+   else if(c.payload.kind==='TEXT'&&['menu','hola'].includes(n))view=oracle.menu();
    else if(c.payload.kind==='TEXT'&&ordinaryDecision({type:'text',text:{body:c.payload.value}},'BOT','NONE').outcome==='HUMAN_HANDOFF')view=oracle.humano();
-   else if(basis['outcome']==='HUMAN_HANDOFF')view=oracle.ordinary();
+   else if(c.payload.kind==='TEXT'&&['cita','agendar','reservar','horarios'].includes(n))view=await oracle.open();
+   else if(c.payload.kind==='TEXT'&&['reagendar','cancelar'].includes(n))view=oracle.management();
+   else if(c.error||((c.payload.kind==='ACTION'||basis['outcome']==='NAME_REQUIRED')&&Date.parse(c.expiresAt)<=Date.parse(now))){oracle.menu();view=await oracle.open();view.text='Esa opción venció o ya fue utilizada. Elige un horario de nuevo.\n\n'+view.text;}
    else if(c.payload.kind==='ACTION')view=await oracle.action(c.action,!!customer?.name);
    else if(basis['outcome']==='NAME_REQUIRED'){
-    const name=c.payload.value.replace(/\s+/g,' ').trim();
-    if(name.length<3||name.length>120||!/[\p{L}]/u.test(name)||/[0-9<>]/.test(name)){view={...previousView(),text:'Por favor, escribe tu nombre completo (máximo 120 caracteres).',choices:[]};}
+    const name=bookingCustomerName(c.payload.value);
+    if(!name){view={...previousView(),text:NAME_REPROMPT,choices:[]};}
     else{const identity=await s.archive.ensure(`local-name/${b}/${inputId}`,'LOCAL_CUSTOMER',{businessId:b,inputId,name},()=>({customerId:randomUUID()}));await s.reducer.tx(b,async db=>{await db.query('SELECT core.local_name($1,$2,$3,$4)',[b,inputId,name,identity.body['customerId']]);});view=await oracle.nameCaptured();}
    }
-   else if(['cita','agendar','reservar'].includes(n)||!basis['outcome'])view=await oracle.open();
-   else if(basis['outcome']==='BOOKING'||!basis['view'])view=oracle.ordinary();
-   else{const parsed=parseAppointmentDate(c.payload.value,{now,timeZone:s.config.timeZone});if(parsed.success){view=await oracle.date(parsed.date!);if(view.choices.length===1&&parsed.fallback?.success)view=await oracle.date(parsed.fallback.date!);}else view={...previousView(),text:dateErrorMessage(parsed,365)};}
+   else if(!['OFFER','DATES'].includes(String(basis['outcome'])))view=oracle.menu();
+   else{const parsed=parseAppointmentDate(c.payload.value,{now,timeZone:s.config.timeZone});if(parsed.success){view=await oracle.date(parsed.date!);if(view.choices.length===1&&parsed.fallback?.success)view=await oracle.date(parsed.fallback.date!);}else view={...previousView(),text:explainDate(c.payload.value,parsed,365)};}
    if(view?.outcome==='BOOK_REQUEST'){
     const known=await s.reducer.tx(b,async db=>(await db.query<{id:string;name:string}>('SELECT cu.id,p.name FROM core.customer cu JOIN core.local_customer p ON p.business_id=$1 AND p.customer_id=cu.id WHERE cu.business_id=$1 AND cu.subject=$2',[b,c.subject])).rows[0]);if(!known)throw Error('local_customer_missing');
     const original=await s.archive.lookup(`operation/${b}/${inputId}`);
@@ -104,8 +111,9 @@ export class InteractiveBooking {
     else{
      const slot=await recheckSlot(s.config,this.reader(s,now),now,view.slot!),resourceId=s.bindings.employees.get(slot.resourceId);if(!resourceId)throw Error('local_resource_mapping');
      const intent=await s.archive.ensure(`local-intent/${b}/${inputId}`,'LOCAL_BOOKING_INTENT',{businessId:b,inputId},()=>({customerId:known.id,calendarId:s.bindings.calendar.coreId,resourceId,slot:object(slot)}));if(intent.body['resourceId']!==resourceId)throw new AvailabilityHeldError('SLOT_UNAVAILABLE');await s.sealer.seal(b,s.archive,intent);await s.reducer.tx(b,async db=>{await db.query('SELECT core.local_intent($1,$2,$3,$4)',[b,intent.body,intent.key,intent.digest]);});
-     const employeeName=s.employeeNames.get(slot.resourceId)??slot.resourceId,when=DateTime.fromISO(slot.startAt).setZone(s.config.timeZone).setLocale('es').toFormat('cccc d LLL, HH:mm');
-     book=await prepareOperation({request:{businessId:b,inputId,customerId:known.id,calendarId:s.bindings.calendar.coreId,resourceId,startAt:slot.startAt,endAt:slot.endAt,bufferMinutes:slot.bufferMinutes,confirmation:{text:`Tu cita está confirmada para ${when} con ${employeeName}.`,choices:[],outcome:'CONFIRMED',employee:employeeName,customer:known.name,startAt:slot.startAt,endAt:slot.endAt}},reducer:s.reducer,sealer:s.sealer,archive:s.archive,clock,faults:this.faults});
+     const employeeName=s.employeeNames.get(slot.resourceId)??slot.resourceId,when=shortDate(slot.startAt,s.config.timeZone);
+     const confirmation={text:`Tu cita está confirmada para ${when} con ${employeeName}.\n\n¡Te esperamos en ${s.businessName??'el negocio'}!`,choices:[],presentation:'TEXT' as const,outcome:'CONFIRMED',employee:employeeName,customer:known.name,startAt:slot.startAt,endAt:slot.endAt};whatsappMessages(confirmation);
+     book=await prepareOperation({request:{businessId:b,inputId,customerId:known.id,calendarId:s.bindings.calendar.coreId,resourceId,startAt:slot.startAt,endAt:slot.endAt,bufferMinutes:slot.bufferMinutes,confirmation},reducer:s.reducer,sealer:s.sealer,archive:s.archive,clock,faults:this.faults});
     }
    }
   }catch(e){
@@ -116,17 +124,34 @@ export class InteractiveBooking {
   if(!book&&!view)throw Error('local_view_missing');
   let reply:ObjectValue|null=null;
   if(!book){
-   const active=await this.active(s,c.subject);if(active.length)view!.text=this.activeText(s,active)+'\n\n'+view!.text;
+   const active=await this.active(s,c.subject,view!.outcome==='MENU');
+   if(view!.outcome==='MENU'){
+    const greeting=`Hola${customer?.name?' '+customer.name:''}, bienvenido a ${s.businessName??'el negocio'}.`,overview=this.activeText(s,active),prefix=[greeting,overview].filter(Boolean).join('\n\n');
+    if([...prefix+'\n\n'+view!.text].length<=1024)view!.text=prefix+'\n\n'+view!.text;
+    else{const lines=prefix.split('\n'),chunks:string[]=[];let chunk='';for(const line of lines){if([...chunk+'\n'+line].length>4000){chunks.push(chunk);chunk='';}chunk+=(chunk?'\n':'')+line;}if(chunk)chunks.push(chunk);view!.precedingTexts=chunks;}
+   }else if(!silent&&active.length)view!.text=this.activeText(s,active)+'\n\n'+view!.text;
    // Reference view/action IDs are replaced by independently allocated displayed IDs.
-   whatsappPresentation(view!);
-   reply=object({...view!,choices:view!.choices.map(x=>({id:randomUUID(),title:x.title,action:x.id}))});
+   if(!silent){const displayed={...view!,choices:view!.choices.map(x=>({id:randomUUID(),title:x.title,action:x.id}))};whatsappMessages(displayed);reply=object(displayed);}
    await reduceInput({businessId:b,inputId,reducer:s.reducer,sealer:s.sealer,archive:s.archive});
   }
   const saved=await s.archive.ensure(`local-view/${b}/${inputId}`,'LOCAL_VIEW',{businessId:b,inputId},()=>({revision:c.revision+1,replyId:randomUUID(),reply,state:{oracle:oracle.snapshot(),outcome:book?'BOOKING':view!.outcome,view:reply},...(book?{attemptId:book.body['attemptId']!}:{})}));await this.finish(s,saved);
  }
  private async finish(s:LocalScope,seal:Seal):Promise<void>{await s.sealer.seal(s.config.businessId,s.archive,seal);await s.reducer.tx(s.config.businessId,async db=>{await db.query('SELECT core.local_finish($1,$2,$3,$4)',[s.config.businessId,seal.body,seal.key,seal.digest]);},'local-view',this.faults);}
- private async active(s:LocalScope,subject:string):Promise<ObjectValue[]>{return s.reducer.tx(s.config.businessId,async db=>(await db.query(`SELECT a.*,max(i.sequence) AS last_sequence FROM core.appointment a JOIN core.customer c ON c.business_id=a.business_id AND c.id=a.customer_id LEFT JOIN core.operation op ON op.business_id=a.business_id AND op.appointment_id=a.id LEFT JOIN core.input i ON i.business_id=op.business_id AND i.id=op.input_id WHERE a.business_id=$1 AND c.subject=$2 AND a.state='ACTIVE' GROUP BY a.business_id,a.id ORDER BY max(i.sequence) DESC NULLS LAST,a.start_at DESC LIMIT 1`,[s.config.businessId,subject])).rows as ObjectValue[]);}
- private activeText(s:LocalScope,rows:ObjectValue[]):string{const reverse=new Map([...s.bindings.employees].map(([k,v])=>[v,s.employeeNames.get(k)??k]));return rows.map(a=>`Tienes una cita confirmada el ${DateTime.fromISO(text(a['start_at'])).setZone(s.config.timeZone).setLocale('es').toFormat('d LLL HH:mm')} con ${reverse.get(text(a['resource_id']))??'el equipo'}.`).join('\n');}
+ private async active(s:LocalScope,subject:string,all=false):Promise<ObjectValue[]>{return s.reducer.tx(s.config.businessId,async db=>(await db.query(`
+  SELECT a.*,a.start_at>=core.local_now($1) AS upcoming,max(i.sequence) AS last_sequence
+  FROM core.appointment a JOIN core.customer c ON c.business_id=a.business_id AND c.id=a.customer_id
+  LEFT JOIN core.operation op ON op.business_id=a.business_id AND op.appointment_id=a.id
+  LEFT JOIN core.input i ON i.business_id=op.business_id AND i.id=op.input_id
+  WHERE a.business_id=$1 AND c.subject=$2 AND a.state='ACTIVE'
+  AND (a.start_at>=core.local_now($1) OR EXISTS(
+   SELECT 1 FROM core.output_intent oi JOIN core.operation oc ON oc.business_id=oi.business_id AND oc.id=oi.parent_operation_id
+   WHERE oi.business_id=a.business_id AND oc.appointment_id=a.id AND oi.state<>'ACCEPTED'))
+  GROUP BY a.business_id,a.id
+  ORDER BY ${all?'a.start_at,a.id':'max(i.sequence) DESC NULLS LAST,a.start_at DESC LIMIT 1'}`,[s.config.businessId,subject])).rows as ObjectValue[]);}
+ private activeText(s:LocalScope,rows:ObjectValue[]):string{
+  const item=(r:ObjectValue)=>({start:text(r['start_at']),end:text(r['end_at'])});
+  return [appointmentOverview(rows.filter(r=>r['upcoming']===true).map(item),s.config.timeZone),...rows.filter(r=>r['upcoming']!==true).map(r=>delayedConfirmationOverview(item(r),s.config.timeZone))].filter(Boolean).join('\n\n');
+ }
  private async effects(s:LocalScope):Promise<void>{
   const b=s.config.businessId,provider=this.providers.get(b)!,now=await this.now(s),clock={now:()=>new Date(now)};
   const attempts=await s.dispatcher.tx(b,async db=>(await db.query<{id:string;state:string;envelope:Envelope;owner_id:string|null}>("SELECT id,state,envelope,owner_id FROM core.attempt WHERE business_id=$1 AND state NOT IN ('VERIFIED_APPLIED','ABANDONED') ORDER BY id",[b])).rows);
@@ -148,6 +173,22 @@ export class InteractiveBooking {
    const delivered=await s.result.tx(b,async db=>(await db.query<{v:boolean}>('SELECT core.local_reply_result($1,$2) v',[b,r.id])).rows[0]!.v);if(!delivered)await this.attention(s,'reply/'+r.id,'REPLY_UNKNOWN_HELD',{replyId:r.id});
   }
  }
+ /** Local cookie authenticates the fixture owner; signed session selects tenant.
+  * No customer-facing or real-provider authorization is implied by this viewer. */
+ async appointmentDetail(b:string,eventId:string):Promise<ObjectValue|null>{
+  const s=this.scope(b);if(!eventId||eventId.length>256)throw Error('local_event_schema');
+  const row=await s.reducer.tx(b,async db=>(await db.query(`SELECT ev.*,a.id AS appointment_id,a.state AS booking_status,c.subject AS contact,p.name AS customer_name,li.slot->>'serviceId' AS service_id,cl.value->>'ruleVersion' AS source_rule
+   FROM core.local_calendar ev LEFT JOIN core.appointment a ON a.business_id=ev.business_id AND a.event_id=ev.id
+   LEFT JOIN core.customer c ON c.business_id=a.business_id AND c.id=a.customer_id
+   LEFT JOIN core.local_customer p ON p.business_id=c.business_id AND p.customer_id=c.id
+   LEFT JOIN LATERAL (SELECT op.input_id FROM core.operation op WHERE op.business_id=a.business_id AND op.appointment_id=a.id ORDER BY op.expected_revision DESC LIMIT 1) op ON true
+   LEFT JOIN core.local_booking_intent li ON li.business_id=ev.business_id AND li.input_id=op.input_id
+   LEFT JOIN core.input_classification cl ON cl.business_id=ev.business_id AND cl.input_id=op.input_id
+   WHERE ev.business_id=$1 AND ev.id=$2`,[b,eventId])).rows[0]);
+  if(!row)return null;
+  const reverse=new Map([...s.bindings.employees].map(([k,v])=>[v,s.employeeNames.get(k)??k]));
+  return object({eventId:row.id,appointmentId:row.appointment_id??null,customerName:row.customer_name??null,syntheticContact:row.contact??null,whatsappNumber:null,serviceId:row.service_id??null,serviceName:null,employee:reverse.get(row.resource_id)??null,startAt:row.start_at,endAt:row.end_at,durationMinutes:(Date.parse(row.end_at)-Date.parse(row.start_at))/60000,bufferMinutes:row.buffer_minutes,status:row.booking_status??null,bookingSource:row.source_rule==='L2-LOCAL-1'?'L2_LOCAL_SYNTHETIC':null,missingMetadata:['whatsappNumber','serviceName']});
+ }
  async snapshot(b:string,subject:string):Promise<ObjectValue>{
   const s=this.scope(b);return s.reducer.tx(b,async db=>{
    const inputs=(await db.query(`SELECT i.id,i.sequence,m.payload,m.state FROM core.input i JOIN core.local_message m ON m.business_id=i.business_id AND m.input_id=i.id WHERE i.business_id=$1 AND i.subject=$2 ORDER BY i.sequence`,[b,subject])).rows;
@@ -158,7 +199,8 @@ export class InteractiveBooking {
    const session=(await db.query('SELECT ls.revision FROM core.local_session ls JOIN core.conversation c ON c.business_id=ls.business_id AND c.id=ls.conversation_id WHERE ls.business_id=$1 AND c.subject=$2 AND c.channel_id=$3',[b,subject,s.channelId])).rows[0];
    const pending=(await db.query("SELECT count(*)::int n FROM core.attempt WHERE business_id=$1 AND envelope->>'recipient'=$2 AND state NOT IN ('VERIFIED_APPLIED','ABANDONED')",[b,subject])).rows[0]!.n;
    const serverNow=(await db.query<{v:string}>('SELECT core.local_now($1) v',[b])).rows[0]!.v;
-   return object({businessId:b,subject,inputs,replies,appointments,calendar,diagnostics,currentRevision:session?.revision??0,serverNow,pendingEffects:pending});
+   const supportMessages=(await db.query('SELECT count(*)::int n FROM core.local_support_message WHERE business_id=$1',[b])).rows[0]!.n;
+   return object({businessId:b,subject,inputs,replies,appointments,calendar,diagnostics,supportMessages,currentRevision:session?.revision??0,serverNow,pendingEffects:pending});
   });
  }
 }
