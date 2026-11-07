@@ -17,7 +17,7 @@ function normalizeDateText(value:unknown) {
     .replace(/[¿?¡!*_~`,;()[\]{}]|\p{Extended_Pictographic}|\uFE0F/gu, " ")
     .replace(/\.(?=\s|$)/g, " ").trim().replace(/\s+/g, " ");
 }
-interface ParsedDate {success:boolean;date:string|null;error:string|null;fallback?:ParsedDate}
+interface ParsedDate {success:boolean;date:string|null;error:string|null;fallback?:ParsedDate;detail?:'IMPOSSIBLE'|'UNRECOGNIZED'|'WEEKDAY_MISMATCH'}
 function dateError(reason:string):ParsedDate { return { success: false, date: null, error: reason }; }
 export function parseAppointmentDate(value:unknown, { now, timeZone, maxBookingHorizonDays=365 }:{now:string;timeZone:string;maxBookingHorizonDays?:number}):ParsedDate {
   const current = (typeof now === "string" ? DateTime.fromISO(now, { setZone: true }) : now).setZone(timeZone);
@@ -47,6 +47,14 @@ export function parseAppointmentDate(value:unknown, { now, timeZone, maxBookingH
     .replace(/^(?:quiero|quisiera|necesito|me gustaria|puede ser|podria ser|para)(?: para)? /, "")
     .replace(/^para /, "").replace(/^el /, "").replace(/^dia /, "");
   if (!text) return dateError("INVALID");
+  // Optional weekday must agree with the explicit calendar date. No fuzzy NLP.
+  const full=/^(lunes|martes|miercoles|jueves|viernes|sabado|domingo) (\d{1,2}) (?:de )?([a-z]+)(?: (?:de )?(\d{4}))?$/.exec(text);
+  if(full&&months[full[3]!]){
+    const result=calendarDate(Number(full[2]),months[full[3]!]!,full[4]===undefined?undefined:Number(full[4]));
+    if(!result.success)return {...result,detail:'IMPOSSIBLE'};
+    if(DateTime.fromISO(result.date!,{zone:timeZone}).weekday!==weekdays[full[1]!])return {...dateError('INVALID'),detail:'WEEKDAY_MISMATCH'};
+    return result;
+  }
   if (/\b(?:o|u|y)\b/.test(text) || /^(?:algun dia|la otra semana|la semana que viene)$/.test(text)) return dateError("AMBIGUOUS");
   if (text === "hoy") return checked(today);
   if (text === "manana") return checked(today.plus({ days: 1 }));
@@ -89,6 +97,16 @@ export function parseAppointmentDate(value:unknown, { now, timeZone, maxBookingH
 export function dateErrorMessage(result:ParsedDate, horizonDays:number) {
   if (result.error === "PAST") return "Esa fecha ya pasó. ¿Qué otro día te gustaría?";
   if (result.error === "OUT_OF_HORIZON") return `Por ahora solo podemos agendar citas dentro de los próximos ${horizonDays} días. ¿Qué otra fecha te gustaría?`;
+  if(result.detail==='WEEKDAY_MISMATCH')return 'El día de la semana no coincide con la fecha. Revisa la fecha o elige otra opción.';
+  if(result.detail==='IMPOSSIBLE')return 'Esa fecha no existe en el calendario. Escribe otra fecha o elige una opción.';
   return INVALID_DATE;
+}
+/** Preserve the accepted parser result shape; add editorial context at the boundary. */
+export function explainDate(value:string,result:ParsedDate,horizonDays=365):string{
+ if(result.error==='INVALID'&&!result.detail){
+  const n=normalizeDateText(value);
+  if(/^\d{1,2}[\/.-]\d{1,2}(?:[\/.-]\d{4})?$/.test(n)||months[/^\d{1,2} (?:de )?([a-z]+)(?: (?:de )?\d{4})?$/.exec(n)?.[1]??''])return dateErrorMessage({...result,detail:'IMPOSSIBLE'},horizonDays);
+ }
+ return dateErrorMessage(result,horizonDays);
 }
 export {DATE_PROMPT,INVALID_DATE};

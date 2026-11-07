@@ -34,7 +34,8 @@
     "demo:book": "npm run build && node local/cli.mjs book",
     "demo:restore": "npm run build && node local/cli.mjs restore",
     "test:interactive": "npm run build && node --test --test-concurrency=1 local/interactive.test.mjs",
-    "test:browser": "npm run build && node local/browser-smoke.mjs"
+    "test:browser": "npm run build && node local/browser-smoke.mjs",
+    "demo:upgrade": "npm run build && node local/cli.mjs upgrade"
   },
   "dependencies": {
     "luxon": "3.7.2",
