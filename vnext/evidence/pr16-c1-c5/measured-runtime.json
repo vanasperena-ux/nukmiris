@@ -1,0 +1,51 @@
+[
+  {
+    "suite": "runtime",
+    "interactiveLocal": "PASS",
+    "platform": "linux",
+    "node": "v24.19.0",
+    "postgres": "17.11 (Debian 17.11-1.pgdg12+2)",
+    "tcp": true,
+    "restart": true,
+    "coherentBackup": true,
+    "inertRestore": true,
+    "bookings": 2,
+    "realProviders": false,
+    "nativeWindows": "NOT RUN"
+  },
+  {
+    "suite": "runtime",
+    "additiveUpgrade": "PASS",
+    "platform": "linux",
+    "node": "v24.19.0",
+    "postgres": "17.11 (Debian 17.11-1.pgdg12+2)",
+    "protectedUnknownPreserved": true,
+    "identityPreserved": true,
+    "coherentBackup": true,
+    "rollbackInert": true,
+    "realProviders": false
+  },
+  {
+    "suite": "runtime",
+    "platform": "linux",
+    "node": "v24.19.0",
+    "postgres": "17.11 (Debian 17.11-1.pgdg12+2)",
+    "tcp": true,
+    "utc": true,
+    "nativeWindows": "NOT RUN",
+    "generatedStatePublished": false
+  },
+  {
+    "suite": "browser",
+    "browser": "Chromium/Edge CDP",
+    "platform": "linux",
+    "knownBooking": "PASS",
+    "newNameAfterSlot": "PASS",
+    "directSelection": "PASS",
+    "calendarBookings": 2,
+    "businessIsolation": "PASS",
+    "loopbackOnly": true,
+    "postgres": "17.11 (Debian 17.11-1.pgdg12+2)",
+    "nativeWindows": "NOT RUN"
+  }
+]

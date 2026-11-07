@@ -225,3 +225,22 @@ Exact tested SHA, reproducible evidence and new focused Claude handoff accompany
 PR16. **Owner Windows upgrade is ON HOLD until Claude accepts the revised source.**
 READY FOR TEST is not VERIFIED; full parity, PR15 independent review, native owner
 acceptance, Milestone A and all production gates remain open.
+
+### Exact-source C1–C5 regression evidence (implementation branch only)
+
+Tested source **`ba1729983f438f648c6fab2aff9b9fbf22941de0`**, tree
+`c197eea0cf62678df90537e87e1c404e4926d5be`. Authoritative original input remains
+**v1.3 at d1399b90b9c0e3c56e5bdf0fe59f24d925a0d455**; its branch is unchanged.
+Actual Linux Node24.19.0/npm11.9.0/PG17.11 results: **554 full,544 fault,415
+concurrency,267 focused,43 runtime and1 real-browser PASS;0 failures**. Runtime
+has2 native-only skips; other suites0 skips. Build/typecheck/scope pass; suites
+overlap. C2 Unicode property:7392 unique candidates/14784 admissions/0 mismatches
+on independent INSERT and deferred UPDATE paths. [Logs, environments, hashes and
+acceptance mapping](../../vnext/evidence/pr16-c1-c5/README.md) and
+[focused Claude handoff18](reviews/18-CLAUDE-PR16-C1-C5-REVERIFICATION.md).
+
+009/032,033/034,005/031 and037/043 remain **READY FOR TEST**, not VERIFIED.
+The corrected source was not executed natively on Windows by Codex; owner's
+baseline3d8f82b41/41 is separate evidence. **Owner upgrade stays HOLD until Claude
+accepts this revised source**, followed by fresh native45-case runtime and browser
+acceptance. C6/Ana, production restrictions and all design/deferred statuses remain.

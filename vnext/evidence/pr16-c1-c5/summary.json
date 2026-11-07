@@ -1,0 +1,83 @@
+{
+  "source": "ba1729983f438f648c6fab2aff9b9fbf22941de0",
+  "tree": "c197eea0cf62678df90537e87e1c404e4926d5be",
+  "register": {
+    "version": "1.3",
+    "commit": "d1399b90b9c0e3c56e5bdf0fe59f24d925a0d455",
+    "blob": "b26bca5af25ebd56d7c561cd325a0faed0bfa1ba",
+    "sha256": "5aff30a762a3df1ac1a620e4091facb3b617e5fbf4f1bb3dfc4d8e7b2ac18828"
+  },
+  "results": {
+    "full": {
+      "tests": 554,
+      "pass": 554,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0
+    },
+    "fault": {
+      "tests": 544,
+      "pass": 544,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0
+    },
+    "concurrency": {
+      "tests": 415,
+      "pass": 415,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0
+    },
+    "focused": {
+      "tests": 267,
+      "pass": 267,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0
+    },
+    "runtime": {
+      "tests": 45,
+      "pass": 43,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 2
+    },
+    "browser": {
+      "tests": 1,
+      "pass": 1,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0
+    }
+  },
+  "build": "PASS",
+  "typecheck": "PASS",
+  "scope": "PASS",
+  "node": "v24.19.0",
+  "npm": "11.9.0",
+  "postgres": "17.11 (Debian 17.11-1.pgdg12+2)",
+  "platform": "linux",
+  "suitesOverlap": true,
+  "unicodeProperty": {
+    "suite": "full",
+    "candidates": 7392,
+    "admissions": 14784,
+    "queuedPerPath": 7003,
+    "mismatches": 0,
+    "actualTriggers": [
+      "INSERT",
+      "DEFERRED_UPDATE"
+    ],
+    "allUnicodeNumericCodePoints": true,
+    "unicode": "17.0",
+    "platform": "linux"
+  },
+  "correctedSourceNativeWindows": "NOT EXECUTED BY CODEX; OWNER RETEST AFTER INDEPENDENT ACCEPTANCE",
+  "independentClaudeReview": "PENDING",
+  "ownerUpgrade": "HOLD",
+  "legacyChanged": false,
+  "documentationBranchChanged": false,
+  "privateStatePublished": false,
+  "realProvidersCloudOrActivation": false
+}
