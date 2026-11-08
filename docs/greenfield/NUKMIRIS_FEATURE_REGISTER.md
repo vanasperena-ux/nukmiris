@@ -269,3 +269,44 @@ environment limits. No code in src/, SQL migrations, legacy or the owner profile
 is changed by the capacity fixture. No owner Test17C PASS, full parity or Milestone A
 closure is claimed. All custody/uncertainty/provider/OPS01 and Draft/unmerged gates
 remain. No real Meta/Google, GCP or old-checkout activation.
+
+### Controlled capacity exact-source evidence
+
+Tested source **`7f35b2f0f1fc251ac90fdb9c0796782dc20d60c2`**, tree
+`c0e67ef3a854db71a5bb93061ebf7c9953dc77a7`. Actual Linux Node24.19.0/npm11.9.0/
+PG17.11:554 full,544 fault,415 concurrency,267 L2,43 runtime,4 capacity,1 normal
+browser and1 capacity-browser PASS;0 failures. Runtime2 native-only skips;
+all others0 skips. Build/typecheck/scope pass; suites overlap. Actual browser
+proves saved original offer remains clickable after two bookings, then rejects
+without Customer4 effects; restart/replays and fresh10:30 alternatives pass.
+[Logs/environments/hashes/screenshots](../../vnext/evidence/pr16-capacity/README.md)
+· [Windows walkthrough28](28-CONTROLLED-CAPACITY-WINDOWS.md)
+· [Claude fixture handoff19](reviews/19-CLAUDE-CONTROLLED-CAPACITY-FIXTURE.md).
+**Owner Test17C and native new-fixture acceptance PENDING**; NM-040/042 remain
+READY FOR TEST, not VERIFIED. Previous owner45/45 is separate reported evidence.
+NM-045 and residual C1 remain OPEN for next scope; no owner data modified.
+
+### Current owner acceptance authority — v1.4
+
+The current authoritative register is **v1.4**, Git commit
+**10d5181720a04492cb837ac8abc869c78de81359**, blob
+**6783f7194b7acbd458e5c53d51fd60647c0cc14d**, SHA256
+`13d4a66c0d0b8904e5e9cd0ca938b06a87df20c567f59dcc460d7e7c4c737b6f`.
+It was read completely; [byte-identical immutable reference copy](references/FEATURE_REGISTER_v1.4_10d5181.md).
+The v1.3 prefix and earlier addenda above are preserved as historical input/evidence,
+not an assertion that the documentation branch still has the old head. Codex did
+not modify or merge that branch. Capacity source7f35b2f changes no behavior covered
+by the new owner findings; this follow-up only updates evidence and references.
+
+- Step8: human entry summary **PARTIAL / NM-045 OPEN NEXT SCOPE**. No fix here.
+- Step9: owner-verified synthetic Menu exit shows both appointments/three options;
+  this is visible UI evidence, not independent queue/provider custody proof.
+- Step12B: **C1 FAIL / P1 / NOT VERIFIED** at ba17299: `hablar con alguien` after
+  new-customer slot selection visibly confirmed Nov9 09:30 with Sofía. Exact
+  stored name/database internals were not independently inspected. Preserve this
+  accidental appointment and Ana's UNKNOWN; no deletion, reset or manual clearing.
+  Structural rejection/safe routing belongs to next separate correction scope.
+  An extra name-confirmation button still needs an owner decision and is not added.
+- Owner6725118485's later, specific instruction controls this increment: implement
+  ONLY the isolated capacity fixture and preserve NM-045/C1 for the next scope.
+  NM-040/042/Test17C remain READY FOR TEST with owner browser acceptance PENDING.

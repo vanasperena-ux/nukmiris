@@ -1,0 +1,11 @@
+Pulling/verifying pinned PostgreSQL image (first download budget: 10 minutes).
+{"capacityBrowser":"PASS","platform":"linux","node":"v24.19.0","postgres":"17.11 (Debian 17.11-1.pgdg12+2)","realServerOffer":true,"oldButtonStillClickable":true,"targetAppointments":2,"employees":2,"durationMinutes":60,"bufferMinutes":15,"staleBookingRejected":true,"c4Attempts":0,"c4Appointments":0,"replayAndCrashRestart":true,"freshAlternativeOffsetMinutes":90,"businessIsolation":true,"screenshots":4,"ownerBrowserAcceptance":"PENDING","nativeWindows":"NOT RUN"}
+✔ actual capacity browser: saved C4 offer, two bookings, clickable stale rejection, restart and fresh alternatives (15021.767248ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 1
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 17982.612759

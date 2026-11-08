@@ -1,0 +1,18 @@
+{
+  "source": "Prior PR16 corrections; exact native SHA not stated in capacity request",
+  "reportedBy": "owner comment6725118485",
+  "url": "https://github.com/vanasperena-ux/nukmiris/pull/16#issuecomment-6725118485",
+  "runtime": {
+    "pass": 45,
+    "fail": 0,
+    "skip": 0
+  },
+  "upgrade": [
+    "008",
+    "009"
+  ],
+  "restartPersistent": true,
+  "AnaHeldPreserved": true,
+  "newCapacityNativeExecutedByCodex": false,
+  "newOwnerBrowserAcceptance": "PENDING"
+}
