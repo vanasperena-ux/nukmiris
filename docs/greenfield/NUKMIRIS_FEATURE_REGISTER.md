@@ -244,3 +244,28 @@ The corrected source was not executed natively on Windows by Codex; owner's
 baseline3d8f82b41/41 is separate evidence. **Owner upgrade stays HOLD until Claude
 accepts this revised source**, followed by fresh native45-case runtime and browser
 acceptance. C6/Ana, production restrictions and all design/deferred statuses remain.
+
+## Controlled capacity fixture — NM-040 / NM-042 / owner Test17C
+
+Scope is the [complete owner request6725118485](https://github.com/vanasperena-ux/nukmiris/pull/16#issuecomment-6725118485).
+The owner reports45/45 native Windows runtime PASS,008+009 upgrade, restart
+persistence and the protected Ana case preserved. This supersedes the earlier
+upgrade HOLD as owner-reported evidence, not a native run by Codex. The particular
+four-customer full-capacity browser scenario remains inconclusive until this
+isolated fixture is independently run by the owner.
+
+| Item | Implementation-branch status | Acceptance boundary |
+|---|---|---|
+|NM-040 / Test17C |READY FOR TEST — dedicated disposable four-known-customer/two-qualified-employee browser fixture; future09:00 slot,60-minute service,15-minute buffer; separate marked directory,instance,database and ports |Exact-source backend/browser evidence and Windows walkthrough accompany PR16; owner browser acceptance PENDING |
+|NM-042 / Test17C |READY FOR TEST — preserve actual Customer4 displayed action/reply/revision/expiry; explicit local-only stale selection uses unchanged POST /api/message handler; SQL-derived counts/ranges; replay/crash/restart/race and fresh-capacity control |No new booking validation or production logic; prior forged-action regressions retained. Browser greying alone is not evidence. |
+|NM-045 — omit appointment summary upon human-support entry |OPEN — next separate owner-requested correction scope |Not implemented or authorized as part of this fixture. Existing support behavior preserved. |
+|NM-009/032 residual C1 name collection |PARTIALLY MET / NOT VERIFIED — independent Claude corpus still accepts phrases such as `hablar con alguien` as names |Preserve owner data, including the accidental synthetic booking. Structural name/intent correction belongs to the next separate scope; no extra confirmation step introduced here. |
+
+Authoritative original reference remains **Feature Register v1.3**, commit
+**d1399b90b9c0e3c56e5bdf0fe59f24d925a0d455**. Original prefix and documentation
+branch stay unchanged. The [independent re-verification6717146528](https://github.com/vanasperena-ux/nukmiris/pull/16#issuecomment-6717146528)
+accepts C2–C5 and data-safe upgrade with conditions, retaining residual C1 and its
+environment limits. No code in src/, SQL migrations, legacy or the owner profile
+is changed by the capacity fixture. No owner Test17C PASS, full parity or Milestone A
+closure is claimed. All custody/uncertainty/provider/OPS01 and Draft/unmerged gates
+remain. No real Meta/Google, GCP or old-checkout activation.

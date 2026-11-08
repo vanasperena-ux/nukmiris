@@ -35,7 +35,14 @@
     "demo:restore": "npm run build && node local/cli.mjs restore",
     "test:interactive": "npm run build && node --test --test-concurrency=1 local/interactive.test.mjs",
     "test:browser": "npm run build && node local/browser-smoke.mjs",
-    "demo:upgrade": "npm run build && node local/cli.mjs upgrade"
+    "demo:upgrade": "npm run build && node local/cli.mjs upgrade",
+    "capacity:prepare": "npm run build && node local/capacity-cli.mjs prepare",
+    "capacity:start": "node local/capacity-cli.mjs start",
+    "capacity:stop": "node local/capacity-cli.mjs stop",
+    "capacity:status": "node local/capacity-cli.mjs status",
+    "capacity:reset": "node local/capacity-cli.mjs reset",
+    "test:capacity": "npm run build && node --test --test-concurrency=1 local/capacity.test.mjs",
+    "test:capacity:browser": "npm run build && node local/capacity-browser.mjs"
   },
   "dependencies": {
     "luxon": "3.7.2",
