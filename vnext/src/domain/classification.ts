@@ -14,7 +14,7 @@ export function classify(event:ObjectValue,binding:{businessId:string;channelId:
 export function ordinaryDecision(event:ObjectValue,mode:string,phase:string):{outcome:string;value:string;mode:string;phase:string} {
   const value=text(object(event['text'])['body']),n=normalizedText(value);
   if(n==='menu')return {outcome:'NAVIGATION',value,mode:'BOT',phase:'NONE'};
-  if(mode==='HUMAN'||['humano','hablar con una persona','hablar con un humano','human'].includes(n))return {outcome:'HUMAN_HANDOFF',value,mode:'HUMAN',phase};
+  if(mode==='HUMAN'||['humano','hablar con alguien','hablar con una persona','hablar con un humano','human'].includes(n))return {outcome:'HUMAN_HANDOFF',value,mode:'HUMAN',phase};
   if(phase==='NAME'||phase==='DATE')return {outcome:'CONTEXT_INPUT',value,mode,phase};
   return {outcome:'NO_EFFECT',value,mode,phase};
 }

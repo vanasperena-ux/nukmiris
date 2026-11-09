@@ -25,7 +25,7 @@
     "demo:reset": "node local/cli.mjs reset",
     "demo:backup": "node local/cli.mjs backup",
     "demo:smoke": "npm run build && node local/cli.mjs smoke",
-    "test:runtime": "npm run build && node --test --test-concurrency=1 local/platform.test.mjs local/command-lock.test.mjs local/runtime.test.mjs local/interactive.test.mjs",
+    "test:runtime": "npm run build && node --test --test-concurrency=1 local/platform.test.mjs local/command-lock.test.mjs local/runtime.test.mjs local/interactive.test.mjs local/final-functional.test.mjs",
     "demo:unlock": "node local/cli.mjs unlock",
     "test:l1": "npm run build && node scripts/run-tests.mjs l1",
     "demo:transcript": "npm run build && node scripts/availability-transcript.mjs",
@@ -42,7 +42,9 @@
     "capacity:status": "node local/capacity-cli.mjs status",
     "capacity:reset": "node local/capacity-cli.mjs reset",
     "test:capacity": "npm run build && node --test --test-concurrency=1 local/capacity.test.mjs",
-    "test:capacity:browser": "npm run build && node local/capacity-browser.mjs"
+    "test:capacity:browser": "npm run build && node local/capacity-browser.mjs",
+    "test:final-functional": "npm run build && node --test --test-concurrency=1 local/final-functional.test.mjs",
+    "test:final-browser": "npm run build && node local/final-browser.mjs"
   },
   "dependencies": {
     "luxon": "3.7.2",

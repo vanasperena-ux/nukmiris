@@ -310,3 +310,25 @@ by the new owner findings; this follow-up only updates evidence and references.
 - Owner6725118485's later, specific instruction controls this increment: implement
   ONLY the isolated capacity fixture and preserve NM-045/C1 for the next scope.
   NM-040/042/Test17C remain READY FOR TEST with owner browser acceptance PENDING.
+
+## Final functional correction increment — current owner scope
+
+Current authority **v1.4 at59cde023d2dff088161c1d01bd76c1099386e13f**, blob
+**679a5b465b913843566fb59f1410b69cf9803bc1**; read fully, including approved
+summary triggers and accepted Test17C. [Immutable reference](references/FEATURE_REGISTER_v1.4_59cde02.md).
+Original v1.3 prefix and older READY FOR TEST/PENDING addenda remain historical;
+this current section supersedes their acceptance status. Documentation branch
+was not merged or modified. [Correction contract](29-FINAL-FUNCTIONAL-CORRECTIONS.md).
+
+| Item | Current status / gate |
+|---|---|
+|C1 / NM-009/032 name entry |READY FOR TEST — positive name grammar/capitalization or explicit self-identification, intent checks anywhere, exact command routing before name allocation; no new confirmation click. Clarification/semantic limits documented; independent Claude and focused owner acceptance pending. |
+|NM-031/032 approved summary59cde policy |READY FOR TEST — all upcoming on direct menu/hola/cita/agendar; none repeated on trusted interactive booking/management/date/recovery transitions; long ordered batches retained. reservar/horarios retain previous routing/latest-only display. |
+|NM-045 |READY FOR TEST — human command/menu entry contains no overview; durable quiet support, restart and complete Menu exit retained. No inbox feature added. |
+|NM-040 / NM-042 / Test17C |OWNER-VERIFIED for bounded isolated synthetic capacity/replay at7f35b2f per [owner6728974018](https://github.com/vanasperena-ux/nukmiris/pull/16#issuecomment-6728974018). Acceptance preserved; real Meta behavior remains gated. No owner rerun requested. |
+|Windows npm path forwarding |OPEN — capacity prepare path-with-spaces issue reported by owner; direct Node CLI succeeded. New short acceptance guide uses that workaround; no unrelated CLI rewrite in this scope. |
+
+Owner's original profile, protected Ana, literal invalid-name accidental booking
+and other appointments are not modified or repaired. Existing SQL/schema/roles,
+archive, fencing and legacy stay unchanged. Production/provider/OPS01 and larger
+local parity gates remain; Milestone A is not declared complete.

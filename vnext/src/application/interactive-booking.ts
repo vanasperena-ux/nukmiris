@@ -11,7 +11,7 @@ import {AvailabilityHeldError,recheckSlot,type AvailabilityConfig,type Synthetic
 import {parseAppointmentDate,explainDate} from '../domain/appointment-date.js';
 import {normalizedText,ordinaryDecision,localRoutingDecision} from '../domain/classification.js';
 import {bookingCustomerName,NAME_REPROMPT} from '../domain/customer-name.js';
-import {appointmentOverview,delayedConfirmationOverview} from '../domain/appointment-summary.js';
+import {appointmentOverview,delayedConfirmationOverview,appointmentSummaryMode} from '../domain/appointment-summary.js';
 import {whatsappMessages} from '../domain/whatsapp-presentation.js';
 import {shortDate} from '../domain/short-date.js';
 import {digest,object,text,uuid,type ObjectValue,type Clock,type Faults,noFaults} from '../domain/protocol.js';
@@ -84,7 +84,7 @@ export class InteractiveBooking {
  private async process(s:LocalScope,inputId:string):Promise<void>{
   const b=s.config.businessId,claimed=await s.reducer.tx(b,async db=>(await db.query<{v:{status:string;claim:Claim}}>('SELECT core.local_claim($1,$2) v',[b,inputId])).rows[0]!.v,'local-claim',this.faults);if(claimed.status!=='CLAIMED')return;
   const c=claimed.claim,now=await this.now(s),clock:Clock={now:()=>new Date(now)},basis=c.basis??{},oracle=AvailabilityOracle.resume(s.config,this.reader(s,now),()=>now,object(basis['oracle']??{}),c.expiresAt);
-  const previousView=()=>{const v=object(basis['view']);return {...v,choices:(v['choices'] as ObjectValue[]).map(x=>({id:text(x['action']??x['id']),title:text(x['title'])}))} as unknown as OracleView;};
+  const previousView=()=>{const {precedingTexts,...v}=object(basis['view']);void precedingTexts;return {...v,choices:(v['choices'] as ObjectValue[]).map(x=>({id:text(x['action']??x['id']),title:text(x['title'])}))} as unknown as OracleView;};
   const prior=await s.archive.lookup(`local-view/${b}/${inputId}`);if(prior){await this.finish(s,prior);return;}
   let view:OracleView|undefined,book:Seal|undefined,silent=false;const n=normalizedText(c.payload.value),customer=await s.reducer.tx(b,async db=>(await db.query<{id:string;name:string}>('SELECT cu.id,p.name FROM core.customer cu LEFT JOIN core.local_customer p ON p.business_id=$1 AND p.customer_id=cu.id WHERE cu.business_id=$1 AND cu.subject=$2',[b,c.subject])).rows[0]);
   const operation=await s.reducer.tx(b,async db=>(await db.query<{plan:ObjectValue}>('SELECT plan FROM core.operation WHERE business_id=$1 AND input_id=$2',[b,inputId])).rows[0]);
@@ -124,12 +124,14 @@ export class InteractiveBooking {
   if(!book&&!view)throw Error('local_view_missing');
   let reply:ObjectValue|null=null;
   if(!book){
-   const active=await this.active(s,c.subject,view!.outcome==='MENU');
-   if(view!.outcome==='MENU'){
-    const greeting=`Hola${customer?.name?' '+customer.name:''}, bienvenido a ${s.businessName??'el negocio'}.`,overview=this.activeText(s,active),prefix=[greeting,overview].filter(Boolean).join('\n\n');
+   const mode=appointmentSummaryMode(c.payload,view!.outcome,silent);
+   const active=mode==='NONE'?[]:await this.active(s,c.subject,mode==='ALL');
+   const greeting=view!.outcome==='MENU'?`Hola${customer?.name?' '+customer.name:''}, bienvenido a ${s.businessName??'el negocio'}.`:'';
+   const prefix=[greeting,this.activeText(s,active)].filter(Boolean).join('\n\n');
+   if(prefix){
     if([...prefix+'\n\n'+view!.text].length<=1024)view!.text=prefix+'\n\n'+view!.text;
-    else{const lines=prefix.split('\n'),chunks:string[]=[];let chunk='';for(const line of lines){if([...chunk+'\n'+line].length>4000){chunks.push(chunk);chunk='';}chunk+=(chunk?'\n':'')+line;}if(chunk)chunks.push(chunk);view!.precedingTexts=chunks;}
-   }else if(!silent&&active.length)view!.text=this.activeText(s,active)+'\n\n'+view!.text;
+    else{const chunks:string[]=[];let chunk='',size=0;for(const line of prefix.split('\n')){if(size+(chunk?1:0)+[...line].length>4000){if(chunk)chunks.push(chunk);chunk='';size=0;}for(const char of (chunk?'\n':'')+line){if(size===4000){chunks.push(chunk);chunk='';size=0;}chunk+=char;size++;}}if(chunk)chunks.push(chunk);view!.precedingTexts=chunks;}
+   }
    // Reference view/action IDs are replaced by independently allocated displayed IDs.
    if(!silent){const displayed={...view!,choices:view!.choices.map(x=>({id:randomUUID(),title:x.title,action:x.id}))};whatsappMessages(displayed);reply=object(displayed);}
    await reduceInput({businessId:b,inputId,reducer:s.reducer,sealer:s.sealer,archive:s.archive});
