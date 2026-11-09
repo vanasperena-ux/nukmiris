@@ -42,12 +42,13 @@ checked anywhere, including punctuation-separated components and compatibility
 characters. Unprefixed names require initial capitals (all capitals work too);
 particles may remain lowercase. Ambiguous lowercase prose gets clarification.
 
-`Me llamo …`, `Soy …` and `Mi nombre es …` explicitly clarify name intent and are
-removed before storing the NFC name; lowercase genuine names remain available
+`Me llamo …` and `Mi nombre es …` explicitly clarify name intent. These and a
+leading `Soy …` are removed before storing the NFC name, but `Soy` alone does not
+relax casing because it can introduce a status (e.g. Soy cliente); lowercase genuine names remain available
 through that path. Ordinary names such as Ana/Sol/Luz, María Fernández, José Ángel
 de la Cruz, Graciela Gracias, Valentina Hola, Vale Gómez, Mar Pérez, Julio César,
 Ma. del Carmen and apostrophes/hyphens remain supported. A bare calendar-like name
-such as Julio asks for clarification; `Soy Julio` resolves it. Ambiguous command-
+such as Julio asks for clarification; `Me llamo Julio` resolves it. Ambiguous command-
 like names (e.g. Cita Rodríguez) are clarified, not booked. Existing identities,
 including literal invalid names, are never normalized/renamed retroactively.
 
