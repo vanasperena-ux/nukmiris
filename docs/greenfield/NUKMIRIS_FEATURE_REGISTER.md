@@ -179,6 +179,25 @@
 - **NM-040** fixture and **NM-042** synthetic full-capacity/stale/replay coverage may be treated as **owner-verified for this scope**, while actual Meta WhatsApp behavior and other provider-gated work remain unverified. Do **not** mark real-provider integration or overall Milestone A complete.
 - **Still open:** residual C1 accidental name-based booking (`hablar con alguien`) and NM-045 support-entry summary suppression. Ana's held case and accidental synthetic booking in the original owner profile remain untouched. Fixture should be stopped using `node local/capacity-cli.mjs stop --state-dir "$CapacityDir"` when acceptance concludes; no reset of original profile.
 
+## Owner-approved appointment-summary trigger rules (2026-11-08) — NEXT CODEX VERSION
+
+**Approved behavior; not yet implemented/verified in the running PR #16 Windows profile.** All summary retrievals remain scoped to the correct customer and business; show only genuinely upcoming appointments, subject to the existing separate delayed/unverified-confirmation safety handling. This refines NM-031/NM-032 and NM-045.
+
+| Trigger / customer action | Show previous upcoming appointments? | Response / flow |
+|---|---|---|
+| Types `menu` | **ALL upcoming appointments** | Then show the three-option main menu. If none, omit summary. |
+| Types `hola` when used as main-menu navigation | **ALL upcoming appointments** | Same as menu. |
+| Types `cita` directly | **ALL upcoming appointments** | Then offer available appointment times for an additional/new booking. This also lets customers use `cita` to check their existing bookings. If none, omit summary. |
+| Types `agendar` directly | **ALL upcoming appointments** | **Exactly the same rule and flow as `cita`**: display all upcoming appointments, then offer times. If none, omit summary. |
+| Selects `Agendar una cita` from the displayed menu | **NO repeated summary** | Offer new-booking time slots immediately; the menu has already supplied the overview. |
+| Selects `Más opciones`, `Más horarios`, `Elegir fecha`; enters/corrects a date (including invalid input) | **NO repeated summary** | Continue/recover within booking flow; no older-booking prefix on every response. |
+| Selects `Hablar con alguien` or types `humano` | **NO appointment summary** | Entry instructions only. In human mode, ordinary texts are silently queued. `menu` exits and returns to complete menu overview. Implements NM-045. |
+| Receives successful booking confirmation | **Only newly confirmed booking details** | Do not restate existing appointments; retain ordering and no-false-confirmation safeguards. |
+| Selects `Reagendar / cancelar` | **NO repeated summary** | When management is implemented, show the specific appointment-selection stage then; until then, show honest unavailable messaging without repeating an overview. |
+| Uses stale/expired choice | **NO repeated summary** | Explain expiry/unavailability and offer safe choices; never falsely confirm. |
+
+**Implementation guardrails:** Distinguish direct text commands `cita`/`agendar` from the interactive action labeled `Agendar una cita` using trusted action/state metadata, not surface text alone; no duplicate overview during the same menu-to-booking sequence. Maintain existing customer/tenant isolation, strict booking validation, uncertainty protection, exact number of appointments, WhatsApp message limits, and v0.8.1 approved three-option menu. Treat `reservar`/`horarios` and other synonyms according to existing approved routing until the owner explicitly changes their display policy. Add focused Windows/browser regression cases for 0/1/2/many upcoming bookings, both direct commands, button navigation, human support, booking continuation, invalid dates, and post-book confirmation.
+
 ## Change log
 
 | Date | Change |
@@ -189,6 +208,7 @@
 | 2026-11-05 | Added NM-031 (P1, OPEN) for showing and managing all future customer appointments, and NM-032 (P1, OPEN) for restoring the three-option `menu` behavior from v0.8.1. Evidence from vNext owner local testing. |
 | 2026-11-05 | Clarified NM-031 at owner direction: `menu` displays upcoming appointments and the three options; selection of a specific appointment happens only after `Reagendar / cancelar` and the selected action. No appointment-management selector in initial menu or ordinary booking. |
 | 2026-11-06 | Added next-increment BUILD / DESIGN / VERIFY / DEFER classification without changing implementation statuses; scoped menu and human support parity, data display, WhatsApp formatting, date parsing, and safety fixtures; explicitly kept policy/reconciliation/real-provider work gated. |
+| 2026-11-08 | Owner approved revised appointment-summary trigger policy: both direct `cita` and direct `agendar` display all upcoming appointments then booking offers; menu selection `Agendar una cita` and intermediate booking/human-support messages do not repeat summaries. Next Codex correction scope only. |
 | 2026-11-08 | Owner-verified isolated Windows Test 17C full capacity/stale-button/replay/restart; NM-040 and synthetic portion of NM-042 passed, provider validation remains pending. |
 | 2026-11-08 | Windows acceptance Step 12B confirmed C1: `hablar con alguien` in `NAME_REQUIRED` caused a booking (Juanita / fourth synthetic customer / Nov 9 09:30 / Sofía). Next Codex correction required; name collection NOT VERIFIED. |
 | 2026-11-08 | Added NM-045 (P1, OPEN — NEXT CODEX VERSION) for human-support entry to omit appointment summaries; recorded Steps 8–9 of Windows acceptance. |
