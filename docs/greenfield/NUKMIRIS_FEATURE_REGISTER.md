@@ -332,3 +332,22 @@ Owner's original profile, protected Ana, literal invalid-name accidental booking
 and other appointments are not modified or repaired. Existing SQL/schema/roles,
 archive, fencing and legacy stay unchanged. Production/provider/OPS01 and larger
 local parity gates remain; Milestone A is not declared complete.
+
+### Final functional exact-source evidence
+
+Source **`b4d0be0cb98c7f2b69be318e18b93f4de102c511`**, tree `03d08322e27d9d54485fa887b482743fe076556b`. Actual Linux Node24.19.0/npm11.9.0/PG17.11:
+667 full,657 fault,528 concurrency,380 L2,44 runtime,4 automated capacity,
+1 original browser and1 focused final-browser PASS;0 failures. Runtime2 native-
+only skips; others0 skips. Build/typecheck/scope pass; suites overlap.113 new core
+regressions include all68 independent Claude-corpus inputs through actual app/SQL.
+[Evidence/logs/environments/hashes](../../vnext/evidence/pr16-final-functional/README.md)
+· [Claude handoff20](reviews/20-CLAUDE-FINAL-FUNCTIONAL-CORRECTIONS.md)
+· [short focused Windows walkthrough30](30-FINAL-CORRECTIONS-WINDOWS.md).
+
+C1, summary59cde and NM-045 remain **READY FOR TEST**, not independently VERIFIED.
+C1 is conservative syntax/intent clarification, not universal semantic identity
+proof; no new confirmation phase was added. New native Windows and Claude review
+remain pending. Accepted owner Test17C is retained; no owner rerun requested.
+Current authority **v1.4 at59cde023d2dff088161c1d01bd76c1099386e13f**; documentation
+branch unchanged/unmerged. Original profile/Ana/accidental appointment untouched.
+Milestone A remains open for owner assessment; no excluded functionality activated.

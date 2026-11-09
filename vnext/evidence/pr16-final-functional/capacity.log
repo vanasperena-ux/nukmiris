@@ -1,0 +1,15 @@
+✔ capacity fixture refuses owner paths, existing directories, links and unsupported/shared ports before provisioning (29.21422ms)
+Pulling/verifying pinned PostgreSQL image (first download budget: 10 minutes).
+{"capacity":"PASS","platform":"linux","node":"v24.19.0","postgres":"17.11 (Debian 17.11-1.pgdg12+2)","savedServerAction":true,"customers":4,"employees":2,"targetAppointments":2,"staleAfterFull":"REJECTED","sameRequestIdentity":true,"newRequestReplays":2,"crashRestart":true,"durationMinutes":60,"bufferMinutes":15,"nextGridOffsetMinutes":90,"c4BookingAttempts":0,"c4Appointments":0,"otherBusinessOperational":true,"unrelatedCustomerOperational":true,"ownerBrowserAcceptance":"PENDING","nativeWindows":"NOT RUN"}
+✔ NM040/042 Test17C: real stale C4 offer cannot exceed two employees; replay/restart, buffers and tenant control (13174.283479ms)
+Pulling/verifying pinned PostgreSQL image (first download budget: 10 minutes).
+✔ capacity near-simultaneous three-customer admission to two places never overbooks (9018.769565ms)
+✔ capacity CLI status/stop/start/reset use only marked fixture, preserve prior evidence and work with Unicode/spaces (17227.165193ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 39606.277361

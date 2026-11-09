@@ -1,0 +1,23 @@
+{
+  "source": "7f35b2f0f1fc251ac90fdb9c0796782dc20d60c2",
+  "reportedBy": "owner",
+  "comment": "https://github.com/vanasperena-ux/nukmiris/pull/16#issuecomment-6728974018",
+  "result": "OWNER-VERIFIED isolated Windows Test17C PASS",
+  "scope": "NM040 and NM042 bounded synthetic capacity/replay/restart; not real Meta",
+  "counts": {
+    "appointments": 2,
+    "operations": 2,
+    "attempts": 4,
+    "protections": 2,
+    "guards": 0,
+    "bookingIntents": 2,
+    "coreLedger": 4,
+    "pendingAttempts": 0,
+    "pendingInputs": 0,
+    "customer4Effects": 0
+  },
+  "checksTrue": 9,
+  "staleInputsDoneAfterRestart": 3,
+  "newCorrectionsNativeExecutedByCodex": false,
+  "ownerRetestOfCapacityRequired": false
+}

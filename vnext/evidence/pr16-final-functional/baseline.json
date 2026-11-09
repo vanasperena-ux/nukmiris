@@ -1,0 +1,20 @@
+{
+  "branch": "implementation/wp2-l2-functional-corrections",
+  "source": "bff61b883552c7e004722427bb1ab44b231759c9",
+  "initialWorkingTree": "CLEAN before modifications",
+  "verifiedSourceFiles": 124,
+  "L2": {
+    "pass": 267,
+    "fail": 0,
+    "skip": 0
+  },
+  "build": "PASS",
+  "environment": {
+    "mode": "l2",
+    "node": "v24.19.0",
+    "postgres": "17.11 (Debian 17.11-1.pgdg12+2)",
+    "image": "postgres@sha256:839fbb5a4942a7758dd93e18b42ea5649807491a0545b5eeeb8f0b8bb11857a5",
+    "network": "container --network none; Unix socket only",
+    "independentReview": "NOT RUN"
+  }
+}
