@@ -1,0 +1,55 @@
+{
+  "L1-O3-TIMEOUT-50.json": {
+    "configuredTimeoutMs": 50,
+    "observedElapsedMs": 112.29265299999997,
+    "terminalReason": "LOCK_TIMEOUT",
+    "sameInputRetryDenied": true,
+    "newCustomerRequestCanProgress": true,
+    "operatorRequired": false
+  },
+  "L1-O3-CONTENTION.json": {
+    "workers": 6,
+    "competingSlots": 3,
+    "defaultLockTimeoutMs": 3000,
+    "lockTimeoutCount": 0,
+    "terminalResourceConflicts": 3,
+    "prepared": 3,
+    "p50Ms": 198.82261700000004,
+    "p95Ms": 237.78082499999994,
+    "samples": [
+      {
+        "result": "PREPARED",
+        "elapsedMs": 85.230955
+      },
+      {
+        "result": "PREPARED",
+        "elapsedMs": 124.72858299999996
+      },
+      {
+        "result": "PREPARED",
+        "elapsedMs": 105.56680200000005
+      },
+      {
+        "result": "RESOURCE_CONFLICT",
+        "elapsedMs": 237.78082499999994
+      },
+      {
+        "result": "RESOURCE_CONFLICT",
+        "elapsedMs": 218.67532900000003
+      },
+      {
+        "result": "RESOURCE_CONFLICT",
+        "elapsedMs": 198.82261700000004
+      }
+    ],
+    "claim": "Synthetic host observation, not a Windows SLO. Terminal LOCK_TIMEOUT requires a new customer choice; never retry the rejected plan."
+  },
+  "L1-O3-TIMEOUT-3000.json": {
+    "configuredTimeoutMs": 3000,
+    "observedElapsedMs": 3043.4727489999996,
+    "terminalReason": "LOCK_TIMEOUT",
+    "sameInputRetryDenied": true,
+    "newCustomerRequestCanProgress": true,
+    "operatorRequired": false
+  }
+}

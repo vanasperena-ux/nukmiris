@@ -1,0 +1,11 @@
+Pulling/verifying pinned PostgreSQL image (first download budget: 10 minutes).
+{"finalBrowser":"PASS","platform":"linux","node":"v24.19.0","postgres":"17.11 (Debian 17.11-1.pgdg12+2)","realBrowser":true,"invalidNameNoBooking":true,"nameClarification":true,"validDirectBooking":true,"twoUpcomingOnCitaAndAgendar":true,"menuNavigationNoRepeat":true,"dateContinuationNoRepeat":true,"humanEntryNoSummary":true,"quietSupport":true,"menuExitRestoresAll":true,"ownerProfileAccessed":false,"ownerCapacityRetestRequired":false,"nativeWindows":"NOT RUN"}
+✔ Final corrections actual browser: name safety, summary trigger matrix and human-support entry (32937.777109ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 1
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 35902.957411

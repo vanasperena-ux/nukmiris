@@ -1,0 +1,58 @@
+[
+  {
+    "suite": "full",
+    "candidates": 7392,
+    "admissions": 14784,
+    "queuedPerPath": 7003,
+    "mismatches": 0,
+    "actualTriggers": [
+      "INSERT",
+      "DEFERRED_UPDATE"
+    ],
+    "allUnicodeNumericCodePoints": true,
+    "unicode": "17.0",
+    "platform": "linux"
+  },
+  {
+    "suite": "fault",
+    "candidates": 7392,
+    "admissions": 14784,
+    "queuedPerPath": 7003,
+    "mismatches": 0,
+    "actualTriggers": [
+      "INSERT",
+      "DEFERRED_UPDATE"
+    ],
+    "allUnicodeNumericCodePoints": true,
+    "unicode": "17.0",
+    "platform": "linux"
+  },
+  {
+    "suite": "concurrency",
+    "candidates": 7392,
+    "admissions": 14784,
+    "queuedPerPath": 7003,
+    "mismatches": 0,
+    "actualTriggers": [
+      "INSERT",
+      "DEFERRED_UPDATE"
+    ],
+    "allUnicodeNumericCodePoints": true,
+    "unicode": "17.0",
+    "platform": "linux"
+  },
+  {
+    "suite": "focused",
+    "candidates": 7392,
+    "admissions": 14784,
+    "queuedPerPath": 7003,
+    "mismatches": 0,
+    "actualTriggers": [
+      "INSERT",
+      "DEFERRED_UPDATE"
+    ],
+    "allUnicodeNumericCodePoints": true,
+    "unicode": "17.0",
+    "platform": "linux"
+  }
+]

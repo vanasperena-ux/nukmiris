@@ -1,0 +1,17 @@
+{
+  "source": "3d8f82bb047e6ed937750b7ce6e81ecd23ab9f42",
+  "reportedBy": "owner, Feature Register v1.3",
+  "platform": "native Windows",
+  "postgres": "17.11",
+  "runtime": {
+    "pass": 41,
+    "fail": 0,
+    "skip": 0
+  },
+  "nativeAcl": "EXECUTED",
+  "nativeMetadataSync": "EXECUTED",
+  "interactiveSyntheticBooking": "PASS",
+  "browserEvidence": "Tests1\u201326 in authoritative register, with limits and unresolved findings",
+  "correctedSourceExecutedNativelyByCodex": false,
+  "notCorrectedSourceAcceptance": true
+}

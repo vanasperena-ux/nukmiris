@@ -1,0 +1,25 @@
+{
+  "source": "b4d0be0cb98c7f2b69be318e18b93f4de102c511",
+  "tree": "03d08322e27d9d54485fa887b482743fe076556b",
+  "parent": "53c40c79e165c2da62f1f8a7d4ad5fde2d4b855a",
+  "incrementBase": "bff61b883552c7e004722427bb1ab44b231759c9",
+  "register": {
+    "version": "1.4",
+    "commit": "59cde023d2dff088161c1d01bd76c1099386e13f",
+    "blob": "679a5b465b913843566fb59f1410b69cf9803bc1",
+    "sha256": "5a3d29093dc6b2b393656eaa4b708f8a64c3087c7c6b68b9df651d1b8443fdae",
+    "readCompletely": true,
+    "documentationBranchModified": false,
+    "reference": "docs/greenfield/references/FEATURE_REGISTER_v1.4_59cde02.md"
+  },
+  "sourceFiles": 127,
+  "sourceMatchesWorkingFiles": true,
+  "migrationsRolesArchiveDispatcherAvailabilityRuntimeLegacyChanged": false,
+  "ownerProfileAccessed": false,
+  "privateStatePublished": false,
+  "realProvidersCloudOrActivation": false,
+  "independentClaudeReview": "PENDING",
+  "correctedNativeWindows": "NOT EXECUTED BY CODEX",
+  "namePolicy": "Conservative syntax/casing or explicit name clarification plus intent rejection; no universal semantic/identity proof; no new confirmation phase",
+  "ownerTest17C": "Acceptance retained; no owner rerun requested"
+}

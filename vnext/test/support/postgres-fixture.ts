@@ -44,7 +44,7 @@ export async function startCluster():Promise<{directory:string;socket:string;nam
   if(!version){const logs=await docker(['logs',name]);await docker(['rm','--force',name]);throw new Error('fixture_postgres_not_ready: '+logs);}
   return {directory,socket,name,version,stop:async()=>{await docker(['rm','--force',name]);}};
 }
-export const TABLES=['business','channel','calendar','resource','customer','conversation','seal','batch','input','input_classification','conversation_context','input_reduction','plan_rejection','batch_input','permission_head','permission_event','status_event','appointment','operation','mutation_guard','protection','output_intent','attempt','receipt','recovery_case','audit','local_session','local_message','local_reply','local_action','local_customer','local_booking_intent','local_ledger','local_calendar','local_diagnostic'] as const;
+export const TABLES=['business','channel','calendar','resource','customer','conversation','seal','batch','input','input_classification','conversation_context','input_reduction','plan_rejection','batch_input','permission_head','permission_event','status_event','appointment','operation','mutation_guard','protection','output_intent','attempt','receipt','recovery_case','audit','local_session','local_message','local_reply','local_action','local_customer','local_booking_intent','local_ledger','local_calendar','local_diagnostic','local_support_message'] as const;
 export class Fixture {
   private closed=false;
   readonly dbname='nukmiris_wp1_'+randomUUID().replaceAll('-','');
@@ -67,7 +67,7 @@ export class Fixture {
     const cluster=new pg.Client({host:this.socket,database:'postgres',user:'postgres'});await cluster.connect();
     await cluster.query(`CREATE DATABASE "${this.dbname}"`);await cluster.end();
     const root=fileURLToPath(new URL('../../../',import.meta.url));
-    for(const file of ['migrations/001-foundation.sql','migrations/002-execution.sql','migrations/003-dispositions.sql','roles.sql','migrations/004-classification-and-ordering.sql','migrations/005-conversation-progress.sql','migrations/006-deadline-recovery.sql','migrations/007-local-interactive.sql']) {
+    for(const file of ['migrations/001-foundation.sql','migrations/002-execution.sql','migrations/003-dispositions.sql','roles.sql','migrations/004-classification-and-ordering.sql','migrations/005-conversation-progress.sql','migrations/006-deadline-recovery.sql','migrations/007-local-interactive.sql','migrations/008-local-corrections.sql','migrations/009-local-review-corrections.sql']) {
       await this.admin.query(await fs.readFile(path.join(root,'src/infrastructure/postgres',file),'utf8'));
     }
     await this.admin.query(`CREATE SCHEMA fixture_private; REVOKE ALL ON SCHEMA fixture_private FROM PUBLIC;
