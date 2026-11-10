@@ -25,7 +25,7 @@ python3 docs/milestone-b/evidence/calculate-costs.py
 Compare output to `cost-calculation.json`; verify listed input blobs/SHA256 against
 their exact Git refs. `verification.json` records the actual static/arithmetic
 checks and non-executions. A later publication record pins this design commit;
-its follow-up contains only that provenance file. Check that split and confirm
+its follow-up changes only that provenance file. Check that split and confirm
 the branch diff is confined to `docs/milestone-b/`.
 
 Application suite counts, Windows46/46 and owner browser/Test17C are **prior**

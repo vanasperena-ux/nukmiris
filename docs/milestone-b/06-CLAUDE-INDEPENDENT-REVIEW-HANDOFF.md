@@ -10,7 +10,7 @@ Do not present this author's package as the independent approval it requests.
 Repository `vanasperena-ux/nukmiris`; dedicated planning branch
 `planning/milestone-b-cloud-reconciliation-2026-11-09`. Exact design commit/tree
 are in the PR publication record and `evidence/publication.json` when published.
-The publication follow-up adds that record only; verify this before reviewing.
+The publication follow-up changes that record only; verify this before reviewing.
 
 - Accepted executable **`b4d0be0cb98c7f2b69be318e18b93f4de102c511`**, tree
   **`03d08322e27d9d54485fa887b482743fe076556b`**.
@@ -101,8 +101,9 @@ are in `evidence/PROVIDER-SOURCES.md`.
   grants? If not demonstrated, require an explicit future decision and proof without
   revoking customer consent or silently weakening ADR protections.
 - Is explicit customer-name confirmation **mandatory before any real WhatsApp pilot**
-  and clearly absent from the baseline? Real testing is limited to owner-approved
-  identities/assets; local name ambiguity acceptance is not a commercial waiver.
+  and clearly absent from the baseline? Real testing requires admission/gateway
+  inbound/outbound identity and asset allowlists, with no learned recipients;
+  local name ambiguity acceptance is not a commercial waiver.
 
 ## Reproduction and evidence limits
 

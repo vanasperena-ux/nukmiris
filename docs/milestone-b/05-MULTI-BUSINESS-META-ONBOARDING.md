@@ -25,6 +25,14 @@ B2's controlled NukMiris-owned Meta test-number setup is a **test exception**, n
 the future ownership model. No migration of v0.8.1 assets, owner numbers, Ana's
 protected data or existing Windows fixtures is proposed.
 
+Before B2, enforce the owner's private, versioned allowlist of inbound subjects,
+outbound recipients, WABA/receiving-number and Calendar assets at admission **and**
+the gateway. Do not learn new authorized recipients from incoming traffic. An
+unapproved sender must not trigger a greeting, booking, template or automated
+reply. Test bypasses through receipts, retries and every message purpose. Keep
+the actual phone identities/configuration out of GitHub; broadening needs further
+owner approval. No such real-identity allowlist is configured in this task.
+
 ## 2. Primary-source verification and limits
 
 Meta's [official partner page](https://business.whatsapp.com/partners/become-a-partner)
