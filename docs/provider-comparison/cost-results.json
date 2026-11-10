@@ -1,0 +1,298 @@
+{
+  "currency": "USD",
+  "priceCheckDate": "2026-11-09 America/Mexico_City",
+  "hours": 730,
+  "freeUsageOrTrialApplied": false,
+  "scenarios": {
+    "A": {
+      "inputs": {
+        "businesses": 1,
+        "appointments": 100,
+        "requests": 1000,
+        "sqlcpu": 1,
+        "sqlram": "3.75",
+        "ssd": 10,
+        "backup": 15,
+        "archive": 5,
+        "ops": 20000,
+        "keys": 6,
+        "egress": 2,
+        "logs": 3,
+        "build": 2,
+        "drill": 3,
+        "fake": 12,
+        "wal": 2,
+        "worker_ram": 1,
+        "railway_ram": 3,
+        "railway_cpu": ".5",
+        "db_ram": 1,
+        "db_cpu": ".1",
+        "snapshots": 20,
+        "pitr": 15,
+        "render_compute": 35,
+        "render_db": 19
+      },
+      "GCP": {
+        "lines_excluding_NAT": {
+          "archive_and_KMS": "0.64",
+          "platform_secrets": "0.90",
+          "logs_and_metrics_allowance": "3.00",
+          "build_images_allowance": "2.00",
+          "restore_drill_allowance": "3.00",
+          "fake_host_allowance": "12.00",
+          "ingress_and_independent_sealer": "19.72",
+          "instance_gateway": "49.93",
+          "continuous_worker": "32.79",
+          "private_result": "0.01",
+          "SQL_compute_SSD_backup": "52.21",
+          "WAL_reserve": "2.00",
+          "internet_and_export_transfer_allowance": "3.00"
+        },
+        "NAT_low": "4.76",
+        "NAT_high": "35.86",
+        "subtotal_low": "185.97",
+        "subtotal_high": "217.07",
+        "with25pct_low": "232.46",
+        "with25pct_high": "271.33",
+        "request_gateway_conditional_saving": "40.07"
+      },
+      "Railway_incomplete_candidate": {
+        "lines": {
+          "archive_and_KMS": "0.64",
+          "platform_secrets": "0.90",
+          "logs_and_metrics_allowance": "3.00",
+          "build_images_allowance": "2.00",
+          "restore_drill_allowance": "3.00",
+          "fake_host_allowance": "12.00",
+          "external_independent_verifier": "9.86",
+          "Railway_compute_DB_volumes_snapshots_PITR_egress": "56.83",
+          "WAL_archive_operation_reserve": "2.00"
+        },
+        "usage_before_plan_floor": "56.83",
+        "subtotal": "90.23",
+        "with25pct": "112.79",
+        "unpriced_safety_gap": "U_R >= 0; may require architectural replacement, not merely money"
+      },
+      "Render_incomplete_candidate": {
+        "lines": {
+          "archive_and_KMS": "0.64",
+          "platform_secrets": "0.90",
+          "logs_and_metrics_allowance": "3.00",
+          "build_images_allowance": "2.00",
+          "restore_drill_allowance": "3.00",
+          "fake_host_allowance": "12.00",
+          "external_independent_verifier": "9.86",
+          "Pro_workspace": "25.00",
+          "five_compute_services": "35.00",
+          "managed_Postgres": "19.00",
+          "DB_storage": "3.00",
+          "outbound_over_25GB": "0.00"
+        },
+        "subtotal": "113.40",
+        "with25pct": "141.75",
+        "unpriced_safety_gap": "U_D >= 0; may require architectural replacement, not merely money"
+      },
+      "GCP_core_plus_optional_PaaS_UI": {
+        "Railway_low": "205.97",
+        "Railway_high": "237.07",
+        "Render_low": "217.97",
+        "Render_high": "249.07"
+      }
+    },
+    "B": {
+      "inputs": {
+        "businesses": 10,
+        "appointments": 1000,
+        "requests": 25000,
+        "sqlcpu": 1,
+        "sqlram": "3.75",
+        "ssd": 20,
+        "backup": 30,
+        "archive": 25,
+        "ops": 200000,
+        "keys": 24,
+        "egress": 10,
+        "logs": 5,
+        "build": 2,
+        "drill": 5,
+        "fake": 0,
+        "wal": 4,
+        "worker_ram": 1,
+        "railway_ram": 4,
+        "railway_cpu": 1,
+        "db_ram": 2,
+        "db_cpu": ".25",
+        "snapshots": 40,
+        "pitr": 30,
+        "render_compute": 53,
+        "render_db": 55
+      },
+      "GCP": {
+        "lines_excluding_NAT": {
+          "archive_and_KMS": "3.78",
+          "platform_secrets": "0.90",
+          "logs_and_metrics_allowance": "5.00",
+          "build_images_allowance": "2.00",
+          "restore_drill_allowance": "5.00",
+          "fake_host_allowance": "0.00",
+          "ingress_and_independent_sealer": "19.95",
+          "instance_gateway": "49.93",
+          "continuous_worker": "32.79",
+          "private_result": "0.14",
+          "SQL_compute_SSD_backup": "55.11",
+          "WAL_reserve": "4.00",
+          "internet_and_export_transfer_allowance": "5.00"
+        },
+        "NAT_low": "5.12",
+        "NAT_high": "36.22",
+        "subtotal_low": "188.72",
+        "subtotal_high": "219.82",
+        "with25pct_low": "235.90",
+        "with25pct_high": "274.77",
+        "request_gateway_conditional_saving": "39.96"
+      },
+      "Railway_incomplete_candidate": {
+        "lines": {
+          "archive_and_KMS": "3.78",
+          "platform_secrets": "0.90",
+          "logs_and_metrics_allowance": "5.00",
+          "build_images_allowance": "2.00",
+          "restore_drill_allowance": "5.00",
+          "fake_host_allowance": "0.00",
+          "external_independent_verifier": "9.97",
+          "Railway_compute_DB_volumes_snapshots_PITR_egress": "94.95",
+          "WAL_archive_operation_reserve": "4.00"
+        },
+        "usage_before_plan_floor": "94.95",
+        "subtotal": "125.60",
+        "with25pct": "157.00",
+        "unpriced_safety_gap": "U_R >= 0; may require architectural replacement, not merely money"
+      },
+      "Render_incomplete_candidate": {
+        "lines": {
+          "archive_and_KMS": "3.78",
+          "platform_secrets": "0.90",
+          "logs_and_metrics_allowance": "5.00",
+          "build_images_allowance": "2.00",
+          "restore_drill_allowance": "5.00",
+          "fake_host_allowance": "0.00",
+          "external_independent_verifier": "9.97",
+          "Pro_workspace": "25.00",
+          "five_compute_services": "53.00",
+          "managed_Postgres": "55.00",
+          "DB_storage": "6.00",
+          "outbound_over_25GB": "0.00"
+        },
+        "subtotal": "165.65",
+        "with25pct": "207.07",
+        "unpriced_safety_gap": "U_D >= 0; may require architectural replacement, not merely money"
+      },
+      "GCP_core_plus_optional_PaaS_UI": {
+        "Railway_low": "208.72",
+        "Railway_high": "239.82",
+        "Render_low": "220.72",
+        "Render_high": "251.82"
+      }
+    },
+    "C": {
+      "inputs": {
+        "businesses": 100,
+        "appointments": 10000,
+        "requests": 250000,
+        "sqlcpu": 2,
+        "sqlram": "7.5",
+        "ssd": 100,
+        "backup": 150,
+        "archive": 250,
+        "ops": 2000000,
+        "keys": 204,
+        "egress": 50,
+        "logs": 15,
+        "build": 5,
+        "drill": 10,
+        "fake": 0,
+        "wal": 10,
+        "worker_ram": 2,
+        "railway_ram": 9,
+        "railway_cpu": "2.5",
+        "db_ram": 4,
+        "db_cpu": 1,
+        "snapshots": 200,
+        "pitr": 150,
+        "render_compute": 125,
+        "render_db": 55
+      },
+      "GCP": {
+        "lines_excluding_NAT": {
+          "archive_and_KMS": "35.64",
+          "platform_secrets": "0.90",
+          "logs_and_metrics_allowance": "15.00",
+          "build_images_allowance": "5.00",
+          "restore_drill_allowance": "10.00",
+          "fake_host_allowance": "0.00",
+          "ingress_and_independent_sealer": "22.06",
+          "instance_gateway": "49.93",
+          "continuous_worker": "36.04",
+          "private_result": "1.36",
+          "SQL_compute_SSD_backup": "127.62",
+          "WAL_reserve": "10.00",
+          "internet_and_export_transfer_allowance": "15.00"
+        },
+        "NAT_low": "6.92",
+        "NAT_high": "38.02",
+        "subtotal_low": "335.48",
+        "subtotal_high": "366.58",
+        "with25pct_low": "419.35",
+        "with25pct_high": "458.22",
+        "request_gateway_conditional_saving": "38.90"
+      },
+      "Railway_incomplete_candidate": {
+        "lines": {
+          "archive_and_KMS": "35.64",
+          "platform_secrets": "0.90",
+          "logs_and_metrics_allowance": "15.00",
+          "build_images_allowance": "5.00",
+          "restore_drill_allowance": "10.00",
+          "fake_host_allowance": "0.00",
+          "external_independent_verifier": "11.03",
+          "Railway_compute_DB_volumes_snapshots_PITR_egress": "249.75",
+          "WAL_archive_operation_reserve": "10.00"
+        },
+        "usage_before_plan_floor": "249.75",
+        "subtotal": "337.32",
+        "with25pct": "421.65",
+        "unpriced_safety_gap": "U_R >= 0; may require architectural replacement, not merely money"
+      },
+      "Render_incomplete_candidate": {
+        "lines": {
+          "archive_and_KMS": "35.64",
+          "platform_secrets": "0.90",
+          "logs_and_metrics_allowance": "15.00",
+          "build_images_allowance": "5.00",
+          "restore_drill_allowance": "10.00",
+          "fake_host_allowance": "0.00",
+          "external_independent_verifier": "11.03",
+          "Pro_workspace": "25.00",
+          "five_compute_services": "125.00",
+          "managed_Postgres": "55.00",
+          "DB_storage": "30.00",
+          "outbound_over_25GB": "3.75"
+        },
+        "subtotal": "316.32",
+        "with25pct": "395.40",
+        "unpriced_safety_gap": "U_D >= 0; may require architectural replacement, not merely money"
+      },
+      "GCP_core_plus_optional_PaaS_UI": {
+        "Railway_low": "355.48",
+        "Railway_high": "386.58",
+        "Render_low": "367.48",
+        "Render_high": "398.58"
+      }
+    }
+  },
+  "weightedScoresOutOf5": {
+    "GCP": "3.45",
+    "Railway": "2.45",
+    "Render": "2.20"
+  }
+}
