@@ -1,0 +1,121 @@
+[
+  {
+    "branch": "architecture/v0.8.1-greenfield-challenge",
+    "commit": "c55193a95e5eb38b245215f81deb00d9b2eaad5f",
+    "cloudDocumentPaths": []
+  },
+  {
+    "branch": "audit/v0.8.0-legacy-code",
+    "commit": "0107d84106faa6fcef2bb56629c8a01d0f8e65cc",
+    "cloudDocumentPaths": []
+  },
+  {
+    "branch": "audit/v0.8.0-remaining-legacy",
+    "commit": "f54e09f0d4ad6c4c31306453753942da380e806c",
+    "cloudDocumentPaths": []
+  },
+  {
+    "branch": "cleanup/v0.8.0-category-a",
+    "commit": "e0af76524069b1973ded8584ef36f035718b13e9",
+    "cloudDocumentPaths": []
+  },
+  {
+    "branch": "docs/feature-register-vnext-20261106",
+    "commit": "59cde023d2dff088161c1d01bd76c1099386e13f",
+    "cloudDocumentPaths": []
+  },
+  {
+    "branch": "feature/v0.8.1-approved-reminder-testing",
+    "commit": "c58c9f3fd3b170f3a1a59a0da9d5cb000b6e6b3b",
+    "cloudDocumentPaths": []
+  },
+  {
+    "branch": "fix/v0.8.0-reconciliation-reminders",
+    "commit": "8c7e8dc4eff4173fed48c3da617ec16822c2abcf",
+    "cloudDocumentPaths": []
+  },
+  {
+    "branch": "implementation/wp1-synthetic-safety-slice",
+    "commit": "84ff73d36cc6defc493a30a4f07445e4818ce1c8",
+    "cloudDocumentPaths": []
+  },
+  {
+    "branch": "implementation/wp2-c1-conversation-progress",
+    "commit": "c24b7e4f748936ca370eb2bcb402fa8d45d71cc8",
+    "cloudDocumentPaths": []
+  },
+  {
+    "branch": "implementation/wp2-l0a-indexed-archive",
+    "commit": "de9a9a995a9d6ada4b398806db29d94abfe87364",
+    "cloudDocumentPaths": []
+  },
+  {
+    "branch": "implementation/wp2-l0b-sealed-inbound",
+    "commit": "a0eca88c8fca2173f1d9ae6e840ae75860222a2d",
+    "cloudDocumentPaths": []
+  },
+  {
+    "branch": "implementation/wp2-l1-availability-oracle",
+    "commit": "5282eda121dd918e4b384995c6e9672e8c88c728",
+    "cloudDocumentPaths": []
+  },
+  {
+    "branch": "implementation/wp2-l2-functional-corrections",
+    "commit": "50f3a5be4a22cb0fbbaa7887e366e7c4c8db8117",
+    "cloudDocumentPaths": []
+  },
+  {
+    "branch": "implementation/wp2-l2-interactive",
+    "commit": "069111187c06416f06f6fc95cffa25c2776850dd",
+    "cloudDocumentPaths": []
+  },
+  {
+    "branch": "implementation/wp2-l2-safety-composition",
+    "commit": "6e1ae2a6450cef01fedc91e63e8b0d7044a267f1",
+    "cloudDocumentPaths": []
+  },
+  {
+    "branch": "implementation/wp2-windows-local-runtime",
+    "commit": "ca14f99c7ab303dbcf0d6ae074812b336fb4475f",
+    "cloudDocumentPaths": []
+  },
+  {
+    "branch": "main",
+    "commit": "c439586ca512297c589ddd3bc2ae783b37358b37",
+    "cloudDocumentPaths": []
+  },
+  {
+    "branch": "planning/greenfield-wp0-2026-10-31",
+    "commit": "e305bab763eacfdc25774c37d98a9de69c5a8da7",
+    "cloudDocumentPaths": []
+  },
+  {
+    "branch": "planning/issue-7-local-milestone-a",
+    "commit": "4cdc638a98964c5ea684c076255353ecffda5f6a",
+    "cloudDocumentPaths": []
+  },
+  {
+    "branch": "planning/persona-journeys-review-2026-10",
+    "commit": "1f4682ccba02fe5d89ce9d671c0114d6f9a0d6e1",
+    "cloudDocumentPaths": [
+      "docs/product-review/01-decision-reconciliation.md"
+    ]
+  },
+  {
+    "branch": "review/claude-gcp-adr005-2026-11-01",
+    "commit": "83907db61daa929fa91ed9301c75b92eaa5f5436",
+    "cloudDocumentPaths": [
+      "docs/greenfield/12-ADR-005-GCP-CLOUD-ARCHITECTURE.md",
+      "docs/greenfield/12a-ADR-005-CLAUDE-REVIEW-HANDOFF.md",
+      "docs/greenfield/reviews/02-CLAUDE-GCP-ADR005-ARCHITECTURE-REVIEW.md",
+      "docs/greenfield/reviews/03-CLAUDE-ADR-005-INDEPENDENT-REVIEW.md",
+      "docs/greenfield/reviews/04-CLAUDE-ADR-005-REV2-DELTA-REVIEW.md",
+      "docs/greenfield/reviews/05-CLAUDE-ADR-005-REV3-FINAL-CHECK.md"
+    ]
+  },
+  {
+    "branch": "test/v0.8.0-legacy-compatibility",
+    "commit": "93258882c89404cd8142ce49966abbc9f44e3aea",
+    "cloudDocumentPaths": []
+  }
+]
