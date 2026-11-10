@@ -1,0 +1,119 @@
+{
+  "currency": "USD",
+  "hoursPerMonth": 730,
+  "discountsOrCreditsApplied": false,
+  "laborTaxFxDomainSupportExcluded": true,
+  "ratesCheckedLocalDate": "2026-11-09",
+  "regionCandidate": "us-central1",
+  "monthlyCases": {
+    "request_low": {
+      "lineItems": {
+        "SQL compute/SSD/backup": "55.11",
+        "PITR/WAL allowance": "4.00",
+        "Archive operations/storage + KMS": "14.44",
+        "Platform secrets": "0.90",
+        "Logs/metrics allowance": "5.00",
+        "Build/images allowance": "2.00",
+        "Transfer allowance": "5.00",
+        "Independent fake-provider host allowance": "12.00",
+        "Private result service": "0.55",
+        "Continuous worker": "32.79",
+        "Ingress and sealer": "20.65",
+        "Gateway": "10.33",
+        "NAT/IP/processing sensitivity": "5.57"
+      },
+      "subtotal": "168.34",
+      "with25PercentContingency": "210.42"
+    },
+    "request_high": {
+      "lineItems": {
+        "SQL compute/SSD/backup": "55.11",
+        "PITR/WAL allowance": "4.00",
+        "Archive operations/storage + KMS": "14.44",
+        "Platform secrets": "0.90",
+        "Logs/metrics allowance": "5.00",
+        "Build/images allowance": "2.00",
+        "Transfer allowance": "5.00",
+        "Independent fake-provider host allowance": "12.00",
+        "Private result service": "0.55",
+        "Continuous worker": "32.79",
+        "Ingress and sealer": "20.65",
+        "Gateway": "10.33",
+        "NAT/IP/processing sensitivity": "36.67"
+      },
+      "subtotal": "199.44",
+      "with25PercentContingency": "249.30"
+    },
+    "instance_low": {
+      "lineItems": {
+        "SQL compute/SSD/backup": "55.11",
+        "PITR/WAL allowance": "4.00",
+        "Archive operations/storage + KMS": "14.44",
+        "Platform secrets": "0.90",
+        "Logs/metrics allowance": "5.00",
+        "Build/images allowance": "2.00",
+        "Transfer allowance": "5.00",
+        "Independent fake-provider host allowance": "12.00",
+        "Private result service": "0.55",
+        "Continuous worker": "32.79",
+        "Ingress and sealer": "20.65",
+        "Gateway": "49.93",
+        "NAT/IP/processing sensitivity": "5.57"
+      },
+      "subtotal": "207.95",
+      "with25PercentContingency": "259.93"
+    },
+    "instance_high": {
+      "lineItems": {
+        "SQL compute/SSD/backup": "55.11",
+        "PITR/WAL allowance": "4.00",
+        "Archive operations/storage + KMS": "14.44",
+        "Platform secrets": "0.90",
+        "Logs/metrics allowance": "5.00",
+        "Build/images allowance": "2.00",
+        "Transfer allowance": "5.00",
+        "Independent fake-provider host allowance": "12.00",
+        "Private result service": "0.55",
+        "Continuous worker": "32.79",
+        "Ingress and sealer": "20.65",
+        "Gateway": "49.93",
+        "NAT/IP/processing sensitivity": "36.67"
+      },
+      "subtotal": "239.04",
+      "with25PercentContingency": "298.80"
+    }
+  },
+  "workerIfEntireFreeAllowanceAvailable": "27.57",
+  "workerConditionalSaving": "5.22",
+  "priorAdrRoundedRowsSum": "138.36",
+  "proof72h": {
+    "lineItems": {
+      "Warm ingress + sealer, one each": "1.94",
+      "Two gateway epoch instances, 72h each": "9.85",
+      "Request-billed throttle variant, 6h fully active": "0.55",
+      "Extra ingress/sealer active-instance seconds, aggregate86400": "1.86",
+      "40000 HTTP requests": "0.02",
+      "Continuous worker": "3.23",
+      "Shared-core epoch SQL, SSD10GiB, backup5GiB": "0.96",
+      "NAT upper metering allowance + IP +2GiB": "3.62",
+      "Synthetic archive/KMS allowance": "0.70",
+      "Platform secrets allowance": "0.10",
+      "Fake host/disk/IP allowance": "3.00",
+      "Build/images allowance": "1.50",
+      "Logs/metrics allowance": "1.50",
+      "Transfer allowance": "2.00",
+      "Temporary DB/drill allowance": "2.00"
+    },
+    "subtotal": "32.83",
+    "with25PercentContingency": "41.04",
+    "saturatedIngressSealerSubtotal": "55.21",
+    "saturatedWith25PercentContingency": "69.01"
+  },
+  "claims": {
+    "vendorQuote": false,
+    "hardSpendingCap": false,
+    "freeTrialAccountVerified": false,
+    "natDirectVpcMeteringVerified": false,
+    "cloudExecuted": false
+  }
+}

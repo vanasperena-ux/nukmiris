@@ -1,0 +1,301 @@
+{
+  "reviewDateLocal": "2026-11-09",
+  "timezone": "America/Mexico_City",
+  "acceptedExecutable": "b4d0be0cb98c7f2b69be318e18b93f4de102c511",
+  "applicationEvidenceHead": "50f3a5be4a22cb0fbbaa7887e366e7c4c8db8117",
+  "adrHead": "83907db61daa929fa91ed9301c75b92eaa5f5436",
+  "featureRegister": {
+    "version": "1.4",
+    "commit": "59cde023d2dff088161c1d01bd76c1099386e13f"
+  },
+  "inputs": [
+    {
+      "path": "docs/greenfield/12-ADR-005-GCP-CLOUD-ARCHITECTURE.md",
+      "commit": "83907db61daa929fa91ed9301c75b92eaa5f5436",
+      "blob": "5628d99dc1b81cc6edbdee232506b2754045240c",
+      "sha256": "c3bfc7acb209ccd5fe946063f94f03ea06fc518c2f75d8b20277d5ce83e8babc",
+      "lines": 254,
+      "coverage": "Read complete original architecture/review document; review02 superseded by03/04/05 where corrected"
+    },
+    {
+      "path": "docs/greenfield/12a-ADR-005-CLAUDE-REVIEW-HANDOFF.md",
+      "commit": "83907db61daa929fa91ed9301c75b92eaa5f5436",
+      "blob": "31e378520a3e3b5fd67e17dc809352a84394f7af",
+      "sha256": "486f459d03956950ceec0e267c63c99d84777d5b16c0431a8ee141b4974cc679",
+      "lines": 66,
+      "coverage": "Read complete original architecture/review document; review02 superseded by03/04/05 where corrected"
+    },
+    {
+      "path": "docs/greenfield/reviews/02-CLAUDE-GCP-ADR005-ARCHITECTURE-REVIEW.md",
+      "commit": "83907db61daa929fa91ed9301c75b92eaa5f5436",
+      "blob": "d4ce3ee114e80e45860ff2c8475547740432d1d1",
+      "sha256": "10363d20cf20a2560298ab244908958f9f6c4e129eeb455824d936a866575749",
+      "lines": 404,
+      "coverage": "Read complete original architecture/review document; review02 superseded by03/04/05 where corrected"
+    },
+    {
+      "path": "docs/greenfield/reviews/03-CLAUDE-ADR-005-INDEPENDENT-REVIEW.md",
+      "commit": "83907db61daa929fa91ed9301c75b92eaa5f5436",
+      "blob": "0996e6071e1aa86f7b3105323afb249faa986777",
+      "sha256": "8609c0196ed2a2394c9cc0d24004a506c53df3b1d4ce9d70adbb5389e173673b",
+      "lines": 294,
+      "coverage": "Read complete original architecture/review document; review02 superseded by03/04/05 where corrected"
+    },
+    {
+      "path": "docs/greenfield/reviews/04-CLAUDE-ADR-005-REV2-DELTA-REVIEW.md",
+      "commit": "83907db61daa929fa91ed9301c75b92eaa5f5436",
+      "blob": "a50b7255ab5369b3d984a153bd9163a4ea01588a",
+      "sha256": "b7fe42827da70418cd5d44f5b766af2c6bd3d734f4dadeb2e224f8cdae430b05",
+      "lines": 165,
+      "coverage": "Read complete original architecture/review document; review02 superseded by03/04/05 where corrected"
+    },
+    {
+      "path": "docs/greenfield/reviews/05-CLAUDE-ADR-005-REV3-FINAL-CHECK.md",
+      "commit": "83907db61daa929fa91ed9301c75b92eaa5f5436",
+      "blob": "4c664437ec6b95547b61472208a782d4dc27912d",
+      "sha256": "d56fd6c2678ad5d0b4580206605fa63fa6061bbcc0611ce471848a480b5b5aaa",
+      "lines": 71,
+      "coverage": "Read complete original architecture/review document; review02 superseded by03/04/05 where corrected"
+    },
+    {
+      "path": "vnext/src/ports.ts",
+      "commit": "b4d0be0cb98c7f2b69be318e18b93f4de102c511",
+      "blob": "8df31feacb3c8901e06cac362617015980d414bd",
+      "sha256": "830ea92da56ecf380915eb5248c844344c185f7b88a0badea869230e88fefc7a",
+      "lines": 35,
+      "coverage": "Examined relevant architecture/safety implementation or evidence; not a formal complete-code verification"
+    },
+    {
+      "path": "vnext/src/application/dispatch-once.ts",
+      "commit": "b4d0be0cb98c7f2b69be318e18b93f4de102c511",
+      "blob": "d23040990a20f0e5d8bb223e56983fcd8f5578d8",
+      "sha256": "357f0950aa9ac7142188aa17312e9bdaccd01d4f7edc531294212739c2db726c",
+      "lines": 57,
+      "coverage": "Examined relevant architecture/safety implementation or evidence; not a formal complete-code verification"
+    },
+    {
+      "path": "vnext/src/application/admit-input.ts",
+      "commit": "b4d0be0cb98c7f2b69be318e18b93f4de102c511",
+      "blob": "3ff012b5240dcca3d16e25de97af4b407f0b80c8",
+      "sha256": "427467318a0238bf9cb776498df84f4b685765ba31d3773545815060e739e04f",
+      "lines": 76,
+      "coverage": "Examined relevant architecture/safety implementation or evidence; not a formal complete-code verification"
+    },
+    {
+      "path": "vnext/src/application/admission-custody.ts",
+      "commit": "b4d0be0cb98c7f2b69be318e18b93f4de102c511",
+      "blob": "fbdf7171fb19ca2535d0a3f26e84bec1e1b5a173",
+      "sha256": "acd8ae30e28fd8846e2a0806d0fb2964d3ad72e24c77045afa3efaa10db2f804",
+      "lines": 14,
+      "coverage": "Examined relevant architecture/safety implementation or evidence; not a formal complete-code verification"
+    },
+    {
+      "path": "vnext/src/application/record-result.ts",
+      "commit": "b4d0be0cb98c7f2b69be318e18b93f4de102c511",
+      "blob": "d288916874e163d24d30578a137c9a556cb33d45",
+      "sha256": "37965413cc3bb5c816ab2385df3fa09415a50f749081ccbc16de5112311f8c1f",
+      "lines": 11,
+      "coverage": "Examined relevant architecture/safety implementation or evidence; not a formal complete-code verification"
+    },
+    {
+      "path": "vnext/src/application/recover-expired.ts",
+      "commit": "b4d0be0cb98c7f2b69be318e18b93f4de102c511",
+      "blob": "541f7e98a44116c6618014f934925460ba08a96c",
+      "sha256": "09671efe2facf7c339b88402448672f353cc237d96da384b7ca71d38014243b0",
+      "lines": 27,
+      "coverage": "Examined relevant architecture/safety implementation or evidence; not a formal complete-code verification"
+    },
+    {
+      "path": "vnext/src/application/restore-inert.ts",
+      "commit": "b4d0be0cb98c7f2b69be318e18b93f4de102c511",
+      "blob": "4417a8b4634e15faf03ec7cf0b8e8a227dbcb415",
+      "sha256": "cf44fadb6f486efdba0738e79b4cb0672047f2965555a32076572653b686c7b0",
+      "lines": 16,
+      "coverage": "Examined relevant architecture/safety implementation or evidence; not a formal complete-code verification"
+    },
+    {
+      "path": "vnext/src/application/booking-composition.ts",
+      "commit": "b4d0be0cb98c7f2b69be318e18b93f4de102c511",
+      "blob": "22510e23df75e5a702d48f4ca79e2536ce703c68",
+      "sha256": "672bd3f2f0dde7c39cfca930101d1b926e4e07908a3db4180838e47a87291901",
+      "lines": 37,
+      "coverage": "Examined relevant architecture/safety implementation or evidence; not a formal complete-code verification"
+    },
+    {
+      "path": "vnext/src/infrastructure/postgres/unit-of-work.ts",
+      "commit": "b4d0be0cb98c7f2b69be318e18b93f4de102c511",
+      "blob": "a52bc602dba3909c5fafbd140b0d3cb6075ba8c9",
+      "sha256": "9c526298ab9f56ef28e101546a736f84e79d4047a47cec617669b57f2e19e07c",
+      "lines": 39,
+      "coverage": "Examined relevant architecture/safety implementation or evidence; not a formal complete-code verification"
+    },
+    {
+      "path": "vnext/src/infrastructure/postgres/roles.sql",
+      "commit": "b4d0be0cb98c7f2b69be318e18b93f4de102c511",
+      "blob": "e4640a9bb9cb913310e4b44f65ba7e59840e2199",
+      "sha256": "108062d2163095dcb6c6186f829a82159d509132e3287ac719378494f3ac7ded",
+      "lines": 85,
+      "coverage": "Examined relevant architecture/safety implementation or evidence; not a formal complete-code verification"
+    },
+    {
+      "path": "vnext/src/infrastructure/postgres/migrations/001-foundation.sql",
+      "commit": "b4d0be0cb98c7f2b69be318e18b93f4de102c511",
+      "blob": "4a515fb5821e7e7e4865a175b17e798797ebb1a7",
+      "sha256": "b1065dccf73ded6f3b91d962c3d2a1585d10a75a672c90f71e67f22be9000468",
+      "lines": 317,
+      "coverage": "Examined relevant architecture/safety implementation or evidence; not a formal complete-code verification"
+    },
+    {
+      "path": "vnext/src/infrastructure/postgres/migrations/003-dispositions.sql",
+      "commit": "b4d0be0cb98c7f2b69be318e18b93f4de102c511",
+      "blob": "539723391101348281c545b0b4629028c63e4e37",
+      "sha256": "33681aee587267609954b8058e2458c067d8f12f921fcfc65133584e82eed726",
+      "lines": 114,
+      "coverage": "Examined relevant architecture/safety implementation or evidence; not a formal complete-code verification"
+    },
+    {
+      "path": "vnext/src/infrastructure/archive/protocol.ts",
+      "commit": "b4d0be0cb98c7f2b69be318e18b93f4de102c511",
+      "blob": "5c8aafe9a76c3c33ff73257033e346fd80db9641",
+      "sha256": "978b476a22272c5f4945c9e16a3b3c4888b650e7df85296af17ce5ac5781baea",
+      "lines": 36,
+      "coverage": "Examined relevant architecture/safety implementation or evidence; not a formal complete-code verification"
+    },
+    {
+      "path": "vnext/local/interactive-profile.mjs",
+      "commit": "b4d0be0cb98c7f2b69be318e18b93f4de102c511",
+      "blob": "07db82fd84f84087766acffc418379955c76fdba",
+      "sha256": "53183638b882f5a88ac5e2a6dcce6e50ea118122697fb771bf3ea4b9b34a4df6",
+      "lines": 36,
+      "coverage": "Examined relevant architecture/safety implementation or evidence; not a formal complete-code verification"
+    },
+    {
+      "path": "vnext/local/custody.mjs",
+      "commit": "b4d0be0cb98c7f2b69be318e18b93f4de102c511",
+      "blob": "e7c9c5b0df1f20e22f1912c257c1260e0580c4f2",
+      "sha256": "d9d24988e8ed00142a5eca4c93e37c214e4cd631f17206bfeee5f37cd3f619ed",
+      "lines": 29,
+      "coverage": "Examined relevant architecture/safety implementation or evidence; not a formal complete-code verification"
+    },
+    {
+      "path": "vnext/local/coherent-backup.mjs",
+      "commit": "b4d0be0cb98c7f2b69be318e18b93f4de102c511",
+      "blob": "bdf36ff99f5f475804c0731498da8f52969a84a6",
+      "sha256": "4730f9e341b6382e5a4e9a7ff5dc6d01cc868bc6165856efd893ec693b875069",
+      "lines": 40,
+      "coverage": "Examined relevant architecture/safety implementation or evidence; not a formal complete-code verification"
+    },
+    {
+      "path": "vnext/local/booking-worker.mjs",
+      "commit": "b4d0be0cb98c7f2b69be318e18b93f4de102c511",
+      "blob": "0c7a87744a1b94460924fcb4b12228f3cf6fe45f",
+      "sha256": "5a8697f1d7b21f7e36ec1f17ab968be050bb8879bc2d515ade7f3c65e06b5c46",
+      "lines": 42,
+      "coverage": "Examined relevant architecture/safety implementation or evidence; not a formal complete-code verification"
+    },
+    {
+      "path": "vnext/src/domain/customer-name.ts",
+      "commit": "b4d0be0cb98c7f2b69be318e18b93f4de102c511",
+      "blob": "f472e7c6a1deaf2721cd096dea66b3dcb1fc7f5e",
+      "sha256": "a911f1659f21304de5d26ff075f411fa5e0e03c813b12fb23d1b99b674980032",
+      "lines": 31,
+      "coverage": "Examined relevant architecture/safety implementation or evidence; not a formal complete-code verification"
+    },
+    {
+      "path": "vnext/src/domain/tenant.ts",
+      "commit": "b4d0be0cb98c7f2b69be318e18b93f4de102c511",
+      "blob": "13b1e109a3ad9617e3fc946e421b488129bd9e21",
+      "sha256": "644f21fdee7a995f603310571164e77ce49b1b0aabb61aa918e05c73822d304c",
+      "lines": 24,
+      "coverage": "Examined relevant architecture/safety implementation or evidence; not a formal complete-code verification"
+    },
+    {
+      "path": "vnext/src/domain/classification.ts",
+      "commit": "b4d0be0cb98c7f2b69be318e18b93f4de102c511",
+      "blob": "0db5c3b6c656566b71ef83d9b2d9162309cec1b5",
+      "sha256": "c80c5c985b9ae98dcad529292cf86c01582ff69f79e5d394aa541a5ab9eb65b9",
+      "lines": 25,
+      "coverage": "Examined relevant architecture/safety implementation or evidence; not a formal complete-code verification"
+    },
+    {
+      "path": "docs/greenfield/16-WP2-BOOKING-AND-INBOUND-DESIGN-REQUIREMENTS.md",
+      "commit": "b4d0be0cb98c7f2b69be318e18b93f4de102c511",
+      "blob": "f5f398fa7ecd81fd05a5c63402489cc6caf314b9",
+      "sha256": "7ded54974db68b079eba9709b087e9dcec64ae30ee04dbb2713af3f67b2f104d",
+      "lines": 188,
+      "coverage": "Examined relevant architecture/safety implementation or evidence; not a formal complete-code verification"
+    },
+    {
+      "path": "docs/greenfield/18-WP2-L0A-B1-B2-AND-FOLLOWUPS.md",
+      "commit": "b4d0be0cb98c7f2b69be318e18b93f4de102c511",
+      "blob": "2442bad5bb9a72b0ea335e5367707a3bc83744ba",
+      "sha256": "993f58ccdb084095db79d616420581ed407e2a3c1d271e7735c3c350f2b88a29",
+      "lines": 84,
+      "coverage": "Examined relevant architecture/safety implementation or evidence; not a formal complete-code verification"
+    },
+    {
+      "path": "docs/greenfield/29-FINAL-FUNCTIONAL-CORRECTIONS.md",
+      "commit": "b4d0be0cb98c7f2b69be318e18b93f4de102c511",
+      "blob": "2d930a44a97f956695f62ed4c9264eb2664c1d22",
+      "sha256": "19390352a3e413de40bb9f9256395a04f34c1b64c40484bb9a554b30b5d401be",
+      "lines": 151,
+      "coverage": "Examined relevant architecture/safety implementation or evidence; not a formal complete-code verification"
+    },
+    {
+      "path": "docs/greenfield/reviews/20-CLAUDE-FINAL-FUNCTIONAL-CORRECTIONS.md",
+      "commit": "50f3a5be4a22cb0fbbaa7887e366e7c4c8db8117",
+      "blob": "07ed2587337bb537ec55ef7079ab60c361dae23f",
+      "sha256": "bc8fb31496da78206c67c673f7ba8a629bb45e61fec690e8f80bcfeba5cf6cc6",
+      "lines": 165,
+      "coverage": "Examined relevant architecture/safety implementation or evidence; not a formal complete-code verification"
+    },
+    {
+      "path": "vnext/test/archive-security-boundary.test.ts",
+      "commit": "b4d0be0cb98c7f2b69be318e18b93f4de102c511",
+      "blob": "22a1b4601c15a6ab8449ff7c8c6dbe227f6ff790",
+      "sha256": "4e82343526652ec16663e53c5397ed69eb47cacb7114e83aac8e955380a73135",
+      "lines": 57,
+      "coverage": "Examined relevant architecture/safety implementation or evidence; not a formal complete-code verification"
+    },
+    {
+      "path": "vnext/evidence/checkpoint-1/F13-RESIDUAL-LATE-SUBMISSION.json",
+      "commit": "b4d0be0cb98c7f2b69be318e18b93f4de102c511",
+      "blob": "3605c3abc3ba9cc3f43261b04848401a23cd3ad3",
+      "sha256": "841562e451dff38cf264240b236d3ea0cf4db99f77b9529b6083569ee9cfcdda",
+      "lines": 99,
+      "coverage": "Examined relevant architecture/safety implementation or evidence; not a formal complete-code verification"
+    },
+    {
+      "path": "docs/greenfield/NUKMIRIS_FEATURE_REGISTER.md",
+      "commit": "59cde023d2dff088161c1d01bd76c1099386e13f",
+      "blob": "679a5b465b913843566fb59f1410b69cf9803bc1",
+      "sha256": "5a3d29093dc6b2b393656eaa4b708f8a64c3087c7c6b68b9df651d1b8443fdae",
+      "lines": 223,
+      "coverage": "Read complete223-line Feature Register v1.4 including all45 IDs, owner evidence and summary rules"
+    },
+    {
+      "path": "vnext/evidence/pr16-final-functional/source-sha256.txt",
+      "commit": "50f3a5be4a22cb0fbbaa7887e366e7c4c8db8117",
+      "blob": "e8e02979d77921f6beb285d86da4e7751808aa6b",
+      "sha256": "78529e44796b05f24c2ccabf2860eb09ff39845f6e327fe2f46ba3cb9ea81176",
+      "lines": 127,
+      "coverage": "Read exact-source evidence manifest/summary and verified hashes; not a new application test run"
+    },
+    {
+      "path": "vnext/evidence/pr16-final-functional/artifact-sha256.txt",
+      "commit": "50f3a5be4a22cb0fbbaa7887e366e7c4c8db8117",
+      "blob": "d2f158f1b94f5a4b55b3a76a1dc207dc5b8f1c2d",
+      "sha256": "a6ac09c3fe035eb9f93e7846441b2ebce4a9590ce3a1a77d2f6b7526f781e8fd",
+      "lines": 26,
+      "coverage": "Read exact-source evidence manifest/summary and verified hashes; not a new application test run"
+    },
+    {
+      "path": "vnext/evidence/pr16-final-functional/summary.json",
+      "commit": "50f3a5be4a22cb0fbbaa7887e366e7c4c8db8117",
+      "blob": "bd1b70165d32a181619cfbd8842b9fa4e28efcb7",
+      "sha256": "4e04d1d0a28b60acdac6b9d3943f5631bd9aa1c02c48e663a85a4865c3fd8db3",
+      "lines": 94,
+      "coverage": "Read exact-source evidence manifest/summary and verified hashes; not a new application test run"
+    }
+  ]
+}
