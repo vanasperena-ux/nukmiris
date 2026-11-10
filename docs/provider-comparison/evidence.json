@@ -1,0 +1,31 @@
+{
+  "date": "2026-11-09 America/Mexico_City",
+  "base": "23079800b825502cf290c5a61ee32c2e3c256dd6",
+  "executable": "b4d0be0cb98c7f2b69be318e18b93f4de102c511",
+  "accepted_source_src_tree": "06b9b834e47359ec9ec9fc90d3ee98419f3cf020",
+  "base_src_tree": "06b9b834e47359ec9ec9fc90d3ee98419f3cf020",
+  "source_to_base_vnext_changes": "27 historical evidence files only; executable files identical",
+  "adr_rev3_sha256": "c3bfc7acb209ccd5fe946063f94f03ea06fc518c2f75d8b20277d5ce83e8babc",
+  "sha256": {
+    "CLAUDE-HANDOFF.md": "d4dd0f8607a160bd75809cba22246e2cc8c31ad9b9e51014f2009eb56ecff460",
+    "COSTS.md": "e8dbec94522eb134e52033e9784ffd526d8d295c98b6589a3ee24a25553046df",
+    "README.md": "b18a9d5c99df2408d940b16e267a2299d0db7faffd084d1ce0cbd1bc165afc9c",
+    "SOURCES.md": "d0fb2da7d6f43084a1d38b2083f060ef79fc2dbee369a3694a32ddbb0b14305e",
+    "calculate-costs.py": "59b1df941aef119e31be18758d15e4b9225e2a1190fd6126db9944dc0378a512",
+    "cost-results.json": "e8d3c02418e6642ea92de8527076d172ead1c76f2176c8c5465be6a5c0c694c5"
+  },
+  "validation": [
+    "calculator output byte-equal to cost-results.json",
+    "independent displayed line-item sums within rounding tolerance",
+    "NAT high-low delta and weighted scores checked",
+    "16 relative Markdown links resolve"
+  ],
+  "not_executed": [
+    "application suites",
+    "Windows tests",
+    "cloud experiments",
+    "provider/account connections",
+    "independent Claude review of this package"
+  ],
+  "restrictions": "docs-only; no INC1 or historical evidence edits"
+}
