@@ -1,0 +1,20 @@
+{
+  "packageId": "NM-MILESTONE-B-PLAN-2026-11-09-1",
+  "branch": "planning/milestone-b-cloud-reconciliation-2026-11-09",
+  "designCommit": "e0c1508e9a1327c010f7b397aa0670551845e205",
+  "designTree": "c98b2bfeb1ee3a06038a5495a53f4b7bc670c8bf",
+  "parentApplicationEvidenceCommit": "50f3a5be4a22cb0fbbaa7887e366e7c4c8db8117",
+  "acceptedExecutable": "b4d0be0cb98c7f2b69be318e18b93f4de102c511",
+  "adrCommit": "83907db61daa929fa91ed9301c75b92eaa5f5436",
+  "featureRegisterVersion": "1.4",
+  "featureRegisterCommit": "59cde023d2dff088161c1d01bd76c1099386e13f",
+  "designFiles": 16,
+  "packageManifest": "docs/milestone-b/evidence/PACKAGE-SHA256.txt",
+  "publicationFollowUpScope": "Adds only this publication.json file; design documents, cost model, source manifests and handoff remain unchanged from designCommit.",
+  "independentClaudeReview": "PENDING",
+  "authorization": "Planning documents only; implementation charter and resource-specific provisioning approval are separate owner decisions.",
+  "applicationCodeChanged": false,
+  "cloudResourcesCreated": false,
+  "providerBusinessApiCallsMade": false,
+  "billingChanged": false
+}
