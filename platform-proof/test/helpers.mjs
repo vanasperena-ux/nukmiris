@@ -35,6 +35,7 @@ export async function fixture(t) {
     name = "inc1-" + randomBytes(8).toString("hex"),
     dbName = "inc1_" + randomBytes(8).toString("hex"),
     password = randomBytes(24).toString("hex");
+  const volume = name + "-pgdata";
   let admin, worker, provider;
   const children = new Set();
   t.after(async () => {
@@ -46,10 +47,23 @@ export async function fixture(t) {
     }
     await worker?.end();
     await admin?.end();
-    await docker(["rm", "-f", name]).catch(() => {});
+    await docker(["rm", "-f", "-v", name]).catch(() => {});
+    await docker(["volume", "rm", volume]).catch((e) => {
+      if (!e.stderr?.toLowerCase().includes("no such volume"))
+        throw Error("owned_fixture_volume_cleanup_failed");
+    });
     await rm(dir, { recursive: true, force: true });
   });
   await docker(["image", "inspect", IMAGE]);
+  await docker([
+    "volume",
+    "create",
+    "--label",
+    "nukmiris.inc1=local-proof",
+    "--label",
+    "nukmiris.inc1.owner=" + name,
+    volume,
+  ]);
   await docker([
     "run",
     "--detach",
@@ -57,6 +71,8 @@ export async function fixture(t) {
     name,
     "--label",
     "nukmiris.inc1=local-proof",
+    "--mount",
+    "type=volume,source=" + volume + ",target=/var/lib/postgresql/data",
     "--publish",
     "127.0.0.1::5432",
     "--env",
@@ -81,7 +97,8 @@ export async function fixture(t) {
     user: "postgres",
     password,
   };
-  for (let i = 0; i < 100; i++) {
+  const startupDeadline = Date.now() + 60000;
+  for (;;) {
     try {
       admin = new pg.Pool(database(db));
       await admin.query("SELECT 1");
@@ -89,7 +106,19 @@ export async function fixture(t) {
     } catch (e) {
       await admin?.end();
       admin = null;
-      if (i === 99) throw e;
+      const state = JSON.parse(
+        (await docker(["inspect", "--format", "{{json .State}}", name])).stdout,
+      );
+      if (!state.Running || Date.now() >= startupDeadline)
+        throw Error(
+          "fixture_startup_failed " +
+            JSON.stringify({
+              status: state.Status,
+              exitCode: state.ExitCode,
+              oom: state.OOMKilled,
+              connectionCode: e.code,
+            }),
+        );
       await new Promise((r) => setTimeout(r, 100));
     }
   }
@@ -152,6 +181,7 @@ export async function fixture(t) {
   const callerKey = randomBytes(24).toString("hex");
   const f = {
     dir,
+    volume,
     db,
     admin,
     worker,
@@ -279,6 +309,17 @@ export async function fixture(t) {
   )
     throw Error("INC1_requires_Node24_PostgreSQL17_11_UTC");
   return f;
+}
+export async function ownedVolumePresent(name) {
+  if (!/^inc1-[a-f0-9]{16}-pgdata$/.test(name))
+    throw Error("not_owned_fixture_volume");
+  try {
+    const x = JSON.parse((await docker(["volume", "inspect", name])).stdout)[0];
+    return x.Labels?.["nukmiris.inc1"] === "local-proof";
+  } catch (e) {
+    if (e.stderr?.toLowerCase().includes("no such volume")) return false;
+    throw e;
+  }
 }
 export function message(c, predicate, timeout = 10000) {
   return new Promise((resolve, reject) => {

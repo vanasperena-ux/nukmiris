@@ -33,9 +33,11 @@ npm run costs
 The pinned PG image must already exist locally. To fetch public tooling only:
 `docker --host=unix:///var/run/docker.sock pull postgres@sha256:839fbb5a4942a7758dd93e18b42ea5649807491a0545b5eeeb8f0b8bb11857a5`.
 The harness clears inherited Docker endpoint selectors and uses that local socket,
-creates a unique `inc1-*` container and `inc1_<hex>` database, binds SQL to loopback,
+creates a unique `inc1-*` container, labeled disposable volume and `inc1_<hex>` database, binds SQL to loopback,
 sets UTC/fsync/synchronous_commit, generates disposable TLS keys and service-auth
-material, then removes only its own named container. Evidence contains synthetic
+material, then removes only its own named container and labeled volume. Readiness
+polling is bounded and checks container exit/OOM state; cleanup has a regression
+test. No broad Docker prune command is used. Evidence contains synthetic
 IDs, timestamps and hashes, never keys/passwords. Temporary key directories are
 removed after each fixture; do not upload a test's private temporary directory.
 
