@@ -1,0 +1,165 @@
+{
+  "localOnly": true,
+  "priorCalculatorSha256": "82a724717cb33410c78b2e023437d734363c1b22393e7cbb5694984b6a640fe3",
+  "prior72hUnchanged": {
+    "lineItems": {
+      "Warm ingress + sealer, one each": "1.94",
+      "Two gateway epoch instances, 72h each": "9.85",
+      "Request-billed throttle variant, 6h fully active": "0.55",
+      "Extra ingress/sealer active-instance seconds, aggregate86400": "1.86",
+      "40000 HTTP requests": "0.02",
+      "Continuous worker": "3.23",
+      "Shared-core epoch SQL, SSD10GiB, backup5GiB": "0.96",
+      "NAT upper metering allowance + IP +2GiB": "3.62",
+      "Synthetic archive/KMS allowance": "0.70",
+      "Platform secrets allowance": "0.10",
+      "Fake host/disk/IP allowance": "3.00",
+      "Build/images allowance": "1.50",
+      "Logs/metrics allowance": "1.50",
+      "Transfer allowance": "2.00",
+      "Temporary DB/drill allowance": "2.00"
+    },
+    "subtotal": "32.83",
+    "with25PercentContingency": "41.04",
+    "saturatedIngressSealerSubtotal": "55.21",
+    "saturatedWith25PercentContingency": "69.01"
+  },
+  "newScenarios": {
+    "sixHourBaseline": {
+      "hours": 6,
+      "tier": "db-f1-micro",
+      "edition": "ENTERPRISE",
+      "lines": {
+        "ingress_and_sealer_max_one_each": "0.1620",
+        "gateway_old_and_new_instance_billed": "0.8208",
+        "request_billed_throttle_variant_up_to6h": "0.5454",
+        "40000_requests_conservative": "0.0160",
+        "worker_one": "0.2695",
+        "sql_compute": "0.0630",
+        "sql_storage_backup": "0.0173",
+        "nat_upper_ip_2GiB": "0.3840",
+        "archive_kms": "0.7000",
+        "secrets": "0.1000",
+        "fake_host_disk_ip": "3.0000",
+        "build_images": "1.5000",
+        "logs_metrics": "1.5000",
+        "transfer": "2.0000",
+        "temporary_restore_drill": "2.0000"
+      },
+      "grossUsd": "13.08",
+      "with25Percent": "16.35"
+    },
+    "sixHourMaxOneHighLoad": {
+      "hours": 6,
+      "tier": "db-f1-micro",
+      "edition": "ENTERPRISE",
+      "lines": {
+        "ingress_and_sealer_max_one_each": "1.0908",
+        "gateway_old_and_new_instance_billed": "0.8208",
+        "request_billed_throttle_variant_up_to6h": "0.5454",
+        "40000_requests_conservative": "0.0160",
+        "worker_one": "0.2695",
+        "sql_compute": "0.0630",
+        "sql_storage_backup": "0.0173",
+        "nat_upper_ip_2GiB": "0.3840",
+        "archive_kms": "0.7000",
+        "secrets": "0.1000",
+        "fake_host_disk_ip": "3.0000",
+        "build_images": "1.5000",
+        "logs_metrics": "1.5000",
+        "transfer": "2.0000",
+        "temporary_restore_drill": "2.0000"
+      },
+      "grossUsd": "14.01",
+      "with25Percent": "17.51"
+    },
+    "sixHourG1Small": {
+      "hours": 6,
+      "tier": "db-g1-small",
+      "edition": "ENTERPRISE",
+      "lines": {
+        "ingress_and_sealer_max_one_each": "1.0908",
+        "gateway_old_and_new_instance_billed": "0.8208",
+        "request_billed_throttle_variant_up_to6h": "0.5454",
+        "40000_requests_conservative": "0.0160",
+        "worker_one": "0.2695",
+        "sql_compute": "0.2100",
+        "sql_storage_backup": "0.0173",
+        "nat_upper_ip_2GiB": "0.3840",
+        "archive_kms": "0.7000",
+        "secrets": "0.1000",
+        "fake_host_disk_ip": "3.0000",
+        "build_images": "1.5000",
+        "logs_metrics": "1.5000",
+        "transfer": "2.0000",
+        "temporary_restore_drill": "2.0000"
+      },
+      "grossUsd": "14.15",
+      "with25Percent": "17.69"
+    },
+    "sixHourEnterprisePlusMisconfiguration": {
+      "hours": 6,
+      "tier": "db-f1-micro",
+      "edition": "ENTERPRISE_PLUS_RISK_SENSITIVITY",
+      "lines": {
+        "ingress_and_sealer_max_one_each": "1.0908",
+        "gateway_old_and_new_instance_billed": "0.8208",
+        "request_billed_throttle_variant_up_to6h": "0.5454",
+        "40000_requests_conservative": "0.0160",
+        "worker_one": "0.2695",
+        "sql_compute": "1.5179",
+        "sql_storage_backup": "0.0173",
+        "nat_upper_ip_2GiB": "0.3840",
+        "archive_kms": "0.7000",
+        "secrets": "0.1000",
+        "fake_host_disk_ip": "3.0000",
+        "build_images": "1.5000",
+        "logs_metrics": "1.5000",
+        "transfer": "2.0000",
+        "temporary_restore_drill": "2.0000"
+      },
+      "grossUsd": "15.46",
+      "with25Percent": "19.33"
+    },
+    "72hMaxOneHighLoadSensitivityOnly": {
+      "hours": 72,
+      "tier": "db-f1-micro",
+      "edition": "ENTERPRISE",
+      "lines": {
+        "ingress_and_sealer_max_one_each": "13.0896",
+        "gateway_old_and_new_instance_billed": "9.8496",
+        "request_billed_throttle_variant_up_to6h": "0.5454",
+        "40000_requests_conservative": "0.0160",
+        "worker_one": "3.2346",
+        "sql_compute": "0.7560",
+        "sql_storage_backup": "0.2071",
+        "nat_upper_ip_2GiB": "3.6180",
+        "archive_kms": "0.7000",
+        "secrets": "0.1000",
+        "fake_host_disk_ip": "3.0000",
+        "build_images": "1.5000",
+        "logs_metrics": "1.5000",
+        "transfer": "2.0000",
+        "temporary_restore_drill": "2.0000"
+      },
+      "grossUsd": "42.12",
+      "with25Percent": "52.65"
+    }
+  },
+  "residualDailyGrossUsd": {
+    "forgottenUnattachedIp": ".24",
+    "forgottenF1Compute": ".252",
+    "forgottenG1Compute": ".84",
+    "disabledSecretVersionMonth": ".06",
+    "kmsActiveVersionMonth": ".06"
+  },
+  "limitations": [
+    "No credit, tax or FX deducted; no billing/account queried",
+    "No hard cap: alerts are notifications; spend-cap eligibility/scope not verified",
+    "Fixed allowances conservatively remain for short session; workload amplification unmeasured",
+    "Enterprise Plus prices are sensitivity inputs requiring SKU revalidation",
+    "Storage, snapshots, backups, WAL, logs, IPs and keys survive compute unless removed",
+    "No claim of Cloud SQL compatibility or connection limit measurement",
+    "72h is sensitivity only, not first-session authorization"
+  ]
+}

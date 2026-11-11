@@ -1,0 +1,18 @@
+{
+  "name": "nukmiris-inc1-local-proof",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": {"node": ">=24 <25"},
+  "scripts": {
+    "test": "node --test --test-concurrency=1 test/*.test.mjs",
+    "test:fault": "node --test --test-concurrency=1 test/fault.test.mjs test/campaign.test.mjs",
+    "test:concurrency": "node --test --test-concurrency=1 test/concurrency.test.mjs",
+    "check": "node scripts/check.mjs",
+    "fence:dry-run": "node ops/dry-run.mjs fence",
+    "teardown:dry-run": "node ops/dry-run.mjs teardown",
+    "probe:print": "node ops/dry-run.mjs probe",
+    "costs": "python3 planning/calculate-costs.py"
+  },
+  "dependencies": {"pg": "8.16.3"}
+}

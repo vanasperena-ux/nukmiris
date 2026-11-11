@@ -1,0 +1,7 @@
+node_modules/
+.runs/
+.terraform/
+*.tfstate*
+*.key
+*.pem
+__pycache__/
