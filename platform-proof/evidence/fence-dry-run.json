@@ -1,0 +1,42 @@
+{
+  "mode": "PRINT_ONLY_NO_CLOUD_EXECUTION",
+  "kind": "fence",
+  "steps": [
+    {
+      "step": 1,
+      "action": "Pin image/schema/policies; stage N+1 inert with unique epoch identity/tag",
+      "evidence": "signed source/image/schema/policy digests; no traffic; no effect authority"
+    },
+    {
+      "step": 2,
+      "action": "Advance durable execution epoch atomically; freeze intake/promotion",
+      "evidence": "transaction commit receipt; original attempt identities; N+1 inert"
+    },
+    {
+      "step": 3,
+      "action": "Route 100% to inert N+1; remove ALL N traffic tags",
+      "evidence": "API results and propagation; traffic-zero is not termination"
+    },
+    {
+      "step": 4,
+      "action": "Independent kill identity denies old-tag egress, removes scoped secrets/decrypt and deletes N",
+      "evidence": "deny-policy receipt; secret/IAM changes; revision deletion receipt; production Meta token fence unresolved; synthetic only"
+    },
+    {
+      "step": 5,
+      "action": "Observe deletion AND zero instances after reporting delay; reconcile canaries/ledger",
+      "evidence": "fresh complete old-scope platform samples; system logs; independent delayed wake; missing/stale => NOT_PROVEN"
+    },
+    {
+      "step": 6,
+      "action": "Preserve may-have-entered attempts UNKNOWN and protect resources",
+      "evidence": "no rearm, new identity, replay or invented outcome; pre-fence bytes may arrive later"
+    },
+    {
+      "step": 7,
+      "action": "Explicitly promote N+1 only after all evidence; otherwise hold inert",
+      "evidence": "recorded decision; rollback prior image at N+2 through same fence, never reactivate old epoch"
+    }
+  ],
+  "approval": "Separate owner provisioning/operations authorization required"
+}

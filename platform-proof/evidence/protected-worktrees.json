@@ -1,0 +1,17 @@
+[
+  {
+    "worktree": "/workspace/nukmiris",
+    "head": "c439586ca512297c589ddd3bc2ae783b37358b37",
+    "status": ""
+  },
+  {
+    "worktree": "/workspace/work/nukmiris-l2-corrections",
+    "head": "50f3a5be4a22cb0fbbaa7887e366e7c4c8db8117",
+    "status": ""
+  },
+  {
+    "worktree": "/workspace/work/nukmiris-milestone-b-review",
+    "head": "23079800b825502cf290c5a61ee32c2e3c256dd6",
+    "status": ""
+  }
+]

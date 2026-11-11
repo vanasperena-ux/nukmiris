@@ -1,0 +1,46 @@
+{
+  "mode": "LOCAL_SYNTHETIC_ONLY",
+  "results": [
+    {
+      "name": "campaign",
+      "records": 4148,
+      "verified": true,
+      "schedules": 1000
+    },
+    {
+      "name": "crash-restart",
+      "records": 0,
+      "verified": true
+    },
+    {
+      "name": "dead-man",
+      "records": 100,
+      "verified": true
+    },
+    {
+      "name": "identity-roles",
+      "records": 5,
+      "verified": true
+    },
+    {
+      "name": "keep-alive-counterexample",
+      "records": 18,
+      "verified": true
+    },
+    {
+      "name": "late-pre-fence-effect",
+      "records": 6,
+      "verified": true
+    },
+    {
+      "name": "lost-commit",
+      "records": 0,
+      "verified": true
+    },
+    {
+      "name": "transport-faults",
+      "records": 20,
+      "verified": true
+    }
+  ]
+}

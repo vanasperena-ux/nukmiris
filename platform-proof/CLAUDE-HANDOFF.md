@@ -14,6 +14,22 @@ cost script/results, operational tools and raw evidence. Source authority:
 ADR Revision3/9redlines/DR-01–12 pins in ARCHITECTURE. Accepted executable
 b4d0be0cb98c7f2b69be318e18b93f4de102c511/tree03d08322… is unchanged.
 
+## Exact tested source and measured results
+
+Branch `implementation/inc1-local-gateway-proof`; [Draft PR20](https://github.com/vanasperena-ux/nukmiris/pull/20).
+Implementation `3204e73c823d7e552c0aacad74294617490465f6`;
+tree `e77226c95b35855b551ae680d0a6488f3cde1d78`.
+Linux Node24.19.0/PostgreSQL17.11 UTC: full22/22, fault8/8, concurrency1/1;
+zero failures/skips in final runs, overlapping suites.1,000 actual schedules per
+full/fault run (same seed repeated), max1 invocation/attempt;20 live and20 killed
+canaries per run. Native Terraform validate:0 errors/warnings. All campaign
+physical-fence classifications NOT_PROVEN; no cloud result is inferred.
+
+An earlier fault repeat at superseded f5ea869 failed during SQL fixture startup.
+Read the original failing log, precise uncertainty and attributed-volume cleanup
+correction in evidence/README.md. The final source adds labeled volume ownership,
+cleanup regression and bounded readiness; no application code changed.
+
 ## Challenge these points
 
 1. MB-03: COMMIT occurs in gateway, one-use continuation only after positive
@@ -53,7 +69,8 @@ Linux Node24 +local Docker/OpenSSL/Python; README has pinned public PG image.
 From platform-proof: `npm ci --ignore-scripts`, `npm run check`, `npm test`,
 `npm run test:fault`, `npm run test:concurrency` (overlapping suites).
 Use `INC1_EVIDENCE_DIR="$PWD/.runs/review" npm test` for new raw evidence;
-`node scripts/verify-evidence.mjs evidence/runs` verifies published ledgers offline.
+Extract the three synthetic archives and run the verifier as documented in
+[evidence/README.md](evidence/README.md) to verify published ledgers offline.
 Terraform1.17.2: init-backend=false +validate only, never plan/apply/destroy.
 No cloud probe execution. Native Windows is not an INC1 acceptance claim.
 

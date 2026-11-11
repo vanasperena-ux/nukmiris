@@ -1,0 +1,50 @@
+
+> nukmiris-inc1-local-proof@0.1.0 test
+> node --test --test-concurrency=1 test/*.test.mjs
+
+✔ campaign: 1000 randomized real SIGSTOP/SIGCONT schedules, all classified (88558.446586ms)
+ℹ completed 100 real suspended/resumed schedules
+ℹ completed 200 real suspended/resumed schedules
+ℹ completed 300 real suspended/resumed schedules
+ℹ completed 400 real suspended/resumed schedules
+ℹ completed 500 real suspended/resumed schedules
+ℹ completed 600 real suspended/resumed schedules
+ℹ completed 700 real suspended/resumed schedules
+ℹ completed 800 real suspended/resumed schedules
+ℹ completed 900 real suspended/resumed schedules
+ℹ completed 1000 real suspended/resumed schedules
+✔ concurrency: one invocation for 32 same-attempt callers, replay and distinct operations (4016.679449ms)
+✔ faults: lost COMMIT acknowledgement cannot recreate a permit (4485.503745ms)
+✔ faults: provider response loss, rejection, TLS stall and deadline stay held without resend (3400.923018ms)
+✔ faults: crash after COMMIT, restart and replay keep ENTERED/UNKNOWN non-resumable (3673.183499ms)
+✔ faults: pre-exit accepted request can apply after completed local termination (2823.837114ms)
+✔ faults: scope binding, immutable operation and role separation (2959.398515ms)
+✔ counterexample: unsafe keep-alive sends again on an old connection; corrected gateway never does (3327.616634ms)
+✔ dead-man: 20 independently awakened stopped processes; silence is not death (9302.936962ms)
+▶ fixture: labeled independent SQL volume is removed after the fixture closes
+  ✔ create and use disposable volume (4034.04282ms)
+✔ fixture: labeled independent SQL volume is removed after the fixture closes (4048.952268ms)
+✔ permission: consume once in gateway continuation; durable row/replay is never a ticket (3969.668588ms)
+✔ permission: gateway cannot plan/rearm; invalid binding fails UNKNOWN with no network (4245.218449ms)
+✔ permission: both authority/COMMIT race orders serialize; retirement is not physical fencing (3101.63317ms)
+✔ plan pins: Enterprise/shared-core, region, limits, identity/epoch, no retained/final backups (6.740478ms)
+✔ plan-only guard: all resources depend on impossible apply gate; no live token or auto-apply workflow (1.379434ms)
+✔ operational tools are print-only and reject execution; exactly seven fence steps (115.549899ms)
+✔ additive offline calculator reproduces prior evidence and six-hour/max-one/G1 scenarios (49.205627ms)
+✔ isolation: literal loopback, isolated database names and roles only (0.92418ms)
+✔ ledger: modify, reorder, truncate, rehash and partial-record tampering fail against independent checkpoint (17.983085ms)
+✔ classifier: pre-fence late arrival differs from post-fence initiation (0.374925ms)
+✔ classifier: absent, stale, wrong-scope, missing deletion and heartbeat-only evidence fail closed (0.211564ms)
+ℹ tests 22
+ℹ suites 0
+ℹ pass 22
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 138662.038014
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.2
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.2
+npm notice To update run: npm install -g npm@12.2.2
+npm notice
