@@ -12,8 +12,8 @@ for (const name of await readdir(root)) {
   const records = text.trim() ? text.trimEnd().split("\n").map(JSON.parse) : [];
   verifyRecords(records, head);
   if (
-    result.evidenceScope !== "B1A_LOCAL_SYNTHETIC" ||
-    !/^[a-f0-9]{40}$/.test(result.sourceSha)
+    result.evidenceScope !== "B1A_LOCAL_SYNTHETIC_PREPARATION" ||
+    !/^[a-f0-9]{40}$/.test(result.testedSource)
   )
     throw Error("new_source_pin_required");
   if (
@@ -81,4 +81,10 @@ for (const name of await readdir(root)) {
     cloudContainmentProven: false,
   });
 }
-console.log(JSON.stringify({ scope: "B1A_LOCAL_SYNTHETIC", results }, null, 2));
+console.log(
+  JSON.stringify(
+    { scope: "B1A_LOCAL_SYNTHETIC_PREPARATION", results },
+    null,
+    2,
+  ),
+);
