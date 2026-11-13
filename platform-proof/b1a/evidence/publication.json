@@ -1,0 +1,79 @@
+{
+  "schema": "nukmiris.b1a.source-publication/v1",
+  "scope": "LOCAL_SYNTHETIC_SOURCE_ONLY",
+  "pr": "https://github.com/vanasperena-ux/nukmiris/pull/21",
+  "testedSource": "38ad02abbb0b7353f6768ff67f74542a4df0dedb",
+  "testedTree": "9192e00e97da478608d71b4421513725b7a7196c",
+  "base": "2ca5cf215b68f187bfa48b42aaa041bbe93cf56d",
+  "originalInc1Source": "3204e73c823d7e552c0aacad74294617490465f6",
+  "originalInc1Tree": "e77226c95b35855b551ae680d0a6488f3cde1d78",
+  "acceptedExecutable": "b4d0be0cb98c7f2b69be318e18b93f4de102c511",
+  "acceptedTree": "03d08322e27d9d54485fa887b482743fe076556b",
+  "publishedAt": "2026-11-13T21:13:18.766348+00:00",
+  "results": {
+    "full": {
+      "tests": 62,
+      "pass": 62,
+      "fail": 0,
+      "skipped": 0,
+      "cancelled": 0
+    },
+    "fault": {
+      "tests": 29,
+      "pass": 29,
+      "fail": 0,
+      "skipped": 0,
+      "cancelled": 0
+    },
+    "concurrency": {
+      "tests": 8,
+      "pass": 8,
+      "fail": 0,
+      "skipped": 0,
+      "cancelled": 0
+    }
+  },
+  "suiteCountsOverlap": true,
+  "localCampaignPerFullOrFault": {
+    "originalInstrumented": 1000,
+    "newInstrumented": 1080,
+    "newCells": 54,
+    "perCell": 20,
+    "asynchronousStops": 400,
+    "directKills": 130,
+    "canaryTrials": 20
+  },
+  "nativeTerraform": "VALID true; 0 errors; 0 warnings; never plan/apply/destroy",
+  "cloudResourcesCreated": 0,
+  "realExternalProviderCalls": 0,
+  "sourceIndependentlyReviewed": false,
+  "nextVerdictRequested": [
+    "GO FOR B1a SOURCE ACCEPTANCE",
+    "GO WITH CONDITIONS",
+    "NO-GO"
+  ],
+  "provisioningAuthorized": false,
+  "applyGuard": "RETAINED_IMPOSSIBLE",
+  "deploymentReadiness": "BLOCKED: owner/independent source review, live bootstrap/identity/observation/custody adapter gates, actual cloud tests and exact resource authorization",
+  "earlierFailures": {
+    "1557242Full": "60 pass /1 fail: cross-product child_message_timeout. Overlapped a development run with confirmed ENOSPC; timeout root cause itself remains unconfirmed. Failed campaign raw trace was not exported before cleanup; log retained. Not used as passing evidence.",
+    "recoveryDevelopment": "Fixture startup ENOSPC confirmed from captured PostgreSQL logs before removal; not an application assertion failure. Unpinned development source; never a source-acceptance run.",
+    "originalINC1FixtureFailure": "Still unresolved; new ENOSPC evidence does not establish its historical cause."
+  },
+  "archiveTransport": {
+    "largeArchives": "lossless 100000-byte ordered parts; original SHA256 and size in archive-assembly.json",
+    "smallArchive": "unsplit",
+    "runtimeSourceChanged": false
+  },
+  "privacyAudit": {
+    "report": "privacy-audit.json",
+    "allArchiveFilesInspected": 150,
+    "payloads": [
+      "{\"synthetic\": true}"
+    ],
+    "forbiddenCredentialOrCustomerKeys": 0,
+    "privateKeyAndProviderTokenPatterns": 0,
+    "independentlyReviewed": false
+  },
+  "artifactPublicationStatus": "TEXT_EVIDENCE_READY; RAW_ARCHIVE_PARTS_PENDING"
+}

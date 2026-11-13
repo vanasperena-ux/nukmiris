@@ -1,0 +1,52 @@
+{
+  "mode": "PRINT_ONLY_NOT_AN_API_REQUEST",
+  "method": "POST",
+  "url": "https://billingbudgets.googleapis.com/v1/billingAccounts/OWNER_AUTHORIZED_ACCOUNT_ID/budgets",
+  "body": {
+    "displayName": "B1a runtime Cloud Run spend cap ONLY",
+    "budgetFilter": {
+      "projects": [
+        "projects/OWNER_AUTHORIZED_RUNTIME_NUMBER"
+      ],
+      "services": [
+        "services/152E-C115-5142"
+      ],
+      "creditTypesTreatment": "EXCLUDE_ALL_CREDITS",
+      "calendarPeriod": "MONTH",
+      "ownershipScope": "ALL_USERS"
+    },
+    "amount": {
+      "specifiedAmount": {
+        "currencyCode": "OWNER_VERIFIED_ACCOUNT_CURRENCY",
+        "units": "OWNER_APPROVED_CONVERSION_OF_ALLOCATION"
+      }
+    },
+    "thresholdRules": [
+      {
+        "thresholdPercent": 0.5,
+        "spendBasis": "CURRENT_SPEND"
+      },
+      {
+        "thresholdPercent": 0.8,
+        "spendBasis": "CURRENT_SPEND"
+      },
+      {
+        "thresholdPercent": 1,
+        "spendBasis": "CURRENT_SPEND"
+      }
+    ],
+    "notificationsRule": {
+      "enableProjectLevelRecipients": true
+    },
+    "spendCap": {
+      "inputState": "CONFIGURED"
+    }
+  },
+  "limitations": [
+    "Account/API/Free Trial eligibility unverified; may be unavailable",
+    "Delayed, service/project scoped; SQL, NAT, LB, VM, storage and inflight work continue billing",
+    "USD20 is proposed gross TOTAL allocation, not 20MXN; owner must verify currency/FX and preexisting monthly spend",
+    "ENFORCED or reset CONFIGURED/AWAITING_NEXT_PERIOD durably holds dispatch; independent explicit promotion required",
+    "Separate gross alert budget 10/15/18/20 USD equivalent; alerts are not hard caps"
+  ]
+}

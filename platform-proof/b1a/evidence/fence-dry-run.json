@@ -1,0 +1,238 @@
+{
+  "mode": "PRINT_ONLY_B1A_NOT_AUTHORIZED",
+  "inventoryDigest": "e79debbf1eb9c2e3f78f3e7edaca7fd6b7f13c9e125399d40ab89f9536d475ed",
+  "serviceModel": "one service, unique revision/SA/tag per epoch",
+  "preconditions": [
+    "Separate source acceptance AND inventory-specific resource authorization",
+    "Named supervisor, kill, cleanup, billing and backup humans",
+    "Approved image digest replaces all-zero placeholder; SQL schema/policy digests pinned",
+    "Independent observer trust pins; measured clock and reporting delay; owner-approved fence threshold",
+    "Candidate dispatch disabled in SQL; no credentials or live APIs used by this tool"
+  ],
+  "steps": [
+    {
+      "step": 1,
+      "title": "Stage candidate inert; never route by latest after bootstrap",
+      "commands": [
+        [
+          "gcloud",
+          "run",
+          "deploy",
+          "nmb1a-gateway",
+          "--region=us-central1",
+          "--image=us-central1-docker.pkg.dev/nmb1a-plan-run/b1a/harness@sha256:0000000000000000000000000000000000000000000000000000000000000000",
+          "--revision-suffix=e000002-r1",
+          "--service-account=nmb1a-gw-e000002@nmb1a-plan-run.iam.gserviceaccount.com",
+          "--network=nmb1a-run",
+          "--subnet=nmb1a-gateway",
+          "--network-tags=nmb1a-e000002",
+          "--vpc-egress=all-traffic",
+          "--no-traffic",
+          "--min=1",
+          "--max=2",
+          "--min-instances=1",
+          "--max-instances=1",
+          "--no-cpu-throttling",
+          "--concurrency=1",
+          "--timeout=15s",
+          "--update-env-vars=B1A_MODE=INERT_UNCONFIGURED,DEPLOYMENT_EPOCH=2",
+          "--project=nmb1a-plan-run",
+          "--impersonate-service-account=nmb1a-deployer@nmb1a-plan-run.iam.gserviceaccount.com",
+          "--quiet"
+        ]
+      ],
+      "evidence": [
+        "Assert actual returned revision exactly nmb1a-gateway-e000002-r1",
+        "Snapshot effective ingress/all-traffic/tag/SA/image/limits; mismatch aborts",
+        "Runtime configuration/bootstrap and image approval remain review gates; command intentionally stages inert"
+      ],
+      "onFailure": "STOP; keep dispatch disabled; retain original identities and all evidence; independent kill operator investigates. Never auto-promote."
+    },
+    {
+      "step": 2,
+      "title": "Freeze and advance authority in one SQL transaction",
+      "commands": [
+        [
+          "psql",
+          "service=B1A_CONTROLLER_VERIFY_FULL",
+          "--set=ON_ERROR_STOP=1",
+          "--file=platform-proof/b1a/ops/advance.sql"
+        ]
+      ],
+      "evidence": [
+        "Bind SQL variables session UUID, oldEpoch=1,newEpoch=2,newRevision=nmb1a-gateway-e000002-r1",
+        "Read committed control row: epoch 2, dispatch false, generation incremented; no effect permit in worker"
+      ],
+      "onFailure": "STOP; keep dispatch disabled; retain original identities and all evidence; independent kill operator investigates. Never auto-promote."
+    },
+    {
+      "step": 3,
+      "title": "Move all traffic to inert candidate; remove all old traffic tags",
+      "commands": [
+        [
+          "gcloud",
+          "run",
+          "services",
+          "update-traffic",
+          "nmb1a-gateway",
+          "--region=us-central1",
+          "--to-revisions=nmb1a-gateway-e000002-r1=100",
+          "--clear-tags",
+          "--project=nmb1a-plan-run",
+          "--impersonate-service-account=nmb1a-kill@nmb1a-plan-run.iam.gserviceaccount.com",
+          "--quiet"
+        ]
+      ],
+      "evidence": [
+        "Exact service traffic/tag export; 0% old traffic is NOT termination; old warm/min instances still hazardous"
+      ],
+      "onFailure": "STOP; keep dispatch disabled; retain original identities and all evidence; independent kill operator investigates. Never auto-promote."
+    },
+    {
+      "step": 4,
+      "title": "Independent kill: deny old egress, remove credentials/decrypt, delete old revision",
+      "commands": [
+        [
+          "gcloud",
+          "compute",
+          "firewall-rules",
+          "update",
+          "nmb1a-e000001-deny-v4",
+          "--no-disabled",
+          "--project=nmb1a-plan-run",
+          "--impersonate-service-account=nmb1a-kill@nmb1a-plan-run.iam.gserviceaccount.com",
+          "--quiet"
+        ],
+        [
+          "gcloud",
+          "compute",
+          "firewall-rules",
+          "update",
+          "nmb1a-e000001-deny-v6",
+          "--no-disabled",
+          "--project=nmb1a-plan-run",
+          "--impersonate-service-account=nmb1a-kill@nmb1a-plan-run.iam.gserviceaccount.com",
+          "--quiet"
+        ],
+        [
+          "gcloud",
+          "secrets",
+          "remove-iam-policy-binding",
+          "nmb1a-effect-e000001",
+          "--member=serviceAccount:nmb1a-gw-e000001@nmb1a-plan-run.iam.gserviceaccount.com",
+          "--role=roles/secretmanager.secretAccessor",
+          "--project=nmb1a-plan-run",
+          "--impersonate-service-account=nmb1a-kill@nmb1a-plan-run.iam.gserviceaccount.com",
+          "--quiet"
+        ],
+        [
+          "gcloud",
+          "kms",
+          "keys",
+          "remove-iam-policy-binding",
+          "nmb1a-effect",
+          "--keyring=nmb1a-effect",
+          "--location=us-central1",
+          "--member=serviceAccount:nmb1a-gw-e000001@nmb1a-plan-run.iam.gserviceaccount.com",
+          "--role=roles/cloudkms.cryptoKeyDecrypter",
+          "--project=nmb1a-plan-run",
+          "--impersonate-service-account=nmb1a-kill@nmb1a-plan-run.iam.gserviceaccount.com",
+          "--quiet"
+        ],
+        [
+          "gcloud",
+          "run",
+          "revisions",
+          "delete",
+          "nmb1a-gateway-e000001-r1",
+          "--region=us-central1",
+          "--project=nmb1a-plan-run",
+          "--impersonate-service-account=nmb1a-kill@nmb1a-plan-run.iam.gserviceaccount.com",
+          "--quiet"
+        ]
+      ],
+      "evidence": [
+        "Independent principal receipts; verify old priority100 IPv4/IPv6 deny takes precedence1000",
+        "Cached credentials are not revoked by IAM changes; network + deletion + canary evidence mandatory",
+        "Delete receipt plus system logs, never presume all processes gone"
+      ],
+      "onFailure": "STOP; keep dispatch disabled; retain original identities and all evidence; independent kill operator investigates. Never auto-promote."
+    },
+    {
+      "step": 5,
+      "title": "Independently observe platform, network, clocks, delayed canaries and full fake ledger",
+      "commands": [
+        [
+          "gcloud",
+          "run",
+          "revisions",
+          "describe",
+          "nmb1a-gateway-e000001-r1",
+          "--region=us-central1",
+          "--format=json",
+          "--project=nmb1a-plan-run",
+          "--impersonate-service-account=nmb1a-observer@nmb1a-plan-custody.iam.gserviceaccount.com",
+          "--quiet"
+        ],
+        [
+          "gcloud",
+          "logging",
+          "read",
+          "resource.type=\"cloud_run_revision\" AND resource.labels.revision_name=\"nmb1a-gateway-e000001-r1\"",
+          "--format=json",
+          "--project=nmb1a-plan-run",
+          "--impersonate-service-account=nmb1a-observer@nmb1a-plan-custody.iam.gserviceaccount.com",
+          "--quiet"
+        ],
+        [
+          "PRINT_ONLY_HTTPS_GET",
+          "https://monitoring.googleapis.com/v3/projects/nmb1a-plan-run/timeSeries",
+          "filter=metric.type=\"run.googleapis.com/container/instance_count\" AND resource.labels.service_name=\"nmb1a-gateway\" AND resource.labels.revision_name=\"nmb1a-gateway-e000001-r1\"",
+          "start/end=session fence window; aggregation/distribution interpreted by independent observer"
+        ]
+      ],
+      "evidence": [
+        "404 deletion is only one input; missing Monitoring series is NOT a zero sample",
+        "Signed independent FENCE/ACTIVITY/CLOCK/CANARY/LEDGER envelopes; full chain/head; explicit uncertainty",
+        ">=20 canaries independently scheduled after deletion+reporting window; measured wake tail; provider ledger observed past every wake tail",
+        "No actual Google evidence adapter executed locally; source contract cannot manufacture Google facts"
+      ],
+      "onFailure": "STOP; keep dispatch disabled; retain original identities and all evidence; independent kill operator investigates. Never auto-promote."
+    },
+    {
+      "step": 6,
+      "title": "Reconcile original attempts without resending uncertain work",
+      "commands": [
+        [
+          "psql",
+          "service=B1A_CONTROLLER_VERIFY_FULL",
+          "--set=ON_ERROR_STOP=1",
+          "--file=platform-proof/b1a/ops/reconcile.sql"
+        ]
+      ],
+      "evidence": [
+        "May-have-entered → UNKNOWN protected; APPLIED stays; ARMED may be explicitly replayed only original identity and matching authority",
+        "No deleted history, auto rearm, replacement identity or invented external outcome"
+      ],
+      "onFailure": "STOP; keep dispatch disabled; retain original identities and all evidence; independent kill operator investigates. Never auto-promote."
+    },
+    {
+      "step": 7,
+      "title": "Explicit compare-and-swap promotion only after independent complete evidence",
+      "commands": [
+        [
+          "PRINT_ONLY_NODE_API",
+          "SessionController.promote(authenticatedBundle)",
+          "session from approved inventory; bundle must bind current session/scope and retired epoch/revision; generation CAS"
+        ]
+      ],
+      "evidence": [
+        "VIOLATION blocks; stale/missing/conflicting => HOLD/NOT_PROVEN",
+        "Record signed decision + evidence digest; billing/session reset never automatically enables",
+        "Rollback prior image must be epoch3/new SA/tag/revision through entire fence; never reactivate epoch1"
+      ],
+      "onFailure": "STOP; keep dispatch disabled; retain original identities and all evidence; independent kill operator investigates. Never auto-promote."
+    }
+  ],
+  "abort": "Any incomplete evidence leaves dispatch disabled; freeze old/new work, invoke independent kill, preserve custody. Watchdog expiry never promotes."
+}

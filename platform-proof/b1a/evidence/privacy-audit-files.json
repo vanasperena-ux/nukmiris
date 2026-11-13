@@ -1,0 +1,1052 @@
+[
+  {
+    "archive": "b1a38ad-runs-full.tar.gz",
+    "path": "authority-races/provider.jsonl",
+    "bytes": 2218,
+    "records": 5,
+    "sha256": "2d050b8dfbef0857aca79154a1b8efdeddacd19fd25dfd704b43553bef7049aa"
+  },
+  {
+    "archive": "b1a38ad-runs-full.tar.gz",
+    "path": "authority-races/checkpoint.json",
+    "bytes": 98,
+    "records": 1,
+    "sha256": "11fffecfcca8a8f31e60cc94158c8cf29abebdef2cf2d3d723250b58bf27499e"
+  },
+  {
+    "archive": "b1a38ad-runs-full.tar.gz",
+    "path": "authority-races/result.json",
+    "bytes": 397,
+    "records": 1,
+    "sha256": "2d7fe06e42d5abfe3b0a7afb0faae12f79bb4455fef3ed7634f14f6ed2fdf8db"
+  },
+  {
+    "archive": "b1a38ad-runs-full.tar.gz",
+    "path": "b1a-asynchronous-v1/provider.jsonl",
+    "bytes": 657732,
+    "records": 1501,
+    "sha256": "75129f800de1e83260562cd1feee7c40ab0cb6350521a74d8b20f5718f2e9453"
+  },
+  {
+    "archive": "b1a38ad-runs-full.tar.gz",
+    "path": "b1a-asynchronous-v1/checkpoint.json",
+    "bytes": 101,
+    "records": 1,
+    "sha256": "8944363e2d3e7689242a54deb9907cd5dd1213e669240d464a94638a7d6cc489"
+  },
+  {
+    "archive": "b1a38ad-runs-full.tar.gz",
+    "path": "b1a-asynchronous-v1/result.json",
+    "bytes": 1812080,
+    "records": 1,
+    "sha256": "5dc931ea4c1c40c87c49623ddb086cf6833a9c3ee8046a7779e187f8ac172052"
+  },
+  {
+    "archive": "b1a38ad-runs-full.tar.gz",
+    "path": "b1a-authenticated-provider/provider.jsonl",
+    "bytes": 4276,
+    "records": 9,
+    "sha256": "72561e72ff23f5137d9da8d8986e551cf1c2948d1862d96bf8038c0699512ebc"
+  },
+  {
+    "archive": "b1a38ad-runs-full.tar.gz",
+    "path": "b1a-authenticated-provider/checkpoint.json",
+    "bytes": 98,
+    "records": 1,
+    "sha256": "f671eff66e751d9bd30a6cfa6ced477412e46da07f4720ffeb477e5a146bafe9"
+  },
+  {
+    "archive": "b1a38ad-runs-full.tar.gz",
+    "path": "b1a-authenticated-provider/result.json",
+    "bytes": 446,
+    "records": 1,
+    "sha256": "8c093efd91960f6ecd4bece344447fc5319002a9f3ac236f0fad5d26c0751f46"
+  },
+  {
+    "archive": "b1a38ad-runs-full.tar.gz",
+    "path": "b1a-cloud-profile-pure/provider.jsonl",
+    "bytes": 0,
+    "records": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "archive": "b1a38ad-runs-full.tar.gz",
+    "path": "b1a-cloud-profile-pure/checkpoint.json",
+    "bytes": 98,
+    "records": 1,
+    "sha256": "8c3c1d142cbde961902c8dea95fa96b2d471900ca2f9dce016e4ac4a14ae67ee"
+  },
+  {
+    "archive": "b1a38ad-runs-full.tar.gz",
+    "path": "b1a-cloud-profile-pure/result.json",
+    "bytes": 393,
+    "records": 1,
+    "sha256": "877de6abb937fdd1a5491b738f421c764bf67addd7e95c3d0c1350be6b4c1737"
+  },
+  {
+    "archive": "b1a38ad-runs-full.tar.gz",
+    "path": "b1a-commit-ack_lost/provider.jsonl",
+    "bytes": 0,
+    "records": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "archive": "b1a38ad-runs-full.tar.gz",
+    "path": "b1a-commit-ack_lost/checkpoint.json",
+    "bytes": 98,
+    "records": 1,
+    "sha256": "8c3c1d142cbde961902c8dea95fa96b2d471900ca2f9dce016e4ac4a14ae67ee"
+  },
+  {
+    "archive": "b1a38ad-runs-full.tar.gz",
+    "path": "b1a-commit-ack_lost/result.json",
+    "bytes": 436,
+    "records": 1,
+    "sha256": "b5fd1c98001224c45411a4903e26d8328b6f45aaa595ba2afe9dd0fcd8c236b1"
+  },
+  {
+    "archive": "b1a38ad-runs-full.tar.gz",
+    "path": "b1a-commit-before_server/provider.jsonl",
+    "bytes": 2218,
+    "records": 5,
+    "sha256": "20378d24499ca3ef10dd81af21390242fd97e0af6978cae6803e11b7d1d98985"
+  },
+  {
+    "archive": "b1a38ad-runs-full.tar.gz",
+    "path": "b1a-commit-before_server/checkpoint.json",
+    "bytes": 98,
+    "records": 1,
+    "sha256": "2411aafcfbd4b4b856e6e3d7dc64fb6dcc3f318d9946dc828dc4aae3f5997637"
+  },
+  {
+    "archive": "b1a38ad-runs-full.tar.gz",
+    "path": "b1a-commit-before_server/result.json",
+    "bytes": 439,
+    "records": 1,
+    "sha256": "1d77548b9446892767dbc284a897d59151f5276e01536ed73d6e9c8d37fe2f62"
+  },
+  {
+    "archive": "b1a38ad-runs-full.tar.gz",
+    "path": "b1a-commit-rollback_tag/provider.jsonl",
+    "bytes": 2218,
+    "records": 5,
+    "sha256": "70500178cb1b007bc84f4649e9d3f2fd71a258314ce988fb7c2191ca38bf053c"
+  },
+  {
+    "archive": "b1a38ad-runs-full.tar.gz",
+    "path": "b1a-commit-rollback_tag/checkpoint.json",
+    "bytes": 98,
+    "records": 1,
+    "sha256": "5ab00695088b245400b08808edc2fb862747387192c06e463e13994060d7dad9"
+  },
+  {
+    "archive": "b1a38ad-runs-full.tar.gz",
+    "path": "b1a-commit-rollback_tag/result.json",
+    "bytes": 438,
+    "records": 1,
+    "sha256": "b4c89453f76f69a68c21e1c79b3af1e06a4ef5be1039adca0d89c87daca8c9c3"
+  },
+  {
+    "archive": "b1a38ad-runs-full.tar.gz",
+    "path": "b1a-cross-product-v1/provider.jsonl",
+    "bytes": 1700293,
+    "records": 3930,
+    "sha256": "f5c0a1ceeff15fefdb7b51fd14b007a7b8a6ae689d127bf1a18a9396a21635c2"
+  },
+  {
+    "archive": "b1a38ad-runs-full.tar.gz",
+    "path": "b1a-cross-product-v1/checkpoint.json",
+    "bytes": 101,
+    "records": 1,
+    "sha256": "3300e012ba90e48417e415a9afdabf72db1c20e8d90f7b71f5a436ba3be473b5"
+  },
+  {
+    "archive": "b1a38ad-runs-full.tar.gz",
+    "path": "b1a-cross-product-v1/result.json",
+    "bytes": 3664086,
+    "records": 1,
+    "sha256": "124b013640a82f9731212ea711050f359578a66ff0d35d6c9d2d9567d213e795"
+  },
+  {
+    "archive": "b1a38ad-runs-full.tar.gz",
+    "path": "b1a-direct-kill/provider.jsonl",
+    "bytes": 0,
+    "records": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "archive": "b1a38ad-runs-full.tar.gz",
+    "path": "b1a-direct-kill/checkpoint.json",
+    "bytes": 98,
+    "records": 1,
+    "sha256": "8c3c1d142cbde961902c8dea95fa96b2d471900ca2f9dce016e4ac4a14ae67ee"
+  },
+  {
+    "archive": "b1a38ad-runs-full.tar.gz",
+    "path": "b1a-direct-kill/result.json",
+    "bytes": 619,
+    "records": 1,
+    "sha256": "2cd2c5bcc66db6ae7b30dbb33f1bca65474bddefbf58290f4f5536f0fe61ad8b"
+  },
+  {
+    "archive": "b1a38ad-runs-full.tar.gz",
+    "path": "b1a-native-kill-classification/provider.jsonl",
+    "bytes": 2754,
+    "records": 6,
+    "sha256": "2a68ae6a950fabb9aa1e512d4f3e39081e23256209066ea78f6c7765d8a17eca"
+  },
+  {
+    "archive": "b1a38ad-runs-full.tar.gz",
+    "path": "b1a-native-kill-classification/checkpoint.json",
+    "bytes": 98,
+    "records": 1,
+    "sha256": "d99367cd4cee614cfc233c3ed3c696d6b8c01c05ac17a1dbd8532987962aac53"
+  },
+  {
+    "archive": "b1a38ad-runs-full.tar.gz",
+    "path": "b1a-native-kill-classification/result.json",
+    "bytes": 2844,
+    "records": 1,
+    "sha256": "f65090fafd28683acfcfb3f7b8edbfa7b8f79945f673bdf9d4bb075feb546a94"
+  },
+  {
+    "archive": "b1a38ad-runs-full.tar.gz",
+    "path": "b1a-native-sql-tls/provider.jsonl",
+    "bytes": 0,
+    "records": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "archive": "b1a38ad-runs-full.tar.gz",
+    "path": "b1a-native-sql-tls/checkpoint.json",
+    "bytes": 98,
+    "records": 1,
+    "sha256": "8c3c1d142cbde961902c8dea95fa96b2d471900ca2f9dce016e4ac4a14ae67ee"
+  },
+  {
+    "archive": "b1a38ad-runs-full.tar.gz",
+    "path": "b1a-native-sql-tls/result.json",
+    "bytes": 437,
+    "records": 1,
+    "sha256": "7c62a59ccc6555d2be19a1df280aabaace9e4c6143a6316e7ba3e6bd02950c9d"
+  },
+  {
+    "archive": "b1a38ad-runs-full.tar.gz",
+    "path": "b1a-proof-bad_epoch/provider.jsonl",
+    "bytes": 2218,
+    "records": 5,
+    "sha256": "26fed457966eb86f02f4a8ec343ae136f900b0450202d0936ad237357516d3dc"
+  },
+  {
+    "archive": "b1a38ad-runs-full.tar.gz",
+    "path": "b1a-proof-bad_epoch/checkpoint.json",
+    "bytes": 98,
+    "records": 1,
+    "sha256": "5af42e8eee23673694aa9fe8be8cfb8bacb4057c9191e1b5eba2a4eca211f8a7"
+  },
+  {
+    "archive": "b1a38ad-runs-full.tar.gz",
+    "path": "b1a-proof-bad_epoch/result.json",
+    "bytes": 349,
+    "records": 1,
+    "sha256": "6503b91e28210ad2c1485cb435ac197c5fff25a3e32b9fde1b14c3dfbe657b3f"
+  },
+  {
+    "archive": "b1a38ad-runs-full.tar.gz",
+    "path": "b1a-proof-bad_revision/provider.jsonl",
+    "bytes": 2218,
+    "records": 5,
+    "sha256": "7265ed3ebb82dc762947145055c62ec4733a1edef9f98fc5968cb5ec21c0b99d"
+  },
+  {
+    "archive": "b1a38ad-runs-full.tar.gz",
+    "path": "b1a-proof-bad_revision/checkpoint.json",
+    "bytes": 98,
+    "records": 1,
+    "sha256": "62af4092b3bc94e4ec2ac6f0d957ae10358b959312b0b8729fe602121eaff4ec"
+  },
+  {
+    "archive": "b1a38ad-runs-full.tar.gz",
+    "path": "b1a-proof-bad_revision/result.json",
+    "bytes": 352,
+    "records": 1,
+    "sha256": "5f420de8c9078d8d2ddf962aaa76398b1c2a54378d3adbf1865f12a2087b96f2"
+  },
+  {
+    "archive": "b1a38ad-runs-full.tar.gz",
+    "path": "b1a-retired-recovery/provider.jsonl",
+    "bytes": 0,
+    "records": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "archive": "b1a38ad-runs-full.tar.gz",
+    "path": "b1a-retired-recovery/checkpoint.json",
+    "bytes": 98,
+    "records": 1,
+    "sha256": "8c3c1d142cbde961902c8dea95fa96b2d471900ca2f9dce016e4ac4a14ae67ee"
+  },
+  {
+    "archive": "b1a38ad-runs-full.tar.gz",
+    "path": "b1a-retired-recovery/result.json",
+    "bytes": 427,
+    "records": 1,
+    "sha256": "017275d77e0aa941f00c656cf0a390350fa7af2ad6b6e8fd7b8a5faed2ffe945"
+  },
+  {
+    "archive": "b1a38ad-runs-full.tar.gz",
+    "path": "b1a-sealer-ack/provider.jsonl",
+    "bytes": 0,
+    "records": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "archive": "b1a38ad-runs-full.tar.gz",
+    "path": "b1a-sealer-ack/checkpoint.json",
+    "bytes": 98,
+    "records": 1,
+    "sha256": "8c3c1d142cbde961902c8dea95fa96b2d471900ca2f9dce016e4ac4a14ae67ee"
+  },
+  {
+    "archive": "b1a38ad-runs-full.tar.gz",
+    "path": "b1a-sealer-ack/result.json",
+    "bytes": 437,
+    "records": 1,
+    "sha256": "b08559d8eda0a8d7d8066ba656d42d914dbfaf987849cae59c7f70cfe22e1e87"
+  },
+  {
+    "archive": "b1a38ad-runs-full.tar.gz",
+    "path": "b1a-session-budget-hold/provider.jsonl",
+    "bytes": 2218,
+    "records": 5,
+    "sha256": "c1ac27ebf5cc285ed863f5fa6de85c9715ca56c46dd8eea61b76bdc3c89f99d9"
+  },
+  {
+    "archive": "b1a38ad-runs-full.tar.gz",
+    "path": "b1a-session-budget-hold/checkpoint.json",
+    "bytes": 98,
+    "records": 1,
+    "sha256": "fa306570e756f20923c4712c4a8c947183031dbb79436407b804af9d27963cf5"
+  },
+  {
+    "archive": "b1a38ad-runs-full.tar.gz",
+    "path": "b1a-session-budget-hold/result.json",
+    "bytes": 751,
+    "records": 1,
+    "sha256": "8c32b517ea02c7b51a1a49c39190309b5d3351c95a0899dd3cb400aa61b6727c"
+  },
+  {
+    "archive": "b1a38ad-runs-full.tar.gz",
+    "path": "campaign/provider.jsonl",
+    "bytes": 1835666,
+    "records": 4147,
+    "sha256": "c81c86868fed5401a4587bc03e5265235b7e7b8db8d8770431dd7dfa1424e0f8"
+  },
+  {
+    "archive": "b1a38ad-runs-full.tar.gz",
+    "path": "campaign/checkpoint.json",
+    "bytes": 101,
+    "records": 1,
+    "sha256": "a632f32ba4ee9f2b2e348e0a9b349290ed797aa686a76837f763e187b7dda93a"
+  },
+  {
+    "archive": "b1a38ad-runs-full.tar.gz",
+    "path": "campaign/result.json",
+    "bytes": 3537851,
+    "records": 1,
+    "sha256": "e7bc1037a782a0016fc4c4aa0218868fdfa2204c99d3135e9df6164fea12f8bd"
+  },
+  {
+    "archive": "b1a38ad-runs-full.tar.gz",
+    "path": "concurrency/provider.jsonl",
+    "bytes": 19998,
+    "records": 45,
+    "sha256": "74584bc47be7194bdfe9a9478b2605cab3ce1fc7c337266011dd413e3bfe38a7"
+  },
+  {
+    "archive": "b1a38ad-runs-full.tar.gz",
+    "path": "concurrency/checkpoint.json",
+    "bytes": 99,
+    "records": 1,
+    "sha256": "11be150b9188ce26011085e0875750e10fdfb706832b921babcba44a979b531a"
+  },
+  {
+    "archive": "b1a38ad-runs-full.tar.gz",
+    "path": "concurrency/result.json",
+    "bytes": 3480,
+    "records": 1,
+    "sha256": "0b4e4c84b18541788f1b8d234f899c4f6302b8bd6bd039efda6550e9bb0053e2"
+  },
+  {
+    "archive": "b1a38ad-runs-full.tar.gz",
+    "path": "crash-restart/provider.jsonl",
+    "bytes": 0,
+    "records": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "archive": "b1a38ad-runs-full.tar.gz",
+    "path": "crash-restart/checkpoint.json",
+    "bytes": 98,
+    "records": 1,
+    "sha256": "8c3c1d142cbde961902c8dea95fa96b2d471900ca2f9dce016e4ac4a14ae67ee"
+  },
+  {
+    "archive": "b1a38ad-runs-full.tar.gz",
+    "path": "crash-restart/result.json",
+    "bytes": 304,
+    "records": 1,
+    "sha256": "002b5442fcdd9e8d676c53add6ff9cbd6c876c02bffbc0707d3d732476ee04b7"
+  },
+  {
+    "archive": "b1a38ad-runs-full.tar.gz",
+    "path": "dead-man/provider.jsonl",
+    "bytes": 44452,
+    "records": 100,
+    "sha256": "545c170b158c7eba1d1d5b600823af242ad25f9850c22073927d733dcee1113f"
+  },
+  {
+    "archive": "b1a38ad-runs-full.tar.gz",
+    "path": "dead-man/checkpoint.json",
+    "bytes": 100,
+    "records": 1,
+    "sha256": "117b96c82240e49a3a5372ec32dcc4175b9b0a7facb298ed127e558f45677b10"
+  },
+  {
+    "archive": "b1a38ad-runs-full.tar.gz",
+    "path": "dead-man/result.json",
+    "bytes": 13614,
+    "records": 1,
+    "sha256": "0f08fc06cc2b674940302a8f0c1fc038408fdf62ae6fe51d8f8667b761e81495"
+  },
+  {
+    "archive": "b1a38ad-runs-full.tar.gz",
+    "path": "identity-roles/provider.jsonl",
+    "bytes": 2218,
+    "records": 5,
+    "sha256": "c4b9f4ee7b63f1dda70c2874be7e1101fa6052e1c28317bc9b3070da109aa7e4"
+  },
+  {
+    "archive": "b1a38ad-runs-full.tar.gz",
+    "path": "identity-roles/checkpoint.json",
+    "bytes": 98,
+    "records": 1,
+    "sha256": "000c7fcbcb369271e476d376d634183f0a37076cf2fec9c3d1813615ebf60d03"
+  },
+  {
+    "archive": "b1a38ad-runs-full.tar.gz",
+    "path": "identity-roles/result.json",
+    "bytes": 304,
+    "records": 1,
+    "sha256": "002b5442fcdd9e8d676c53add6ff9cbd6c876c02bffbc0707d3d732476ee04b7"
+  },
+  {
+    "archive": "b1a38ad-runs-full.tar.gz",
+    "path": "keep-alive-counterexample/provider.jsonl",
+    "bytes": 8320,
+    "records": 18,
+    "sha256": "0d1bbdd1b585bdb875a3cc0641651655de32a04ea992bbf7d7f1d36e54520543"
+  },
+  {
+    "archive": "b1a38ad-runs-full.tar.gz",
+    "path": "keep-alive-counterexample/checkpoint.json",
+    "bytes": 99,
+    "records": 1,
+    "sha256": "4f6f761e2c93b83f416862e6f448fb331ab82502ac7e5db413141a537e565e58"
+  },
+  {
+    "archive": "b1a38ad-runs-full.tar.gz",
+    "path": "keep-alive-counterexample/result.json",
+    "bytes": 441,
+    "records": 1,
+    "sha256": "8eb2691cfac754a5132624ed2262d7aed1526eaeb5121518e0e795d6f02639fd"
+  },
+  {
+    "archive": "b1a38ad-runs-full.tar.gz",
+    "path": "late-pre-fence-effect/provider.jsonl",
+    "bytes": 2754,
+    "records": 6,
+    "sha256": "d4ea41b5efa6f776b8e7bd91b68fa7685fb11f2e17921410e63982b13082aca5"
+  },
+  {
+    "archive": "b1a38ad-runs-full.tar.gz",
+    "path": "late-pre-fence-effect/checkpoint.json",
+    "bytes": 98,
+    "records": 1,
+    "sha256": "7ed1f339d2103b833e3ed2ec6ea4abdad4a733ff5d48ccfba46672f63c06d1dc"
+  },
+  {
+    "archive": "b1a38ad-runs-full.tar.gz",
+    "path": "late-pre-fence-effect/result.json",
+    "bytes": 682,
+    "records": 1,
+    "sha256": "07cd454bbee8287b3944ff8bb6c5d8392256ab9d245dda8838a6cec96aa65ddb"
+  },
+  {
+    "archive": "b1a38ad-runs-full.tar.gz",
+    "path": "lost-commit/provider.jsonl",
+    "bytes": 0,
+    "records": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "archive": "b1a38ad-runs-full.tar.gz",
+    "path": "lost-commit/checkpoint.json",
+    "bytes": 98,
+    "records": 1,
+    "sha256": "8c3c1d142cbde961902c8dea95fa96b2d471900ca2f9dce016e4ac4a14ae67ee"
+  },
+  {
+    "archive": "b1a38ad-runs-full.tar.gz",
+    "path": "lost-commit/result.json",
+    "bytes": 342,
+    "records": 1,
+    "sha256": "f406e47c383912d839909c622942b287f06b428fcc93a81ec015da53f42f67bf"
+  },
+  {
+    "archive": "b1a38ad-runs-full.tar.gz",
+    "path": "transport-faults/provider.jsonl",
+    "bytes": 8393,
+    "records": 20,
+    "sha256": "179a7ec5ae83a479f5c589ed4ccbfee4fd9eddb607f068318e03c6ed6ea9317c"
+  },
+  {
+    "archive": "b1a38ad-runs-full.tar.gz",
+    "path": "transport-faults/checkpoint.json",
+    "bytes": 99,
+    "records": 1,
+    "sha256": "278ae9edcd7c88023f5a791e31938a8f25c5d8a6b8c7e18c7faccd27678fd86b"
+  },
+  {
+    "archive": "b1a38ad-runs-full.tar.gz",
+    "path": "transport-faults/result.json",
+    "bytes": 304,
+    "records": 1,
+    "sha256": "002b5442fcdd9e8d676c53add6ff9cbd6c876c02bffbc0707d3d732476ee04b7"
+  },
+  {
+    "archive": "b1a38ad-runs-fault.tar.gz",
+    "path": "b1a-asynchronous-v1/provider.jsonl",
+    "bytes": 686439,
+    "records": 1562,
+    "sha256": "89a9a0ed2586840e55579791b2a8466d4acf3776bc72c33376abe12503437b05"
+  },
+  {
+    "archive": "b1a38ad-runs-fault.tar.gz",
+    "path": "b1a-asynchronous-v1/checkpoint.json",
+    "bytes": 101,
+    "records": 1,
+    "sha256": "90f8a844e6b482018143e2b232873478d7873240fc8b464c7d92d1404f0a5ceb"
+  },
+  {
+    "archive": "b1a38ad-runs-fault.tar.gz",
+    "path": "b1a-asynchronous-v1/result.json",
+    "bytes": 1867729,
+    "records": 1,
+    "sha256": "eed5febcd6371aad7aa2b34d8da80aff0fd80a838214c98420bc93c8b756bfbe"
+  },
+  {
+    "archive": "b1a38ad-runs-fault.tar.gz",
+    "path": "b1a-commit-ack_lost/provider.jsonl",
+    "bytes": 0,
+    "records": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "archive": "b1a38ad-runs-fault.tar.gz",
+    "path": "b1a-commit-ack_lost/checkpoint.json",
+    "bytes": 98,
+    "records": 1,
+    "sha256": "8c3c1d142cbde961902c8dea95fa96b2d471900ca2f9dce016e4ac4a14ae67ee"
+  },
+  {
+    "archive": "b1a38ad-runs-fault.tar.gz",
+    "path": "b1a-commit-ack_lost/result.json",
+    "bytes": 436,
+    "records": 1,
+    "sha256": "b5fd1c98001224c45411a4903e26d8328b6f45aaa595ba2afe9dd0fcd8c236b1"
+  },
+  {
+    "archive": "b1a38ad-runs-fault.tar.gz",
+    "path": "b1a-commit-before_server/provider.jsonl",
+    "bytes": 2218,
+    "records": 5,
+    "sha256": "9d66674752633f74ec3b044d9a6222963b38ca40eafba1936c17707e3d96606c"
+  },
+  {
+    "archive": "b1a38ad-runs-fault.tar.gz",
+    "path": "b1a-commit-before_server/checkpoint.json",
+    "bytes": 98,
+    "records": 1,
+    "sha256": "f6d82336378664139ff5334e6e6e64e5038148c7317d6a8aa18a697236a7641b"
+  },
+  {
+    "archive": "b1a38ad-runs-fault.tar.gz",
+    "path": "b1a-commit-before_server/result.json",
+    "bytes": 439,
+    "records": 1,
+    "sha256": "1d77548b9446892767dbc284a897d59151f5276e01536ed73d6e9c8d37fe2f62"
+  },
+  {
+    "archive": "b1a38ad-runs-fault.tar.gz",
+    "path": "b1a-commit-rollback_tag/provider.jsonl",
+    "bytes": 2218,
+    "records": 5,
+    "sha256": "1a0f430736f46a4362148a9ca1a61ae3b3ff494071c3edf4ef4b19a2f235e225"
+  },
+  {
+    "archive": "b1a38ad-runs-fault.tar.gz",
+    "path": "b1a-commit-rollback_tag/checkpoint.json",
+    "bytes": 98,
+    "records": 1,
+    "sha256": "4d1142cf194da9c37a45eeff3428cf97d956647f59ba35e21dda260d357254d2"
+  },
+  {
+    "archive": "b1a38ad-runs-fault.tar.gz",
+    "path": "b1a-commit-rollback_tag/result.json",
+    "bytes": 438,
+    "records": 1,
+    "sha256": "b4c89453f76f69a68c21e1c79b3af1e06a4ef5be1039adca0d89c87daca8c9c3"
+  },
+  {
+    "archive": "b1a38ad-runs-fault.tar.gz",
+    "path": "b1a-cross-product-v1/provider.jsonl",
+    "bytes": 1702281,
+    "records": 3937,
+    "sha256": "c87dc12b1a98d41c257658b3fecb5ab9db852fd8dd6f09623ded1166cc192f9e"
+  },
+  {
+    "archive": "b1a38ad-runs-fault.tar.gz",
+    "path": "b1a-cross-product-v1/checkpoint.json",
+    "bytes": 101,
+    "records": 1,
+    "sha256": "4dcede1391beb1d5b785cedb174de7124b2e46df2d3f3443c2f3830093b03655"
+  },
+  {
+    "archive": "b1a38ad-runs-fault.tar.gz",
+    "path": "b1a-cross-product-v1/result.json",
+    "bytes": 3664086,
+    "records": 1,
+    "sha256": "5bcedf9e05ec0e764c527944f1376bf149d55af1ea9d7a1bfc2dc9aae7c2f252"
+  },
+  {
+    "archive": "b1a38ad-runs-fault.tar.gz",
+    "path": "b1a-direct-kill/provider.jsonl",
+    "bytes": 0,
+    "records": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "archive": "b1a38ad-runs-fault.tar.gz",
+    "path": "b1a-direct-kill/checkpoint.json",
+    "bytes": 98,
+    "records": 1,
+    "sha256": "8c3c1d142cbde961902c8dea95fa96b2d471900ca2f9dce016e4ac4a14ae67ee"
+  },
+  {
+    "archive": "b1a38ad-runs-fault.tar.gz",
+    "path": "b1a-direct-kill/result.json",
+    "bytes": 619,
+    "records": 1,
+    "sha256": "79189dfa432aa85c027f0b66c4274d4297647c6b7132a56793dd33cbffdb5ca5"
+  },
+  {
+    "archive": "b1a38ad-runs-fault.tar.gz",
+    "path": "b1a-native-kill-classification/provider.jsonl",
+    "bytes": 2754,
+    "records": 6,
+    "sha256": "66a3f74e07efbed3fa6f1f6679ddcdcd29d04aa7a92f313e62b5f4aa20dfd501"
+  },
+  {
+    "archive": "b1a38ad-runs-fault.tar.gz",
+    "path": "b1a-native-kill-classification/checkpoint.json",
+    "bytes": 98,
+    "records": 1,
+    "sha256": "50763aa6d78f7c88052fe5e107e45cd53f56db9e2cf8ed43e122a2183b378d9b"
+  },
+  {
+    "archive": "b1a38ad-runs-fault.tar.gz",
+    "path": "b1a-native-kill-classification/result.json",
+    "bytes": 2844,
+    "records": 1,
+    "sha256": "1f9d7fd29642914664d1cdbbf5801f6f956279074f0fe9eadcc787dcd186a431"
+  },
+  {
+    "archive": "b1a38ad-runs-fault.tar.gz",
+    "path": "b1a-native-sql-tls/provider.jsonl",
+    "bytes": 0,
+    "records": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "archive": "b1a38ad-runs-fault.tar.gz",
+    "path": "b1a-native-sql-tls/checkpoint.json",
+    "bytes": 98,
+    "records": 1,
+    "sha256": "8c3c1d142cbde961902c8dea95fa96b2d471900ca2f9dce016e4ac4a14ae67ee"
+  },
+  {
+    "archive": "b1a38ad-runs-fault.tar.gz",
+    "path": "b1a-native-sql-tls/result.json",
+    "bytes": 437,
+    "records": 1,
+    "sha256": "7c62a59ccc6555d2be19a1df280aabaace9e4c6143a6316e7ba3e6bd02950c9d"
+  },
+  {
+    "archive": "b1a38ad-runs-fault.tar.gz",
+    "path": "b1a-proof-bad_epoch/provider.jsonl",
+    "bytes": 2218,
+    "records": 5,
+    "sha256": "749bd62f5afb5a5eea1be1081168b8cc347f0f0bdb6d1fc66578de85fceed842"
+  },
+  {
+    "archive": "b1a38ad-runs-fault.tar.gz",
+    "path": "b1a-proof-bad_epoch/checkpoint.json",
+    "bytes": 98,
+    "records": 1,
+    "sha256": "cda6a55aceb2abda9114535f304035211628f69efe970ec9c5ad399aa2d8bef0"
+  },
+  {
+    "archive": "b1a38ad-runs-fault.tar.gz",
+    "path": "b1a-proof-bad_epoch/result.json",
+    "bytes": 349,
+    "records": 1,
+    "sha256": "6503b91e28210ad2c1485cb435ac197c5fff25a3e32b9fde1b14c3dfbe657b3f"
+  },
+  {
+    "archive": "b1a38ad-runs-fault.tar.gz",
+    "path": "b1a-proof-bad_revision/provider.jsonl",
+    "bytes": 2218,
+    "records": 5,
+    "sha256": "fb60ce96cf6a6eeb63f850c098ceebb249c7c3531613da332925739736009569"
+  },
+  {
+    "archive": "b1a38ad-runs-fault.tar.gz",
+    "path": "b1a-proof-bad_revision/checkpoint.json",
+    "bytes": 98,
+    "records": 1,
+    "sha256": "0112838d4ecfbc974a043e40665b66cfe5a07e1fbc3378f6da844c6e0ad7533d"
+  },
+  {
+    "archive": "b1a38ad-runs-fault.tar.gz",
+    "path": "b1a-proof-bad_revision/result.json",
+    "bytes": 352,
+    "records": 1,
+    "sha256": "5f420de8c9078d8d2ddf962aaa76398b1c2a54378d3adbf1865f12a2087b96f2"
+  },
+  {
+    "archive": "b1a38ad-runs-fault.tar.gz",
+    "path": "b1a-retired-recovery/provider.jsonl",
+    "bytes": 0,
+    "records": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "archive": "b1a38ad-runs-fault.tar.gz",
+    "path": "b1a-retired-recovery/checkpoint.json",
+    "bytes": 98,
+    "records": 1,
+    "sha256": "8c3c1d142cbde961902c8dea95fa96b2d471900ca2f9dce016e4ac4a14ae67ee"
+  },
+  {
+    "archive": "b1a38ad-runs-fault.tar.gz",
+    "path": "b1a-retired-recovery/result.json",
+    "bytes": 427,
+    "records": 1,
+    "sha256": "017275d77e0aa941f00c656cf0a390350fa7af2ad6b6e8fd7b8a5faed2ffe945"
+  },
+  {
+    "archive": "b1a38ad-runs-fault.tar.gz",
+    "path": "b1a-sealer-ack/provider.jsonl",
+    "bytes": 0,
+    "records": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "archive": "b1a38ad-runs-fault.tar.gz",
+    "path": "b1a-sealer-ack/checkpoint.json",
+    "bytes": 98,
+    "records": 1,
+    "sha256": "8c3c1d142cbde961902c8dea95fa96b2d471900ca2f9dce016e4ac4a14ae67ee"
+  },
+  {
+    "archive": "b1a38ad-runs-fault.tar.gz",
+    "path": "b1a-sealer-ack/result.json",
+    "bytes": 437,
+    "records": 1,
+    "sha256": "b08559d8eda0a8d7d8066ba656d42d914dbfaf987849cae59c7f70cfe22e1e87"
+  },
+  {
+    "archive": "b1a38ad-runs-fault.tar.gz",
+    "path": "b1a-session-budget-hold/provider.jsonl",
+    "bytes": 2218,
+    "records": 5,
+    "sha256": "a47619e23611d971892b907c10c63275c6c7ea3527a1b8fb93a59b250b8037a3"
+  },
+  {
+    "archive": "b1a38ad-runs-fault.tar.gz",
+    "path": "b1a-session-budget-hold/checkpoint.json",
+    "bytes": 98,
+    "records": 1,
+    "sha256": "cd8286c305a55f8e8bcef18ad4917d72050014b06ec1ee1b8f42e81b5420a08b"
+  },
+  {
+    "archive": "b1a38ad-runs-fault.tar.gz",
+    "path": "b1a-session-budget-hold/result.json",
+    "bytes": 749,
+    "records": 1,
+    "sha256": "7f7387bc57f11a461445a0100a48f4e15ebbedec690fdcbc0d4fba97e9d36c80"
+  },
+  {
+    "archive": "b1a38ad-runs-fault.tar.gz",
+    "path": "campaign/provider.jsonl",
+    "bytes": 1835666,
+    "records": 4147,
+    "sha256": "683d40f447e7ca122a404c47d617150d3dfc3ff0d570372d4b30bae5e213cdb1"
+  },
+  {
+    "archive": "b1a38ad-runs-fault.tar.gz",
+    "path": "campaign/checkpoint.json",
+    "bytes": 101,
+    "records": 1,
+    "sha256": "fe893f070bae7ee434ca07a877881a6ca111ad2aeac1863aa818ec42eb15cdcb"
+  },
+  {
+    "archive": "b1a38ad-runs-fault.tar.gz",
+    "path": "campaign/result.json",
+    "bytes": 3537850,
+    "records": 1,
+    "sha256": "c28e7a228138216fe81861cedfb373e1bafd1887b2846f252bccb5bdee3e8d33"
+  },
+  {
+    "archive": "b1a38ad-runs-fault.tar.gz",
+    "path": "crash-restart/provider.jsonl",
+    "bytes": 0,
+    "records": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "archive": "b1a38ad-runs-fault.tar.gz",
+    "path": "crash-restart/checkpoint.json",
+    "bytes": 98,
+    "records": 1,
+    "sha256": "8c3c1d142cbde961902c8dea95fa96b2d471900ca2f9dce016e4ac4a14ae67ee"
+  },
+  {
+    "archive": "b1a38ad-runs-fault.tar.gz",
+    "path": "crash-restart/result.json",
+    "bytes": 304,
+    "records": 1,
+    "sha256": "002b5442fcdd9e8d676c53add6ff9cbd6c876c02bffbc0707d3d732476ee04b7"
+  },
+  {
+    "archive": "b1a38ad-runs-fault.tar.gz",
+    "path": "dead-man/provider.jsonl",
+    "bytes": 44452,
+    "records": 100,
+    "sha256": "9d47bf9522b384a07f46b312af2889c0fea9cacb27b8473d3dfa4e33bcf1451a"
+  },
+  {
+    "archive": "b1a38ad-runs-fault.tar.gz",
+    "path": "dead-man/checkpoint.json",
+    "bytes": 100,
+    "records": 1,
+    "sha256": "7c7fe87f6334224d0b828d50f946737ebd597ad9385495ed0364b00d5f376d74"
+  },
+  {
+    "archive": "b1a38ad-runs-fault.tar.gz",
+    "path": "dead-man/result.json",
+    "bytes": 13614,
+    "records": 1,
+    "sha256": "b00af96a6e77dbc921a0fbc095f3501df2084412dc93991dd6391628925e6543"
+  },
+  {
+    "archive": "b1a38ad-runs-fault.tar.gz",
+    "path": "identity-roles/provider.jsonl",
+    "bytes": 2218,
+    "records": 5,
+    "sha256": "e549025c6fb39762a4085e03f3eda87892f7e7a4a21d3e68b40d9c8352712d27"
+  },
+  {
+    "archive": "b1a38ad-runs-fault.tar.gz",
+    "path": "identity-roles/checkpoint.json",
+    "bytes": 98,
+    "records": 1,
+    "sha256": "cda9e1f8b83148646a92a74ab87c44be472a8e6b65821c74827ce1e0a5cbfbf9"
+  },
+  {
+    "archive": "b1a38ad-runs-fault.tar.gz",
+    "path": "identity-roles/result.json",
+    "bytes": 304,
+    "records": 1,
+    "sha256": "002b5442fcdd9e8d676c53add6ff9cbd6c876c02bffbc0707d3d732476ee04b7"
+  },
+  {
+    "archive": "b1a38ad-runs-fault.tar.gz",
+    "path": "keep-alive-counterexample/provider.jsonl",
+    "bytes": 8320,
+    "records": 18,
+    "sha256": "61b76b4738f460872e08352ed71f786cbca322b7f81349d5753c13372e8f6508"
+  },
+  {
+    "archive": "b1a38ad-runs-fault.tar.gz",
+    "path": "keep-alive-counterexample/checkpoint.json",
+    "bytes": 99,
+    "records": 1,
+    "sha256": "c29749eca46ce61137fdac50b16d22ad29e169abfe558248c236e63cd469bdcd"
+  },
+  {
+    "archive": "b1a38ad-runs-fault.tar.gz",
+    "path": "keep-alive-counterexample/result.json",
+    "bytes": 441,
+    "records": 1,
+    "sha256": "524aa86f25f6a07021fa2238a2f00364a8eeaae2a9e50c47248c1d77de5429ad"
+  },
+  {
+    "archive": "b1a38ad-runs-fault.tar.gz",
+    "path": "late-pre-fence-effect/provider.jsonl",
+    "bytes": 2754,
+    "records": 6,
+    "sha256": "57cd05ba8f39e31df57664c613de7127da08b0b1438d1aae14c0c56390fbc37a"
+  },
+  {
+    "archive": "b1a38ad-runs-fault.tar.gz",
+    "path": "late-pre-fence-effect/checkpoint.json",
+    "bytes": 98,
+    "records": 1,
+    "sha256": "aea8230e2516e27dfec885f4ce38dda29a8f6e95730550239aea7194bd4cdb47"
+  },
+  {
+    "archive": "b1a38ad-runs-fault.tar.gz",
+    "path": "late-pre-fence-effect/result.json",
+    "bytes": 682,
+    "records": 1,
+    "sha256": "3bf6530ae0a7083f7d7bc8f0e5eff650b64deb81e363a6c3f9508192d1437461"
+  },
+  {
+    "archive": "b1a38ad-runs-fault.tar.gz",
+    "path": "lost-commit/provider.jsonl",
+    "bytes": 0,
+    "records": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "archive": "b1a38ad-runs-fault.tar.gz",
+    "path": "lost-commit/checkpoint.json",
+    "bytes": 98,
+    "records": 1,
+    "sha256": "8c3c1d142cbde961902c8dea95fa96b2d471900ca2f9dce016e4ac4a14ae67ee"
+  },
+  {
+    "archive": "b1a38ad-runs-fault.tar.gz",
+    "path": "lost-commit/result.json",
+    "bytes": 342,
+    "records": 1,
+    "sha256": "f406e47c383912d839909c622942b287f06b428fcc93a81ec015da53f42f67bf"
+  },
+  {
+    "archive": "b1a38ad-runs-fault.tar.gz",
+    "path": "transport-faults/provider.jsonl",
+    "bytes": 8393,
+    "records": 20,
+    "sha256": "bd6c6b8a37cdf1ba4992d5d4db43bca742d326900ae2b88489588118f27f8b57"
+  },
+  {
+    "archive": "b1a38ad-runs-fault.tar.gz",
+    "path": "transport-faults/checkpoint.json",
+    "bytes": 99,
+    "records": 1,
+    "sha256": "4b91f3e1df6c794d1fd2f9a01de400dedc18d46800ed88c40c05dbf786358edb"
+  },
+  {
+    "archive": "b1a38ad-runs-fault.tar.gz",
+    "path": "transport-faults/result.json",
+    "bytes": 304,
+    "records": 1,
+    "sha256": "002b5442fcdd9e8d676c53add6ff9cbd6c876c02bffbc0707d3d732476ee04b7"
+  },
+  {
+    "archive": "b1a38ad-runs-concurrency.tar.gz",
+    "path": "b1a-retired-recovery/provider.jsonl",
+    "bytes": 0,
+    "records": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "archive": "b1a38ad-runs-concurrency.tar.gz",
+    "path": "b1a-retired-recovery/checkpoint.json",
+    "bytes": 98,
+    "records": 1,
+    "sha256": "8c3c1d142cbde961902c8dea95fa96b2d471900ca2f9dce016e4ac4a14ae67ee"
+  },
+  {
+    "archive": "b1a38ad-runs-concurrency.tar.gz",
+    "path": "b1a-retired-recovery/result.json",
+    "bytes": 427,
+    "records": 1,
+    "sha256": "017275d77e0aa941f00c656cf0a390350fa7af2ad6b6e8fd7b8a5faed2ffe945"
+  },
+  {
+    "archive": "b1a38ad-runs-concurrency.tar.gz",
+    "path": "b1a-sealer-ack/provider.jsonl",
+    "bytes": 0,
+    "records": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "archive": "b1a38ad-runs-concurrency.tar.gz",
+    "path": "b1a-sealer-ack/checkpoint.json",
+    "bytes": 98,
+    "records": 1,
+    "sha256": "8c3c1d142cbde961902c8dea95fa96b2d471900ca2f9dce016e4ac4a14ae67ee"
+  },
+  {
+    "archive": "b1a38ad-runs-concurrency.tar.gz",
+    "path": "b1a-sealer-ack/result.json",
+    "bytes": 437,
+    "records": 1,
+    "sha256": "b08559d8eda0a8d7d8066ba656d42d914dbfaf987849cae59c7f70cfe22e1e87"
+  },
+  {
+    "archive": "b1a38ad-runs-concurrency.tar.gz",
+    "path": "b1a-session-budget-hold/provider.jsonl",
+    "bytes": 2218,
+    "records": 5,
+    "sha256": "953c9dee852dea627c8b9ca7bc78a2c3013898a9e2f58cbc2a4b3d70f46e50ed"
+  },
+  {
+    "archive": "b1a38ad-runs-concurrency.tar.gz",
+    "path": "b1a-session-budget-hold/checkpoint.json",
+    "bytes": 98,
+    "records": 1,
+    "sha256": "bf5a1e9a32f5f3fd13eae81fdb63b8c4b1ead900392cfa4ee6a2f26bc933cb9f"
+  },
+  {
+    "archive": "b1a38ad-runs-concurrency.tar.gz",
+    "path": "b1a-session-budget-hold/result.json",
+    "bytes": 751,
+    "records": 1,
+    "sha256": "b90aa9a4853a46b6e924a2c3c0736208109e776f9df7c51ecd421daba40188f8"
+  },
+  {
+    "archive": "b1a38ad-runs-concurrency.tar.gz",
+    "path": "concurrency/provider.jsonl",
+    "bytes": 19998,
+    "records": 45,
+    "sha256": "894a2d44210447aaa08db91bd5decda0091f871f234ac3725ff0c40815afb72b"
+  },
+  {
+    "archive": "b1a38ad-runs-concurrency.tar.gz",
+    "path": "concurrency/checkpoint.json",
+    "bytes": 99,
+    "records": 1,
+    "sha256": "91b6aa5f379a0d4f62d0b48d5e6c4ce6ecf3c3fa1494fcc7f55ae61685c25851"
+  },
+  {
+    "archive": "b1a38ad-runs-concurrency.tar.gz",
+    "path": "concurrency/result.json",
+    "bytes": 3480,
+    "records": 1,
+    "sha256": "419ab667cdde3f8ffb0755d735fb98ddf611f92a03eecedd626b993a31f262c1"
+  }
+]

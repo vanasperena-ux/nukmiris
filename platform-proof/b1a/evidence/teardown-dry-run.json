@@ -1,0 +1,961 @@
+{
+  "mode": "PRINT_ONLY_B1A_NOT_AUTHORIZED",
+  "inventoryDigest": "e79debbf1eb9c2e3f78f3e7edaca7fd6b7f13c9e125399d40ab89f9536d475ed",
+  "deadline": "min(session start + 6h, 2026-12-17)",
+  "preconditions": [
+    "Only future owner-authorized disposable projects listed here; verify exact project numbers before any destructive operation",
+    "Freeze ingress/dispatch; fence ALL started epochs, not only epoch1; preserve export before deleting SQL/custody",
+    "No automatic Terraform recreation; all future apply jobs disabled after expiry; dual-human signoff"
+  ],
+  "phases": [
+    {
+      "phase": 1,
+      "action": "Freeze/fence/export",
+      "commands": [
+        [
+          "PRINT_ONLY",
+          "execute fence steps2–6 for every epoch in signed session registry"
+        ],
+        [
+          "PRINT_ONLY",
+          "export SQL, full ledgers, signed heads, observer decisions and resource inventory to owner-controlled inert evidence package"
+        ]
+      ]
+    },
+    {
+      "phase": 2,
+      "action": "Remove compute and private connections in dependency order",
+      "commands": [
+        [
+          "gcloud",
+          "run",
+          "worker-pools",
+          "delete",
+          "nmb1a-worker",
+          "--region=us-central1",
+          "--project=nmb1a-plan-run",
+          "--impersonate-service-account=nmb1a-kill@nmb1a-plan-run.iam.gserviceaccount.com",
+          "--quiet"
+        ],
+        [
+          "gcloud",
+          "run",
+          "services",
+          "delete",
+          "nmb1a-gateway",
+          "--region=us-central1",
+          "--project=nmb1a-plan-run",
+          "--impersonate-service-account=nmb1a-kill@nmb1a-plan-run.iam.gserviceaccount.com",
+          "--quiet"
+        ],
+        [
+          "gcloud",
+          "run",
+          "services",
+          "delete",
+          "nmb1a-ingress",
+          "--region=us-central1",
+          "--project=nmb1a-plan-run",
+          "--impersonate-service-account=nmb1a-kill@nmb1a-plan-run.iam.gserviceaccount.com",
+          "--quiet"
+        ],
+        [
+          "gcloud",
+          "run",
+          "services",
+          "delete",
+          "nmb1a-sealer",
+          "--region=us-central1",
+          "--project=nmb1a-plan-custody"
+        ],
+        [
+          "gcloud",
+          "compute",
+          "instances",
+          "delete",
+          "nmb1a-fake",
+          "--zone=us-central1-a",
+          "--delete-disks=all",
+          "--project=nmb1a-plan-fake"
+        ],
+        [
+          "gcloud",
+          "compute",
+          "forwarding-rules",
+          "delete",
+          "nmb1a-sealer-consumer",
+          "--region=us-central1",
+          "--project=nmb1a-plan-run"
+        ],
+        [
+          "gcloud",
+          "compute",
+          "forwarding-rules",
+          "delete",
+          "nmb1a-sql-run",
+          "--region=us-central1",
+          "--project=nmb1a-plan-run"
+        ],
+        [
+          "gcloud",
+          "compute",
+          "forwarding-rules",
+          "delete",
+          "nmb1a-sql-custody",
+          "--region=us-central1",
+          "--project=nmb1a-plan-custody"
+        ],
+        [
+          "gcloud",
+          "compute",
+          "service-attachments",
+          "delete",
+          "nmb1a-sealer-published",
+          "--region=us-central1",
+          "--project=nmb1a-plan-custody"
+        ],
+        [
+          "gcloud",
+          "compute",
+          "forwarding-rules",
+          "delete",
+          "nmb1a-sealer-lb",
+          "--region=us-central1",
+          "--project=nmb1a-plan-custody"
+        ],
+        [
+          "gcloud",
+          "compute",
+          "target-https-proxies",
+          "delete",
+          "nmb1a-sealer-https",
+          "--region=us-central1",
+          "--project=nmb1a-plan-custody"
+        ],
+        [
+          "gcloud",
+          "compute",
+          "url-maps",
+          "delete",
+          "nmb1a-sealer-map",
+          "--region=us-central1",
+          "--project=nmb1a-plan-custody"
+        ],
+        [
+          "gcloud",
+          "compute",
+          "backend-services",
+          "delete",
+          "nmb1a-sealer-backend",
+          "--region=us-central1",
+          "--project=nmb1a-plan-custody"
+        ],
+        [
+          "gcloud",
+          "compute",
+          "network-endpoint-groups",
+          "delete",
+          "nmb1a-sealer-neg",
+          "--region=us-central1",
+          "--project=nmb1a-plan-custody"
+        ],
+        [
+          "gcloud",
+          "compute",
+          "ssl-certificates",
+          "delete",
+          "nmb1a-sealer-synthetic-tls",
+          "--region=us-central1",
+          "--project=nmb1a-plan-custody"
+        ],
+        [
+          "gcloud",
+          "sql",
+          "instances",
+          "delete",
+          "nmb1a-epoch",
+          "--project=nmb1a-plan-run",
+          "--impersonate-service-account=nmb1a-kill@nmb1a-plan-run.iam.gserviceaccount.com",
+          "--quiet"
+        ]
+      ]
+    },
+    {
+      "phase": 3,
+      "action": "Verify all billable/retained descendants then remove exact disposable projects",
+      "commands": [
+        [
+          "gcloud",
+          "asset",
+          "search-all-resources",
+          "--scope=projects/nmb1a-plan-run",
+          "--format=json"
+        ],
+        [
+          "gcloud",
+          "asset",
+          "search-all-resources",
+          "--scope=projects/nmb1a-plan-custody",
+          "--format=json"
+        ],
+        [
+          "gcloud",
+          "asset",
+          "search-all-resources",
+          "--scope=projects/nmb1a-plan-fake",
+          "--format=json"
+        ],
+        [
+          "PRINT_ONLY",
+          "enumerate/delete SQL backups/PITR/WAL/restore instances; VM disks/snapshots; PSC/ALB/proxies/addresses; all bucket versions/exports; log buckets/sinks; AR images/build caches; secret versions; schedule every KMS key version destruction"
+        ],
+        [
+          "gcloud",
+          "projects",
+          "delete",
+          "nmb1a-plan-run"
+        ],
+        [
+          "gcloud",
+          "projects",
+          "delete",
+          "nmb1a-plan-custody"
+        ],
+        [
+          "gcloud",
+          "projects",
+          "delete",
+          "nmb1a-plan-fake"
+        ]
+      ],
+      "requiredInventory": [
+        {
+          "type": "terraform_data",
+          "name": "never_apply",
+          "project": "resource-ID scoped",
+          "billableOrRetained": false
+        },
+        {
+          "type": "google_compute_network",
+          "name": "run",
+          "project": "nmb1a-plan-run",
+          "billableOrRetained": true
+        },
+        {
+          "type": "google_compute_network",
+          "name": "custody",
+          "project": "nmb1a-plan-custody",
+          "billableOrRetained": true
+        },
+        {
+          "type": "google_compute_network",
+          "name": "fake",
+          "project": "nmb1a-plan-fake",
+          "billableOrRetained": true
+        },
+        {
+          "type": "google_compute_subnetwork",
+          "name": "gateway",
+          "project": "nmb1a-plan-run",
+          "billableOrRetained": true
+        },
+        {
+          "type": "google_compute_subnetwork",
+          "name": "private",
+          "project": "nmb1a-plan-run",
+          "billableOrRetained": true
+        },
+        {
+          "type": "google_compute_subnetwork",
+          "name": "custody",
+          "project": "nmb1a-plan-custody",
+          "billableOrRetained": true
+        },
+        {
+          "type": "google_compute_subnetwork",
+          "name": "proxy",
+          "project": "nmb1a-plan-custody",
+          "billableOrRetained": true
+        },
+        {
+          "type": "google_compute_subnetwork",
+          "name": "psc_nat",
+          "project": "nmb1a-plan-custody",
+          "billableOrRetained": true
+        },
+        {
+          "type": "google_compute_subnetwork",
+          "name": "fake",
+          "project": "nmb1a-plan-fake",
+          "billableOrRetained": true
+        },
+        {
+          "type": "google_sql_database_instance",
+          "name": "epoch",
+          "project": "nmb1a-plan-run",
+          "billableOrRetained": true
+        },
+        {
+          "type": "google_compute_address",
+          "name": "sql_run",
+          "project": "nmb1a-plan-run",
+          "billableOrRetained": true
+        },
+        {
+          "type": "google_compute_address",
+          "name": "sql_custody",
+          "project": "nmb1a-plan-custody",
+          "billableOrRetained": true
+        },
+        {
+          "type": "google_compute_address",
+          "name": "sealer_consumer",
+          "project": "nmb1a-plan-run",
+          "billableOrRetained": true
+        },
+        {
+          "type": "google_compute_address",
+          "name": "sealer_lb",
+          "project": "nmb1a-plan-custody",
+          "billableOrRetained": true
+        },
+        {
+          "type": "google_compute_address",
+          "name": "nat",
+          "project": "nmb1a-plan-run",
+          "billableOrRetained": true
+        },
+        {
+          "type": "google_compute_address",
+          "name": "fake",
+          "project": "nmb1a-plan-fake",
+          "billableOrRetained": true
+        },
+        {
+          "type": "google_compute_forwarding_rule",
+          "name": "sql_run",
+          "project": "nmb1a-plan-run",
+          "billableOrRetained": true
+        },
+        {
+          "type": "google_compute_forwarding_rule",
+          "name": "sql_custody",
+          "project": "nmb1a-plan-custody",
+          "billableOrRetained": true
+        },
+        {
+          "type": "google_compute_forwarding_rule",
+          "name": "sealer_lb",
+          "project": "nmb1a-plan-custody",
+          "billableOrRetained": true
+        },
+        {
+          "type": "google_compute_forwarding_rule",
+          "name": "sealer_consumer",
+          "project": "nmb1a-plan-run",
+          "billableOrRetained": true
+        },
+        {
+          "type": "google_compute_router",
+          "name": "gateway",
+          "project": "nmb1a-plan-run",
+          "billableOrRetained": true
+        },
+        {
+          "type": "google_compute_router_nat",
+          "name": "gateway",
+          "project": "nmb1a-plan-run",
+          "billableOrRetained": true
+        },
+        {
+          "type": "google_compute_firewall",
+          "name": "deny_run_v4",
+          "project": "nmb1a-plan-run",
+          "billableOrRetained": true
+        },
+        {
+          "type": "google_compute_firewall",
+          "name": "deny_run_v6",
+          "project": "nmb1a-plan-run",
+          "billableOrRetained": true
+        },
+        {
+          "type": "google_compute_firewall",
+          "name": "deny_custody_v4",
+          "project": "nmb1a-plan-custody",
+          "billableOrRetained": true
+        },
+        {
+          "type": "google_compute_firewall",
+          "name": "deny_custody_v6",
+          "project": "nmb1a-plan-custody",
+          "billableOrRetained": true
+        },
+        {
+          "type": "google_compute_firewall",
+          "name": "deny_fake_v4",
+          "project": "nmb1a-plan-fake",
+          "billableOrRetained": true
+        },
+        {
+          "type": "google_compute_firewall",
+          "name": "deny_fake_v6",
+          "project": "nmb1a-plan-fake",
+          "billableOrRetained": true
+        },
+        {
+          "type": "google_compute_firewall",
+          "name": "epoch_deny_1_v4",
+          "project": "nmb1a-plan-run",
+          "billableOrRetained": true
+        },
+        {
+          "type": "google_compute_firewall",
+          "name": "epoch_deny_1_v6",
+          "project": "nmb1a-plan-run",
+          "billableOrRetained": true
+        },
+        {
+          "type": "google_compute_firewall",
+          "name": "gateway_fake_1",
+          "project": "nmb1a-plan-run",
+          "billableOrRetained": true
+        },
+        {
+          "type": "google_compute_firewall",
+          "name": "epoch_deny_2_v4",
+          "project": "nmb1a-plan-run",
+          "billableOrRetained": true
+        },
+        {
+          "type": "google_compute_firewall",
+          "name": "epoch_deny_2_v6",
+          "project": "nmb1a-plan-run",
+          "billableOrRetained": true
+        },
+        {
+          "type": "google_compute_firewall",
+          "name": "gateway_fake_2",
+          "project": "nmb1a-plan-run",
+          "billableOrRetained": true
+        },
+        {
+          "type": "google_compute_firewall",
+          "name": "fake_ingress_nat",
+          "project": "nmb1a-plan-fake",
+          "billableOrRetained": true
+        },
+        {
+          "type": "google_compute_firewall",
+          "name": "sql_run",
+          "project": "nmb1a-plan-run",
+          "billableOrRetained": true
+        },
+        {
+          "type": "google_compute_firewall",
+          "name": "sql_custody",
+          "project": "nmb1a-plan-custody",
+          "billableOrRetained": true
+        },
+        {
+          "type": "google_compute_firewall",
+          "name": "sealer_call",
+          "project": "nmb1a-plan-run",
+          "billableOrRetained": true
+        },
+        {
+          "type": "google_compute_firewall",
+          "name": "restricted_run",
+          "project": "nmb1a-plan-run",
+          "billableOrRetained": true
+        },
+        {
+          "type": "google_compute_firewall",
+          "name": "restricted_custody",
+          "project": "nmb1a-plan-custody",
+          "billableOrRetained": true
+        },
+        {
+          "type": "google_compute_route",
+          "name": "restricted_run",
+          "project": "nmb1a-plan-run",
+          "billableOrRetained": true
+        },
+        {
+          "type": "google_compute_route",
+          "name": "restricted_custody",
+          "project": "nmb1a-plan-custody",
+          "billableOrRetained": true
+        },
+        {
+          "type": "google_dns_managed_zone",
+          "name": "apis_run",
+          "project": "nmb1a-plan-run",
+          "billableOrRetained": true
+        },
+        {
+          "type": "google_dns_managed_zone",
+          "name": "runapp_run",
+          "project": "nmb1a-plan-run",
+          "billableOrRetained": true
+        },
+        {
+          "type": "google_dns_managed_zone",
+          "name": "sql_run",
+          "project": "nmb1a-plan-run",
+          "billableOrRetained": true
+        },
+        {
+          "type": "google_dns_managed_zone",
+          "name": "apis_custody",
+          "project": "nmb1a-plan-custody",
+          "billableOrRetained": true
+        },
+        {
+          "type": "google_dns_managed_zone",
+          "name": "runapp_custody",
+          "project": "nmb1a-plan-custody",
+          "billableOrRetained": true
+        },
+        {
+          "type": "google_dns_managed_zone",
+          "name": "sql_custody",
+          "project": "nmb1a-plan-custody",
+          "billableOrRetained": true
+        },
+        {
+          "type": "google_dns_managed_zone",
+          "name": "sealer",
+          "project": "nmb1a-plan-run",
+          "billableOrRetained": true
+        },
+        {
+          "type": "google_dns_record_set",
+          "name": "apis_run",
+          "project": "nmb1a-plan-run",
+          "billableOrRetained": true
+        },
+        {
+          "type": "google_dns_record_set",
+          "name": "runapp_run",
+          "project": "nmb1a-plan-run",
+          "billableOrRetained": true
+        },
+        {
+          "type": "google_dns_record_set",
+          "name": "sql_run",
+          "project": "nmb1a-plan-run",
+          "billableOrRetained": true
+        },
+        {
+          "type": "google_dns_record_set",
+          "name": "apis_custody",
+          "project": "nmb1a-plan-custody",
+          "billableOrRetained": true
+        },
+        {
+          "type": "google_dns_record_set",
+          "name": "runapp_custody",
+          "project": "nmb1a-plan-custody",
+          "billableOrRetained": true
+        },
+        {
+          "type": "google_dns_record_set",
+          "name": "sql_custody",
+          "project": "nmb1a-plan-custody",
+          "billableOrRetained": true
+        },
+        {
+          "type": "google_dns_record_set",
+          "name": "sealer",
+          "project": "nmb1a-plan-run",
+          "billableOrRetained": true
+        },
+        {
+          "type": "google_service_account",
+          "name": "ingress",
+          "project": "nmb1a-plan-run",
+          "billableOrRetained": true
+        },
+        {
+          "type": "google_service_account",
+          "name": "worker",
+          "project": "nmb1a-plan-run",
+          "billableOrRetained": true
+        },
+        {
+          "type": "google_service_account",
+          "name": "gw_e000001",
+          "project": "nmb1a-plan-run",
+          "billableOrRetained": true
+        },
+        {
+          "type": "google_service_account",
+          "name": "gw_e000002",
+          "project": "nmb1a-plan-run",
+          "billableOrRetained": true
+        },
+        {
+          "type": "google_service_account",
+          "name": "controller",
+          "project": "nmb1a-plan-run",
+          "billableOrRetained": true
+        },
+        {
+          "type": "google_service_account",
+          "name": "kill",
+          "project": "nmb1a-plan-run",
+          "billableOrRetained": true
+        },
+        {
+          "type": "google_service_account",
+          "name": "observer",
+          "project": "nmb1a-plan-custody",
+          "billableOrRetained": true
+        },
+        {
+          "type": "google_service_account",
+          "name": "sealer",
+          "project": "nmb1a-plan-custody",
+          "billableOrRetained": true
+        },
+        {
+          "type": "google_service_account",
+          "name": "deployer",
+          "project": "nmb1a-plan-run",
+          "billableOrRetained": true
+        },
+        {
+          "type": "google_service_account",
+          "name": "fake",
+          "project": "nmb1a-plan-fake",
+          "billableOrRetained": true
+        },
+        {
+          "type": "google_cloud_run_v2_service",
+          "name": "ingress",
+          "project": "nmb1a-plan-run",
+          "billableOrRetained": true
+        },
+        {
+          "type": "google_cloud_run_v2_service",
+          "name": "gateway",
+          "project": "nmb1a-plan-run",
+          "billableOrRetained": true
+        },
+        {
+          "type": "google_cloud_run_v2_service",
+          "name": "sealer",
+          "project": "nmb1a-plan-custody",
+          "billableOrRetained": true
+        },
+        {
+          "type": "google_cloud_run_v2_worker_pool",
+          "name": "worker",
+          "project": "nmb1a-plan-run",
+          "billableOrRetained": true
+        },
+        {
+          "type": "google_compute_region_network_endpoint_group",
+          "name": "sealer",
+          "project": "nmb1a-plan-custody",
+          "billableOrRetained": true
+        },
+        {
+          "type": "google_compute_region_backend_service",
+          "name": "sealer",
+          "project": "nmb1a-plan-custody",
+          "billableOrRetained": true
+        },
+        {
+          "type": "google_compute_region_url_map",
+          "name": "sealer",
+          "project": "nmb1a-plan-custody",
+          "billableOrRetained": true
+        },
+        {
+          "type": "google_compute_region_ssl_certificate",
+          "name": "sealer",
+          "project": "nmb1a-plan-custody",
+          "billableOrRetained": true
+        },
+        {
+          "type": "google_compute_region_target_https_proxy",
+          "name": "sealer",
+          "project": "nmb1a-plan-custody",
+          "billableOrRetained": true
+        },
+        {
+          "type": "google_compute_service_attachment",
+          "name": "sealer",
+          "project": "nmb1a-plan-custody",
+          "billableOrRetained": true
+        },
+        {
+          "type": "google_secret_manager_secret",
+          "name": "effect_e000001",
+          "project": "nmb1a-plan-run",
+          "billableOrRetained": true
+        },
+        {
+          "type": "google_secret_manager_secret",
+          "name": "effect_e000002",
+          "project": "nmb1a-plan-run",
+          "billableOrRetained": true
+        },
+        {
+          "type": "google_secret_manager_secret",
+          "name": "worker_db",
+          "project": "nmb1a-plan-run",
+          "billableOrRetained": true
+        },
+        {
+          "type": "google_secret_manager_secret",
+          "name": "ingress_db",
+          "project": "nmb1a-plan-run",
+          "billableOrRetained": true
+        },
+        {
+          "type": "google_secret_manager_secret",
+          "name": "controller_db",
+          "project": "nmb1a-plan-run",
+          "billableOrRetained": true
+        },
+        {
+          "type": "google_secret_manager_secret",
+          "name": "sealer_db",
+          "project": "nmb1a-plan-custody",
+          "billableOrRetained": true
+        },
+        {
+          "type": "google_secret_manager_secret",
+          "name": "observer_signing",
+          "project": "nmb1a-plan-custody",
+          "billableOrRetained": true
+        },
+        {
+          "type": "google_storage_bucket",
+          "name": "custody",
+          "project": "nmb1a-plan-custody",
+          "billableOrRetained": true
+        },
+        {
+          "type": "google_kms_key_ring",
+          "name": "effect",
+          "project": "nmb1a-plan-run",
+          "billableOrRetained": true
+        },
+        {
+          "type": "google_kms_key_ring",
+          "name": "custody",
+          "project": "nmb1a-plan-custody",
+          "billableOrRetained": true
+        },
+        {
+          "type": "google_kms_crypto_key",
+          "name": "effect",
+          "project": "resource-ID scoped",
+          "billableOrRetained": true
+        },
+        {
+          "type": "google_kms_crypto_key",
+          "name": "custody",
+          "project": "resource-ID scoped",
+          "billableOrRetained": true
+        },
+        {
+          "type": "google_artifact_registry_repository",
+          "name": "harness",
+          "project": "nmb1a-plan-run",
+          "billableOrRetained": true
+        },
+        {
+          "type": "google_compute_instance",
+          "name": "fake",
+          "project": "nmb1a-plan-fake",
+          "billableOrRetained": true
+        },
+        {
+          "type": "google_cloud_run_v2_service_iam_member",
+          "name": "worker_gateway",
+          "project": "nmb1a-plan-run",
+          "billableOrRetained": true
+        },
+        {
+          "type": "google_cloud_run_v2_service_iam_member",
+          "name": "ingress_sealer",
+          "project": "nmb1a-plan-custody",
+          "billableOrRetained": true
+        },
+        {
+          "type": "google_secret_manager_secret_iam_member",
+          "name": "effect_e000001",
+          "project": "nmb1a-plan-run",
+          "billableOrRetained": true
+        },
+        {
+          "type": "google_secret_manager_secret_iam_member",
+          "name": "effect_e000002",
+          "project": "nmb1a-plan-run",
+          "billableOrRetained": true
+        },
+        {
+          "type": "google_secret_manager_secret_iam_member",
+          "name": "worker_db",
+          "project": "nmb1a-plan-run",
+          "billableOrRetained": true
+        },
+        {
+          "type": "google_secret_manager_secret_iam_member",
+          "name": "ingress_db",
+          "project": "nmb1a-plan-run",
+          "billableOrRetained": true
+        },
+        {
+          "type": "google_secret_manager_secret_iam_member",
+          "name": "controller_db",
+          "project": "nmb1a-plan-run",
+          "billableOrRetained": true
+        },
+        {
+          "type": "google_secret_manager_secret_iam_member",
+          "name": "sealer_db",
+          "project": "nmb1a-plan-custody",
+          "billableOrRetained": true
+        },
+        {
+          "type": "google_secret_manager_secret_iam_member",
+          "name": "observer_signing",
+          "project": "nmb1a-plan-custody",
+          "billableOrRetained": true
+        },
+        {
+          "type": "google_kms_crypto_key_iam_member",
+          "name": "effect_1",
+          "project": "resource-ID scoped",
+          "billableOrRetained": true
+        },
+        {
+          "type": "google_kms_crypto_key_iam_member",
+          "name": "effect_2",
+          "project": "resource-ID scoped",
+          "billableOrRetained": true
+        },
+        {
+          "type": "google_kms_crypto_key_iam_member",
+          "name": "sealer",
+          "project": "resource-ID scoped",
+          "billableOrRetained": true
+        },
+        {
+          "type": "google_storage_bucket_iam_member",
+          "name": "sealer_create",
+          "project": "resource-ID scoped",
+          "billableOrRetained": true
+        },
+        {
+          "type": "google_storage_bucket_iam_member",
+          "name": "observer_read",
+          "project": "resource-ID scoped",
+          "billableOrRetained": true
+        },
+        {
+          "type": "google_storage_bucket_iam_member",
+          "name": "fake_create",
+          "project": "resource-ID scoped",
+          "billableOrRetained": true
+        },
+        {
+          "type": "google_project_iam_custom_role",
+          "name": "kill",
+          "project": "nmb1a-plan-run",
+          "billableOrRetained": true
+        },
+        {
+          "type": "google_project_iam_custom_role",
+          "name": "deploy",
+          "project": "nmb1a-plan-run",
+          "billableOrRetained": true
+        },
+        {
+          "type": "google_project_iam_member",
+          "name": "kill",
+          "project": "nmb1a-plan-run",
+          "billableOrRetained": false
+        },
+        {
+          "type": "google_project_iam_member",
+          "name": "deploy",
+          "project": "nmb1a-plan-run",
+          "billableOrRetained": false
+        },
+        {
+          "type": "google_project_iam_member",
+          "name": "observer_metrics",
+          "project": "nmb1a-plan-run",
+          "billableOrRetained": false
+        },
+        {
+          "type": "google_project_iam_member",
+          "name": "observer_logs",
+          "project": "nmb1a-plan-run",
+          "billableOrRetained": false
+        },
+        {
+          "type": "google_project_iam_member",
+          "name": "observer_run",
+          "project": "nmb1a-plan-run",
+          "billableOrRetained": false
+        },
+        {
+          "type": "google_service_account_iam_member",
+          "name": "deploy_ingress",
+          "project": "resource-ID scoped",
+          "billableOrRetained": false
+        },
+        {
+          "type": "google_service_account_iam_member",
+          "name": "deploy_worker",
+          "project": "resource-ID scoped",
+          "billableOrRetained": false
+        },
+        {
+          "type": "google_service_account_iam_member",
+          "name": "deploy_gw_e000001",
+          "project": "resource-ID scoped",
+          "billableOrRetained": false
+        },
+        {
+          "type": "google_service_account_iam_member",
+          "name": "deploy_gw_e000002",
+          "project": "resource-ID scoped",
+          "billableOrRetained": false
+        },
+        {
+          "type": "google_billing_budget",
+          "name": "session",
+          "project": "resource-ID scoped",
+          "billableOrRetained": true
+        },
+        {
+          "type": "google_org_policy_policy",
+          "name": "all_traffic",
+          "project": "resource-ID scoped",
+          "billableOrRetained": true
+        }
+      ]
+    },
+    {
+      "phase": 4,
+      "action": "Independent residual-billing verification",
+      "commands": [
+        [
+          "PRINT_ONLY",
+          "verify resource absence at +2h (Direct VPC IP/subnet release can lag), +48h billing and next statement; record pending charges and KMS destruction completion; remove budget notification wiring only after closeout"
+        ]
+      ],
+      "failClosed": "Missing absence/billing evidence => cleanup incomplete, named backup operator follows up; never reopen experiment automatically"
+    }
+  ],
+  "recreation": "Impossible apply guard remains; durable expiry and disabled deployment jobs; a reboot/reset/new billing month is not authorization."
+}

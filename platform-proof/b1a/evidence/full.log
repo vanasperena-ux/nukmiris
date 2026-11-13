@@ -1,0 +1,102 @@
+
+> nukmiris-inc1-local-proof@0.1.0 test
+> node --test --test-concurrency=1 test/*.test.mjs
+
+✔ B-2/P4: authenticated post-fence initiation is VIOLATION before metrics completeness (15.469408ms)
+✔ B-2: a conclusive write or older-epoch connect cannot be hidden by unrelated invalid fields (3.276454ms)
+✔ B-2: incomplete, stale, contradictory samples never turn pre-fence traffic into containment proof (9.864424ms)
+✔ B-2: explicit measured clock uncertainty and named clock sources are mandatory for CLOUD (6.364288ms)
+✔ B-2: measured offsets across two clocks distinguish pre-fence bytes, ambiguity and post-fence initiation (4.066895ms)
+✔ B-2: caller-controlled sourceVerified, serialized copies and mutated evidence have no authority (2.239708ms)
+✔ B-2: trusted issuer, public-key pin, role, session, and signature are independently checked (2.19389ms)
+✔ B-2: authentic expired records cannot PASS but retain a conclusive historical violation (2.792897ms)
+✔ B-2: four-timestamp clock calibration rejects contradictory samples and includes drift/precision (0.635031ms)
+{"nativeClockMeasurement":{"referenceClockSource":"native-parent-observer","remoteClockSource":"native-child-modeled-offset1000","remoteMinusReferenceMs":1000,"measuredAt":1794603545712,"validUntil":1794603550712,"uncertaintyMs":2.25,"samples":[[1794603545710,1794603546710,1794603546710,1794603545710],[1794603545710,1794603546711,1794603546711,1794603545711],[1794603545711,1794603546711,1794603546711,1794603545711],[1794603545711,1794603546711,1794603546711,1794603545711],[1794603545711,1794603546711,1794603546711,1794603545711],[1794603545711,1794603546711,1794603546711,1794603545711],[1794603545711,1794603546711,1794603546711,1794603545712],[1794603545712,1794603546712,1794603546712,1794603545712],[1794603545712,1794603546712,1794603546712,1794603545712],[1794603545712,1794603546712,1794603546712,1794603545712],[1794603545712,1794603546712,1794603546712,1794603545712],[1794603545712,1794603546712,1794603546712,1794603545712]],"cloudClockMeasurement":false}}
+✔ native four-timestamp clock sampling measures explicit uncertainty; no cloud-default tolerance (62.955757ms)
+▶ B-8: intentional PostgreSQL startup failure captures state/logs before scoped cleanup
+  ✔ failed owned fixture (6162.446828ms)
+✔ B-8: intentional PostgreSQL startup failure captures state/logs before scoped cleanup (6181.294592ms)
+✔ B-8: diagnostics redact generated secrets and bound log size (0.368846ms)
+✔ published evidence verifier consumes the exact helper scope and testedSource schema (44.808172ms)
+✔ published evidence verifier rejects missing source pin and a false hash-chain head (71.436762ms)
+✔ B-4: BEFORE_SERVER cannot mint a continuation without a confirmed COMMIT (4912.372072ms)
+✔ B-4: ACK_LOST cannot mint a continuation without a confirmed COMMIT (4149.467668ms)
+✔ B-4: ROLLBACK_TAG cannot mint a continuation without a confirmed COMMIT (3781.845556ms)
+✔ B-5: positive proof BAD_EPOCH remains UNKNOWN and is never resent (4158.499295ms)
+✔ B-5: positive proof BAD_REVISION remains UNKNOWN and is never resent (3432.616741ms)
+✔ B-3: stop sends only direct SIGKILL to an observed stopped process (4227.632995ms)
+✔ B-5: prepared Cloud SQL config requires a CA and DNS verification; no network or ADC (4922.770989ms)
+✔ independent fake ledger authenticates per-epoch client certificate; spoofed epoch cannot apply (4382.765297ms)
+✔ cloud profile is pure privileged configuration; serialized or copied capabilities cannot bypass literal local defaults (3193.863899ms)
+✔ B-1/P2: complete 54-cell cross-product, 20 real instrumented suspensions per cell (138789.425345ms)
+ℹ B1a cross-product completed 180/1080
+ℹ B1a cross-product completed 360/1080
+ℹ B1a cross-product completed 540/1080
+ℹ B1a cross-product completed 720/1080
+ℹ B1a cross-product completed 900/1080
+ℹ B1a cross-product completed 1080/1080
+✔ B-1/P3: 400 uninstrumented asynchronous suspensions, 130 direct kills and durable replay decisions (51458.65845ms)
+ℹ B1a asynchronous completed 100/400
+ℹ B1a asynchronous completed 200/400
+ℹ B1a asynchronous completed 300/400
+ℹ B1a asynchronous completed 400/400
+✔ B-5: native PostgreSQL TLS verifies both CA and hostname without fallback (5053.825562ms)
+✔ B-2/B-3: real stopped/kill trace distinguishes pre-exit bytes from later provider application (4817.149706ms)
+✔ B1a controller prints exact seven steps, independent kill, no execute mode or cloud SDK (40.586739ms)
+✔ B1a inventory covers EVERY generated resource and teardown explicitly carries retained descendants (2.957472ms)
+✔ B1a network/IAM/SQL bounds, alerts and spend-cap template preserve fail-closed boundary (2.216013ms)
+✔ inert container profile health is alive, readiness/invocation false across restart (19.029792ms)
+✔ elapsed-time supervisor plans teardown on deadline and never resurrects on monthly reset or regressed clock (1.063476ms)
+✔ retirement contract: complete authenticated modeled bundle required; absent data holds (10.582307ms)
+✔ session SQL: billing pause/reset and process restart leave dispatch durably inert (4953.479351ms)
+✔ session SQL: immutable six-hour limit and expiry prevent new entry (5108.532397ms)
+✔ sealer: unavailable, cold, failed journal or dishonest response never causes a false ACK (4239.845204ms)
+✔ retirement promotion rejects another session, scope or predecessor even when signed bundle is internally valid (3.448579ms)
+✔ B1a aggregate gateway SQL login cap bounds old/new overlap without privilege fallback (3002.564359ms)
+✔ B1a controller recovery marks only retired ENTERED as UNKNOWN, preserving original bindings (3399.303448ms)
+✔ campaign: 1000 randomized real SIGSTOP/SIGCONT schedules, all classified (90542.784696ms)
+ℹ completed 100 real suspended/resumed schedules
+ℹ completed 200 real suspended/resumed schedules
+ℹ completed 300 real suspended/resumed schedules
+ℹ completed 400 real suspended/resumed schedules
+ℹ completed 500 real suspended/resumed schedules
+ℹ completed 600 real suspended/resumed schedules
+ℹ completed 700 real suspended/resumed schedules
+ℹ completed 800 real suspended/resumed schedules
+ℹ completed 900 real suspended/resumed schedules
+ℹ completed 1000 real suspended/resumed schedules
+✔ concurrency: one invocation for 32 same-attempt callers, replay and distinct operations (4746.620318ms)
+✔ faults: lost COMMIT acknowledgement cannot recreate a permit (4724.596855ms)
+✔ faults: provider response loss, rejection, TLS stall and deadline stay held without resend (3502.411503ms)
+✔ faults: crash after COMMIT, restart and replay keep ENTERED/UNKNOWN non-resumable (4700.06877ms)
+✔ faults: pre-exit accepted request can apply after completed local termination (3227.212321ms)
+✔ faults: scope binding, immutable operation and role separation (4158.706336ms)
+✔ counterexample: unsafe keep-alive sends again on an old connection; corrected gateway never does (4623.887765ms)
+✔ dead-man: 20 independently awakened stopped processes; silence is not death (10789.612239ms)
+▶ fixture: labeled independent SQL volume is removed after the fixture closes
+  ✔ create and use disposable volume (4661.247822ms)
+✔ fixture: labeled independent SQL volume is removed after the fixture closes (4676.334303ms)
+✔ permission: consume once in gateway continuation; durable row/replay is never a ticket (4374.449016ms)
+✔ permission: gateway cannot plan/rearm; invalid binding fails UNKNOWN with no network (4030.676896ms)
+✔ permission: both authority/COMMIT race orders serialize; retirement is not physical fencing (3938.472645ms)
+✔ plan pins: Enterprise/shared-core, region, limits, identity/epoch, no retained/final backups (5.657311ms)
+✔ plan-only guard: all resources depend on impossible apply gate; no live token or auto-apply workflow (1.408789ms)
+✔ operational tools are print-only and reject execution; exactly seven fence steps (119.782006ms)
+✔ additive offline calculator reproduces prior evidence and six-hour/max-one/G1 scenarios (58.599092ms)
+✔ isolation: literal loopback, isolated database names and roles only (1.066421ms)
+✔ ledger: modify, reorder, truncate, rehash and partial-record tampering fail against independent checkpoint (17.781019ms)
+✔ classifier: pre-fence late arrival differs from post-fence initiation (0.371872ms)
+✔ classifier: absent, stale, wrong-scope, missing deletion and heartbeat-only evidence fail closed (4.871064ms)
+ℹ tests 62
+ℹ suites 0
+ℹ pass 62
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 414386.264759
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.2
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.2
+npm notice To update run: npm install -g npm@12.2.2
+npm notice

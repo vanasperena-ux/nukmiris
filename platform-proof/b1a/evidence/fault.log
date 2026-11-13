@@ -1,0 +1,67 @@
+
+> nukmiris-inc1-local-proof@0.1.0 test:fault
+> node --test --test-concurrency=1 test/fault.test.mjs test/campaign.test.mjs test/b1a-gateway.test.mjs test/b1a-interruption.test.mjs test/b1a-native-proof.test.mjs test/b1a-diagnostics.test.mjs test/b1a-session.test.mjs
+
+▶ B-8: intentional PostgreSQL startup failure captures state/logs before scoped cleanup
+  ✔ failed owned fixture (4115.818836ms)
+✔ B-8: intentional PostgreSQL startup failure captures state/logs before scoped cleanup (4133.970967ms)
+✔ B-8: diagnostics redact generated secrets and bound log size (0.275719ms)
+✔ B-4: BEFORE_SERVER cannot mint a continuation without a confirmed COMMIT (4083.357043ms)
+✔ B-4: ACK_LOST cannot mint a continuation without a confirmed COMMIT (3820.814553ms)
+✔ B-4: ROLLBACK_TAG cannot mint a continuation without a confirmed COMMIT (3441.807576ms)
+✔ B-5: positive proof BAD_EPOCH remains UNKNOWN and is never resent (4640.03325ms)
+✔ B-5: positive proof BAD_REVISION remains UNKNOWN and is never resent (3234.085308ms)
+✔ B-3: stop sends only direct SIGKILL to an observed stopped process (3701.181265ms)
+✔ B-5: prepared Cloud SQL config requires a CA and DNS verification; no network or ADC (2820.432483ms)
+✔ B-1/P2: complete 54-cell cross-product, 20 real instrumented suspensions per cell (138436.810097ms)
+ℹ B1a cross-product completed 180/1080
+ℹ B1a cross-product completed 360/1080
+ℹ B1a cross-product completed 540/1080
+ℹ B1a cross-product completed 720/1080
+ℹ B1a cross-product completed 900/1080
+ℹ B1a cross-product completed 1080/1080
+✔ B-1/P3: 400 uninstrumented asynchronous suspensions, 130 direct kills and durable replay decisions (47694.793872ms)
+ℹ B1a asynchronous completed 100/400
+ℹ B1a asynchronous completed 200/400
+ℹ B1a asynchronous completed 300/400
+ℹ B1a asynchronous completed 400/400
+✔ B-5: native PostgreSQL TLS verifies both CA and hostname without fallback (4032.813471ms)
+✔ B-2/B-3: real stopped/kill trace distinguishes pre-exit bytes from later provider application (3968.926319ms)
+✔ retirement contract: complete authenticated modeled bundle required; absent data holds (10.043683ms)
+✔ session SQL: billing pause/reset and process restart leave dispatch durably inert (4099.758435ms)
+✔ session SQL: immutable six-hour limit and expiry prevent new entry (4319.755622ms)
+✔ sealer: unavailable, cold, failed journal or dishonest response never causes a false ACK (4266.715095ms)
+✔ retirement promotion rejects another session, scope or predecessor even when signed bundle is internally valid (4.024683ms)
+✔ B1a aggregate gateway SQL login cap bounds old/new overlap without privilege fallback (3207.08312ms)
+✔ B1a controller recovery marks only retired ENTERED as UNKNOWN, preserving original bindings (4071.411975ms)
+✔ campaign: 1000 randomized real SIGSTOP/SIGCONT schedules, all classified (90641.415445ms)
+ℹ completed 100 real suspended/resumed schedules
+ℹ completed 200 real suspended/resumed schedules
+ℹ completed 300 real suspended/resumed schedules
+ℹ completed 400 real suspended/resumed schedules
+ℹ completed 500 real suspended/resumed schedules
+ℹ completed 600 real suspended/resumed schedules
+ℹ completed 700 real suspended/resumed schedules
+ℹ completed 800 real suspended/resumed schedules
+ℹ completed 900 real suspended/resumed schedules
+ℹ completed 1000 real suspended/resumed schedules
+✔ faults: lost COMMIT acknowledgement cannot recreate a permit (4524.460105ms)
+✔ faults: provider response loss, rejection, TLS stall and deadline stay held without resend (5168.742506ms)
+✔ faults: crash after COMMIT, restart and replay keep ENTERED/UNKNOWN non-resumable (3931.594187ms)
+✔ faults: pre-exit accepted request can apply after completed local termination (3986.83877ms)
+✔ faults: scope binding, immutable operation and role separation (4375.161555ms)
+✔ counterexample: unsafe keep-alive sends again on an old connection; corrected gateway never does (3445.359655ms)
+✔ dead-man: 20 independently awakened stopped processes; silence is not death (10966.785265ms)
+ℹ tests 29
+ℹ suites 0
+ℹ pass 29
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 371769.909391
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.2
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.2
+npm notice To update run: npm install -g npm@12.2.2
+npm notice

@@ -1,0 +1,22 @@
+{
+  "scope": "OWNED_LOCAL_B1A_FIXTURE_ONLY",
+  "observedAt": "2026-11-13T20:52:14.366Z",
+  "name": "inc1-cd470878fcc235c0",
+  "volume": "inc1-cd470878fcc235c0-pgdata",
+  "reason": "fixture_setup_failed",
+  "intentionalTestFault": false,
+  "startupTimeoutMs": 60000,
+  "state": {
+    "status": "exited",
+    "exitCode": 1,
+    "reason": "",
+    "oomKilled": false,
+    "startedAt": "2026-11-13T20:52:13.762753415Z",
+    "finishedAt": "2026-11-13T20:52:14.258718741Z"
+  },
+  "postgresLogs": "The files belonging to this database system will be owned by user \"postgres\".\nThis user must also own the server process.\n\nThe database cluster will be initialized with locale \"en_US.utf8\".\nThe default database encoding has accordingly been set to \"UTF8\".\nThe default text search configuration will be set to \"english\".\n\nData page checksums are disabled.\n\nfixing permissions on existing directory /var/lib/postgresql/data ... ok\ncreating subdirectories ... ok\nselecting dynamic shared memory implementation ... posix\nselecting default \"max_connections\" ... 100\nselecting default \"shared_buffers\" ... 128MB\nselecting default time zone ... Etc/UTC\ncreating configuration files ... ok\nrunning bootstrap script ... ok\nperforming post-bootstrap initialization ... \n2026-11-13 20:52:14.248 UTC [40] FATAL:  could not create directory \"base/4\": No space left on device\n2026-11-13 20:52:14.248 UTC [40] STATEMENT:  CREATE DATABASE template0 IS_TEMPLATE = true ALLOW_CONNECTIONS = false OID = 4 STRATEGY = file_copy;\n\t\nchild process exited with exit code 1\ninitdb: removing contents of data directory \"/var/lib/postgresql/data\"\n",
+  "inspectError": null,
+  "logError": null,
+  "capturedBeforeResourceRemoval": true,
+  "source": "UNPINNED_DEVELOPMENT_RUN"
+}
