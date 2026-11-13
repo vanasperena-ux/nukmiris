@@ -75,5 +75,11 @@
     "privateKeyAndProviderTokenPatterns": 0,
     "independentlyReviewed": false
   },
-  "artifactPublicationStatus": "TEXT_EVIDENCE_READY; RAW_ARCHIVE_PARTS_PENDING"
+  "artifactPublicationStatus": "COMPLETE",
+  "archivePublicationApproval": "Owner confirmed Allow in Codex for the exact audited synthetic archives; no cloud or deployment authorization.",
+  "archivePartUpload": {
+    "components": 27,
+    "allReturnedGitBlobHashesMatched": true
+  },
+  "publicationFinalizedAt": "2026-11-13T23:54:40.672584+00:00"
 }

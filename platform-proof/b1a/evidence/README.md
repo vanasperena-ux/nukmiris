@@ -1,6 +1,6 @@
 # B1a source/local evidence — Draft PR21
 
-**Artifact publication status: text evidence ready; raw archive parts are still pending upload. Do not treat the remote evidence set as complete until the PR completion comment.**
+**Artifact publication complete: source, logs, privacy audit and all raw archive parts are published. Independent Claude review is pending.**
 
 **No Google Cloud experiment executed. No source acceptance from Claude yet.**
 [Draft PR21](https://github.com/vanasperena-ux/nukmiris/pull/21) is stacked on exact
@@ -71,8 +71,8 @@ review then rejected an opaque upload until its sensitivity was verified.
 The subsequent complete data audit (privacy-audit.json) inspected all150 archived
 JSON files and every string/key: the only payload is {"synthetic":true}; zero
 customer/phone/password/token/private-key fields or secret patterns. This is a
-Codex content audit, not independent Claude acceptance. Splitting does not waive
-approval and preserves the exact same audited bytes. Their
+Codex content audit, not independent Claude acceptance. The owner subsequently confirmed Allow in Codex; uploads then succeeded.
+Splitting preserves the exact same audited bytes and does not waive approval. Their
 original bytes/hash and ordered parts are in archive-assembly.json; concurrency
 is a small unsplit archive. Reassemble from this evidence directory with:
 
