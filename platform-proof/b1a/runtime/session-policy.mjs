@@ -196,6 +196,47 @@ export class SessionController {
     ]);
     return this.read();
   }
+  async reconcile(bundle, attemptIds) {
+    const proof = retirementDecision(bundle);
+    if (proof.state !== "EVIDENCE_READY")
+      return { ...proof, dispatchEnabled: false };
+    if (!Array.isArray(attemptIds) || attemptIds.length > 100)
+      throw Error("bounded_original_attempt_ids_required");
+    attemptIds.forEach(id);
+    const state = await this.read(),
+      f = authenticatedObservation(bundle.fence, "FENCE");
+    if (
+      !state ||
+      state.holdReason !== "FENCE_INCOMPLETE" ||
+      f.sessionId !== this.sessionId ||
+      f.payload.scope !== state.scopeId ||
+      f.payload.retiredEpoch !== state.retiredEpoch ||
+      f.payload.retiredRevision !== state.retiredRevision
+    )
+      return {
+        state: "HOLD",
+        reason: "retirement_session_or_predecessor_mismatch",
+        dispatchEnabled: false,
+      };
+    const outcomes = [];
+    for (const attemptId of attemptIds)
+      outcomes.push({
+        attemptId,
+        state: (
+          await this.db.query("SELECT proof.recover_retired($1,$2,$3) state", [
+            this.sessionId,
+            attemptId,
+            proof.evidenceDigest,
+          ])
+        ).rows[0].state,
+      });
+    return {
+      state: "RECONCILED_OR_HELD",
+      outcomes,
+      dispatchEnabled: false,
+      evidenceDigest: proof.evidenceDigest,
+    };
+  }
   async promote(bundle) {
     const proof = retirementDecision(bundle);
     if (proof.state !== "EVIDENCE_READY")

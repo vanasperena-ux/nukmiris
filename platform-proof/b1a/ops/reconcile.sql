@@ -1,7 +1,6 @@
--- Controller is deliberately NOT granted worker or gateway mutation authority.
--- Reconciliation through original scoped worker identity; separate read-only
--- incident export and operator decision. No universal SQL UPDATE/rearm shortcut.
+-- Future authorized independent controller only, after verified signed bundle.
+-- retirement_digest binds the independently verified fence/canary/ledger bundle.
+-- No worker/admin table UPDATE and no outcome invention or rearm.
 \set ON_ERROR_STOP on
 SELECT proof.control_read(:'session'::uuid);
--- Worker calls proof.recover(scope,attempt) for each ORIGINAL attempt ID.
--- Entry state -> UNKNOWN; ARMED remains explicit-replay eligible. No new IDs.
+SELECT proof.recover_retired(:'session'::uuid,:'original_attempt'::uuid,:'retirement_digest');

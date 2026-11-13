@@ -90,3 +90,9 @@ actual region/unique IDs; named supervisor/kill/custody/cleanup/billing/backup
 humans; measured fence/reporting/wake-tail thresholds; approved gross currency/FX
 allocation and exact session start/end; temporary evidence retention/export and
 review of inventory deltas. None is inferred from source approval or trial credit.
+
+The step6 SQL file calls the implemented controller-only `recover_retired` function.
+It can only mark matching retired ENTERED work UNKNOWN, preserving original
+operation/digest/owner bindings; APPLIED/UNKNOWN/ARMED stay unchanged, cross-scope
+IDs are denied. The API requires the authenticated retirement bundle; SQL trusts
+the independently held controller role and never grants runtime/admin rearm.

@@ -1,7 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { randomUUID } from "node:crypto";
-import { fixture, stop } from "./helpers.mjs";
+import { fixture, stop, arm } from "./helpers.mjs";
 import {
   SessionController,
   retirementDecision,
@@ -376,4 +376,101 @@ test("B1a aggregate gateway SQL login cap bounds old/new overlap without privile
   } finally {
     await Promise.all(clients.map((c) => c.end()));
   }
+});
+
+test("B1a controller recovery marks only retired ENTERED as UNKNOWN, preserving original bindings", async (t) => {
+  const f = await fixture(t, { control: true }),
+    b = await f.plan({ deadlineMs: 8000 }),
+    sessionId = randomUUID(),
+    db = roleDb(f, "inc1_controller"),
+    controller = new SessionController({ db, sessionId });
+  await db.query("SELECT proof.control_create($1,$2,1,$3,$4)", [
+    sessionId,
+    b.scopeId,
+    b.revision,
+    new Date(Date.now() + 60000),
+  ]);
+  const state = await controller.read();
+  await db.query("SELECT proof.control_promote($1,1,$2,$3)", [
+    sessionId,
+    state.generation,
+    "a".repeat(64),
+  ]);
+  const g = await f.gateway({ controlSessionId: sessionId }),
+    { hook } = await arm(g, b, "afterCommit"),
+    pending = f.request(g, b);
+  await hook;
+  await stop(g);
+  await pending;
+  assert.equal(await f.state(b), "ENTERED");
+  const before = (
+    await f.admin.query(
+      "SELECT operation_id,payload_digest,owner_id FROM proof.attempt WHERE id=$1",
+      [b.attemptId],
+    )
+  ).rows[0];
+  await controller.advance(1, 2, "inc1-r2");
+  // Disposable test operator simulates receipt validation. SQL trusts the narrow
+  // controller identity; real API requires the signed retirement bundle first.
+  assert.equal(
+    (
+      await db.query("SELECT proof.recover_retired($1,$2,$3) state", [
+        sessionId,
+        b.attemptId,
+        "b".repeat(64),
+      ])
+    ).rows[0].state,
+    "UNKNOWN",
+  );
+  assert.equal(
+    (
+      await db.query("SELECT proof.recover_retired($1,$2,$3) state", [
+        sessionId,
+        b.attemptId,
+        "b".repeat(64),
+      ])
+    ).rows[0].state,
+    "UNKNOWN",
+  );
+  assert.equal(await f.state(b), "UNKNOWN");
+  assert.deepEqual(
+    (
+      await f.admin.query(
+        "SELECT operation_id,payload_digest,owner_id FROM proof.attempt WHERE id=$1",
+        [b.attemptId],
+      )
+    ).rows[0],
+    before,
+  );
+  const other = await f.plan();
+  assert.equal(
+    (
+      await db.query("SELECT proof.recover_retired($1,$2,$3) state", [
+        sessionId,
+        other.attemptId,
+        "b".repeat(64),
+      ])
+    ).rows[0].state,
+    "DENIED",
+  );
+  assert.equal(await f.state(other), "ARMED");
+  await assert.rejects(
+    roleDb(f, "inc1_worker").query("SELECT proof.recover_retired($1,$2,$3)", [
+      sessionId,
+      b.attemptId,
+      "b".repeat(64),
+    ]),
+    /permission denied/,
+  );
+  assert.equal(
+    (await controller.reconcile({}, [b.attemptId])).dispatchEnabled,
+    false,
+  );
+  assert.equal(f.records.filter((r) => r.event === "REQUEST").length, 0);
+  await f.evidence("b1a-retired-recovery", {
+    neverRearmed: true,
+    originalBindingsPreserved: true,
+    crossScopeDenied: true,
+    cloudRetirementTested: false,
+  });
 });

@@ -97,3 +97,20 @@ ALTER ROLE inc1_worker CONNECTION LIMIT 2;
 ALTER ROLE inc1_ingress CONNECTION LIMIT 1;
 ALTER ROLE inc1_sealer CONNECTION LIMIT 1;
 ALTER ROLE inc1_controller CONNECTION LIMIT 2;
+
+-- Controller can ONLY monotonically mark old entered work uncertain after a
+-- verified retirement. No administrative UPDATE, rearm or new identity API.
+SET ROLE inc1_owner;
+CREATE FUNCTION proof.recover_retired(s uuid,a uuid,digest text) RETURNS text LANGUAGE plpgsql SECURITY DEFINER SET search_path=pg_catalog,proof AS $$
+DECLARE c proof.experiment_control;v proof.attempt;
+BEGIN
+ SELECT * INTO c FROM proof.experiment_control WHERE session_id=s FOR SHARE;
+ IF c.session_id IS NULL OR c.dispatch_enabled OR c.hold_reason<>'FENCE_INCOMPLETE' OR c.retired_epoch IS NULL OR digest IS NULL OR digest!~'^[a-f0-9]{64}$' THEN RAISE EXCEPTION 'retirement_recovery_denied';END IF;
+ SELECT * INTO v FROM proof.attempt WHERE id=a AND scope_id=c.scope_id AND epoch=c.retired_epoch AND revision=c.retired_revision FOR UPDATE;
+ IF v.id IS NULL THEN RETURN 'DENIED';END IF;
+ IF v.state='ENTERED' THEN UPDATE proof.attempt SET state='UNKNOWN',completed_at=clock_timestamp() WHERE id=a;RETURN 'UNKNOWN';END IF;
+ RETURN v.state;
+END $$;
+REVOKE ALL ON FUNCTION proof.recover_retired(uuid,uuid,text) FROM PUBLIC,inc1_gateway,inc1_worker,inc1_ingress,inc1_sealer;
+GRANT EXECUTE ON FUNCTION proof.recover_retired(uuid,uuid,text) TO inc1_controller;
+RESET ROLE;
