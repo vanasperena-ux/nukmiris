@@ -1,0 +1,414 @@
+{
+  "scope": "LOCAL_SYNTHETIC_ONLY",
+  "branch": "implementation/inc1-local-gateway-proof",
+  "draftPr": "https://github.com/vanasperena-ux/nukmiris/pull/20",
+  "testedSourceCommit": "3204e73c823d7e552c0aacad74294617490465f6",
+  "testedSourceTree": "e77226c95b35855b551ae680d0a6488f3cde1d78",
+  "baseCommit": "d3fa65192374ca206ff1f6d166a789c295a15e97",
+  "acceptedExecutableCommit": "b4d0be0cb98c7f2b69be318e18b93f4de102c511",
+  "acceptedExecutableTree": "03d08322e27d9d54485fa887b482743fe076556b",
+  "featureRegister": {
+    "version": "1.4",
+    "commit": "59cde023d2dff088161c1d01bd76c1099386e13f"
+  },
+  "protectedTrees": {
+    "backend": {
+      "accepted": "1db9755edab25359cda4a7d5009fcbefe24b4b94",
+      "source": "1db9755edab25359cda4a7d5009fcbefe24b4b94"
+    },
+    "vnext/src": {
+      "accepted": "06b9b834e47359ec9ec9fc90d3ee98419f3cf020",
+      "source": "06b9b834e47359ec9ec9fc90d3ee98419f3cf020"
+    },
+    "vnext/local": {
+      "accepted": "11c3161e14ad54d688a2d3e096e5b158f9cf8558",
+      "source": "11c3161e14ad54d688a2d3e096e5b158f9cf8558"
+    },
+    "vnext/package.json": {
+      "accepted": "d9f587e42f895809a0732314f295f50deaf9a92a",
+      "source": "d9f587e42f895809a0732314f295f50deaf9a92a"
+    },
+    "vnext/package-lock.json": {
+      "accepted": "6c05cf0c4f447c75b6ddcdc43ff6b96047c63447",
+      "source": "6c05cf0c4f447c75b6ddcdc43ff6b96047c63447"
+    },
+    "vnext/test": {
+      "accepted": "3ae5480f207b648c1b58b7d8412399a3d351d146",
+      "source": "3ae5480f207b648c1b58b7d8412399a3d351d146"
+    }
+  },
+  "acceptedSourceManifestFiles": 127,
+  "testCounts": {
+    "full": {
+      "tests": 22,
+      "pass": 22,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0
+    },
+    "fault": {
+      "tests": 8,
+      "pass": 8,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0
+    },
+    "concurrency": {
+      "tests": 1,
+      "pass": 1,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0
+    }
+  },
+  "campaigns": {
+    "full": {
+      "schedules": 1000,
+      "actualSIGSTOP": 1000,
+      "actualSIGCONT": 1000,
+      "seed": 448864294,
+      "cuts": {
+        "afterWrite": 111,
+        "beforeCommit": 111,
+        "beforeWrite": 111,
+        "beforeAuthority": 112,
+        "beforeConnect": 111,
+        "afterCommit": 111,
+        "afterTls": 111,
+        "afterConnect": 111,
+        "midWrite": 111
+      },
+      "states": {
+        "UNKNOWN": 149,
+        "APPLIED": 739,
+        "EXPIRED": 12,
+        "ARMED": 100
+      },
+      "callerResults": {
+        "UNKNOWN": 149,
+        "APPLIED": 739,
+        "EXPIRED": 12,
+        "DENIED": 100
+      },
+      "fenceEvidenceClassification": {
+        "NOT_PROVEN": 1000
+      },
+      "invocations": 811,
+      "effects": 811,
+      "maxRequestsPerAttempt": 1,
+      "maxEffectsPerAttempt": 1,
+      "providerLedgerRecords": 4150,
+      "version": {
+        "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg12+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 12.2.0-14+deb12u1) 12.2.0, 64-bit",
+        "timezone": "UTC"
+      },
+      "completedCloudFence": false
+    },
+    "fault": {
+      "schedules": 1000,
+      "actualSIGSTOP": 1000,
+      "actualSIGCONT": 1000,
+      "seed": 448864294,
+      "cuts": {
+        "afterWrite": 111,
+        "beforeCommit": 111,
+        "beforeWrite": 111,
+        "beforeAuthority": 112,
+        "beforeConnect": 111,
+        "afterCommit": 111,
+        "afterTls": 111,
+        "afterConnect": 111,
+        "midWrite": 111
+      },
+      "states": {
+        "UNKNOWN": 149,
+        "APPLIED": 739,
+        "EXPIRED": 12,
+        "ARMED": 100
+      },
+      "callerResults": {
+        "UNKNOWN": 149,
+        "APPLIED": 739,
+        "EXPIRED": 12,
+        "DENIED": 100
+      },
+      "fenceEvidenceClassification": {
+        "NOT_PROVEN": 1000
+      },
+      "invocations": 811,
+      "effects": 811,
+      "maxRequestsPerAttempt": 1,
+      "maxEffectsPerAttempt": 1,
+      "providerLedgerRecords": 4148,
+      "version": {
+        "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg12+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 12.2.0-14+deb12u1) 12.2.0, 64-bit",
+        "timezone": "UTC"
+      },
+      "completedCloudFence": false
+    }
+  },
+  "canaries": {
+    "full": {
+      "liveSilenceCounterexamples": 20,
+      "killedCanaryDelayedWakeTrials": 20,
+      "postCompletedLocalExitInvocations": 0,
+      "cloudTerminationProven": false
+    },
+    "fault": {
+      "liveSilenceCounterexamples": 20,
+      "killedCanaryDelayedWakeTrials": 20,
+      "postCompletedLocalExitInvocations": 0,
+      "cloudTerminationProven": false
+    }
+  },
+  "commands": [
+    "npm ci --ignore-scripts",
+    "node scripts/check.mjs",
+    "INC1_EVIDENCE_DIR=<separate-output>/full npm test",
+    "INC1_EVIDENCE_DIR=<separate-output>/fault npm run test:fault",
+    "INC1_EVIDENCE_DIR=<separate-output>/concurrency npm run test:concurrency",
+    "node scripts/verify-evidence.mjs <each-output-dir>",
+    "terraform init -backend=false -input=false",
+    "terraform validate -no-color -json",
+    "fence:dry-run / teardown:dry-run / probe:print / costs"
+  ],
+  "suiteOverlap": true,
+  "terraformValidate": {
+    "valid": true,
+    "errors": 0,
+    "warnings": 0,
+    "version": "1.17.2",
+    "provider": "hashicorp/google8.11.0",
+    "cloudApiCalls": 0,
+    "planApplyOrDestroyRun": false,
+    "binaryChecksum": "e6f16b2f0b137ee5729caa8c4e79a3bae4ee261acd198a1fcfa8584a6296605b"
+  },
+  "historicalDevelopmentFailures": [
+    "The first lost-COMMIT test exposed an unhandled checked-out pg client error: the process exited leaving ENTERED held. Added checked-out-client error handling plus bounded UNKNOWN recording; final lost-COMMIT tests pass.",
+    "At f5ea869, full20/20 passed but fault repeat7/8 failed before a canary ran: SQL container exited1 and loopback readiness expired. Docker mount/die events independently identified25 discarded INC1 anonymous volumes; removed only those attested volumes (no prune). Added explicitly labeled named volumes, verified cleanup regression and bounded60s readiness with exit/OOM state diagnostics. The exact original startup-exit cause is unconfirmed; disk pressure is a hypothesis, not established evidence.",
+    "Initial tool setup encountered unwritable default npm cache and sandbox restrictions on local subprocess/plugin sockets. Used task cache and local-network execution permissions; no cloud credentials or account access."
+  ],
+  "notExecuted": [
+    "Cloud Run termination/traffic/tag/IAM/firewall propagation",
+    "Cloud SQL compatibility probe or account/quota access",
+    "Remote custody/witness and independent chain/index extension",
+    "Real Meta/Calendar provider behavior",
+    "Native Windows process-control tests",
+    "Live billing/cost/credit/spend-cap enforcement"
+  ],
+  "cloudResourcesCreated": 0,
+  "cloudExpenditure": 0,
+  "realProviderCalls": 0,
+  "ownerProfilesAccessedOrChanged": false,
+  "acceptedAppChanged": false,
+  "independentReviewAccepted": false,
+  "nextStep": "Independent Claude review first; any B1a cloud-specific implementation and any later provisioning each require separate owner authorization.",
+  "pr16": {
+    "draft": true,
+    "merged": false,
+    "head": "50f3a5be4a22cb0fbbaa7887e366e7c4c8db8117"
+  },
+  "reviewCorrectionA1": {
+    "findingUrl": "https://github.com/vanasperena-ux/nukmiris/pull/20#issuecomment-6838315312",
+    "findingSections": [
+      "A-1 / F-1",
+      "section 3 item 3",
+      "section 5"
+    ],
+    "supportingEvidenceUrl": "https://github.com/vanasperena-ux/nukmiris/pull/20#issuecomment-6838315843",
+    "changeScope": "documentation_only_no_new_gateway_or_provider_execution",
+    "originalEvidenceCommit": "133430a2e4988d334e071d4b64f43393beb992eb",
+    "originalEvidenceTree": "b68e1a95beab351ec8fef556d298689aaf2a2e7b",
+    "originalFieldsPreserved": true,
+    "historicalFieldsNote": "Existing fields retain the original publication record, including independentReviewAccepted=false and nextStep. The later Claude review applies to testedSourceCommit; no review of this A-1 correction is claimed.",
+    "originalCampaignCoverage": {
+      "appliesToRuns": [
+        "full",
+        "fault"
+      ],
+      "schedulesPerRun": 1000,
+      "sameSeedRepeated": true,
+      "pausePointCount": 9,
+      "controlModes": [
+        "RESUME",
+        "REVOKE",
+        "EXPIRE"
+      ],
+      "exercisedCombinations": 18,
+      "possibleCombinations": 27,
+      "countsPerRun": {
+        "beforeAuthority": {
+          "RESUME": 0,
+          "REVOKE": 100,
+          "EXPIRE": 12
+        },
+        "beforeCommit": {
+          "RESUME": 100,
+          "REVOKE": 0,
+          "EXPIRE": 11
+        },
+        "afterCommit": {
+          "RESUME": 100,
+          "REVOKE": 0,
+          "EXPIRE": 11
+        },
+        "beforeConnect": {
+          "RESUME": 0,
+          "REVOKE": 100,
+          "EXPIRE": 11
+        },
+        "afterConnect": {
+          "RESUME": 100,
+          "REVOKE": 0,
+          "EXPIRE": 11
+        },
+        "afterTls": {
+          "RESUME": 100,
+          "REVOKE": 0,
+          "EXPIRE": 11
+        },
+        "beforeWrite": {
+          "RESUME": 0,
+          "REVOKE": 100,
+          "EXPIRE": 11
+        },
+        "midWrite": {
+          "RESUME": 100,
+          "REVOKE": 0,
+          "EXPIRE": 11
+        },
+        "afterWrite": {
+          "RESUME": 100,
+          "REVOKE": 0,
+          "EXPIRE": 11
+        }
+      },
+      "unexercisedCombinations": [
+        {
+          "point": "beforeAuthority",
+          "controlMode": "RESUME"
+        },
+        {
+          "point": "beforeCommit",
+          "controlMode": "REVOKE"
+        },
+        {
+          "point": "afterCommit",
+          "controlMode": "REVOKE"
+        },
+        {
+          "point": "beforeConnect",
+          "controlMode": "RESUME"
+        },
+        {
+          "point": "afterConnect",
+          "controlMode": "REVOKE"
+        },
+        {
+          "point": "afterTls",
+          "controlMode": "REVOKE"
+        },
+        {
+          "point": "beforeWrite",
+          "controlMode": "RESUME"
+        },
+        {
+          "point": "midWrite",
+          "controlMode": "REVOKE"
+        },
+        {
+          "point": "afterWrite",
+          "controlMode": "REVOKE"
+        }
+      ],
+      "generation": "Pause point cuts[i % 9] and control mode i % 10 === 0 ? EXPIRE : i % 3 === 0 ? REVOKE : RESUME are correlated before seeded shuffling; shuffling/delay randomization does not supply independent cross-product coverage.",
+      "suspension": "Actual SIGSTOP/SIGCONT at instrumented await hook() waits, with observed T state and PID-start-checked independent wake; not arbitrary asynchronous instructions.",
+      "rawOutcomeMode": {
+        "field": "campaign/result.json outcomes[].mode",
+        "contains": "provider mode OK/DROP",
+        "reason": "...b overwrote ...s: b.mode replaced s.mode during evidence generation",
+        "providerModeFieldAlsoContainsProviderMode": true,
+        "controlModeRecovery": "Regenerate the seeded schedule; authorityFenceAt corroborates REVOKE only. Shuffled outcome i is not the original generation index.",
+        "rawEvidenceRewritten": false
+      },
+      "offlineDocumentationVerification": [
+        {
+          "run": "full",
+          "matchedSchedules": 1000,
+          "modeContainsProviderMode": true,
+          "sha256": "8a3c1b0cb3c6cafe43c5c4d4dfc37a21ba707a40899c66287d54dcebf394f86a"
+        },
+        {
+          "run": "fault",
+          "matchedSchedules": 1000,
+          "modeContainsProviderMode": true,
+          "sha256": "86f7f70b5e555a9a4e64740e291c9b6d194ba09c2f88803120769cb28dec8b7b"
+        }
+      ]
+    },
+    "independentEvidence": {
+      "reviewer": "Claude",
+      "verdict": "GO WITH CONDITIONS for local implementation3204e73 only",
+      "correctionReviewedByClaude": false,
+      "environment": {
+        "os": "Linux",
+        "node": "22.23.4",
+        "postgresql": "16.15",
+        "pg": "8.16.3",
+        "timezone": "UTC",
+        "fsync": true,
+        "synchronousCommit": true,
+        "helperAdaptation": "Only test/helpers.mjs adapted to fresh local PostgreSQL clusters instead of Docker; src/ unchanged"
+      },
+      "originalEnvironmentEquivalent": false,
+      "probesRunForThisCorrection": false,
+      "notExecutedByReviewer": [
+        "Docker fixture/volume-cleanup test",
+        "exact Node24.19.0/PostgreSQL17.11 pins",
+        "Terraform validate",
+        "Windows",
+        "cloud"
+      ],
+      "probeChecksReported": {
+        "pass": 4,
+        "total": 4,
+        "note": "P4 passing means the counterexample was reproduced, not fixed."
+      },
+      "P1": {
+        "description": "COMMIT lost before reaching server; caller UNKNOWN, durable ARMED, later replay exactly one request/effect"
+      },
+      "P2": {
+        "pausePoints": 9,
+        "controlModes": 3,
+        "providerModes": 2,
+        "combinations": 54,
+        "schedulesPerCombination": 20,
+        "schedules": 1080,
+        "maxRequestEffectConnectPerAttempt": 1,
+        "note": "Separate adapted-environment full cross-product; does not change original18/27 or implement B-1; F13 SQL-retirement residual remains."
+      },
+      "P3": {
+        "description": "Uninstrumented asynchronous stops without hooks",
+        "trials": 400,
+        "continued": 270,
+        "directSigkill": 130,
+        "requestsAfterKillCallObserved": 0,
+        "maxRequestEffectPerAttempt": 1,
+        "note": "Independent local adapted-environment observations, not cloud termination proof."
+      },
+      "P4": {
+        "description": "Incomplete CLOUD evidence masks post-fence connect as NOT_PROVEN; default2ms uncertainty boundary reproduced",
+        "remainingGate": "B-2"
+      }
+    },
+    "preservation": {
+      "rawArchivesLogsAndHashesUnchanged": true,
+      "checksumManifestRewritten": false,
+      "checksumManifestScope": "Original133430a publication: README/publication hashes identify pre-A-1 document versions; all other entries still match current unchanged artifacts. New document identities are recorded by the additive A-1 Git commit.",
+      "testedSourceCommitUnchanged": true,
+      "testedSourceTreeUnchanged": true
+    },
+    "remainingGates": "B-1 through B-8 and all existing cloud/custody/provider/OPS01 and owner gates remain; no B1a work, provisioning or merge authorized.",
+    "status": "A-1 documentation correction prepared for acceptance recording; no independent review of this correction claimed"
+  }
+}

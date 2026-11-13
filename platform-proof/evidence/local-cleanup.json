@@ -1,0 +1,8 @@
+{
+  "scope": "OWN_INC1_LABELED_RESOURCES_ONLY",
+  "containersRemaining": 0,
+  "labeledVolumesRemaining": 0,
+  "earlierAttestedAnonymousVolumesRemoved": 25,
+  "unrelatedOrUnattributedResourcesNotDeleted": true,
+  "broadPrune": false
+}

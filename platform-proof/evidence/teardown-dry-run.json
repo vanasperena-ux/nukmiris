@@ -1,0 +1,52 @@
+{
+  "mode": "PRINT_ONLY_NO_CLOUD_EXECUTION",
+  "kind": "teardown",
+  "steps": [
+    {
+      "step": 1,
+      "action": "Freeze intake and effect dispatch; fence all gateways/worker epochs",
+      "evidence": "complete fence evidence before deleting protected state"
+    },
+    {
+      "step": 2,
+      "action": "Export coherent synthetic evidence then delete SQL",
+      "evidence": "deletion protection false; final backup disabled; retain_backups_on_delete false; list/delete backups/PITR/WAL and temporary restore instances"
+    },
+    {
+      "step": 3,
+      "action": "Delete workers, all revisions/tags/min instances, fake VM/disks/snapshots",
+      "evidence": "confirm absence including old images/service identities"
+    },
+    {
+      "step": 4,
+      "action": "Delete NAT/router/public and unattached IPs",
+      "evidence": "Direct VPC addresses may linger ~20m; subnet removal ~1–2h; re-inventory"
+    },
+    {
+      "step": 5,
+      "action": "Delete SQL PSA peering and reserved ranges after SQL removal; subnets/firewalls/VPC",
+      "evidence": "enumerate dependencies; reserved ranges are not automatically removed"
+    },
+    {
+      "step": 6,
+      "action": "Delete secrets including disabled versions; KMS active keys and schedule versions destruction",
+      "evidence": "disabled secrets billable; scheduled KMS destruction delay; record irreversible custody consequences"
+    },
+    {
+      "step": 7,
+      "action": "Delete bucket versions/exports/log sinks/log buckets and retention locks; images/build caches",
+      "evidence": "explicit inventory; do not destroy owner application/protected data"
+    },
+    {
+      "step": 8,
+      "action": "Delete disposable projects and unlink billing where authorized",
+      "evidence": "never rely only on stopped compute; quotas/caps not hard account spending limits"
+    },
+    {
+      "step": 9,
+      "action": "Reconcile billing at +48h and next statement; named operator and backup sign off",
+      "evidence": "pending charges and retained resources zero/explicit exceptions; complete by 2026-12-17"
+    }
+  ],
+  "approval": "Separate owner provisioning/operations authorization required"
+}

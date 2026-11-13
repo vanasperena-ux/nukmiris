@@ -1,0 +1,10 @@
+{
+  "mode": "LOCAL_SYNTHETIC_ONLY",
+  "results": [
+    {
+      "name": "concurrency",
+      "records": 45,
+      "verified": true
+    }
+  ]
+}

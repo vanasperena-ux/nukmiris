@@ -1,0 +1,10 @@
+{
+  "os": "Linux-6.18.57-x86_64-with-glibc2.41",
+  "node": "v24.19.0",
+  "npm": "11.9.0",
+  "mode": "LOCAL_SYNTHETIC_ONLY",
+  "gcpAccountQueried": false,
+  "cloudSqlProbeExecuted": false,
+  "cloudResourcesCreated": 0,
+  "realProviderCalls": 0
+}

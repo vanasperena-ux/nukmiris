@@ -1,0 +1,18 @@
+
+> nukmiris-inc1-local-proof@0.1.0 test:concurrency
+> node --test --test-concurrency=1 test/concurrency.test.mjs
+
+✔ concurrency: one invocation for 32 same-attempt callers, replay and distinct operations (3211.728214ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 1
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3299.117556
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.2
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.2
+npm notice To update run: npm install -g npm@12.2.2
+npm notice

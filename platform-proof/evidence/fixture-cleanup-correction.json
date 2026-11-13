@@ -1,0 +1,134 @@
+{
+  "scope": "DISCARDED_INC1_SYNTHETIC_FIXTURES_ONLY",
+  "provenance": "Docker label-filtered container die events joined to volume mount events by exact container ID and PostgreSQL destination",
+  "attestedVolumesRemoved": [
+    {
+      "volume": "a72b16e68de283df5510f13f3d008cb396621925564a6ca69170e52e55d976f9",
+      "container": "0cc2b0d117bf70d7804a2f02215ec0cab06b14d9ae18f9b642c9eabd0e19ec61",
+      "name": "inc1-c90624483bea4b6c"
+    },
+    {
+      "volume": "af9a2e8baa083e637fe0e4341c4974099870004d2a00d5c870fa37022a841b70",
+      "container": "004677e6a6bd49ddf2bb7dc85a7acab00b56e29af353a82386f953aecbd920e0",
+      "name": "inc1-8599e01ab0dbf500"
+    },
+    {
+      "volume": "21245fa6e1c3a33a90d0a1d42a2bc571a54fb12b5413bc0edfea0fe927d7df71",
+      "container": "3b61c3947290e6f52620f3897fee686f33e10c99edd3791cce07be1e3056ffab",
+      "name": "inc1-959ffa189b4354ef"
+    },
+    {
+      "volume": "e08d2e54abec0e82bf9d2de6af7db7a29a45a3bbc43867599a46fe8a549fd8a8",
+      "container": "ac2f7e5c3bb187601fe73371feacfa286bb690b1d420addd18e0197ea2f0a9c6",
+      "name": "inc1-38a1826bc30276b2"
+    },
+    {
+      "volume": "e65fc01e547e3824916586c2385f050a0dfdcb391d1fcf7860f4a13ecb1a1ac9",
+      "container": "6eb3345e60954662de938d8d5bd2f902183443061db326dd8d1d8eaddaa8bc1d",
+      "name": "inc1-70bf54f9a6c97511"
+    },
+    {
+      "volume": "c87e534f9f1b42a33c3b188d28e1db44ca56176a12c49edbbff12769762f04d0",
+      "container": "281ca92362aa8266127356b0612ad44b94d72dcdaceea4a43dd27a85531ff203",
+      "name": "inc1-540b60164fc59408"
+    },
+    {
+      "volume": "a9cd9df648b0e72258867e21ebd2429382fb27679a23fb40d7abefb6334df235",
+      "container": "1fac95598d345ada902051ae236a3548a29a7d19f81a312993039059f7f2e92f",
+      "name": "inc1-f0b0f7ff101870a2"
+    },
+    {
+      "volume": "da3919fa731741465073c9d2f4fddb9909fdb3de48cd0ffbec735aa9c6c297a5",
+      "container": "f3785ba366d6b623b033eb303f5f040aadd5dcbf440c0d00449f4e53f20efc54",
+      "name": "inc1-8902fae48737c0e6"
+    },
+    {
+      "volume": "ffb252c5d09d78efd55ab4ee1225817dfe679124e9290ce54777d553ed321491",
+      "container": "a155683b906f8dc78437ea0b5c69676793a81f4e7679ae22677df310ca86986f",
+      "name": "inc1-f19251d38c67558e"
+    },
+    {
+      "volume": "e2df4060532375ff6c1c8ed6af432577243cd51e0673ce529cf84ac391cd3e65",
+      "container": "b316cf36a8c4b0bcc9bbd93ca226df4aa81354af0c563f1beddec258ada7a364",
+      "name": "inc1-9f7a6495dfa5af04"
+    },
+    {
+      "volume": "da0ec3482e3054fb2ed8705cbaace78b67ed21475709ebca37e2b226e8449cf5",
+      "container": "deee72d55b84be544994490ab105f01a1ccbc696853193ac5861482a57ef5039",
+      "name": "inc1-0529b3cab1ea4ffd"
+    },
+    {
+      "volume": "ac45b390d48f33f4834f649d57cd4bce5970878e6e8108406d47cf9760d5bddf",
+      "container": "0510c059e9cef4e941b9fd9faa428cf81d7e5d6df210381238ebcfbc403c04b4",
+      "name": "inc1-0972fad5d24db05e"
+    },
+    {
+      "volume": "0ca324117ffe3f4f7671a1fa17ba7042a4a83373ce67067f7a5d895785db321d",
+      "container": "ec5b555d72357cbc9dd45fb06828bdb97cc8b74d8eb385592a11c3e7520f70d3",
+      "name": "inc1-61f21f4bc888ceb6"
+    },
+    {
+      "volume": "0d5fcbcae5903c2329e1fc872ec30281b05d1ae628f534bb01f5e70988032f79",
+      "container": "6e8cf419b9f201a1d3f2584d5241b8b5399e0230aa9c39b5288cd4764b3c2c6d",
+      "name": "inc1-0ec3c2e3973069a9"
+    },
+    {
+      "volume": "5f10b322edc4ad401790ca77b3b915cece70d169834221b864bfbac6a4efe0f4",
+      "container": "0990b7f17c9adfd273a81f02d2913dee828f00f9a096b95f4bbcdd4c5e8faa97",
+      "name": "inc1-39b12f422bc480c9"
+    },
+    {
+      "volume": "a5bd7ac07b380509600e81b19cfcff214bf59f6aaca3945f365b9f44f16f8124",
+      "container": "2f357c2bbbf1bd7fe2a9c94170f46bdb057f2252a045c1133940058f7a4461cc",
+      "name": "inc1-9e5f179db846a60a"
+    },
+    {
+      "volume": "837557acc9d375fe427714cf3c34cf305da3694a9ba1e1a44ca6fa249515f666",
+      "container": "26a548379d44160ad385dfffad9c915e77f915292bd3074a69b4f16d30dd0b3c",
+      "name": "inc1-aed39d9fc8d576fb"
+    },
+    {
+      "volume": "f461cc599b8b7fa39849623d4200da98fa6171df29260dddae7982296f287924",
+      "container": "c1f73527649cc8e9db9a3390ee36d4296f9b8631fa5be3b1ee0b7221282241cb",
+      "name": "inc1-815640d8a7f1fd67"
+    },
+    {
+      "volume": "13ebf126c2fc72cf39b86e1ac4f7e25ec81c4226e4d33b829bc9a06c95f19144",
+      "container": "c8e3524d0c2d5c02c22e3897a0b711a225d8f945080ec6af5821906d0f8e8b51",
+      "name": "inc1-9cdf0864ef72923f"
+    },
+    {
+      "volume": "eedc726bf4f1f558751317d5eb271a09101aab7a6cce1addf16516cb06567d26",
+      "container": "568cb0d206ce972650f360d14dfc942e4b323ae78effb660449b25733d1637db",
+      "name": "inc1-c776edd27d8bf311"
+    },
+    {
+      "volume": "b20b901bfafc3379891aa5291d02b2c89949381e68b53b8c8b701a8e550aeca4",
+      "container": "a09cb2a1a12eb3860e72b193343a0258c2070e3a4c7f2d048ab905de5dec0fd5",
+      "name": "inc1-5e7069b147fd5efc"
+    },
+    {
+      "volume": "09b8d4845bd4809544acc4d63b27f3d591fe36376352b4a2eaacbf99167e2622",
+      "container": "97255227c1f6f5a5715f3962d2ea667901374a76dced2f90a24df05178463bbe",
+      "name": "inc1-8aa23cc38a0e20be"
+    },
+    {
+      "volume": "7b3c9218574ff23a8463f6fd834dbf8a2b6781570063c2bd205851738325e795",
+      "container": "1d317af24dcf0af802f699034b80c5593ceacd5ab0a9b200cacd62ea4bf8119f",
+      "name": "inc1-d63fa4a27147bd35"
+    },
+    {
+      "volume": "7f22ad0f4e1a3d59c19f9b3d7a6ded488bd2182a3ed16f286517b86ad5cabf51",
+      "container": "c05726c441fc2b8bfbbb6d556aa4199f05baa82fd0483e3ec915aa88e0b511a6",
+      "name": "inc1-36e88a37b9f1b692"
+    },
+    {
+      "volume": "18cd6028687b89da457590193eaded3906928e9894b1bab5df21b1df3cbca71e",
+      "container": "c0583ae0f05e358ed067094d025bc2ce18fca198344efb9496f4d0fcd205e76b",
+      "name": "inc1-e5a0599dc5e5a92d"
+    }
+  ],
+  "broadPruneUsed": false,
+  "existingProfilesTouched": false,
+  "originalExitCauseEstablished": false
+}

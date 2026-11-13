@@ -1,0 +1,138 @@
+{
+  "mode": "PLAN_ONLY_OWNER_AUTHORIZATION_REQUIRED",
+  "region": "us-central1",
+  "sessionHoursMax": 6,
+  "teardownDeadline": "2026-12-17",
+  "database": {
+    "version": "POSTGRES_17",
+    "edition": "ENTERPRISE",
+    "tier": "db-f1-micro",
+    "alternative": "db-g1-small",
+    "defaultMaxConnectionsAssumption": 25,
+    "measured": false,
+    "connectionBudget": {
+      "oldGateway": 2,
+      "newGateway": 2,
+      "worker": 2,
+      "ingress": 1,
+      "sealer": 1,
+      "operatorProbe": 1,
+      "reserve": 4
+    },
+    "retainedBackupsOnDelete": false,
+    "finalBackup": false,
+    "deletionProtection": false
+  },
+  "services": {
+    "ingress": {
+      "min": 1,
+      "max": 1,
+      "cpu": "request",
+      "identity": "ingress",
+      "public": true
+    },
+    "sealer": {
+      "min": 1,
+      "max": 1,
+      "cpu": "request",
+      "identity": "custody-sealer",
+      "independentAdministration": true,
+      "public": false
+    },
+    "gateway": {
+      "min": 1,
+      "max": 1,
+      "cpu": "instance",
+      "identity": "gateway-e0001",
+      "public": false,
+      "epoch": 1,
+      "revision": "inc1-e0001",
+      "rolloutOverlapBudget": 2
+    },
+    "worker": {
+      "min": 1,
+      "max": 1,
+      "cpu": "worker-pool",
+      "identity": "worker",
+      "public": false
+    }
+  },
+  "network": {
+    "privateSqlOnly": true,
+    "gatewaySubnet": "gateway-e0001",
+    "gatewayUniqueTag": "inc1-e0001",
+    "allTrafficVpc": true,
+    "natGatewaySubnetOnly": true,
+    "denyGeneralEgressForOtherServices": true,
+    "fakeProviderOnly": "203.0.113.20/32",
+    "privateGoogleVip": "restricted.googleapis.com",
+    "privateServiceAccess": true,
+    "requireOrgPolicyOrReviewedWeakerStandaloneControls": true
+  },
+  "custody": {
+    "separateProjectAndPrincipal": true,
+    "chainAndIndexExtensionVerifierRequiredBeforeB1b": true,
+    "bucket": "independent-synthetic-custody",
+    "kms": "independent-custody-key",
+    "retentionLockEnabled": false
+  },
+  "fakeProvider": {
+    "separateProject": true,
+    "vm": "e2-micro",
+    "diskGiB": 10,
+    "publicTls": true,
+    "syntheticOnly": true,
+    "ingressFromGatewayNatOnly": true
+  },
+  "budget": {
+    "allocationUsd": 20,
+    "alertsUsd": [
+      10,
+      25,
+      40
+    ],
+    "hardCap": false,
+    "cloudRunServiceSpendCaps": {
+      "documentedMonthlyProjectSpendCapUsd": 20,
+      "applied": false,
+      "verifyEligibilityAndActualScopeBeforeProvisioning": true,
+      "documentation": "https://docs.cloud.google.com/billing/docs/how-to/budgets-spend-caps",
+      "eligibleServiceId": "152E-C115-5142",
+      "provider8_11_0SupportsSpendCapField": false,
+      "controlPlaneImplementation": "deferred verified Billing Budgets API/console procedure, not an invented Cloud Run endpoint",
+      "scope": "one project and one eligible service; monthly; delayed; persistent resources still accrue; resets can resume usage; dispatch must remain inert"
+    },
+    "namedHumanSupervisorAndBackupRequired": true,
+    "elapsedStopAfterHours": 6,
+    "stopRunsOutsideWorkloadAndDoesNotDependOnBudgetAlerts": true
+  },
+  "labels": {
+    "purpose": "inc1-synthetic-proof",
+    "deployment_epoch": "e0001",
+    "expires": "2026-12-17",
+    "owner": "owner-assignment-required"
+  },
+  "otherBillableInventory": [
+    "artifact-registry-images",
+    "cloud-build",
+    "logs-metrics-exports",
+    "custody-bucket-versions",
+    "kms-active-and-scheduled-destruction-versions",
+    "secret-enabled-and-disabled-versions",
+    "reserved-in-use-and-unattached-ips",
+    "psa-peering-reserved-range",
+    "nat-router-subnets",
+    "sql-backups-pitr-wal-final-retained",
+    "fake-host-disk-snapshots",
+    "temporary-restore-databases"
+  ],
+  "notImplemented": [
+    "cloud-platform-termination-oracle",
+    "gateway-identity-authentication-at-fake-host",
+    "remote-independent-ledger-custody",
+    "cold-sealer-ack-window",
+    "elapsed-cloud-kill-supervisor",
+    "spend-cap-applicability-proof",
+    "B1b-role-compatibility"
+  ]
+}
