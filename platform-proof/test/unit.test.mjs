@@ -6,6 +6,7 @@ import { join } from "node:path";
 import { hash, endpoint, database } from "../src/protocol.mjs";
 import { openLedger, readLedger, verifyRecords } from "../src/ledger.mjs";
 import { classify } from "../src/classify.mjs";
+import { cloudFixture } from "./evidence-fixture.mjs";
 test("isolation: literal loopback, isolated database names and roles only", () => {
   for (const host of [
     "localhost",
@@ -120,7 +121,7 @@ test("classifier: absent, stale, wrong-scope, missing deletion and heartbeat-onl
       ],
     };
   assert.equal(
-    classify({ fence: cloud, activity, now: 155 }).verdict,
+    classify(cloudFixture({ fence: cloud, activity, now: 155 })).verdict,
     "PRE_FENCE",
   );
   for (const fence of [

@@ -1,0 +1,18 @@
+{
+  "system": "Linux",
+  "machine": "x86_64",
+  "kernel": "6.18.57",
+  "node": "v24.19.0",
+  "npm": "11.9.0",
+  "pgImage": "postgres@sha256:839fbb5a4942a7758dd93e18b42ea5649807491a0545b5eeeb8f0b8bb11857a5",
+  "measuredPgAndUtc": "Each exported fixture result.version; setup refuses anything other than PostgreSQL17.11/UTC",
+  "fsync": true,
+  "synchronousCommit": true,
+  "nativeWindows": "NOT EXECUTED",
+  "actualGcp": "NOT EXECUTED",
+  "cloudCredentialsUsed": 0,
+  "dockerEndpoint": "local Unix socket only; inherited selectors removed",
+  "realExternalProviderCalls": 0,
+  "dockerServerMeasured": "28.4.0",
+  "opensslMeasured": "OpenSSL 3.5.7 9 Jun 2026 (Library: OpenSSL 3.5.7 9 Jun 2026)"
+}

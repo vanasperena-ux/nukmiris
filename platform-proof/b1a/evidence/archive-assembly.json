@@ -1,0 +1,46 @@
+{
+  "scope": "LOSSLESS_TRANSPORT_SPLIT_ONLY",
+  "archives": [
+    {
+      "file": "b1a38ad-runs-full.tar.gz",
+      "bytes": 1295439,
+      "sha256": "b6f0d98905bc471e99412c1ad6c637e39ddda9d36ca5a377ecd77aaa83bbc4d2",
+      "parts": [
+        "archive-parts/b1a38ad-runs-full.tar.gz.part000",
+        "archive-parts/b1a38ad-runs-full.tar.gz.part001",
+        "archive-parts/b1a38ad-runs-full.tar.gz.part002",
+        "archive-parts/b1a38ad-runs-full.tar.gz.part003",
+        "archive-parts/b1a38ad-runs-full.tar.gz.part004",
+        "archive-parts/b1a38ad-runs-full.tar.gz.part005",
+        "archive-parts/b1a38ad-runs-full.tar.gz.part006",
+        "archive-parts/b1a38ad-runs-full.tar.gz.part007",
+        "archive-parts/b1a38ad-runs-full.tar.gz.part008",
+        "archive-parts/b1a38ad-runs-full.tar.gz.part009",
+        "archive-parts/b1a38ad-runs-full.tar.gz.part010",
+        "archive-parts/b1a38ad-runs-full.tar.gz.part011",
+        "archive-parts/b1a38ad-runs-full.tar.gz.part012"
+      ]
+    },
+    {
+      "file": "b1a38ad-runs-fault.tar.gz",
+      "bytes": 1295456,
+      "sha256": "e15daf95f3e41d99cb89dd3e057afe54bb1abf70cc1edc1c7b2c54f20a47220c",
+      "parts": [
+        "archive-parts/b1a38ad-runs-fault.tar.gz.part000",
+        "archive-parts/b1a38ad-runs-fault.tar.gz.part001",
+        "archive-parts/b1a38ad-runs-fault.tar.gz.part002",
+        "archive-parts/b1a38ad-runs-fault.tar.gz.part003",
+        "archive-parts/b1a38ad-runs-fault.tar.gz.part004",
+        "archive-parts/b1a38ad-runs-fault.tar.gz.part005",
+        "archive-parts/b1a38ad-runs-fault.tar.gz.part006",
+        "archive-parts/b1a38ad-runs-fault.tar.gz.part007",
+        "archive-parts/b1a38ad-runs-fault.tar.gz.part008",
+        "archive-parts/b1a38ad-runs-fault.tar.gz.part009",
+        "archive-parts/b1a38ad-runs-fault.tar.gz.part010",
+        "archive-parts/b1a38ad-runs-fault.tar.gz.part011",
+        "archive-parts/b1a38ad-runs-fault.tar.gz.part012"
+      ]
+    }
+  ],
+  "testedSource": "38ad02abbb0b7353f6768ff67f74542a4df0dedb"
+}

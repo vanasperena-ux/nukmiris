@@ -1,0 +1,82 @@
+✔ retirement contract: complete authenticated modeled bundle required; absent data holds (9.846329ms)
+✖ session SQL: billing pause/reset and process restart leave dispatch durably inert (2898.919425ms)
+✖ session SQL: immutable six-hour limit and expiry prevent new entry (2727.739325ms)
+✖ sealer: unavailable, cold, failed journal or dishonest response never causes a false ACK (2964.997137ms)
+✔ retirement promotion rejects another session, scope or predecessor even when signed bundle is internally valid (5.156609ms)
+✖ B1a aggregate gateway SQL login cap bounds old/new overlap without privilege fallback (4242.325588ms)
+✖ B1a controller recovery marks only retired ENTERED as UNKNOWN, preserving original bindings (4275.568175ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 2
+ℹ fail 5
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 17224.685832
+
+✖ failing tests:
+
+test at ../nukmiris-b1a-final/platform-proof/test/b1a-session.test.mjs:128:1
+✖ session SQL: billing pause/reset and process restart leave dispatch durably inert (2898.919425ms)
+  Error: fixture_setup_failed; diagnostics captured before cleanup
+      at fixture (file:///workspace/work/nukmiris-b1a-final/platform-proof/test/helpers.mjs:468:7)
+      at async TestContext.<anonymous> (file:///workspace/work/nukmiris-b1a-final/platform-proof/test/b1a-session.test.mjs:129:13)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    diagnosticPath: '/tmp/b1a-fixture-diagnostics/inc1-cd470878fcc235c0-f47a67dc-c3c8-4b17-986d-86d47d93a26a.json',
+    diagnostic: { scope: 'OWNED_LOCAL_B1A_FIXTURE_ONLY', observedAt: '2026-11-13T20:52:14.366Z', name: 'inc1-cd470878fcc235c0', volume: 'inc1-cd470878fcc235c0-pgdata', reason: 'fixture_setup_failed', intentionalTestFault: false, startupTimeoutMs: 60000, state: { status: 'exited', exitCode: 1, reason: '', oomKilled: false, startedAt: '2026-11-13T20:52:13.762753415Z', finishedAt: '2026-11-13T20:52:14.258718741Z' }, postgresLogs: 'The files belonging to this database system will be owned by user "postgres".\nThis user must also own the server process.\n\nThe database cluster will be initialized with locale "en_US.utf8".\nThe default database encoding has accordingly been set to "UTF8".\nThe default text search configuration will be set to "english".\n\nData page checksums are disabled.\n\nfixing permissions on existing directory /var/lib/postgresql/data ... ok\ncreating subdirectories ... ok\nselecting dynamic shared memory implementation ... posix\nselecting default "max_connections" ... 100\nselecting default "shared_buffers" ... 128MB\nselecting default time zone ... Etc/UTC\ncreating configuration files ... ok\nrunning bootstrap script ... ok\nperforming post-bootstrap initialization ... \n2026-11-13 20:52:14.248 UTC [40] FATAL:  could not create directory "base/4": No space left on device\n2026-11-13 20:52:14.248 UTC [40] STATEMENT:  CREATE DATABASE template0 IS_TEMPLATE = true ALLOW_CONNECTIONS = false OID = 4 STRATEGY = file_copy;\n\t\nchild process exited with exit code 1\ninitdb: removing contents of data directory "/var/lib/postgresql/data"\n', inspectError: null, logError: null, capturedBeforeResourceRemoval: true, source: 'UNPINNED_DEVELOPMENT_RUN' },
+    setupErrorCode: 'setup_error',
+    fixtureVolume: 'inc1-cd470878fcc235c0-pgdata'
+  }
+
+test at ../nukmiris-b1a-final/platform-proof/test/b1a-session.test.mjs:197:1
+✖ session SQL: immutable six-hour limit and expiry prevent new entry (2727.739325ms)
+  Error: fixture_setup_failed; diagnostics captured before cleanup
+      at fixture (file:///workspace/work/nukmiris-b1a-final/platform-proof/test/helpers.mjs:468:7)
+      at async TestContext.<anonymous> (file:///workspace/work/nukmiris-b1a-final/platform-proof/test/b1a-session.test.mjs:198:13)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    diagnosticPath: '/tmp/b1a-fixture-diagnostics/inc1-642955fd7bba1663-51906e7b-7ca3-4b17-baaa-a2f00878e1ad.json',
+    diagnostic: { scope: 'OWNED_LOCAL_B1A_FIXTURE_ONLY', observedAt: '2026-11-13T20:52:17.047Z', name: 'inc1-642955fd7bba1663', volume: 'inc1-642955fd7bba1663-pgdata', reason: 'fixture_setup_failed', intentionalTestFault: false, startupTimeoutMs: 60000, state: { status: 'exited', exitCode: 1, reason: '', oomKilled: false, startedAt: '2026-11-13T20:52:16.353229281Z', finishedAt: '2026-11-13T20:52:16.915560323Z' }, postgresLogs: 'The files belonging to this database system will be owned by user "postgres".\nThis user must also own the server process.\n\nThe database cluster will be initialized with locale "en_US.utf8".\nThe default database encoding has accordingly been set to "UTF8".\nThe default text search configuration will be set to "english".\n\nData page checksums are disabled.\n\nfixing permissions on existing directory /var/lib/postgresql/data ... ok\ncreating subdirectories ... ok\nselecting dynamic shared memory implementation ... posix\nselecting default "max_connections" ... 100\nselecting default "shared_buffers" ... 128MB\nselecting default time zone ... Etc/UTC\ncreating configuration files ... ok\nrunning bootstrap script ... ok\nperforming post-bootstrap initialization ... \n2026-11-13 20:52:16.907 UTC [40] FATAL:  could not create directory "base/4": No space left on device\n2026-11-13 20:52:16.907 UTC [40] STATEMENT:  CREATE DATABASE template0 IS_TEMPLATE = true ALLOW_CONNECTIONS = false OID = 4 STRATEGY = file_copy;\n\t\nchild process exited with exit code 1\ninitdb: removing contents of data directory "/var/lib/postgresql/data"\n', inspectError: null, logError: null, capturedBeforeResourceRemoval: true, source: 'UNPINNED_DEVELOPMENT_RUN' },
+    setupErrorCode: 'setup_error',
+    fixtureVolume: 'inc1-642955fd7bba1663-pgdata'
+  }
+
+test at ../nukmiris-b1a-final/platform-proof/test/b1a-session.test.mjs:235:1
+✖ sealer: unavailable, cold, failed journal or dishonest response never causes a false ACK (2964.997137ms)
+  Error: fixture_setup_failed; diagnostics captured before cleanup
+      at fixture (file:///workspace/work/nukmiris-b1a-final/platform-proof/test/helpers.mjs:468:7)
+      at async TestContext.<anonymous> (file:///workspace/work/nukmiris-b1a-final/platform-proof/test/b1a-session.test.mjs:236:13)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    diagnosticPath: '/tmp/b1a-fixture-diagnostics/inc1-1de9f857a8ba7c83-567b006b-ae26-49c5-9cd3-b3c21b351fdc.json',
+    diagnostic: { scope: 'OWNED_LOCAL_B1A_FIXTURE_ONLY', observedAt: '2026-11-13T20:52:20.000Z', name: 'inc1-1de9f857a8ba7c83', volume: 'inc1-1de9f857a8ba7c83-pgdata', reason: 'fixture_setup_failed', intentionalTestFault: false, startupTimeoutMs: 60000, state: { status: 'exited', exitCode: 1, reason: '', oomKilled: false, startedAt: '2026-11-13T20:52:19.342772022Z', finishedAt: '2026-11-13T20:52:19.893636517Z' }, postgresLogs: 'The files belonging to this database system will be owned by user "postgres".\nThis user must also own the server process.\n\nThe database cluster will be initialized with locale "en_US.utf8".\nThe default database encoding has accordingly been set to "UTF8".\nThe default text search configuration will be set to "english".\n\nData page checksums are disabled.\n\nfixing permissions on existing directory /var/lib/postgresql/data ... ok\ncreating subdirectories ... ok\nselecting dynamic shared memory implementation ... posix\nselecting default "max_connections" ... 100\nselecting default "shared_buffers" ... 128MB\nselecting default time zone ... Etc/UTC\ncreating configuration files ... ok\nrunning bootstrap script ... ok\nperforming post-bootstrap initialization ... \n2026-11-13 20:52:19.884 UTC [40] FATAL:  could not create directory "base/4": No space left on device\n2026-11-13 20:52:19.884 UTC [40] STATEMENT:  CREATE DATABASE template0 IS_TEMPLATE = true ALLOW_CONNECTIONS = false OID = 4 STRATEGY = file_copy;\n\t\nchild process exited with exit code 1\ninitdb: removing contents of data directory "/var/lib/postgresql/data"\n', inspectError: null, logError: null, capturedBeforeResourceRemoval: true, source: 'UNPINNED_DEVELOPMENT_RUN' },
+    setupErrorCode: 'setup_error',
+    fixtureVolume: 'inc1-1de9f857a8ba7c83-pgdata'
+  }
+
+test at ../nukmiris-b1a-final/platform-proof/test/b1a-session.test.mjs:352:1
+✖ B1a aggregate gateway SQL login cap bounds old/new overlap without privilege fallback (4242.325588ms)
+  Error: fixture_setup_failed; diagnostics captured before cleanup
+      at fixture (file:///workspace/work/nukmiris-b1a-final/platform-proof/test/helpers.mjs:468:7)
+      at async TestContext.<anonymous> (file:///workspace/work/nukmiris-b1a-final/platform-proof/test/b1a-session.test.mjs:353:13)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    diagnosticPath: '/tmp/b1a-fixture-diagnostics/inc1-0a5b37f97336c9c5-90114177-7332-4c5c-bd2a-0f5a7a83639d.json',
+    diagnostic: { scope: 'OWNED_LOCAL_B1A_FIXTURE_ONLY', observedAt: '2026-11-13T20:52:24.292Z', name: 'inc1-0a5b37f97336c9c5', volume: 'inc1-0a5b37f97336c9c5-pgdata', reason: 'fixture_setup_failed', intentionalTestFault: false, startupTimeoutMs: 60000, state: { status: 'exited', exitCode: 1, reason: '', oomKilled: false, startedAt: '2026-11-13T20:52:23.535881046Z', finishedAt: '2026-11-13T20:52:24.157044698Z' }, postgresLogs: 'The files belonging to this database system will be owned by user "postgres".\nThis user must also own the server process.\n\nThe database cluster will be initialized with locale "en_US.utf8".\nThe default database encoding has accordingly been set to "UTF8".\nThe default text search configuration will be set to "english".\n\nData page checksums are disabled.\n\nfixing permissions on existing directory /var/lib/postgresql/data ... ok\ncreating subdirectories ... ok\nselecting dynamic shared memory implementation ... posix\nselecting default "max_connections" ... 100\nselecting default "shared_buffers" ... 128MB\nselecting default time zone ... Etc/UTC\ncreating configuration files ... ok\nrunning bootstrap script ... ok\nperforming post-bootstrap initialization ... \n2026-11-13 20:52:24.146 UTC [39] FATAL:  could not create directory "base/4": No space left on device\n2026-11-13 20:52:24.146 UTC [39] STATEMENT:  CREATE DATABASE template0 IS_TEMPLATE = true ALLOW_CONNECTIONS = false OID = 4 STRATEGY = file_copy;\n\t\nchild process exited with exit code 1\ninitdb: removing contents of data directory "/var/lib/postgresql/data"\n', inspectError: null, logError: null, capturedBeforeResourceRemoval: true, source: 'UNPINNED_DEVELOPMENT_RUN' },
+    setupErrorCode: 'setup_error',
+    fixtureVolume: 'inc1-0a5b37f97336c9c5-pgdata'
+  }
+
+test at ../nukmiris-b1a-final/platform-proof/test/b1a-session.test.mjs:381:1
+✖ B1a controller recovery marks only retired ENTERED as UNKNOWN, preserving original bindings (4275.568175ms)
+  Error: fixture_setup_failed; diagnostics captured before cleanup
+      at fixture (file:///workspace/work/nukmiris-b1a-final/platform-proof/test/helpers.mjs:468:7)
+      at async TestContext.<anonymous> (file:///workspace/work/nukmiris-b1a-final/platform-proof/test/b1a-session.test.mjs:382:13)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    diagnosticPath: '/tmp/b1a-fixture-diagnostics/inc1-a24dcb03ae22f447-8a17ac3d-f1a8-4706-9700-0d32c8f257ac.json',
+    diagnostic: { scope: 'OWNED_LOCAL_B1A_FIXTURE_ONLY', observedAt: '2026-11-13T20:52:28.582Z', name: 'inc1-a24dcb03ae22f447', volume: 'inc1-a24dcb03ae22f447-pgdata', reason: 'fixture_setup_failed', intentionalTestFault: false, startupTimeoutMs: 60000, state: { status: 'exited', exitCode: 1, reason: '', oomKilled: false, startedAt: '2026-11-13T20:52:27.904101904Z', finishedAt: '2026-11-13T20:52:28.472700419Z' }, postgresLogs: 'The files belonging to this database system will be owned by user "postgres".\nThis user must also own the server process.\n\nThe database cluster will be initialized with locale "en_US.utf8".\nThe default database encoding has accordingly been set to "UTF8".\nThe default text search configuration will be set to "english".\n\nData page checksums are disabled.\n\nfixing permissions on existing directory /var/lib/postgresql/data ... ok\ncreating subdirectories ... ok\nselecting dynamic shared memory implementation ... posix\nselecting default "max_connections" ... 100\nselecting default "shared_buffers" ... 128MB\nselecting default time zone ... Etc/UTC\ncreating configuration files ... ok\nrunning bootstrap script ... ok\nperforming post-bootstrap initialization ... \n2026-11-13 20:52:28.464 UTC [39] FATAL:  could not create directory "base/4": No space left on device\n2026-11-13 20:52:28.464 UTC [39] STATEMENT:  CREATE DATABASE template0 IS_TEMPLATE = true ALLOW_CONNECTIONS = false OID = 4 STRATEGY = file_copy;\n\t\nchild process exited with exit code 1\ninitdb: removing contents of data directory "/var/lib/postgresql/data"\n', inspectError: null, logError: null, capturedBeforeResourceRemoval: true, source: 'UNPINNED_DEVELOPMENT_RUN' },
+    setupErrorCode: 'setup_error',
+    fixtureVolume: 'inc1-a24dcb03ae22f447-pgdata'
+  }

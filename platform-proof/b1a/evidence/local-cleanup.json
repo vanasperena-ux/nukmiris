@@ -1,0 +1,9 @@
+{
+  "scope": "OWNED_LOCAL_PROOF_ONLY",
+  "ownedProofContainers": 0,
+  "ownedProofVolumes": 0,
+  "broadPruneUsed": false,
+  "unrelatedResourcesAltered": false,
+  "historicalInc1EvidenceRewritten": false,
+  "acceptedAppAndLegacyChanged": false
+}

@@ -1,0 +1,14 @@
+{
+  "mode": "LOCAL_SYNTHETIC_ONLY",
+  "base": "d3fa65192374ca206ff1f6d166a789c295a15e97",
+  "accepted": "b4d0be0cb98c7f2b69be318e18b93f4de102c511",
+  "acceptedTree": "03d08322e27d9d54485fa887b482743fe076556b",
+  "manifestFiles": 127,
+  "changedFiles": 108,
+  "scannedFiles": 108,
+  "secretScan": "PASS",
+  "providerCredentialVariables": 0,
+  "protectedSource": "UNCHANGED",
+  "note": "Repository-content scan, not a forensic scan of unrelated host accounts; runtime uses explicit loopback only."
+}
+{"scope":"B1A_SOURCE_ONLY","base":"2ca5cf215b68f187bfa48b42aaa041bbe93cf56d","accepted":"b4d0be0cb98c7f2b69be318e18b93f4de102c511","historicalFilesVerified":35,"changeBoundary":"platform-proof ONLY","sourceHead":"38ad02abbb0b7353f6768ff67f74542a4df0dedb","sourceTree":"9192e00e97da478608d71b4421513725b7a7196c","actualCloudResourcesCreated":0,"actualProviderCalls":0}

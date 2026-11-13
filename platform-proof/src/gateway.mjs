@@ -2,25 +2,39 @@ import http from "node:http";
 import { GatewayStore } from "./store.mjs";
 import { invokeOnce } from "./transport.mjs";
 import { MODE, endpoint, exact, id } from "./protocol.mjs";
+import { preparedProfile, preparedTarget } from "../b1a/runtime/profile.mjs";
 /** Service authentication identifies a caller; it is NOT an effect permit. */
 export async function startGateway(
   config,
   { hook = async () => {}, trace = () => {} } = {},
 ) {
   if (
-    config.mode !== MODE ||
-    config.database.user !== "inc1_gateway" ||
+    (config.mode !== MODE && !preparedProfile(config.prepared)) ||
+    (config.prepared?.database ?? config.database).user !== "inc1_gateway" ||
     !/^[a-f0-9]{48}$/.test(config.callerKey) ||
     !Number.isInteger(config.epoch) ||
     config.epoch < 1 ||
     !/^[a-z0-9-]{1,63}$/.test(config.revision)
   )
     throw Error("local_gateway_configuration");
-  endpoint(config.target);
-  const store = new GatewayStore(config.database),
+  const target = config.prepared?.target ?? config.target;
+  if (!preparedTarget(target)) endpoint(target);
+  const store = new GatewayStore(config.prepared?.database ?? config.database, {
+      sessionId: config.prepared?.controlSessionId ?? config.controlSessionId,
+    }),
     active = new Set();
   const server = http.createServer((req, res) => {
     void (async () => {
+      if (req.method === "GET" && req.url === "/healthz") {
+        res.writeHead(200);
+        res.end("alive");
+        return;
+      }
+      if (req.method === "GET" && req.url === "/readyz") {
+        res.writeHead(200);
+        res.end("synthetic gateway initialized; dispatch remains SQL-gated");
+        return;
+      }
       if (
         req.method !== "POST" ||
         req.url !== "/attempt" ||
@@ -77,7 +91,7 @@ export async function startGateway(
         );
         try {
           await invokeOnce({
-            target: config.target,
+            target,
             ca: config.ca,
             binding,
             hook,
@@ -125,7 +139,11 @@ export async function startGateway(
   server.keepAliveTimeout = 1;
   await new Promise((resolve, reject) => {
     server.once("error", reject);
-    server.listen(0, "127.0.0.1", resolve);
+    server.listen(
+      preparedProfile(config.prepared) ? 8080 : 0,
+      preparedProfile(config.prepared) ? "0.0.0.0" : "127.0.0.1",
+      resolve,
+    );
   });
   return {
     address: { host: "127.0.0.1", port: server.address().port },

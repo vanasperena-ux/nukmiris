@@ -1,0 +1,2086 @@
+{
+  "variable": {
+    "provisioning_authorized": {
+      "type": "bool",
+      "default": false,
+      "validation": {
+        "condition": "${var.provisioning_authorized == false}",
+        "error_message": "B1a preparation cannot provision. Separate reviewed source change and owner resource authorization required."
+      }
+    },
+    "organization_mode": {
+      "type": "string",
+      "default": "UNDECIDED",
+      "validation": {
+        "condition": "${contains([\"UNDECIDED\", \"ORG_ENFORCED\", \"STANDALONE_REVIEW_REQUIRED\"], var.organization_mode)}",
+        "error_message": "Owner organization decision required."
+      }
+    },
+    "standalone_risk_reviewed": {
+      "type": "bool",
+      "default": false
+    },
+    "runtime_project_number": {
+      "type": "string",
+      "default": "000000000000"
+    },
+    "session_started_at": {
+      "type": "string",
+      "default": "2026-12-17T00:00:00Z"
+    },
+    "synthetic_sealer_tls_key": {
+      "type": "string",
+      "default": null,
+      "sensitive": true
+    },
+    "synthetic_sealer_tls_certificate": {
+      "type": "string",
+      "default": null
+    },
+    "billing_account": {
+      "type": "string",
+      "default": "000000-000000-000000"
+    },
+    "billing_currency": {
+      "type": "string",
+      "default": "USD"
+    },
+    "candidate_image": {
+      "type": "string",
+      "default": "us-central1-docker.pkg.dev/nmb1a-plan-run/b1a/harness@sha256:0000000000000000000000000000000000000000000000000000000000000000"
+    }
+  },
+  "locals": {
+    "region": "us-central1",
+    "labels": {
+      "purpose": "b1a-synthetic-proof",
+      "expires": "2026-12-17",
+      "owner": "assignment-required"
+    }
+  },
+  "resource": {
+    "terraform_data": {
+      "never_apply": {
+        "input": "B1A_SOURCE_ONLY",
+        "lifecycle": {
+          "precondition": [
+            {
+              "condition": "${var.provisioning_authorized}",
+              "error_message": "STOP: only local validation authorized. Do not plan/apply."
+            },
+            {
+              "condition": "${var.organization_mode != \"UNDECIDED\" && (var.organization_mode != \"STANDALONE_REVIEW_REQUIRED\" || var.standalone_risk_reviewed)}",
+              "error_message": "Owner organization/standalone decision and review are unresolved."
+            },
+            {
+              "condition": "${timecmp(timestamp(), timeadd(var.session_started_at, \"6h\")) < 0}",
+              "error_message": "Session expired; do not recreate resources."
+            }
+          ]
+        }
+      }
+    },
+    "google_compute_network": {
+      "run": {
+        "name": "nmb1a-run",
+        "auto_create_subnetworks": false,
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "nmb1a-plan-run"
+      },
+      "custody": {
+        "name": "nmb1a-custody",
+        "auto_create_subnetworks": false,
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "nmb1a-plan-custody"
+      },
+      "fake": {
+        "name": "nmb1a-fake",
+        "auto_create_subnetworks": false,
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "nmb1a-plan-fake"
+      }
+    },
+    "google_compute_subnetwork": {
+      "gateway": {
+        "name": "nmb1a-gateway",
+        "network": "${google_compute_network.run.id}",
+        "region": "${local.region}",
+        "ip_cidr_range": "10.81.0.0/26",
+        "private_ip_google_access": true,
+        "stack_type": "IPV4_ONLY",
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "nmb1a-plan-run"
+      },
+      "private": {
+        "name": "nmb1a-private",
+        "network": "${google_compute_network.run.id}",
+        "region": "${local.region}",
+        "ip_cidr_range": "10.81.1.0/26",
+        "private_ip_google_access": true,
+        "stack_type": "IPV4_ONLY",
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "nmb1a-plan-run"
+      },
+      "custody": {
+        "name": "nmb1a-custody",
+        "network": "${google_compute_network.custody.id}",
+        "region": "${local.region}",
+        "ip_cidr_range": "10.83.0.0/26",
+        "private_ip_google_access": true,
+        "stack_type": "IPV4_ONLY",
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "nmb1a-plan-custody"
+      },
+      "proxy": {
+        "name": "nmb1a-proxy",
+        "network": "${google_compute_network.custody.id}",
+        "region": "${local.region}",
+        "ip_cidr_range": "10.83.2.0/23",
+        "private_ip_google_access": true,
+        "stack_type": "IPV4_ONLY",
+        "purpose": "REGIONAL_MANAGED_PROXY",
+        "role": "ACTIVE",
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "nmb1a-plan-custody"
+      },
+      "psc_nat": {
+        "name": "nmb1a-psc-nat",
+        "network": "${google_compute_network.custody.id}",
+        "region": "${local.region}",
+        "ip_cidr_range": "10.83.4.0/28",
+        "private_ip_google_access": true,
+        "stack_type": "IPV4_ONLY",
+        "purpose": "PRIVATE_SERVICE_CONNECT",
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "nmb1a-plan-custody"
+      },
+      "fake": {
+        "name": "nmb1a-fake",
+        "network": "${google_compute_network.fake.id}",
+        "region": "${local.region}",
+        "ip_cidr_range": "10.82.0.0/26",
+        "private_ip_google_access": true,
+        "stack_type": "IPV4_ONLY",
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "nmb1a-plan-fake"
+      }
+    },
+    "google_sql_database_instance": {
+      "epoch": {
+        "name": "nmb1a-epoch",
+        "database_version": "POSTGRES_17",
+        "region": "${local.region}",
+        "deletion_protection": false,
+        "settings": {
+          "edition": "ENTERPRISE",
+          "tier": "db-f1-micro",
+          "availability_type": "ZONAL",
+          "disk_size": 10,
+          "disk_type": "PD_SSD",
+          "disk_autoresize": false,
+          "deletion_protection_enabled": false,
+          "retain_backups_on_delete": false,
+          "final_backup_config": {
+            "enabled": false
+          },
+          "backup_configuration": {
+            "enabled": true,
+            "point_in_time_recovery_enabled": true,
+            "transaction_log_retention_days": 1,
+            "backup_retention_settings": {
+              "retained_backups": 1
+            }
+          },
+          "ip_configuration": {
+            "ipv4_enabled": false,
+            "ssl_mode": "ENCRYPTED_ONLY",
+            "server_ca_mode": "GOOGLE_MANAGED_CAS_CA",
+            "psc_config": {
+              "psc_enabled": true,
+              "allowed_consumer_projects": [
+                "nmb1a-plan-run",
+                "nmb1a-plan-custody"
+              ]
+            }
+          },
+          "database_flags": [
+            {
+              "name": "cloudsql.iam_authentication",
+              "value": "on"
+            },
+            {
+              "name": "timezone",
+              "value": "UTC"
+            }
+          ],
+          "user_labels": "${local.labels}"
+        },
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "nmb1a-plan-run"
+      }
+    },
+    "google_compute_address": {
+      "sql_run": {
+        "name": "nmb1a-sql-run",
+        "address_type": "INTERNAL",
+        "address": "10.81.1.12",
+        "subnetwork": "${google_compute_subnetwork.private.id}",
+        "region": "${local.region}",
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "nmb1a-plan-run"
+      },
+      "sql_custody": {
+        "name": "nmb1a-sql-custody",
+        "address_type": "INTERNAL",
+        "address": "10.83.0.12",
+        "subnetwork": "${google_compute_subnetwork.custody.id}",
+        "region": "${local.region}",
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "nmb1a-plan-custody"
+      },
+      "sealer_consumer": {
+        "name": "nmb1a-sealer-consumer",
+        "address_type": "INTERNAL",
+        "address": "10.81.1.10",
+        "subnetwork": "${google_compute_subnetwork.private.id}",
+        "region": "${local.region}",
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "nmb1a-plan-run"
+      },
+      "sealer_lb": {
+        "name": "nmb1a-sealer-lb",
+        "address_type": "INTERNAL",
+        "address": "10.83.0.10",
+        "subnetwork": "${google_compute_subnetwork.custody.id}",
+        "region": "${local.region}",
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "nmb1a-plan-custody"
+      },
+      "nat": {
+        "name": "nmb1a-nat-ip",
+        "region": "${local.region}",
+        "labels": "${local.labels}",
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "nmb1a-plan-run"
+      },
+      "fake": {
+        "name": "nmb1a-fake-ip",
+        "region": "${local.region}",
+        "labels": "${local.labels}",
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "nmb1a-plan-fake"
+      }
+    },
+    "google_compute_forwarding_rule": {
+      "sql_run": {
+        "name": "nmb1a-sql-run",
+        "region": "${local.region}",
+        "network": "${google_compute_network.run.id}",
+        "ip_address": "${google_compute_address.sql_run.id}",
+        "target": "${google_sql_database_instance.epoch.psc_service_attachment_link}",
+        "load_balancing_scheme": "",
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "nmb1a-plan-run"
+      },
+      "sql_custody": {
+        "name": "nmb1a-sql-custody",
+        "region": "${local.region}",
+        "network": "${google_compute_network.custody.id}",
+        "ip_address": "${google_compute_address.sql_custody.id}",
+        "target": "${google_sql_database_instance.epoch.psc_service_attachment_link}",
+        "load_balancing_scheme": "",
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "nmb1a-plan-custody"
+      },
+      "sealer_lb": {
+        "name": "nmb1a-sealer-lb",
+        "region": "${local.region}",
+        "load_balancing_scheme": "INTERNAL_MANAGED",
+        "network": "${google_compute_network.custody.id}",
+        "subnetwork": "${google_compute_subnetwork.custody.id}",
+        "ip_address": "${google_compute_address.sealer_lb.address}",
+        "ports": [
+          "443"
+        ],
+        "target": "${google_compute_region_target_https_proxy.sealer.id}",
+        "depends_on": [
+          "google_compute_subnetwork.proxy",
+          "terraform_data.never_apply"
+        ],
+        "project": "nmb1a-plan-custody"
+      },
+      "sealer_consumer": {
+        "name": "nmb1a-sealer-consumer",
+        "region": "${local.region}",
+        "network": "${google_compute_network.run.id}",
+        "ip_address": "${google_compute_address.sealer_consumer.id}",
+        "target": "${google_compute_service_attachment.sealer.id}",
+        "load_balancing_scheme": "",
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "nmb1a-plan-run"
+      }
+    },
+    "google_compute_router": {
+      "gateway": {
+        "name": "nmb1a-gateway-router",
+        "region": "${local.region}",
+        "network": "${google_compute_network.run.id}",
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "nmb1a-plan-run"
+      }
+    },
+    "google_compute_router_nat": {
+      "gateway": {
+        "name": "nmb1a-gateway-only",
+        "region": "${local.region}",
+        "router": "${google_compute_router.gateway.name}",
+        "nat_ip_allocate_option": "MANUAL_ONLY",
+        "nat_ips": [
+          "${google_compute_address.nat.self_link}"
+        ],
+        "source_subnetwork_ip_ranges_to_nat": "LIST_OF_SUBNETWORKS",
+        "subnetwork": [
+          {
+            "name": "${google_compute_subnetwork.gateway.id}",
+            "source_ip_ranges_to_nat": [
+              "ALL_IP_RANGES"
+            ]
+          }
+        ],
+        "log_config": {
+          "enable": true,
+          "filter": "ALL"
+        },
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "nmb1a-plan-run"
+      }
+    },
+    "google_compute_firewall": {
+      "deny_run_v4": {
+        "name": "nmb1a-deny-run-v4",
+        "network": "${google_compute_network.run.id}",
+        "direction": "EGRESS",
+        "priority": 65534,
+        "destination_ranges": [
+          "0.0.0.0/0"
+        ],
+        "deny": [
+          {
+            "protocol": "all"
+          }
+        ],
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "nmb1a-plan-run"
+      },
+      "deny_run_v6": {
+        "name": "nmb1a-deny-run-v6",
+        "network": "${google_compute_network.run.id}",
+        "direction": "EGRESS",
+        "priority": 65534,
+        "destination_ranges": [
+          "::/0"
+        ],
+        "deny": [
+          {
+            "protocol": "all"
+          }
+        ],
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "nmb1a-plan-run"
+      },
+      "deny_custody_v4": {
+        "name": "nmb1a-deny-custody-v4",
+        "network": "${google_compute_network.custody.id}",
+        "direction": "EGRESS",
+        "priority": 65534,
+        "destination_ranges": [
+          "0.0.0.0/0"
+        ],
+        "deny": [
+          {
+            "protocol": "all"
+          }
+        ],
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "nmb1a-plan-custody"
+      },
+      "deny_custody_v6": {
+        "name": "nmb1a-deny-custody-v6",
+        "network": "${google_compute_network.custody.id}",
+        "direction": "EGRESS",
+        "priority": 65534,
+        "destination_ranges": [
+          "::/0"
+        ],
+        "deny": [
+          {
+            "protocol": "all"
+          }
+        ],
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "nmb1a-plan-custody"
+      },
+      "deny_fake_v4": {
+        "name": "nmb1a-deny-fake-v4",
+        "network": "${google_compute_network.fake.id}",
+        "direction": "EGRESS",
+        "priority": 65534,
+        "destination_ranges": [
+          "0.0.0.0/0"
+        ],
+        "deny": [
+          {
+            "protocol": "all"
+          }
+        ],
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "nmb1a-plan-fake"
+      },
+      "deny_fake_v6": {
+        "name": "nmb1a-deny-fake-v6",
+        "network": "${google_compute_network.fake.id}",
+        "direction": "EGRESS",
+        "priority": 65534,
+        "destination_ranges": [
+          "::/0"
+        ],
+        "deny": [
+          {
+            "protocol": "all"
+          }
+        ],
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "nmb1a-plan-fake"
+      },
+      "epoch_deny_1_v4": {
+        "name": "nmb1a-e000001-deny-v4",
+        "network": "${google_compute_network.run.id}",
+        "direction": "EGRESS",
+        "priority": 100,
+        "disabled": true,
+        "target_tags": [
+          "nmb1a-e000001"
+        ],
+        "destination_ranges": [
+          "0.0.0.0/0"
+        ],
+        "deny": [
+          {
+            "protocol": "all"
+          }
+        ],
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "nmb1a-plan-run"
+      },
+      "epoch_deny_1_v6": {
+        "name": "nmb1a-e000001-deny-v6",
+        "network": "${google_compute_network.run.id}",
+        "direction": "EGRESS",
+        "priority": 100,
+        "disabled": true,
+        "target_tags": [
+          "nmb1a-e000001"
+        ],
+        "destination_ranges": [
+          "::/0"
+        ],
+        "deny": [
+          {
+            "protocol": "all"
+          }
+        ],
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "nmb1a-plan-run"
+      },
+      "gateway_fake_1": {
+        "name": "nmb1a-e000001-fake-allow",
+        "network": "${google_compute_network.run.id}",
+        "direction": "EGRESS",
+        "priority": 1000,
+        "target_tags": [
+          "nmb1a-e000001"
+        ],
+        "destination_ranges": [
+          "${google_compute_address.fake.address}/32"
+        ],
+        "allow": [
+          {
+            "protocol": "tcp",
+            "ports": [
+              "443"
+            ]
+          }
+        ],
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "nmb1a-plan-run"
+      },
+      "epoch_deny_2_v4": {
+        "name": "nmb1a-e000002-deny-v4",
+        "network": "${google_compute_network.run.id}",
+        "direction": "EGRESS",
+        "priority": 100,
+        "disabled": true,
+        "target_tags": [
+          "nmb1a-e000002"
+        ],
+        "destination_ranges": [
+          "0.0.0.0/0"
+        ],
+        "deny": [
+          {
+            "protocol": "all"
+          }
+        ],
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "nmb1a-plan-run"
+      },
+      "epoch_deny_2_v6": {
+        "name": "nmb1a-e000002-deny-v6",
+        "network": "${google_compute_network.run.id}",
+        "direction": "EGRESS",
+        "priority": 100,
+        "disabled": true,
+        "target_tags": [
+          "nmb1a-e000002"
+        ],
+        "destination_ranges": [
+          "::/0"
+        ],
+        "deny": [
+          {
+            "protocol": "all"
+          }
+        ],
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "nmb1a-plan-run"
+      },
+      "gateway_fake_2": {
+        "name": "nmb1a-e000002-fake-allow",
+        "network": "${google_compute_network.run.id}",
+        "direction": "EGRESS",
+        "priority": 1000,
+        "target_tags": [
+          "nmb1a-e000002"
+        ],
+        "destination_ranges": [
+          "${google_compute_address.fake.address}/32"
+        ],
+        "allow": [
+          {
+            "protocol": "tcp",
+            "ports": [
+              "443"
+            ]
+          }
+        ],
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "nmb1a-plan-run"
+      },
+      "fake_ingress_nat": {
+        "name": "nmb1a-fake-ingress-nat",
+        "network": "${google_compute_network.fake.id}",
+        "direction": "INGRESS",
+        "source_ranges": [
+          "${google_compute_address.nat.address}/32"
+        ],
+        "target_tags": [
+          "nmb1a-fake"
+        ],
+        "allow": [
+          {
+            "protocol": "tcp",
+            "ports": [
+              "443"
+            ]
+          }
+        ],
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "nmb1a-plan-fake"
+      },
+      "sql_run": {
+        "name": "nmb1a-sql-run",
+        "network": "${google_compute_network.run.id}",
+        "direction": "EGRESS",
+        "priority": 1000,
+        "target_tags": [
+          "nmb1a-e000001",
+          "nmb1a-e000002",
+          "nmb1a-worker",
+          "nmb1a-ingress"
+        ],
+        "destination_ranges": [
+          "10.81.1.12/32"
+        ],
+        "allow": [
+          {
+            "protocol": "tcp",
+            "ports": [
+              "5432"
+            ]
+          }
+        ],
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "nmb1a-plan-run"
+      },
+      "sql_custody": {
+        "name": "nmb1a-sql-custody",
+        "network": "${google_compute_network.custody.id}",
+        "direction": "EGRESS",
+        "priority": 1000,
+        "target_tags": [
+          "nmb1a-sealer"
+        ],
+        "destination_ranges": [
+          "10.83.0.12/32"
+        ],
+        "allow": [
+          {
+            "protocol": "tcp",
+            "ports": [
+              "5432"
+            ]
+          }
+        ],
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "nmb1a-plan-custody"
+      },
+      "sealer_call": {
+        "name": "nmb1a-sealer-call",
+        "network": "${google_compute_network.run.id}",
+        "direction": "EGRESS",
+        "priority": 1000,
+        "target_tags": [
+          "nmb1a-ingress"
+        ],
+        "destination_ranges": [
+          "10.81.1.10/32"
+        ],
+        "allow": [
+          {
+            "protocol": "tcp",
+            "ports": [
+              "443"
+            ]
+          }
+        ],
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "nmb1a-plan-run"
+      },
+      "restricted_run": {
+        "name": "nmb1a-restricted-run",
+        "network": "${google_compute_network.run.id}",
+        "direction": "EGRESS",
+        "priority": 1000,
+        "target_tags": [
+          "nmb1a-e000001",
+          "nmb1a-e000002",
+          "nmb1a-worker",
+          "nmb1a-ingress"
+        ],
+        "destination_ranges": [
+          "199.36.153.4/30"
+        ],
+        "allow": [
+          {
+            "protocol": "tcp",
+            "ports": [
+              "443"
+            ]
+          }
+        ],
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "nmb1a-plan-run"
+      },
+      "restricted_custody": {
+        "name": "nmb1a-restricted-custody",
+        "network": "${google_compute_network.custody.id}",
+        "direction": "EGRESS",
+        "priority": 1000,
+        "target_tags": [
+          "nmb1a-sealer"
+        ],
+        "destination_ranges": [
+          "199.36.153.4/30"
+        ],
+        "allow": [
+          {
+            "protocol": "tcp",
+            "ports": [
+              "443"
+            ]
+          }
+        ],
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "nmb1a-plan-custody"
+      }
+    },
+    "google_compute_route": {
+      "restricted_run": {
+        "name": "nmb1a-restricted-run",
+        "network": "${google_compute_network.run.id}",
+        "dest_range": "199.36.153.4/30",
+        "next_hop_gateway": "default-internet-gateway",
+        "priority": 900,
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "nmb1a-plan-run"
+      },
+      "restricted_custody": {
+        "name": "nmb1a-restricted-custody",
+        "network": "${google_compute_network.custody.id}",
+        "dest_range": "199.36.153.4/30",
+        "next_hop_gateway": "default-internet-gateway",
+        "priority": 900,
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "nmb1a-plan-custody"
+      }
+    },
+    "google_dns_managed_zone": {
+      "apis_run": {
+        "name": "nmb1a-apis-run",
+        "dns_name": "googleapis.com.",
+        "visibility": "private",
+        "private_visibility_config": {
+          "networks": [
+            {
+              "network_url": "${google_compute_network.run.id}"
+            }
+          ]
+        },
+        "labels": "${local.labels}",
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "nmb1a-plan-run"
+      },
+      "runapp_run": {
+        "name": "nmb1a-runapp-run",
+        "dns_name": "run.app.",
+        "visibility": "private",
+        "private_visibility_config": {
+          "networks": [
+            {
+              "network_url": "${google_compute_network.run.id}"
+            }
+          ]
+        },
+        "labels": "${local.labels}",
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "nmb1a-plan-run"
+      },
+      "sql_run": {
+        "name": "nmb1a-sql-run",
+        "dns_name": "${trimsuffix(google_sql_database_instance.epoch.dns_name, \".\")}.",
+        "visibility": "private",
+        "private_visibility_config": {
+          "networks": [
+            {
+              "network_url": "${google_compute_network.run.id}"
+            }
+          ]
+        },
+        "labels": "${local.labels}",
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "nmb1a-plan-run"
+      },
+      "apis_custody": {
+        "name": "nmb1a-apis-custody",
+        "dns_name": "googleapis.com.",
+        "visibility": "private",
+        "private_visibility_config": {
+          "networks": [
+            {
+              "network_url": "${google_compute_network.custody.id}"
+            }
+          ]
+        },
+        "labels": "${local.labels}",
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "nmb1a-plan-custody"
+      },
+      "runapp_custody": {
+        "name": "nmb1a-runapp-custody",
+        "dns_name": "run.app.",
+        "visibility": "private",
+        "private_visibility_config": {
+          "networks": [
+            {
+              "network_url": "${google_compute_network.custody.id}"
+            }
+          ]
+        },
+        "labels": "${local.labels}",
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "nmb1a-plan-custody"
+      },
+      "sql_custody": {
+        "name": "nmb1a-sql-custody",
+        "dns_name": "${trimsuffix(google_sql_database_instance.epoch.dns_name, \".\")}.",
+        "visibility": "private",
+        "private_visibility_config": {
+          "networks": [
+            {
+              "network_url": "${google_compute_network.custody.id}"
+            }
+          ]
+        },
+        "labels": "${local.labels}",
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "nmb1a-plan-custody"
+      },
+      "sealer": {
+        "name": "nmb1a-sealer-private",
+        "dns_name": "sealer.nmb1a.invalid.",
+        "visibility": "private",
+        "private_visibility_config": {
+          "networks": [
+            {
+              "network_url": "${google_compute_network.run.id}"
+            }
+          ]
+        },
+        "labels": "${local.labels}",
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "nmb1a-plan-run"
+      }
+    },
+    "google_dns_record_set": {
+      "apis_run": {
+        "name": "*.googleapis.com.",
+        "type": "A",
+        "ttl": 30,
+        "managed_zone": "${google_dns_managed_zone.apis_run.name}",
+        "rrdatas": [
+          "199.36.153.4",
+          "199.36.153.5",
+          "199.36.153.6",
+          "199.36.153.7"
+        ],
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "nmb1a-plan-run"
+      },
+      "runapp_run": {
+        "name": "*.run.app.",
+        "type": "A",
+        "ttl": 30,
+        "managed_zone": "${google_dns_managed_zone.runapp_run.name}",
+        "rrdatas": [
+          "199.36.153.4",
+          "199.36.153.5",
+          "199.36.153.6",
+          "199.36.153.7"
+        ],
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "nmb1a-plan-run"
+      },
+      "sql_run": {
+        "name": "${google_dns_managed_zone.sql_run.dns_name}",
+        "type": "A",
+        "ttl": 30,
+        "managed_zone": "${google_dns_managed_zone.sql_run.name}",
+        "rrdatas": [
+          "${google_compute_address.sql_run.address}"
+        ],
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "nmb1a-plan-run"
+      },
+      "apis_custody": {
+        "name": "*.googleapis.com.",
+        "type": "A",
+        "ttl": 30,
+        "managed_zone": "${google_dns_managed_zone.apis_custody.name}",
+        "rrdatas": [
+          "199.36.153.4",
+          "199.36.153.5",
+          "199.36.153.6",
+          "199.36.153.7"
+        ],
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "nmb1a-plan-custody"
+      },
+      "runapp_custody": {
+        "name": "*.run.app.",
+        "type": "A",
+        "ttl": 30,
+        "managed_zone": "${google_dns_managed_zone.runapp_custody.name}",
+        "rrdatas": [
+          "199.36.153.4",
+          "199.36.153.5",
+          "199.36.153.6",
+          "199.36.153.7"
+        ],
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "nmb1a-plan-custody"
+      },
+      "sql_custody": {
+        "name": "${google_dns_managed_zone.sql_custody.dns_name}",
+        "type": "A",
+        "ttl": 30,
+        "managed_zone": "${google_dns_managed_zone.sql_custody.name}",
+        "rrdatas": [
+          "${google_compute_address.sql_custody.address}"
+        ],
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "nmb1a-plan-custody"
+      },
+      "sealer": {
+        "name": "sealer.nmb1a.invalid.",
+        "type": "A",
+        "ttl": 30,
+        "managed_zone": "${google_dns_managed_zone.sealer.name}",
+        "rrdatas": [
+          "${google_compute_address.sealer_consumer.address}"
+        ],
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "nmb1a-plan-run"
+      }
+    },
+    "google_service_account": {
+      "ingress": {
+        "account_id": "nmb1a-ingress",
+        "display_name": "B1a ingress separate principal",
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "nmb1a-plan-run"
+      },
+      "worker": {
+        "account_id": "nmb1a-worker",
+        "display_name": "B1a worker separate principal",
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "nmb1a-plan-run"
+      },
+      "gw_e000001": {
+        "account_id": "nmb1a-gw-e000001",
+        "display_name": "B1a gw_e000001 separate principal",
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "nmb1a-plan-run"
+      },
+      "gw_e000002": {
+        "account_id": "nmb1a-gw-e000002",
+        "display_name": "B1a gw_e000002 separate principal",
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "nmb1a-plan-run"
+      },
+      "controller": {
+        "account_id": "nmb1a-controller",
+        "display_name": "B1a controller separate principal",
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "nmb1a-plan-run"
+      },
+      "kill": {
+        "account_id": "nmb1a-kill",
+        "display_name": "B1a kill separate principal",
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "nmb1a-plan-run"
+      },
+      "observer": {
+        "account_id": "nmb1a-observer",
+        "display_name": "B1a observer separate principal",
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "nmb1a-plan-custody"
+      },
+      "sealer": {
+        "account_id": "nmb1a-sealer",
+        "display_name": "B1a sealer separate principal",
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "nmb1a-plan-custody"
+      },
+      "deployer": {
+        "account_id": "nmb1a-deployer",
+        "display_name": "B1a deployer separate principal",
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "nmb1a-plan-run"
+      },
+      "fake": {
+        "account_id": "nmb1a-fake",
+        "display_name": "B1a fake separate principal",
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "nmb1a-plan-fake"
+      }
+    },
+    "google_cloud_run_v2_service": {
+      "ingress": {
+        "name": "nmb1a-ingress",
+        "location": "${local.region}",
+        "deletion_protection": false,
+        "ingress": "INGRESS_TRAFFIC_ALL",
+        "labels": "${local.labels}",
+        "scaling": {
+          "min_instance_count": 1,
+          "max_instance_count": 1
+        },
+        "template": {
+          "revision": "nmb1a-ingress-e000001-r1",
+          "service_account": "${google_service_account.ingress.email}",
+          "labels": {
+            "purpose": "b1a-synthetic-proof",
+            "expires": "2026-12-17",
+            "owner": "assignment-required",
+            "deployment_epoch": "e000001"
+          },
+          "timeout": "15s",
+          "max_instance_request_concurrency": 1,
+          "scaling": {
+            "min_instance_count": 1,
+            "max_instance_count": 1
+          },
+          "containers": [
+            {
+              "image": "${var.candidate_image}",
+              "env": [
+                {
+                  "name": "B1A_ROLE",
+                  "value": "ingress"
+                },
+                {
+                  "name": "B1A_MODE",
+                  "value": "INERT_UNCONFIGURED"
+                },
+                {
+                  "name": "DEPLOYMENT_EPOCH",
+                  "value": "1"
+                }
+              ],
+              "ports": [
+                {
+                  "container_port": 8080
+                }
+              ],
+              "resources": {
+                "limits": {
+                  "cpu": "1",
+                  "memory": "512Mi"
+                },
+                "cpu_idle": true,
+                "startup_cpu_boost": false
+              },
+              "startup_probe": {
+                "http_get": {
+                  "path": "/healthz",
+                  "port": 8080
+                },
+                "period_seconds": 2,
+                "failure_threshold": 30
+              },
+              "readiness_probe": {
+                "http_get": {
+                  "path": "/readyz",
+                  "port": 8080
+                },
+                "period_seconds": 2,
+                "failure_threshold": 3
+              }
+            }
+          ],
+          "vpc_access": {
+            "egress": "ALL_TRAFFIC",
+            "network_interfaces": [
+              {
+                "network": "${google_compute_network.run.name}",
+                "subnetwork": "${google_compute_subnetwork.private.name}",
+                "tags": [
+                  "nmb1a-ingress"
+                ]
+              }
+            ]
+          }
+        },
+        "traffic": [
+          {
+            "type": "TRAFFIC_TARGET_ALLOCATION_TYPE_LATEST",
+            "percent": 100
+          }
+        ],
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "nmb1a-plan-run"
+      },
+      "gateway": {
+        "name": "nmb1a-gateway",
+        "location": "${local.region}",
+        "deletion_protection": false,
+        "ingress": "INGRESS_TRAFFIC_INTERNAL_ONLY",
+        "labels": "${local.labels}",
+        "scaling": {
+          "min_instance_count": 1,
+          "max_instance_count": 2
+        },
+        "template": {
+          "revision": "nmb1a-gateway-e000001-r1",
+          "service_account": "${google_service_account.gw_e000001.email}",
+          "labels": {
+            "purpose": "b1a-synthetic-proof",
+            "expires": "2026-12-17",
+            "owner": "assignment-required",
+            "deployment_epoch": "e000001"
+          },
+          "timeout": "15s",
+          "max_instance_request_concurrency": 1,
+          "scaling": {
+            "min_instance_count": 1,
+            "max_instance_count": 1
+          },
+          "containers": [
+            {
+              "image": "${var.candidate_image}",
+              "env": [
+                {
+                  "name": "B1A_ROLE",
+                  "value": "gateway"
+                },
+                {
+                  "name": "B1A_MODE",
+                  "value": "INERT_UNCONFIGURED"
+                },
+                {
+                  "name": "DEPLOYMENT_EPOCH",
+                  "value": "1"
+                }
+              ],
+              "ports": [
+                {
+                  "container_port": 8080
+                }
+              ],
+              "resources": {
+                "limits": {
+                  "cpu": "1",
+                  "memory": "512Mi"
+                },
+                "cpu_idle": false,
+                "startup_cpu_boost": false
+              },
+              "startup_probe": {
+                "http_get": {
+                  "path": "/healthz",
+                  "port": 8080
+                },
+                "period_seconds": 2,
+                "failure_threshold": 30
+              },
+              "readiness_probe": {
+                "http_get": {
+                  "path": "/readyz",
+                  "port": 8080
+                },
+                "period_seconds": 2,
+                "failure_threshold": 3
+              }
+            }
+          ],
+          "vpc_access": {
+            "egress": "ALL_TRAFFIC",
+            "network_interfaces": [
+              {
+                "network": "${google_compute_network.run.name}",
+                "subnetwork": "${google_compute_subnetwork.gateway.name}",
+                "tags": [
+                  "nmb1a-e000001"
+                ]
+              }
+            ]
+          }
+        },
+        "traffic": [
+          {
+            "type": "TRAFFIC_TARGET_ALLOCATION_TYPE_LATEST",
+            "percent": 100
+          }
+        ],
+        "lifecycle": {
+          "ignore_changes": [
+            "template",
+            "traffic"
+          ]
+        },
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "nmb1a-plan-run"
+      },
+      "sealer": {
+        "name": "nmb1a-sealer",
+        "location": "${local.region}",
+        "deletion_protection": false,
+        "ingress": "INGRESS_TRAFFIC_INTERNAL_ONLY",
+        "labels": "${local.labels}",
+        "scaling": {
+          "min_instance_count": 1,
+          "max_instance_count": 1
+        },
+        "template": {
+          "revision": "nmb1a-sealer-e000001-r1",
+          "service_account": "${google_service_account.sealer.email}",
+          "labels": {
+            "purpose": "b1a-synthetic-proof",
+            "expires": "2026-12-17",
+            "owner": "assignment-required",
+            "deployment_epoch": "e000001"
+          },
+          "timeout": "15s",
+          "max_instance_request_concurrency": 1,
+          "scaling": {
+            "min_instance_count": 1,
+            "max_instance_count": 1
+          },
+          "containers": [
+            {
+              "image": "${var.candidate_image}",
+              "env": [
+                {
+                  "name": "B1A_ROLE",
+                  "value": "sealer"
+                },
+                {
+                  "name": "B1A_MODE",
+                  "value": "INERT_UNCONFIGURED"
+                },
+                {
+                  "name": "DEPLOYMENT_EPOCH",
+                  "value": "1"
+                }
+              ],
+              "ports": [
+                {
+                  "container_port": 8080
+                }
+              ],
+              "resources": {
+                "limits": {
+                  "cpu": "1",
+                  "memory": "512Mi"
+                },
+                "cpu_idle": true,
+                "startup_cpu_boost": false
+              },
+              "startup_probe": {
+                "http_get": {
+                  "path": "/healthz",
+                  "port": 8080
+                },
+                "period_seconds": 2,
+                "failure_threshold": 30
+              },
+              "readiness_probe": {
+                "http_get": {
+                  "path": "/readyz",
+                  "port": 8080
+                },
+                "period_seconds": 2,
+                "failure_threshold": 3
+              }
+            }
+          ],
+          "vpc_access": {
+            "egress": "ALL_TRAFFIC",
+            "network_interfaces": [
+              {
+                "network": "${google_compute_network.custody.name}",
+                "subnetwork": "${google_compute_subnetwork.custody.name}",
+                "tags": [
+                  "nmb1a-sealer"
+                ]
+              }
+            ]
+          }
+        },
+        "traffic": [
+          {
+            "type": "TRAFFIC_TARGET_ALLOCATION_TYPE_LATEST",
+            "percent": 100
+          }
+        ],
+        "default_uri_disabled": true,
+        "custom_audiences": [
+          "https://sealer.nmb1a.invalid"
+        ],
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "nmb1a-plan-custody"
+      }
+    },
+    "google_cloud_run_v2_worker_pool": {
+      "worker": {
+        "name": "nmb1a-worker",
+        "location": "${local.region}",
+        "deletion_protection": false,
+        "labels": "${local.labels}",
+        "scaling": {
+          "manual_instance_count": 1,
+          "scaling_mode": "MANUAL"
+        },
+        "template": {
+          "revision": "nmb1a-worker-e000001-r1",
+          "service_account": "${google_service_account.worker.email}",
+          "labels": "${local.labels}",
+          "containers": [
+            {
+              "image": "${var.candidate_image}",
+              "env": [
+                {
+                  "name": "B1A_ROLE",
+                  "value": "worker"
+                },
+                {
+                  "name": "B1A_MODE",
+                  "value": "INERT_UNCONFIGURED"
+                }
+              ],
+              "resources": {
+                "limits": {
+                  "cpu": "1",
+                  "memory": "1Gi"
+                }
+              }
+            }
+          ],
+          "vpc_access": {
+            "egress": "ALL_TRAFFIC",
+            "network_interfaces": [
+              {
+                "network": "${google_compute_network.run.name}",
+                "subnetwork": "${google_compute_subnetwork.private.name}",
+                "tags": [
+                  "nmb1a-worker"
+                ]
+              }
+            ]
+          }
+        },
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "nmb1a-plan-run"
+      }
+    },
+    "google_compute_region_network_endpoint_group": {
+      "sealer": {
+        "name": "nmb1a-sealer-neg",
+        "region": "${local.region}",
+        "network_endpoint_type": "SERVERLESS",
+        "cloud_run": {
+          "service": "${google_cloud_run_v2_service.sealer.name}"
+        },
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "nmb1a-plan-custody"
+      }
+    },
+    "google_compute_region_backend_service": {
+      "sealer": {
+        "name": "nmb1a-sealer-backend",
+        "region": "${local.region}",
+        "protocol": "HTTP",
+        "load_balancing_scheme": "INTERNAL_MANAGED",
+        "backend": [
+          {
+            "group": "${google_compute_region_network_endpoint_group.sealer.id}"
+          }
+        ],
+        "log_config": {
+          "enable": true,
+          "sample_rate": 1
+        },
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "nmb1a-plan-custody"
+      }
+    },
+    "google_compute_region_url_map": {
+      "sealer": {
+        "name": "nmb1a-sealer-map",
+        "region": "${local.region}",
+        "default_service": "${google_compute_region_backend_service.sealer.id}",
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "nmb1a-plan-custody"
+      }
+    },
+    "google_compute_region_ssl_certificate": {
+      "sealer": {
+        "name": "nmb1a-sealer-synthetic-tls",
+        "region": "${local.region}",
+        "private_key": "${var.synthetic_sealer_tls_key}",
+        "certificate": "${var.synthetic_sealer_tls_certificate}",
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "nmb1a-plan-custody"
+      }
+    },
+    "google_compute_region_target_https_proxy": {
+      "sealer": {
+        "name": "nmb1a-sealer-https",
+        "region": "${local.region}",
+        "url_map": "${google_compute_region_url_map.sealer.id}",
+        "ssl_certificates": [
+          "${google_compute_region_ssl_certificate.sealer.id}"
+        ],
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "nmb1a-plan-custody"
+      }
+    },
+    "google_compute_service_attachment": {
+      "sealer": {
+        "name": "nmb1a-sealer-published",
+        "region": "${local.region}",
+        "target_service": "${google_compute_forwarding_rule.sealer_lb.id}",
+        "connection_preference": "ACCEPT_MANUAL",
+        "nat_subnets": [
+          "${google_compute_subnetwork.psc_nat.id}"
+        ],
+        "enable_proxy_protocol": false,
+        "consumer_accept_lists": [
+          {
+            "project_id_or_num": "nmb1a-plan-run",
+            "connection_limit": 1
+          }
+        ],
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "nmb1a-plan-custody"
+      }
+    },
+    "google_secret_manager_secret": {
+      "effect_e000001": {
+        "secret_id": "nmb1a-effect-e000001",
+        "replication": {
+          "auto": {}
+        },
+        "labels": "${local.labels}",
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "nmb1a-plan-run"
+      },
+      "effect_e000002": {
+        "secret_id": "nmb1a-effect-e000002",
+        "replication": {
+          "auto": {}
+        },
+        "labels": "${local.labels}",
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "nmb1a-plan-run"
+      },
+      "worker_db": {
+        "secret_id": "nmb1a-worker-db",
+        "replication": {
+          "auto": {}
+        },
+        "labels": "${local.labels}",
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "nmb1a-plan-run"
+      },
+      "ingress_db": {
+        "secret_id": "nmb1a-ingress-db",
+        "replication": {
+          "auto": {}
+        },
+        "labels": "${local.labels}",
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "nmb1a-plan-run"
+      },
+      "controller_db": {
+        "secret_id": "nmb1a-controller-db",
+        "replication": {
+          "auto": {}
+        },
+        "labels": "${local.labels}",
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "nmb1a-plan-run"
+      },
+      "sealer_db": {
+        "secret_id": "nmb1a-sealer-db",
+        "replication": {
+          "auto": {}
+        },
+        "labels": "${local.labels}",
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "nmb1a-plan-custody"
+      },
+      "observer_signing": {
+        "secret_id": "nmb1a-observer-signing",
+        "replication": {
+          "auto": {}
+        },
+        "labels": "${local.labels}",
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "nmb1a-plan-custody"
+      }
+    },
+    "google_storage_bucket": {
+      "custody": {
+        "name": "nmb1a-plan-custody-evidence-unique-required",
+        "location": "US-CENTRAL1",
+        "uniform_bucket_level_access": true,
+        "public_access_prevention": "enforced",
+        "versioning": {
+          "enabled": true
+        },
+        "force_destroy": false,
+        "labels": "${local.labels}",
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "nmb1a-plan-custody"
+      }
+    },
+    "google_kms_key_ring": {
+      "effect": {
+        "name": "nmb1a-effect",
+        "location": "${local.region}",
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "nmb1a-plan-run"
+      },
+      "custody": {
+        "name": "nmb1a-custody",
+        "location": "${local.region}",
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "nmb1a-plan-custody"
+      }
+    },
+    "google_kms_crypto_key": {
+      "effect": {
+        "name": "nmb1a-effect",
+        "key_ring": "${google_kms_key_ring.effect.id}",
+        "destroy_scheduled_duration": "86400s",
+        "rotation_period": "2592000s",
+        "labels": "${local.labels}",
+        "depends_on": [
+          "terraform_data.never_apply"
+        ]
+      },
+      "custody": {
+        "name": "nmb1a-custody",
+        "key_ring": "${google_kms_key_ring.custody.id}",
+        "destroy_scheduled_duration": "86400s",
+        "rotation_period": "2592000s",
+        "labels": "${local.labels}",
+        "depends_on": [
+          "terraform_data.never_apply"
+        ]
+      }
+    },
+    "google_artifact_registry_repository": {
+      "harness": {
+        "location": "${local.region}",
+        "repository_id": "b1a",
+        "format": "DOCKER",
+        "labels": "${local.labels}",
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "nmb1a-plan-run"
+      }
+    },
+    "google_compute_instance": {
+      "fake": {
+        "name": "nmb1a-fake",
+        "zone": "us-central1-a",
+        "machine_type": "e2-micro",
+        "boot_disk": {
+          "initialize_params": {
+            "image": "debian-cloud/debian-12",
+            "size": 10,
+            "type": "pd-standard"
+          }
+        },
+        "network_interface": [
+          {
+            "subnetwork": "${google_compute_subnetwork.fake.id}",
+            "access_config": [
+              {
+                "nat_ip": "${google_compute_address.fake.address}"
+              }
+            ]
+          }
+        ],
+        "service_account": {
+          "email": "${google_service_account.fake.email}",
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform"
+          ]
+        },
+        "metadata": {
+          "enable-oslogin": "TRUE",
+          "block-project-ssh-keys": "TRUE"
+        },
+        "tags": [
+          "nmb1a-fake"
+        ],
+        "labels": "${local.labels}",
+        "deletion_protection": false,
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "nmb1a-plan-fake"
+      }
+    },
+    "google_cloud_run_v2_service_iam_member": {
+      "worker_gateway": {
+        "location": "${local.region}",
+        "name": "${google_cloud_run_v2_service.gateway.name}",
+        "role": "roles/run.invoker",
+        "member": "serviceAccount:${google_service_account.worker.email}",
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "nmb1a-plan-run"
+      },
+      "ingress_sealer": {
+        "location": "${local.region}",
+        "name": "${google_cloud_run_v2_service.sealer.name}",
+        "role": "roles/run.invoker",
+        "member": "serviceAccount:${google_service_account.ingress.email}",
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "nmb1a-plan-custody"
+      }
+    },
+    "google_secret_manager_secret_iam_member": {
+      "effect_e000001": {
+        "secret_id": "${google_secret_manager_secret.effect_e000001.id}",
+        "role": "roles/secretmanager.secretAccessor",
+        "member": "serviceAccount:${google_service_account.gw_e000001.email}",
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "nmb1a-plan-run"
+      },
+      "effect_e000002": {
+        "secret_id": "${google_secret_manager_secret.effect_e000002.id}",
+        "role": "roles/secretmanager.secretAccessor",
+        "member": "serviceAccount:${google_service_account.gw_e000002.email}",
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "nmb1a-plan-run"
+      },
+      "worker_db": {
+        "secret_id": "${google_secret_manager_secret.worker_db.id}",
+        "role": "roles/secretmanager.secretAccessor",
+        "member": "serviceAccount:${google_service_account.worker.email}",
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "nmb1a-plan-run"
+      },
+      "ingress_db": {
+        "secret_id": "${google_secret_manager_secret.ingress_db.id}",
+        "role": "roles/secretmanager.secretAccessor",
+        "member": "serviceAccount:${google_service_account.ingress.email}",
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "nmb1a-plan-run"
+      },
+      "controller_db": {
+        "secret_id": "${google_secret_manager_secret.controller_db.id}",
+        "role": "roles/secretmanager.secretAccessor",
+        "member": "serviceAccount:${google_service_account.controller.email}",
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "nmb1a-plan-run"
+      },
+      "sealer_db": {
+        "secret_id": "${google_secret_manager_secret.sealer_db.id}",
+        "role": "roles/secretmanager.secretAccessor",
+        "member": "serviceAccount:${google_service_account.sealer.email}",
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "nmb1a-plan-custody"
+      },
+      "observer_signing": {
+        "secret_id": "${google_secret_manager_secret.observer_signing.id}",
+        "role": "roles/secretmanager.secretAccessor",
+        "member": "serviceAccount:${google_service_account.observer.email}",
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "nmb1a-plan-custody"
+      }
+    },
+    "google_kms_crypto_key_iam_member": {
+      "effect_1": {
+        "crypto_key_id": "${google_kms_crypto_key.effect.id}",
+        "role": "roles/cloudkms.cryptoKeyDecrypter",
+        "member": "serviceAccount:${google_service_account.gw_e000001.email}",
+        "depends_on": [
+          "terraform_data.never_apply"
+        ]
+      },
+      "effect_2": {
+        "crypto_key_id": "${google_kms_crypto_key.effect.id}",
+        "role": "roles/cloudkms.cryptoKeyDecrypter",
+        "member": "serviceAccount:${google_service_account.gw_e000002.email}",
+        "depends_on": [
+          "terraform_data.never_apply"
+        ]
+      },
+      "sealer": {
+        "crypto_key_id": "${google_kms_crypto_key.custody.id}",
+        "role": "roles/cloudkms.cryptoKeyEncrypterDecrypter",
+        "member": "serviceAccount:${google_service_account.sealer.email}",
+        "depends_on": [
+          "terraform_data.never_apply"
+        ]
+      }
+    },
+    "google_storage_bucket_iam_member": {
+      "sealer_create": {
+        "bucket": "${google_storage_bucket.custody.name}",
+        "role": "roles/storage.objectCreator",
+        "member": "serviceAccount:${google_service_account.sealer.email}",
+        "depends_on": [
+          "terraform_data.never_apply"
+        ]
+      },
+      "observer_read": {
+        "bucket": "${google_storage_bucket.custody.name}",
+        "role": "roles/storage.objectViewer",
+        "member": "serviceAccount:${google_service_account.observer.email}",
+        "depends_on": [
+          "terraform_data.never_apply"
+        ]
+      },
+      "fake_create": {
+        "bucket": "${google_storage_bucket.custody.name}",
+        "role": "roles/storage.objectCreator",
+        "member": "serviceAccount:${google_service_account.fake.email}",
+        "depends_on": [
+          "terraform_data.never_apply"
+        ]
+      }
+    },
+    "google_project_iam_custom_role": {
+      "kill": {
+        "role_id": "nmb1a_kill",
+        "title": "B1a kill only",
+        "permissions": [
+          "run.revisions.get",
+          "run.revisions.list",
+          "run.revisions.delete",
+          "compute.firewalls.get",
+          "compute.firewalls.update",
+          "secretmanager.secrets.getIamPolicy",
+          "secretmanager.secrets.setIamPolicy",
+          "cloudkms.cryptoKeys.getIamPolicy",
+          "cloudkms.cryptoKeys.setIamPolicy"
+        ],
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "nmb1a-plan-run"
+      },
+      "deploy": {
+        "role_id": "nmb1a_deploy",
+        "title": "B1a deploy only",
+        "permissions": [
+          "run.services.create",
+          "run.services.update",
+          "run.services.get",
+          "run.services.list",
+          "run.operations.get",
+          "run.revisions.get",
+          "run.revisions.list"
+        ],
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "nmb1a-plan-run"
+      }
+    },
+    "google_project_iam_member": {
+      "kill": {
+        "role": "${google_project_iam_custom_role.kill.name}",
+        "member": "serviceAccount:${google_service_account.kill.email}",
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "nmb1a-plan-run"
+      },
+      "deploy": {
+        "role": "${google_project_iam_custom_role.deploy.name}",
+        "member": "serviceAccount:${google_service_account.deployer.email}",
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "nmb1a-plan-run"
+      },
+      "observer_metrics": {
+        "role": "roles/monitoring.viewer",
+        "member": "serviceAccount:${google_service_account.observer.email}",
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "nmb1a-plan-run"
+      },
+      "observer_logs": {
+        "role": "roles/logging.viewer",
+        "member": "serviceAccount:${google_service_account.observer.email}",
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "nmb1a-plan-run"
+      },
+      "observer_run": {
+        "role": "roles/run.viewer",
+        "member": "serviceAccount:${google_service_account.observer.email}",
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "nmb1a-plan-run"
+      }
+    },
+    "google_service_account_iam_member": {
+      "deploy_ingress": {
+        "service_account_id": "${google_service_account.ingress.name}",
+        "role": "roles/iam.serviceAccountUser",
+        "member": "serviceAccount:${google_service_account.deployer.email}",
+        "depends_on": [
+          "terraform_data.never_apply"
+        ]
+      },
+      "deploy_worker": {
+        "service_account_id": "${google_service_account.worker.name}",
+        "role": "roles/iam.serviceAccountUser",
+        "member": "serviceAccount:${google_service_account.deployer.email}",
+        "depends_on": [
+          "terraform_data.never_apply"
+        ]
+      },
+      "deploy_gw_e000001": {
+        "service_account_id": "${google_service_account.gw_e000001.name}",
+        "role": "roles/iam.serviceAccountUser",
+        "member": "serviceAccount:${google_service_account.deployer.email}",
+        "depends_on": [
+          "terraform_data.never_apply"
+        ]
+      },
+      "deploy_gw_e000002": {
+        "service_account_id": "${google_service_account.gw_e000002.name}",
+        "role": "roles/iam.serviceAccountUser",
+        "member": "serviceAccount:${google_service_account.deployer.email}",
+        "depends_on": [
+          "terraform_data.never_apply"
+        ]
+      }
+    },
+    "google_billing_budget": {
+      "session": {
+        "billing_account": "${var.billing_account}",
+        "display_name": "B1a gross session alerts only",
+        "amount": {
+          "specified_amount": {
+            "currency_code": "${var.billing_currency}",
+            "units": "20"
+          }
+        },
+        "budget_filter": {
+          "projects": [
+            "projects/nmb1a-plan-run",
+            "projects/nmb1a-plan-custody",
+            "projects/nmb1a-plan-fake"
+          ],
+          "credit_types_treatment": "EXCLUDE_ALL_CREDITS",
+          "calendar_period": "MONTH"
+        },
+        "threshold_rules": [
+          {
+            "threshold_percent": 0.5,
+            "spend_basis": "CURRENT_SPEND"
+          },
+          {
+            "threshold_percent": 0.75,
+            "spend_basis": "CURRENT_SPEND"
+          },
+          {
+            "threshold_percent": 0.9,
+            "spend_basis": "CURRENT_SPEND"
+          },
+          {
+            "threshold_percent": 1,
+            "spend_basis": "CURRENT_SPEND"
+          }
+        ],
+        "depends_on": [
+          "terraform_data.never_apply"
+        ]
+      }
+    },
+    "google_org_policy_policy": {
+      "all_traffic": {
+        "count": "${var.organization_mode == \"ORG_ENFORCED\" ? 1 : 0}",
+        "name": "projects/${var.runtime_project_number}/policies/run.allowedVPCEgress",
+        "parent": "projects/${var.runtime_project_number}",
+        "spec": {
+          "rules": [
+            {
+              "values": {
+                "allowed_values": [
+                  "all-traffic"
+                ]
+              }
+            }
+          ]
+        },
+        "depends_on": [
+          "terraform_data.never_apply"
+        ]
+      }
+    }
+  }
+}

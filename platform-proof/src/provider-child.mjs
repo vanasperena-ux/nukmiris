@@ -14,7 +14,14 @@ const plans = new Map(),
   releases = new Map();
 const append = (e) => ledger.append({ at: Date.now(), ...e });
 const server = https.createServer(
-  { key: config.key, cert: config.cert, minVersion: "TLSv1.3" },
+  {
+    key: config.key,
+    cert: config.cert,
+    minVersion: "TLSv1.3",
+    ...(config.mutualTls
+      ? { ca: config.cert, requestCert: true, rejectUnauthorized: true }
+      : {}),
+  },
   (req, res) => {
     void (async () => {
       const connectionId = req.socket.__inc1ConnectionId;
@@ -25,6 +32,10 @@ const server = https.createServer(
       }
       const attemptId = id(req.headers["x-inc1-attempt"]),
         p = plans.get(attemptId);
+      const peer = config.mutualTls
+          ? req.socket.getPeerCertificate()
+          : undefined,
+        identity = peer ? config.identities?.[peer.fingerprint256] : undefined;
       const binding = {
         scopeId: req.headers["x-inc1-scope"],
         attemptId,
@@ -38,8 +49,20 @@ const server = https.createServer(
         connectionId,
         ...binding,
         actualDigest: hash(raw),
+        ...(peer
+          ? {
+              authenticatedFingerprint: peer.fingerprint256,
+              authenticatedEpoch: identity?.epoch,
+              authenticatedRevision: identity?.revision,
+            }
+          : {}),
       });
       if (
+        (config.mutualTls &&
+          (!req.socket.authorized ||
+            !identity ||
+            identity.epoch !== binding.epoch ||
+            identity.revision !== binding.revision)) ||
         req.url !== "/effect" ||
         req.method !== "POST" ||
         !p ||
@@ -77,6 +100,10 @@ const server = https.createServer(
       const body = JSON.stringify({
         ...binding,
         ...(p.mode === "BAD_PROOF" ? { operationId: randomUUID() } : {}),
+        ...(p.mode === "BAD_EPOCH" ? { epoch: binding.epoch + 1 } : {}),
+        ...(p.mode === "BAD_REVISION"
+          ? { revision: binding.revision + "-wrong" }
+          : {}),
         accepted: true,
       });
       await append({ event: "RESPONSE", connectionId, ...binding });

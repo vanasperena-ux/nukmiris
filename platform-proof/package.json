@@ -3,16 +3,25 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "engines": {"node": ">=24 <25"},
+  "engines": {
+    "node": ">=24 <25"
+  },
   "scripts": {
     "test": "node --test --test-concurrency=1 test/*.test.mjs",
-    "test:fault": "node --test --test-concurrency=1 test/fault.test.mjs test/campaign.test.mjs",
-    "test:concurrency": "node --test --test-concurrency=1 test/concurrency.test.mjs",
+    "test:fault": "node --test --test-concurrency=1 test/fault.test.mjs test/campaign.test.mjs test/b1a-gateway.test.mjs test/b1a-interruption.test.mjs test/b1a-native-proof.test.mjs test/b1a-diagnostics.test.mjs test/b1a-session.test.mjs",
+    "test:concurrency": "node --test --test-concurrency=1 test/concurrency.test.mjs test/b1a-session.test.mjs",
     "check": "node scripts/check.mjs",
     "fence:dry-run": "node ops/dry-run.mjs fence",
     "teardown:dry-run": "node ops/dry-run.mjs teardown",
     "probe:print": "node ops/dry-run.mjs probe",
-    "costs": "python3 planning/calculate-costs.py"
+    "costs": "python3 planning/calculate-costs.py",
+    "b1a:fence:dry-run": "node b1a/ops/controller.mjs fence",
+    "b1a:teardown:dry-run": "node b1a/ops/controller.mjs teardown",
+    "b1a:spend-cap:print": "node b1a/ops/controller.mjs spend-cap",
+    "b1a:costs": "python3 b1a/calculate-costs.py",
+    "b1a:check": "node b1a/check.mjs"
   },
-  "dependencies": {"pg": "8.16.3"}
+  "dependencies": {
+    "pg": "8.16.3"
+  }
 }

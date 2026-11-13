@@ -1,0 +1,15 @@
+{
+  "observationsCurrent": true,
+  "observedPhase": "running",
+  "network": {
+    "mode": "restricted",
+    "state": "enforced",
+    "presets": [
+      "package_managers"
+    ]
+  },
+  "secretCount": 0,
+  "outboundIdentityCount": 0,
+  "realExternalProviderCallsExecuted": 0,
+  "note": "Managed-environment observation, not a forensic audit of unrelated accounts; local synthetic tests/public tooling/GitHub only."
+}

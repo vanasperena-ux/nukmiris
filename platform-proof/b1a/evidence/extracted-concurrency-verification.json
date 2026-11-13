@@ -1,0 +1,29 @@
+{
+  "scope": "B1A_LOCAL_SYNTHETIC_PREPARATION",
+  "results": [
+    {
+      "case": "b1a-retired-recovery",
+      "records": 0,
+      "chainAndHeadVerified": true,
+      "cloudContainmentProven": false
+    },
+    {
+      "case": "b1a-sealer-ack",
+      "records": 0,
+      "chainAndHeadVerified": true,
+      "cloudContainmentProven": false
+    },
+    {
+      "case": "b1a-session-budget-hold",
+      "records": 5,
+      "chainAndHeadVerified": true,
+      "cloudContainmentProven": false
+    },
+    {
+      "case": "concurrency",
+      "records": 45,
+      "chainAndHeadVerified": true,
+      "cloudContainmentProven": false
+    }
+  ]
+}
