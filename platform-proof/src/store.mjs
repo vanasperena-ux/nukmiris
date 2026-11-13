@@ -1,9 +1,12 @@
 import pg from "pg";
 import { randomUUID } from "node:crypto";
 import { database, hash, id } from "./protocol.mjs";
+import { preparedDatabase } from "../b1a/runtime/profile.mjs";
 export class GatewayStore {
-  constructor(config) {
-    this.pool = new pg.Pool(database(config));
+  constructor(config, { sessionId } = {}) {
+    if (sessionId !== undefined) id(sessionId);
+    this.sessionId = sessionId;
+    this.pool = new pg.Pool(preparedDatabase(config) ?? database(config));
     this.pool.on("error", () => {});
     this.pool.on("connect", (client) => client.on("error", () => {}));
   }
@@ -18,16 +21,25 @@ export class GatewayStore {
       await db.query("BEGIN");
       await hook("beforeAuthority", attemptId);
       value = (
-        await db.query("SELECT proof.enter($1,$2,$3,$4,$5) v", [
-          scopeId,
-          attemptId,
-          ownerId,
-          epoch,
-          revision,
-        ])
+        await db.query(
+          this.sessionId
+            ? "SELECT proof.enter_b1a($1,$2,$3,$4,$5,$6) v"
+            : "SELECT proof.enter($1,$2,$3,$4,$5) v",
+          [
+            ...(this.sessionId ? [this.sessionId] : []),
+            scopeId,
+            attemptId,
+            ownerId,
+            epoch,
+            revision,
+          ],
+        )
       ).rows[0].v;
       await hook("beforeCommit", attemptId);
-      await db.query("COMMIT");
+      const completion = await db.query("COMMIT");
+      // PostgreSQL can answer COMMIT with a ROLLBACK command tag for an aborted
+      // transaction. A resolved query alone must never create effect authority.
+      if (completion.command !== "COMMIT") throw Error("commit_not_confirmed");
       // Sole permission-creating continuation. No serialized/recoverable ticket.
       if (!value.entered) return { state: value.state };
       await hook("afterCommit", attemptId);

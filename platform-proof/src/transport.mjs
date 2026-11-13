@@ -1,9 +1,11 @@
 import tls from "node:tls";
 import { once } from "node:events";
 import { endpoint, beforeDeadline, canonical } from "./protocol.mjs";
+import { preparedTarget } from "../b1a/runtime/profile.mjs";
 /** Single raw TLS socket, no HTTP agent, pool, redirect handler or retry loop. */
 export async function invokeOnce({ target, ca, binding, hook, trace }) {
-  const to = endpoint(target),
+  const prepared = preparedTarget(target);
+  const to = prepared ?? endpoint(target),
     deadline = Date.parse(binding.deadlineAt);
   beforeDeadline(deadline);
   await hook("beforeConnect", binding.attemptId);
@@ -13,6 +15,7 @@ export async function invokeOnce({ target, ca, binding, hook, trace }) {
     ...to,
     servername: "localhost",
     ca,
+    ...(prepared ?? {}),
     rejectUnauthorized: true,
     minVersion: "TLSv1.3",
     ALPNProtocols: ["http/1.1"],
@@ -40,7 +43,7 @@ export async function invokeOnce({ target, ca, binding, hook, trace }) {
   );
   try {
     await connected;
-    if (socket.remoteAddress !== "127.0.0.1") throw Error("non_loopback_peer");
+    if (socket.remoteAddress !== to.host) throw Error("non_loopback_peer");
     trace("CONNECTED", {
       localPort: socket.localPort,
       remotePort: socket.remotePort,
@@ -54,7 +57,7 @@ export async function invokeOnce({ target, ca, binding, hook, trace }) {
     const body = Buffer.from(canonical(binding.payload));
     const headers = [
       "POST /effect HTTP/1.1",
-      "Host: localhost",
+      "Host: " + (prepared?.servername ?? "localhost"),
       "Connection: close",
       "Content-Type: application/json",
       "Content-Length: " + body.length,
@@ -95,7 +98,14 @@ export async function invokeOnce({ target, ca, binding, hook, trace }) {
     if (split < 0 || !/^HTTP\/1\.1 200 /.test(response))
       throw Error("positive_proof_missing");
     const proof = JSON.parse(response.slice(split + 4));
-    for (const k of ["scopeId", "attemptId", "operationId", "payloadDigest"])
+    for (const k of [
+      "scopeId",
+      "attemptId",
+      "operationId",
+      "payloadDigest",
+      "epoch",
+      "revision",
+    ])
       if (proof[k] !== binding[k]) throw Error("proof_binding_mismatch");
     if (proof.accepted !== true) throw Error("positive_proof_missing");
     return proof;
