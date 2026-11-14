@@ -190,21 +190,25 @@ try {
 } finally {
   await docker(["rm", "--force", "--volumes", name]).catch(() => {});
   await rm(dir, { force: true, recursive: true });
-  console.log(
-    JSON.stringify({
-      scope: "LOCAL_CLEANUP",
-      containerRemoved:
-        JSON.parse(
-          (await docker([
-            "ps",
-            "--all",
-            "--filter",
-            "name=^" + name + "$",
-            "--format",
-            "json",
-          ])) || "null",
-        ) === null,
-      fixtureDirectoryRemoved: true,
-    }),
+  const cleanup = {
+    scope: "LOCAL_CLEANUP",
+    containerRemoved:
+      JSON.parse(
+        (await docker([
+          "ps",
+          "--all",
+          "--filter",
+          "name=^" + name + "$",
+          "--format",
+          "json",
+        ])) || "null",
+      ) === null,
+    fixtureDirectoryRemoved: true,
+  };
+  console.log(JSON.stringify(cleanup));
+  assert.equal(
+    cleanup.containerRemoved,
+    true,
+    "owned_packaged_container_cleanup_incomplete",
   );
 }
