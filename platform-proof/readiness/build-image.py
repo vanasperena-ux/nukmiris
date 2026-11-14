@@ -31,7 +31,7 @@ def build(repo,source,out,cache,base_archive):
         archive=subprocess.check_output(['git','archive',source,*['platform-proof/'+p for p in ROOTS]],cwd=repo)
         with tarfile.open(fileobj=io.BytesIO(archive)) as t:t.extractall(context,filter='data')
         proof=context/'platform-proof'
-        env={k:v for k,v in os.environ.items() if not k.lower().startswith(('npm_','google_','gcloud_','cloudsdk_'))};env.update({'npm_config_userconfig':'/dev/null','npm_config_globalconfig':'/dev/null'})
+        env={k:v for k,v in os.environ.items() if not k.lower().startswith(('npm_','google_','gcloud_','cloudsdk_'))};user_rc=context/'empty-user.npmrc';global_rc=context/'empty-global.npmrc';user_rc.write_text('');global_rc.write_text('');env.update({'npm_config_userconfig':str(user_rc),'npm_config_globalconfig':str(global_rc)})
         install=subprocess.run(['npm','ci','--ignore-scripts','--omit=dev','--offline','--cache='+str(cache),'--no-audit','--no-fund'],cwd=proof,env=env,check=True,capture_output=True,text=True,timeout=60)
         (out/'npm-ci.log').write_text(install.stdout+install.stderr)
         paths=sorted(p for p in proof.rglob('*') if not p.is_dir());files=[];layer=out/'source-layer.tar'
