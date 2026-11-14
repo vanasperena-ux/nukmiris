@@ -1,0 +1,38 @@
+
+> nukmiris-inc1-local-proof@0.1.0 test:concurrency
+> node --test --test-concurrency=1 test/concurrency.test.mjs test/b1a-session.test.mjs test/b1a2-journal.test.mjs test/b1a2-controller.test.mjs test/b1a2-startup.test.mjs test/b1a2-observer.test.mjs test/b1a2-teardown.test.mjs test/b1a2-preparation.test.mjs
+
+✔ retirement contract: complete authenticated modeled bundle required; absent data holds (13.228669ms)
+✔ session SQL: billing pause/reset and process restart leave dispatch durably inert (5034.826359ms)
+✔ session SQL: immutable six-hour limit and expiry prevent new entry (4957.548521ms)
+✔ sealer: unavailable, cold, failed journal or dishonest response never causes a false ACK (4912.436814ms)
+✔ retirement promotion rejects another session, scope or predecessor even when signed bundle is internally valid (4.045814ms)
+✔ B1a aggregate gateway SQL login cap bounds old/new overlap without privilege fallback (4345.951195ms)
+✔ B1a controller recovery marks only retired ENTERED as UNKNOWN, preserving original bindings (2928.159555ms)
+✔ P-3 durable seven-step local simulation, crash after CAS, readback without replay and independent emergency (15.55863ms)
+✔ P-3 unknown outcome or missing permission holds; cannot replay, promote, or impersonate deployer (4.219742ms)
+✔ P-6 every generated resource has dependency-ordered teardown and residual policy (7.252033ms)
+✔ D-3 emergency remains executable with an unresolved operation and unavailable SQL hold (1.155943ms)
+✔ P-1/P-2 ambiguous custody PUT resolves only original immutable slot; concurrent writers cannot fork (39.323517ms)
+✔ P-4 provider crash restart requires independently retained head; corrupt, missing and partial writes hold (6.85066ms)
+✔ D-2/P-2 end-to-end independent adapters: real mTLS clock/ledger, Google-shaped 60s/120s metrics, 20 native stopped canaries and signed retirement (1682.136778ms)
+✔ P-2 forged caller wake booleans cannot become signed canary evidence (1.267788ms)
+✔ P-1 cross-process preparation requires independent actual config and purpose-bound signed identities for all roles (45.972517ms)
+✔ P-1 mounted identity/session/epoch/revision/expiry/image/secret invalid states remain inert (8.719698ms)
+✔ P-1 full synthetic SQL admission → independent custody → worker → COMMIT-gated gateway → mTLS fake, restart and revocation (5393.655807ms)
+✔ P-3 exact teardown preserves independent cleanup authority, handles lost destroy ack, forbids replay and unknown/replaced state (2.017479ms)
+✔ P-3 independent NAT/permission/key-version absence is not fabricated from a nonexistent NAT subresource or missing state (24.699111ms)
+✔ concurrency: one invocation for 32 same-attempt callers, replay and distinct operations (4686.519862ms)
+ℹ tests 21
+ℹ suites 0
+ℹ pass 21
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 34855.16513
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.2
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.2
+npm notice To update run: npm install -g npm@12.2.2
+npm notice

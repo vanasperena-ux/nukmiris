@@ -1,0 +1,27 @@
+DEPRECATED: The legacy builder is deprecated and will be removed in a future release.
+            BuildKit is currently disabled; enable it by removing the DOCKER_BUILDKIT=0
+            environment-variable.
+
+Sending build context to Docker daemon  828.4kB
+Step 1/6 : FROM node@sha256:a9f5f7c91a432850b2a8a7797adf5eadb6c733ceed61167806cee7ea7fbc29df
+ ---> 622f209f6c16
+Step 2/6 : COPY --chown=node:node . /proof
+ ---> f4a1d155f450
+Step 3/6 : WORKDIR /proof
+ ---> Running in f3dc41a97946
+ ---> Removed intermediate container f3dc41a97946
+ ---> a1b981356b63
+Step 4/6 : USER node
+ ---> Running in f61f81478296
+ ---> Removed intermediate container f61f81478296
+ ---> 61665e88daf1
+Step 5/6 : ENV B1A2_MODE=INERT_UNCONFIGURED B1A2_ROLE=gateway PORT=8080
+ ---> Running in 1e40798ef7e5
+ ---> Removed intermediate container 1e40798ef7e5
+ ---> 13c65368924d
+Step 6/6 : ENTRYPOINT ["node", "b1a2/runtime/entrypoint.mjs"]
+ ---> Running in 0ab11423f2e4
+ ---> Removed intermediate container 0ab11423f2e4
+ ---> 4280e7b91f0b
+Successfully built 4280e7b91f0b
+Successfully tagged nukmiris-b1a2-local:review

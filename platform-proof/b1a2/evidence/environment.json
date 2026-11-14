@@ -1,0 +1,17 @@
+{
+  "node": "v24.19.0",
+  "npm": "11.9.0",
+  "system": "Linux-6.18.57-x86_64-with-glibc2.41",
+  "timezone": "UTC (PostgreSQL fixture asserts measured UTC)",
+  "postgresImage": "postgres@sha256:839fbb5a4942a7758dd93e18b42ea5649807491a0545b5eeeb8f0b8bb11857a5",
+  "postgresMeasuredVersion": "17.11 (asserted by every native fixture and preserved in each result.json)",
+  "nativeWindowsExecuted": false,
+  "actualCloudSafety": "NOT_PROVEN",
+  "gcpApiCallsPerformed": 0,
+  "gcpCredentialsAccessed": 0,
+  "gcpResourcesProvisioned": 0,
+  "realMetaCalls": 0,
+  "realCalendarCalls": 0,
+  "merges": 0,
+  "claimBasis": "Executed command inventory and local fixture provenance; not an independent packet-forensics claim"
+}

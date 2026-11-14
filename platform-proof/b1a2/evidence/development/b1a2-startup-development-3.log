@@ -1,0 +1,12 @@
+✔ P-1/P-2 ambiguous custody PUT resolves only original immutable slot; concurrent writers cannot fork (52.203991ms)
+✔ P-4 provider crash restart requires independently retained head; corrupt, missing and partial writes hold (10.494678ms)
+✔ P-1 mounted identity/session/epoch/revision/expiry/image/secret invalid states remain inert (10.858061ms)
+✔ P-1 full synthetic SQL admission → independent custody → worker → COMMIT-gated gateway → mTLS fake, restart and revocation (7005.276911ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 7363.041904

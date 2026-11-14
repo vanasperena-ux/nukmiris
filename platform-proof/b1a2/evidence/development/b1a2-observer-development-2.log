@@ -1,0 +1,32 @@
+✖ D-2/P-2 end-to-end independent adapters: real mTLS clock/ledger, Google-shaped 60s/120s metrics, 20 native stopped canaries and signed retirement (1907.040017ms)
+✔ P-2 forged caller wake booleans cannot become signed canary evidence (1.466483ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 1
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2033.290457
+
+✖ failing tests:
+
+test at platform-proof/test/b1a2-observer.test.mjs:2:1
+✖ D-2/P-2 end-to-end independent adapters: real mTLS clock/ledger, Google-shaped 60s/120s metrics, 20 native stopped canaries and signed retirement (1907.040017ms)
+  AssertionError [ERR_ASSERTION]: {"state":"HOLD","reason":"physical_termination_deadline_exceeded"}
+  + actual - expected
+  
+  + 'HOLD'
+  - 'EVIDENCE_READY'
+  
+      at TestContext.<anonymous> (file:///workspace/work/nukmiris-b1a-2/platform-proof/test/b1a2-observer.test.mjs:12:1004)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 'HOLD',
+    expected: 'EVIDENCE_READY',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

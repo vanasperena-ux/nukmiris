@@ -1,0 +1,26 @@
+docker.io/library/node@sha256:a9f5f7c91a432850b2a8a7797adf5eadb6c733ceed61167806cee7ea7fbc29df: Pulling from library/node
+a8ac7f6c67ab: Pulling fs layer
+990581063f5c: Pulling fs layer
+4996e33358ab: Pulling fs layer
+f95897c2a1fb: Pulling fs layer
+c35748eaa5ec: Pulling fs layer
+f95897c2a1fb: Waiting
+c35748eaa5ec: Waiting
+990581063f5c: Verifying Checksum
+990581063f5c: Download complete
+f95897c2a1fb: Verifying Checksum
+f95897c2a1fb: Download complete
+c35748eaa5ec: Verifying Checksum
+c35748eaa5ec: Download complete
+a8ac7f6c67ab: Verifying Checksum
+a8ac7f6c67ab: Download complete
+a8ac7f6c67ab: Pull complete
+990581063f5c: Pull complete
+4996e33358ab: Verifying Checksum
+4996e33358ab: Download complete
+4996e33358ab: Pull complete
+f95897c2a1fb: Pull complete
+c35748eaa5ec: Pull complete
+Digest: sha256:a9f5f7c91a432850b2a8a7797adf5eadb6c733ceed61167806cee7ea7fbc29df
+Status: Downloaded newer image for node@sha256:a9f5f7c91a432850b2a8a7797adf5eadb6c733ceed61167806cee7ea7fbc29df
+docker.io/library/node@sha256:a9f5f7c91a432850b2a8a7797adf5eadb6c733ceed61167806cee7ea7fbc29df

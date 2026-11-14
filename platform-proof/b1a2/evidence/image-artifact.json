@@ -1,0 +1,34 @@
+{
+  "ociManifestDigest": "sha256:dc01d76b91e833a516ad97220d47d28aac050e24e0e559612a4cbcaad17e7c29",
+  "dockerConfigDigest": "sha256:4280e7b91f0bbf3ba517cbfa411db8282624964023162e0c095a72670e56c144",
+  "baseImage": "node@sha256:a9f5f7c91a432850b2a8a7797adf5eadb6c733ceed61167806cee7ea7fbc29df",
+  "publication": "LOCAL_BUILD_ONLY_NOT_PUSHED",
+  "configContainsNoSecrets": true,
+  "baseLayers": "Reconstruct by pulling exactly baseImage then docker-save; verify diff_ids",
+  "layers": [
+    {
+      "digest": "sha256:1d69a5fd31932841d7825ef4780c06f008eea65aaa9f3110fe09d5832ed5c7d8",
+      "size": 77895680
+    },
+    {
+      "digest": "sha256:1ecd584585e16573c2663ba440a96264e380d3b73d1aa134bd412832a7a9d007",
+      "size": 21504
+    },
+    {
+      "digest": "sha256:26bfa8972980bd9e51648c04196656bce2b61da00740da02193ad26350dcec03",
+      "size": 149260800
+    },
+    {
+      "digest": "sha256:f8df5cf514d8a65c9cc96cb515c1551f829b4fe10355783d2e7f4edfb095d4b7",
+      "size": 7217152
+    },
+    {
+      "digest": "sha256:aaa6cd2b99bfcc6c44dbf6f7a291414c7fc026f228eadfd3bd5b608afbfecb81",
+      "size": 3584
+    },
+    {
+      "digest": "sha256:595b2131cd5b01ba4c9f1b9186ae16302b5245673acf5acb8c64df5151a2d25f",
+      "size": 828928
+    }
+  ]
+}

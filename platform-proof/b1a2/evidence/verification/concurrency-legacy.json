@@ -1,0 +1,30 @@
+{
+  "mode": "LOCAL_SYNTHETIC_ONLY",
+  "results": [
+    {
+      "name": "b1a-retired-recovery",
+      "records": 0,
+      "verified": true
+    },
+    {
+      "name": "b1a-sealer-ack",
+      "records": 0,
+      "verified": true
+    },
+    {
+      "name": "b1a-session-budget-hold",
+      "records": 5,
+      "verified": true
+    },
+    {
+      "name": "b1a2-startup-chain",
+      "records": 0,
+      "verified": true
+    },
+    {
+      "name": "concurrency",
+      "records": 45,
+      "verified": true
+    }
+  ]
+}
