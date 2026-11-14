@@ -2,9 +2,14 @@
   "scope": "FILES_PUBLISHED_IN_THIS_EVIDENCE_COMMIT",
   "files": [
     {
+      "path": "platform-proof/b1a2/evidence/CLAUDE-REVERIFICATION.md",
+      "bytes": 3881,
+      "sha256": "1ad79b05b34c660ab1a62e8238c7a673985a7c7e0818d5d02ef83ab71c7f8216"
+    },
+    {
       "path": "platform-proof/b1a2/evidence/README.md",
-      "bytes": 6928,
-      "sha256": "8d704d89611fd8162eef91f080a674e8a9484150802259e0e6f2dc26af822b1e"
+      "bytes": 6988,
+      "sha256": "26960dd9228c2e2b04af917aceff076c2ccdde21b33d9da9b223d500c30cdf07"
     },
     {
       "path": "platform-proof/b1a2/evidence/archive-assembly.json",
@@ -312,6 +317,11 @@
       "sha256": "332e94dd316837dc3bc72c7fc3138585c1a588f8d0e431f0fb9961fe2f28ffc8"
     },
     {
+      "path": "platform-proof/b1a2/evidence/pending-upload-approval.json",
+      "bytes": 12603,
+      "sha256": "a2a82bd6370f6935f398647c0126faeace50498fc96258bd49617410e1832452"
+    },
+    {
       "path": "platform-proof/b1a2/evidence/printed-plan.json",
       "bytes": 77088,
       "sha256": "dbb63565a3f1f13cdffc15835c679c923286b75e02df216fd153e49ba9009678"
@@ -323,8 +333,8 @@
     },
     {
       "path": "platform-proof/b1a2/evidence/publication.json",
-      "bytes": 2877,
-      "sha256": "daae808d167c38d0b2abb2fb4d9215c1c33b9e5386833e5c8004f4a88bf41039"
+      "bytes": 3133,
+      "sha256": "c46e323a634b4df7f05b6162825ce3073f98490cf58212029a04807bd1aa90ee"
     },
     {
       "path": "platform-proof/b1a2/evidence/retirement/concurrency.json",
