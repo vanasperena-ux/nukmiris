@@ -1,0 +1,136 @@
+{
+  "mode": "LOCAL_SYNTHETIC_ONLY",
+  "results": [
+    {
+      "name": "authority-races",
+      "records": 5,
+      "verified": true
+    },
+    {
+      "name": "b1a-asynchronous-v1",
+      "records": 1492,
+      "verified": true
+    },
+    {
+      "name": "b1a-authenticated-provider",
+      "records": 9,
+      "verified": true
+    },
+    {
+      "name": "b1a-cloud-profile-pure",
+      "records": 0,
+      "verified": true
+    },
+    {
+      "name": "b1a-commit-ack_lost",
+      "records": 0,
+      "verified": true
+    },
+    {
+      "name": "b1a-commit-before_server",
+      "records": 5,
+      "verified": true
+    },
+    {
+      "name": "b1a-commit-rollback_tag",
+      "records": 5,
+      "verified": true
+    },
+    {
+      "name": "b1a-cross-product-v1",
+      "records": 3934,
+      "verified": true
+    },
+    {
+      "name": "b1a-direct-kill",
+      "records": 0,
+      "verified": true
+    },
+    {
+      "name": "b1a-native-kill-classification",
+      "records": 6,
+      "verified": true
+    },
+    {
+      "name": "b1a-native-sql-tls",
+      "records": 0,
+      "verified": true
+    },
+    {
+      "name": "b1a-proof-bad_epoch",
+      "records": 5,
+      "verified": true
+    },
+    {
+      "name": "b1a-proof-bad_revision",
+      "records": 5,
+      "verified": true
+    },
+    {
+      "name": "b1a-retired-recovery",
+      "records": 0,
+      "verified": true
+    },
+    {
+      "name": "b1a-sealer-ack",
+      "records": 0,
+      "verified": true
+    },
+    {
+      "name": "b1a-session-budget-hold",
+      "records": 5,
+      "verified": true
+    },
+    {
+      "name": "b1a2-startup-chain",
+      "records": 0,
+      "verified": true
+    },
+    {
+      "name": "campaign",
+      "records": 4147,
+      "verified": true,
+      "schedules": 1000
+    },
+    {
+      "name": "concurrency",
+      "records": 45,
+      "verified": true
+    },
+    {
+      "name": "crash-restart",
+      "records": 0,
+      "verified": true
+    },
+    {
+      "name": "dead-man",
+      "records": 100,
+      "verified": true
+    },
+    {
+      "name": "identity-roles",
+      "records": 5,
+      "verified": true
+    },
+    {
+      "name": "keep-alive-counterexample",
+      "records": 18,
+      "verified": true
+    },
+    {
+      "name": "late-pre-fence-effect",
+      "records": 6,
+      "verified": true
+    },
+    {
+      "name": "lost-commit",
+      "records": 0,
+      "verified": true
+    },
+    {
+      "name": "transport-faults",
+      "records": 20,
+      "verified": true
+    }
+  ]
+}

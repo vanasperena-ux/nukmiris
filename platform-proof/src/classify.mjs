@@ -1,3 +1,4 @@
+import { classifyBounded, CLOCK_MODEL } from "../b1a2/runtime/time-model.mjs";
 import { authenticatedObservation, measuredClock } from "./evidence-source.mjs";
 const no = (reason) => ({ verdict: "NOT_PROVEN", reason });
 const violation = () => ({
@@ -18,7 +19,27 @@ const valid = (i) =>
   i.length === 2 &&
   i.every(Number.isFinite) &&
   i[1] >= i[0];
-export function classify({ fence, activity, clock, now, uncertaintyMs }) {
+export function classify({
+  fence,
+  activity,
+  clock,
+  clocks = [],
+  now,
+  uncertaintyMs,
+}) {
+  if (
+    fence?.kind === "CLOUD" &&
+    (authenticatedObservation(clock, "CLOCK")?.payload.model === CLOCK_MODEL ||
+      clocks.length)
+  )
+    return classifyBounded({
+      fence,
+      activity,
+      clock,
+      clocks,
+      now,
+      uncertaintyMs,
+    });
   if (fence?.kind === "CLOUD")
     return classifyCloud({ fence, activity, clock, now, uncertaintyMs });
   // Local-only observation path: never promoted to Cloud Run termination proof.

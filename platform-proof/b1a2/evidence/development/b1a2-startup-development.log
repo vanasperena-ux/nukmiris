@@ -1,0 +1,36 @@
+✖ P-1/P-2 ambiguous custody PUT resolves only original immutable slot; concurrent writers cannot fork (46.727759ms)
+✔ P-4 provider crash restart requires independently retained head; corrupt, missing and partial writes hold (12.192023ms)
+✔ P-1 mounted identity/session/epoch/revision/expiry/image/secret invalid states remain inert (8.894868ms)
+✖ P-1 full synthetic SQL admission → independent custody → worker → COMMIT-gated gateway → mTLS fake, restart and revocation (5666.028324ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 2
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 5969.569702
+
+✖ failing tests:
+
+test at platform-proof/test/b1a2-journal.test.mjs:2:1
+✖ P-1/P-2 ambiguous custody PUT resolves only original immutable slot; concurrent writers cannot fork (46.727759ms)
+  TypeError: Cannot assign to read only property '0' of object '[object Array]'
+      at Array.sort (<anonymous>)
+      at CustodyJournal.load (file:///workspace/work/nukmiris-b1a-2/platform-proof/b1a2/runtime/journal.mjs:18:339)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async TestContext.<anonymous> (file:///workspace/work/nukmiris-b1a-2/platform-proof/test/b1a2-journal.test.mjs:2:1017)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)
+
+test at platform-proof/test/b1a2-startup.test.mjs:4:1
+✖ P-1 full synthetic SQL admission → independent custody → worker → COMMIT-gated gateway → mTLS fake, restart and revocation (5666.028324ms)
+  TypeError [ERR_INVALID_ARG_TYPE]: The "path" argument must be of type string. Received an instance of TestContext
+      at join (node:path:1339:7)
+      at certkit (file:///workspace/work/nukmiris-b1a-2/platform-proof/test/b1a2-certkit.mjs:4:89)
+      at TestContext.<anonymous> (file:///workspace/work/nukmiris-b1a-2/platform-proof/test/b1a2-startup.test.mjs:8:18)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    code: 'ERR_INVALID_ARG_TYPE'
+  }

@@ -1,0 +1,1581 @@
+{
+  "scope": "CODEX_CONTENT_AUDIT_NOT_INDEPENDENT_ACCEPTANCE",
+  "archivesAudited": [
+    "concurrency-raw.tar.gz",
+    "fault-raw.tar.gz",
+    "full-raw.tar.gz",
+    "prior-b5-raw.tar.gz"
+  ],
+  "archivedFiles": 312,
+  "objects": 173249,
+  "fields": 1380143,
+  "strings": 859796,
+  "payloadObjects": 5920,
+  "unexpectedCredentialOrCustomerFields": [],
+  "privateKeyOrCredentialPatterns": 0,
+  "payloadContract": "effect payloads only {synthetic:true}; signed observation payloads reproduced separately",
+  "rawEvidenceRewritten": false,
+  "imageAudit": "184 packaged files separately audited; zero private keys,42 runtime source files match final implementation",
+  "files": [
+    {
+      "path": "concurrency-raw.tar.gz/native/b1a-retired-recovery/checkpoint.json",
+      "bytes": 98,
+      "sha256": "8c3c1d142cbde961902c8dea95fa96b2d471900ca2f9dce016e4ac4a14ae67ee"
+    },
+    {
+      "path": "concurrency-raw.tar.gz/native/b1a-retired-recovery/provider.jsonl",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "concurrency-raw.tar.gz/native/b1a-retired-recovery/result.json",
+      "bytes": 427,
+      "sha256": "e85c9dde6ce1d6844cdb2b3d42252eb520472d3904fa7d4645889804310ccf10"
+    },
+    {
+      "path": "concurrency-raw.tar.gz/native/b1a-sealer-ack/checkpoint.json",
+      "bytes": 98,
+      "sha256": "8c3c1d142cbde961902c8dea95fa96b2d471900ca2f9dce016e4ac4a14ae67ee"
+    },
+    {
+      "path": "concurrency-raw.tar.gz/native/b1a-sealer-ack/provider.jsonl",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "concurrency-raw.tar.gz/native/b1a-sealer-ack/result.json",
+      "bytes": 437,
+      "sha256": "0177cae03480aa1702dc4470a0383e7abfd536b714978bee0af5661da2eddaa1"
+    },
+    {
+      "path": "concurrency-raw.tar.gz/native/b1a-session-budget-hold/checkpoint.json",
+      "bytes": 98,
+      "sha256": "d02bb4f7142438ed850beb1295ecc039004319804b6adb5e0a297e6b477d875f"
+    },
+    {
+      "path": "concurrency-raw.tar.gz/native/b1a-session-budget-hold/provider.jsonl",
+      "bytes": 2218,
+      "sha256": "2e40b8a6e750cb2888ece2d3f5ee383b5796ece5f3366b18db07bfa3561300e6"
+    },
+    {
+      "path": "concurrency-raw.tar.gz/native/b1a-session-budget-hold/result.json",
+      "bytes": 751,
+      "sha256": "77fc7b644e0f1ba05df51aa4f2d5a181192765e497036e7a536e67ff840b35e1"
+    },
+    {
+      "path": "concurrency-raw.tar.gz/native/b1a2-startup-chain/checkpoint.json",
+      "bytes": 98,
+      "sha256": "8c3c1d142cbde961902c8dea95fa96b2d471900ca2f9dce016e4ac4a14ae67ee"
+    },
+    {
+      "path": "concurrency-raw.tar.gz/native/b1a2-startup-chain/provider.jsonl",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "concurrency-raw.tar.gz/native/b1a2-startup-chain/result.json",
+      "bytes": 459,
+      "sha256": "0f37c741ab26f717c7191984c048be4dac819b63dfb085846bc4379ec91103fd"
+    },
+    {
+      "path": "concurrency-raw.tar.gz/native/concurrency/checkpoint.json",
+      "bytes": 99,
+      "sha256": "7baa75a22971f27ec9be5af0644fff56e756d7e269144845b739247fd90212d8"
+    },
+    {
+      "path": "concurrency-raw.tar.gz/native/concurrency/provider.jsonl",
+      "bytes": 19998,
+      "sha256": "348e029f1b6cbab4755f5c4e09f56a564dd57e7a6206b2bec309d2e1ece4ea4b"
+    },
+    {
+      "path": "concurrency-raw.tar.gz/native/concurrency/result.json",
+      "bytes": 3480,
+      "sha256": "8a8727768b76edddba51701c8c41af3102a0b3e212c010f8ac8d9106def9be07"
+    },
+    {
+      "path": "concurrency-raw.tar.gz/new/observer-retirement.json",
+      "bytes": 63779,
+      "sha256": "e72682dc513729e7fb6460d6b801ec2a587815009ae94b61fcc1a77f766c3bcd"
+    },
+    {
+      "path": "fault-raw.tar.gz/diagnostics/inc1-58468c2239e13b45-af21b00a-5ea5-4330-bcea-2b071800601b.json",
+      "bytes": 1899,
+      "sha256": "2c35361091a7aea326d8941057b57f53bf1445b23863124f503a4935957dafd5"
+    },
+    {
+      "path": "fault-raw.tar.gz/native/b1a-asynchronous-v1/checkpoint.json",
+      "bytes": 101,
+      "sha256": "748bb86a27f3e2554b2c7797a267aae40c9dd409b9acd34def529ed1b81ec87b"
+    },
+    {
+      "path": "fault-raw.tar.gz/native/b1a-asynchronous-v1/provider.jsonl",
+      "bytes": 640625,
+      "sha256": "5a17faadbf185a66adedb03dd856a023225da3bf9ef570d7d346d620cf1c4cb2"
+    },
+    {
+      "path": "fault-raw.tar.gz/native/b1a-asynchronous-v1/result.json",
+      "bytes": 1798193,
+      "sha256": "00efbf4c559c09d7c40b753baf1ba24aaf89bc57ecd6fa1fc58ff835b8231362"
+    },
+    {
+      "path": "fault-raw.tar.gz/native/b1a-commit-ack_lost/checkpoint.json",
+      "bytes": 98,
+      "sha256": "8c3c1d142cbde961902c8dea95fa96b2d471900ca2f9dce016e4ac4a14ae67ee"
+    },
+    {
+      "path": "fault-raw.tar.gz/native/b1a-commit-ack_lost/provider.jsonl",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "fault-raw.tar.gz/native/b1a-commit-ack_lost/result.json",
+      "bytes": 436,
+      "sha256": "2e9d029b95ab335e18ab65f1024901a7ccc5284a9ddf336f7d3cb899a8863bb7"
+    },
+    {
+      "path": "fault-raw.tar.gz/native/b1a-commit-before_server/checkpoint.json",
+      "bytes": 98,
+      "sha256": "abffbdf584909a4d387d348562657d3b3544629a05fe5d16864c5be84d7f6c0d"
+    },
+    {
+      "path": "fault-raw.tar.gz/native/b1a-commit-before_server/provider.jsonl",
+      "bytes": 2218,
+      "sha256": "3483830282dd43778a395373b458b9cf1a3c31102c77ea74da9cd3a69b8d9b62"
+    },
+    {
+      "path": "fault-raw.tar.gz/native/b1a-commit-before_server/result.json",
+      "bytes": 439,
+      "sha256": "6592de736300d025e33e5c8c823b9c5b6deee068f2fd1c7735723d5bdb05ba70"
+    },
+    {
+      "path": "fault-raw.tar.gz/native/b1a-commit-rollback_tag/checkpoint.json",
+      "bytes": 98,
+      "sha256": "109d76a35b849c01888d17993ed001b61b5bec9aa1d569c50cd8df281552894c"
+    },
+    {
+      "path": "fault-raw.tar.gz/native/b1a-commit-rollback_tag/provider.jsonl",
+      "bytes": 2218,
+      "sha256": "0708bee4c22d250ecb79c82519793437604acfae4297afe0ce979073aa36dd17"
+    },
+    {
+      "path": "fault-raw.tar.gz/native/b1a-commit-rollback_tag/result.json",
+      "bytes": 438,
+      "sha256": "e34a3b55b87218bd1c63011f4ad21dc6c0ccc07caffc7be1d6dfd4ae3c443141"
+    },
+    {
+      "path": "fault-raw.tar.gz/native/b1a-cross-product-v1/checkpoint.json",
+      "bytes": 101,
+      "sha256": "f785c0be5fe5c5a7d96210c8ef6eca5264ace5671c555a720eb4629e8cb3aef0"
+    },
+    {
+      "path": "fault-raw.tar.gz/native/b1a-cross-product-v1/provider.jsonl",
+      "bytes": 1700861,
+      "sha256": "7c923dd7ac8fbe23f9343ba567aee3c669852138f4b5ca06def009e8a06ff4ca"
+    },
+    {
+      "path": "fault-raw.tar.gz/native/b1a-cross-product-v1/result.json",
+      "bytes": 3671766,
+      "sha256": "2f5a384b391f8eeed1fa018c0a4517df4b9ba612253af2344f368005816f0bba"
+    },
+    {
+      "path": "fault-raw.tar.gz/native/b1a-direct-kill/checkpoint.json",
+      "bytes": 98,
+      "sha256": "8c3c1d142cbde961902c8dea95fa96b2d471900ca2f9dce016e4ac4a14ae67ee"
+    },
+    {
+      "path": "fault-raw.tar.gz/native/b1a-direct-kill/provider.jsonl",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "fault-raw.tar.gz/native/b1a-direct-kill/result.json",
+      "bytes": 620,
+      "sha256": "f4286acfcaddac019c03c003bbd977179691edbf64d769b108a29605948d23b4"
+    },
+    {
+      "path": "fault-raw.tar.gz/native/b1a-native-kill-classification/checkpoint.json",
+      "bytes": 98,
+      "sha256": "86150d419a0d95ed578c42d6317a9ed00dfd043fd324dfec0f0be209bd2eb83d"
+    },
+    {
+      "path": "fault-raw.tar.gz/native/b1a-native-kill-classification/provider.jsonl",
+      "bytes": 2754,
+      "sha256": "84cff408672fc49159795f525b162b71a14def82c49b4693f05730c3bad2fe52"
+    },
+    {
+      "path": "fault-raw.tar.gz/native/b1a-native-kill-classification/result.json",
+      "bytes": 2853,
+      "sha256": "c655345b83fee39969fe8c786f74bac6feae94a2f8f387225ce4b0149f81ecb4"
+    },
+    {
+      "path": "fault-raw.tar.gz/native/b1a-native-sql-tls/checkpoint.json",
+      "bytes": 98,
+      "sha256": "8c3c1d142cbde961902c8dea95fa96b2d471900ca2f9dce016e4ac4a14ae67ee"
+    },
+    {
+      "path": "fault-raw.tar.gz/native/b1a-native-sql-tls/provider.jsonl",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "fault-raw.tar.gz/native/b1a-native-sql-tls/result.json",
+      "bytes": 437,
+      "sha256": "76b4b392f390b3c73cd75ba51024a7fd01025525854bcaf80df31d168c8609de"
+    },
+    {
+      "path": "fault-raw.tar.gz/native/b1a-proof-bad_epoch/checkpoint.json",
+      "bytes": 98,
+      "sha256": "286dee4d948a8b4ab95b9d146e2e6d9cacadbbf3401beb2d80c2dc1f858ae840"
+    },
+    {
+      "path": "fault-raw.tar.gz/native/b1a-proof-bad_epoch/provider.jsonl",
+      "bytes": 2218,
+      "sha256": "0369af5912a1835e5def439a08e5eb42199b3c86714a5c6b881d25f48f1e50fa"
+    },
+    {
+      "path": "fault-raw.tar.gz/native/b1a-proof-bad_epoch/result.json",
+      "bytes": 349,
+      "sha256": "3e24ca0ef774f915cbf9a30511c7ef230f8a9dd3fb2340ee40d5d0eb690a1b5a"
+    },
+    {
+      "path": "fault-raw.tar.gz/native/b1a-proof-bad_revision/checkpoint.json",
+      "bytes": 98,
+      "sha256": "e13c72af4f8c98a98421b2d9836e2132ad977f0c4f0417c9b368e5a33f4d6528"
+    },
+    {
+      "path": "fault-raw.tar.gz/native/b1a-proof-bad_revision/provider.jsonl",
+      "bytes": 2218,
+      "sha256": "ca74de175553ab3ed1324e128ea1c88d5dc82a222ca2f394d9c0838befb3f670"
+    },
+    {
+      "path": "fault-raw.tar.gz/native/b1a-proof-bad_revision/result.json",
+      "bytes": 352,
+      "sha256": "06865b91714ed0b3c77665798f291e8a5171369f998dc136fed3b684a9385f5f"
+    },
+    {
+      "path": "fault-raw.tar.gz/native/b1a-retired-recovery/checkpoint.json",
+      "bytes": 98,
+      "sha256": "8c3c1d142cbde961902c8dea95fa96b2d471900ca2f9dce016e4ac4a14ae67ee"
+    },
+    {
+      "path": "fault-raw.tar.gz/native/b1a-retired-recovery/provider.jsonl",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "fault-raw.tar.gz/native/b1a-retired-recovery/result.json",
+      "bytes": 427,
+      "sha256": "e85c9dde6ce1d6844cdb2b3d42252eb520472d3904fa7d4645889804310ccf10"
+    },
+    {
+      "path": "fault-raw.tar.gz/native/b1a-sealer-ack/checkpoint.json",
+      "bytes": 98,
+      "sha256": "8c3c1d142cbde961902c8dea95fa96b2d471900ca2f9dce016e4ac4a14ae67ee"
+    },
+    {
+      "path": "fault-raw.tar.gz/native/b1a-sealer-ack/provider.jsonl",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "fault-raw.tar.gz/native/b1a-sealer-ack/result.json",
+      "bytes": 437,
+      "sha256": "0177cae03480aa1702dc4470a0383e7abfd536b714978bee0af5661da2eddaa1"
+    },
+    {
+      "path": "fault-raw.tar.gz/native/b1a-session-budget-hold/checkpoint.json",
+      "bytes": 98,
+      "sha256": "106cf0ffe6f476db7ad691346745c83f22ca160ce80630ade90698b26ef844a1"
+    },
+    {
+      "path": "fault-raw.tar.gz/native/b1a-session-budget-hold/provider.jsonl",
+      "bytes": 2218,
+      "sha256": "4c5b85ff67a19a733880b050a2678e73304d9abbb4ceda4c184924946ea579a5"
+    },
+    {
+      "path": "fault-raw.tar.gz/native/b1a-session-budget-hold/result.json",
+      "bytes": 751,
+      "sha256": "cf26aaf88b14816a28538fdb4546c0a649fa12a487bd2f0a9f2772d43748e595"
+    },
+    {
+      "path": "fault-raw.tar.gz/native/b1a2-startup-chain/checkpoint.json",
+      "bytes": 98,
+      "sha256": "8c3c1d142cbde961902c8dea95fa96b2d471900ca2f9dce016e4ac4a14ae67ee"
+    },
+    {
+      "path": "fault-raw.tar.gz/native/b1a2-startup-chain/provider.jsonl",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "fault-raw.tar.gz/native/b1a2-startup-chain/result.json",
+      "bytes": 459,
+      "sha256": "0721d1610a16cfa934c170b1302186342d9fe948c4f383d4002a1b262c8c12a5"
+    },
+    {
+      "path": "fault-raw.tar.gz/native/campaign/checkpoint.json",
+      "bytes": 101,
+      "sha256": "b0f933c29733abee1d3160bcc151f0477232181e4c979f10785c5cabfdccfae9"
+    },
+    {
+      "path": "fault-raw.tar.gz/native/campaign/provider.jsonl",
+      "bytes": 1835098,
+      "sha256": "ec364b4298be77aefc21eec421902669dacd477afe37a825f3e7ffc7c4979120"
+    },
+    {
+      "path": "fault-raw.tar.gz/native/campaign/result.json",
+      "bytes": 3545659,
+      "sha256": "c20f5742fafdaf89ca9a66b4875f0e5e301d9cdec3b44f1108ae5092e4c1a19b"
+    },
+    {
+      "path": "fault-raw.tar.gz/native/crash-restart/checkpoint.json",
+      "bytes": 98,
+      "sha256": "8c3c1d142cbde961902c8dea95fa96b2d471900ca2f9dce016e4ac4a14ae67ee"
+    },
+    {
+      "path": "fault-raw.tar.gz/native/crash-restart/provider.jsonl",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "fault-raw.tar.gz/native/crash-restart/result.json",
+      "bytes": 304,
+      "sha256": "c85325086f9aa65bc6d98661b477119b99cd0ffdcc898f7ec58842e142f742ae"
+    },
+    {
+      "path": "fault-raw.tar.gz/native/dead-man/checkpoint.json",
+      "bytes": 100,
+      "sha256": "5fc27889d240d955e6615fab1bda7dd4065acd590d54fd52a1ff30f81630aac7"
+    },
+    {
+      "path": "fault-raw.tar.gz/native/dead-man/provider.jsonl",
+      "bytes": 44452,
+      "sha256": "26c416e9cfcb5aa8ce931cf1e4560a2be4cb5a4e40cdd159cf02d8ad3f1518c4"
+    },
+    {
+      "path": "fault-raw.tar.gz/native/dead-man/result.json",
+      "bytes": 13675,
+      "sha256": "a9293deb6abd93772f947e778d6f2c069cbcb6588674c1de0f74afd08e1e063b"
+    },
+    {
+      "path": "fault-raw.tar.gz/native/identity-roles/checkpoint.json",
+      "bytes": 98,
+      "sha256": "7005a822c4266db611d7617cda1aff0935d34295cfb9de341894152ad87e1234"
+    },
+    {
+      "path": "fault-raw.tar.gz/native/identity-roles/provider.jsonl",
+      "bytes": 2218,
+      "sha256": "467bf37321ec0e0b0f5b88cc7faf4a22d12ec83fe2b45b03f29a5d3dd16cfaf1"
+    },
+    {
+      "path": "fault-raw.tar.gz/native/identity-roles/result.json",
+      "bytes": 304,
+      "sha256": "c85325086f9aa65bc6d98661b477119b99cd0ffdcc898f7ec58842e142f742ae"
+    },
+    {
+      "path": "fault-raw.tar.gz/native/keep-alive-counterexample/checkpoint.json",
+      "bytes": 99,
+      "sha256": "4ec9352a933cd87d8e2a63787007af2eb1a1d23583cf9eb1e215ae726dc80a06"
+    },
+    {
+      "path": "fault-raw.tar.gz/native/keep-alive-counterexample/provider.jsonl",
+      "bytes": 8320,
+      "sha256": "159b834f17b4c3691f8587ab74c520c67e397eab3ea184f457755f695264ab88"
+    },
+    {
+      "path": "fault-raw.tar.gz/native/keep-alive-counterexample/result.json",
+      "bytes": 441,
+      "sha256": "05dda7c93fb2421d9cd6e872e10e8baaaf6b571d5e337430be30cb0cebf9bbcf"
+    },
+    {
+      "path": "fault-raw.tar.gz/native/late-pre-fence-effect/checkpoint.json",
+      "bytes": 98,
+      "sha256": "7a36e702a2673addb3d792e60daed1f091e7cd911bbc8e05549a3a7d9a58d0ad"
+    },
+    {
+      "path": "fault-raw.tar.gz/native/late-pre-fence-effect/provider.jsonl",
+      "bytes": 2754,
+      "sha256": "89a39265db0b7a0140efd0ee3a336822615b0a807f4a6e71b5be922e45fd5fc4"
+    },
+    {
+      "path": "fault-raw.tar.gz/native/late-pre-fence-effect/result.json",
+      "bytes": 683,
+      "sha256": "fe755b85085e46661eafed48af03b466f0c4e43f7fb626a7a4f7496008df7402"
+    },
+    {
+      "path": "fault-raw.tar.gz/native/lost-commit/checkpoint.json",
+      "bytes": 98,
+      "sha256": "8c3c1d142cbde961902c8dea95fa96b2d471900ca2f9dce016e4ac4a14ae67ee"
+    },
+    {
+      "path": "fault-raw.tar.gz/native/lost-commit/provider.jsonl",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "fault-raw.tar.gz/native/lost-commit/result.json",
+      "bytes": 342,
+      "sha256": "3037c72a71e7759d573ebd8090401c264a48830b4eeb50b6876862ba1cf3c4dc"
+    },
+    {
+      "path": "fault-raw.tar.gz/native/transport-faults/checkpoint.json",
+      "bytes": 99,
+      "sha256": "880afaf81b94ff84596dd06d2cc85ec587b2a49924749bb5e0ea75db1e68306a"
+    },
+    {
+      "path": "fault-raw.tar.gz/native/transport-faults/provider.jsonl",
+      "bytes": 8393,
+      "sha256": "079af51bbb871f302e87c105b64c46af6c16b33f466e8de18aa20c95eada3073"
+    },
+    {
+      "path": "fault-raw.tar.gz/native/transport-faults/result.json",
+      "bytes": 304,
+      "sha256": "c85325086f9aa65bc6d98661b477119b99cd0ffdcc898f7ec58842e142f742ae"
+    },
+    {
+      "path": "fault-raw.tar.gz/new/observer-retirement.json",
+      "bytes": 63779,
+      "sha256": "5cab0a076a1afb8a866d751e4f83370c7b1f488c5f9fd8c2b26e9631268fa5bb"
+    },
+    {
+      "path": "full-raw.tar.gz/diagnostics/inc1-ee30eb580a9dfa61-114ca478-073a-4aa7-b265-01ba80154b3c.json",
+      "bytes": 1899,
+      "sha256": "40aed45f81041970b01b4fe26ece72323b5c485e2fb9ea5deded804ec56f1709"
+    },
+    {
+      "path": "full-raw.tar.gz/native/authority-races/checkpoint.json",
+      "bytes": 98,
+      "sha256": "7a1fe50f0b16319fb41b8e96234163da1135aa210278b959f5ab70aa1084e433"
+    },
+    {
+      "path": "full-raw.tar.gz/native/authority-races/provider.jsonl",
+      "bytes": 2218,
+      "sha256": "547d9f97e4ac9d62a780609b8da5ed23f9aaeed36fa2eabe661a9b01a7df3a7e"
+    },
+    {
+      "path": "full-raw.tar.gz/native/authority-races/result.json",
+      "bytes": 397,
+      "sha256": "939ea20c38f136caffcddffc30ebca3a246bf82d56fa1f8ee9a5b2c96de56b1a"
+    },
+    {
+      "path": "full-raw.tar.gz/native/b1a-asynchronous-v1/checkpoint.json",
+      "bytes": 101,
+      "sha256": "699778ad1575877d93d18f538b4b99ec25d6a41e87908d424fae03b526e1d0b7"
+    },
+    {
+      "path": "full-raw.tar.gz/native/b1a-asynchronous-v1/provider.jsonl",
+      "bytes": 653449,
+      "sha256": "dc48ce09bae55ef2eb7e2f40d7eb7ba3433f18dcc34848bcefc5ef7883257541"
+    },
+    {
+      "path": "full-raw.tar.gz/native/b1a-asynchronous-v1/result.json",
+      "bytes": 1849768,
+      "sha256": "8ebdf5efa157554409d222b55613456bf8d6b313fd5b005cd01616b35f78eb79"
+    },
+    {
+      "path": "full-raw.tar.gz/native/b1a-authenticated-provider/checkpoint.json",
+      "bytes": 98,
+      "sha256": "ef6d6be1b3b791ededa47e98182744c701c228d42cd95d17a27cea0729805c2f"
+    },
+    {
+      "path": "full-raw.tar.gz/native/b1a-authenticated-provider/provider.jsonl",
+      "bytes": 4276,
+      "sha256": "47910b7297f7ef0d49aa0f8662234c4c585dc5bf706be98efd9e0e47187b355f"
+    },
+    {
+      "path": "full-raw.tar.gz/native/b1a-authenticated-provider/result.json",
+      "bytes": 446,
+      "sha256": "05473a874ed82404a46acf5fbf412ba67e3bf48305d56a8133685f69b9b6d0eb"
+    },
+    {
+      "path": "full-raw.tar.gz/native/b1a-cloud-profile-pure/checkpoint.json",
+      "bytes": 98,
+      "sha256": "8c3c1d142cbde961902c8dea95fa96b2d471900ca2f9dce016e4ac4a14ae67ee"
+    },
+    {
+      "path": "full-raw.tar.gz/native/b1a-cloud-profile-pure/provider.jsonl",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "full-raw.tar.gz/native/b1a-cloud-profile-pure/result.json",
+      "bytes": 393,
+      "sha256": "d6af90d9c868f9e73e81ba37ba580ccfe59ab2495ddb03bc56fc3662a008630b"
+    },
+    {
+      "path": "full-raw.tar.gz/native/b1a-commit-ack_lost/checkpoint.json",
+      "bytes": 98,
+      "sha256": "8c3c1d142cbde961902c8dea95fa96b2d471900ca2f9dce016e4ac4a14ae67ee"
+    },
+    {
+      "path": "full-raw.tar.gz/native/b1a-commit-ack_lost/provider.jsonl",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "full-raw.tar.gz/native/b1a-commit-ack_lost/result.json",
+      "bytes": 436,
+      "sha256": "2e9d029b95ab335e18ab65f1024901a7ccc5284a9ddf336f7d3cb899a8863bb7"
+    },
+    {
+      "path": "full-raw.tar.gz/native/b1a-commit-before_server/checkpoint.json",
+      "bytes": 98,
+      "sha256": "275f3bd6d740c87b6603eb4ebaf68ad624215e4615a2f657f8b48b6df4489c62"
+    },
+    {
+      "path": "full-raw.tar.gz/native/b1a-commit-before_server/provider.jsonl",
+      "bytes": 2218,
+      "sha256": "59e98c311f1a73630f7a7c84d3e349291dedb229f868a0ecb5bfa2a8e805cc3b"
+    },
+    {
+      "path": "full-raw.tar.gz/native/b1a-commit-before_server/result.json",
+      "bytes": 439,
+      "sha256": "6592de736300d025e33e5c8c823b9c5b6deee068f2fd1c7735723d5bdb05ba70"
+    },
+    {
+      "path": "full-raw.tar.gz/native/b1a-commit-rollback_tag/checkpoint.json",
+      "bytes": 98,
+      "sha256": "95e33bcb87e72be8e08e16fa70a7b0c82545d0fdccb827e7d1fdc3dcd3f9c8fa"
+    },
+    {
+      "path": "full-raw.tar.gz/native/b1a-commit-rollback_tag/provider.jsonl",
+      "bytes": 2218,
+      "sha256": "5e4d6c4901d2d534d217978fef92c55a40fec28f4b06da55103c470bc41d142a"
+    },
+    {
+      "path": "full-raw.tar.gz/native/b1a-commit-rollback_tag/result.json",
+      "bytes": 438,
+      "sha256": "e34a3b55b87218bd1c63011f4ad21dc6c0ccc07caffc7be1d6dfd4ae3c443141"
+    },
+    {
+      "path": "full-raw.tar.gz/native/b1a-cross-product-v1/checkpoint.json",
+      "bytes": 101,
+      "sha256": "a6e7f91e1d8b6a674563a33f65816c0cd28ef5b558fd83bb655ce4b2d03af02e"
+    },
+    {
+      "path": "full-raw.tar.gz/native/b1a-cross-product-v1/provider.jsonl",
+      "bytes": 1701429,
+      "sha256": "9290a206eb4e2bb324306e8bfe6b5fc36e5732fbdeff57f9b4cbef8a87b54c3a"
+    },
+    {
+      "path": "full-raw.tar.gz/native/b1a-cross-product-v1/result.json",
+      "bytes": 3671766,
+      "sha256": "812dd6fc7a014bede89fb69a253645da6fe600f8d5818889b8ac7f0f3f258fcb"
+    },
+    {
+      "path": "full-raw.tar.gz/native/b1a-direct-kill/checkpoint.json",
+      "bytes": 98,
+      "sha256": "8c3c1d142cbde961902c8dea95fa96b2d471900ca2f9dce016e4ac4a14ae67ee"
+    },
+    {
+      "path": "full-raw.tar.gz/native/b1a-direct-kill/provider.jsonl",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "full-raw.tar.gz/native/b1a-direct-kill/result.json",
+      "bytes": 620,
+      "sha256": "9b88d58e773ed050bcaaca5848cc1710336419cc7d8fb93551598f04bcd8763e"
+    },
+    {
+      "path": "full-raw.tar.gz/native/b1a-native-kill-classification/checkpoint.json",
+      "bytes": 98,
+      "sha256": "38e9ebf5d703b1dca23d5da87217509764c46381ef68cf042e32a6ec518455c5"
+    },
+    {
+      "path": "full-raw.tar.gz/native/b1a-native-kill-classification/provider.jsonl",
+      "bytes": 2754,
+      "sha256": "cb67b99c1604db3b1ed431ea79eec6aa9847cb12143ba60786dde54b1d967321"
+    },
+    {
+      "path": "full-raw.tar.gz/native/b1a-native-kill-classification/result.json",
+      "bytes": 2853,
+      "sha256": "90640756eb7125ed9c672e088b3cbe7565280e6df2dafa04053f0e15f0eb4e7d"
+    },
+    {
+      "path": "full-raw.tar.gz/native/b1a-native-sql-tls/checkpoint.json",
+      "bytes": 98,
+      "sha256": "8c3c1d142cbde961902c8dea95fa96b2d471900ca2f9dce016e4ac4a14ae67ee"
+    },
+    {
+      "path": "full-raw.tar.gz/native/b1a-native-sql-tls/provider.jsonl",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "full-raw.tar.gz/native/b1a-native-sql-tls/result.json",
+      "bytes": 437,
+      "sha256": "76b4b392f390b3c73cd75ba51024a7fd01025525854bcaf80df31d168c8609de"
+    },
+    {
+      "path": "full-raw.tar.gz/native/b1a-proof-bad_epoch/checkpoint.json",
+      "bytes": 98,
+      "sha256": "4d7eef5cd461de643810e3897c366245db374e82f7b1e2ef657c205c322300b6"
+    },
+    {
+      "path": "full-raw.tar.gz/native/b1a-proof-bad_epoch/provider.jsonl",
+      "bytes": 2218,
+      "sha256": "f8bd3ba5543631b8eca5270729fd9755a5fec4d0a07acce19995ab756e520046"
+    },
+    {
+      "path": "full-raw.tar.gz/native/b1a-proof-bad_epoch/result.json",
+      "bytes": 349,
+      "sha256": "3e24ca0ef774f915cbf9a30511c7ef230f8a9dd3fb2340ee40d5d0eb690a1b5a"
+    },
+    {
+      "path": "full-raw.tar.gz/native/b1a-proof-bad_revision/checkpoint.json",
+      "bytes": 98,
+      "sha256": "0543ca5c8ce7bc4301b10e0d8e743ad5a6f7d0ea05c969d4e0085ba75a88ee58"
+    },
+    {
+      "path": "full-raw.tar.gz/native/b1a-proof-bad_revision/provider.jsonl",
+      "bytes": 2218,
+      "sha256": "d430ab1430794570393a50cd48cdbf75b6f4a21b6c246733a1633ec38d1eeb20"
+    },
+    {
+      "path": "full-raw.tar.gz/native/b1a-proof-bad_revision/result.json",
+      "bytes": 352,
+      "sha256": "06865b91714ed0b3c77665798f291e8a5171369f998dc136fed3b684a9385f5f"
+    },
+    {
+      "path": "full-raw.tar.gz/native/b1a-retired-recovery/checkpoint.json",
+      "bytes": 98,
+      "sha256": "8c3c1d142cbde961902c8dea95fa96b2d471900ca2f9dce016e4ac4a14ae67ee"
+    },
+    {
+      "path": "full-raw.tar.gz/native/b1a-retired-recovery/provider.jsonl",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "full-raw.tar.gz/native/b1a-retired-recovery/result.json",
+      "bytes": 427,
+      "sha256": "e85c9dde6ce1d6844cdb2b3d42252eb520472d3904fa7d4645889804310ccf10"
+    },
+    {
+      "path": "full-raw.tar.gz/native/b1a-sealer-ack/checkpoint.json",
+      "bytes": 98,
+      "sha256": "8c3c1d142cbde961902c8dea95fa96b2d471900ca2f9dce016e4ac4a14ae67ee"
+    },
+    {
+      "path": "full-raw.tar.gz/native/b1a-sealer-ack/provider.jsonl",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "full-raw.tar.gz/native/b1a-sealer-ack/result.json",
+      "bytes": 437,
+      "sha256": "0177cae03480aa1702dc4470a0383e7abfd536b714978bee0af5661da2eddaa1"
+    },
+    {
+      "path": "full-raw.tar.gz/native/b1a-session-budget-hold/checkpoint.json",
+      "bytes": 98,
+      "sha256": "44a2e3e8ae63d2460af8ecb0c499b77a259bd0046d2a95c945235819484b0555"
+    },
+    {
+      "path": "full-raw.tar.gz/native/b1a-session-budget-hold/provider.jsonl",
+      "bytes": 2218,
+      "sha256": "e238c714eb29ec2c249f4630a8bc09540e12cf0be9e7859ea190f678bea1a220"
+    },
+    {
+      "path": "full-raw.tar.gz/native/b1a-session-budget-hold/result.json",
+      "bytes": 751,
+      "sha256": "9518c0bc4f5af175364b258b0714e42d8beafac752ac1ef6d99eb408a6d2213d"
+    },
+    {
+      "path": "full-raw.tar.gz/native/b1a2-startup-chain/checkpoint.json",
+      "bytes": 98,
+      "sha256": "8c3c1d142cbde961902c8dea95fa96b2d471900ca2f9dce016e4ac4a14ae67ee"
+    },
+    {
+      "path": "full-raw.tar.gz/native/b1a2-startup-chain/provider.jsonl",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "full-raw.tar.gz/native/b1a2-startup-chain/result.json",
+      "bytes": 459,
+      "sha256": "57e553de74d546e77ff98bdffa19a7c385b096ac998946f95562104f3a32f0ad"
+    },
+    {
+      "path": "full-raw.tar.gz/native/campaign/checkpoint.json",
+      "bytes": 101,
+      "sha256": "75e6b2548651107ab041d083733b3c62f17c73c022a1013a82e9d08f8adb7d83"
+    },
+    {
+      "path": "full-raw.tar.gz/native/campaign/provider.jsonl",
+      "bytes": 1835666,
+      "sha256": "ac4aa95033114da327707d561b26e2eed1b2bec7f95225b1441632b822afd9bf"
+    },
+    {
+      "path": "full-raw.tar.gz/native/campaign/result.json",
+      "bytes": 3545659,
+      "sha256": "39d3f136b56550a1a817a5d5a995011e3937c1d19c34f58e7a98de824a5c5ad8"
+    },
+    {
+      "path": "full-raw.tar.gz/native/concurrency/checkpoint.json",
+      "bytes": 99,
+      "sha256": "194e13dbc0e6c9de50b1b41bfc397b0eb2cf6c97baeed876f27f5d4ca6d59a7c"
+    },
+    {
+      "path": "full-raw.tar.gz/native/concurrency/provider.jsonl",
+      "bytes": 19998,
+      "sha256": "a1027f6198846f74864e5ab5dd9ddcfa234f71996ec5c78a345c6f2b087a629e"
+    },
+    {
+      "path": "full-raw.tar.gz/native/concurrency/result.json",
+      "bytes": 3480,
+      "sha256": "06dbd73202dad10422be4df3b2d3cd81e8aff69e01f0f527c41cd92be13547e7"
+    },
+    {
+      "path": "full-raw.tar.gz/native/crash-restart/checkpoint.json",
+      "bytes": 98,
+      "sha256": "8c3c1d142cbde961902c8dea95fa96b2d471900ca2f9dce016e4ac4a14ae67ee"
+    },
+    {
+      "path": "full-raw.tar.gz/native/crash-restart/provider.jsonl",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "full-raw.tar.gz/native/crash-restart/result.json",
+      "bytes": 304,
+      "sha256": "c85325086f9aa65bc6d98661b477119b99cd0ffdcc898f7ec58842e142f742ae"
+    },
+    {
+      "path": "full-raw.tar.gz/native/dead-man/checkpoint.json",
+      "bytes": 100,
+      "sha256": "c888719f3c6ab7cdb11e6a0d38ad85da241e4264bf8df3861ab89a1c2cf41a3b"
+    },
+    {
+      "path": "full-raw.tar.gz/native/dead-man/provider.jsonl",
+      "bytes": 44452,
+      "sha256": "898a46e205f952d2f5f411360511984556735bc01713978f33417af0ac23df6e"
+    },
+    {
+      "path": "full-raw.tar.gz/native/dead-man/result.json",
+      "bytes": 13675,
+      "sha256": "844bd912fb1be4b5c481a20572dc8fba566f3a567ab5e9a98e6a71f53f44be93"
+    },
+    {
+      "path": "full-raw.tar.gz/native/identity-roles/checkpoint.json",
+      "bytes": 98,
+      "sha256": "ec7052fda10893e9e04350ffe488606a5e75a0aa374ab6287087cfe1c9c647bb"
+    },
+    {
+      "path": "full-raw.tar.gz/native/identity-roles/provider.jsonl",
+      "bytes": 2218,
+      "sha256": "92b9e3efd8831993f2ba52a7c609713a327e4e6a390025d32a7a8d7e4a03f1cb"
+    },
+    {
+      "path": "full-raw.tar.gz/native/identity-roles/result.json",
+      "bytes": 304,
+      "sha256": "c85325086f9aa65bc6d98661b477119b99cd0ffdcc898f7ec58842e142f742ae"
+    },
+    {
+      "path": "full-raw.tar.gz/native/keep-alive-counterexample/checkpoint.json",
+      "bytes": 99,
+      "sha256": "82f82ec908d48c4d46b8719aeb1c50e2e84ca89ece5b3aad07f4a6cfbf3b0609"
+    },
+    {
+      "path": "full-raw.tar.gz/native/keep-alive-counterexample/provider.jsonl",
+      "bytes": 8320,
+      "sha256": "6cbe92ab0e4c8777181e4a625dba4f566fa1d8161e9c3ba1c7761b05aa36af91"
+    },
+    {
+      "path": "full-raw.tar.gz/native/keep-alive-counterexample/result.json",
+      "bytes": 441,
+      "sha256": "c0c6ca121e6853c7387e8ffc60cf5f343e779e6927b746060f22de233c9f6b01"
+    },
+    {
+      "path": "full-raw.tar.gz/native/late-pre-fence-effect/checkpoint.json",
+      "bytes": 98,
+      "sha256": "55fa0094366200763f8b129647f46b3112d979f1c1240663ee52b9fe680dc31e"
+    },
+    {
+      "path": "full-raw.tar.gz/native/late-pre-fence-effect/provider.jsonl",
+      "bytes": 2754,
+      "sha256": "6b6c615423c85f0c1ca02d9ef7acf6ae3191a8d4c9d97b395ba030d455a7308c"
+    },
+    {
+      "path": "full-raw.tar.gz/native/late-pre-fence-effect/result.json",
+      "bytes": 683,
+      "sha256": "2a37c85826fab38f8d2866a3043d211ac36350b4ca114711e623e743aaadd70d"
+    },
+    {
+      "path": "full-raw.tar.gz/native/lost-commit/checkpoint.json",
+      "bytes": 98,
+      "sha256": "8c3c1d142cbde961902c8dea95fa96b2d471900ca2f9dce016e4ac4a14ae67ee"
+    },
+    {
+      "path": "full-raw.tar.gz/native/lost-commit/provider.jsonl",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "full-raw.tar.gz/native/lost-commit/result.json",
+      "bytes": 342,
+      "sha256": "3037c72a71e7759d573ebd8090401c264a48830b4eeb50b6876862ba1cf3c4dc"
+    },
+    {
+      "path": "full-raw.tar.gz/native/transport-faults/checkpoint.json",
+      "bytes": 99,
+      "sha256": "8e86a8163d50fbad883ef121df51e8c3d1f3a4b3b7c86d9eda0e2a5cfd3f7849"
+    },
+    {
+      "path": "full-raw.tar.gz/native/transport-faults/provider.jsonl",
+      "bytes": 8393,
+      "sha256": "59321fe539969180bfd4b7d150d8b6daabeac6f250c25e4512d70daafe1c55d5"
+    },
+    {
+      "path": "full-raw.tar.gz/native/transport-faults/result.json",
+      "bytes": 304,
+      "sha256": "c85325086f9aa65bc6d98661b477119b99cd0ffdcc898f7ec58842e142f742ae"
+    },
+    {
+      "path": "full-raw.tar.gz/new/observer-retirement.json",
+      "bytes": 63779,
+      "sha256": "f4e5bd1cab368fec6e504a70bd6ded8489f9d80c8e48404a17dd52b09207e824"
+    },
+    {
+      "path": "prior-b5-raw.tar.gz/full/diagnostics/inc1-bb9c947f295d55e7-7415512b-9849-43e0-9023-aeb874729f81.json",
+      "bytes": 1898,
+      "sha256": "e81e8c157795183638bc409c59e56a3f6550829a036988e183e95d830ce29166"
+    },
+    {
+      "path": "prior-b5-raw.tar.gz/full/native/authority-races/checkpoint.json",
+      "bytes": 98,
+      "sha256": "06cbf87033dbadfa5e2a7ada53360227765ec96bed7264b8a4bf855be37fa886"
+    },
+    {
+      "path": "prior-b5-raw.tar.gz/full/native/authority-races/provider.jsonl",
+      "bytes": 2218,
+      "sha256": "ca1f3302b1b9db937f311ab4226c39b8e87e92fbfd735a9db395c71547cd26e2"
+    },
+    {
+      "path": "prior-b5-raw.tar.gz/full/native/authority-races/result.json",
+      "bytes": 397,
+      "sha256": "a162de527d9491711172077e61a6ab40acf53302fa16964d03e48ae69e69c2b3"
+    },
+    {
+      "path": "prior-b5-raw.tar.gz/full/native/b1a-asynchronous-v1/checkpoint.json",
+      "bytes": 101,
+      "sha256": "bb161e4c1896490b838b56f26071c2e0d499474601967737347de1cef19d7592"
+    },
+    {
+      "path": "prior-b5-raw.tar.gz/full/native/b1a-asynchronous-v1/provider.jsonl",
+      "bytes": 678267,
+      "sha256": "b8641b12b07629e57bbf1dc57b51ce101a3559bed095ad07cd6afa558c20f0b4"
+    },
+    {
+      "path": "prior-b5-raw.tar.gz/full/native/b1a-asynchronous-v1/result.json",
+      "bytes": 1894766,
+      "sha256": "a8b93cd737920474eab5095a157d85f9b8d40be26be2c7a0e1ec9623229063a8"
+    },
+    {
+      "path": "prior-b5-raw.tar.gz/full/native/b1a-authenticated-provider/checkpoint.json",
+      "bytes": 98,
+      "sha256": "96dc12172d95e6723f464e20e4d14529a730a4a4ce432cf918af76f4ff67624f"
+    },
+    {
+      "path": "prior-b5-raw.tar.gz/full/native/b1a-authenticated-provider/provider.jsonl",
+      "bytes": 4276,
+      "sha256": "154f572f7abaf741723f6963088d6ea58dd1528edfdb35d51d52ef9f8bea3136"
+    },
+    {
+      "path": "prior-b5-raw.tar.gz/full/native/b1a-authenticated-provider/result.json",
+      "bytes": 446,
+      "sha256": "73452cf5c9b1285d4fe0afbc5b50c237738bdec121a2a2d6866e93b1e7a79db9"
+    },
+    {
+      "path": "prior-b5-raw.tar.gz/full/native/b1a-cloud-profile-pure/checkpoint.json",
+      "bytes": 98,
+      "sha256": "8c3c1d142cbde961902c8dea95fa96b2d471900ca2f9dce016e4ac4a14ae67ee"
+    },
+    {
+      "path": "prior-b5-raw.tar.gz/full/native/b1a-cloud-profile-pure/provider.jsonl",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "prior-b5-raw.tar.gz/full/native/b1a-cloud-profile-pure/result.json",
+      "bytes": 393,
+      "sha256": "4dafd94dbfdf795ca59adbe9b48d95dd48c7df285c0f764d7a95b2e9f057c460"
+    },
+    {
+      "path": "prior-b5-raw.tar.gz/full/native/b1a-commit-ack_lost/checkpoint.json",
+      "bytes": 98,
+      "sha256": "8c3c1d142cbde961902c8dea95fa96b2d471900ca2f9dce016e4ac4a14ae67ee"
+    },
+    {
+      "path": "prior-b5-raw.tar.gz/full/native/b1a-commit-ack_lost/provider.jsonl",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "prior-b5-raw.tar.gz/full/native/b1a-commit-ack_lost/result.json",
+      "bytes": 436,
+      "sha256": "b3d4dfa9705e9affefc7d04c74c0d6693cdb8b2ece99f0c7cae780c05fe33787"
+    },
+    {
+      "path": "prior-b5-raw.tar.gz/full/native/b1a-commit-before_server/checkpoint.json",
+      "bytes": 98,
+      "sha256": "2c27a50aedd55d97e23d0651f15e7cdfdccc5bbb050bd196f391484718e207c1"
+    },
+    {
+      "path": "prior-b5-raw.tar.gz/full/native/b1a-commit-before_server/provider.jsonl",
+      "bytes": 2218,
+      "sha256": "d001b0f9db9d1c6c1bb5e92e8822e2cd4de8f6c29fc7803cb2e1e415630cf888"
+    },
+    {
+      "path": "prior-b5-raw.tar.gz/full/native/b1a-commit-before_server/result.json",
+      "bytes": 439,
+      "sha256": "11afee655c6dd9d60c0bbbb1e2e66b9a5ea7288814a7fe21a769ef32db6ecd70"
+    },
+    {
+      "path": "prior-b5-raw.tar.gz/full/native/b1a-commit-rollback_tag/checkpoint.json",
+      "bytes": 98,
+      "sha256": "97dec09c6bf1922f882da90d2128f74f8e2fc99d861ac27355a7cd00ef23bac1"
+    },
+    {
+      "path": "prior-b5-raw.tar.gz/full/native/b1a-commit-rollback_tag/provider.jsonl",
+      "bytes": 2218,
+      "sha256": "3bcc517bd2f1f89795b14e8c111271ebc010793f307b1c847c933c0f58cee43d"
+    },
+    {
+      "path": "prior-b5-raw.tar.gz/full/native/b1a-commit-rollback_tag/result.json",
+      "bytes": 438,
+      "sha256": "1547b955e9133fc25409841d9e934ce9f1f72ed913de118dbcc4520cdc1abf13"
+    },
+    {
+      "path": "prior-b5-raw.tar.gz/full/native/b1a-cross-product-v1/checkpoint.json",
+      "bytes": 101,
+      "sha256": "7b4c5942e6d29d29366748231612db4fd17caa8118ed27c7532557583f5215d6"
+    },
+    {
+      "path": "prior-b5-raw.tar.gz/full/native/b1a-cross-product-v1/provider.jsonl",
+      "bytes": 1701145,
+      "sha256": "2bd5d43a8f862f17c2933c4a18b44789842196d45130a99811fd241b7f9311db"
+    },
+    {
+      "path": "prior-b5-raw.tar.gz/full/native/b1a-cross-product-v1/result.json",
+      "bytes": 3671766,
+      "sha256": "b70ad76a3dd7eb7fd45e90f14c0d75c8c506d5b583ece2980bb3c21ff36ad5e6"
+    },
+    {
+      "path": "prior-b5-raw.tar.gz/full/native/b1a-direct-kill/checkpoint.json",
+      "bytes": 98,
+      "sha256": "8c3c1d142cbde961902c8dea95fa96b2d471900ca2f9dce016e4ac4a14ae67ee"
+    },
+    {
+      "path": "prior-b5-raw.tar.gz/full/native/b1a-direct-kill/provider.jsonl",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "prior-b5-raw.tar.gz/full/native/b1a-direct-kill/result.json",
+      "bytes": 620,
+      "sha256": "1b6f8b38c63fb972c3b25cd9603faf1cd503d090e613b98ab14fe8b919bea631"
+    },
+    {
+      "path": "prior-b5-raw.tar.gz/full/native/b1a-native-kill-classification/checkpoint.json",
+      "bytes": 98,
+      "sha256": "b41114d7a1afd08e8070f2f741269ffc4bb2013f2c72bcae0586cb8409e140d7"
+    },
+    {
+      "path": "prior-b5-raw.tar.gz/full/native/b1a-native-kill-classification/provider.jsonl",
+      "bytes": 2754,
+      "sha256": "2e7df8ec2ade9ce211d4deee2bf0dae36a5499bddf907e6f3d5d8bef2e03eee8"
+    },
+    {
+      "path": "prior-b5-raw.tar.gz/full/native/b1a-native-kill-classification/result.json",
+      "bytes": 2853,
+      "sha256": "adf4ea4a6ae41e95abc55b436d26134a6b078d029423e0180bef1a483e10f55c"
+    },
+    {
+      "path": "prior-b5-raw.tar.gz/full/native/b1a-native-sql-tls/checkpoint.json",
+      "bytes": 98,
+      "sha256": "8c3c1d142cbde961902c8dea95fa96b2d471900ca2f9dce016e4ac4a14ae67ee"
+    },
+    {
+      "path": "prior-b5-raw.tar.gz/full/native/b1a-native-sql-tls/provider.jsonl",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "prior-b5-raw.tar.gz/full/native/b1a-native-sql-tls/result.json",
+      "bytes": 437,
+      "sha256": "44b14da7197d14a4c6c05837e22313d8a678243a4fffc717ea496e8cbbe4e846"
+    },
+    {
+      "path": "prior-b5-raw.tar.gz/full/native/b1a-proof-bad_epoch/checkpoint.json",
+      "bytes": 98,
+      "sha256": "2978f506c168ba7f335e0dee276e67397059cb01b60992caef1afea588a6a87b"
+    },
+    {
+      "path": "prior-b5-raw.tar.gz/full/native/b1a-proof-bad_epoch/provider.jsonl",
+      "bytes": 2218,
+      "sha256": "65f7555d294ba088088d2a31a90d22835035551a839ec71ceab432c6a3d8975b"
+    },
+    {
+      "path": "prior-b5-raw.tar.gz/full/native/b1a-proof-bad_epoch/result.json",
+      "bytes": 349,
+      "sha256": "f36aa8f8b8b429c6440ed4c79b774eb4c720a7f09a1109ef4de05036ceb596d7"
+    },
+    {
+      "path": "prior-b5-raw.tar.gz/full/native/b1a-proof-bad_revision/checkpoint.json",
+      "bytes": 98,
+      "sha256": "57a78297974cd3a2b7aafac2dc8c6289d657bc76c442cb202d882a66242241ef"
+    },
+    {
+      "path": "prior-b5-raw.tar.gz/full/native/b1a-proof-bad_revision/provider.jsonl",
+      "bytes": 2218,
+      "sha256": "0fb297c8a6c7a0ca285c2ce67504a77ceac359df382e46bba710bf22e32359fb"
+    },
+    {
+      "path": "prior-b5-raw.tar.gz/full/native/b1a-proof-bad_revision/result.json",
+      "bytes": 352,
+      "sha256": "b57def8d9f549e2cf30897e10adab11668e4ab8629c20271fd9909c8bcaa9ad4"
+    },
+    {
+      "path": "prior-b5-raw.tar.gz/full/native/b1a-retired-recovery/checkpoint.json",
+      "bytes": 98,
+      "sha256": "8c3c1d142cbde961902c8dea95fa96b2d471900ca2f9dce016e4ac4a14ae67ee"
+    },
+    {
+      "path": "prior-b5-raw.tar.gz/full/native/b1a-retired-recovery/provider.jsonl",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "prior-b5-raw.tar.gz/full/native/b1a-retired-recovery/result.json",
+      "bytes": 427,
+      "sha256": "6e4c6fccb14af81f6962cb8ff2669e5a1d3236f5465def20784d5e5aa9a93725"
+    },
+    {
+      "path": "prior-b5-raw.tar.gz/full/native/b1a-sealer-ack/checkpoint.json",
+      "bytes": 98,
+      "sha256": "8c3c1d142cbde961902c8dea95fa96b2d471900ca2f9dce016e4ac4a14ae67ee"
+    },
+    {
+      "path": "prior-b5-raw.tar.gz/full/native/b1a-sealer-ack/provider.jsonl",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "prior-b5-raw.tar.gz/full/native/b1a-sealer-ack/result.json",
+      "bytes": 437,
+      "sha256": "8713a4b8a7eae311a4f100a32cd1e34143363af2b084c3733ef337ccd5d1c8f8"
+    },
+    {
+      "path": "prior-b5-raw.tar.gz/full/native/b1a-session-budget-hold/checkpoint.json",
+      "bytes": 98,
+      "sha256": "eca16fe14cb5d486bd51de2cb8ce098d5fc639ab36914f0cf0c232ffd307cd26"
+    },
+    {
+      "path": "prior-b5-raw.tar.gz/full/native/b1a-session-budget-hold/provider.jsonl",
+      "bytes": 2218,
+      "sha256": "000c14e54886526a42f0d7ab072441a9612be903819d0e12f6de30521cc3db99"
+    },
+    {
+      "path": "prior-b5-raw.tar.gz/full/native/b1a-session-budget-hold/result.json",
+      "bytes": 751,
+      "sha256": "1c3c3b7550310c31e80fb21ac54b12ad2b30eab6f050f02734cfc801df9d9941"
+    },
+    {
+      "path": "prior-b5-raw.tar.gz/full/native/b1a2-startup-chain/checkpoint.json",
+      "bytes": 98,
+      "sha256": "8c3c1d142cbde961902c8dea95fa96b2d471900ca2f9dce016e4ac4a14ae67ee"
+    },
+    {
+      "path": "prior-b5-raw.tar.gz/full/native/b1a2-startup-chain/provider.jsonl",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "prior-b5-raw.tar.gz/full/native/b1a2-startup-chain/result.json",
+      "bytes": 459,
+      "sha256": "b270a3e3c29ad97eae9fab2651ee0338a87fcb826283fe591c1281f1e062f845"
+    },
+    {
+      "path": "prior-b5-raw.tar.gz/full/native/campaign/checkpoint.json",
+      "bytes": 101,
+      "sha256": "228fd0bcdfdd0431278618f254cb8422993fe935e1d094ac453828c72f382caf"
+    },
+    {
+      "path": "prior-b5-raw.tar.gz/full/native/campaign/provider.jsonl",
+      "bytes": 1835950,
+      "sha256": "2b4a8ddc5027e54474b645e1f9bbf7f8c42d87ac2f35ee40fff669a77363c141"
+    },
+    {
+      "path": "prior-b5-raw.tar.gz/full/native/campaign/result.json",
+      "bytes": 3545659,
+      "sha256": "e97e50175e84a8b497819be7d171139174c2ba5beec7c9d0ac90e6beeb15a72f"
+    },
+    {
+      "path": "prior-b5-raw.tar.gz/full/native/concurrency/checkpoint.json",
+      "bytes": 99,
+      "sha256": "88b70538f1ab89b11fa554cf1018a4a4474989daa053cca742219ed36cc0985e"
+    },
+    {
+      "path": "prior-b5-raw.tar.gz/full/native/concurrency/provider.jsonl",
+      "bytes": 19998,
+      "sha256": "b7efbfa2b109af09ea4a859af772eda658aed89fdf8557c910e8f0d62f770bb2"
+    },
+    {
+      "path": "prior-b5-raw.tar.gz/full/native/concurrency/result.json",
+      "bytes": 3480,
+      "sha256": "89153ac1c7997d41df73098adde0d70a0028f468a42f79f0a77fa155bb9e7087"
+    },
+    {
+      "path": "prior-b5-raw.tar.gz/full/native/crash-restart/checkpoint.json",
+      "bytes": 98,
+      "sha256": "8c3c1d142cbde961902c8dea95fa96b2d471900ca2f9dce016e4ac4a14ae67ee"
+    },
+    {
+      "path": "prior-b5-raw.tar.gz/full/native/crash-restart/provider.jsonl",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "prior-b5-raw.tar.gz/full/native/crash-restart/result.json",
+      "bytes": 304,
+      "sha256": "a31a74f6262a02860f2e2c5463e15425505f0d5541980e60ba0b23563ca29b4f"
+    },
+    {
+      "path": "prior-b5-raw.tar.gz/full/native/dead-man/checkpoint.json",
+      "bytes": 100,
+      "sha256": "8480c583349d93dc7210f833cc8bbc80da0ec34d0b11c68622cc6b904853a79a"
+    },
+    {
+      "path": "prior-b5-raw.tar.gz/full/native/dead-man/provider.jsonl",
+      "bytes": 44452,
+      "sha256": "f18e4c3d53370af70708bf9c6a34097ec4474ad499b332dd0d7bea779aed1008"
+    },
+    {
+      "path": "prior-b5-raw.tar.gz/full/native/dead-man/result.json",
+      "bytes": 13675,
+      "sha256": "d5e5aa7e6daa6cb0502765e45a6a832166ab64a0fc331529d61fc79a8fc8934c"
+    },
+    {
+      "path": "prior-b5-raw.tar.gz/full/native/identity-roles/checkpoint.json",
+      "bytes": 98,
+      "sha256": "26a566f66c5b62282b48020207a703a28a5b85f31bfeef356ebb1a644c229a43"
+    },
+    {
+      "path": "prior-b5-raw.tar.gz/full/native/identity-roles/provider.jsonl",
+      "bytes": 2218,
+      "sha256": "7c2203daa783ced6e88bbb14e44aaefc82b889a18df8b158d1aa901c97b98309"
+    },
+    {
+      "path": "prior-b5-raw.tar.gz/full/native/identity-roles/result.json",
+      "bytes": 304,
+      "sha256": "a31a74f6262a02860f2e2c5463e15425505f0d5541980e60ba0b23563ca29b4f"
+    },
+    {
+      "path": "prior-b5-raw.tar.gz/full/native/keep-alive-counterexample/checkpoint.json",
+      "bytes": 99,
+      "sha256": "29722dbd91d986b8062480a9405249d3a9c2a46b2c01f659a83981d9a4984f8e"
+    },
+    {
+      "path": "prior-b5-raw.tar.gz/full/native/keep-alive-counterexample/provider.jsonl",
+      "bytes": 8320,
+      "sha256": "55f4dbcd28750f330aa6e1e2294af48d9f5876b57b49793e5dea217f54d83f0c"
+    },
+    {
+      "path": "prior-b5-raw.tar.gz/full/native/keep-alive-counterexample/result.json",
+      "bytes": 441,
+      "sha256": "c9e99e1eb267c3ff0a7b2cbbd38c04ed753591fc53f8617e5bc003c64c90cb2e"
+    },
+    {
+      "path": "prior-b5-raw.tar.gz/full/native/late-pre-fence-effect/checkpoint.json",
+      "bytes": 98,
+      "sha256": "528bb3e6aff8fe20037ba86a1fd81d27c49d67c53fdd6d7006a4a41f0f572322"
+    },
+    {
+      "path": "prior-b5-raw.tar.gz/full/native/late-pre-fence-effect/provider.jsonl",
+      "bytes": 2754,
+      "sha256": "dcb68ba94bb445a7421734b1202a08d676a8e44f9800f8c8b73c3c8479ead46c"
+    },
+    {
+      "path": "prior-b5-raw.tar.gz/full/native/late-pre-fence-effect/result.json",
+      "bytes": 683,
+      "sha256": "57aeaa7925e20f486479083ea9b7b8180efd8ccb6105d0f77eda862bc5c51a55"
+    },
+    {
+      "path": "prior-b5-raw.tar.gz/full/native/lost-commit/checkpoint.json",
+      "bytes": 98,
+      "sha256": "8c3c1d142cbde961902c8dea95fa96b2d471900ca2f9dce016e4ac4a14ae67ee"
+    },
+    {
+      "path": "prior-b5-raw.tar.gz/full/native/lost-commit/provider.jsonl",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "prior-b5-raw.tar.gz/full/native/lost-commit/result.json",
+      "bytes": 342,
+      "sha256": "12a911f8d156acd1f4c7e7a75314a20cb5e665099ed9280b4f37c34112aefeab"
+    },
+    {
+      "path": "prior-b5-raw.tar.gz/full/native/transport-faults/checkpoint.json",
+      "bytes": 99,
+      "sha256": "fcd62d14e3a1a96fd31a377a03afb3af31f68cc40f8ea5110e1e561ab03008db"
+    },
+    {
+      "path": "prior-b5-raw.tar.gz/full/native/transport-faults/provider.jsonl",
+      "bytes": 8393,
+      "sha256": "c8c4a5148cf96cd2c72e34c0d8a867bb18090ed37d5b22b2a1aaaf16bc954328"
+    },
+    {
+      "path": "prior-b5-raw.tar.gz/full/native/transport-faults/result.json",
+      "bytes": 304,
+      "sha256": "a31a74f6262a02860f2e2c5463e15425505f0d5541980e60ba0b23563ca29b4f"
+    },
+    {
+      "path": "prior-b5-raw.tar.gz/full/new/observer-retirement.json",
+      "bytes": 63779,
+      "sha256": "a6fbcb5181e720e167044125ae6eeb085455d057244c229ab320b0072f68006e"
+    },
+    {
+      "path": "prior-b5-raw.tar.gz/fault/diagnostics/inc1-e36ee43ecd768b12-5152d336-4f2e-4cb1-acc3-e327d02318e5.json",
+      "bytes": 1899,
+      "sha256": "86fa4fb293280d7ed0645dc10a5ac673d99cc6a3e099f040474d78da51b94e8b"
+    },
+    {
+      "path": "prior-b5-raw.tar.gz/fault/native/b1a-asynchronous-v1/checkpoint.json",
+      "bytes": 101,
+      "sha256": "3ca237370169411a1fa6ef82a7894cc04a80277db9da8cf5e0fba89da04fd01d"
+    },
+    {
+      "path": "prior-b5-raw.tar.gz/fault/native/b1a-asynchronous-v1/provider.jsonl",
+      "bytes": 698278,
+      "sha256": "883540c13e3c27dd0482018f0281b6feb57671bc50a63897fa42a9a9eecb9373"
+    },
+    {
+      "path": "prior-b5-raw.tar.gz/fault/native/b1a-asynchronous-v1/result.json",
+      "bytes": 1868206,
+      "sha256": "fa615d6d8ce36f7ac34339981485e0f2c60365930eabb1c77664cb3058f6c3df"
+    },
+    {
+      "path": "prior-b5-raw.tar.gz/fault/native/b1a-commit-ack_lost/checkpoint.json",
+      "bytes": 98,
+      "sha256": "8c3c1d142cbde961902c8dea95fa96b2d471900ca2f9dce016e4ac4a14ae67ee"
+    },
+    {
+      "path": "prior-b5-raw.tar.gz/fault/native/b1a-commit-ack_lost/provider.jsonl",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "prior-b5-raw.tar.gz/fault/native/b1a-commit-ack_lost/result.json",
+      "bytes": 436,
+      "sha256": "b3d4dfa9705e9affefc7d04c74c0d6693cdb8b2ece99f0c7cae780c05fe33787"
+    },
+    {
+      "path": "prior-b5-raw.tar.gz/fault/native/b1a-commit-before_server/checkpoint.json",
+      "bytes": 98,
+      "sha256": "598b400854742f60ab7ad742769ab76e3b471ff5ac6018ee8672506d6ec7c635"
+    },
+    {
+      "path": "prior-b5-raw.tar.gz/fault/native/b1a-commit-before_server/provider.jsonl",
+      "bytes": 2218,
+      "sha256": "d0947490b0ed9d18f1500e0a5144d4c7000db451d87dd3068c8455fe0a9a6541"
+    },
+    {
+      "path": "prior-b5-raw.tar.gz/fault/native/b1a-commit-before_server/result.json",
+      "bytes": 439,
+      "sha256": "11afee655c6dd9d60c0bbbb1e2e66b9a5ea7288814a7fe21a769ef32db6ecd70"
+    },
+    {
+      "path": "prior-b5-raw.tar.gz/fault/native/b1a-commit-rollback_tag/checkpoint.json",
+      "bytes": 98,
+      "sha256": "4aede380b4da6ec26168d25ceb206ffb65831ee2506df4fea75f19217f4e4c31"
+    },
+    {
+      "path": "prior-b5-raw.tar.gz/fault/native/b1a-commit-rollback_tag/provider.jsonl",
+      "bytes": 2218,
+      "sha256": "83acd1ae4626f762cce6e8d34209cb0c763ccbe7c2d40d1d5c6716b53cc01676"
+    },
+    {
+      "path": "prior-b5-raw.tar.gz/fault/native/b1a-commit-rollback_tag/result.json",
+      "bytes": 438,
+      "sha256": "1547b955e9133fc25409841d9e934ce9f1f72ed913de118dbcc4520cdc1abf13"
+    },
+    {
+      "path": "prior-b5-raw.tar.gz/fault/native/b1a-cross-product-v1/checkpoint.json",
+      "bytes": 101,
+      "sha256": "e94df6c7f52a3dca6a709571ea8e984598e3865f44fcc0519f88fc9cb07b9145"
+    },
+    {
+      "path": "prior-b5-raw.tar.gz/fault/native/b1a-cross-product-v1/provider.jsonl",
+      "bytes": 1701145,
+      "sha256": "3dede573cbfb8819ac2d697c306d8b0a35a5bd23b3df24986782c6238a88bcfa"
+    },
+    {
+      "path": "prior-b5-raw.tar.gz/fault/native/b1a-cross-product-v1/result.json",
+      "bytes": 3671766,
+      "sha256": "ef8b45c51f5be2835aabcbdc13223f10aad1c31908e64be5930fd876e1b42be8"
+    },
+    {
+      "path": "prior-b5-raw.tar.gz/fault/native/b1a-direct-kill/checkpoint.json",
+      "bytes": 98,
+      "sha256": "8c3c1d142cbde961902c8dea95fa96b2d471900ca2f9dce016e4ac4a14ae67ee"
+    },
+    {
+      "path": "prior-b5-raw.tar.gz/fault/native/b1a-direct-kill/provider.jsonl",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "prior-b5-raw.tar.gz/fault/native/b1a-direct-kill/result.json",
+      "bytes": 620,
+      "sha256": "dc43e619c55864395631757540a98c983568c411fc4e71a103964c0a60f858b5"
+    },
+    {
+      "path": "prior-b5-raw.tar.gz/fault/native/b1a-native-kill-classification/checkpoint.json",
+      "bytes": 98,
+      "sha256": "a70ecc43cdf8711362549ec87fae4c0bbd438347ca0f73fa66df38a7a2d59d6d"
+    },
+    {
+      "path": "prior-b5-raw.tar.gz/fault/native/b1a-native-kill-classification/provider.jsonl",
+      "bytes": 2754,
+      "sha256": "0e9e27b6c722e6e7ca3878b40d96aa2efd1eb118167b8b4eb9e69808b4fb9025"
+    },
+    {
+      "path": "prior-b5-raw.tar.gz/fault/native/b1a-native-kill-classification/result.json",
+      "bytes": 2853,
+      "sha256": "942c0e9a0cd1e2a57d3c21a6b0b5f27417733b0f636cbaf69690e95e9b21da22"
+    },
+    {
+      "path": "prior-b5-raw.tar.gz/fault/native/b1a-native-sql-tls/checkpoint.json",
+      "bytes": 98,
+      "sha256": "8c3c1d142cbde961902c8dea95fa96b2d471900ca2f9dce016e4ac4a14ae67ee"
+    },
+    {
+      "path": "prior-b5-raw.tar.gz/fault/native/b1a-native-sql-tls/provider.jsonl",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "prior-b5-raw.tar.gz/fault/native/b1a-native-sql-tls/result.json",
+      "bytes": 437,
+      "sha256": "44b14da7197d14a4c6c05837e22313d8a678243a4fffc717ea496e8cbbe4e846"
+    },
+    {
+      "path": "prior-b5-raw.tar.gz/fault/native/b1a-proof-bad_epoch/checkpoint.json",
+      "bytes": 98,
+      "sha256": "8a37a92c6c388b6d89efe6a61733e134398ca9a7d44e3401347edb88c95b9b8c"
+    },
+    {
+      "path": "prior-b5-raw.tar.gz/fault/native/b1a-proof-bad_epoch/provider.jsonl",
+      "bytes": 2218,
+      "sha256": "0adf192d645d24062980572eaf32cadd37ce38f03d87fc834f89bdf7253b4176"
+    },
+    {
+      "path": "prior-b5-raw.tar.gz/fault/native/b1a-proof-bad_epoch/result.json",
+      "bytes": 349,
+      "sha256": "f36aa8f8b8b429c6440ed4c79b774eb4c720a7f09a1109ef4de05036ceb596d7"
+    },
+    {
+      "path": "prior-b5-raw.tar.gz/fault/native/b1a-proof-bad_revision/checkpoint.json",
+      "bytes": 98,
+      "sha256": "02014ee063bb97d7f30f28d12d09631965aefccbf1600c6136b8824b05d435b8"
+    },
+    {
+      "path": "prior-b5-raw.tar.gz/fault/native/b1a-proof-bad_revision/provider.jsonl",
+      "bytes": 2218,
+      "sha256": "998fac6f68bcfdb4947775e743a67275dfe4c88bfad277c1d453511c3b5d9d83"
+    },
+    {
+      "path": "prior-b5-raw.tar.gz/fault/native/b1a-proof-bad_revision/result.json",
+      "bytes": 352,
+      "sha256": "b57def8d9f549e2cf30897e10adab11668e4ab8629c20271fd9909c8bcaa9ad4"
+    },
+    {
+      "path": "prior-b5-raw.tar.gz/fault/native/b1a-retired-recovery/checkpoint.json",
+      "bytes": 98,
+      "sha256": "8c3c1d142cbde961902c8dea95fa96b2d471900ca2f9dce016e4ac4a14ae67ee"
+    },
+    {
+      "path": "prior-b5-raw.tar.gz/fault/native/b1a-retired-recovery/provider.jsonl",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "prior-b5-raw.tar.gz/fault/native/b1a-retired-recovery/result.json",
+      "bytes": 427,
+      "sha256": "6e4c6fccb14af81f6962cb8ff2669e5a1d3236f5465def20784d5e5aa9a93725"
+    },
+    {
+      "path": "prior-b5-raw.tar.gz/fault/native/b1a-sealer-ack/checkpoint.json",
+      "bytes": 98,
+      "sha256": "8c3c1d142cbde961902c8dea95fa96b2d471900ca2f9dce016e4ac4a14ae67ee"
+    },
+    {
+      "path": "prior-b5-raw.tar.gz/fault/native/b1a-sealer-ack/provider.jsonl",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "prior-b5-raw.tar.gz/fault/native/b1a-sealer-ack/result.json",
+      "bytes": 437,
+      "sha256": "8713a4b8a7eae311a4f100a32cd1e34143363af2b084c3733ef337ccd5d1c8f8"
+    },
+    {
+      "path": "prior-b5-raw.tar.gz/fault/native/b1a-session-budget-hold/checkpoint.json",
+      "bytes": 98,
+      "sha256": "aa0a5fb23c135c7c8ba879b0e3cfdf387d1f70133e4297ce9e337ef0610b743d"
+    },
+    {
+      "path": "prior-b5-raw.tar.gz/fault/native/b1a-session-budget-hold/provider.jsonl",
+      "bytes": 2218,
+      "sha256": "6a299852d0b7013fd9bed88d2d9e128c587d065e8fbaca133b6ee0ace24df88a"
+    },
+    {
+      "path": "prior-b5-raw.tar.gz/fault/native/b1a-session-budget-hold/result.json",
+      "bytes": 751,
+      "sha256": "3053e189d03be7b352bff5b6fb625e7b53cd63b10a99569a7e597fbc87ccfb96"
+    },
+    {
+      "path": "prior-b5-raw.tar.gz/fault/native/b1a2-startup-chain/checkpoint.json",
+      "bytes": 98,
+      "sha256": "8c3c1d142cbde961902c8dea95fa96b2d471900ca2f9dce016e4ac4a14ae67ee"
+    },
+    {
+      "path": "prior-b5-raw.tar.gz/fault/native/b1a2-startup-chain/provider.jsonl",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "prior-b5-raw.tar.gz/fault/native/b1a2-startup-chain/result.json",
+      "bytes": 459,
+      "sha256": "4a6462400c8121c3cb0e846661d7ae3b95e64e2312a79187612302a32ad9f3ac"
+    },
+    {
+      "path": "prior-b5-raw.tar.gz/fault/native/campaign/checkpoint.json",
+      "bytes": 101,
+      "sha256": "09464f92d44c839831003d8be044ee75c2af78e8944af52c4664f3e3595723a8"
+    },
+    {
+      "path": "prior-b5-raw.tar.gz/fault/native/campaign/provider.jsonl",
+      "bytes": 1835098,
+      "sha256": "3cca02a02071d4d7f18661ec59214ec1e569da1e244cdcb5543f5d78f9feabaa"
+    },
+    {
+      "path": "prior-b5-raw.tar.gz/fault/native/campaign/result.json",
+      "bytes": 3545659,
+      "sha256": "7edda1a6c78d7da08df0ae69e5ad7cfd73622f65fe5f0ea4e2bffa8a53bc8801"
+    },
+    {
+      "path": "prior-b5-raw.tar.gz/fault/native/crash-restart/checkpoint.json",
+      "bytes": 98,
+      "sha256": "8c3c1d142cbde961902c8dea95fa96b2d471900ca2f9dce016e4ac4a14ae67ee"
+    },
+    {
+      "path": "prior-b5-raw.tar.gz/fault/native/crash-restart/provider.jsonl",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "prior-b5-raw.tar.gz/fault/native/crash-restart/result.json",
+      "bytes": 304,
+      "sha256": "a31a74f6262a02860f2e2c5463e15425505f0d5541980e60ba0b23563ca29b4f"
+    },
+    {
+      "path": "prior-b5-raw.tar.gz/fault/native/dead-man/checkpoint.json",
+      "bytes": 100,
+      "sha256": "3717bfa5a5ef44be122b1a112045459ca4d1b5617d47e79ffef29c62845ed384"
+    },
+    {
+      "path": "prior-b5-raw.tar.gz/fault/native/dead-man/provider.jsonl",
+      "bytes": 44452,
+      "sha256": "49997ceb38eae5e239fb6453a2306132d93f1f0d4c782c0b23cdd39d82b4f65c"
+    },
+    {
+      "path": "prior-b5-raw.tar.gz/fault/native/dead-man/result.json",
+      "bytes": 13675,
+      "sha256": "55c9f231c11c3d42273c9670ae49aed0fe255d84502b0a9fe684eb9d5e501728"
+    },
+    {
+      "path": "prior-b5-raw.tar.gz/fault/native/identity-roles/checkpoint.json",
+      "bytes": 98,
+      "sha256": "2206de599545bfa0c75fc7ac14dfffc87e9fc3302e60ea501d5537915e3f11c6"
+    },
+    {
+      "path": "prior-b5-raw.tar.gz/fault/native/identity-roles/provider.jsonl",
+      "bytes": 2218,
+      "sha256": "3abc23f4607bab6d10e6f9e3b1f8792ac1dcdd5c0d615f355a8be789b7758e07"
+    },
+    {
+      "path": "prior-b5-raw.tar.gz/fault/native/identity-roles/result.json",
+      "bytes": 304,
+      "sha256": "a31a74f6262a02860f2e2c5463e15425505f0d5541980e60ba0b23563ca29b4f"
+    },
+    {
+      "path": "prior-b5-raw.tar.gz/fault/native/keep-alive-counterexample/checkpoint.json",
+      "bytes": 99,
+      "sha256": "925302f7556d1146692449caefa29577fd50bf65003a0fceed478cc0cc3160ac"
+    },
+    {
+      "path": "prior-b5-raw.tar.gz/fault/native/keep-alive-counterexample/provider.jsonl",
+      "bytes": 8320,
+      "sha256": "787f6871348b8a304d130982bf74777fd175948d414bb19265d32423e75d7b37"
+    },
+    {
+      "path": "prior-b5-raw.tar.gz/fault/native/keep-alive-counterexample/result.json",
+      "bytes": 441,
+      "sha256": "0fb949eb6e120fbd92f74e88ba14121ffa8cc4621adeabfbbbb1b085802fe828"
+    },
+    {
+      "path": "prior-b5-raw.tar.gz/fault/native/late-pre-fence-effect/checkpoint.json",
+      "bytes": 98,
+      "sha256": "0ad72662c81bd25b6a963da03f0fd2892cb9fe32bf95610f100cf4673bbdca7a"
+    },
+    {
+      "path": "prior-b5-raw.tar.gz/fault/native/late-pre-fence-effect/provider.jsonl",
+      "bytes": 2754,
+      "sha256": "b96a663640a70c48921bd6d89f389c6442b9f5271f8042a5285944915530b34d"
+    },
+    {
+      "path": "prior-b5-raw.tar.gz/fault/native/late-pre-fence-effect/result.json",
+      "bytes": 683,
+      "sha256": "6dfb288a590478d4ddc4a114d0abf37a0a66ce6844b7a12e734113c0e06b4913"
+    },
+    {
+      "path": "prior-b5-raw.tar.gz/fault/native/lost-commit/checkpoint.json",
+      "bytes": 98,
+      "sha256": "8c3c1d142cbde961902c8dea95fa96b2d471900ca2f9dce016e4ac4a14ae67ee"
+    },
+    {
+      "path": "prior-b5-raw.tar.gz/fault/native/lost-commit/provider.jsonl",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "prior-b5-raw.tar.gz/fault/native/lost-commit/result.json",
+      "bytes": 342,
+      "sha256": "12a911f8d156acd1f4c7e7a75314a20cb5e665099ed9280b4f37c34112aefeab"
+    },
+    {
+      "path": "prior-b5-raw.tar.gz/fault/native/transport-faults/checkpoint.json",
+      "bytes": 99,
+      "sha256": "1558780696c5283ca031d0842c6ffe13b401c9ec18caf6d49dbd7d14cd0a840a"
+    },
+    {
+      "path": "prior-b5-raw.tar.gz/fault/native/transport-faults/provider.jsonl",
+      "bytes": 8393,
+      "sha256": "de1dd3f04d017e9003ff7b381cb014c4ff8d990f29f594624363d7593099a159"
+    },
+    {
+      "path": "prior-b5-raw.tar.gz/fault/native/transport-faults/result.json",
+      "bytes": 304,
+      "sha256": "a31a74f6262a02860f2e2c5463e15425505f0d5541980e60ba0b23563ca29b4f"
+    },
+    {
+      "path": "prior-b5-raw.tar.gz/fault/new/observer-retirement.json",
+      "bytes": 63779,
+      "sha256": "a5ef78427a8c3e949c6ada27da4d71ece6796bb40e0f686bb742ec0c9cebb0a4"
+    }
+  ]
+}

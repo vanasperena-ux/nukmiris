@@ -1,0 +1,100 @@
+
+> nukmiris-inc1-local-proof@0.1.0 test:fault
+> node --test --test-concurrency=1 test/fault.test.mjs test/campaign.test.mjs test/b1a-gateway.test.mjs test/b1a-interruption.test.mjs test/b1a-native-proof.test.mjs test/b1a-diagnostics.test.mjs test/b1a-session.test.mjs test/b1a2-time.test.mjs test/b1a2-retirement.test.mjs test/b1a2-startup.test.mjs test/b1a2-journal.test.mjs test/b1a2-controller.test.mjs test/b1a2-provider.test.mjs test/b1a2-observer.test.mjs test/b1a2-api.test.mjs test/b1a2-billing.test.mjs test/b1a2-teardown.test.mjs test/b1a2-preflight.test.mjs test/b1a2-preparation.test.mjs test/b1a2-sql.test.mjs
+
+▶ B-8: intentional PostgreSQL startup failure captures state/logs before scoped cleanup
+  ✔ failed owned fixture (3826.121319ms)
+✔ B-8: intentional PostgreSQL startup failure captures state/logs before scoped cleanup (3842.74172ms)
+✔ B-8: diagnostics redact generated secrets and bound log size (0.271202ms)
+✔ B-4: BEFORE_SERVER cannot mint a continuation without a confirmed COMMIT (5223.747504ms)
+✔ B-4: ACK_LOST cannot mint a continuation without a confirmed COMMIT (4129.391831ms)
+✔ B-4: ROLLBACK_TAG cannot mint a continuation without a confirmed COMMIT (3156.536366ms)
+✔ B-5: positive proof BAD_EPOCH remains UNKNOWN and is never resent (3294.282843ms)
+✔ B-5: positive proof BAD_REVISION remains UNKNOWN and is never resent (4251.378069ms)
+✔ B-3: stop sends only direct SIGKILL to an observed stopped process (4335.547722ms)
+✔ B-5: prepared Cloud SQL config requires a CA and DNS verification; no network or ADC (2800.089206ms)
+✔ B-1/P2: complete 54-cell cross-product, 20 real instrumented suspensions per cell (134333.157693ms)
+ℹ B1a cross-product completed 180/1080
+ℹ B1a cross-product completed 360/1080
+ℹ B1a cross-product completed 540/1080
+ℹ B1a cross-product completed 720/1080
+ℹ B1a cross-product completed 900/1080
+ℹ B1a cross-product completed 1080/1080
+✔ B-1/P3: 400 uninstrumented asynchronous suspensions, 130 direct kills and durable replay decisions (48691.921144ms)
+ℹ B1a asynchronous completed 100/400
+ℹ B1a asynchronous completed 200/400
+ℹ B1a asynchronous completed 300/400
+ℹ B1a asynchronous completed 400/400
+✔ B-5: native PostgreSQL TLS verifies both CA and hostname without fallback (4028.358378ms)
+✔ B-2/B-3: real stopped/kill trace distinguishes pre-exit bytes from later provider application (4814.983297ms)
+✔ retirement contract: complete authenticated modeled bundle required; absent data holds (11.880791ms)
+✔ session SQL: billing pause/reset and process restart leave dispatch durably inert (3954.976954ms)
+✔ session SQL: immutable six-hour limit and expiry prevent new entry (3723.11338ms)
+✔ sealer: unavailable, cold, failed journal or dishonest response never causes a false ACK (3319.459428ms)
+✔ retirement promotion rejects another session, scope or predecessor even when signed bundle is internally valid (3.55744ms)
+✔ B1a aggregate gateway SQL login cap bounds old/new overlap without privilege fallback (3594.631698ms)
+✔ B1a controller recovery marks only retired ENTERED as UNKNOWN, preserving original bindings (3120.07309ms)
+✔ P-2 Google protocol adapters use only localhost fixtures; typed metric states are complete and immutable (21.063486ms)
+✔ P-2 live cloud/credential access cannot be enabled by environment or flags (0.407073ms)
+✔ P-5 threshold, budget reset/delay, capacity pause, worker restart, suspension/recovery and expiry never auto-enable (1.041714ms)
+✔ P-5 journal failure cannot prevent hold, unavailable SQL triggers independent emergency and stops renewal (0.345171ms)
+✔ P-1/P-5 independent renewal cannot restore expired/revoked authority or survive a failed renewal (0.441184ms)
+✔ P-3 durable seven-step local simulation, crash after CAS, readback without replay and independent emergency (15.215072ms)
+✔ P-3 unknown outcome or missing permission holds; cannot replay, promote, or impersonate deployer (1.115843ms)
+✔ P-6 every generated resource has dependency-ordered teardown and residual policy (8.672609ms)
+✔ D-3 emergency remains executable with an unresolved operation and unavailable SQL hold (1.098127ms)
+✔ P-1/P-2 ambiguous custody PUT resolves only original immutable slot; concurrent writers cannot fork (40.916829ms)
+✔ P-4 provider crash restart requires independently retained head; corrupt, missing and partial writes hold (7.999311ms)
+✔ D-2/P-2 end-to-end independent adapters: real mTLS clock/ledger, Google-shaped 60s/120s metrics, 20 native stopped canaries and signed retirement (1365.052235ms)
+✔ P-2 forged caller wake booleans cannot become signed canary evidence (0.910219ms)
+✔ P-2/P-7 exact service/API/quota protocol preflight holds on unknown, missing or mismatched evidence (58.613638ms)
+✔ P-1 cross-process preparation requires independent actual config and purpose-bound signed identities for all roles (46.076724ms)
+✔ P-4 deployable fake accepts epoch-bound mTLS effect; observer exports fsynced ledger; unauthorized identities reject (340.688558ms)
+✔ P-4 modeled old-tag deny blocks only new connections, preserving the established-flow termination requirement (0.336118ms)
+✔ D-2 realistic 60s sampling,120s visibility delay,20 delayed canaries reaches EVIDENCE_READY (8.006512ms)
+✔ D-2 physical deadline is separate from delayed reporting and cannot be waived (2.5449ms)
+✔ D-2 every state and every sampling interval must be present, zero and fresh (13.70868ms)
+✔ D-2 missing/late deletion and incomplete canary or network-tail evidence holds (12.259152ms)
+✔ D-2 frozen old sender after minutes is VIOLATION even with incomplete unrelated metrics (1.853116ms)
+✔ D-2 pre-fence initiation with delayed application is retained; stale signatures cannot promote (5.969504ms)
+✔ P-1 all five restricted roles support pinned private SQL TLS; runtime never accepts installer/admin, public host or fallback (496.186143ms)
+✔ P-1 mounted identity/session/epoch/revision/expiry/image/secret invalid states remain inert (8.315039ms)
+✔ P-1 full synthetic SQL admission → independent custody → worker → COMMIT-gated gateway → mTLS fake, restart and revocation (5403.33749ms)
+✔ P-3 exact teardown preserves independent cleanup authority, handles lost destroy ack, forbids replay and unknown/replaced state (2.030949ms)
+✔ P-3 independent NAT/permission/key-version absence is not fabricated from a nonexistent NAT subresource or missing state (23.698449ms)
+✔ D-1/P5 authenticated late initiation 10000ms remains VIOLATION (8.037137ms)
+✔ D-1/P5 authenticated late initiation 150000ms remains VIOLATION (2.500344ms)
+✔ D-1/P5 authenticated late initiation 600000ms remains VIOLATION (2.070758ms)
+✔ D-1 bounded extrapolation does not invent precision beyond horizon or at overlapping boundary (2.501816ms)
+✔ D-1 multiple authenticated measurements intersect; inconsistent offsets fail closed (2.757876ms)
+✔ campaign: 1000 randomized real SIGSTOP/SIGCONT schedules, all classified (91653.460623ms)
+ℹ completed 100 real suspended/resumed schedules
+ℹ completed 200 real suspended/resumed schedules
+ℹ completed 300 real suspended/resumed schedules
+ℹ completed 400 real suspended/resumed schedules
+ℹ completed 500 real suspended/resumed schedules
+ℹ completed 600 real suspended/resumed schedules
+ℹ completed 700 real suspended/resumed schedules
+ℹ completed 800 real suspended/resumed schedules
+ℹ completed 900 real suspended/resumed schedules
+ℹ completed 1000 real suspended/resumed schedules
+✔ faults: lost COMMIT acknowledgement cannot recreate a permit (5166.911393ms)
+✔ faults: provider response loss, rejection, TLS stall and deadline stay held without resend (4373.660143ms)
+✔ faults: crash after COMMIT, restart and replay keep ENTERED/UNKNOWN non-resumable (3857.367987ms)
+✔ faults: pre-exit accepted request can apply after completed local termination (3133.356743ms)
+✔ faults: scope binding, immutable operation and role separation (3487.038091ms)
+✔ counterexample: unsafe keep-alive sends again on an old connection; corrected gateway never does (4682.854673ms)
+✔ dead-man: 20 independently awakened stopped processes; silence is not death (10935.601745ms)
+ℹ tests 62
+ℹ suites 0
+ℹ pass 62
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 377686.03064
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.2
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.2
+npm notice To update run: npm install -g npm@12.2.2
+npm notice

@@ -1,0 +1,2331 @@
+{
+  "mode": "PRINT_ONLY_OR_LOCAL_SIMULATION",
+  "liveExecutionEnabled": false,
+  "inputDigest": "1303a6d371b4162f481bcc2e610043fce005bc246ee71dee78191c9ba2a6ab3e",
+  "inputs": {
+    "serviceIdentities": {
+      "gatewayOld": "b1a2-gateway-old@b1a2-fixture-run.iam.gserviceaccount.com",
+      "gatewayNext": "b1a2-gateway-next@b1a2-fixture-run.iam.gserviceaccount.com",
+      "ingress": "b1a2-ingress@b1a2-fixture-run.iam.gserviceaccount.com",
+      "sealer": "b1a2-sealer@b1a2-fixture-run.iam.gserviceaccount.com",
+      "worker": "b1a2-worker@b1a2-fixture-run.iam.gserviceaccount.com",
+      "controller": "b1a2-controller@b1a2-fixture-run.iam.gserviceaccount.com",
+      "kill": "b1a2-kill@b1a2-fixture-run.iam.gserviceaccount.com",
+      "cleanup": "b1a2-cleanup@b1a2-fixture-run.iam.gserviceaccount.com",
+      "custodyCleanup": "b1a2-custody-cleanup@b1a2-fixture-custody.iam.gserviceaccount.com",
+      "observer": "b1a2-observer@b1a2-fixture-custody.iam.gserviceaccount.com",
+      "deployer": "b1a2-deployer@b1a2-fixture-run.iam.gserviceaccount.com",
+      "fake": "b1a2-fake@b1a2-fixture-fake.iam.gserviceaccount.com"
+    },
+    "mode": "SYNTHETIC_FIXTURE",
+    "ownerApprovalRef": "SYNTHETIC_ONLY_NOT_AUTHORIZED",
+    "projects": {
+      "runtime": {
+        "id": "b1a2-fixture-run",
+        "number": "111111111111"
+      },
+      "custody": {
+        "id": "b1a2-fixture-custody",
+        "number": "222222222222"
+      },
+      "fake": {
+        "id": "b1a2-fixture-fake",
+        "number": "333333333333"
+      }
+    },
+    "organizationMode": "ORG_ENFORCED",
+    "standaloneRiskReview": null,
+    "region": "us-central1",
+    "allowedApis": [
+      "run.googleapis.com",
+      "compute.googleapis.com",
+      "sqladmin.googleapis.com",
+      "storage.googleapis.com",
+      "secretmanager.googleapis.com",
+      "cloudkms.googleapis.com",
+      "monitoring.googleapis.com",
+      "logging.googleapis.com",
+      "artifactregistry.googleapis.com",
+      "dns.googleapis.com",
+      "iam.googleapis.com",
+      "serviceusage.googleapis.com",
+      "billingbudgets.googleapis.com",
+      "iap.googleapis.com"
+    ],
+    "quotas": {
+      "gatewayInstances": 2,
+      "workerInstances": 1,
+      "sqlConnections": 25
+    },
+    "names": {
+      "gateway": "b1a2-gateway",
+      "ingress": "b1a2-ingress",
+      "sealer": "b1a2-sealer",
+      "worker": "b1a2-worker",
+      "fake": "b1a2-fake",
+      "database": "b1a2-epoch",
+      "bucket": "b1a2-fixture-custody-evidence",
+      "network": "b1a2-run"
+    },
+    "network": {
+      "gateway": "10.91.0.0/26",
+      "private": "10.91.1.0/26",
+      "fake": "10.92.0.0/26"
+    },
+    "epochs": {
+      "old": 1,
+      "next": 2,
+      "oldRevision": "b1a2-gateway-e000001-r1",
+      "nextRevision": "b1a2-gateway-e000002-r1",
+      "oldTag": "b1a2-e000001",
+      "nextTag": "b1a2-e000002"
+    },
+    "session": {
+      "id": "11111111-1111-4111-8111-111111111111",
+      "scopeId": "22222222-2222-4222-8222-222222222222",
+      "startedAt": "2026-11-14T12:00:00.000Z",
+      "expiresAt": "2026-11-14T18:00:00.000Z"
+    },
+    "operators": {
+      "supervisor": "synthetic:supervisor",
+      "kill": "synthetic:kill",
+      "cleanup": "synthetic:cleanup",
+      "billing": "synthetic:billing",
+      "backup": "synthetic:backup",
+      "custodian": "synthetic:custodian"
+    },
+    "timing": {
+      "terminationTargetMs": 60000,
+      "canaryCount": 20,
+      "samplingIntervalMs": 60000,
+      "publicationLatencyMs": 120000,
+      "ownerApprovalRef": null
+    },
+    "images": {
+      "runtime": "us-central1-docker.pkg.dev/b1a2-fixture-run/b1a2/harness@sha256:dc01d76b91e833a516ad97220d47d28aac050e24e0e559612a4cbcaad17e7c29",
+      "fake": "us-central1-docker.pkg.dev/b1a2-fixture-run/b1a2/harness@sha256:dc01d76b91e833a516ad97220d47d28aac050e24e0e559612a4cbcaad17e7c29",
+      "approvalRef": "SYNTHETIC_ONLY_NOT_PUSHED"
+    },
+    "budget": {
+      "billingAccountId": "000000-000000-000000",
+      "allocationUsd": "20.00",
+      "accountCurrency": "MXN",
+      "localPerUsd": "20.50",
+      "fxAsOf": 1794657600000,
+      "fxValidUntil": 1794744000000,
+      "fxApprovalRef": "SYNTHETIC_FX_NOT_OWNER_APPROVAL"
+    },
+    "optionalRestoreDrill": null,
+    "budgetPlan": {
+      "planningUsd": "20.00",
+      "accountCurrency": "MXN",
+      "localPerUsd": "20.50",
+      "fxAsOf": 1794657600000,
+      "fxValidUntil": 1794744000000,
+      "fxApprovalRef": "SYNTHETIC_FX_NOT_OWNER_APPROVAL",
+      "amount": {
+        "currencyCode": "MXN",
+        "units": "410",
+        "nanos": 0
+      },
+      "amountMinorUnits": "41000",
+      "alertThresholds": [
+        {
+          "percent": 50,
+          "minorUnits": "20500"
+        },
+        {
+          "percent": 75,
+          "minorUnits": "30750"
+        },
+        {
+          "percent": 90,
+          "minorUnits": "36900"
+        },
+        {
+          "percent": 100,
+          "minorUnits": "41000"
+        }
+      ],
+      "hardProjectCap": false,
+      "cloudRunCapEligibility": "UNVERIFIED_NO_API_ACCESS",
+      "approvalDigest": "a2b4e0d9cbbad8e900425dd6aa27ee4d796d9d1806f2ee8be9e04750fee737cb"
+    },
+    "inputDigest": "1303a6d371b4162f481bcc2e610043fce005bc246ee71dee78191c9ba2a6ab3e",
+    "sourceMode": "LOCAL_SYNTHETIC_ONLY"
+  },
+  "fenceSteps": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+  ],
+  "commands": [
+    {
+      "id": "preflight",
+      "phase": 0,
+      "principalRole": "observer",
+      "principal": "b1a2-observer@b1a2-fixture-custody.iam.gserviceaccount.com",
+      "argv": [
+        "B1A2_OBSERVER",
+        "preflight",
+        "1303a6d371b4162f481bcc2e610043fce005bc246ee71dee78191c9ba2a6ab3e"
+      ],
+      "preconditions": [
+        "Owner decisions/account inputs validated; source guard retained"
+      ],
+      "evidence": [
+        "Exact identity/API/quota/image/digest/region/network config snapshots"
+      ],
+      "semantic": "preflight",
+      "onFailure": "HOLD; independent emergency stop; never auto-promote/rearm/recreate"
+    },
+    {
+      "id": "initialize",
+      "phase": 0,
+      "principalRole": "controller",
+      "principal": "b1a2-controller@b1a2-fixture-run.iam.gserviceaccount.com",
+      "argv": [
+        "B1A2_LOCAL_SQL",
+        "initialize",
+        "11111111-1111-4111-8111-111111111111",
+        "22222222-2222-4222-8222-222222222222",
+        "2026-11-14T18:00:00.000Z"
+      ],
+      "preconditions": [
+        "No existing different session/identity"
+      ],
+      "evidence": [
+        "Committed control row starts dispatch=false"
+      ],
+      "semantic": "initialize",
+      "onFailure": "HOLD; independent emergency stop; never auto-promote/rearm/recreate"
+    },
+    {
+      "id": "prepare-gateway",
+      "phase": 0,
+      "principalRole": "deployer",
+      "principal": "b1a2-deployer@b1a2-fixture-run.iam.gserviceaccount.com",
+      "argv": [
+        "gcloud",
+        "run",
+        "services",
+        "update",
+        "b1a2-gateway",
+        "--region=us-central1",
+        "--revision-suffix=e000001-prepared",
+        "--update-env-vars=B1A2_MODE=MOUNTED_PREPARATION,B1A2_ROLE=gateway",
+        "--project=b1a2-fixture-run",
+        "--impersonate-service-account=b1a2-deployer@b1a2-fixture-run.iam.gserviceaccount.com",
+        "--quiet"
+      ],
+      "preconditions": [
+        "Pinned role bundle and approved public profile use the exact prepared revision suffix; SQL remains inert"
+      ],
+      "evidence": [
+        "Purpose-bound startup attestation, actual service/worker identity+image+revision and restricted DB check"
+      ],
+      "semantic": "prepare",
+      "onFailure": "HOLD; independent emergency stop; never auto-promote/rearm/recreate"
+    },
+    {
+      "id": "prepare-ingress",
+      "phase": 0,
+      "principalRole": "deployer",
+      "principal": "b1a2-deployer@b1a2-fixture-run.iam.gserviceaccount.com",
+      "argv": [
+        "gcloud",
+        "run",
+        "services",
+        "update",
+        "b1a2-ingress",
+        "--region=us-central1",
+        "--revision-suffix=e000001-prepared",
+        "--update-env-vars=B1A2_MODE=MOUNTED_PREPARATION,B1A2_ROLE=ingress",
+        "--project=b1a2-fixture-run",
+        "--impersonate-service-account=b1a2-deployer@b1a2-fixture-run.iam.gserviceaccount.com",
+        "--quiet"
+      ],
+      "preconditions": [
+        "Pinned role bundle and approved public profile use the exact prepared revision suffix; SQL remains inert"
+      ],
+      "evidence": [
+        "Purpose-bound startup attestation, actual service/worker identity+image+revision and restricted DB check"
+      ],
+      "semantic": "prepare",
+      "onFailure": "HOLD; independent emergency stop; never auto-promote/rearm/recreate"
+    },
+    {
+      "id": "prepare-sealer",
+      "phase": 0,
+      "principalRole": "deployer",
+      "principal": "b1a2-deployer@b1a2-fixture-run.iam.gserviceaccount.com",
+      "argv": [
+        "gcloud",
+        "run",
+        "services",
+        "update",
+        "b1a2-sealer",
+        "--region=us-central1",
+        "--revision-suffix=e000001-prepared",
+        "--update-env-vars=B1A2_MODE=MOUNTED_PREPARATION,B1A2_ROLE=sealer",
+        "--project=b1a2-fixture-run",
+        "--impersonate-service-account=b1a2-deployer@b1a2-fixture-run.iam.gserviceaccount.com",
+        "--quiet"
+      ],
+      "preconditions": [
+        "Pinned role bundle and approved public profile use the exact prepared revision suffix; SQL remains inert"
+      ],
+      "evidence": [
+        "Purpose-bound startup attestation, actual service/worker identity+image+revision and restricted DB check"
+      ],
+      "semantic": "prepare",
+      "onFailure": "HOLD; independent emergency stop; never auto-promote/rearm/recreate"
+    },
+    {
+      "id": "prepare-worker",
+      "phase": 0,
+      "principalRole": "deployer",
+      "principal": "b1a2-deployer@b1a2-fixture-run.iam.gserviceaccount.com",
+      "argv": [
+        "gcloud",
+        "run",
+        "worker-pools",
+        "update",
+        "b1a2-worker",
+        "--region=us-central1",
+        "--revision-suffix=e000001-prepared",
+        "--update-env-vars=B1A2_MODE=MOUNTED_PREPARATION,B1A2_ROLE=worker",
+        "--project=b1a2-fixture-run",
+        "--impersonate-service-account=b1a2-deployer@b1a2-fixture-run.iam.gserviceaccount.com",
+        "--quiet"
+      ],
+      "preconditions": [
+        "Pinned role bundle and approved public profile use the exact prepared revision suffix; SQL remains inert"
+      ],
+      "evidence": [
+        "Purpose-bound startup attestation, actual service/worker identity+image+revision and restricted DB check"
+      ],
+      "semantic": "prepare",
+      "onFailure": "HOLD; independent emergency stop; never auto-promote/rearm/recreate"
+    },
+    {
+      "id": "retire-inert-bootstrap",
+      "phase": 0,
+      "principalRole": "kill",
+      "principal": "b1a2-kill@b1a2-fixture-run.iam.gserviceaccount.com",
+      "argv": [
+        "gcloud",
+        "run",
+        "revisions",
+        "delete",
+        "b1a2-gateway-inert-bootstrap",
+        "--region=us-central1",
+        "--project=b1a2-fixture-run",
+        "--impersonate-service-account=b1a2-kill@b1a2-fixture-run.iam.gserviceaccount.com",
+        "--quiet"
+      ],
+      "preconditions": [
+        "Prepared old revision serves100% latest traffic; inert bootstrap had no dispatch capability"
+      ],
+      "evidence": [
+        "Delete receipt and exact absence of initial inert bootstrap"
+      ],
+      "semantic": "delete-inert",
+      "onFailure": "HOLD; independent emergency stop; never auto-promote/rearm/recreate"
+    },
+    {
+      "id": "bootstrap",
+      "phase": 0,
+      "principalRole": "controller",
+      "principal": "b1a2-controller@b1a2-fixture-run.iam.gserviceaccount.com",
+      "argv": [
+        "B1A2_LOCAL_SQL",
+        "bootstrap",
+        "11111111-1111-4111-8111-111111111111",
+        "VERIFIED_INERT_PROFILES_AND_INDEPENDENT_CUSTODY"
+      ],
+      "preconditions": [
+        "Fresh BOOTSTRAP only; explicit owner session approval; four verified profiles; fake/custody preflight"
+      ],
+      "evidence": [
+        "Committed initial promotion and short authority lease; never re-enable a prior hold"
+      ],
+      "semantic": "bootstrap",
+      "onFailure": "HOLD; independent emergency stop; never auto-promote/rearm/recreate"
+    },
+    {
+      "id": "stage",
+      "phase": 1,
+      "principalRole": "deployer",
+      "principal": "b1a2-deployer@b1a2-fixture-run.iam.gserviceaccount.com",
+      "argv": [
+        "gcloud",
+        "run",
+        "deploy",
+        "b1a2-gateway",
+        "--region=us-central1",
+        "--image=us-central1-docker.pkg.dev/b1a2-fixture-run/b1a2/harness@sha256:dc01d76b91e833a516ad97220d47d28aac050e24e0e559612a4cbcaad17e7c29",
+        "--revision-suffix=e000002-r1",
+        "--service-account=b1a2-gateway-next@b1a2-fixture-run.iam.gserviceaccount.com",
+        "--network=b1a2-run",
+        "--subnet=b1a2-gateway",
+        "--network-tags=b1a2-e000002",
+        "--vpc-egress=all-traffic",
+        "--no-traffic",
+        "--no-cpu-throttling",
+        "--concurrency=1",
+        "--timeout=15s",
+        "--update-env-vars=B1A2_MODE=MOUNTED_PREPARATION,B1A2_ROLE=gateway",
+        "--update-secrets=/secrets/manifest.json=b1a2-effect-next:1,/secrets/profile.json=b1a2-effect-next:2,/secrets/database.json=b1a2-effect-next:3,/secrets/callerKey.txt=b1a2-effect-next:4,/secrets/tls.json=b1a2-effect-next:5",
+        "--project=b1a2-fixture-run",
+        "--impersonate-service-account=b1a2-deployer@b1a2-fixture-run.iam.gserviceaccount.com",
+        "--quiet"
+      ],
+      "preconditions": [
+        "Exact pinned build/profile approved; no candidate dispatch"
+      ],
+      "evidence": [
+        "Actual returned revision/SA/tag/image exact match; actAs scoped to candidate"
+      ],
+      "semantic": "stage",
+      "onFailure": "HOLD; independent emergency stop; never auto-promote/rearm/recreate"
+    },
+    {
+      "id": "advance",
+      "phase": 2,
+      "principalRole": "controller",
+      "principal": "b1a2-controller@b1a2-fixture-run.iam.gserviceaccount.com",
+      "argv": [
+        "B1A2_LOCAL_SQL",
+        "advance",
+        "11111111-1111-4111-8111-111111111111",
+        "1",
+        "2",
+        "b1a2-gateway-e000002-r1"
+      ],
+      "preconditions": [
+        "Candidate inert"
+      ],
+      "evidence": [
+        "Epoch CAS committed, dispatch false; original attempts unchanged"
+      ],
+      "semantic": "advance",
+      "onFailure": "HOLD; independent emergency stop; never auto-promote/rearm/recreate"
+    },
+    {
+      "id": "traffic",
+      "phase": 3,
+      "principalRole": "kill",
+      "principal": "b1a2-kill@b1a2-fixture-run.iam.gserviceaccount.com",
+      "argv": [
+        "gcloud",
+        "run",
+        "services",
+        "update-traffic",
+        "b1a2-gateway",
+        "--region=us-central1",
+        "--to-revisions=b1a2-gateway-e000002-r1=100",
+        "--clear-tags",
+        "--project=b1a2-fixture-run",
+        "--impersonate-service-account=b1a2-kill@b1a2-fixture-run.iam.gserviceaccount.com",
+        "--quiet"
+      ],
+      "preconditions": [
+        "Epoch advanced; candidate inert"
+      ],
+      "evidence": [
+        "100% candidate, no old traffic tag; traffic0 not termination"
+      ],
+      "semantic": "traffic",
+      "onFailure": "HOLD; independent emergency stop; never auto-promote/rearm/recreate"
+    },
+    {
+      "id": "deny-v4",
+      "phase": 4,
+      "principalRole": "kill",
+      "principal": "b1a2-kill@b1a2-fixture-run.iam.gserviceaccount.com",
+      "argv": [
+        "gcloud",
+        "compute",
+        "firewall-rules",
+        "update",
+        "b1a2-e000001-deny-v4",
+        "--no-disabled",
+        "--project=b1a2-fixture-run",
+        "--impersonate-service-account=b1a2-kill@b1a2-fixture-run.iam.gserviceaccount.com",
+        "--quiet"
+      ],
+      "preconditions": [
+        "Kill principal independent of deployer"
+      ],
+      "evidence": [
+        "Priority100 deny over allow1000; includes restricted GoogleVIP; established sockets still dangerous"
+      ],
+      "semantic": "deny",
+      "onFailure": "HOLD; independent emergency stop; never auto-promote/rearm/recreate"
+    },
+    {
+      "id": "deny-v6",
+      "phase": 4,
+      "principalRole": "kill",
+      "principal": "b1a2-kill@b1a2-fixture-run.iam.gserviceaccount.com",
+      "argv": [
+        "gcloud",
+        "compute",
+        "firewall-rules",
+        "update",
+        "b1a2-e000001-deny-v6",
+        "--no-disabled",
+        "--project=b1a2-fixture-run",
+        "--impersonate-service-account=b1a2-kill@b1a2-fixture-run.iam.gserviceaccount.com",
+        "--quiet"
+      ],
+      "preconditions": [
+        "Kill principal independent of deployer"
+      ],
+      "evidence": [
+        "Priority100 deny over allow1000; includes restricted GoogleVIP; established sockets still dangerous"
+      ],
+      "semantic": "deny",
+      "onFailure": "HOLD; independent emergency stop; never auto-promote/rearm/recreate"
+    },
+    {
+      "id": "secret-withdraw",
+      "phase": 4,
+      "principalRole": "kill",
+      "principal": "b1a2-kill@b1a2-fixture-run.iam.gserviceaccount.com",
+      "argv": [
+        "gcloud",
+        "secrets",
+        "remove-iam-policy-binding",
+        "b1a2-effect-old",
+        "--member=serviceAccount:b1a2-gateway-old@b1a2-fixture-run.iam.gserviceaccount.com",
+        "--role=roles/secretmanager.secretAccessor",
+        "--project=b1a2-fixture-run",
+        "--impersonate-service-account=b1a2-kill@b1a2-fixture-run.iam.gserviceaccount.com",
+        "--quiet"
+      ],
+      "preconditions": [
+        "Old tag deny initiated"
+      ],
+      "evidence": [
+        "Exact old synthetic bundle IAM receipt; cached values still require termination"
+      ],
+      "semantic": "secret",
+      "onFailure": "HOLD; independent emergency stop; never auto-promote/rearm/recreate"
+    },
+    {
+      "id": "decrypt-withdraw",
+      "phase": 4,
+      "principalRole": "kill",
+      "principal": "b1a2-kill@b1a2-fixture-run.iam.gserviceaccount.com",
+      "argv": [
+        "gcloud",
+        "kms",
+        "keys",
+        "remove-iam-policy-binding",
+        "b1a2-effect",
+        "--keyring=b1a2-effect",
+        "--location=us-central1",
+        "--member=serviceAccount:b1a2-gateway-old@b1a2-fixture-run.iam.gserviceaccount.com",
+        "--role=roles/cloudkms.cryptoKeyDecrypter",
+        "--project=b1a2-fixture-run",
+        "--impersonate-service-account=b1a2-kill@b1a2-fixture-run.iam.gserviceaccount.com",
+        "--quiet"
+      ],
+      "preconditions": [
+        "Old tag deny initiated"
+      ],
+      "evidence": [
+        "Exact effect key IAM receipt"
+      ],
+      "semantic": "decrypt",
+      "onFailure": "HOLD; independent emergency stop; never auto-promote/rearm/recreate"
+    },
+    {
+      "id": "revision-delete",
+      "phase": 4,
+      "principalRole": "kill",
+      "principal": "b1a2-kill@b1a2-fixture-run.iam.gserviceaccount.com",
+      "argv": [
+        "gcloud",
+        "run",
+        "revisions",
+        "delete",
+        "b1a2-gateway-e000001-r1",
+        "--region=us-central1",
+        "--project=b1a2-fixture-run",
+        "--impersonate-service-account=b1a2-kill@b1a2-fixture-run.iam.gserviceaccount.com",
+        "--quiet"
+      ],
+      "preconditions": [
+        "Old traffic/tags removed; deny applied"
+      ],
+      "evidence": [
+        "Deletion LRO and not-found receipt; not sufficient alone"
+      ],
+      "semantic": "delete",
+      "onFailure": "HOLD; independent emergency stop; never auto-promote/rearm/recreate"
+    },
+    {
+      "id": "observe",
+      "phase": 5,
+      "principalRole": "observer",
+      "principal": "b1a2-observer@b1a2-fixture-custody.iam.gserviceaccount.com",
+      "argv": [
+        "B1A2_OBSERVER",
+        "retirement",
+        "11111111-1111-4111-8111-111111111111",
+        "b1a2-gateway-e000001-r1"
+      ],
+      "preconditions": [
+        "No physical bound inferred from delayed reporting"
+      ],
+      "evidence": [
+        "Sample60s,visible latency120s, all active/idle labels, signed clocks, >=20 independent canaries, full fake ledger"
+      ],
+      "semantic": "observe",
+      "onFailure": "HOLD; independent emergency stop; never auto-promote/rearm/recreate"
+    },
+    {
+      "id": "recover",
+      "phase": 6,
+      "principalRole": "controller",
+      "principal": "b1a2-controller@b1a2-fixture-run.iam.gserviceaccount.com",
+      "argv": [
+        "B1A2_LOCAL_SQL",
+        "recover-retired",
+        "11111111-1111-4111-8111-111111111111",
+        "ORIGINAL_ATTEMPTS_FROM_VERIFIED_LEDGER"
+      ],
+      "preconditions": [
+        "Authenticated retirement evidence complete"
+      ],
+      "evidence": [
+        "Only retired ENTERED→UNKNOWN; APPLIED/ARMED/UNKNOWN preserved; no new IDs"
+      ],
+      "semantic": "recover",
+      "onFailure": "HOLD; independent emergency stop; never auto-promote/rearm/recreate"
+    },
+    {
+      "id": "promote",
+      "phase": 7,
+      "principalRole": "controller",
+      "principal": "b1a2-controller@b1a2-fixture-run.iam.gserviceaccount.com",
+      "argv": [
+        "B1A2_LOCAL_SQL",
+        "promote",
+        "11111111-1111-4111-8111-111111111111",
+        "VERIFIED_EVIDENCE_DIGEST"
+      ],
+      "preconditions": [
+        "EVIDENCE_READY and exact session/scope/predecessor/generation CAS; expiry still valid"
+      ],
+      "evidence": [
+        "Explicit recorded promotion; rollback is new epoch N+2"
+      ],
+      "semantic": "promote",
+      "onFailure": "HOLD; independent emergency stop; never auto-promote/rearm/recreate"
+    }
+  ],
+  "emergency": [
+    {
+      "id": "emergency-service-delete",
+      "phase": 8,
+      "principalRole": "kill",
+      "principal": "b1a2-kill@b1a2-fixture-run.iam.gserviceaccount.com",
+      "argv": [
+        "gcloud",
+        "run",
+        "services",
+        "delete",
+        "b1a2-gateway",
+        "--region=us-central1",
+        "--project=b1a2-fixture-run",
+        "--impersonate-service-account=b1a2-kill@b1a2-fixture-run.iam.gserviceaccount.com",
+        "--quiet"
+      ],
+      "preconditions": [
+        "Immediate SQL hold; old-tag deny attempted; no deployer dependency"
+      ],
+      "evidence": [
+        "Whole service and all revisions requested deleted; no actAs/AR read dependency; independent platform/canary evidence still required"
+      ],
+      "semantic": "emergency",
+      "onFailure": "HOLD; independent emergency stop; never auto-promote/rearm/recreate"
+    },
+    {
+      "id": "emergency-worker-delete",
+      "phase": 8,
+      "principalRole": "kill",
+      "principal": "b1a2-kill@b1a2-fixture-run.iam.gserviceaccount.com",
+      "argv": [
+        "gcloud",
+        "run",
+        "worker-pools",
+        "delete",
+        "b1a2-worker",
+        "--region=us-central1",
+        "--project=b1a2-fixture-run",
+        "--impersonate-service-account=b1a2-kill@b1a2-fixture-run.iam.gserviceaccount.com",
+        "--quiet"
+      ],
+      "preconditions": [
+        "Dispatch held"
+      ],
+      "evidence": [
+        "Worker-pool delete receipt; IAM permission is run.workerpools.delete (lowercase)"
+      ],
+      "semantic": "emergency",
+      "onFailure": "HOLD; independent emergency stop; never auto-promote/rearm/recreate"
+    }
+  ],
+  "teardown": [
+    {
+      "id": "delete-b1a2-gateway",
+      "phase": 9,
+      "principalRole": "cleanup",
+      "principal": "b1a2-cleanup@b1a2-fixture-run.iam.gserviceaccount.com",
+      "argv": [
+        "gcloud",
+        "run",
+        "services",
+        "delete",
+        "b1a2-gateway",
+        "--region=us-central1",
+        "--project=b1a2-fixture-run",
+        "--impersonate-service-account=b1a2-cleanup@b1a2-fixture-run.iam.gserviceaccount.com",
+        "--quiet"
+      ],
+      "preconditions": [
+        "All epochs fenced; coherent evidence exported"
+      ],
+      "evidence": [
+        "Exact service absent; retained revisions/instances independently checked"
+      ],
+      "semantic": "teardown",
+      "onFailure": "HOLD; independent emergency stop; never auto-promote/rearm/recreate"
+    },
+    {
+      "id": "delete-b1a2-ingress",
+      "phase": 9,
+      "principalRole": "cleanup",
+      "principal": "b1a2-cleanup@b1a2-fixture-run.iam.gserviceaccount.com",
+      "argv": [
+        "gcloud",
+        "run",
+        "services",
+        "delete",
+        "b1a2-ingress",
+        "--region=us-central1",
+        "--project=b1a2-fixture-run",
+        "--impersonate-service-account=b1a2-cleanup@b1a2-fixture-run.iam.gserviceaccount.com",
+        "--quiet"
+      ],
+      "preconditions": [
+        "All epochs fenced; coherent evidence exported"
+      ],
+      "evidence": [
+        "Exact service absent; retained revisions/instances independently checked"
+      ],
+      "semantic": "teardown",
+      "onFailure": "HOLD; independent emergency stop; never auto-promote/rearm/recreate"
+    },
+    {
+      "id": "delete-b1a2-sealer",
+      "phase": 9,
+      "principalRole": "cleanup",
+      "principal": "b1a2-cleanup@b1a2-fixture-run.iam.gserviceaccount.com",
+      "argv": [
+        "gcloud",
+        "run",
+        "services",
+        "delete",
+        "b1a2-sealer",
+        "--region=us-central1",
+        "--project=b1a2-fixture-run",
+        "--impersonate-service-account=b1a2-cleanup@b1a2-fixture-run.iam.gserviceaccount.com",
+        "--quiet"
+      ],
+      "preconditions": [
+        "All epochs fenced; coherent evidence exported"
+      ],
+      "evidence": [
+        "Exact service absent; retained revisions/instances independently checked"
+      ],
+      "semantic": "teardown",
+      "onFailure": "HOLD; independent emergency stop; never auto-promote/rearm/recreate"
+    },
+    {
+      "id": "worker-delete",
+      "phase": 9,
+      "principalRole": "cleanup",
+      "principal": "b1a2-cleanup@b1a2-fixture-run.iam.gserviceaccount.com",
+      "argv": [
+        "gcloud",
+        "run",
+        "worker-pools",
+        "delete",
+        "b1a2-worker",
+        "--region=us-central1",
+        "--project=b1a2-fixture-run",
+        "--impersonate-service-account=b1a2-cleanup@b1a2-fixture-run.iam.gserviceaccount.com",
+        "--quiet"
+      ],
+      "preconditions": [
+        "Dispatch held"
+      ],
+      "evidence": [
+        "Worker pool absent"
+      ],
+      "semantic": "teardown",
+      "onFailure": "HOLD; independent emergency stop; never auto-promote/rearm/recreate"
+    },
+    {
+      "id": "fake-delete",
+      "phase": 9,
+      "principalRole": "cleanup",
+      "principal": "b1a2-cleanup@b1a2-fixture-run.iam.gserviceaccount.com",
+      "argv": [
+        "gcloud",
+        "compute",
+        "instances",
+        "delete",
+        "b1a2-fake",
+        "--zone=us-central1-a",
+        "--delete-disks=all",
+        "--project=b1a2-fixture-fake",
+        "--impersonate-service-account=b1a2-cleanup@b1a2-fixture-run.iam.gserviceaccount.com",
+        "--quiet"
+      ],
+      "preconditions": [
+        "Independent ledger/export secured"
+      ],
+      "evidence": [
+        "Fake VM and boot disk absent"
+      ],
+      "semantic": "teardown",
+      "onFailure": "HOLD; independent emergency stop; never auto-promote/rearm/recreate"
+    },
+    {
+      "id": "sql-delete",
+      "phase": 9,
+      "principalRole": "cleanup",
+      "principal": "b1a2-cleanup@b1a2-fixture-run.iam.gserviceaccount.com",
+      "argv": [
+        "gcloud",
+        "sql",
+        "instances",
+        "delete",
+        "b1a2-epoch",
+        "--project=b1a2-fixture-run",
+        "--impersonate-service-account=b1a2-cleanup@b1a2-fixture-run.iam.gserviceaccount.com",
+        "--quiet"
+      ],
+      "preconditions": [
+        "Evidence export, no real data; no final/retained backups"
+      ],
+      "evidence": [
+        "Instance/backup/PITR absence (B1a-only 1day)"
+      ],
+      "semantic": "teardown",
+      "onFailure": "HOLD; independent emergency stop; never auto-promote/rearm/recreate"
+    },
+    {
+      "id": "residual",
+      "phase": 10,
+      "principalRole": "cleanup",
+      "principal": "b1a2-cleanup@b1a2-fixture-run.iam.gserviceaccount.com",
+      "argv": [
+        "gcloud",
+        "asset",
+        "search-all-resources",
+        "--scope=projects/b1a2-fixture-run",
+        "--format=json",
+        "--project=b1a2-fixture-run",
+        "--impersonate-service-account=b1a2-cleanup@b1a2-fixture-run.iam.gserviceaccount.com",
+        "--quiet"
+      ],
+      "preconditions": [
+        "Every exact inventory resource processed"
+      ],
+      "evidence": [
+        "No unexpected/retained resources; +2h,+48h,next statement verification; unknown resources held for owner"
+      ],
+      "semantic": "residual",
+      "onFailure": "HOLD; independent emergency stop; never auto-promote/rearm/recreate"
+    }
+  ],
+  "access": [
+    {
+      "id": "fake-tunnel",
+      "phase": 0,
+      "principalRole": "observer",
+      "principal": "b1a2-observer@b1a2-fixture-custody.iam.gserviceaccount.com",
+      "argv": [
+        "gcloud",
+        "compute",
+        "start-iap-tunnel",
+        "b1a2-fake",
+        "443",
+        "--zone=us-central1-a",
+        "--local-host-port=127.0.0.1:18443",
+        "--project=b1a2-fixture-fake",
+        "--impersonate-service-account=b1a2-observer@b1a2-fixture-custody.iam.gserviceaccount.com",
+        "--quiet"
+      ],
+      "preconditions": [
+        "IAP+mTLS observer identity; no SSH or public0/0 rule"
+      ],
+      "evidence": [
+        "Local encrypted tunnel to fake clock/ledger endpoint; no actAs privilege needed"
+      ],
+      "semantic": "tunnel",
+      "onFailure": "HOLD; independent emergency stop; never auto-promote/rearm/recreate"
+    }
+  ],
+  "permissionMatrix": [
+    {
+      "id": "preflight",
+      "phase": 0,
+      "principalRole": "observer",
+      "principal": "b1a2-observer@b1a2-fixture-custody.iam.gserviceaccount.com",
+      "argv": [
+        "B1A2_OBSERVER",
+        "preflight",
+        "1303a6d371b4162f481bcc2e610043fce005bc246ee71dee78191c9ba2a6ab3e"
+      ],
+      "preconditions": [
+        "Owner decisions/account inputs validated; source guard retained"
+      ],
+      "evidence": [
+        "Exact identity/API/quota/image/digest/region/network config snapshots"
+      ],
+      "semantic": "preflight",
+      "onFailure": "HOLD; independent emergency stop; never auto-promote/rearm/recreate",
+      "requirements": [
+        {
+          "scope": "projects/b1a2-fixture-run",
+          "permissions": [
+            "monitoring.timeSeries.list",
+            "logging.logEntries.list",
+            "run.revisions.get"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "initialize",
+      "phase": 0,
+      "principalRole": "controller",
+      "principal": "b1a2-controller@b1a2-fixture-run.iam.gserviceaccount.com",
+      "argv": [
+        "B1A2_LOCAL_SQL",
+        "initialize",
+        "11111111-1111-4111-8111-111111111111",
+        "22222222-2222-4222-8222-222222222222",
+        "2026-11-14T18:00:00.000Z"
+      ],
+      "preconditions": [
+        "No existing different session/identity"
+      ],
+      "evidence": [
+        "Committed control row starts dispatch=false"
+      ],
+      "semantic": "initialize",
+      "onFailure": "HOLD; independent emergency stop; never auto-promote/rearm/recreate",
+      "requirements": [
+        {
+          "scope": "database:proof",
+          "permissions": [
+            "sql.execute:control_read",
+            "sql.execute:control_create"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "prepare-gateway",
+      "phase": 0,
+      "principalRole": "deployer",
+      "principal": "b1a2-deployer@b1a2-fixture-run.iam.gserviceaccount.com",
+      "argv": [
+        "gcloud",
+        "run",
+        "services",
+        "update",
+        "b1a2-gateway",
+        "--region=us-central1",
+        "--revision-suffix=e000001-prepared",
+        "--update-env-vars=B1A2_MODE=MOUNTED_PREPARATION,B1A2_ROLE=gateway",
+        "--project=b1a2-fixture-run",
+        "--impersonate-service-account=b1a2-deployer@b1a2-fixture-run.iam.gserviceaccount.com",
+        "--quiet"
+      ],
+      "preconditions": [
+        "Pinned role bundle and approved public profile use the exact prepared revision suffix; SQL remains inert"
+      ],
+      "evidence": [
+        "Purpose-bound startup attestation, actual service/worker identity+image+revision and restricted DB check"
+      ],
+      "semantic": "prepare",
+      "onFailure": "HOLD; independent emergency stop; never auto-promote/rearm/recreate",
+      "requirements": [
+        {
+          "scope": "projects/b1a2-fixture-run",
+          "permissions": [
+            "run.services.get",
+            "run.services.update",
+            "run.operations.get"
+          ]
+        },
+        {
+          "scope": "serviceAccounts/b1a2-gateway-old@b1a2-fixture-run.iam.gserviceaccount.com",
+          "permissions": [
+            "iam.serviceAccounts.actAs"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "prepare-ingress",
+      "phase": 0,
+      "principalRole": "deployer",
+      "principal": "b1a2-deployer@b1a2-fixture-run.iam.gserviceaccount.com",
+      "argv": [
+        "gcloud",
+        "run",
+        "services",
+        "update",
+        "b1a2-ingress",
+        "--region=us-central1",
+        "--revision-suffix=e000001-prepared",
+        "--update-env-vars=B1A2_MODE=MOUNTED_PREPARATION,B1A2_ROLE=ingress",
+        "--project=b1a2-fixture-run",
+        "--impersonate-service-account=b1a2-deployer@b1a2-fixture-run.iam.gserviceaccount.com",
+        "--quiet"
+      ],
+      "preconditions": [
+        "Pinned role bundle and approved public profile use the exact prepared revision suffix; SQL remains inert"
+      ],
+      "evidence": [
+        "Purpose-bound startup attestation, actual service/worker identity+image+revision and restricted DB check"
+      ],
+      "semantic": "prepare",
+      "onFailure": "HOLD; independent emergency stop; never auto-promote/rearm/recreate",
+      "requirements": [
+        {
+          "scope": "projects/b1a2-fixture-run",
+          "permissions": [
+            "run.services.get",
+            "run.services.update",
+            "run.operations.get"
+          ]
+        },
+        {
+          "scope": "serviceAccounts/b1a2-ingress@b1a2-fixture-run.iam.gserviceaccount.com",
+          "permissions": [
+            "iam.serviceAccounts.actAs"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "prepare-sealer",
+      "phase": 0,
+      "principalRole": "deployer",
+      "principal": "b1a2-deployer@b1a2-fixture-run.iam.gserviceaccount.com",
+      "argv": [
+        "gcloud",
+        "run",
+        "services",
+        "update",
+        "b1a2-sealer",
+        "--region=us-central1",
+        "--revision-suffix=e000001-prepared",
+        "--update-env-vars=B1A2_MODE=MOUNTED_PREPARATION,B1A2_ROLE=sealer",
+        "--project=b1a2-fixture-run",
+        "--impersonate-service-account=b1a2-deployer@b1a2-fixture-run.iam.gserviceaccount.com",
+        "--quiet"
+      ],
+      "preconditions": [
+        "Pinned role bundle and approved public profile use the exact prepared revision suffix; SQL remains inert"
+      ],
+      "evidence": [
+        "Purpose-bound startup attestation, actual service/worker identity+image+revision and restricted DB check"
+      ],
+      "semantic": "prepare",
+      "onFailure": "HOLD; independent emergency stop; never auto-promote/rearm/recreate",
+      "requirements": [
+        {
+          "scope": "projects/b1a2-fixture-run",
+          "permissions": [
+            "run.services.get",
+            "run.services.update",
+            "run.operations.get"
+          ]
+        },
+        {
+          "scope": "serviceAccounts/b1a2-sealer@b1a2-fixture-run.iam.gserviceaccount.com",
+          "permissions": [
+            "iam.serviceAccounts.actAs"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "prepare-worker",
+      "phase": 0,
+      "principalRole": "deployer",
+      "principal": "b1a2-deployer@b1a2-fixture-run.iam.gserviceaccount.com",
+      "argv": [
+        "gcloud",
+        "run",
+        "worker-pools",
+        "update",
+        "b1a2-worker",
+        "--region=us-central1",
+        "--revision-suffix=e000001-prepared",
+        "--update-env-vars=B1A2_MODE=MOUNTED_PREPARATION,B1A2_ROLE=worker",
+        "--project=b1a2-fixture-run",
+        "--impersonate-service-account=b1a2-deployer@b1a2-fixture-run.iam.gserviceaccount.com",
+        "--quiet"
+      ],
+      "preconditions": [
+        "Pinned role bundle and approved public profile use the exact prepared revision suffix; SQL remains inert"
+      ],
+      "evidence": [
+        "Purpose-bound startup attestation, actual service/worker identity+image+revision and restricted DB check"
+      ],
+      "semantic": "prepare",
+      "onFailure": "HOLD; independent emergency stop; never auto-promote/rearm/recreate",
+      "requirements": [
+        {
+          "scope": "projects/b1a2-fixture-run",
+          "permissions": [
+            "run.workerpools.get",
+            "run.workerpools.update",
+            "run.operations.get"
+          ]
+        },
+        {
+          "scope": "serviceAccounts/b1a2-worker@b1a2-fixture-run.iam.gserviceaccount.com",
+          "permissions": [
+            "iam.serviceAccounts.actAs"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "retire-inert-bootstrap",
+      "phase": 0,
+      "principalRole": "kill",
+      "principal": "b1a2-kill@b1a2-fixture-run.iam.gserviceaccount.com",
+      "argv": [
+        "gcloud",
+        "run",
+        "revisions",
+        "delete",
+        "b1a2-gateway-inert-bootstrap",
+        "--region=us-central1",
+        "--project=b1a2-fixture-run",
+        "--impersonate-service-account=b1a2-kill@b1a2-fixture-run.iam.gserviceaccount.com",
+        "--quiet"
+      ],
+      "preconditions": [
+        "Prepared old revision serves100% latest traffic; inert bootstrap had no dispatch capability"
+      ],
+      "evidence": [
+        "Delete receipt and exact absence of initial inert bootstrap"
+      ],
+      "semantic": "delete-inert",
+      "onFailure": "HOLD; independent emergency stop; never auto-promote/rearm/recreate",
+      "requirements": [
+        {
+          "scope": "projects/b1a2-fixture-run",
+          "permissions": [
+            "run.revisions.get",
+            "run.revisions.delete",
+            "run.operations.get"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bootstrap",
+      "phase": 0,
+      "principalRole": "controller",
+      "principal": "b1a2-controller@b1a2-fixture-run.iam.gserviceaccount.com",
+      "argv": [
+        "B1A2_LOCAL_SQL",
+        "bootstrap",
+        "11111111-1111-4111-8111-111111111111",
+        "VERIFIED_INERT_PROFILES_AND_INDEPENDENT_CUSTODY"
+      ],
+      "preconditions": [
+        "Fresh BOOTSTRAP only; explicit owner session approval; four verified profiles; fake/custody preflight"
+      ],
+      "evidence": [
+        "Committed initial promotion and short authority lease; never re-enable a prior hold"
+      ],
+      "semantic": "bootstrap",
+      "onFailure": "HOLD; independent emergency stop; never auto-promote/rearm/recreate",
+      "requirements": [
+        {
+          "scope": "database:proof",
+          "permissions": [
+            "sql.execute:control_read",
+            "sql.execute:control_promote",
+            "sql.execute:control_renew"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "stage",
+      "phase": 1,
+      "principalRole": "deployer",
+      "principal": "b1a2-deployer@b1a2-fixture-run.iam.gserviceaccount.com",
+      "argv": [
+        "gcloud",
+        "run",
+        "deploy",
+        "b1a2-gateway",
+        "--region=us-central1",
+        "--image=us-central1-docker.pkg.dev/b1a2-fixture-run/b1a2/harness@sha256:dc01d76b91e833a516ad97220d47d28aac050e24e0e559612a4cbcaad17e7c29",
+        "--revision-suffix=e000002-r1",
+        "--service-account=b1a2-gateway-next@b1a2-fixture-run.iam.gserviceaccount.com",
+        "--network=b1a2-run",
+        "--subnet=b1a2-gateway",
+        "--network-tags=b1a2-e000002",
+        "--vpc-egress=all-traffic",
+        "--no-traffic",
+        "--no-cpu-throttling",
+        "--concurrency=1",
+        "--timeout=15s",
+        "--update-env-vars=B1A2_MODE=MOUNTED_PREPARATION,B1A2_ROLE=gateway",
+        "--update-secrets=/secrets/manifest.json=b1a2-effect-next:1,/secrets/profile.json=b1a2-effect-next:2,/secrets/database.json=b1a2-effect-next:3,/secrets/callerKey.txt=b1a2-effect-next:4,/secrets/tls.json=b1a2-effect-next:5",
+        "--project=b1a2-fixture-run",
+        "--impersonate-service-account=b1a2-deployer@b1a2-fixture-run.iam.gserviceaccount.com",
+        "--quiet"
+      ],
+      "preconditions": [
+        "Exact pinned build/profile approved; no candidate dispatch"
+      ],
+      "evidence": [
+        "Actual returned revision/SA/tag/image exact match; actAs scoped to candidate"
+      ],
+      "semantic": "stage",
+      "onFailure": "HOLD; independent emergency stop; never auto-promote/rearm/recreate",
+      "requirements": [
+        {
+          "scope": "projects/b1a2-fixture-run",
+          "permissions": [
+            "run.services.get",
+            "run.services.update",
+            "run.operations.get"
+          ]
+        },
+        {
+          "scope": "serviceAccounts/b1a2-gateway-next@b1a2-fixture-run.iam.gserviceaccount.com",
+          "permissions": [
+            "iam.serviceAccounts.actAs"
+          ]
+        },
+        {
+          "scope": "projects/b1a2-fixture-run/locations/us-central1/repositories/b1a2",
+          "permissions": [
+            "artifactregistry.repositories.get",
+            "artifactregistry.repositories.downloadArtifacts"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "advance",
+      "phase": 2,
+      "principalRole": "controller",
+      "principal": "b1a2-controller@b1a2-fixture-run.iam.gserviceaccount.com",
+      "argv": [
+        "B1A2_LOCAL_SQL",
+        "advance",
+        "11111111-1111-4111-8111-111111111111",
+        "1",
+        "2",
+        "b1a2-gateway-e000002-r1"
+      ],
+      "preconditions": [
+        "Candidate inert"
+      ],
+      "evidence": [
+        "Epoch CAS committed, dispatch false; original attempts unchanged"
+      ],
+      "semantic": "advance",
+      "onFailure": "HOLD; independent emergency stop; never auto-promote/rearm/recreate",
+      "requirements": [
+        {
+          "scope": "database:proof",
+          "permissions": [
+            "sql.execute:control_advance",
+            "sql.execute:control_read"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "traffic",
+      "phase": 3,
+      "principalRole": "kill",
+      "principal": "b1a2-kill@b1a2-fixture-run.iam.gserviceaccount.com",
+      "argv": [
+        "gcloud",
+        "run",
+        "services",
+        "update-traffic",
+        "b1a2-gateway",
+        "--region=us-central1",
+        "--to-revisions=b1a2-gateway-e000002-r1=100",
+        "--clear-tags",
+        "--project=b1a2-fixture-run",
+        "--impersonate-service-account=b1a2-kill@b1a2-fixture-run.iam.gserviceaccount.com",
+        "--quiet"
+      ],
+      "preconditions": [
+        "Epoch advanced; candidate inert"
+      ],
+      "evidence": [
+        "100% candidate, no old traffic tag; traffic0 not termination"
+      ],
+      "semantic": "traffic",
+      "onFailure": "HOLD; independent emergency stop; never auto-promote/rearm/recreate",
+      "requirements": [
+        {
+          "scope": "projects/b1a2-fixture-run",
+          "permissions": [
+            "run.services.get",
+            "run.services.update",
+            "run.operations.get"
+          ]
+        },
+        {
+          "scope": "serviceAccounts/b1a2-gateway-next@b1a2-fixture-run.iam.gserviceaccount.com",
+          "permissions": [
+            "iam.serviceAccounts.actAs"
+          ]
+        },
+        {
+          "scope": "projects/b1a2-fixture-run/locations/us-central1/repositories/b1a2",
+          "permissions": [
+            "artifactregistry.repositories.get",
+            "artifactregistry.repositories.downloadArtifacts"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "deny-v4",
+      "phase": 4,
+      "principalRole": "kill",
+      "principal": "b1a2-kill@b1a2-fixture-run.iam.gserviceaccount.com",
+      "argv": [
+        "gcloud",
+        "compute",
+        "firewall-rules",
+        "update",
+        "b1a2-e000001-deny-v4",
+        "--no-disabled",
+        "--project=b1a2-fixture-run",
+        "--impersonate-service-account=b1a2-kill@b1a2-fixture-run.iam.gserviceaccount.com",
+        "--quiet"
+      ],
+      "preconditions": [
+        "Kill principal independent of deployer"
+      ],
+      "evidence": [
+        "Priority100 deny over allow1000; includes restricted GoogleVIP; established sockets still dangerous"
+      ],
+      "semantic": "deny",
+      "onFailure": "HOLD; independent emergency stop; never auto-promote/rearm/recreate",
+      "requirements": [
+        {
+          "scope": "projects/b1a2-fixture-run",
+          "permissions": [
+            "compute.firewalls.get",
+            "compute.firewalls.update"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "deny-v6",
+      "phase": 4,
+      "principalRole": "kill",
+      "principal": "b1a2-kill@b1a2-fixture-run.iam.gserviceaccount.com",
+      "argv": [
+        "gcloud",
+        "compute",
+        "firewall-rules",
+        "update",
+        "b1a2-e000001-deny-v6",
+        "--no-disabled",
+        "--project=b1a2-fixture-run",
+        "--impersonate-service-account=b1a2-kill@b1a2-fixture-run.iam.gserviceaccount.com",
+        "--quiet"
+      ],
+      "preconditions": [
+        "Kill principal independent of deployer"
+      ],
+      "evidence": [
+        "Priority100 deny over allow1000; includes restricted GoogleVIP; established sockets still dangerous"
+      ],
+      "semantic": "deny",
+      "onFailure": "HOLD; independent emergency stop; never auto-promote/rearm/recreate",
+      "requirements": [
+        {
+          "scope": "projects/b1a2-fixture-run",
+          "permissions": [
+            "compute.firewalls.get",
+            "compute.firewalls.update"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "secret-withdraw",
+      "phase": 4,
+      "principalRole": "kill",
+      "principal": "b1a2-kill@b1a2-fixture-run.iam.gserviceaccount.com",
+      "argv": [
+        "gcloud",
+        "secrets",
+        "remove-iam-policy-binding",
+        "b1a2-effect-old",
+        "--member=serviceAccount:b1a2-gateway-old@b1a2-fixture-run.iam.gserviceaccount.com",
+        "--role=roles/secretmanager.secretAccessor",
+        "--project=b1a2-fixture-run",
+        "--impersonate-service-account=b1a2-kill@b1a2-fixture-run.iam.gserviceaccount.com",
+        "--quiet"
+      ],
+      "preconditions": [
+        "Old tag deny initiated"
+      ],
+      "evidence": [
+        "Exact old synthetic bundle IAM receipt; cached values still require termination"
+      ],
+      "semantic": "secret",
+      "onFailure": "HOLD; independent emergency stop; never auto-promote/rearm/recreate",
+      "requirements": [
+        {
+          "scope": "projects/b1a2-fixture-run/secrets/b1a2-effect-old",
+          "permissions": [
+            "secretmanager.secrets.getIamPolicy",
+            "secretmanager.secrets.setIamPolicy"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "decrypt-withdraw",
+      "phase": 4,
+      "principalRole": "kill",
+      "principal": "b1a2-kill@b1a2-fixture-run.iam.gserviceaccount.com",
+      "argv": [
+        "gcloud",
+        "kms",
+        "keys",
+        "remove-iam-policy-binding",
+        "b1a2-effect",
+        "--keyring=b1a2-effect",
+        "--location=us-central1",
+        "--member=serviceAccount:b1a2-gateway-old@b1a2-fixture-run.iam.gserviceaccount.com",
+        "--role=roles/cloudkms.cryptoKeyDecrypter",
+        "--project=b1a2-fixture-run",
+        "--impersonate-service-account=b1a2-kill@b1a2-fixture-run.iam.gserviceaccount.com",
+        "--quiet"
+      ],
+      "preconditions": [
+        "Old tag deny initiated"
+      ],
+      "evidence": [
+        "Exact effect key IAM receipt"
+      ],
+      "semantic": "decrypt",
+      "onFailure": "HOLD; independent emergency stop; never auto-promote/rearm/recreate",
+      "requirements": [
+        {
+          "scope": "projects/b1a2-fixture-run/locations/us-central1/keyRings/b1a2-effect/cryptoKeys/b1a2-effect",
+          "permissions": [
+            "cloudkms.cryptoKeys.getIamPolicy",
+            "cloudkms.cryptoKeys.setIamPolicy"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "revision-delete",
+      "phase": 4,
+      "principalRole": "kill",
+      "principal": "b1a2-kill@b1a2-fixture-run.iam.gserviceaccount.com",
+      "argv": [
+        "gcloud",
+        "run",
+        "revisions",
+        "delete",
+        "b1a2-gateway-e000001-r1",
+        "--region=us-central1",
+        "--project=b1a2-fixture-run",
+        "--impersonate-service-account=b1a2-kill@b1a2-fixture-run.iam.gserviceaccount.com",
+        "--quiet"
+      ],
+      "preconditions": [
+        "Old traffic/tags removed; deny applied"
+      ],
+      "evidence": [
+        "Deletion LRO and not-found receipt; not sufficient alone"
+      ],
+      "semantic": "delete",
+      "onFailure": "HOLD; independent emergency stop; never auto-promote/rearm/recreate",
+      "requirements": [
+        {
+          "scope": "projects/b1a2-fixture-run",
+          "permissions": [
+            "run.revisions.get",
+            "run.revisions.delete",
+            "run.operations.get"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "observe",
+      "phase": 5,
+      "principalRole": "observer",
+      "principal": "b1a2-observer@b1a2-fixture-custody.iam.gserviceaccount.com",
+      "argv": [
+        "B1A2_OBSERVER",
+        "retirement",
+        "11111111-1111-4111-8111-111111111111",
+        "b1a2-gateway-e000001-r1"
+      ],
+      "preconditions": [
+        "No physical bound inferred from delayed reporting"
+      ],
+      "evidence": [
+        "Sample60s,visible latency120s, all active/idle labels, signed clocks, >=20 independent canaries, full fake ledger"
+      ],
+      "semantic": "observe",
+      "onFailure": "HOLD; independent emergency stop; never auto-promote/rearm/recreate",
+      "requirements": [
+        {
+          "scope": "projects/b1a2-fixture-run",
+          "permissions": [
+            "monitoring.timeSeries.list",
+            "logging.logEntries.list",
+            "run.revisions.get"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "recover",
+      "phase": 6,
+      "principalRole": "controller",
+      "principal": "b1a2-controller@b1a2-fixture-run.iam.gserviceaccount.com",
+      "argv": [
+        "B1A2_LOCAL_SQL",
+        "recover-retired",
+        "11111111-1111-4111-8111-111111111111",
+        "ORIGINAL_ATTEMPTS_FROM_VERIFIED_LEDGER"
+      ],
+      "preconditions": [
+        "Authenticated retirement evidence complete"
+      ],
+      "evidence": [
+        "Only retired ENTERED→UNKNOWN; APPLIED/ARMED/UNKNOWN preserved; no new IDs"
+      ],
+      "semantic": "recover",
+      "onFailure": "HOLD; independent emergency stop; never auto-promote/rearm/recreate",
+      "requirements": [
+        {
+          "scope": "database:proof",
+          "permissions": [
+            "sql.execute:recover_retired",
+            "sql.execute:control_read"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "promote",
+      "phase": 7,
+      "principalRole": "controller",
+      "principal": "b1a2-controller@b1a2-fixture-run.iam.gserviceaccount.com",
+      "argv": [
+        "B1A2_LOCAL_SQL",
+        "promote",
+        "11111111-1111-4111-8111-111111111111",
+        "VERIFIED_EVIDENCE_DIGEST"
+      ],
+      "preconditions": [
+        "EVIDENCE_READY and exact session/scope/predecessor/generation CAS; expiry still valid"
+      ],
+      "evidence": [
+        "Explicit recorded promotion; rollback is new epoch N+2"
+      ],
+      "semantic": "promote",
+      "onFailure": "HOLD; independent emergency stop; never auto-promote/rearm/recreate",
+      "requirements": [
+        {
+          "scope": "database:proof",
+          "permissions": [
+            "sql.execute:control_promote",
+            "sql.execute:control_read"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "emergency-service-delete",
+      "phase": 8,
+      "principalRole": "kill",
+      "principal": "b1a2-kill@b1a2-fixture-run.iam.gserviceaccount.com",
+      "argv": [
+        "gcloud",
+        "run",
+        "services",
+        "delete",
+        "b1a2-gateway",
+        "--region=us-central1",
+        "--project=b1a2-fixture-run",
+        "--impersonate-service-account=b1a2-kill@b1a2-fixture-run.iam.gserviceaccount.com",
+        "--quiet"
+      ],
+      "preconditions": [
+        "Immediate SQL hold; old-tag deny attempted; no deployer dependency"
+      ],
+      "evidence": [
+        "Whole service and all revisions requested deleted; no actAs/AR read dependency; independent platform/canary evidence still required"
+      ],
+      "semantic": "emergency",
+      "onFailure": "HOLD; independent emergency stop; never auto-promote/rearm/recreate",
+      "requirements": [
+        {
+          "scope": "projects/b1a2-fixture-run",
+          "permissions": [
+            "run.services.get",
+            "run.services.delete"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "emergency-worker-delete",
+      "phase": 8,
+      "principalRole": "kill",
+      "principal": "b1a2-kill@b1a2-fixture-run.iam.gserviceaccount.com",
+      "argv": [
+        "gcloud",
+        "run",
+        "worker-pools",
+        "delete",
+        "b1a2-worker",
+        "--region=us-central1",
+        "--project=b1a2-fixture-run",
+        "--impersonate-service-account=b1a2-kill@b1a2-fixture-run.iam.gserviceaccount.com",
+        "--quiet"
+      ],
+      "preconditions": [
+        "Dispatch held"
+      ],
+      "evidence": [
+        "Worker-pool delete receipt; IAM permission is run.workerpools.delete (lowercase)"
+      ],
+      "semantic": "emergency",
+      "onFailure": "HOLD; independent emergency stop; never auto-promote/rearm/recreate",
+      "requirements": [
+        {
+          "scope": "projects/b1a2-fixture-run",
+          "permissions": [
+            "run.workerpools.get",
+            "run.workerpools.delete"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "delete-b1a2-gateway",
+      "phase": 9,
+      "principalRole": "cleanup",
+      "principal": "b1a2-cleanup@b1a2-fixture-run.iam.gserviceaccount.com",
+      "argv": [
+        "gcloud",
+        "run",
+        "services",
+        "delete",
+        "b1a2-gateway",
+        "--region=us-central1",
+        "--project=b1a2-fixture-run",
+        "--impersonate-service-account=b1a2-cleanup@b1a2-fixture-run.iam.gserviceaccount.com",
+        "--quiet"
+      ],
+      "preconditions": [
+        "All epochs fenced; coherent evidence exported"
+      ],
+      "evidence": [
+        "Exact service absent; retained revisions/instances independently checked"
+      ],
+      "semantic": "teardown",
+      "onFailure": "HOLD; independent emergency stop; never auto-promote/rearm/recreate",
+      "requirements": [
+        {
+          "scope": "projects/b1a2-fixture-run",
+          "permissions": [
+            "run.services.get",
+            "run.services.delete"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "delete-b1a2-ingress",
+      "phase": 9,
+      "principalRole": "cleanup",
+      "principal": "b1a2-cleanup@b1a2-fixture-run.iam.gserviceaccount.com",
+      "argv": [
+        "gcloud",
+        "run",
+        "services",
+        "delete",
+        "b1a2-ingress",
+        "--region=us-central1",
+        "--project=b1a2-fixture-run",
+        "--impersonate-service-account=b1a2-cleanup@b1a2-fixture-run.iam.gserviceaccount.com",
+        "--quiet"
+      ],
+      "preconditions": [
+        "All epochs fenced; coherent evidence exported"
+      ],
+      "evidence": [
+        "Exact service absent; retained revisions/instances independently checked"
+      ],
+      "semantic": "teardown",
+      "onFailure": "HOLD; independent emergency stop; never auto-promote/rearm/recreate",
+      "requirements": [
+        {
+          "scope": "projects/b1a2-fixture-run",
+          "permissions": [
+            "run.services.get",
+            "run.services.delete"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "delete-b1a2-sealer",
+      "phase": 9,
+      "principalRole": "cleanup",
+      "principal": "b1a2-cleanup@b1a2-fixture-run.iam.gserviceaccount.com",
+      "argv": [
+        "gcloud",
+        "run",
+        "services",
+        "delete",
+        "b1a2-sealer",
+        "--region=us-central1",
+        "--project=b1a2-fixture-run",
+        "--impersonate-service-account=b1a2-cleanup@b1a2-fixture-run.iam.gserviceaccount.com",
+        "--quiet"
+      ],
+      "preconditions": [
+        "All epochs fenced; coherent evidence exported"
+      ],
+      "evidence": [
+        "Exact service absent; retained revisions/instances independently checked"
+      ],
+      "semantic": "teardown",
+      "onFailure": "HOLD; independent emergency stop; never auto-promote/rearm/recreate",
+      "requirements": [
+        {
+          "scope": "projects/b1a2-fixture-run",
+          "permissions": [
+            "run.services.get",
+            "run.services.delete"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "worker-delete",
+      "phase": 9,
+      "principalRole": "cleanup",
+      "principal": "b1a2-cleanup@b1a2-fixture-run.iam.gserviceaccount.com",
+      "argv": [
+        "gcloud",
+        "run",
+        "worker-pools",
+        "delete",
+        "b1a2-worker",
+        "--region=us-central1",
+        "--project=b1a2-fixture-run",
+        "--impersonate-service-account=b1a2-cleanup@b1a2-fixture-run.iam.gserviceaccount.com",
+        "--quiet"
+      ],
+      "preconditions": [
+        "Dispatch held"
+      ],
+      "evidence": [
+        "Worker pool absent"
+      ],
+      "semantic": "teardown",
+      "onFailure": "HOLD; independent emergency stop; never auto-promote/rearm/recreate",
+      "requirements": [
+        {
+          "scope": "projects/b1a2-fixture-run",
+          "permissions": [
+            "run.workerpools.get",
+            "run.workerpools.delete"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fake-delete",
+      "phase": 9,
+      "principalRole": "cleanup",
+      "principal": "b1a2-cleanup@b1a2-fixture-run.iam.gserviceaccount.com",
+      "argv": [
+        "gcloud",
+        "compute",
+        "instances",
+        "delete",
+        "b1a2-fake",
+        "--zone=us-central1-a",
+        "--delete-disks=all",
+        "--project=b1a2-fixture-fake",
+        "--impersonate-service-account=b1a2-cleanup@b1a2-fixture-run.iam.gserviceaccount.com",
+        "--quiet"
+      ],
+      "preconditions": [
+        "Independent ledger/export secured"
+      ],
+      "evidence": [
+        "Fake VM and boot disk absent"
+      ],
+      "semantic": "teardown",
+      "onFailure": "HOLD; independent emergency stop; never auto-promote/rearm/recreate",
+      "requirements": [
+        {
+          "scope": "projects/b1a2-fixture-fake",
+          "permissions": [
+            "compute.instances.get",
+            "compute.instances.delete",
+            "compute.disks.delete"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sql-delete",
+      "phase": 9,
+      "principalRole": "cleanup",
+      "principal": "b1a2-cleanup@b1a2-fixture-run.iam.gserviceaccount.com",
+      "argv": [
+        "gcloud",
+        "sql",
+        "instances",
+        "delete",
+        "b1a2-epoch",
+        "--project=b1a2-fixture-run",
+        "--impersonate-service-account=b1a2-cleanup@b1a2-fixture-run.iam.gserviceaccount.com",
+        "--quiet"
+      ],
+      "preconditions": [
+        "Evidence export, no real data; no final/retained backups"
+      ],
+      "evidence": [
+        "Instance/backup/PITR absence (B1a-only 1day)"
+      ],
+      "semantic": "teardown",
+      "onFailure": "HOLD; independent emergency stop; never auto-promote/rearm/recreate",
+      "requirements": [
+        {
+          "scope": "projects/b1a2-fixture-run",
+          "permissions": [
+            "cloudsql.instances.get",
+            "cloudsql.instances.delete"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "residual",
+      "phase": 10,
+      "principalRole": "cleanup",
+      "principal": "b1a2-cleanup@b1a2-fixture-run.iam.gserviceaccount.com",
+      "argv": [
+        "gcloud",
+        "asset",
+        "search-all-resources",
+        "--scope=projects/b1a2-fixture-run",
+        "--format=json",
+        "--project=b1a2-fixture-run",
+        "--impersonate-service-account=b1a2-cleanup@b1a2-fixture-run.iam.gserviceaccount.com",
+        "--quiet"
+      ],
+      "preconditions": [
+        "Every exact inventory resource processed"
+      ],
+      "evidence": [
+        "No unexpected/retained resources; +2h,+48h,next statement verification; unknown resources held for owner"
+      ],
+      "semantic": "residual",
+      "onFailure": "HOLD; independent emergency stop; never auto-promote/rearm/recreate",
+      "requirements": [
+        {
+          "scope": "projects/b1a2-fixture-run",
+          "permissions": [
+            "cloudasset.assets.searchAllResources"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fake-tunnel",
+      "phase": 0,
+      "principalRole": "observer",
+      "principal": "b1a2-observer@b1a2-fixture-custody.iam.gserviceaccount.com",
+      "argv": [
+        "gcloud",
+        "compute",
+        "start-iap-tunnel",
+        "b1a2-fake",
+        "443",
+        "--zone=us-central1-a",
+        "--local-host-port=127.0.0.1:18443",
+        "--project=b1a2-fixture-fake",
+        "--impersonate-service-account=b1a2-observer@b1a2-fixture-custody.iam.gserviceaccount.com",
+        "--quiet"
+      ],
+      "preconditions": [
+        "IAP+mTLS observer identity; no SSH or public0/0 rule"
+      ],
+      "evidence": [
+        "Local encrypted tunnel to fake clock/ledger endpoint; no actAs privilege needed"
+      ],
+      "semantic": "tunnel",
+      "onFailure": "HOLD; independent emergency stop; never auto-promote/rearm/recreate",
+      "requirements": [
+        {
+          "scope": "projects/b1a2-fixture-fake",
+          "permissions": [
+            "iap.tunnelInstances.accessViaIAP",
+            "compute.instances.get",
+            "compute.instances.list"
+          ]
+        }
+      ]
+    }
+  ],
+  "grants": [
+    {
+      "role": "deployer",
+      "principal": "b1a2-deployer@b1a2-fixture-run.iam.gserviceaccount.com",
+      "scope": "projects/b1a2-fixture-run",
+      "permissions": [
+        "run.services.create",
+        "run.services.get",
+        "run.services.update",
+        "run.revisions.get",
+        "run.revisions.list",
+        "run.operations.get",
+        "run.workerpools.create",
+        "run.workerpools.get",
+        "run.workerpools.update"
+      ],
+      "note": "Dedicated runtime project; no custody/deletion/kill authority"
+    },
+    {
+      "role": "deployer",
+      "principal": "b1a2-deployer@b1a2-fixture-run.iam.gserviceaccount.com",
+      "scope": "serviceAccounts/b1a2-gateway-old@b1a2-fixture-run.iam.gserviceaccount.com",
+      "permissions": [
+        "iam.serviceAccounts.actAs"
+      ],
+      "note": "Exact runtime identity attachment only"
+    },
+    {
+      "role": "deployer",
+      "principal": "b1a2-deployer@b1a2-fixture-run.iam.gserviceaccount.com",
+      "scope": "serviceAccounts/b1a2-gateway-next@b1a2-fixture-run.iam.gserviceaccount.com",
+      "permissions": [
+        "iam.serviceAccounts.actAs"
+      ],
+      "note": "Exact runtime identity attachment only"
+    },
+    {
+      "role": "deployer",
+      "principal": "b1a2-deployer@b1a2-fixture-run.iam.gserviceaccount.com",
+      "scope": "serviceAccounts/b1a2-ingress@b1a2-fixture-run.iam.gserviceaccount.com",
+      "permissions": [
+        "iam.serviceAccounts.actAs"
+      ],
+      "note": "Exact runtime identity attachment only"
+    },
+    {
+      "role": "deployer",
+      "principal": "b1a2-deployer@b1a2-fixture-run.iam.gserviceaccount.com",
+      "scope": "serviceAccounts/b1a2-sealer@b1a2-fixture-run.iam.gserviceaccount.com",
+      "permissions": [
+        "iam.serviceAccounts.actAs"
+      ],
+      "note": "Exact runtime identity attachment only"
+    },
+    {
+      "role": "deployer",
+      "principal": "b1a2-deployer@b1a2-fixture-run.iam.gserviceaccount.com",
+      "scope": "serviceAccounts/b1a2-worker@b1a2-fixture-run.iam.gserviceaccount.com",
+      "permissions": [
+        "iam.serviceAccounts.actAs"
+      ],
+      "note": "Exact runtime identity attachment only"
+    },
+    {
+      "role": "kill",
+      "principal": "b1a2-kill@b1a2-fixture-run.iam.gserviceaccount.com",
+      "scope": "projects/b1a2-fixture-run",
+      "permissions": [
+        "run.services.get",
+        "run.services.update",
+        "run.services.delete",
+        "run.revisions.get",
+        "run.revisions.list",
+        "run.revisions.delete",
+        "run.operations.get",
+        "run.workerpools.get",
+        "run.workerpools.delete",
+        "compute.firewalls.get",
+        "compute.firewalls.update"
+      ],
+      "note": "Independent emergency authority in disposable runtime project; service DELETE does not need deployer/actAs"
+    },
+    {
+      "role": "kill",
+      "principal": "b1a2-kill@b1a2-fixture-run.iam.gserviceaccount.com",
+      "scope": "serviceAccounts/b1a2-gateway-next@b1a2-fixture-run.iam.gserviceaccount.com",
+      "permissions": [
+        "iam.serviceAccounts.actAs"
+      ],
+      "note": "Traffic management guide requires Service Account User; only staged candidate gateway identity, never all SAs"
+    },
+    {
+      "role": "deployer",
+      "principal": "b1a2-deployer@b1a2-fixture-run.iam.gserviceaccount.com",
+      "scope": "projects/b1a2-fixture-run/locations/us-central1/repositories/b1a2",
+      "permissions": [
+        "artifactregistry.repositories.get",
+        "artifactregistry.repositories.downloadArtifacts"
+      ],
+      "note": "Only approved harness image repository"
+    },
+    {
+      "role": "kill",
+      "principal": "b1a2-kill@b1a2-fixture-run.iam.gserviceaccount.com",
+      "scope": "projects/b1a2-fixture-run/locations/us-central1/repositories/b1a2",
+      "permissions": [
+        "artifactregistry.repositories.get",
+        "artifactregistry.repositories.downloadArtifacts"
+      ],
+      "note": "Only approved harness image repository"
+    },
+    {
+      "role": "fake",
+      "principal": "b1a2-fake@b1a2-fixture-fake.iam.gserviceaccount.com",
+      "scope": "projects/b1a2-fixture-run/locations/us-central1/repositories/b1a2",
+      "permissions": [
+        "artifactregistry.repositories.get",
+        "artifactregistry.repositories.downloadArtifacts"
+      ],
+      "note": "Only approved harness image repository"
+    },
+    {
+      "role": "kill",
+      "principal": "b1a2-kill@b1a2-fixture-run.iam.gserviceaccount.com",
+      "scope": "projects/b1a2-fixture-run/secrets/b1a2-effect-old",
+      "permissions": [
+        "secretmanager.secrets.getIamPolicy",
+        "secretmanager.secrets.setIamPolicy"
+      ],
+      "note": "Old synthetic effect bundle only; IAM withdrawal is not cached-secret revocation"
+    },
+    {
+      "role": "kill",
+      "principal": "b1a2-kill@b1a2-fixture-run.iam.gserviceaccount.com",
+      "scope": "projects/b1a2-fixture-run/locations/us-central1/keyRings/b1a2-effect/cryptoKeys/b1a2-effect",
+      "permissions": [
+        "cloudkms.cryptoKeys.getIamPolicy",
+        "cloudkms.cryptoKeys.setIamPolicy"
+      ],
+      "note": "Exact effect key"
+    },
+    {
+      "role": "observer",
+      "principal": "b1a2-observer@b1a2-fixture-custody.iam.gserviceaccount.com",
+      "scope": "projects/b1a2-fixture-run",
+      "permissions": [
+        "run.services.get",
+        "run.revisions.get",
+        "run.revisions.list",
+        "run.operations.get",
+        "serviceusage.services.get",
+        "serviceusage.quotas.get",
+        "monitoring.timeSeries.list",
+        "logging.logEntries.list"
+      ],
+      "note": "Read-only platform evidence; missing metrics never zero"
+    },
+    {
+      "role": "observer",
+      "principal": "b1a2-observer@b1a2-fixture-custody.iam.gserviceaccount.com",
+      "scope": "projects/b1a2-fixture-fake",
+      "permissions": [
+        "compute.instances.get",
+        "compute.instances.list",
+        "iap.tunnelInstances.accessViaIAP",
+        "logging.logEntries.list"
+      ],
+      "note": "IAP TCP443, not SSH; no actAs needed for start-iap-tunnel"
+    },
+    {
+      "role": "observer",
+      "principal": "b1a2-observer@b1a2-fixture-custody.iam.gserviceaccount.com",
+      "scope": "projects/b1a2-fixture-custody/secrets/b1a2-observer-signing",
+      "permissions": [
+        "secretmanager.versions.access"
+      ],
+      "note": "Independent observer key custody, never runtime/deployer"
+    },
+    {
+      "role": "observer",
+      "principal": "b1a2-observer@b1a2-fixture-custody.iam.gserviceaccount.com",
+      "scope": "buckets/b1a2-fixture-custody-evidence",
+      "permissions": [
+        "storage.objects.get",
+        "storage.objects.list"
+      ],
+      "note": "Independent evidence read"
+    },
+    {
+      "role": "cleanup",
+      "principal": "b1a2-cleanup@b1a2-fixture-run.iam.gserviceaccount.com",
+      "scope": "projects/b1a2-fixture-run",
+      "permissions": [
+        "run.services.get",
+        "run.services.delete",
+        "run.workerpools.get",
+        "run.workerpools.delete",
+        "run.revisions.get",
+        "run.revisions.list",
+        "compute.forwardingRules.get",
+        "compute.forwardingRules.delete",
+        "compute.addresses.get",
+        "compute.addresses.delete",
+        "compute.routers.get",
+        "compute.routers.update",
+        "compute.routers.delete",
+        "compute.subnetworks.get",
+        "compute.subnetworks.delete",
+        "compute.firewalls.get",
+        "compute.firewalls.delete",
+        "compute.routes.get",
+        "compute.routes.delete",
+        "compute.networks.get",
+        "compute.networks.delete",
+        "cloudsql.instances.get",
+        "cloudsql.instances.delete",
+        "cloudsql.backupRuns.list",
+        "cloudsql.backupRuns.delete",
+        "dns.managedZones.get",
+        "dns.managedZones.delete",
+        "dns.resourceRecordSets.list",
+        "dns.changes.create",
+        "secretmanager.secrets.get",
+        "secretmanager.secrets.delete",
+        "secretmanager.versions.list",
+        "secretmanager.versions.destroy",
+        "artifactregistry.repositories.get",
+        "artifactregistry.repositories.delete",
+        "iam.serviceAccounts.get",
+        "iam.serviceAccounts.delete",
+        "resourcemanager.projects.get",
+        "cloudasset.assets.searchAllResources"
+      ],
+      "note": "Exact disposable inventory; no automatic deletion of unexpected resources"
+    },
+    {
+      "role": "cleanup",
+      "principal": "b1a2-cleanup@b1a2-fixture-run.iam.gserviceaccount.com",
+      "scope": "projects/b1a2-fixture-fake",
+      "permissions": [
+        "compute.instances.get",
+        "compute.instances.delete",
+        "compute.disks.get",
+        "compute.disks.delete",
+        "compute.addresses.get",
+        "compute.addresses.delete",
+        "compute.subnetworks.get",
+        "compute.subnetworks.delete",
+        "compute.firewalls.get",
+        "compute.firewalls.delete",
+        "compute.routes.get",
+        "compute.routes.delete",
+        "compute.networks.get",
+        "compute.networks.delete",
+        "dns.managedZones.get",
+        "dns.managedZones.delete",
+        "dns.resourceRecordSets.list",
+        "dns.changes.create",
+        "resourcemanager.projects.get",
+        "cloudasset.assets.searchAllResources"
+      ],
+      "note": "Fake host+network only"
+    },
+    {
+      "role": "custodyCleanup",
+      "principal": "b1a2-custody-cleanup@b1a2-fixture-custody.iam.gserviceaccount.com",
+      "scope": "projects/b1a2-fixture-custody",
+      "permissions": [
+        "storage.buckets.get",
+        "storage.buckets.delete",
+        "storage.objects.get",
+        "storage.objects.list",
+        "storage.objects.delete",
+        "cloudkms.cryptoKeyVersions.list",
+        "cloudkms.cryptoKeyVersions.destroy",
+        "secretmanager.secrets.get",
+        "secretmanager.secrets.delete",
+        "secretmanager.versions.list",
+        "secretmanager.versions.destroy",
+        "resourcemanager.projects.get",
+        "cloudasset.assets.searchAllResources"
+      ],
+      "note": "Independent approved synthetic evidence export/deletion; key rings not individually deletable"
+    },
+    {
+      "role": "cleanup",
+      "principal": "b1a2-cleanup@b1a2-fixture-run.iam.gserviceaccount.com",
+      "scope": "projects/b1a2-fixture-run",
+      "permissions": [
+        "iam.roles.get",
+        "iam.roles.delete",
+        "resourcemanager.projects.getIamPolicy",
+        "resourcemanager.projects.setIamPolicy",
+        "iam.serviceAccounts.get",
+        "iam.serviceAccounts.delete",
+        "iam.serviceAccounts.getIamPolicy",
+        "iam.serviceAccounts.setIamPolicy",
+        "secretmanager.secrets.getIamPolicy",
+        "secretmanager.secrets.setIamPolicy",
+        "cloudkms.cryptoKeys.getIamPolicy",
+        "cloudkms.cryptoKeys.setIamPolicy",
+        "cloudkms.cryptoKeyVersions.list",
+        "cloudkms.cryptoKeyVersions.destroy",
+        "artifactregistry.repositories.getIamPolicy",
+        "artifactregistry.repositories.setIamPolicy",
+        "run.services.getIamPolicy",
+        "run.services.setIamPolicy",
+        "orgpolicy.policies.get",
+        "orgpolicy.policies.delete"
+      ],
+      "note": "Privileged teardown only in disposable project; exact inventory policy CAS, independently supervised; never a normal runtime/deployer grant"
+    },
+    {
+      "role": "custodyCleanup",
+      "principal": "b1a2-custody-cleanup@b1a2-fixture-custody.iam.gserviceaccount.com",
+      "scope": "projects/b1a2-fixture-custody",
+      "permissions": [
+        "iam.roles.get",
+        "iam.roles.delete",
+        "resourcemanager.projects.getIamPolicy",
+        "resourcemanager.projects.setIamPolicy",
+        "iam.serviceAccounts.get",
+        "iam.serviceAccounts.delete",
+        "iam.serviceAccounts.getIamPolicy",
+        "iam.serviceAccounts.setIamPolicy",
+        "secretmanager.secrets.getIamPolicy",
+        "secretmanager.secrets.setIamPolicy",
+        "cloudkms.cryptoKeys.getIamPolicy",
+        "cloudkms.cryptoKeys.setIamPolicy",
+        "cloudkms.cryptoKeyVersions.list",
+        "cloudkms.cryptoKeyVersions.destroy",
+        "artifactregistry.repositories.getIamPolicy",
+        "artifactregistry.repositories.setIamPolicy",
+        "run.services.getIamPolicy",
+        "run.services.setIamPolicy",
+        "orgpolicy.policies.get",
+        "orgpolicy.policies.delete"
+      ],
+      "note": "Privileged teardown only in disposable project; exact inventory policy CAS, independently supervised; never a normal runtime/deployer grant"
+    },
+    {
+      "role": "cleanup",
+      "principal": "b1a2-cleanup@b1a2-fixture-run.iam.gserviceaccount.com",
+      "scope": "projects/b1a2-fixture-fake",
+      "permissions": [
+        "iam.roles.get",
+        "iam.roles.delete",
+        "iam.serviceAccounts.get",
+        "iam.serviceAccounts.delete",
+        "resourcemanager.projects.getIamPolicy",
+        "resourcemanager.projects.setIamPolicy"
+      ],
+      "note": "Exact fake identity/policy teardown only"
+    },
+    {
+      "role": "custodyCleanup",
+      "principal": "b1a2-custody-cleanup@b1a2-fixture-custody.iam.gserviceaccount.com",
+      "scope": "buckets/b1a2-fixture-custody-evidence",
+      "permissions": [
+        "storage.buckets.get",
+        "storage.buckets.delete",
+        "storage.buckets.getIamPolicy",
+        "storage.buckets.setIamPolicy",
+        "storage.objects.get",
+        "storage.objects.list",
+        "storage.objects.delete"
+      ],
+      "note": "Exact synthetic evidence bucket only, export approval first"
+    },
+    {
+      "role": "cleanup",
+      "principal": "b1a2-cleanup@b1a2-fixture-run.iam.gserviceaccount.com",
+      "scope": "billingAccounts/000000-000000-000000",
+      "permissions": [
+        "billing.budgets.get",
+        "billing.budgets.delete"
+      ],
+      "note": "Owner must authorize exact billing account budget cleanup; no account upgrade or billing-spend permission"
+    },
+    {
+      "role": "controller",
+      "principal": "b1a2-controller@b1a2-fixture-run.iam.gserviceaccount.com",
+      "scope": "database:proof",
+      "permissions": [
+        "sql.execute:control_read",
+        "sql.execute:control_renew",
+        "sql.execute:control_create",
+        "sql.execute:control_hold",
+        "sql.execute:control_advance",
+        "sql.execute:control_promote",
+        "sql.execute:recover_retired"
+      ],
+      "note": "Restricted SQL SECURITY DEFINER functions; no table DML, no admin role"
+    }
+  ],
+  "futureActivation": "Separate reviewed source change AND exact owner authorization; flags/CI cannot activate",
+  "callerImpersonation": "Named humans require iam.serviceAccounts.getAccessToken on only their approved controller/kill/cleanup/observer identities; not a runtime grant",
+  "rollback": "Prior image at fresh N+2, never old revision"
+}

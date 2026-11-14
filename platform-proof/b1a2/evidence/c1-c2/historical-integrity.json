@@ -1,0 +1,13 @@
+{
+  "historicalCommit": "655d07d7ae45a280d28e4c6ae58071c199db523d",
+  "historicalManifestSha256": "f01e0a537d5a28301c755529ed42a262b4571818421945291234bd656a33230c",
+  "originalManifestEntriesVerified": 85,
+  "currentHistoricalFilesUnchanged": 84,
+  "intentionalHelperChanges": [
+    "platform-proof/b1a2/evidence/verify-retirement.mjs"
+  ],
+  "historicalManifestPreserved": true,
+  "originalRawArchivesAndSignedBundlesChanged": false,
+  "applicationSourceChanged": false,
+  "cloudGuardChanged": false
+}

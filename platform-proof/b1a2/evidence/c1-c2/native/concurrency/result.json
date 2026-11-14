@@ -1,0 +1,33 @@
+{
+  "retirement": {
+    "state": "EVIDENCE_READY",
+    "timeModel": "BOUNDED_DRIFT_V2",
+    "physicalBoundary": 59000,
+    "declaredAt": 299000,
+    "evidenceCompletedAt": 530000,
+    "thresholdBasis": "PROVISIONAL_SYNTHETIC_TARGET",
+    "derivationProtocol": "AUTHENTICATED_LEDGER_ACTIVITY_V1",
+    "derivedActivityCount": 3,
+    "derivedActivitiesDigest": "40646c4dbcb1fc60920f10b62ec4fe2cdff6089477a9030455569c8328bb9119",
+    "evidenceDigest": "0db01904e42e08bdf1aaf5858f8bea4fff753ef778e8081d79a1f743655ad3a6"
+  },
+  "outcome": {
+    "state": "RECONCILED_OR_HELD",
+    "outcomes": [
+      {
+        "attemptId": "44305c3c-45e4-4db0-b109-367b5b5c666a",
+        "state": "ARMED"
+      }
+    ],
+    "dispatchEnabled": false,
+    "evidenceDigest": "0db01904e42e08bdf1aaf5858f8bea4fff753ef778e8081d79a1f743655ad3a6"
+  },
+  "dispatchOnlyAfterExplicitPromotion": true,
+  "cloudExecution": false,
+  "version": {
+    "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg12+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 12.2.0-14+deb12u1) 12.2.0, 64-bit",
+    "timezone": "UTC"
+  },
+  "evidenceScope": "B1A_LOCAL_SYNTHETIC_PREPARATION",
+  "testedSource": "ade1c3be3b66f81aa05a26e06fa6c8e707d0526c"
+}

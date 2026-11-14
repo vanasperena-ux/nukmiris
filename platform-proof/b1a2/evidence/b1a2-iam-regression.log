@@ -1,0 +1,16 @@
+✔ P-3 durable seven-step local simulation, crash after CAS, readback without replay and independent emergency (23.534866ms)
+✔ P-3 unknown outcome or missing permission holds; cannot replay, promote, or impersonate deployer (1.115442ms)
+✔ P-6 every generated resource has dependency-ordered teardown and residual policy (10.055776ms)
+✔ D-3 emergency remains executable with an unresolved operation and unavailable SQL hold (1.293686ms)
+✔ P-1/P-6 GCS recovery lists the bucket and reads only current-session objects; managed IAM principals exist before binding (4.537422ms)
+✔ D-3 every concrete command maps to its independent principal and scoped IAM permissions (5.25891ms)
+✔ D-3 missing traffic/delete/firewall/actAs rights block instead of borrowing deployer (1.201981ms)
+✔ P-3 seven steps remain ordered; CLI/CI execution flags cannot invoke any cloud command (106.121149ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 8
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 348.825221

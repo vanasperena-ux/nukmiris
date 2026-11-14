@@ -1,0 +1,30 @@
+{
+  "scope": "LOCAL_REVERIFICATION_ONLY",
+  "testedSource": "ecc085f3a2e413c9f3a228066292b81ad9c1be73",
+  "result": {
+    "state": "EVIDENCE_READY",
+    "timeModel": "BOUNDED_DRIFT_V2",
+    "physicalBoundary": 1794657656000,
+    "declaredAt": 1794657899000,
+    "evidenceCompletedAt": 1794658130000,
+    "thresholdBasis": "PROVISIONAL_SYNTHETIC_TARGET",
+    "derivationProtocol": "AUTHENTICATED_LEDGER_ACTIVITY_V1",
+    "derivedActivityCount": 0,
+    "derivedActivitiesDigest": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "evidenceDigest": "5eff3afd27d6f8d240cf17c2989f22b7edc3737e1dab9b27ad5598e083477d27"
+  },
+  "recordedResult": {
+    "state": "EVIDENCE_READY",
+    "timeModel": "BOUNDED_DRIFT_V2",
+    "physicalBoundary": 1794657656000,
+    "declaredAt": 1794657899000,
+    "evidenceCompletedAt": 1794658130000,
+    "thresholdBasis": "PROVISIONAL_SYNTHETIC_TARGET",
+    "evidenceDigest": "cfd7697ae71065cb02ac026645905b41194a292d14eb79b253aa73e0bdb7f1e5"
+  },
+  "originalResultPreserved": true,
+  "derivedActivityCount": 0,
+  "canaries": 20,
+  "authenticatedSignaturesVerified": true,
+  "livePromotionAuthorized": false
+}

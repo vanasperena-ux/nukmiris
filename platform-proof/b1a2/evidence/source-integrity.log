@@ -1,0 +1,15 @@
+{
+  "mode": "LOCAL_SYNTHETIC_ONLY",
+  "base": "d3fa65192374ca206ff1f6d166a789c295a15e97",
+  "accepted": "b4d0be0cb98c7f2b69be318e18b93f4de102c511",
+  "acceptedTree": "03d08322e27d9d54485fa887b482743fe076556b",
+  "manifestFiles": 127,
+  "changedFiles": 258,
+  "scannedFiles": 258,
+  "secretScan": "PASS",
+  "providerCredentialVariables": 0,
+  "protectedSource": "UNCHANGED",
+  "note": "Repository-content scan, not a forensic scan of unrelated host accounts; runtime uses explicit loopback only."
+}
+{"scope":"B1A_SOURCE_ONLY","base":"2ca5cf215b68f187bfa48b42aaa041bbe93cf56d","accepted":"b4d0be0cb98c7f2b69be318e18b93f4de102c511","historicalFilesVerified":35,"changeBoundary":"platform-proof ONLY","sourceHead":"ecc085f3a2e413c9f3a228066292b81ad9c1be73","sourceTree":"5748cbadd56bdfed11319e51d11530abb2dccc1d","actualCloudResourcesCreated":0,"actualProviderCalls":0}
+{"scope":"B1A2_LOCAL_SOURCE_ONLY","historicalFilesVerified":107,"acceptedApplication":"UNCHANGED","cloudExecution":false,"resourceCount":140,"placementRemoved":30,"teardownAuthority":"STATIC_SCOPE_COVERAGE_PASS","actualCloudEvidence":"NOT_PROVEN"}

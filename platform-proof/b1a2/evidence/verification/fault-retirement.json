@@ -1,0 +1,16 @@
+{
+  "scope": "HISTORICAL_LOCAL_REPRODUCTION_ONLY",
+  "testedSource": "ecc085f3a2e413c9f3a228066292b81ad9c1be73",
+  "result": {
+    "state": "EVIDENCE_READY",
+    "timeModel": "BOUNDED_DRIFT_V2",
+    "physicalBoundary": 1794657656000,
+    "declaredAt": 1794657899000,
+    "evidenceCompletedAt": 1794658130000,
+    "thresholdBasis": "PROVISIONAL_SYNTHETIC_TARGET",
+    "evidenceDigest": "17c85a3d731472feeb0db6fb52e23742b619199489daf3f639a18d29368c6af4"
+  },
+  "canaries": 20,
+  "authenticatedSignaturesVerified": true,
+  "livePromotionAuthorized": false
+}

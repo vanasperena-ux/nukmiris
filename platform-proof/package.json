@@ -8,8 +8,8 @@
   },
   "scripts": {
     "test": "node --test --test-concurrency=1 test/*.test.mjs",
-    "test:fault": "node --test --test-concurrency=1 test/fault.test.mjs test/campaign.test.mjs test/b1a-gateway.test.mjs test/b1a-interruption.test.mjs test/b1a-native-proof.test.mjs test/b1a-diagnostics.test.mjs test/b1a-session.test.mjs",
-    "test:concurrency": "node --test --test-concurrency=1 test/concurrency.test.mjs test/b1a-session.test.mjs",
+    "test:fault": "node --test --test-concurrency=1 test/fault.test.mjs test/campaign.test.mjs test/b1a-gateway.test.mjs test/b1a-interruption.test.mjs test/b1a-native-proof.test.mjs test/b1a-diagnostics.test.mjs test/b1a-session.test.mjs test/b1a2-time.test.mjs test/b1a2-retirement.test.mjs test/b1a2-startup.test.mjs test/b1a2-journal.test.mjs test/b1a2-controller.test.mjs test/b1a2-provider.test.mjs test/b1a2-observer.test.mjs test/b1a2-api.test.mjs test/b1a2-billing.test.mjs test/b1a2-teardown.test.mjs test/b1a2-preflight.test.mjs test/b1a2-preparation.test.mjs test/b1a2-sql.test.mjs",
+    "test:concurrency": "node --test --test-concurrency=1 test/concurrency.test.mjs test/b1a-session.test.mjs test/b1a2-journal.test.mjs test/b1a2-controller.test.mjs test/b1a2-startup.test.mjs test/b1a2-observer.test.mjs test/b1a2-teardown.test.mjs test/b1a2-preparation.test.mjs",
     "check": "node scripts/check.mjs",
     "fence:dry-run": "node ops/dry-run.mjs fence",
     "teardown:dry-run": "node ops/dry-run.mjs teardown",
@@ -19,7 +19,9 @@
     "b1a:teardown:dry-run": "node b1a/ops/controller.mjs teardown",
     "b1a:spend-cap:print": "node b1a/ops/controller.mjs spend-cap",
     "b1a:costs": "python3 b1a/calculate-costs.py",
-    "b1a:check": "node b1a/check.mjs"
+    "b1a:check": "node b1a/check.mjs",
+    "b1a2:check": "node b1a2/check.mjs",
+    "b1a2:plan:print": "node b1a2/ops/cli.mjs fixture-plan"
   },
   "dependencies": {
     "pg": "8.16.3"

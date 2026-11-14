@@ -1,0 +1,43 @@
+[
+  {
+    "suite": "full",
+    "argv": [
+      "npm",
+      "test"
+    ],
+    "testedSource": "ecc085f3a2e413c9f3a228066292b81ad9c1be73",
+    "startedAt": "2026-11-14T03:22:04.282874+00:00",
+    "finishedAt": "2026-11-14T03:28:48.744958+00:00",
+    "elapsedSeconds": 404.46209498700046,
+    "exitCode": 0,
+    "serialDockerFixtures": true
+  },
+  {
+    "suite": "fault",
+    "argv": [
+      "npm",
+      "run",
+      "test:fault"
+    ],
+    "testedSource": "ecc085f3a2e413c9f3a228066292b81ad9c1be73",
+    "startedAt": "2026-11-14T03:28:48.745540+00:00",
+    "finishedAt": "2026-11-14T03:35:06.682807+00:00",
+    "elapsedSeconds": 377.93729583299137,
+    "exitCode": 0,
+    "serialDockerFixtures": true
+  },
+  {
+    "suite": "concurrency",
+    "argv": [
+      "npm",
+      "run",
+      "test:concurrency"
+    ],
+    "testedSource": "ecc085f3a2e413c9f3a228066292b81ad9c1be73",
+    "startedAt": "2026-11-14T03:35:06.683652+00:00",
+    "finishedAt": "2026-11-14T03:35:41.771848+00:00",
+    "elapsedSeconds": 35.08822884999972,
+    "exitCode": 0,
+    "serialDockerFixtures": true
+  }
+]

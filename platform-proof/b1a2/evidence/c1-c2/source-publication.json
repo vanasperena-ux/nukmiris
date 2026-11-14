@@ -1,0 +1,73 @@
+{
+  "parent": "655d07d7ae45a280d28e4c6ae58071c199db523d",
+  "baseTree": "de56cb8f6664dd168c46f40bd6be09f687b657b8",
+  "tree": "76d7c525b68aa879c38fad52872b77a96e51275a",
+  "files": [
+    {
+      "path": "platform-proof/b1a2/ACCEPTANCE.md",
+      "bytes": 7337,
+      "sha256": "0a1f75f65c109651d4a78c9ce2663ef2659e7bc975644d6142507301178c52d8"
+    },
+    {
+      "path": "platform-proof/b1a2/README.md",
+      "bytes": 12960,
+      "sha256": "28d5b60e0cd203e1e0d3c6c4990329133adccdaf150ca8dd8f788f5f7b739a2f"
+    },
+    {
+      "path": "platform-proof/b1a2/evidence/verify-retirement.mjs",
+      "bytes": 3446,
+      "sha256": "ee1ca00c2cdec9101a8f19e763c2d882b318aaabda37f44dc256318af7ba292b"
+    },
+    {
+      "path": "platform-proof/b1a2/ops/controller.mjs",
+      "bytes": 7005,
+      "sha256": "11a87b5cbca6783da2131eac779d637cd3f74af2a56879323eb894e1a402617f"
+    },
+    {
+      "path": "platform-proof/b1a2/ops/prepared-adapter.mjs",
+      "bytes": 5701,
+      "sha256": "ac016ba729c27c0325f1f5e0a0e417a94b75e0162921749c4ff3b1f24e6a89b6"
+    },
+    {
+      "path": "platform-proof/b1a2/runtime/observer.mjs",
+      "bytes": 13585,
+      "sha256": "ddfe87d37f10b75804a4831a37397f3adb15e02fd23b7bd3ffbcf27d0bb7d816"
+    },
+    {
+      "path": "platform-proof/b1a2/runtime/retirement.mjs",
+      "bytes": 12997,
+      "sha256": "d73a2bd31a41b46e7298c6f039dbc62d72d348143bdc13bb1da7b441deaac5f0"
+    },
+    {
+      "path": "platform-proof/test/b1a2-controller.test.mjs",
+      "bytes": 11942,
+      "sha256": "0a7a7ff6ccd167a6cdd61903f3bd2acc5d32356c2062d99471550998714557a4"
+    },
+    {
+      "path": "platform-proof/test/b1a2-fixture.mjs",
+      "bytes": 3516,
+      "sha256": "2d7cdf3a10dcc84aee57981fd5e3317794ab2b39907d7ac6bd44310c2e0522d6"
+    },
+    {
+      "path": "platform-proof/test/b1a2-observer.test.mjs",
+      "bytes": 10441,
+      "sha256": "08887094057c6d9c327c53e8acc3a356044c090d63982d33281db8e59a3cad8e"
+    },
+    {
+      "path": "platform-proof/test/b1a2-retirement.test.mjs",
+      "bytes": 11187,
+      "sha256": "63446f169cb5f6efb80cb2793bef86cc097c763db23a9a9e80f48dcf272e142a"
+    },
+    {
+      "path": "platform-proof/test/b1a2-startup.test.mjs",
+      "bytes": 10785,
+      "sha256": "fb26de3683a9f2677924531940d654b94b5991e171b0bf638c87638f0f465919"
+    },
+    {
+      "path": "platform-proof/b1a2/runtime/session-policy.mjs",
+      "bytes": 838,
+      "sha256": "fbd9a828e9ee0eac08ed0829b5d152a89cd506e4e8fa542bdc37b4a224f5599c"
+    }
+  ],
+  "source": "ade1c3be3b66f81aa05a26e06fa6c8e707d0526c"
+}

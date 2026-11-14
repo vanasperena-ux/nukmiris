@@ -1,0 +1,29 @@
+{
+  "source": "ecc085f3a2e413c9f3a228066292b81ad9c1be73",
+  "P10b_100000": {
+    "state": "EVIDENCE_READY",
+    "timeModel": "BOUNDED_DRIFT_V2",
+    "physicalBoundary": 59000,
+    "declaredAt": 299000,
+    "evidenceCompletedAt": 530000,
+    "thresholdBasis": "PROVISIONAL_SYNTHETIC_TARGET",
+    "evidenceDigest": "d1cbae98e03b9ff64a39986df3359b1b054eff5091ba9d17bf11960b8d8a4b62"
+  },
+  "P10b_520000": {
+    "state": "EVIDENCE_READY",
+    "timeModel": "BOUNDED_DRIFT_V2",
+    "physicalBoundary": 59000,
+    "declaredAt": 299000,
+    "evidenceCompletedAt": 530000,
+    "thresholdBasis": "PROVISIONAL_SYNTHETIC_TARGET",
+    "evidenceDigest": "018aeee4bec3c9ff159d2d8cc015fecb9d50ef98c0c5527bf705bf0e54abbaa9"
+  },
+  "P9_incomplete": {
+    "state": "HOLD",
+    "reason": "canary_window_incomplete"
+  },
+  "P9_19trials": {
+    "state": "HOLD",
+    "reason": "canary_or_ledger_contract_incomplete"
+  }
+}

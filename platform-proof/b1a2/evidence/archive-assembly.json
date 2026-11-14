@@ -1,0 +1,99 @@
+{
+  "scope": "AUDITED_LOCAL_SYNTHETIC_BYTES_ONLY",
+  "partSize": 100000,
+  "reason": "Bounded connector transport; not a waiver of approval or sensitivity review",
+  "archives": [
+    {
+      "file": "concurrency-raw.tar.gz",
+      "bytes": 13996,
+      "sha256": "7117789358f82b8b4572f07561f09ff2d0a3d9cc148af75e3775241abd890aaf",
+      "parts": [
+        "archive-parts/concurrency-raw.tar.gz.000.part"
+      ]
+    },
+    {
+      "file": "fault-raw.tar.gz",
+      "bytes": 1296152,
+      "sha256": "85ac373aeceba4f300e94a3b1b542e6657cdc9fa14cf91be49f779b2e4e52abb",
+      "parts": [
+        "archive-parts/fault-raw.tar.gz.000.part",
+        "archive-parts/fault-raw.tar.gz.001.part",
+        "archive-parts/fault-raw.tar.gz.002.part",
+        "archive-parts/fault-raw.tar.gz.003.part",
+        "archive-parts/fault-raw.tar.gz.004.part",
+        "archive-parts/fault-raw.tar.gz.005.part",
+        "archive-parts/fault-raw.tar.gz.006.part",
+        "archive-parts/fault-raw.tar.gz.007.part",
+        "archive-parts/fault-raw.tar.gz.008.part",
+        "archive-parts/fault-raw.tar.gz.009.part",
+        "archive-parts/fault-raw.tar.gz.010.part",
+        "archive-parts/fault-raw.tar.gz.011.part",
+        "archive-parts/fault-raw.tar.gz.012.part"
+      ]
+    },
+    {
+      "file": "full-raw.tar.gz",
+      "bytes": 1304843,
+      "sha256": "126d5f769fae217565dbba56b9586044c0592c9aa837cdae6782b954b26ccf17",
+      "parts": [
+        "archive-parts/full-raw.tar.gz.000.part",
+        "archive-parts/full-raw.tar.gz.001.part",
+        "archive-parts/full-raw.tar.gz.002.part",
+        "archive-parts/full-raw.tar.gz.003.part",
+        "archive-parts/full-raw.tar.gz.004.part",
+        "archive-parts/full-raw.tar.gz.005.part",
+        "archive-parts/full-raw.tar.gz.006.part",
+        "archive-parts/full-raw.tar.gz.007.part",
+        "archive-parts/full-raw.tar.gz.008.part",
+        "archive-parts/full-raw.tar.gz.009.part",
+        "archive-parts/full-raw.tar.gz.010.part",
+        "archive-parts/full-raw.tar.gz.011.part",
+        "archive-parts/full-raw.tar.gz.012.part",
+        "archive-parts/full-raw.tar.gz.013.part"
+      ]
+    },
+    {
+      "file": "image-source.tar.gz",
+      "bytes": 169259,
+      "sha256": "ce5c0097b9ad04cb33e0a9d30d8f5956121650ced0bd9d2ae5c8ce4d9ac3e763",
+      "parts": [
+        "archive-parts/image-source.tar.gz.000.part",
+        "archive-parts/image-source.tar.gz.001.part"
+      ]
+    },
+    {
+      "file": "prior-b5-raw.tar.gz",
+      "bytes": 2618083,
+      "sha256": "4b567e62e9186ce82f6d1213d160f8179a223395e7b75289219d7d5a5a6a5a02",
+      "parts": [
+        "archive-parts/prior-b5-raw.tar.gz.000.part",
+        "archive-parts/prior-b5-raw.tar.gz.001.part",
+        "archive-parts/prior-b5-raw.tar.gz.002.part",
+        "archive-parts/prior-b5-raw.tar.gz.003.part",
+        "archive-parts/prior-b5-raw.tar.gz.004.part",
+        "archive-parts/prior-b5-raw.tar.gz.005.part",
+        "archive-parts/prior-b5-raw.tar.gz.006.part",
+        "archive-parts/prior-b5-raw.tar.gz.007.part",
+        "archive-parts/prior-b5-raw.tar.gz.008.part",
+        "archive-parts/prior-b5-raw.tar.gz.009.part",
+        "archive-parts/prior-b5-raw.tar.gz.010.part",
+        "archive-parts/prior-b5-raw.tar.gz.011.part",
+        "archive-parts/prior-b5-raw.tar.gz.012.part",
+        "archive-parts/prior-b5-raw.tar.gz.013.part",
+        "archive-parts/prior-b5-raw.tar.gz.014.part",
+        "archive-parts/prior-b5-raw.tar.gz.015.part",
+        "archive-parts/prior-b5-raw.tar.gz.016.part",
+        "archive-parts/prior-b5-raw.tar.gz.017.part",
+        "archive-parts/prior-b5-raw.tar.gz.018.part",
+        "archive-parts/prior-b5-raw.tar.gz.019.part",
+        "archive-parts/prior-b5-raw.tar.gz.020.part",
+        "archive-parts/prior-b5-raw.tar.gz.021.part",
+        "archive-parts/prior-b5-raw.tar.gz.022.part",
+        "archive-parts/prior-b5-raw.tar.gz.023.part",
+        "archive-parts/prior-b5-raw.tar.gz.024.part",
+        "archive-parts/prior-b5-raw.tar.gz.025.part",
+        "archive-parts/prior-b5-raw.tar.gz.026.part"
+      ]
+    }
+  ]
+}

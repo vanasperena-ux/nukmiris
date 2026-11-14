@@ -1,0 +1,54 @@
+{
+  "source": "ade1c3be3b66f81aa05a26e06fa6c8e707d0526c",
+  "scope": "LOCAL_SIGNED_REGRESSION_ONLY",
+  "fence": 59000,
+  "declared": 299000,
+  "signedTransitUpperMs": 60000,
+  "P10b_100000": {
+    "state": "HOLD",
+    "reason": "unresolved_activity_interval",
+    "derivationProtocol": "AUTHENTICATED_LEDGER_ACTIVITY_V1",
+    "derivedActivityCount": 3,
+    "derivedActivitiesDigest": "2652c5fc1c581ef51a06ceb2c9fec49b26081b5dbccd8ca4fe155717fb9f90bc"
+  },
+  "P10b_520000": {
+    "state": "VIOLATION",
+    "reason": "post_fence_initiation",
+    "derivationProtocol": "AUTHENTICATED_LEDGER_ACTIVITY_V1",
+    "derivedActivityCount": 3,
+    "derivedActivitiesDigest": "a702fbfbee6d001bf0e074cf84b9e7630b1b88ccc654944809b2b238de1555af"
+  },
+  "P9_incomplete": {
+    "state": "VIOLATION",
+    "reason": "old_canary_invocation_after_declared_retirement",
+    "derivationProtocol": "AUTHENTICATED_LEDGER_ACTIVITY_V1",
+    "derivedActivityCount": 1,
+    "derivedActivitiesDigest": "700d7818bd36b3918fc9986232db5f95fdc5b2c401007c421c695dde2b591c43"
+  },
+  "P9_19trials": {
+    "state": "VIOLATION",
+    "reason": "old_canary_invocation_after_declared_retirement",
+    "derivationProtocol": "AUTHENTICATED_LEDGER_ACTIVITY_V1",
+    "derivedActivityCount": 1,
+    "derivedActivitiesDigest": "700d7818bd36b3918fc9986232db5f95fdc5b2c401007c421c695dde2b591c43"
+  },
+  "H1_TLS_only": {
+    "state": "VIOLATION",
+    "reason": "post_fence_initiation",
+    "derivationProtocol": "AUTHENTICATED_LEDGER_ACTIVITY_V1",
+    "derivedActivityCount": 1,
+    "derivedActivitiesDigest": "c428f27b7e12db1129342f651b13146cb74fea3bc3f4d2217c33356de951f1be"
+  },
+  "delayedApplication": {
+    "state": "EVIDENCE_READY",
+    "timeModel": "BOUNDED_DRIFT_V2",
+    "physicalBoundary": 59000,
+    "declaredAt": 299000,
+    "evidenceCompletedAt": 530000,
+    "thresholdBasis": "PROVISIONAL_SYNTHETIC_TARGET",
+    "derivationProtocol": "AUTHENTICATED_LEDGER_ACTIVITY_V1",
+    "derivedActivityCount": 3,
+    "derivedActivitiesDigest": "7a8924b71e84908e9e089b6a079daea769a4569a76473f29a342b88ffeb7fcea",
+    "evidenceDigest": "f6241679fb0197c29ac65cb57fef8e9366fa32de4930fcedfd2fb8c3d8e10033"
+  }
+}

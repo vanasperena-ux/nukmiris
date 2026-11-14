@@ -1,0 +1,30 @@
+✔ P-1/P-2 ambiguous custody PUT resolves only original immutable slot; concurrent writers cannot fork (58.156169ms)
+✔ P-4 provider crash restart requires independently retained head; corrupt, missing and partial writes hold (9.968458ms)
+✔ P-1 mounted identity/session/epoch/revision/expiry/image/secret invalid states remain inert (8.652789ms)
+✖ P-1 full synthetic SQL admission → independent custody → worker → COMMIT-gated gateway → mTLS fake, restart and revocation (6927.458035ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 3
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 7285.877733
+
+✖ failing tests:
+
+test at platform-proof/test/b1a2-startup.test.mjs:4:1
+✖ P-1 full synthetic SQL admission → independent custody → worker → COMMIT-gated gateway → mTLS fake, restart and revocation (6927.458035ms)
+  TypeError [ERR_INVALID_ARG_TYPE]: The "listener" argument must be of type function. Received an instance of Object
+      at checkListener (node:events:266:3)
+      at ClientRequest.once (node:events:650:3)
+      at new ClientRequest (node:_http_client:458:10)
+      at Object.request (node:http:108:10)
+      at file:///workspace/work/nukmiris-b1a-2/platform-proof/b1a2/runtime/startup.mjs:68:307
+      at new Promise (<anonymous>)
+      at callJson (file:///workspace/work/nukmiris-b1a-2/platform-proof/b1a2/runtime/startup.mjs:68:76)
+      at TestContext.<anonymous> (file:///workspace/work/nukmiris-b1a-2/platform-proof/test/b1a2-startup.test.mjs:16:24)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1389:7) {
+    code: 'ERR_INVALID_ARG_TYPE'
+  }
