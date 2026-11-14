@@ -3,7 +3,7 @@ import { promisify } from "node:util";
 import { LIVE_CLOUD_EXECUTION, receiptData } from "../runtime/transport.mjs";
 import { hash } from "../../src/protocol.mjs";
 import { assertPermissionCoverage } from "./plan.mjs";
-import { retirementDecision } from "../../b1a/runtime/session-policy.mjs";
+import { retirementV2 } from "../runtime/retirement.mjs";
 const run = promisify(execFile);
 /** Exact argv only; never a shell. Even the constructor is closed before an
  * SDK, metadata server, credentials, account settings or subprocess is touched. */
@@ -69,6 +69,11 @@ export class PreparedOperationalAdapter {
   }
   async apply(op, { bundle } = {}) {
     assertPermissionCoverage([op], this.plan.inputs);
+    if (["observe", "recover", "promote"].includes(op.semantic)) {
+      const decision = retirementV2(bundle ?? {});
+      if (decision.state !== "EVIDENCE_READY")
+        throw Error(decision.reason ?? "retirement_held");
+    }
     let value;
     const c = this.plan.inputs;
     switch (op.semantic) {
@@ -115,7 +120,7 @@ export class PreparedOperationalAdapter {
         );
         break;
       case "observe":
-        value = retirementDecision(bundle ?? {});
+        value = retirementV2(bundle ?? {});
         if (value.state !== "EVIDENCE_READY") throw Error("retirement_held");
         break;
       case "recover":

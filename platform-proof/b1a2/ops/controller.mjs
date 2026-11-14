@@ -1,6 +1,6 @@
 import { hash } from "../../src/protocol.mjs";
 import { assertPermissionCoverage } from "./plan.mjs";
-import { retirementDecision } from "../../b1a/runtime/session-policy.mjs";
+import { retirementV2 } from "../runtime/retirement.mjs";
 import { LIVE_CLOUD_EXECUTION } from "../runtime/transport.mjs";
 /** No shell/gcloud execution primitive exists in this module. Intents and exact
  * receipts survive process interruption; unknown outcomes require read-back. */
@@ -100,11 +100,11 @@ export class LocalOperationController {
         };
     }
     if (["observe", "recover", "promote"].includes(id)) {
-      const decision = retirementDecision(bundle ?? {});
+      const decision = retirementV2(bundle ?? {});
       if (decision.state !== "EVIDENCE_READY")
         return {
           state: "HOLD",
-          reason: "independent_retirement_not_ready",
+          reason: decision.reason ?? "independent_retirement_not_ready",
           decision,
         };
     }
@@ -166,6 +166,11 @@ export class LocalCloudModel {
   }
   async apply(op, { bundle } = {}) {
     if (this.applied.has(op.id)) throw Error("model_refuses_automatic_replay");
+    if (["observe", "recover", "promote"].includes(op.semantic)) {
+      const decision = retirementV2(bundle ?? {});
+      if (decision.state !== "EVIDENCE_READY")
+        throw Error(decision.reason ?? "retirement_held");
+    }
     if (op.semantic === "advance") {
       await this.controller?.advance(
         this.plan.inputs.epochs.old,

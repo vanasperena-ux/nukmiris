@@ -191,7 +191,16 @@ export class IndependentObserver {
       throw Error("complete_nat_export_required");
     return r;
   }
-  async providerLedger() {
+  async providerLedger({ transitPolicy } = {}) {
+    if (transitPolicy !== undefined) {
+      transitPolicy = verifiedTransit(transitPolicy);
+      if (
+        !transitPolicy ||
+        transitPolicy.upperMs > 60000 ||
+        transitPolicy.validUntil < this.now()
+      )
+        throw Error("independent_network_and_transit_evidence_required");
+    }
     const r = await this.fake.ledger();
     await this.preserve(r);
     const v = r.value;
@@ -221,10 +230,20 @@ export class IndependentObserver {
         recordsDigest: hash(v.records),
         checkpoint: v.checkpoint,
         rawRefs: [r.rawDigest],
+        ...(transitPolicy
+          ? {
+              transitPolicy: {
+                ...transitPolicy,
+                clockSource: "independent-observer-clock",
+              },
+            }
+          : {}),
       }),
     };
   }
   deriveActivities({ ledgerReceipt, natReceipt, transitPolicy }) {
+    // Optional NAT diagnostics. Retirement independently derives every relevant
+    // TLS/REQUEST/EFFECT from providerLedger's signed full export and policy.
     const provider = fakeReceipt(ledgerReceipt),
       nat = receiptData(natReceipt);
     transitPolicy = verifiedTransit(transitPolicy);

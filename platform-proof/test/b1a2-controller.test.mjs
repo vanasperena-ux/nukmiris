@@ -11,6 +11,201 @@ import {
 } from "../b1a2/ops/controller.mjs";
 import { teardownInventory, simulateTeardown } from "../b1a2/ops/teardown.mjs";
 import { retirementFixture } from "./b1a2-fixture.mjs";
+import { cloudFixture } from "./evidence-fixture.mjs";
+import { retirementDecision as historicalDecision } from "../b1a/runtime/session-policy.mjs";
+import { retirementV2 } from "../b1a2/runtime/retirement.mjs";
+import { SessionController } from "../b1a2/runtime/session-policy.mjs";
+import { hash } from "../src/protocol.mjs";
+import { ZERO } from "../src/ledger.mjs";
+import { randomUUID } from "node:crypto";
+import { authenticatedObservation } from "../src/evidence-source.mjs";
+import { fixture } from "./helpers.mjs";
+
+function legacyBundle() {
+  const v = cloudFixture({
+    now: 2000,
+    fence: {
+      at: 1000,
+      coverUntil: 1300,
+      maxAgeMs: 1000,
+      reportingDelayMs: 100,
+      samples: [
+        { at: 1200, instances: 0 },
+        { at: 1300, instances: 0 },
+      ],
+    },
+    activity: { connect: [100, 110] },
+    clock: { model: "FOUR_TIMESTAMP_V1", measuredAt: 5, validUntil: 3000 },
+  });
+  return {
+    ...v,
+    activities: [v.activity],
+    ledgerRecords: [],
+    canary: v.verifier.verify(
+      v.raw("CANARY", {
+        scope: "old",
+        epoch: 1,
+        revision: "old-r1",
+        clockSource: "fixture-observer-clock",
+        measuredWakeTailMs: 50,
+        trials: Array.from({ length: 20 }, () => ({
+          attemptId: randomUUID(),
+          scheduledWakeAt: 1400,
+          independentWakeAttempted: true,
+          parkedBeforeConnect: true,
+        })),
+      }),
+    ),
+    ledger: v.verifier.verify(
+      v.raw("LEDGER", {
+        scope: "old",
+        epoch: 1,
+        revision: "old-r1",
+        clockSource: "fixture-observer-clock",
+        observedUntil: 1500,
+        checkpoint: { sequence: 0, hash: ZERO },
+        recordsDigest: hash([]),
+      }),
+    ),
+  };
+}
+
+test("C-2/P6b: historical V1 remains verifiable but every B1a-2 operational, recovery and promotion gate refuses it", async () => {
+  const bundle = legacyBundle(),
+    plan = operationalPlan(syntheticInputs());
+  assert.equal(historicalDecision(bundle).state, "EVIDENCE_READY");
+  assert.deepEqual(retirementV2(bundle), {
+    state: "HOLD",
+    reason: "b1a2_requires_v2_retirement",
+  });
+  let effects = 0;
+  const forbidden = async () => {
+    effects++;
+    throw Error("must_not_execute");
+  };
+  const controller = new SessionController({
+    db: { query: forbidden },
+    sessionId: bundle.sessionId,
+  });
+  for (const result of [
+    await controller.reconcile(bundle, []),
+    await controller.promote(bundle),
+  ]) {
+    assert.equal(result.state, "HOLD");
+    assert.equal(result.reason, "b1a2_requires_v2_retirement");
+    assert.equal(result.dispatchEnabled, false);
+  }
+  for (const id of ["observe", "recover", "promote"]) {
+    const op = plan.commands.find((v) => v.id === id);
+    const adapter = new PreparedOperationalAdapter({
+      plan,
+      executor: { mode: "LOCAL_SIMULATION", execute: forbidden },
+      controller: { reconcile: forbidden, promote: forbidden },
+      heartbeat: {
+        start: () => {
+          effects++;
+        },
+      },
+    });
+    await assert.rejects(
+      adapter.apply(op, { bundle }),
+      /b1a2_requires_v2_retirement/,
+    );
+    const model = new LocalCloudModel({ plan });
+    await assert.rejects(
+      model.apply(op, { bundle }),
+      /b1a2_requires_v2_retirement/,
+    );
+    const local = new LocalOperationController({
+      plan,
+      journal: { append: forbidden },
+      adapter: { mode: "LOCAL_SIMULATION", apply: forbidden },
+      records: plan.commands.slice(0, plan.commands.indexOf(op)).map((v) => ({
+        event: "OP_RESULT",
+        id: v.id,
+        inputDigest: plan.inputDigest,
+      })),
+    });
+    const result = await local.execute(id, { bundle });
+    assert.equal(result.state, "HOLD");
+    assert.equal(result.reason, "b1a2_requires_v2_retirement");
+  }
+  assert.equal(
+    effects,
+    0,
+    "no SQL, journal intent, executor, promotion or heartbeat side effect",
+  );
+});
+test("C-2: V2 fence with a legacy primary or additional clock also fails closed", () => {
+  const b = retirementFixture(),
+    legacyClock = b.verifier.verify(
+      b.raw("CLOCK", {
+        ...authenticatedObservation(b.clock, "CLOCK").payload,
+        model: "FOUR_TIMESTAMP_V1",
+        measuredAt: 1000,
+        validUntil: 61000,
+      }),
+    );
+  for (const bundle of [
+    { ...b, clock: legacyClock },
+    { ...b, clocks: [legacyClock] },
+  ])
+    assert.equal(retirementV2(bundle).reason, "b1a2_requires_v2_retirement");
+});
+test("C-2: corrected V2 evidence still reconciles original work and explicitly promotes through restricted PostgreSQL", async (t) => {
+  const f = await fixture(t, { control: true }),
+    binding = await f.plan({ revision: "old-r1" });
+  await f.admin.query(
+    await readFile(new URL("../b1a2/schema.sql", import.meta.url), "utf8"),
+  );
+  const bundle = retirementFixture({
+    fence: { scope: binding.scopeId },
+    canary: { scope: binding.scopeId },
+    ledger: { scope: binding.scopeId },
+  });
+  const db = {
+    async query(sql, args) {
+      const c = await f.admin.connect();
+      try {
+        await c.query("BEGIN");
+        await c.query("SET LOCAL ROLE inc1_controller");
+        const r = await c.query(sql, args);
+        await c.query("COMMIT");
+        return r;
+      } catch (e) {
+        await c.query("ROLLBACK");
+        throw e;
+      } finally {
+        c.release();
+      }
+    },
+  };
+  const controller = new SessionController({ db, sessionId: bundle.sessionId });
+  await db.query("SELECT proof.control_create($1,$2,1,$3,$4)", [
+    bundle.sessionId,
+    binding.scopeId,
+    binding.revision,
+    new Date(Date.now() + 60000),
+  ]);
+  await controller.advance(1, 2, "next-r2");
+  const outcome = await controller.reconcile(bundle, [binding.attemptId]);
+  assert.equal(outcome.state, "RECONCILED_OR_HELD");
+  assert.deepEqual(outcome.outcomes, [
+    { attemptId: binding.attemptId, state: "ARMED" },
+  ]);
+  assert.equal((await controller.read()).dispatchEnabled, false);
+  assert.equal((await controller.promote(bundle)).dispatchEnabled, true);
+  assert.equal(
+    (await controller.promote(bundle)).reason,
+    "protected_hold_requires_new_epoch",
+  );
+  await f.evidence("b1a2-v2-retirement-gates", {
+    retirement: retirementV2(bundle),
+    outcome,
+    dispatchOnlyAfterExplicitPromotion: true,
+    cloudExecution: false,
+  });
+});
 test("P-3 durable seven-step local simulation, crash after CAS, readback without replay and independent emergency", async () => {
   const plan = operationalPlan(syntheticInputs()),
     records = [],

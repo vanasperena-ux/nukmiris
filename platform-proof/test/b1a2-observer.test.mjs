@@ -4,6 +4,8 @@ import { generateKeyPairSync } from "node:crypto";
 import { mkdtemp, rm, writeFile } from "node:fs/promises";
 import { join } from "node:path";
 import { tmpdir } from "node:os";
+import { connect } from "node:tls";
+import { once } from "node:events";
 import { syntheticInputs, validateInputs } from "../b1a2/runtime/inputs.mjs";
 import { ObserverSigner } from "../b1a2/runtime/identity.mjs";
 import {
@@ -16,7 +18,8 @@ import { FakeEvidenceClient } from "../b1a2/runtime/fake-client.mjs";
 import { startFakeProvider } from "../b1a2/runtime/fake-provider.mjs";
 import { protocolFixture } from "./b1a2-protocol-fixture.mjs";
 import { certkit } from "./b1a2-certkit.mjs";
-import { retirementDecision } from "../b1a/runtime/session-policy.mjs";
+import { retirementV2 as retirementDecision } from "../b1a2/runtime/retirement.mjs";
+import { measuredTransitPolicy } from "../b1a2/runtime/transit.mjs";
 import {
   measuredClock,
   authenticatedObservation,
@@ -40,8 +43,15 @@ test("D-2/P-2 end-to-end independent adapters: real mTLS clock/ledger, Google-sh
     ledger = await providerJournal(join(dir, "fake.jsonl")),
     fake = await startFakeProvider({
       tls: tls.server,
-      identities: { [tls.observer.fingerprint]: { role: "observer" } },
-      sourceAllowlist: { observer: ["127.0.0.1"] },
+      identities: {
+        [tls.observer.fingerprint]: { role: "observer" },
+        [tls.gateway.fingerprint]: {
+          role: "gateway",
+          epoch: 1,
+          revision: c.epochs.oldRevision,
+        },
+      },
+      sourceAllowlist: { observer: ["127.0.0.1"], gateway: ["127.0.0.1"] },
       ledger,
       sessionId: c.session.id,
       scopeId: c.session.scopeId,
@@ -57,6 +67,26 @@ test("D-2/P-2 end-to-end independent adapters: real mTLS clock/ledger, Google-sh
     sessionId: c.session.id,
     now,
   });
+  const clockReceipts = [];
+  for (let i = 0; i < 3; i++) clockReceipts.push(await client.clock());
+  const transitPolicy = measuredTransitPolicy({
+    clockReceipts,
+    allowanceMs: 5000,
+    validUntil: b + 600000,
+    now: at,
+    mode: "LOCAL_SIMULATION",
+  });
+  // A real authenticated old-epoch TLS connection, without a REQUEST, must be
+  // derived from the signed ledger. It occurs safely before the fence.
+  const socket = connect({
+    ...tls.gateway,
+    host: "127.0.0.1",
+    port: fake.address.port,
+  });
+  const closed = once(socket, "close");
+  await once(socket, "secureConnect");
+  socket.end();
+  await closed;
   const metricPoints = () =>
     ["active", "idle"].map((state) => ({
       metric: {
@@ -164,7 +194,11 @@ test("D-2/P-2 end-to-end independent adapters: real mTLS clock/ledger, Google-sh
     20,
   );
   at = b + 529000;
-  const exported = await observer.providerLedger();
+  await assert.rejects(
+    observer.providerLedger({ transitPolicy: { upperMs: 1 } }),
+    /independent/,
+  );
+  const exported = await observer.providerLedger({ transitPolicy });
   at = b + 530000;
   const payload = {
     retirementModel: "METRIC_LATENCY_V2",
@@ -197,6 +231,7 @@ test("D-2/P-2 end-to-end independent adapters: real mTLS clock/ledger, Google-sh
       canary: canary.token,
       ledger: exported.observation.token,
       ledgerRecords: exported.records,
+      activities: [],
       now: at,
       uncertaintyMs: measuredClock(
         authenticatedObservation(clock.token, "CLOCK").payload,
@@ -204,6 +239,12 @@ test("D-2/P-2 end-to-end independent adapters: real mTLS clock/ledger, Google-sh
     };
   const result = retirementDecision(bundle);
   assert.equal(result.state, "EVIDENCE_READY", JSON.stringify(result));
+  assert.equal(result.derivedActivityCount, 1);
+  assert.match(result.derivedActivitiesDigest, /^[a-f0-9]{64}$/);
+  assert.deepEqual(
+    retirementDecision({ ...bundle, activities: [{ invented: true }] }),
+    result,
+  );
   assert.throws(
     () =>
       observer.deriveActivities({

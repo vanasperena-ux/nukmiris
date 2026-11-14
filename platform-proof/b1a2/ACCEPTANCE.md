@@ -1,6 +1,6 @@
 # B1a-2 source acceptance matrix
 
-Exact tested source/tree and commands are recorded in `evidence/publication.json`; no source acceptance or cloud approval is inferred from this matrix. Existing full/fault/concurrency suites are retained and extended, not replaced by mocks. Source changes remain solely within `platform-proof/`.
+The original tested source/tree and commands remain in `evidence/publication.json`. C-1/C-2 correction results are separately indexed in `evidence/c1-c2/README.md`; no source acceptance or cloud approval is inferred from this matrix. Existing full/fault/concurrency suites are retained and extended, not replaced by mocks. Source changes remain solely within `platform-proof/`.
 
 | Requirement | Automated evidence |
 | --- | --- |
@@ -27,7 +27,13 @@ Exact tested source/tree and commands are recorded in `evidence/publication.json
 | P-6 sealer simplification and retention | Terraform validate; generated inventory/static tests;30 removals, runtime sealer/private SQL/same-project IAM, no custody serving network or TLS private key state; one-day/no final or retained backups B1a only |
 | P-7 exact input validation | input tests: null owner template and synthetic fixture cannot become real-account authorization; exact projects/identities/names/networks/windows/operators/images/budget required |
 | Source/historical protection | `b1a2/check.mjs`: accepted127-file manifest, all original107 INC1/B1a evidence/planning files, protected application/legacy trees, source scope and secret scan |
+| C-1/P10b, H-1 complete authenticated activity | retirement tests: late old TLS/REQUEST/EFFECT → VIOLATION with omitted/empty/untrusted caller lists; TLS-only/REQUEST-only covered; signed uncertainty overlapping fence → HOLD; delayed EFFECT keeps original pre-fence initiation |
+| C-1/P9 violation precedence | retirement tests: canary REQUEST plus unrelated incomplete trial, 19 trials, missing metrics/tail; an earlier unresolved activity cannot mask a later violation; authentication/chain/export failures hold |
+| C-1/H-2 reproducible derivation | observer e2e derives a real pre-fence old TLS record; corrected verifier reports derived count/digest; all three immutable original signed bundles still reach EVIDENCE_READY with original results/digests checked separately |
+| C-2/P6b V2-only authorization | controller tests: historical V1 bundle still verifies historically but fails the B1a-2 verdict, all observe/recover/promote controller/model/adapter gates and direct reconciliation/promotion; mixed V1/V2 clocks fail; real restricted PG preserves ARMED recovery and explicit V2 promotion |
 
 Original B1a exhaustive point/control/provider campaign, asynchronous schedules, SIGKILL, actual COMMIT-ack loss, PG native TLS, direct-kill measurements, uncertainty handling and diagnostic tests remain mandatory. Original randomized18/27 coverage and independent Claude campaigns are never relabeled as this increment's exhaustive evidence.
 
 Do not interpret local `EVIDENCE_READY`, static IAM coverage or Terraform `validate` as proof of actual Google Cloud instance termination, effective permissions, private networking, quota eligibility, billing control or teardown. Exact source acceptance is requested from Claude; every cloud/account/production authorization gate remains closed.
+
+G-1 image-source/rebuild verification remains OPEN before cloud deployment. Original archive bytes, signed bundles, test logs and historical checksum manifests are preserved. The historical B1a-2 checksum manifest applies at commit655d07d; the intentionally corrected `verify-retirement.mjs` is recorded under the separate correction source/evidence hashes. No missing archive chunk is uploaded by this closure.

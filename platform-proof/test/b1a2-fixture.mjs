@@ -54,6 +54,32 @@ export function retirementFixture({
     },
     activity: { connect: [10000, 10010], ...activity },
   });
+  const connectionId = randomUUID(),
+    attemptId = randomUUID(),
+    identity = {
+      authenticatedEpoch: 1,
+      authenticatedRevision: "old-r1",
+      authenticatedFingerprint: "AA:BB",
+    },
+    connectAt = d.activity.connect[1],
+    requestAt = d.activity.write?.[1] ?? connectAt + 1;
+  let previous = ZERO;
+  const records = [
+    { event: "TLS_READY", at: connectAt, connectionId, ...identity },
+    { event: "REQUEST", at: requestAt, connectionId, attemptId, ...identity },
+    {
+      event: "EFFECT",
+      at: d.activity.providerArrival ?? requestAt + 1,
+      connectionId,
+      attemptId,
+      ...identity,
+    },
+  ].map((e, i) => {
+    const value = { ...e, sequence: i + 1, previous },
+      record = { ...value, hash: hash(value) };
+    previous = record.hash;
+    return record;
+  });
   const trials = Array.from({ length: 20 }, (_, i) => ({
     attemptId: randomUUID(),
     scheduledWakeAt: 310000 + i * 10000,
@@ -77,9 +103,16 @@ export function retirementFixture({
       epoch: 1,
       revision: "old-r1",
       clockSource: "fixture-observer-clock",
-      observedUntil: 529000,
-      checkpoint: { sequence: 0, hash: ZERO },
-      recordsDigest: hash([]),
+      observedUntil: now - 1000,
+      checkpoint: { sequence: records.length, hash: previous },
+      recordsDigest: hash(records),
+      transitPolicy: {
+        upperMs: 60000,
+        validUntil: now + 100000,
+        clockSource: "fixture-observer-clock",
+        scope: "LOCAL_MEASURED_EXPERIMENT_ONLY",
+        measurementRefs: ["c".repeat(64)],
+      },
       ...ledger,
     };
   return {
@@ -87,7 +120,7 @@ export function retirementFixture({
     activities: [d.activity],
     canary: d.verifier.verify(d.raw("CANARY", ca)),
     ledger: d.verifier.verify(d.raw("LEDGER", le)),
-    ledgerRecords: [],
+    ledgerRecords: records,
     ca,
     le,
   };

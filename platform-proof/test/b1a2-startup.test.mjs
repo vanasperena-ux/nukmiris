@@ -1,6 +1,6 @@
 import { SyntheticInitialization } from "../b1a2/runtime/initialize.mjs";
 import { BillingSupervisor } from "../b1a2/runtime/billing.mjs";
-import { SessionController } from "../b1a/runtime/session-policy.mjs";
+import { SessionController } from "../b1a2/runtime/session-policy.mjs";
 import test from "node:test";
 import assert from "node:assert/strict";
 import { randomUUID, randomBytes } from "node:crypto";
