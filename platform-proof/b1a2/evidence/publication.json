@@ -1,0 +1,117 @@
+{
+  "scope": "B1A2_LOCAL_SYNTHETIC_SOURCE_PREPARATION",
+  "version": 2,
+  "testedSource": "ecc085f3a2e413c9f3a228066292b81ad9c1be73",
+  "testedTree": "5748cbadd56bdfed11319e51d11530abb2dccc1d",
+  "base": "ac38ede7777e5493a458995b021a103e55a0059e",
+  "draftPR": 22,
+  "evidencePublicationCommit": "See exact final commit in PR22 handoff comment; avoids self-referential commit hashes",
+  "results": {
+    "full": {
+      "pass": 103,
+      "fail": 0,
+      "skip": 0
+    },
+    "fault": {
+      "pass": 62,
+      "fail": 0,
+      "skip": 0
+    },
+    "concurrency": {
+      "pass": 21,
+      "fail": 0,
+      "skip": 0
+    },
+    "suitesOverlap": true
+  },
+  "nativeLedgersVerified": {
+    "full": 26,
+    "fault": 22,
+    "concurrency": 5
+  },
+  "retirementReproduced": [
+    "full",
+    "fault",
+    "concurrency"
+  ],
+  "node": "24.19.0",
+  "postgresql": "17.11",
+  "terraform": "1.17.2",
+  "googleProvider": "8.11.0",
+  "inventory": {
+    "original": 119,
+    "placementOnlyRemoved": 30,
+    "final": 140
+  },
+  "sixHourUsdWithContingency": "17.30",
+  "sixHourUsdTaxLagRetentionStress": "22.07",
+  "allocationStressWithin20Usd": false,
+  "archivedRawEvidence": [
+    {
+      "file": "concurrency-raw.tar.gz",
+      "bytes": 13996,
+      "sha256": "7117789358f82b8b4572f07561f09ff2d0a3d9cc148af75e3775241abd890aaf",
+      "parts": 1,
+      "uploadedParts": 1,
+      "state": "COMPLETE"
+    },
+    {
+      "file": "fault-raw.tar.gz",
+      "bytes": 1296152,
+      "sha256": "85ac373aeceba4f300e94a3b1b542e6657cdc9fa14cf91be49f779b2e4e52abb",
+      "parts": 13,
+      "uploadedParts": 13,
+      "state": "COMPLETE"
+    },
+    {
+      "file": "full-raw.tar.gz",
+      "bytes": 1304843,
+      "sha256": "126d5f769fae217565dbba56b9586044c0592c9aa837cdae6782b954b26ccf17",
+      "parts": 14,
+      "uploadedParts": 4,
+      "state": "PENDING_AUTOMATIC_REVIEW"
+    },
+    {
+      "file": "image-source.tar.gz",
+      "bytes": 169259,
+      "sha256": "ce5c0097b9ad04cb33e0a9d30d8f5956121650ced0bd9d2ae5c8ce4d9ac3e763",
+      "parts": 2,
+      "uploadedParts": 0,
+      "state": "PENDING_AUTOMATIC_REVIEW"
+    },
+    {
+      "file": "prior-b5-raw.tar.gz",
+      "bytes": 2618083,
+      "sha256": "4b567e62e9186ce82f6d1213d160f8179a223395e7b75289219d7d5a5a6a5a02",
+      "parts": 27,
+      "uploadedParts": 0,
+      "state": "PENDING_AUTOMATIC_REVIEW"
+    }
+  ],
+  "archivePublicationComplete": false,
+  "actualCloudSafety": "NOT_PROVEN",
+  "nativeWindowsExecuted": false,
+  "independentClaudeAcceptance": false,
+  "gcpApiCalls": 0,
+  "gcpCredentialAccess": 0,
+  "gcpProvisioning": 0,
+  "realMetaCalls": 0,
+  "realCalendarCalls": 0,
+  "merges": 0,
+  "acceptedApplicationUnchanged": "b4d0be0cb98c7f2b69be318e18b93f4de102c511",
+  "originalHistoricalFilesUnchanged": 107,
+  "openOwnerDecisions": [
+    "O-2",
+    "O-3",
+    "O-4",
+    "O-5",
+    "O-7"
+  ],
+  "B1bOrB2Authorized": false,
+  "blockedByAutomaticApprovalReview": true,
+  "exactPayloadRetryRejected": true,
+  "pendingParts": 39,
+  "pendingBytes": 3692185,
+  "approvalManifest": "pending-upload-approval.json",
+  "readableEvidenceCommit": "25351e56334266a56ed951076a04684029be34c8"
+}

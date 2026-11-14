@@ -101,7 +101,9 @@ test("B-2: explicit measured clock uncertainty and named clock sources are manda
     "NOT_PROVEN",
   );
   assert.equal(
-    classify(cloudFixture({ clock: { validUntil: 100 } })).verdict,
+    classify(
+      cloudFixture({ clock: { validUntil: 100, maxExtrapolationMs: 95 } }),
+    ).verdict,
     "NOT_PROVEN",
   );
 });

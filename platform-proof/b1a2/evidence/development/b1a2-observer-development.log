@@ -1,0 +1,25 @@
+✖ D-2/P-2 end-to-end independent adapters: real mTLS clock/ledger, Google-shaped 60s/120s metrics, 20 native stopped canaries and signed retirement (1936.198946ms)
+✔ P-2 forged caller wake booleans cannot become signed canary evidence (2.327398ms)
+✔ D-2 realistic 60s sampling,120s visibility delay,20 delayed canaries reaches EVIDENCE_READY (8.357652ms)
+✔ D-2 physical deadline is separate from delayed reporting and cannot be waived (2.568756ms)
+✔ D-2 every state and every sampling interval must be present, zero and fresh (12.641618ms)
+✔ D-2 missing/late deletion and incomplete canary or network-tail evidence holds (8.586922ms)
+✔ D-2 frozen old sender after minutes is VIOLATION even with incomplete unrelated metrics (1.653269ms)
+✔ D-2 pre-fence initiation with delayed application is retained; stale signatures cannot promote (6.130342ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 7
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2169.497445
+
+✖ failing tests:
+
+test at platform-proof/test/b1a2-observer.test.mjs:2:1
+✖ D-2/P-2 end-to-end independent adapters: real mTLS clock/ledger, Google-shaped 60s/120s metrics, 20 native stopped canaries and signed retirement (1936.198946ms)
+  TypeError: Cannot read properties of undefined (reading 'trials')
+      at TestContext.<anonymous> (file:///workspace/work/nukmiris-b1a-2/platform-proof/test/b1a2-observer.test.mjs:11:153)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)

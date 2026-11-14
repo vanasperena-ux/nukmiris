@@ -1,0 +1,73 @@
+{
+  "mode": "OWNER_SUPPLIED",
+  "ownerApprovalRef": null,
+  "projects": {
+    "runtime": {
+      "id": null,
+      "number": null
+    },
+    "custody": {
+      "id": null,
+      "number": null
+    },
+    "fake": {
+      "id": null,
+      "number": null
+    }
+  },
+  "organizationMode": null,
+  "standaloneRiskReview": null,
+  "region": null,
+  "allowedApis": [
+    "run.googleapis.com",
+    "compute.googleapis.com",
+    "sqladmin.googleapis.com",
+    "storage.googleapis.com",
+    "secretmanager.googleapis.com",
+    "cloudkms.googleapis.com",
+    "monitoring.googleapis.com",
+    "logging.googleapis.com",
+    "artifactregistry.googleapis.com",
+    "dns.googleapis.com",
+    "iam.googleapis.com",
+    "serviceusage.googleapis.com",
+    "billingbudgets.googleapis.com",
+    "iap.googleapis.com"
+  ],
+  "quotas": {
+    "gatewayInstances": 2,
+    "workerInstances": 1,
+    "sqlConnections": 25
+  },
+  "names": null,
+  "serviceIdentities": {
+    "gatewayOld": null,
+    "gatewayNext": null,
+    "ingress": null,
+    "sealer": null,
+    "worker": null,
+    "controller": null,
+    "kill": null,
+    "cleanup": null,
+    "custodyCleanup": null,
+    "observer": null,
+    "deployer": null,
+    "fake": null
+  },
+  "network": null,
+  "epochs": null,
+  "session": null,
+  "operators": null,
+  "timing": null,
+  "images": null,
+  "budget": {
+    "billingAccountId": null,
+    "allocationUsd": "20.00",
+    "accountCurrency": null,
+    "localPerUsd": null,
+    "fxAsOf": null,
+    "fxValidUntil": null,
+    "fxApprovalRef": null
+  },
+  "optionalRestoreDrill": null
+}

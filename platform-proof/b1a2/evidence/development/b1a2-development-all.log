@@ -1,0 +1,55 @@
+✔ P-2 Google protocol adapters use only localhost fixtures; typed metric states are complete and immutable (26.571002ms)
+✔ P-2 live cloud/credential access cannot be enabled by environment or flags (0.382356ms)
+✔ P-5 threshold, budget reset/delay, capacity pause, worker restart, suspension/recovery and expiry never auto-enable (1.679908ms)
+✔ P-3 durable seven-step local simulation, crash after CAS, readback without replay and independent emergency (22.574002ms)
+✔ P-3 unknown outcome or missing permission holds; cannot replay, promote, or impersonate deployer (0.922316ms)
+✔ P-6 every generated resource has dependency-ordered teardown and residual policy (10.068806ms)
+✔ P-7 exact synthetic fixture validates locally, never as an owner provisioning plan (4.655527ms)
+✔ P-7 missing or inconsistent account/session/operator/image inputs fail closed (1.715231ms)
+✔ P-5 MXN amount derives from explicit USD/approved FX; stale,missing or inconsistent conversion rejects (0.347856ms)
+✔ P-5 tax,FX uncertainty,lag and retained costs are explicit sensitivities (0.281997ms)
+✔ P-1/P-2 ambiguous custody PUT resolves only original immutable slot; concurrent writers cannot fork (42.733656ms)
+✔ P-4 provider crash restart requires independently retained head; corrupt, missing and partial writes hold (7.754887ms)
+✔ D-2/P-2 end-to-end independent adapters: real mTLS clock/ledger, Google-shaped 60s/120s metrics, 20 native stopped canaries and signed retirement (1908.633722ms)
+✔ P-2 forged caller wake booleans cannot become signed canary evidence (0.927564ms)
+✔ D-3 every concrete command maps to its independent principal and scoped IAM permissions (5.03612ms)
+✔ D-3 missing traffic/delete/firewall/actAs rights block instead of borrowing deployer (1.210553ms)
+✔ P-3 seven steps remain ordered; CLI/CI execution flags cannot invoke any cloud command (96.680843ms)
+✔ P-4 deployable fake accepts epoch-bound mTLS effect; observer exports fsynced ledger; unauthorized identities reject (410.326096ms)
+✔ P-4 modeled old-tag deny blocks only new connections, preserving the established-flow termination requirement (0.323319ms)
+✔ D-2 realistic 60s sampling,120s visibility delay,20 delayed canaries reaches EVIDENCE_READY (10.442771ms)
+✔ D-2 physical deadline is separate from delayed reporting and cannot be waived (2.966705ms)
+✔ D-2 every state and every sampling interval must be present, zero and fresh (16.708484ms)
+✔ D-2 missing/late deletion and incomplete canary or network-tail evidence holds (9.192107ms)
+✔ D-2 frozen old sender after minutes is VIOLATION even with incomplete unrelated metrics (1.745025ms)
+✔ D-2 pre-fence initiation with delayed application is retained; stale signatures cannot promote (7.219996ms)
+✔ P-1 mounted identity/session/epoch/revision/expiry/image/secret invalid states remain inert (7.87724ms)
+✖ P-1 full synthetic SQL admission → independent custody → worker → COMMIT-gated gateway → mTLS fake, restart and revocation (7560.980528ms)
+✔ D-1/P5 authenticated late initiation 10000ms remains VIOLATION (8.87636ms)
+✔ D-1/P5 authenticated late initiation 150000ms remains VIOLATION (3.730687ms)
+✔ D-1/P5 authenticated late initiation 600000ms remains VIOLATION (2.168452ms)
+✔ D-1 bounded extrapolation does not invent precision beyond horizon or at overlapping boundary (2.784586ms)
+✔ D-1 multiple authenticated measurements intersect; inconsistent offsets fail closed (2.769764ms)
+ℹ tests 32
+ℹ suites 0
+ℹ pass 31
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 11096.580206
+
+✖ failing tests:
+
+test at platform-proof/test/b1a2-startup.test.mjs:113:1
+✖ P-1 full synthetic SQL admission → independent custody → worker → COMMIT-gated gateway → mTLS fake, restart and revocation (7560.980528ms)
+  Error: fixture_setup_failed; diagnostics captured before cleanup
+      at fixture (file:///workspace/work/nukmiris-b1a-2/platform-proof/test/helpers.mjs:468:7)
+      at async TestContext.<anonymous> (file:///workspace/work/nukmiris-b1a-2/platform-proof/test/b1a2-startup.test.mjs:114:13)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    diagnosticPath: '/tmp/b1a-fixture-diagnostics/inc1-49a1b2a1e73685ad-c52736da-73e1-4c92-8953-3c8035ce2d19.json',
+    diagnostic: { scope: 'OWNED_LOCAL_B1A_FIXTURE_ONLY', observedAt: '2026-11-14T01:56:31.418Z', name: 'inc1-49a1b2a1e73685ad', volume: 'inc1-49a1b2a1e73685ad-pgdata', reason: 'fixture_setup_failed', intentionalTestFault: false, startupTimeoutMs: 60000, state: { status: 'exited', exitCode: 1, reason: '', oomKilled: false, startedAt: '2026-11-14T01:56:31.121566322Z', finishedAt: '2026-11-14T01:56:31.275991816Z' }, postgresLogs: 'The files belonging to this database system will be owned by user "postgres".\nThis user must also own the server process.\n\nThe database cluster will be initialized with locale "en_US.utf8".\nThe default database encoding has accordingly been set to "UTF8".\nThe default text search configuration will be set to "english".\n\nData page checksums are disabled.\n\nfixing permissions on existing directory /var/lib/postgresql/data ... ok\n\ninitdb: error: could not create directory "/var/lib/postgresql/data/pg_wal": No space left on device\ninitdb: removing contents of data directory "/var/lib/postgresql/data"\n', inspectError: null, logError: null, capturedBeforeResourceRemoval: true, source: 'UNPINNED_DEVELOPMENT_RUN' },
+    setupErrorCode: 'setup_error',
+    fixtureVolume: 'inc1-49a1b2a1e73685ad-pgdata'
+  }

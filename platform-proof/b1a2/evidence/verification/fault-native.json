@@ -1,0 +1,140 @@
+{
+  "scope": "B1A_LOCAL_SYNTHETIC_PREPARATION",
+  "results": [
+    {
+      "case": "b1a-asynchronous-v1",
+      "records": 1464,
+      "chainAndHeadVerified": true,
+      "schedules": 400,
+      "cloudContainmentProven": false
+    },
+    {
+      "case": "b1a-commit-ack_lost",
+      "records": 0,
+      "chainAndHeadVerified": true,
+      "cloudContainmentProven": false
+    },
+    {
+      "case": "b1a-commit-before_server",
+      "records": 5,
+      "chainAndHeadVerified": true,
+      "cloudContainmentProven": false
+    },
+    {
+      "case": "b1a-commit-rollback_tag",
+      "records": 5,
+      "chainAndHeadVerified": true,
+      "cloudContainmentProven": false
+    },
+    {
+      "case": "b1a-cross-product-v1",
+      "records": 3932,
+      "chainAndHeadVerified": true,
+      "schedules": 1080,
+      "cloudContainmentProven": false
+    },
+    {
+      "case": "b1a-direct-kill",
+      "records": 0,
+      "chainAndHeadVerified": true,
+      "cloudContainmentProven": false
+    },
+    {
+      "case": "b1a-native-kill-classification",
+      "records": 6,
+      "chainAndHeadVerified": true,
+      "cloudContainmentProven": false
+    },
+    {
+      "case": "b1a-native-sql-tls",
+      "records": 0,
+      "chainAndHeadVerified": true,
+      "cloudContainmentProven": false
+    },
+    {
+      "case": "b1a-proof-bad_epoch",
+      "records": 5,
+      "chainAndHeadVerified": true,
+      "cloudContainmentProven": false
+    },
+    {
+      "case": "b1a-proof-bad_revision",
+      "records": 5,
+      "chainAndHeadVerified": true,
+      "cloudContainmentProven": false
+    },
+    {
+      "case": "b1a-retired-recovery",
+      "records": 0,
+      "chainAndHeadVerified": true,
+      "cloudContainmentProven": false
+    },
+    {
+      "case": "b1a-sealer-ack",
+      "records": 0,
+      "chainAndHeadVerified": true,
+      "cloudContainmentProven": false
+    },
+    {
+      "case": "b1a-session-budget-hold",
+      "records": 5,
+      "chainAndHeadVerified": true,
+      "cloudContainmentProven": false
+    },
+    {
+      "case": "b1a2-startup-chain",
+      "records": 0,
+      "chainAndHeadVerified": true,
+      "cloudContainmentProven": false
+    },
+    {
+      "case": "campaign",
+      "records": 4145,
+      "chainAndHeadVerified": true,
+      "schedules": 1000,
+      "cloudContainmentProven": false
+    },
+    {
+      "case": "crash-restart",
+      "records": 0,
+      "chainAndHeadVerified": true,
+      "cloudContainmentProven": false
+    },
+    {
+      "case": "dead-man",
+      "records": 100,
+      "chainAndHeadVerified": true,
+      "cloudContainmentProven": false
+    },
+    {
+      "case": "identity-roles",
+      "records": 5,
+      "chainAndHeadVerified": true,
+      "cloudContainmentProven": false
+    },
+    {
+      "case": "keep-alive-counterexample",
+      "records": 18,
+      "chainAndHeadVerified": true,
+      "cloudContainmentProven": false
+    },
+    {
+      "case": "late-pre-fence-effect",
+      "records": 6,
+      "chainAndHeadVerified": true,
+      "cloudContainmentProven": false
+    },
+    {
+      "case": "lost-commit",
+      "records": 0,
+      "chainAndHeadVerified": true,
+      "cloudContainmentProven": false
+    },
+    {
+      "case": "transport-faults",
+      "records": 20,
+      "chainAndHeadVerified": true,
+      "cloudContainmentProven": false
+    }
+  ]
+}

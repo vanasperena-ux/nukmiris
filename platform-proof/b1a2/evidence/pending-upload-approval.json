@@ -1,0 +1,267 @@
+{
+  "scope": "EXACT_AUDITED_SYNTHETIC_BYTES_REQUESTED_FOR_OWNER_APPROVAL",
+  "repository": "vanasperena-ux/nukmiris",
+  "draftPR": 22,
+  "targetDirectory": "platform-proof/b1a2/evidence/archive-parts/",
+  "source": "ecc085f3a2e413c9f3a228066292b81ad9c1be73",
+  "pendingParts": 39,
+  "pendingBytes": 3692185,
+  "archives": [
+    {
+      "archive": "full-raw.tar.gz",
+      "archiveBytes": 1304843,
+      "archiveSha256": "126d5f769fae217565dbba56b9586044c0592c9aa837cdae6782b954b26ccf17",
+      "pendingParts": [
+        {
+          "path": "platform-proof/b1a2/evidence/archive-parts/full-raw.tar.gz.004.part",
+          "bytes": 100000,
+          "sha256": "224e45db469e20e00718309f63e8a3b42cf993754ff34b7b27812c0164ccc415",
+          "gitBlobSha": "29f9b9609d44e5dd45975e6a323d3b5d9bb46e98"
+        },
+        {
+          "path": "platform-proof/b1a2/evidence/archive-parts/full-raw.tar.gz.005.part",
+          "bytes": 100000,
+          "sha256": "8eadb580e85cf4855ab2536163934d504194988e4be521bec6da50e6ce8d57af",
+          "gitBlobSha": "13eb424689a21f4ca868b9b025d2d3bff960b67a"
+        },
+        {
+          "path": "platform-proof/b1a2/evidence/archive-parts/full-raw.tar.gz.006.part",
+          "bytes": 100000,
+          "sha256": "4c86348e244b270a0113a8848ccc2df72fd3750f08847f1cfed72120f3322622",
+          "gitBlobSha": "bb5ee6dd5c4841e722a662c98c5fa350996ffcfa"
+        },
+        {
+          "path": "platform-proof/b1a2/evidence/archive-parts/full-raw.tar.gz.007.part",
+          "bytes": 100000,
+          "sha256": "40325d1d5a641d6cfec70f614326f2486687f7c71938024c855108e6664fbf04",
+          "gitBlobSha": "23a2462effc7b68c584fc08187050a447f5d49d1"
+        },
+        {
+          "path": "platform-proof/b1a2/evidence/archive-parts/full-raw.tar.gz.008.part",
+          "bytes": 100000,
+          "sha256": "b5b6608e9d4beab9f5380c9e76f614c6adef4fd843daa54fe9f89035d306d785",
+          "gitBlobSha": "abbccfab4ab480fc03376944a528d705842e0f71"
+        },
+        {
+          "path": "platform-proof/b1a2/evidence/archive-parts/full-raw.tar.gz.009.part",
+          "bytes": 100000,
+          "sha256": "85c524152828b64d70fefc3597f622a1528adff91909b4ae63b74f3b18fd3282",
+          "gitBlobSha": "82fe803b215aad878cf4d8d37aa13c1c72df427a"
+        },
+        {
+          "path": "platform-proof/b1a2/evidence/archive-parts/full-raw.tar.gz.010.part",
+          "bytes": 100000,
+          "sha256": "8fd32373deec0b1e457708dbe3ce00eb2424b7eda5b9c3ab8d1fe9114c97f9bc",
+          "gitBlobSha": "3daa4b8b9dcc1940cb78e49363670ef2417d7d6e"
+        },
+        {
+          "path": "platform-proof/b1a2/evidence/archive-parts/full-raw.tar.gz.011.part",
+          "bytes": 100000,
+          "sha256": "a7f0ddf67ad521f840d627e294e070c178d4551be25e8c32370343d410c5ad10",
+          "gitBlobSha": "012c529baaf78ab692b8410613207aa93fab801b"
+        },
+        {
+          "path": "platform-proof/b1a2/evidence/archive-parts/full-raw.tar.gz.012.part",
+          "bytes": 100000,
+          "sha256": "d9fc00387c12da5cbe34b558bffa081cc447e5c4763f8ba4bc9555d006990385",
+          "gitBlobSha": "d21987c0b1bedffa3626dbe4d8d0268259c6f48e"
+        },
+        {
+          "path": "platform-proof/b1a2/evidence/archive-parts/full-raw.tar.gz.013.part",
+          "bytes": 4843,
+          "sha256": "7c32ec3c257a4c6ce14d0e2ffa0d53b829ece5fc8eb0d51096840d6518ea1072",
+          "gitBlobSha": "46ca153011cc1ebc38bf02ccadd437550784a89f"
+        }
+      ]
+    },
+    {
+      "archive": "image-source.tar.gz",
+      "archiveBytes": 169259,
+      "archiveSha256": "ce5c0097b9ad04cb33e0a9d30d8f5956121650ced0bd9d2ae5c8ce4d9ac3e763",
+      "pendingParts": [
+        {
+          "path": "platform-proof/b1a2/evidence/archive-parts/image-source.tar.gz.000.part",
+          "bytes": 100000,
+          "sha256": "1e58aeee584a2f8535fb8b5c02d77abbbce141347061f16de9542eb7ac637da0",
+          "gitBlobSha": "ba7c6290938211a540bdd2f6382d460bcf2c3e92"
+        },
+        {
+          "path": "platform-proof/b1a2/evidence/archive-parts/image-source.tar.gz.001.part",
+          "bytes": 69259,
+          "sha256": "84e89cd20b08663bf8ebb88b41e3ee9f9f40149a875344c081c6cade0f39b0a3",
+          "gitBlobSha": "f918e03be5666c820b4f005a4054230cd7b3415f"
+        }
+      ]
+    },
+    {
+      "archive": "prior-b5-raw.tar.gz",
+      "archiveBytes": 2618083,
+      "archiveSha256": "4b567e62e9186ce82f6d1213d160f8179a223395e7b75289219d7d5a5a6a5a02",
+      "pendingParts": [
+        {
+          "path": "platform-proof/b1a2/evidence/archive-parts/prior-b5-raw.tar.gz.000.part",
+          "bytes": 100000,
+          "sha256": "806b1e28d3ff1f40c81b1d43791c6da3c8ffc02f0c99563349577a444e1deadb",
+          "gitBlobSha": "2b5aa153388ce9aabfc590a7b0d54f527dc72e2c"
+        },
+        {
+          "path": "platform-proof/b1a2/evidence/archive-parts/prior-b5-raw.tar.gz.001.part",
+          "bytes": 100000,
+          "sha256": "dc4f0ff85a03269582b43ea15a6cd590e0d95b2bd065c9de357838fc2ebaf5dc",
+          "gitBlobSha": "a0de010080ad5e6da091e867c80804ae4941fc30"
+        },
+        {
+          "path": "platform-proof/b1a2/evidence/archive-parts/prior-b5-raw.tar.gz.002.part",
+          "bytes": 100000,
+          "sha256": "99a7ac02bfc190198f44130f132639ea82b31ddee9005eee1aac60ff582047c5",
+          "gitBlobSha": "b6a5dc8649541467cf019daac96b87b51f02beaf"
+        },
+        {
+          "path": "platform-proof/b1a2/evidence/archive-parts/prior-b5-raw.tar.gz.003.part",
+          "bytes": 100000,
+          "sha256": "752a74c3e7508906a3301702e8a40a0ce3ed5c1f2afe7434d20ca030c5b33e7b",
+          "gitBlobSha": "f4f993b3891b3135f1189b944062a1cfc2470290"
+        },
+        {
+          "path": "platform-proof/b1a2/evidence/archive-parts/prior-b5-raw.tar.gz.004.part",
+          "bytes": 100000,
+          "sha256": "afea17eae5af49dbc9a5b37a8e0d935118edcc4852045bd68b48833ba85bf480",
+          "gitBlobSha": "ac67148182b933a96938a9534569c0377b3c6eae"
+        },
+        {
+          "path": "platform-proof/b1a2/evidence/archive-parts/prior-b5-raw.tar.gz.005.part",
+          "bytes": 100000,
+          "sha256": "6582e7cd26c95a0c79ff8976e579eff071eb7fa6c87072545419c80171547474",
+          "gitBlobSha": "5ef639284fc0f0d8af7c09efbb95b2da9c94c97b"
+        },
+        {
+          "path": "platform-proof/b1a2/evidence/archive-parts/prior-b5-raw.tar.gz.006.part",
+          "bytes": 100000,
+          "sha256": "7d7ba1c55957a8da2ea8b5ea7e8d0bb0e9a8fc82648807b21560d4e98f93cb0e",
+          "gitBlobSha": "259ee9eb8f85d204ec6881ddbd8b1f75396622dd"
+        },
+        {
+          "path": "platform-proof/b1a2/evidence/archive-parts/prior-b5-raw.tar.gz.007.part",
+          "bytes": 100000,
+          "sha256": "36c115b2a5aa89a3b64bf6abba7724981e4b30855ed7948a391fdc6c09a72844",
+          "gitBlobSha": "4914af49136d2d5f1e77ac5f339c4d42fbd02640"
+        },
+        {
+          "path": "platform-proof/b1a2/evidence/archive-parts/prior-b5-raw.tar.gz.008.part",
+          "bytes": 100000,
+          "sha256": "61f80733fc02b458a48cbe1993dd3ee0de22dd30cb008d6c06968deebffe569d",
+          "gitBlobSha": "63efdfbe7feb9309bdfb135d6fd2b8ee66c36f4a"
+        },
+        {
+          "path": "platform-proof/b1a2/evidence/archive-parts/prior-b5-raw.tar.gz.009.part",
+          "bytes": 100000,
+          "sha256": "4be8ada10d50425e91f13794f124eafb6dfb28613a763896227df039a71d951c",
+          "gitBlobSha": "9584ca6a022dc71732f82ffd249f949df1f21fcd"
+        },
+        {
+          "path": "platform-proof/b1a2/evidence/archive-parts/prior-b5-raw.tar.gz.010.part",
+          "bytes": 100000,
+          "sha256": "9b79bc14b91d008d3275ab5a92d438dffb92869070b27e37c3e0815a3d40c2ab",
+          "gitBlobSha": "4c7f96da98eee000056882bcf0455f11978a1dcc"
+        },
+        {
+          "path": "platform-proof/b1a2/evidence/archive-parts/prior-b5-raw.tar.gz.011.part",
+          "bytes": 100000,
+          "sha256": "ccff3c3fcbad3967ab112cd01f7e89a1241a99b76c4344b2cd0bdd35d9ca7c1c",
+          "gitBlobSha": "6f4fc90f35d4fa19bd98c65bd5fdd2f6d9f07544"
+        },
+        {
+          "path": "platform-proof/b1a2/evidence/archive-parts/prior-b5-raw.tar.gz.012.part",
+          "bytes": 100000,
+          "sha256": "cf3aa37ee4ae670313480d0828db51e990a49a296164d4efe1ba427031bf3751",
+          "gitBlobSha": "5c045ee50c066c4d2f9f15748dd1ec2909278b10"
+        },
+        {
+          "path": "platform-proof/b1a2/evidence/archive-parts/prior-b5-raw.tar.gz.013.part",
+          "bytes": 100000,
+          "sha256": "f758cbc245e6fa743ef392fa71f92535d0df5d21ac28980b99c56368d62f7a25",
+          "gitBlobSha": "336513a568ade3513566fd2445f32480642dbf4c"
+        },
+        {
+          "path": "platform-proof/b1a2/evidence/archive-parts/prior-b5-raw.tar.gz.014.part",
+          "bytes": 100000,
+          "sha256": "bf4452dfe331fffa817f62ef54aa2e5e8e7ff3063c9916e50ce3759465fa76af",
+          "gitBlobSha": "60f385cae00a9075b66e15678aca188b7c0e96c4"
+        },
+        {
+          "path": "platform-proof/b1a2/evidence/archive-parts/prior-b5-raw.tar.gz.015.part",
+          "bytes": 100000,
+          "sha256": "94794cf4b2647d6f541e794b3abbbbbc61dec9b27f5d3094d532db91621ac85a",
+          "gitBlobSha": "96550aa69e5043f03e9f7bbed9a698931f516404"
+        },
+        {
+          "path": "platform-proof/b1a2/evidence/archive-parts/prior-b5-raw.tar.gz.016.part",
+          "bytes": 100000,
+          "sha256": "24e02ea5c6ef198b6e3440970abb0a584b77d68f930b99655cab36401be8435e",
+          "gitBlobSha": "70c0bbd67e6fcc960eef82bef30f95b8081d8bf3"
+        },
+        {
+          "path": "platform-proof/b1a2/evidence/archive-parts/prior-b5-raw.tar.gz.017.part",
+          "bytes": 100000,
+          "sha256": "7e30489bbf767654c1213f84720f05205cd1da5dcce2b8117c5550149011dc53",
+          "gitBlobSha": "437ed04b201403bc48ae518762ec8027775ff2ac"
+        },
+        {
+          "path": "platform-proof/b1a2/evidence/archive-parts/prior-b5-raw.tar.gz.018.part",
+          "bytes": 100000,
+          "sha256": "d86e85f7a2604dfb1d336c99f56e50d4bfd8a68069a59a320852ca35ac0a7253",
+          "gitBlobSha": "e4e6935aa251ae47c0df95d31697f175e9d134a3"
+        },
+        {
+          "path": "platform-proof/b1a2/evidence/archive-parts/prior-b5-raw.tar.gz.019.part",
+          "bytes": 100000,
+          "sha256": "9ee90591e00024732ccc5da429d0ae2b5deaa10b103f7ee6c921b5d79f9e6a9e",
+          "gitBlobSha": "94b4b5c3e7dae15a481ecb3c0c37ea60cab15362"
+        },
+        {
+          "path": "platform-proof/b1a2/evidence/archive-parts/prior-b5-raw.tar.gz.020.part",
+          "bytes": 100000,
+          "sha256": "f2425821d27823993d8a545c3f6169ff1785b03430cf6f4f115ec75a6ffe7f2c",
+          "gitBlobSha": "1d8cead917b1813fc148118b9c9540619be18636"
+        },
+        {
+          "path": "platform-proof/b1a2/evidence/archive-parts/prior-b5-raw.tar.gz.021.part",
+          "bytes": 100000,
+          "sha256": "82ada1e54ab21887a201069a715d35491c4caf4bcad6c79663867f626ce7de63",
+          "gitBlobSha": "fccdd2696d91ff88092f63eb41d042e0e3807172"
+        },
+        {
+          "path": "platform-proof/b1a2/evidence/archive-parts/prior-b5-raw.tar.gz.022.part",
+          "bytes": 100000,
+          "sha256": "9325ddb9a304682f4bf8b0e18281f76bb9673089d30916d2e0a96ef6e1430997",
+          "gitBlobSha": "66ddc559a5c12aadbe5388fc13ec7cece7d0c0c0"
+        },
+        {
+          "path": "platform-proof/b1a2/evidence/archive-parts/prior-b5-raw.tar.gz.023.part",
+          "bytes": 100000,
+          "sha256": "ed7bd56eb526acee7d13b99cfede9e91a724f50016bc86a9cf65d5b983e9837e",
+          "gitBlobSha": "7e306e4970f721651eb8a53c20edd58a70cbf9d4"
+        },
+        {
+          "path": "platform-proof/b1a2/evidence/archive-parts/prior-b5-raw.tar.gz.024.part",
+          "bytes": 100000,
+          "sha256": "9e33352b6e9638c3c351fc267a7eaf37fd5883067e1a58944e3f76d4ec61feb6",
+          "gitBlobSha": "5e5d8aa5f1b322fb9cec059baa577328eac358f9"
+        },
+        {
+          "path": "platform-proof/b1a2/evidence/archive-parts/prior-b5-raw.tar.gz.025.part",
+          "bytes": 100000,
+          "sha256": "89d1f84b46d24b525de234d2831ba78340361db59f4958e80050f5743d51bdfd",
+          "gitBlobSha": "3c1fa4ef5e7f742c0b1ab30927c29229d97b08cb"
+        },
+        {
+          "path": "platform-proof/b1a2/evidence/archive-parts/prior-b5-raw.tar.gz.026.part",
+          "bytes": 18083,
+          "sha256": "a2d4efb2c0b555ef90d6814b362f1bd03b843e752f870d42fa1ab11a7a4fb70b",
+          "gitBlobSha": "5a727d22aa29ce65eaa375a5a248c15462aea6a4"
+        }
+      ]
+    }
+  ],
+  "authorizationRequested": "Publish these exact remaining bytes through the existing GitHub API. No cloud/provider/runtime activation or other authorization."
+}
