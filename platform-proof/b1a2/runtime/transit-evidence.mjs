@@ -43,6 +43,11 @@ export function assessTransitEvidence({
     !p ||
     !l ||
     !expected ||
+    !Array.isArray(clocks) ||
+    ![expected.providerFingerprint, expected.probeFingerprint].every(
+      (v) =>
+        typeof v === "string" && /^(?:[A-F0-9]{2}:){31}[A-F0-9]{2}$/.test(v),
+    ) ||
     !Number.isFinite(now) ||
     ![p, l].every(
       (v) =>
@@ -118,7 +123,7 @@ export function assessTransitEvidence({
     tls[0].sequence >= request.sequence
   )
     return held("independent_probe_provider_flow_binding_missing");
-  let ctx, phase, arrival, boundary;
+  let ctx, phase, arrival, boundary, observedUntil;
   if (
     ![clock, ...clocks].every(
       (c) =>
@@ -138,6 +143,7 @@ export function assessTransitEvidence({
     if (!clockFresh(ctx, now)) return held("transit_clock_stale");
     phase = v.phases.map((x) => correlate(ctx, x.at, v.clockSource));
     arrival = correlate(ctx, request.at, q.clockSource);
+    observedUntil = correlate(ctx, q.observedUntil, q.clockSource);
     boundary = correlate(ctx, fenceAt, ctx.referenceClockSource);
   } catch (e) {
     return held(e.message);
@@ -151,7 +157,7 @@ export function assessTransitEvidence({
       (x, i) => x.lower > now || (i && phase[i - 1].lower > x.upper),
     ) ||
     !Number.isFinite(q.observedUntil) ||
-    correlate(ctx, q.observedUntil, q.clockSource).upper < arrival.lower
+    observedUntil.upper < arrival.lower
   )
     return held("transit_clock_order_inconsistent");
   const observedDelayMs = {

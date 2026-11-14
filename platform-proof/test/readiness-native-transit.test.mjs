@@ -105,7 +105,6 @@ test("G-2 native separate process SIGSTOP after TLS then post-fence write on tha
   );
   t.after(() => {
     try {
-      child.kill("SIGCONT");
       child.kill("SIGKILL");
     } catch {}
   });

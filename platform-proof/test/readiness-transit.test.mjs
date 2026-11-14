@@ -167,3 +167,20 @@ test("G-2 probe refuses cloud mode, remote targets and non-synthetic payload bef
       /local_synthetic/,
     );
 });
+
+test("G-2 invalid clock collection, missing provider pin and outside-horizon export timestamp hold without throwing", () => {
+  const f = transitFixture();
+  assert.equal(assessTransitEvidence({ ...f, clocks: {} }).state, "HOLD");
+  assert.equal(
+    assessTransitEvidence({
+      ...f,
+      expected: { ...f.expected, providerFingerprint: undefined },
+    }).state,
+    "HOLD",
+  );
+  const ledger = f.providerSigner.observe("LEDGER", {
+    ...f.ledgerPayload,
+    observedUntil: Number.MAX_SAFE_INTEGER,
+  }).token;
+  assert.equal(assessTransitEvidence({ ...f, ledger }).state, "HOLD");
+});
