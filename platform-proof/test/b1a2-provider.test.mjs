@@ -30,6 +30,7 @@ async function setup(t) {
     p = await startFakeProvider({
       tls: tls.server,
       identities,
+      expectedGateways: [{ epoch: 1, revision: "b1a2-old-r1" }],
       sessionId,
       scopeId,
       sourceAllowlist: { gateway: ["127.0.0.1"], observer: ["127.0.0.1"] },

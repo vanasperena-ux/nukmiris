@@ -41,6 +41,10 @@ export async function assemble({
   if (role === "fake")
     return startFakeProvider({
       ...mounts.profile.provider,
+      expectedGateways: [
+        { epoch: inputs.epochs.old, revision: inputs.epochs.oldRevision },
+        { epoch: inputs.epochs.next, revision: inputs.epochs.nextRevision },
+      ],
       tls: mounts.tls,
       sessionId: inputs.session.id,
       scopeId: inputs.session.scopeId,

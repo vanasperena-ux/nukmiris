@@ -2,6 +2,10 @@ import { isIP } from "node:net";
 import { randomUUID } from "node:crypto";
 import { hash } from "../../src/protocol.mjs";
 import { budgetPlan } from "./billing.mjs";
+import {
+  accountReceiptTemplate,
+  validateAccountReceipts,
+} from "./account-receipts.mjs";
 export const REQUIRED_APIS = [
   "run.googleapis.com",
   "compute.googleapis.com",
@@ -111,7 +115,7 @@ export function validateInputs(
     throw Error("approved_bounded_session_window_required");
   if (
     !v.operators ||
-    !["supervisor", "kill", "cleanup", "billing", "backup", "custodian"].every(
+    !["supervisor", "kill", "cleanup", "billing", "custodian"].every(
       (k) => typeof v.operators[k] === "string" && v.operators[k],
     ) ||
     (!fixture &&
@@ -228,6 +232,12 @@ export function validateInputs(
   )
     throw Error("explicit_billing_account_id_required");
   const budget = budgetPlan(v.budget, now);
+  if (
+    !fixture &&
+    validateAccountReceipts(v.accountReceipts, { inputs: v, now }).state !==
+      "OFFLINE_RECEIPTS_STRUCTURALLY_VALID"
+  )
+    throw Error("mandatory_owner_account_receipts_missing_or_invalid");
   return frozen({
     ...structuredClone(v),
     budgetPlan: budget,
@@ -240,13 +250,14 @@ export function validateInputs(
 export function ownerTemplate() {
   return {
     mode: "OWNER_SUPPLIED",
+    accountReceipts: accountReceiptTemplate(),
     ownerApprovalRef: null,
     projects: {
       runtime: { id: null, number: null },
       custody: { id: null, number: null },
       fake: { id: null, number: null },
     },
-    organizationMode: null,
+    organizationMode: "ORG_ENFORCED",
     standaloneRiskReview: null,
     region: null,
     allowedApis: REQUIRED_APIS,
@@ -257,18 +268,24 @@ export function ownerTemplate() {
     epochs: null,
     session: null,
     operators: null,
-    timing: null,
+    timing: {
+      terminationTargetMs: 60000,
+      canaryCount: 20,
+      samplingIntervalMs: 60000,
+      publicationLatencyMs: 120000,
+      ownerApprovalRef: null,
+    },
     images: null,
     budget: {
       billingAccountId: null,
-      allocationUsd: "20.00",
+      allocationUsd: "30.00",
       accountCurrency: null,
       localPerUsd: null,
       fxAsOf: null,
       fxValidUntil: null,
       fxApprovalRef: null,
     },
-    optionalRestoreDrill: null,
+    optionalRestoreDrill: false,
   };
 }
 export function syntheticInputs(now = Date.parse("2026-11-14T12:00:00Z")) {

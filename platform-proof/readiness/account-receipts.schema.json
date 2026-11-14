@@ -1,0 +1,434 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "schema": {
+      "const": "B1A_READ_ONLY_ACCOUNT_RECEIPTS_V1"
+    },
+    "provenance": {
+      "type": "object",
+      "properties": {
+        "authorizationRef": {
+          "type": "string",
+          "minLength": 1
+        },
+        "capturedAt": {
+          "type": "number"
+        },
+        "validUntil": {
+          "type": "number"
+        },
+        "sourceDigests": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        }
+      },
+      "required": [
+        "authorizationRef",
+        "capturedAt",
+        "validUntil",
+        "sourceDigests"
+      ],
+      "additionalProperties": false
+    },
+    "organization": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[1-9][0-9]{5,19}$"
+        },
+        "policyAdminPrincipal": {
+          "type": "string",
+          "minLength": 1
+        },
+        "policyAdministrationVerified": {
+          "const": true
+        },
+        "allTrafficPolicyVerified": {
+          "const": true
+        },
+        "noVpcDeploymentDeniedVerified": {
+          "const": true
+        }
+      },
+      "required": [
+        "id",
+        "policyAdminPrincipal",
+        "policyAdministrationVerified",
+        "allTrafficPolicyVerified",
+        "noVpcDeploymentDeniedVerified"
+      ],
+      "additionalProperties": false
+    },
+    "projects": {
+      "type": "object",
+      "properties": {
+        "runtime": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "number": {
+              "type": "string",
+              "pattern": "^[1-9][0-9]{11}$"
+            },
+            "organizationId": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "id",
+            "number",
+            "organizationId"
+          ],
+          "additionalProperties": false
+        },
+        "custody": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "number": {
+              "type": "string",
+              "pattern": "^[1-9][0-9]{11}$"
+            },
+            "organizationId": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "id",
+            "number",
+            "organizationId"
+          ],
+          "additionalProperties": false
+        },
+        "fake": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "number": {
+              "type": "string",
+              "pattern": "^[1-9][0-9]{11}$"
+            },
+            "organizationId": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "id",
+            "number",
+            "organizationId"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "runtime",
+        "custody",
+        "fake"
+      ],
+      "additionalProperties": false
+    },
+    "billing": {
+      "type": "object",
+      "properties": {
+        "accountId": {
+          "type": "string",
+          "pattern": "^[A-F0-9]{6}-[A-F0-9]{6}-[A-F0-9]{6}$"
+        },
+        "currency": {
+          "const": "MXN"
+        },
+        "localPerUsd": {
+          "type": "string",
+          "pattern": "^[1-9][0-9]*(\\.[0-9]{1,6})?$"
+        },
+        "fxAsOf": {
+          "type": "number"
+        },
+        "fxValidUntil": {
+          "type": "number"
+        },
+        "fxOwnerApprovalRef": {
+          "type": "string",
+          "minLength": 1
+        },
+        "trialExpiry": {
+          "type": "string",
+          "minLength": 1
+        },
+        "freeTrialEligibilityVerified": {
+          "const": true
+        },
+        "noAutomaticPaidUpgrade": {
+          "const": true
+        }
+      },
+      "required": [
+        "accountId",
+        "currency",
+        "localPerUsd",
+        "fxAsOf",
+        "fxValidUntil",
+        "fxOwnerApprovalRef",
+        "trialExpiry",
+        "freeTrialEligibilityVerified",
+        "noAutomaticPaidUpgrade"
+      ],
+      "additionalProperties": false
+    },
+    "environment": {
+      "type": "object",
+      "properties": {
+        "region": {
+          "const": "us-central1"
+        },
+        "enabledApis": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "quotasVerified": {
+          "const": true
+        },
+        "skuAvailabilityVerified": {
+          "const": true
+        },
+        "sqlEdition": {
+          "const": "ENTERPRISE"
+        },
+        "sqlTier": {
+          "enum": [
+            "db-f1-micro",
+            "db-g1-small"
+          ]
+        },
+        "sqlPscTlsRoleCompatibilityVerified": {
+          "const": true
+        },
+        "sqlConnectionLimit": {
+          "type": "integer",
+          "minimum": 13,
+          "maximum": 25
+        },
+        "syntheticImageCandidate": {
+          "type": "string",
+          "pattern": "^sha256:[a-f0-9]{64}$"
+        }
+      },
+      "required": [
+        "region",
+        "enabledApis",
+        "quotasVerified",
+        "skuAvailabilityVerified",
+        "sqlEdition",
+        "sqlTier",
+        "sqlPscTlsRoleCompatibilityVerified",
+        "sqlConnectionLimit",
+        "syntheticImageCandidate"
+      ],
+      "additionalProperties": false
+    },
+    "operator": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "principal": {
+          "type": "string",
+          "minLength": 1
+        },
+        "singlePersonRiskAccepted": {
+          "const": true
+        },
+        "duties": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "supervisor",
+              "kill",
+              "cleanup",
+              "billing",
+              "custodian"
+            ]
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "policyApprovalRef": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "name",
+        "principal",
+        "singlePersonRiskAccepted",
+        "duties",
+        "policyApprovalRef"
+      ],
+      "additionalProperties": false
+    },
+    "technicalIdentities": {
+      "type": "object",
+      "properties": {
+        "deployment": {
+          "type": "string",
+          "minLength": 1
+        },
+        "kill": {
+          "type": "string",
+          "minLength": 1
+        },
+        "cleanup": {
+          "type": "string",
+          "minLength": 1
+        },
+        "custodyCleanup": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "deployment",
+        "kill",
+        "cleanup",
+        "custodyCleanup"
+      ],
+      "additionalProperties": false
+    },
+    "authority": {
+      "type": "object",
+      "properties": {
+        "independentlyScopedKillVerified": {
+          "const": true
+        },
+        "independentlyScopedCleanupVerified": {
+          "const": true
+        },
+        "directOperatorAccessWithoutDeployerVerified": {
+          "const": true
+        },
+        "cleanupSurvivesExperimentDeletionVerified": {
+          "const": true
+        },
+        "manualBillingBudgetCleanupAccepted": {
+          "const": true
+        },
+        "permissionReceipts": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        }
+      },
+      "required": [
+        "independentlyScopedKillVerified",
+        "independentlyScopedCleanupVerified",
+        "directOperatorAccessWithoutDeployerVerified",
+        "cleanupSurvivesExperimentDeletionVerified",
+        "manualBillingBudgetCleanupAccepted",
+        "permissionReceipts"
+      ],
+      "additionalProperties": false
+    },
+    "window": {
+      "type": "object",
+      "properties": {
+        "startsAt": {
+          "type": "string",
+          "minLength": 1
+        },
+        "expiresAt": {
+          "type": "string",
+          "minLength": 1
+        },
+        "terminationTargetMs": {
+          "const": 60000
+        },
+        "allocationUsd": {
+          "const": "30.00"
+        },
+        "noSpendAuthorizedByThisReceipt": {
+          "const": true
+        },
+        "independentExpiryHoldVerified": {
+          "const": true
+        },
+        "cleanupResponsibilitiesAccepted": {
+          "const": true
+        }
+      },
+      "required": [
+        "startsAt",
+        "expiresAt",
+        "terminationTargetMs",
+        "allocationUsd",
+        "noSpendAuthorizedByThisReceipt",
+        "independentExpiryHoldVerified",
+        "cleanupResponsibilitiesAccepted"
+      ],
+      "additionalProperties": false
+    },
+    "retention": {
+      "type": "object",
+      "properties": {
+        "b1aPitrDays": {
+          "const": 1
+        },
+        "b1aRestoreDrill": {
+          "const": false
+        },
+        "b1bRestoreRequired": {
+          "const": true
+        }
+      },
+      "required": [
+        "b1aPitrDays",
+        "b1aRestoreDrill",
+        "b1bRestoreRequired"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "schema",
+    "provenance",
+    "organization",
+    "projects",
+    "billing",
+    "environment",
+    "operator",
+    "technicalIdentities",
+    "authority",
+    "window",
+    "retention"
+  ],
+  "additionalProperties": false
+}

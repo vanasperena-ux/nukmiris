@@ -27,7 +27,7 @@ export function budgetPlan(v, now) {
     rate = decimal(v.localPerUsd);
   if (
     usd <= 0n ||
-    usd > 20n * SCALE ||
+    usd > 30n * SCALE ||
     rate <= 0n ||
     rate > 1000n * SCALE ||
     (v.accountCurrency === "USD" && rate !== SCALE)
