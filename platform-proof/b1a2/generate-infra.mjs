@@ -1,3 +1,4 @@
+import { custodyReadCondition } from "./ops/custody-policy.mjs";
 import { readFile, writeFile, mkdir } from "node:fs/promises";
 import { permissionCatalog } from "./ops/plan.mjs";
 import {
@@ -114,6 +115,14 @@ const placementRemoved = [...removed];
 const gate = ["terraform_data.never_apply"];
 const add = (t, n, v, project = c.projects.runtime.id) => {
   r[t] ??= {};
+  const memberRole = Object.entries(c.serviceIdentities).find(
+    ([, email]) => v.member === "serviceAccount:" + email,
+  )?.[0];
+  if (memberRole)
+    v.depends_on = [
+      ...(v.depends_on ?? []),
+      "google_service_account." + saNames[memberRole],
+    ];
   r[t][n] = {
     ...v,
     depends_on: [...new Set([...(v.depends_on ?? []), ...gate])],
@@ -256,13 +265,10 @@ add(
     bucket: "${google_storage_bucket.custody.name}",
     role: "roles/storage.objectViewer",
     member: "serviceAccount:" + c.serviceIdentities.sealer,
-    condition: {
-      title: "B1a2RecordsOnly",
-      expression:
-        'resource.name.startsWith("projects/_/buckets/' +
-        c.names.bucket +
-        '/objects/sessions/")',
-    },
+    condition: custodyReadCondition({
+      bucket: c.names.bucket,
+      sessionId: c.session.id,
+    }),
   },
   null,
 );

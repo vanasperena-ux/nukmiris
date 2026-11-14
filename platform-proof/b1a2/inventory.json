@@ -1162,6 +1162,7 @@
       "project": "b1a2-fixture-run",
       "name": "${google_secret_manager_secret.bundle_worker.id}",
       "dependencies": [
+        "google_service_account.worker",
         "terraform_data.never_apply",
         "google_secret_manager_secret.bundle_worker"
       ],
@@ -1176,6 +1177,7 @@
       "project": "b1a2-fixture-run",
       "name": "${google_secret_manager_secret.bundle_ingress.id}",
       "dependencies": [
+        "google_service_account.ingress",
         "terraform_data.never_apply",
         "google_secret_manager_secret.bundle_ingress"
       ],
@@ -1190,6 +1192,7 @@
       "project": "b1a2-fixture-run",
       "name": "${google_secret_manager_secret.bundle_sealer.id}",
       "dependencies": [
+        "google_service_account.sealer",
         "terraform_data.never_apply",
         "google_secret_manager_secret.bundle_sealer"
       ],
@@ -1204,6 +1207,7 @@
       "project": "b1a2-fixture-run",
       "name": "projects/b1a2-fixture-run/secrets/b1a2-effect-old",
       "dependencies": [
+        "google_service_account.kill",
         "terraform_data.never_apply",
         "google_project_iam_custom_role.scope_11"
       ],
@@ -1218,6 +1222,7 @@
       "project": "b1a2-fixture-custody",
       "name": "projects/b1a2-fixture-custody/secrets/b1a2-observer-signing",
       "dependencies": [
+        "google_service_account.observer",
         "terraform_data.never_apply",
         "google_project_iam_custom_role.scope_15"
       ],
@@ -1277,6 +1282,7 @@
       "project": "b1a2-fixture-run",
       "name": "scope_12",
       "dependencies": [
+        "google_service_account.kill",
         "terraform_data.never_apply",
         "google_project_iam_custom_role.scope_12"
       ],
@@ -1336,6 +1342,7 @@
       "project": "b1a2-fixture-custody",
       "name": "${google_storage_bucket.custody.name}",
       "dependencies": [
+        "google_service_account.sealer",
         "terraform_data.never_apply",
         "google_storage_bucket.custody"
       ],
@@ -1350,6 +1357,7 @@
       "project": "b1a2-fixture-custody",
       "name": "b1a2-fixture-custody-evidence",
       "dependencies": [
+        "google_service_account.observer",
         "terraform_data.never_apply",
         "google_project_iam_custom_role.scope_16"
       ],
@@ -1364,6 +1372,7 @@
       "project": "b1a2-fixture-custody",
       "name": "b1a2-fixture-custody-evidence",
       "dependencies": [
+        "google_service_account.custody_cleanup",
         "terraform_data.never_apply",
         "google_project_iam_custom_role.scope_23"
       ],
@@ -1716,6 +1725,7 @@
       "project": "b1a2-fixture-run",
       "name": "scope_0",
       "dependencies": [
+        "google_service_account.deployer",
         "terraform_data.never_apply",
         "google_project_iam_custom_role.scope_0"
       ],
@@ -1730,6 +1740,7 @@
       "project": "b1a2-fixture-run",
       "name": "scope_6",
       "dependencies": [
+        "google_service_account.kill",
         "terraform_data.never_apply",
         "google_project_iam_custom_role.scope_6"
       ],
@@ -1744,6 +1755,7 @@
       "project": "b1a2-fixture-run",
       "name": "scope_13",
       "dependencies": [
+        "google_service_account.observer",
         "terraform_data.never_apply",
         "google_project_iam_custom_role.scope_13"
       ],
@@ -1758,6 +1770,7 @@
       "project": "b1a2-fixture-fake",
       "name": "scope_14",
       "dependencies": [
+        "google_service_account.observer",
         "terraform_data.never_apply",
         "google_project_iam_custom_role.scope_14"
       ],
@@ -1772,6 +1785,7 @@
       "project": "b1a2-fixture-run",
       "name": "scope_17",
       "dependencies": [
+        "google_service_account.cleanup",
         "terraform_data.never_apply",
         "google_project_iam_custom_role.scope_17"
       ],
@@ -1786,6 +1800,7 @@
       "project": "b1a2-fixture-fake",
       "name": "scope_18",
       "dependencies": [
+        "google_service_account.cleanup",
         "terraform_data.never_apply",
         "google_project_iam_custom_role.scope_18"
       ],
@@ -1800,6 +1815,7 @@
       "project": "b1a2-fixture-custody",
       "name": "scope_19",
       "dependencies": [
+        "google_service_account.custody_cleanup",
         "terraform_data.never_apply",
         "google_project_iam_custom_role.scope_19"
       ],
@@ -1814,6 +1830,7 @@
       "project": "b1a2-fixture-run",
       "name": "scope_20",
       "dependencies": [
+        "google_service_account.cleanup",
         "terraform_data.never_apply",
         "google_project_iam_custom_role.scope_20"
       ],
@@ -1828,6 +1845,7 @@
       "project": "b1a2-fixture-custody",
       "name": "scope_21",
       "dependencies": [
+        "google_service_account.custody_cleanup",
         "terraform_data.never_apply",
         "google_project_iam_custom_role.scope_21"
       ],
@@ -1842,6 +1860,7 @@
       "project": "b1a2-fixture-fake",
       "name": "scope_22",
       "dependencies": [
+        "google_service_account.cleanup",
         "terraform_data.never_apply",
         "google_project_iam_custom_role.scope_22"
       ],
@@ -1856,6 +1875,7 @@
       "project": "b1a2-fixture-run",
       "name": "scope_1",
       "dependencies": [
+        "google_service_account.deployer",
         "terraform_data.never_apply",
         "google_project_iam_custom_role.scope_1"
       ],
@@ -1870,6 +1890,7 @@
       "project": "b1a2-fixture-run",
       "name": "scope_2",
       "dependencies": [
+        "google_service_account.deployer",
         "terraform_data.never_apply",
         "google_project_iam_custom_role.scope_2"
       ],
@@ -1884,6 +1905,7 @@
       "project": "b1a2-fixture-run",
       "name": "scope_3",
       "dependencies": [
+        "google_service_account.deployer",
         "terraform_data.never_apply",
         "google_project_iam_custom_role.scope_3"
       ],
@@ -1898,6 +1920,7 @@
       "project": "b1a2-fixture-run",
       "name": "scope_4",
       "dependencies": [
+        "google_service_account.deployer",
         "terraform_data.never_apply",
         "google_project_iam_custom_role.scope_4"
       ],
@@ -1912,6 +1935,7 @@
       "project": "b1a2-fixture-run",
       "name": "scope_5",
       "dependencies": [
+        "google_service_account.deployer",
         "terraform_data.never_apply",
         "google_project_iam_custom_role.scope_5"
       ],
@@ -1926,6 +1950,7 @@
       "project": "b1a2-fixture-run",
       "name": "scope_7",
       "dependencies": [
+        "google_service_account.kill",
         "terraform_data.never_apply",
         "google_project_iam_custom_role.scope_7"
       ],
@@ -1940,6 +1965,7 @@
       "project": "b1a2-fixture-run",
       "name": "scope_8",
       "dependencies": [
+        "google_service_account.deployer",
         "terraform_data.never_apply",
         "google_project_iam_custom_role.scope_8"
       ],
@@ -1954,6 +1980,7 @@
       "project": "b1a2-fixture-run",
       "name": "scope_9",
       "dependencies": [
+        "google_service_account.kill",
         "terraform_data.never_apply",
         "google_project_iam_custom_role.scope_9"
       ],
@@ -1968,6 +1995,7 @@
       "project": "b1a2-fixture-run",
       "name": "scope_10",
       "dependencies": [
+        "google_service_account.fake",
         "terraform_data.never_apply",
         "google_project_iam_custom_role.scope_10"
       ],

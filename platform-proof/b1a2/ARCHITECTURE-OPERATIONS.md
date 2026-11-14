@@ -4,7 +4,7 @@ Baseline: ADR-005 Revision 3 at `ad705c8cf666ae4ec617e00cae37eaad7f3f4511`, PR #
 
 The approved O-1 delta returns the dedicated synthetic sealer to the runtime project. Ingress calls the same-project internal Run service using its own invoker identity and a separate bounded application caller key. All-traffic VPC egress and restricted-VIP DNS remain explicit. The sealer uses the runtime private subnet and the single runtime SQL PSC endpoint. It retains its own restricted SQL role and seal-before-ACK contract.
 
-Custody retains separately administered GCS/KMS/observer identity/signing secret. Sealer writes generation-zero immutable session slots and has prefix-bounded read/list recovery authority; no delete/IAM/admin. Runtime/deployer cannot obtain the observer signing key. A customer-supplied HTTP field cannot become an authenticated observation. Administrative custody authority is a separate higher-trust boundary; this disposable journal is not a replacement for production authenticated archive/index extension gates.
+Custody retains separately administered GCS/KMS/observer identity/signing secret. Sealer writes generation-zero immutable session slots and has bucket-level listing of opaque synthetic object names and current-session object-read recovery authority; no delete/IAM/admin. Runtime/deployer cannot obtain the observer signing key. A customer-supplied HTTP field cannot become an authenticated observation. Administrative custody authority is a separate higher-trust boundary; this disposable journal is not a replacement for production authenticated archive/index extension gates.
 
 Runtime gateway → runtime NAT → independently authenticated fake HTTPS VM in the fake project. Only gateway NAT /32 and IAP 35.235.240.0/20 may reach fake443; mTLS separately identifies gateway epochs and the observer. Fake restricted-Google-VIP egress/DNS/route supports future immutable evidence export/approved artifact access. No public0/0 fake ingress or SSH path is required. This is a locally validated **model**, not actual GCP firewall evidence. The fake's provider ledger remains available to observe forbidden old initiations rather than silently revoking its TLS identity and hiding them.
 
@@ -42,6 +42,7 @@ KMS key rings **and CryptoKey metadata** cannot be individually deleted. Destroy
 
 ## Official sources checked using public documentation only
 
+- https://docs.cloud.google.com/storage/docs/access-control/iam
 - https://docs.cloud.google.com/run/docs/container-contract
 - https://docs.cloud.google.com/sdk/gcloud/reference/run/worker-pools/update
 - https://docs.cloud.google.com/run/docs/rollouts-rollbacks-traffic-migration
@@ -53,3 +54,5 @@ KMS key rings **and CryptoKey metadata** cannot be individually deleted. Destroy
 - https://docs.cloud.google.com/monitoring/api/metrics_gcp_p_z
 
 Public documents do not verify the owner's account, quotas, Free Trial, billing currency, spend caps, effective IAM or actual platform behavior.
+
+GCS object listing is authorized on the bucket resource, so the recovery grant explicitly admits that exact bucket for LIST and only the approved session prefix for object contents. It does not claim prefix-limited listing. All new managed-principal IAM grants explicitly depend on their service-account resources, preventing a creation race. These are source/static policy corrections; effective cloud IAM remains untested.
