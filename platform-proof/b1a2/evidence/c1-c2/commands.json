@@ -1,0 +1,121 @@
+[
+  {
+    "label": "source-check",
+    "argv": [
+      "node",
+      "b1a2/check.mjs"
+    ],
+    "cwd": "/workspace/work/nukmiris-b1a-2/platform-proof",
+    "source": "ade1c3be3b66f81aa05a26e06fa6c8e707d0526c",
+    "tree": "76d7c525b68aa879c38fad52872b77a96e51275a",
+    "started": "2026-11-14T19:49:16.659829+00:00",
+    "ambientProviderCredentialsExcluded": true,
+    "execution": "LOCAL_ONLY",
+    "ended": "2026-11-14T19:49:17.650314+00:00",
+    "seconds": 0.99,
+    "exitCode": 0
+  },
+  {
+    "label": "targeted",
+    "argv": [
+      "node",
+      "--test",
+      "--test-reporter=tap",
+      "--test-concurrency=1",
+      "test/b1a2-retirement.test.mjs",
+      "test/b1a2-controller.test.mjs",
+      "test/b1a2-observer.test.mjs"
+    ],
+    "cwd": "/workspace/work/nukmiris-b1a-2/platform-proof",
+    "source": "ade1c3be3b66f81aa05a26e06fa6c8e707d0526c",
+    "tree": "76d7c525b68aa879c38fad52872b77a96e51275a",
+    "started": "2026-11-14T19:49:17.650835+00:00",
+    "ambientProviderCredentialsExcluded": true,
+    "execution": "LOCAL_ONLY",
+    "ended": "2026-11-14T19:49:25.724804+00:00",
+    "seconds": 8.074,
+    "exitCode": 0,
+    "summary": {
+      "tests": 25,
+      "pass": 25,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0
+    }
+  },
+  {
+    "label": "full",
+    "argv": [
+      "npm",
+      "test"
+    ],
+    "cwd": "/workspace/work/nukmiris-b1a-2/platform-proof",
+    "source": "ade1c3be3b66f81aa05a26e06fa6c8e707d0526c",
+    "tree": "76d7c525b68aa879c38fad52872b77a96e51275a",
+    "started": "2026-11-14T19:49:25.726688+00:00",
+    "ambientProviderCredentialsExcluded": true,
+    "execution": "LOCAL_ONLY",
+    "ended": "2026-11-14T19:56:24.839907+00:00",
+    "seconds": 419.113,
+    "exitCode": 0,
+    "summary": {
+      "tests": 116,
+      "pass": 116,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0
+    }
+  },
+  {
+    "label": "fault",
+    "argv": [
+      "npm",
+      "run",
+      "test:fault"
+    ],
+    "cwd": "/workspace/work/nukmiris-b1a-2/platform-proof",
+    "source": "ade1c3be3b66f81aa05a26e06fa6c8e707d0526c",
+    "tree": "76d7c525b68aa879c38fad52872b77a96e51275a",
+    "started": "2026-11-14T19:56:24.841497+00:00",
+    "ambientProviderCredentialsExcluded": true,
+    "execution": "LOCAL_ONLY",
+    "ended": "2026-11-14T20:02:49.727925+00:00",
+    "seconds": 384.886,
+    "exitCode": 0,
+    "summary": {
+      "tests": 75,
+      "pass": 75,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0
+    }
+  },
+  {
+    "label": "concurrency",
+    "argv": [
+      "npm",
+      "run",
+      "test:concurrency"
+    ],
+    "cwd": "/workspace/work/nukmiris-b1a-2/platform-proof",
+    "source": "ade1c3be3b66f81aa05a26e06fa6c8e707d0526c",
+    "tree": "76d7c525b68aa879c38fad52872b77a96e51275a",
+    "started": "2026-11-14T20:02:49.728945+00:00",
+    "ambientProviderCredentialsExcluded": true,
+    "execution": "LOCAL_ONLY",
+    "ended": "2026-11-14T20:03:27.881154+00:00",
+    "seconds": 38.152,
+    "exitCode": 0,
+    "summary": {
+      "tests": 24,
+      "pass": 24,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0
+    }
+  }
+]

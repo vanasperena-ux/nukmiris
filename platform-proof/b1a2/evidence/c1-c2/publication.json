@@ -1,0 +1,75 @@
+{
+  "scope": "C1_C2_LOCAL_SYNTHETIC_CORRECTION",
+  "testedSource": "ade1c3be3b66f81aa05a26e06fa6c8e707d0526c",
+  "testedTree": "76d7c525b68aa879c38fad52872b77a96e51275a",
+  "parentEvidenceHead": "655d07d7ae45a280d28e4c6ae58071c199db523d",
+  "reviewedHistoricalSource": "ecc085f3a2e413c9f3a228066292b81ad9c1be73",
+  "draftPR": 22,
+  "results": {
+    "targeted": {
+      "tests": 25,
+      "pass": 25,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0
+    },
+    "full": {
+      "tests": 116,
+      "pass": 116,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0
+    },
+    "fault": {
+      "tests": 75,
+      "pass": 75,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0
+    },
+    "concurrency": {
+      "tests": 24,
+      "pass": 24,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0
+    }
+  },
+  "suitesOverlap": true,
+  "nativeLedgersVerifiedByBothOriginalVerifiers": {
+    "targeted": 1,
+    "full": 27,
+    "fault": 23,
+    "concurrency": 6
+  },
+  "currentSignedRetirementDerivedCounts": {
+    "targeted": 1,
+    "full": 1,
+    "fault": 1,
+    "concurrency": 1
+  },
+  "historicalSignedRetirementDerivedCounts": {
+    "full": 0,
+    "fault": 0,
+    "concurrency": 0
+  },
+  "originalSignedResultsAndChecksumManifestsPreserved": true,
+  "independentClaudeReverification": "PENDING",
+  "historicalArchiveChunksRetried": 0,
+  "completeNativeRawExportsPublished": false,
+  "publishedEvidence": "Complete new suite logs; all four new signed observer bundles; all original-verifier outputs; small new SQL-gate exports; local-only raw hash index",
+  "G1": "OPEN: missing historical image-source; retained image pins are historical and cannot substitute for a corrected-source reviewed rebuild/registry digest",
+  "G2_G5": "OPEN",
+  "sourceOnlyApplyGuardPreserved": true,
+  "applicationChanges": 0,
+  "cloudCalls": 0,
+  "cloudCredentialAccess": 0,
+  "provisioning": 0,
+  "spending": 0,
+  "realMetaCalendarCalls": 0,
+  "merges": 0
+}

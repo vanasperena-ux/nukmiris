@@ -1,0 +1,11 @@
+{
+  "scope": "B1A_LOCAL_SYNTHETIC_PREPARATION",
+  "results": [
+    {
+      "case": "b1a2-v2-retirement-gates",
+      "records": 0,
+      "chainAndHeadVerified": true,
+      "cloudContainmentProven": false
+    }
+  ]
+}

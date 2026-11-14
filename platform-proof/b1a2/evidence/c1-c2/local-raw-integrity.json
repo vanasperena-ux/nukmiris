@@ -1,0 +1,1032 @@
+{
+  "scope": "HASH_INDEX_NOT_A_CLAIM_OF_COMPLETE_RAW_PUBLICATION",
+  "source": "ade1c3be3b66f81aa05a26e06fa6c8e707d0526c",
+  "files": [
+    {
+      "localRunPath": "targeted/native/b1a2-v2-retirement-gates/checkpoint.json",
+      "bytes": 98,
+      "sha256": "8c3c1d142cbde961902c8dea95fa96b2d471900ca2f9dce016e4ac4a14ae67ee",
+      "publishedHere": true
+    },
+    {
+      "localRunPath": "targeted/native/b1a2-v2-retirement-gates/provider.jsonl",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "publishedHere": true
+    },
+    {
+      "localRunPath": "targeted/native/b1a2-v2-retirement-gates/result.json",
+      "bytes": 1196,
+      "sha256": "adc3757135266f6008f6ff3c3543a6f233899ce6f8e90d5e33d308a3124f2806",
+      "publishedHere": true
+    },
+    {
+      "localRunPath": "full/native/authority-races/checkpoint.json",
+      "bytes": 98,
+      "sha256": "25b7d8a325e97dc5aa8accbd63617e9d78e79e2a90b0448319dae432623f8e8c",
+      "publishedHere": false
+    },
+    {
+      "localRunPath": "full/native/authority-races/provider.jsonl",
+      "bytes": 2218,
+      "sha256": "68ffd14e8f58e6b29863c8eb26f817557eedbc97aca86436a82311745f39298e",
+      "publishedHere": false
+    },
+    {
+      "localRunPath": "full/native/authority-races/result.json",
+      "bytes": 397,
+      "sha256": "466796cb0b229c82f99f6a8b12ca3ad19b85ff101871073f63b27cfb76592b08",
+      "publishedHere": false
+    },
+    {
+      "localRunPath": "full/native/b1a-asynchronous-v1/checkpoint.json",
+      "bytes": 101,
+      "sha256": "a1cf284d45e3727e29ce23c6113d8e464f0e6dca8f8cc451d6449bb1b16c5004",
+      "publishedHere": false
+    },
+    {
+      "localRunPath": "full/native/b1a-asynchronous-v1/provider.jsonl",
+      "bytes": 673206,
+      "sha256": "0c95a4971da16ccdc8cc2b8922bd7c3cb7fde171e0852ac28a636953328f3c8a",
+      "publishedHere": false
+    },
+    {
+      "localRunPath": "full/native/b1a-asynchronous-v1/result.json",
+      "bytes": 1891992,
+      "sha256": "b8bd6baf7df83a7b9f184df8db0cd513ae1c271ddde3fcbb2f2f3b1dce0c127b",
+      "publishedHere": false
+    },
+    {
+      "localRunPath": "full/native/b1a-authenticated-provider/checkpoint.json",
+      "bytes": 98,
+      "sha256": "822571a02e347f476010b84799656cae89ef5996f716db2e452bcf38557e72d4",
+      "publishedHere": false
+    },
+    {
+      "localRunPath": "full/native/b1a-authenticated-provider/provider.jsonl",
+      "bytes": 4276,
+      "sha256": "54c0f59bf131298f6cf7bb88c9826d252c774d5b75db8e6b1715501075ed6639",
+      "publishedHere": false
+    },
+    {
+      "localRunPath": "full/native/b1a-authenticated-provider/result.json",
+      "bytes": 446,
+      "sha256": "e37c1e0e9da8f96cd166deedea761c3b4a64f41579d4811520ac628cfcea0898",
+      "publishedHere": false
+    },
+    {
+      "localRunPath": "full/native/b1a-cloud-profile-pure/checkpoint.json",
+      "bytes": 98,
+      "sha256": "8c3c1d142cbde961902c8dea95fa96b2d471900ca2f9dce016e4ac4a14ae67ee",
+      "publishedHere": false
+    },
+    {
+      "localRunPath": "full/native/b1a-cloud-profile-pure/provider.jsonl",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "publishedHere": false
+    },
+    {
+      "localRunPath": "full/native/b1a-cloud-profile-pure/result.json",
+      "bytes": 393,
+      "sha256": "978a125324d2c071fb576d5e384c7997b8af8f3ceaffba3d50c96aaf2e420539",
+      "publishedHere": false
+    },
+    {
+      "localRunPath": "full/native/b1a-commit-ack_lost/checkpoint.json",
+      "bytes": 98,
+      "sha256": "8c3c1d142cbde961902c8dea95fa96b2d471900ca2f9dce016e4ac4a14ae67ee",
+      "publishedHere": false
+    },
+    {
+      "localRunPath": "full/native/b1a-commit-ack_lost/provider.jsonl",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "publishedHere": false
+    },
+    {
+      "localRunPath": "full/native/b1a-commit-ack_lost/result.json",
+      "bytes": 436,
+      "sha256": "1510f0ab2f501c03a354be4a6573994d0570403c99093c8e7185b67ed68a6ead",
+      "publishedHere": false
+    },
+    {
+      "localRunPath": "full/native/b1a-commit-before_server/checkpoint.json",
+      "bytes": 98,
+      "sha256": "1dfc83b378e0b6ad14ffe92d8abcaeca89d9dc84c65b2ffc6e9d913cb25b91fe",
+      "publishedHere": false
+    },
+    {
+      "localRunPath": "full/native/b1a-commit-before_server/provider.jsonl",
+      "bytes": 2218,
+      "sha256": "9f4b59d9a3d4bea84310a9091b51a43aa6165f4a53be19962c3933b44e37e57c",
+      "publishedHere": false
+    },
+    {
+      "localRunPath": "full/native/b1a-commit-before_server/result.json",
+      "bytes": 439,
+      "sha256": "3369240d448ccb077d7ed63d27c33e68b2e00fc49f215f0a9937ce265cc0db67",
+      "publishedHere": false
+    },
+    {
+      "localRunPath": "full/native/b1a-commit-rollback_tag/checkpoint.json",
+      "bytes": 98,
+      "sha256": "df62c3c65331f882e1c8ff118b5ce2dac841adcaf04f7d83e6bbe0c42583db1e",
+      "publishedHere": false
+    },
+    {
+      "localRunPath": "full/native/b1a-commit-rollback_tag/provider.jsonl",
+      "bytes": 2218,
+      "sha256": "9d505f2d8da60f08d27cfa9e38df040dc7788284b65fe8f59d46d95a43b69ec3",
+      "publishedHere": false
+    },
+    {
+      "localRunPath": "full/native/b1a-commit-rollback_tag/result.json",
+      "bytes": 438,
+      "sha256": "29918401f0df651b647913a600bb9c0e61fd5fe7536fb60558f2ef557a667750",
+      "publishedHere": false
+    },
+    {
+      "localRunPath": "full/native/b1a-cross-product-v1/checkpoint.json",
+      "bytes": 101,
+      "sha256": "5c7cab283fa18b9f234444c83868ed211d49b47e9962efb04980161c099235fa",
+      "publishedHere": false
+    },
+    {
+      "localRunPath": "full/native/b1a-cross-product-v1/provider.jsonl",
+      "bytes": 1701997,
+      "sha256": "a6266f9e5baf9e5a1b0f53e4fb66acf4849c9ab2443399ee9caa343211fdcaeb",
+      "publishedHere": false
+    },
+    {
+      "localRunPath": "full/native/b1a-cross-product-v1/result.json",
+      "bytes": 3671766,
+      "sha256": "fab279291e56e0b01a5a97de08215877dd9c8aa19c6be7320bad3d746e34e295",
+      "publishedHere": false
+    },
+    {
+      "localRunPath": "full/native/b1a-direct-kill/checkpoint.json",
+      "bytes": 98,
+      "sha256": "8c3c1d142cbde961902c8dea95fa96b2d471900ca2f9dce016e4ac4a14ae67ee",
+      "publishedHere": false
+    },
+    {
+      "localRunPath": "full/native/b1a-direct-kill/provider.jsonl",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "publishedHere": false
+    },
+    {
+      "localRunPath": "full/native/b1a-direct-kill/result.json",
+      "bytes": 620,
+      "sha256": "8006cc3a19fd959b8315efeaf55c4ba570dd4195e498aa5655f6cd6d16b4ef61",
+      "publishedHere": false
+    },
+    {
+      "localRunPath": "full/native/b1a-native-kill-classification/checkpoint.json",
+      "bytes": 98,
+      "sha256": "18885ef1e5cae61b961a242204d57066992e5811d0f6d736408eea2eb6d32589",
+      "publishedHere": false
+    },
+    {
+      "localRunPath": "full/native/b1a-native-kill-classification/provider.jsonl",
+      "bytes": 2754,
+      "sha256": "55c92a28b6adc202cc28a9187ec52bab923a38c820b5f18c09b06514f3164e52",
+      "publishedHere": false
+    },
+    {
+      "localRunPath": "full/native/b1a-native-kill-classification/result.json",
+      "bytes": 2853,
+      "sha256": "9b7689927ba7d1d30991fa67705b0c52404d12e238c1d66f66bf035bc176e617",
+      "publishedHere": false
+    },
+    {
+      "localRunPath": "full/native/b1a-native-sql-tls/checkpoint.json",
+      "bytes": 98,
+      "sha256": "8c3c1d142cbde961902c8dea95fa96b2d471900ca2f9dce016e4ac4a14ae67ee",
+      "publishedHere": false
+    },
+    {
+      "localRunPath": "full/native/b1a-native-sql-tls/provider.jsonl",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "publishedHere": false
+    },
+    {
+      "localRunPath": "full/native/b1a-native-sql-tls/result.json",
+      "bytes": 437,
+      "sha256": "141f73ec1c421bd79fa72f4ec7b2aaf3b7686824d7008f368cba2be3d9793b5b",
+      "publishedHere": false
+    },
+    {
+      "localRunPath": "full/native/b1a-proof-bad_epoch/checkpoint.json",
+      "bytes": 98,
+      "sha256": "bf913a145d48f6259186c5ab41724ffefeae032664fae59019328154d7e7b65c",
+      "publishedHere": false
+    },
+    {
+      "localRunPath": "full/native/b1a-proof-bad_epoch/provider.jsonl",
+      "bytes": 2218,
+      "sha256": "2da34a3caaabf9988b09058e8a7a43be8882444daff67fd3b80b4ce729ebb4a4",
+      "publishedHere": false
+    },
+    {
+      "localRunPath": "full/native/b1a-proof-bad_epoch/result.json",
+      "bytes": 349,
+      "sha256": "a3d8523633fb5eda87cf2f99b611d22923f28cbceff2e8192f88e161ccb1aefe",
+      "publishedHere": false
+    },
+    {
+      "localRunPath": "full/native/b1a-proof-bad_revision/checkpoint.json",
+      "bytes": 98,
+      "sha256": "4f9cc255aa9d473ecbb062bec6c344aac2f60052eef708d5f6b5005f1e94d03d",
+      "publishedHere": false
+    },
+    {
+      "localRunPath": "full/native/b1a-proof-bad_revision/provider.jsonl",
+      "bytes": 2218,
+      "sha256": "cfc436e270249580e5192664b7b1cb1e4d8f09812fce883414834b4902b0c7fc",
+      "publishedHere": false
+    },
+    {
+      "localRunPath": "full/native/b1a-proof-bad_revision/result.json",
+      "bytes": 352,
+      "sha256": "9fd2962377b6ce8004f4b6c6ccc1184ae6e6fdedf3630a7da5f7b7fb993cae29",
+      "publishedHere": false
+    },
+    {
+      "localRunPath": "full/native/b1a-retired-recovery/checkpoint.json",
+      "bytes": 98,
+      "sha256": "8c3c1d142cbde961902c8dea95fa96b2d471900ca2f9dce016e4ac4a14ae67ee",
+      "publishedHere": false
+    },
+    {
+      "localRunPath": "full/native/b1a-retired-recovery/provider.jsonl",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "publishedHere": false
+    },
+    {
+      "localRunPath": "full/native/b1a-retired-recovery/result.json",
+      "bytes": 427,
+      "sha256": "1bcf00e676f02b4d7c82f36bb47fa6c47b049cb09b0aa456390f9ecfc41c7a3c",
+      "publishedHere": false
+    },
+    {
+      "localRunPath": "full/native/b1a-sealer-ack/checkpoint.json",
+      "bytes": 98,
+      "sha256": "8c3c1d142cbde961902c8dea95fa96b2d471900ca2f9dce016e4ac4a14ae67ee",
+      "publishedHere": false
+    },
+    {
+      "localRunPath": "full/native/b1a-sealer-ack/provider.jsonl",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "publishedHere": false
+    },
+    {
+      "localRunPath": "full/native/b1a-sealer-ack/result.json",
+      "bytes": 437,
+      "sha256": "e4f1982374ef650a19865de80fae4a2716e38c788913451b88ffffcdc5bfe1e9",
+      "publishedHere": false
+    },
+    {
+      "localRunPath": "full/native/b1a-session-budget-hold/checkpoint.json",
+      "bytes": 98,
+      "sha256": "094001501c9b9957750a32d6aa2ea04d078665d674109d00846747f14a1095fe",
+      "publishedHere": false
+    },
+    {
+      "localRunPath": "full/native/b1a-session-budget-hold/provider.jsonl",
+      "bytes": 2218,
+      "sha256": "341fa4adebac2c5c975be9d2fb71c49c8ea418659cb2ad71c30f069b28ca5dbf",
+      "publishedHere": false
+    },
+    {
+      "localRunPath": "full/native/b1a-session-budget-hold/result.json",
+      "bytes": 751,
+      "sha256": "5e28193d4dfa315bd0c4c1f1f35aff6d9b373c1106668b1e1797591cf153ec92",
+      "publishedHere": false
+    },
+    {
+      "localRunPath": "full/native/b1a2-startup-chain/checkpoint.json",
+      "bytes": 98,
+      "sha256": "8c3c1d142cbde961902c8dea95fa96b2d471900ca2f9dce016e4ac4a14ae67ee",
+      "publishedHere": false
+    },
+    {
+      "localRunPath": "full/native/b1a2-startup-chain/provider.jsonl",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "publishedHere": false
+    },
+    {
+      "localRunPath": "full/native/b1a2-startup-chain/result.json",
+      "bytes": 459,
+      "sha256": "324eb84b3eeafa67b7db2e68bc82488890354304e9d6d21acfb31cb0dc191218",
+      "publishedHere": false
+    },
+    {
+      "localRunPath": "full/native/b1a2-v2-retirement-gates/checkpoint.json",
+      "bytes": 98,
+      "sha256": "8c3c1d142cbde961902c8dea95fa96b2d471900ca2f9dce016e4ac4a14ae67ee",
+      "publishedHere": true
+    },
+    {
+      "localRunPath": "full/native/b1a2-v2-retirement-gates/provider.jsonl",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "publishedHere": true
+    },
+    {
+      "localRunPath": "full/native/b1a2-v2-retirement-gates/result.json",
+      "bytes": 1196,
+      "sha256": "8289039cf6c96d4b4997ba215cbe6d49ad786983084dbe22261a86cb21e2f76d",
+      "publishedHere": true
+    },
+    {
+      "localRunPath": "full/native/campaign/checkpoint.json",
+      "bytes": 101,
+      "sha256": "e9374785e1f3be945a6bbe6b51d81039c87d2a11099ffe346adf896cf437e8d7",
+      "publishedHere": false
+    },
+    {
+      "localRunPath": "full/native/campaign/provider.jsonl",
+      "bytes": 1835950,
+      "sha256": "56e27274a75b44fe9243aebc6389103cb88410e9cb9070bc4fb0a1fab38832ef",
+      "publishedHere": false
+    },
+    {
+      "localRunPath": "full/native/campaign/result.json",
+      "bytes": 3545660,
+      "sha256": "f72588883ad53916975f31ff937377371e11fc7ddefcda9aae0ba7a2586f2b4c",
+      "publishedHere": false
+    },
+    {
+      "localRunPath": "full/native/concurrency/checkpoint.json",
+      "bytes": 99,
+      "sha256": "bfaaef1bf956e0f01444a6952873165b7deab1708de823b6b786101aef4a80a8",
+      "publishedHere": false
+    },
+    {
+      "localRunPath": "full/native/concurrency/provider.jsonl",
+      "bytes": 19998,
+      "sha256": "d887854d5ad3d932bb3cce2fb7f7e5f749816e1d3038206b7826170841db19c9",
+      "publishedHere": false
+    },
+    {
+      "localRunPath": "full/native/concurrency/result.json",
+      "bytes": 3480,
+      "sha256": "c700da1a4d48bf83094618b054c7f522d13b22d0d8237de6b3053d877cc5d807",
+      "publishedHere": false
+    },
+    {
+      "localRunPath": "full/native/crash-restart/checkpoint.json",
+      "bytes": 98,
+      "sha256": "8c3c1d142cbde961902c8dea95fa96b2d471900ca2f9dce016e4ac4a14ae67ee",
+      "publishedHere": false
+    },
+    {
+      "localRunPath": "full/native/crash-restart/provider.jsonl",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "publishedHere": false
+    },
+    {
+      "localRunPath": "full/native/crash-restart/result.json",
+      "bytes": 304,
+      "sha256": "b41870dcc610ea9051bb8a8179fb863bd9c29d38f3b99217da4e414b6cd1dd8a",
+      "publishedHere": false
+    },
+    {
+      "localRunPath": "full/native/dead-man/checkpoint.json",
+      "bytes": 100,
+      "sha256": "975f164997e3fa50b490359f19c654f250ad01d1efae65fa216fe5fde26821d9",
+      "publishedHere": false
+    },
+    {
+      "localRunPath": "full/native/dead-man/provider.jsonl",
+      "bytes": 44452,
+      "sha256": "756c1cf8e3abf71873a332b0887eb56eb3821666524e6163d25b9328c7f5c4c5",
+      "publishedHere": false
+    },
+    {
+      "localRunPath": "full/native/dead-man/result.json",
+      "bytes": 13675,
+      "sha256": "60752eac64f9ddff1ced529b383100973e507a801ead9ba551660e88908b5b69",
+      "publishedHere": false
+    },
+    {
+      "localRunPath": "full/native/identity-roles/checkpoint.json",
+      "bytes": 98,
+      "sha256": "511d406c0d9c6059c5e666af8f1a0eff299714430813564ce350db9ea16675e9",
+      "publishedHere": false
+    },
+    {
+      "localRunPath": "full/native/identity-roles/provider.jsonl",
+      "bytes": 2218,
+      "sha256": "64cdea66bc2125412f7cd207ea4e4dd7c12f09a4747587a53da011190d929854",
+      "publishedHere": false
+    },
+    {
+      "localRunPath": "full/native/identity-roles/result.json",
+      "bytes": 304,
+      "sha256": "b41870dcc610ea9051bb8a8179fb863bd9c29d38f3b99217da4e414b6cd1dd8a",
+      "publishedHere": false
+    },
+    {
+      "localRunPath": "full/native/keep-alive-counterexample/checkpoint.json",
+      "bytes": 99,
+      "sha256": "2b602a52b2db6e7c2558acd46db55c50210bc3a3b771662546d8a883c8177de4",
+      "publishedHere": false
+    },
+    {
+      "localRunPath": "full/native/keep-alive-counterexample/provider.jsonl",
+      "bytes": 8320,
+      "sha256": "09e5959f04988f7f3a40698b353364333270d99c747fa9978524f59374dc5300",
+      "publishedHere": false
+    },
+    {
+      "localRunPath": "full/native/keep-alive-counterexample/result.json",
+      "bytes": 441,
+      "sha256": "9eb980cde234ae5602645148d16004c663170931ecbe5679176e7b3387e8c352",
+      "publishedHere": false
+    },
+    {
+      "localRunPath": "full/native/late-pre-fence-effect/checkpoint.json",
+      "bytes": 98,
+      "sha256": "87fed0a5bc3e5257b0f43113e0d11e1289b83231934c9a5bbc8ee3e54a763230",
+      "publishedHere": false
+    },
+    {
+      "localRunPath": "full/native/late-pre-fence-effect/provider.jsonl",
+      "bytes": 2754,
+      "sha256": "3cab7d9a3ac091908e1fec42d664317d220a1a9bba94af56d43571edf14c9ce1",
+      "publishedHere": false
+    },
+    {
+      "localRunPath": "full/native/late-pre-fence-effect/result.json",
+      "bytes": 683,
+      "sha256": "db398b406d9b57fe9a9d820dc93e63ce98a73b05a9187183c1851e3de197c5f8",
+      "publishedHere": false
+    },
+    {
+      "localRunPath": "full/native/lost-commit/checkpoint.json",
+      "bytes": 98,
+      "sha256": "8c3c1d142cbde961902c8dea95fa96b2d471900ca2f9dce016e4ac4a14ae67ee",
+      "publishedHere": false
+    },
+    {
+      "localRunPath": "full/native/lost-commit/provider.jsonl",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "publishedHere": false
+    },
+    {
+      "localRunPath": "full/native/lost-commit/result.json",
+      "bytes": 342,
+      "sha256": "33a2c7eb0ec3714e2570e00e1a7a5a2821551ea98d7252f38eb41d2d23f98dec",
+      "publishedHere": false
+    },
+    {
+      "localRunPath": "full/native/transport-faults/checkpoint.json",
+      "bytes": 99,
+      "sha256": "50a592edb49e3f0654908a77d12e801a61e6f8dcd585b74d687b3ad8c4129025",
+      "publishedHere": false
+    },
+    {
+      "localRunPath": "full/native/transport-faults/provider.jsonl",
+      "bytes": 8393,
+      "sha256": "e6dd1b5ee7901c654fcfd422deeab12e69810fbb64f3437fa3c4e3b4a18413e7",
+      "publishedHere": false
+    },
+    {
+      "localRunPath": "full/native/transport-faults/result.json",
+      "bytes": 304,
+      "sha256": "b41870dcc610ea9051bb8a8179fb863bd9c29d38f3b99217da4e414b6cd1dd8a",
+      "publishedHere": false
+    },
+    {
+      "localRunPath": "fault/native/b1a-asynchronous-v1/checkpoint.json",
+      "bytes": 101,
+      "sha256": "dee44540e94f75a70d0b4265438356c9c743f2ac10374bb9639c76b2beb72c9f",
+      "publishedHere": false
+    },
+    {
+      "localRunPath": "fault/native/b1a-asynchronous-v1/provider.jsonl",
+      "bytes": 666902,
+      "sha256": "2fb3bedd8551e56f8392cb09c8991141645687e1521f1fb040e9bc558e676c73",
+      "publishedHere": false
+    },
+    {
+      "localRunPath": "fault/native/b1a-asynchronous-v1/result.json",
+      "bytes": 1885878,
+      "sha256": "696131c86c45a6b40df57f228785f1c80432ba857f555373604af1effcebf6dd",
+      "publishedHere": false
+    },
+    {
+      "localRunPath": "fault/native/b1a-commit-ack_lost/checkpoint.json",
+      "bytes": 98,
+      "sha256": "8c3c1d142cbde961902c8dea95fa96b2d471900ca2f9dce016e4ac4a14ae67ee",
+      "publishedHere": false
+    },
+    {
+      "localRunPath": "fault/native/b1a-commit-ack_lost/provider.jsonl",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "publishedHere": false
+    },
+    {
+      "localRunPath": "fault/native/b1a-commit-ack_lost/result.json",
+      "bytes": 436,
+      "sha256": "1510f0ab2f501c03a354be4a6573994d0570403c99093c8e7185b67ed68a6ead",
+      "publishedHere": false
+    },
+    {
+      "localRunPath": "fault/native/b1a-commit-before_server/checkpoint.json",
+      "bytes": 98,
+      "sha256": "768a3db9b4e8c63f98bd2f09f2e976fc79b21346f30949e46be46c2808ec93ad",
+      "publishedHere": false
+    },
+    {
+      "localRunPath": "fault/native/b1a-commit-before_server/provider.jsonl",
+      "bytes": 2218,
+      "sha256": "07e3bfded9127c25dd0764b8b7f5ecdaceda0f5a287ce26de6df8396630fb074",
+      "publishedHere": false
+    },
+    {
+      "localRunPath": "fault/native/b1a-commit-before_server/result.json",
+      "bytes": 439,
+      "sha256": "3369240d448ccb077d7ed63d27c33e68b2e00fc49f215f0a9937ce265cc0db67",
+      "publishedHere": false
+    },
+    {
+      "localRunPath": "fault/native/b1a-commit-rollback_tag/checkpoint.json",
+      "bytes": 98,
+      "sha256": "a7399ec69a0a5963a8e5bce91fa05102f11da35a808776e649c4e714c6811666",
+      "publishedHere": false
+    },
+    {
+      "localRunPath": "fault/native/b1a-commit-rollback_tag/provider.jsonl",
+      "bytes": 2218,
+      "sha256": "571810f76d5907640bdb2dcf6897c1fbc293317224e57fe0d1c0abab2a4712eb",
+      "publishedHere": false
+    },
+    {
+      "localRunPath": "fault/native/b1a-commit-rollback_tag/result.json",
+      "bytes": 438,
+      "sha256": "29918401f0df651b647913a600bb9c0e61fd5fe7536fb60558f2ef557a667750",
+      "publishedHere": false
+    },
+    {
+      "localRunPath": "fault/native/b1a-cross-product-v1/checkpoint.json",
+      "bytes": 101,
+      "sha256": "a5f4ca43e2528def060ee32699f40c6b0ee662f6692b5f21b40a441dc533b437",
+      "publishedHere": false
+    },
+    {
+      "localRunPath": "fault/native/b1a-cross-product-v1/provider.jsonl",
+      "bytes": 1701145,
+      "sha256": "a59dfc73705587f59b38e561c8727e9ad64c3d618978a6ac741545634d41082a",
+      "publishedHere": false
+    },
+    {
+      "localRunPath": "fault/native/b1a-cross-product-v1/result.json",
+      "bytes": 3671768,
+      "sha256": "249fb475a350e34319fe3fe75b4db98f6cdc9c4d03da9793ea76ef6f8e8d9c05",
+      "publishedHere": false
+    },
+    {
+      "localRunPath": "fault/native/b1a-direct-kill/checkpoint.json",
+      "bytes": 98,
+      "sha256": "8c3c1d142cbde961902c8dea95fa96b2d471900ca2f9dce016e4ac4a14ae67ee",
+      "publishedHere": false
+    },
+    {
+      "localRunPath": "fault/native/b1a-direct-kill/provider.jsonl",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "publishedHere": false
+    },
+    {
+      "localRunPath": "fault/native/b1a-direct-kill/result.json",
+      "bytes": 620,
+      "sha256": "6171fc9fe611b512881dfa4de7ee7649d3980e9be3577553f0c7e4d87786081b",
+      "publishedHere": false
+    },
+    {
+      "localRunPath": "fault/native/b1a-native-kill-classification/checkpoint.json",
+      "bytes": 98,
+      "sha256": "c9a02deef7c53bef9ac9e5fbba054805d2e4da2ac9e556ea1fe724cf98883d93",
+      "publishedHere": false
+    },
+    {
+      "localRunPath": "fault/native/b1a-native-kill-classification/provider.jsonl",
+      "bytes": 2754,
+      "sha256": "a076d8e3b51a744016e82021df40e51501034ec8a53b293a69459777465132b1",
+      "publishedHere": false
+    },
+    {
+      "localRunPath": "fault/native/b1a-native-kill-classification/result.json",
+      "bytes": 2853,
+      "sha256": "15d25ac6d2af3edf619fdd90a0b60e60bae4b279478bc4d797e2e2716c463a14",
+      "publishedHere": false
+    },
+    {
+      "localRunPath": "fault/native/b1a-native-sql-tls/checkpoint.json",
+      "bytes": 98,
+      "sha256": "8c3c1d142cbde961902c8dea95fa96b2d471900ca2f9dce016e4ac4a14ae67ee",
+      "publishedHere": false
+    },
+    {
+      "localRunPath": "fault/native/b1a-native-sql-tls/provider.jsonl",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "publishedHere": false
+    },
+    {
+      "localRunPath": "fault/native/b1a-native-sql-tls/result.json",
+      "bytes": 437,
+      "sha256": "141f73ec1c421bd79fa72f4ec7b2aaf3b7686824d7008f368cba2be3d9793b5b",
+      "publishedHere": false
+    },
+    {
+      "localRunPath": "fault/native/b1a-proof-bad_epoch/checkpoint.json",
+      "bytes": 98,
+      "sha256": "88ac2a5e9f28822c72bc5064078fb30c695281502072d0630b267e396c6efc5d",
+      "publishedHere": false
+    },
+    {
+      "localRunPath": "fault/native/b1a-proof-bad_epoch/provider.jsonl",
+      "bytes": 2218,
+      "sha256": "65bd95a50c8b5aa47dde0b3ffc4b3d4c41a7794a695475fe41d514b2b92bd4b9",
+      "publishedHere": false
+    },
+    {
+      "localRunPath": "fault/native/b1a-proof-bad_epoch/result.json",
+      "bytes": 349,
+      "sha256": "a3d8523633fb5eda87cf2f99b611d22923f28cbceff2e8192f88e161ccb1aefe",
+      "publishedHere": false
+    },
+    {
+      "localRunPath": "fault/native/b1a-proof-bad_revision/checkpoint.json",
+      "bytes": 98,
+      "sha256": "1a648e1f1ea4d32eb25f4e0b69d957c7160ac83678125ab0751fb9627dcde9d8",
+      "publishedHere": false
+    },
+    {
+      "localRunPath": "fault/native/b1a-proof-bad_revision/provider.jsonl",
+      "bytes": 2218,
+      "sha256": "bc1fa8883c96cd43056bb65f4a27b80bc3f7925e8533d3347fdcb717a94ac1e3",
+      "publishedHere": false
+    },
+    {
+      "localRunPath": "fault/native/b1a-proof-bad_revision/result.json",
+      "bytes": 352,
+      "sha256": "9fd2962377b6ce8004f4b6c6ccc1184ae6e6fdedf3630a7da5f7b7fb993cae29",
+      "publishedHere": false
+    },
+    {
+      "localRunPath": "fault/native/b1a-retired-recovery/checkpoint.json",
+      "bytes": 98,
+      "sha256": "8c3c1d142cbde961902c8dea95fa96b2d471900ca2f9dce016e4ac4a14ae67ee",
+      "publishedHere": false
+    },
+    {
+      "localRunPath": "fault/native/b1a-retired-recovery/provider.jsonl",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "publishedHere": false
+    },
+    {
+      "localRunPath": "fault/native/b1a-retired-recovery/result.json",
+      "bytes": 427,
+      "sha256": "1bcf00e676f02b4d7c82f36bb47fa6c47b049cb09b0aa456390f9ecfc41c7a3c",
+      "publishedHere": false
+    },
+    {
+      "localRunPath": "fault/native/b1a-sealer-ack/checkpoint.json",
+      "bytes": 98,
+      "sha256": "8c3c1d142cbde961902c8dea95fa96b2d471900ca2f9dce016e4ac4a14ae67ee",
+      "publishedHere": false
+    },
+    {
+      "localRunPath": "fault/native/b1a-sealer-ack/provider.jsonl",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "publishedHere": false
+    },
+    {
+      "localRunPath": "fault/native/b1a-sealer-ack/result.json",
+      "bytes": 437,
+      "sha256": "e4f1982374ef650a19865de80fae4a2716e38c788913451b88ffffcdc5bfe1e9",
+      "publishedHere": false
+    },
+    {
+      "localRunPath": "fault/native/b1a-session-budget-hold/checkpoint.json",
+      "bytes": 98,
+      "sha256": "5f53965affb8119563d56763752471465d1148e52b8a41ca7b3c081cbbc16037",
+      "publishedHere": false
+    },
+    {
+      "localRunPath": "fault/native/b1a-session-budget-hold/provider.jsonl",
+      "bytes": 2218,
+      "sha256": "2eee7f71f7388af266662052bc0e772ff981ad95a7c11da38bc7b0f6fa01ba33",
+      "publishedHere": false
+    },
+    {
+      "localRunPath": "fault/native/b1a-session-budget-hold/result.json",
+      "bytes": 751,
+      "sha256": "8ece6b74c04720eb7d20b68c5b3df85e199b4726c676a950e204b20948d8e73c",
+      "publishedHere": false
+    },
+    {
+      "localRunPath": "fault/native/b1a2-startup-chain/checkpoint.json",
+      "bytes": 98,
+      "sha256": "8c3c1d142cbde961902c8dea95fa96b2d471900ca2f9dce016e4ac4a14ae67ee",
+      "publishedHere": false
+    },
+    {
+      "localRunPath": "fault/native/b1a2-startup-chain/provider.jsonl",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "publishedHere": false
+    },
+    {
+      "localRunPath": "fault/native/b1a2-startup-chain/result.json",
+      "bytes": 459,
+      "sha256": "9f7fc92d80e77986c05371b2c2baf16c8f3a2d417c698c35e56e89d35fa6f5a7",
+      "publishedHere": false
+    },
+    {
+      "localRunPath": "fault/native/b1a2-v2-retirement-gates/checkpoint.json",
+      "bytes": 98,
+      "sha256": "8c3c1d142cbde961902c8dea95fa96b2d471900ca2f9dce016e4ac4a14ae67ee",
+      "publishedHere": true
+    },
+    {
+      "localRunPath": "fault/native/b1a2-v2-retirement-gates/provider.jsonl",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "publishedHere": true
+    },
+    {
+      "localRunPath": "fault/native/b1a2-v2-retirement-gates/result.json",
+      "bytes": 1196,
+      "sha256": "4c28ee8d0bef23f2b323ebf78f812fc4854592c9e4c6ddd865521027826fe0d7",
+      "publishedHere": true
+    },
+    {
+      "localRunPath": "fault/native/campaign/checkpoint.json",
+      "bytes": 101,
+      "sha256": "e5666aede2bf924fa2d3457de408fb92b06dc334967a7fae50034dad1d73b400",
+      "publishedHere": false
+    },
+    {
+      "localRunPath": "fault/native/campaign/provider.jsonl",
+      "bytes": 1835098,
+      "sha256": "da284db86279845a5b9785c94fe9b08ad220a4ea9bfb2d8e7e411459011a912f",
+      "publishedHere": false
+    },
+    {
+      "localRunPath": "fault/native/campaign/result.json",
+      "bytes": 3545659,
+      "sha256": "259a4b662b1284494d45258ee0d30a45e05b43c0fa36394f01da8571bf14b593",
+      "publishedHere": false
+    },
+    {
+      "localRunPath": "fault/native/crash-restart/checkpoint.json",
+      "bytes": 98,
+      "sha256": "8c3c1d142cbde961902c8dea95fa96b2d471900ca2f9dce016e4ac4a14ae67ee",
+      "publishedHere": false
+    },
+    {
+      "localRunPath": "fault/native/crash-restart/provider.jsonl",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "publishedHere": false
+    },
+    {
+      "localRunPath": "fault/native/crash-restart/result.json",
+      "bytes": 304,
+      "sha256": "b41870dcc610ea9051bb8a8179fb863bd9c29d38f3b99217da4e414b6cd1dd8a",
+      "publishedHere": false
+    },
+    {
+      "localRunPath": "fault/native/dead-man/checkpoint.json",
+      "bytes": 100,
+      "sha256": "f24515e2fe9ea37c896f97bd2431d98cef9ccbf8809f262530bc74027541a154",
+      "publishedHere": false
+    },
+    {
+      "localRunPath": "fault/native/dead-man/provider.jsonl",
+      "bytes": 44452,
+      "sha256": "db92f2fbc6dc384c63af2b58ef301bb1b2c5023bc35da4abacaed32faf128659",
+      "publishedHere": false
+    },
+    {
+      "localRunPath": "fault/native/dead-man/result.json",
+      "bytes": 13675,
+      "sha256": "090947faaf9866727b76cabb59d6e814bd8705a6c7a93cfe27471616569f24fb",
+      "publishedHere": false
+    },
+    {
+      "localRunPath": "fault/native/identity-roles/checkpoint.json",
+      "bytes": 98,
+      "sha256": "600a5374c38bf2ecc1e40963ede2b453af8d814f7daf9c58a7cc0ec95ff71fff",
+      "publishedHere": false
+    },
+    {
+      "localRunPath": "fault/native/identity-roles/provider.jsonl",
+      "bytes": 2218,
+      "sha256": "c2653eba5c20554236f7c5c3af9405d626a1633a775e4046d579bc0877a4b129",
+      "publishedHere": false
+    },
+    {
+      "localRunPath": "fault/native/identity-roles/result.json",
+      "bytes": 304,
+      "sha256": "b41870dcc610ea9051bb8a8179fb863bd9c29d38f3b99217da4e414b6cd1dd8a",
+      "publishedHere": false
+    },
+    {
+      "localRunPath": "fault/native/keep-alive-counterexample/checkpoint.json",
+      "bytes": 99,
+      "sha256": "a1f8b9d672d0eb0ffd06f057ac07aab7dbc17cbb29ad0f39b51a82eaa772ee3d",
+      "publishedHere": false
+    },
+    {
+      "localRunPath": "fault/native/keep-alive-counterexample/provider.jsonl",
+      "bytes": 8320,
+      "sha256": "befb8458321600b02930972e79fe6efba01e744491d205ed2e1ea6926913b99b",
+      "publishedHere": false
+    },
+    {
+      "localRunPath": "fault/native/keep-alive-counterexample/result.json",
+      "bytes": 441,
+      "sha256": "d3d4cbe2e2c3f5cf90a2b2a5f56ae7ca996012cc3a22c298910174ab4fc8514f",
+      "publishedHere": false
+    },
+    {
+      "localRunPath": "fault/native/late-pre-fence-effect/checkpoint.json",
+      "bytes": 98,
+      "sha256": "422e0ca402c810b40a2cb7ebefbf4f2f55e1e253c28c2e389a5af346eddfab63",
+      "publishedHere": false
+    },
+    {
+      "localRunPath": "fault/native/late-pre-fence-effect/provider.jsonl",
+      "bytes": 2754,
+      "sha256": "28884ac9b1d8b464da6015cdc12619c02bd92e15e82436e07e30335c1c4609aa",
+      "publishedHere": false
+    },
+    {
+      "localRunPath": "fault/native/late-pre-fence-effect/result.json",
+      "bytes": 683,
+      "sha256": "78c4ef8e8f30e801a2763036488a544c0bac2554a58e2b3dc173eead50479f07",
+      "publishedHere": false
+    },
+    {
+      "localRunPath": "fault/native/lost-commit/checkpoint.json",
+      "bytes": 98,
+      "sha256": "8c3c1d142cbde961902c8dea95fa96b2d471900ca2f9dce016e4ac4a14ae67ee",
+      "publishedHere": false
+    },
+    {
+      "localRunPath": "fault/native/lost-commit/provider.jsonl",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "publishedHere": false
+    },
+    {
+      "localRunPath": "fault/native/lost-commit/result.json",
+      "bytes": 342,
+      "sha256": "33a2c7eb0ec3714e2570e00e1a7a5a2821551ea98d7252f38eb41d2d23f98dec",
+      "publishedHere": false
+    },
+    {
+      "localRunPath": "fault/native/transport-faults/checkpoint.json",
+      "bytes": 99,
+      "sha256": "97a2eef533cd8d0404c70a36b9957bc22edb00a8d3c67dbc8dc55ccbdedeeb06",
+      "publishedHere": false
+    },
+    {
+      "localRunPath": "fault/native/transport-faults/provider.jsonl",
+      "bytes": 8393,
+      "sha256": "818cdfc1efff51fcd192e09f832bbf37728f0637ee2770b855a3ca040c13e17c",
+      "publishedHere": false
+    },
+    {
+      "localRunPath": "fault/native/transport-faults/result.json",
+      "bytes": 304,
+      "sha256": "b41870dcc610ea9051bb8a8179fb863bd9c29d38f3b99217da4e414b6cd1dd8a",
+      "publishedHere": false
+    },
+    {
+      "localRunPath": "concurrency/native/b1a-retired-recovery/checkpoint.json",
+      "bytes": 98,
+      "sha256": "8c3c1d142cbde961902c8dea95fa96b2d471900ca2f9dce016e4ac4a14ae67ee",
+      "publishedHere": false
+    },
+    {
+      "localRunPath": "concurrency/native/b1a-retired-recovery/provider.jsonl",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "publishedHere": false
+    },
+    {
+      "localRunPath": "concurrency/native/b1a-retired-recovery/result.json",
+      "bytes": 427,
+      "sha256": "1bcf00e676f02b4d7c82f36bb47fa6c47b049cb09b0aa456390f9ecfc41c7a3c",
+      "publishedHere": false
+    },
+    {
+      "localRunPath": "concurrency/native/b1a-sealer-ack/checkpoint.json",
+      "bytes": 98,
+      "sha256": "8c3c1d142cbde961902c8dea95fa96b2d471900ca2f9dce016e4ac4a14ae67ee",
+      "publishedHere": false
+    },
+    {
+      "localRunPath": "concurrency/native/b1a-sealer-ack/provider.jsonl",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "publishedHere": false
+    },
+    {
+      "localRunPath": "concurrency/native/b1a-sealer-ack/result.json",
+      "bytes": 437,
+      "sha256": "e4f1982374ef650a19865de80fae4a2716e38c788913451b88ffffcdc5bfe1e9",
+      "publishedHere": false
+    },
+    {
+      "localRunPath": "concurrency/native/b1a-session-budget-hold/checkpoint.json",
+      "bytes": 98,
+      "sha256": "d3fb42a397b9ab5848ab748d9d2ea8c5fb13df55ef7d123cc2822731ba4546d4",
+      "publishedHere": false
+    },
+    {
+      "localRunPath": "concurrency/native/b1a-session-budget-hold/provider.jsonl",
+      "bytes": 2218,
+      "sha256": "0b81d28b9878af291334f9991e8bca1e3fe687fd368a9cfe7ae76aea5cef0619",
+      "publishedHere": false
+    },
+    {
+      "localRunPath": "concurrency/native/b1a-session-budget-hold/result.json",
+      "bytes": 751,
+      "sha256": "55ae3242f085f82468373113874e2adf559f1fff4047bec52527f9b9a9b98a6f",
+      "publishedHere": false
+    },
+    {
+      "localRunPath": "concurrency/native/b1a2-startup-chain/checkpoint.json",
+      "bytes": 98,
+      "sha256": "8c3c1d142cbde961902c8dea95fa96b2d471900ca2f9dce016e4ac4a14ae67ee",
+      "publishedHere": false
+    },
+    {
+      "localRunPath": "concurrency/native/b1a2-startup-chain/provider.jsonl",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "publishedHere": false
+    },
+    {
+      "localRunPath": "concurrency/native/b1a2-startup-chain/result.json",
+      "bytes": 459,
+      "sha256": "f1a03a4a4d5a9252588157defa6113140b93de32eb9230cb6d872a8b9c555ee5",
+      "publishedHere": false
+    },
+    {
+      "localRunPath": "concurrency/native/b1a2-v2-retirement-gates/checkpoint.json",
+      "bytes": 98,
+      "sha256": "8c3c1d142cbde961902c8dea95fa96b2d471900ca2f9dce016e4ac4a14ae67ee",
+      "publishedHere": true
+    },
+    {
+      "localRunPath": "concurrency/native/b1a2-v2-retirement-gates/provider.jsonl",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "publishedHere": true
+    },
+    {
+      "localRunPath": "concurrency/native/b1a2-v2-retirement-gates/result.json",
+      "bytes": 1196,
+      "sha256": "27ec1077aaf7b7ff261fb5923990a09ebbf89efc042ae28dc435f6e732943ef9",
+      "publishedHere": true
+    },
+    {
+      "localRunPath": "concurrency/native/concurrency/checkpoint.json",
+      "bytes": 99,
+      "sha256": "6e9fe1a56a78058bc57ec94e9f8b4ae755e2d3dc8f1c5481a9d3a55b5fb34e49",
+      "publishedHere": false
+    },
+    {
+      "localRunPath": "concurrency/native/concurrency/provider.jsonl",
+      "bytes": 19998,
+      "sha256": "462d93d0b33e75f2d5c3519681cdaca55a6339586f8eb0c5fffe9382e4fb989a",
+      "publishedHere": false
+    },
+    {
+      "localRunPath": "concurrency/native/concurrency/result.json",
+      "bytes": 3480,
+      "sha256": "de6fe3421c15a75d827c4d7e120ff45683bf379a63a03c9caa5fa15498b08637",
+      "publishedHere": false
+    }
+  ]
+}

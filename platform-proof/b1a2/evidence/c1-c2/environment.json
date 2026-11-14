@@ -1,0 +1,13 @@
+{
+  "scope": "MEASURED_LOCAL_LINUX_ONLY",
+  "node": "v24.19.0",
+  "postgresql": {
+    "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg12+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 12.2.0-14+deb12u1) 12.2.0, 64-bit",
+    "timezone": "UTC"
+  },
+  "platform": "Linux 6.18.57 x86_64",
+  "postgresImage": "postgres@sha256:839fbb5a4942a7758dd93e18b42ea5649807491a0545b5eeeb8f0b8bb11857a5",
+  "credentials": "AMBIENT_PROVIDER_VARIABLES_EXCLUDED; NO_CLOUD_CREDENTIAL_ACCESS",
+  "nativeWindowsExecuted": false,
+  "actualCloudSafety": "NOT_PROVEN"
+}

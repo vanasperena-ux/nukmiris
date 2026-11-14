@@ -1,0 +1,1827 @@
+{
+  "scope": "LOCAL_PROTOCOL_AND_NATIVE_SIGNALS_NOT_GCP",
+  "observerPublicKey": "-----BEGIN PUBLIC KEY-----\nMCowBQYDK2VwAyEAltI5eATzna31BAXRwe5gPPNFTvpqD9/VaALJYFeh6zo=\n-----END PUBLIC KEY-----\n",
+  "observerKeyId": "730c2a44770688bbebe9309c7b228b1803ea523dea7e1f32feac6244264d4389",
+  "testedSource": "ade1c3be3b66f81aa05a26e06fa6c8e707d0526c",
+  "clock": {
+    "schema": "nukmiris.b1a.observation/v1",
+    "issuer": "local-independent-observer",
+    "keyId": "730c2a44770688bbebe9309c7b228b1803ea523dea7e1f32feac6244264d4389",
+    "sessionId": "11111111-1111-4111-8111-111111111111",
+    "recordType": "CLOCK",
+    "issuedAt": 1794657601000,
+    "expiresAt": 1794661201000,
+    "payload": {
+      "model": "BOUNDED_DRIFT_V2",
+      "referenceClockSource": "independent-observer-clock",
+      "remoteClockSource": "independent-fake-clock",
+      "samples": [
+        [
+          1794657601000,
+          1794657601000,
+          1794657601000,
+          1794657601000
+        ],
+        [
+          1794657601000,
+          1794657601000,
+          1794657601000,
+          1794657601000
+        ],
+        [
+          1794657601000,
+          1794657601000,
+          1794657601000,
+          1794657601000
+        ]
+      ],
+      "precisionMs": 2,
+      "driftPpm": 50,
+      "resyncAllowanceMs": 5,
+      "maxExtrapolationMs": 21600000,
+      "measuredAt": 1794657601000,
+      "validUntil": 1794657661000,
+      "rawRefs": [
+        "5367151fbba65312c41cd7e2b1d7da0acaab9f6cbf478c1ee6339efb483de10b",
+        "5cefe8a152d7347c099d0c8f6c2a9fffdbc884c0fb94b0c31bb0981dfe31e79e",
+        "a66884662621708d5362227361229a5bb9ae4df18e47b13af8474630fc72cf09"
+      ],
+      "driftBasis": "DECLARED_CONSERVATIVE_BOUND_PLUS_MEASURED_OFFSETS; actual cloud bound remains unproven"
+    },
+    "signature": "xeX3D2ThMpm7olb+UVK2uqYC+HwL3CuZnW+faiSn14iat6JkVaPaQfV+nJNhY532cBGTRKtJNycLUCPBg5/vCg=="
+  },
+  "platformClock": {
+    "schema": "nukmiris.b1a.observation/v1",
+    "issuer": "local-independent-observer",
+    "keyId": "730c2a44770688bbebe9309c7b228b1803ea523dea7e1f32feac6244264d4389",
+    "sessionId": "11111111-1111-4111-8111-111111111111",
+    "recordType": "CLOCK",
+    "issuedAt": 1794657899000,
+    "expiresAt": 1794661499000,
+    "payload": {
+      "model": "BOUNDED_DRIFT_V2",
+      "referenceClockSource": "independent-observer-clock",
+      "remoteClockSource": "gcp-platform-clock",
+      "samples": [
+        [
+          1794657899000,
+          1794657899000,
+          1794657899000,
+          1794657899000
+        ],
+        [
+          1794657899000,
+          1794657899000,
+          1794657899000,
+          1794657899000
+        ],
+        [
+          1794657899000,
+          1794657899000,
+          1794657899000,
+          1794657899000
+        ]
+      ],
+      "precisionMs": 1000,
+      "driftPpm": 50,
+      "resyncAllowanceMs": 5,
+      "maxExtrapolationMs": 21600000,
+      "measuredAt": 1794657899000,
+      "validUntil": 1794657959000,
+      "rawRefs": [
+        "d354970f89f94339b8cb9851cb59cba00a7bfd454691751eb89b38fcdf40a9ce",
+        "d354970f89f94339b8cb9851cb59cba00a7bfd454691751eb89b38fcdf40a9ce",
+        "d354970f89f94339b8cb9851cb59cba00a7bfd454691751eb89b38fcdf40a9ce"
+      ],
+      "driftBasis": "API_DATE_PLUS_EXPLICIT_INTERNAL_PLATFORM_CLOCK_ALLOWANCE; NOT_CLOUD_PROVEN"
+    },
+    "signature": "2PyOfEAkocftihdNhEX6gp+muWIa+iDdVjLq8is7EEheIbITA/pDHEjYJc6j9EPmH44cq2HJaJWV8tbTdxw6Cw=="
+  },
+  "fence": {
+    "schema": "nukmiris.b1a.observation/v1",
+    "issuer": "local-independent-observer",
+    "keyId": "730c2a44770688bbebe9309c7b228b1803ea523dea7e1f32feac6244264d4389",
+    "sessionId": "11111111-1111-4111-8111-111111111111",
+    "recordType": "FENCE",
+    "issuedAt": 1794658130000,
+    "expiresAt": 1794658190000,
+    "payload": {
+      "retirementModel": "METRIC_LATENCY_V2",
+      "scope": "22222222-2222-4222-8222-222222222222",
+      "retiredEpoch": 1,
+      "retiredRevision": "b1a2-gateway-e000001-r1",
+      "clockSource": "gcp-platform-clock",
+      "visibilityClockSource": "independent-observer-clock",
+      "requestClockSource": "independent-observer-clock",
+      "retirementRequestedAt": 1794657601000,
+      "at": 1794657656000,
+      "terminationTargetMs": 60000,
+      "thresholdOwnerApproved": false,
+      "deletion": {
+        "operationDone": true,
+        "revisionNotFound": true,
+        "revision": "b1a2-gateway-e000001-r1",
+        "completedAt": 1794657630000,
+        "receiptObservedAt": 1794657899000,
+        "clockSource": "gcp-platform-clock",
+        "completionMeaning": "PLATFORM_END_TIME",
+        "rawDigest": "bba5656f0d18af546dcba2bb3a7689be32b6d7b1f23d0fad819dbffafc22c3f9"
+      },
+      "revisionDeleted": true,
+      "declaredAt": 1794657899000,
+      "coverUntil": 1794657776000,
+      "samplingIntervalMs": 60000,
+      "publicationLatencyMs": 120000,
+      "zeroObservationIntervalMs": 120000,
+      "metricFreshnessMs": 600000,
+      "requiredStates": [
+        "active",
+        "idle"
+      ],
+      "samples": [
+        {
+          "sampleAt": 1794657656000,
+          "visibleAt": 1794657899000,
+          "states": {
+            "active": 0,
+            "idle": 0
+          },
+          "rawDigest": "b51efc5a7023b4bdf5b5cb170b02d01c987ed72ba7e9708aa4eb3b3dc674fc9c",
+          "visibilityMeaning": "FIRST_OBSERVER_READ_UPPER_BOUND"
+        },
+        {
+          "sampleAt": 1794657716000,
+          "visibleAt": 1794657899000,
+          "states": {
+            "active": 0,
+            "idle": 0
+          },
+          "rawDigest": "b51efc5a7023b4bdf5b5cb170b02d01c987ed72ba7e9708aa4eb3b3dc674fc9c",
+          "visibilityMeaning": "FIRST_OBSERVER_READ_UPPER_BOUND"
+        },
+        {
+          "sampleAt": 1794657776000,
+          "visibleAt": 1794657899000,
+          "states": {
+            "active": 0,
+            "idle": 0
+          },
+          "rawDigest": "b51efc5a7023b4bdf5b5cb170b02d01c987ed72ba7e9708aa4eb3b3dc674fc9c",
+          "visibilityMeaning": "FIRST_OBSERVER_READ_UPPER_BOUND"
+        }
+      ]
+    },
+    "signature": "Mz8czu+Q0G19zRcA5b4YiStil+u+fP4DUnx0esErQOnJEQjKy1nc9MFDErdjrvd5Wvla2hlQW14VUw4frUxFDw=="
+  },
+  "canary": {
+    "schema": "nukmiris.b1a.observation/v1",
+    "issuer": "local-independent-observer",
+    "keyId": "730c2a44770688bbebe9309c7b228b1803ea523dea7e1f32feac6244264d4389",
+    "sessionId": "11111111-1111-4111-8111-111111111111",
+    "recordType": "CANARY",
+    "issuedAt": 1794658100000,
+    "expiresAt": 1794658160000,
+    "payload": {
+      "scope": "22222222-2222-4222-8222-222222222222",
+      "epoch": 1,
+      "revision": "b1a2-gateway-e000001-r1",
+      "clockSource": "independent-observer-clock",
+      "measuredWakeTailMs": 20000,
+      "networkTransitBoundMs": 1000,
+      "trials": [
+        {
+          "attemptId": "e491e5af-7a41-48fc-8a53-8669079ec3e5",
+          "scheduledWakeAt": 1794657910000,
+          "wakeObservedAt": 1794657910000,
+          "independentWakeAttempted": true,
+          "parkedBeforeConnect": true,
+          "independentWakeSource": "LOCAL_PROC_AND_INDEPENDENT_SIGCONT",
+          "receiptDigest": "2e3a34ef3c31c083f94b630a2132ad805c8100aec2b3d4dc6e9d51733c67082d",
+          "preparedAt": 1794657601000
+        },
+        {
+          "attemptId": "19c9e6a3-ba5e-4153-ac19-87f447038c03",
+          "scheduledWakeAt": 1794657920000,
+          "wakeObservedAt": 1794657920000,
+          "independentWakeAttempted": true,
+          "parkedBeforeConnect": true,
+          "independentWakeSource": "LOCAL_PROC_AND_INDEPENDENT_SIGCONT",
+          "receiptDigest": "7b4835b26292de0177e8662673ae626521531f145a85391677909127d3ab7faa",
+          "preparedAt": 1794657601000
+        },
+        {
+          "attemptId": "2fcd8382-446f-4a6e-947b-0efa73c86e62",
+          "scheduledWakeAt": 1794657930000,
+          "wakeObservedAt": 1794657930000,
+          "independentWakeAttempted": true,
+          "parkedBeforeConnect": true,
+          "independentWakeSource": "LOCAL_PROC_AND_INDEPENDENT_SIGCONT",
+          "receiptDigest": "e15990bf789a268a5bd26b2051039a5cedf5d62ed2d52ccfc8113261e274ca49",
+          "preparedAt": 1794657601000
+        },
+        {
+          "attemptId": "9a8f6bb2-7bbc-4246-bda7-0bc920ddf6b5",
+          "scheduledWakeAt": 1794657940000,
+          "wakeObservedAt": 1794657940000,
+          "independentWakeAttempted": true,
+          "parkedBeforeConnect": true,
+          "independentWakeSource": "LOCAL_PROC_AND_INDEPENDENT_SIGCONT",
+          "receiptDigest": "c44efe3022a96835f42939e6a95722ec5dc08288f8993ff19b3df55ed33cde7e",
+          "preparedAt": 1794657601000
+        },
+        {
+          "attemptId": "65f704b6-647d-4f00-9e1f-e3c14acbf56e",
+          "scheduledWakeAt": 1794657950000,
+          "wakeObservedAt": 1794657950000,
+          "independentWakeAttempted": true,
+          "parkedBeforeConnect": true,
+          "independentWakeSource": "LOCAL_PROC_AND_INDEPENDENT_SIGCONT",
+          "receiptDigest": "43fe4e21859c6c4db94338990ba7a6d5758a7170a348f6a4805c61b023e3b864",
+          "preparedAt": 1794657601000
+        },
+        {
+          "attemptId": "12968025-1185-431c-9114-10051ac02568",
+          "scheduledWakeAt": 1794657960000,
+          "wakeObservedAt": 1794657960000,
+          "independentWakeAttempted": true,
+          "parkedBeforeConnect": true,
+          "independentWakeSource": "LOCAL_PROC_AND_INDEPENDENT_SIGCONT",
+          "receiptDigest": "f2f53f7208caf1f4b9d8b7dc47e8b7981a36350c195960d79684bd651fee0c81",
+          "preparedAt": 1794657601000
+        },
+        {
+          "attemptId": "3b44a965-d4f1-40b1-a3bf-b6a84925cf7a",
+          "scheduledWakeAt": 1794657970000,
+          "wakeObservedAt": 1794657970000,
+          "independentWakeAttempted": true,
+          "parkedBeforeConnect": true,
+          "independentWakeSource": "LOCAL_PROC_AND_INDEPENDENT_SIGCONT",
+          "receiptDigest": "97defaba2817c297e11a57f90c31bfe541ce5193413046562319264c844caff8",
+          "preparedAt": 1794657601000
+        },
+        {
+          "attemptId": "245cdc98-c586-45c0-9dab-79288a33d3ea",
+          "scheduledWakeAt": 1794657980000,
+          "wakeObservedAt": 1794657980000,
+          "independentWakeAttempted": true,
+          "parkedBeforeConnect": true,
+          "independentWakeSource": "LOCAL_PROC_AND_INDEPENDENT_SIGCONT",
+          "receiptDigest": "7721ff6a7c404ea3ec4b452ac013f260b5c9d9e0e813bf36596dd6e0a4112b42",
+          "preparedAt": 1794657601000
+        },
+        {
+          "attemptId": "24856fb6-3f60-4756-a75a-5893fb7e01d8",
+          "scheduledWakeAt": 1794657990000,
+          "wakeObservedAt": 1794657990000,
+          "independentWakeAttempted": true,
+          "parkedBeforeConnect": true,
+          "independentWakeSource": "LOCAL_PROC_AND_INDEPENDENT_SIGCONT",
+          "receiptDigest": "f83f4e4fb8a34bc1f4c453e77bf677322ff4dcaa9751e5ac8b6d8e4af0a1d673",
+          "preparedAt": 1794657601000
+        },
+        {
+          "attemptId": "3d32aadf-552c-4b96-ad83-d6884f35055c",
+          "scheduledWakeAt": 1794658000000,
+          "wakeObservedAt": 1794658000000,
+          "independentWakeAttempted": true,
+          "parkedBeforeConnect": true,
+          "independentWakeSource": "LOCAL_PROC_AND_INDEPENDENT_SIGCONT",
+          "receiptDigest": "75bdf928d23375cbb147c0e17f543c16f60a1a5f486acaad69d0ad51798b9678",
+          "preparedAt": 1794657601000
+        },
+        {
+          "attemptId": "c6cce82e-ba41-4e86-99aa-a18513bcfe78",
+          "scheduledWakeAt": 1794658010000,
+          "wakeObservedAt": 1794658010000,
+          "independentWakeAttempted": true,
+          "parkedBeforeConnect": true,
+          "independentWakeSource": "LOCAL_PROC_AND_INDEPENDENT_SIGCONT",
+          "receiptDigest": "61e25da18ef2784c08e84ef73929ce95a4c78a5074cbbe09fddae9e38fd10724",
+          "preparedAt": 1794657601000
+        },
+        {
+          "attemptId": "6e242e3f-8e4f-4b07-81da-4e00813069ab",
+          "scheduledWakeAt": 1794658020000,
+          "wakeObservedAt": 1794658020000,
+          "independentWakeAttempted": true,
+          "parkedBeforeConnect": true,
+          "independentWakeSource": "LOCAL_PROC_AND_INDEPENDENT_SIGCONT",
+          "receiptDigest": "07020dac2786d03b09012cf11b217a76287250a5471a4fd91af23b7a3b359639",
+          "preparedAt": 1794657601000
+        },
+        {
+          "attemptId": "bd81f5d0-971d-4435-b12d-651d4d47225f",
+          "scheduledWakeAt": 1794658030000,
+          "wakeObservedAt": 1794658030000,
+          "independentWakeAttempted": true,
+          "parkedBeforeConnect": true,
+          "independentWakeSource": "LOCAL_PROC_AND_INDEPENDENT_SIGCONT",
+          "receiptDigest": "079753854ae23b7bf609de5d1c4e5ef3e9d540e7bedc9008c18f4615555ac35b",
+          "preparedAt": 1794657601000
+        },
+        {
+          "attemptId": "e032bfab-b232-4b12-939e-8ccd558e217c",
+          "scheduledWakeAt": 1794658040000,
+          "wakeObservedAt": 1794658040000,
+          "independentWakeAttempted": true,
+          "parkedBeforeConnect": true,
+          "independentWakeSource": "LOCAL_PROC_AND_INDEPENDENT_SIGCONT",
+          "receiptDigest": "5af093305d424910d053f121ba6e014f15abba1921dc3cbf60bd9a9678b3d304",
+          "preparedAt": 1794657601000
+        },
+        {
+          "attemptId": "a7d33460-27c6-4132-81fb-c6ddf0045bb1",
+          "scheduledWakeAt": 1794658050000,
+          "wakeObservedAt": 1794658050000,
+          "independentWakeAttempted": true,
+          "parkedBeforeConnect": true,
+          "independentWakeSource": "LOCAL_PROC_AND_INDEPENDENT_SIGCONT",
+          "receiptDigest": "1e2f582a4b04e4da5ada6d85644048ddda6a1bd79de23bbbb6748334e80402a6",
+          "preparedAt": 1794657601000
+        },
+        {
+          "attemptId": "a399cad5-e30e-4f72-8c20-7b012760158c",
+          "scheduledWakeAt": 1794658060000,
+          "wakeObservedAt": 1794658060000,
+          "independentWakeAttempted": true,
+          "parkedBeforeConnect": true,
+          "independentWakeSource": "LOCAL_PROC_AND_INDEPENDENT_SIGCONT",
+          "receiptDigest": "15793f3df6734655657645c9ab6a980fe6cfb284d4ba288648d045a290cb0505",
+          "preparedAt": 1794657601000
+        },
+        {
+          "attemptId": "3c6397f9-dc3e-4722-a0a4-c25db3d0907c",
+          "scheduledWakeAt": 1794658070000,
+          "wakeObservedAt": 1794658070000,
+          "independentWakeAttempted": true,
+          "parkedBeforeConnect": true,
+          "independentWakeSource": "LOCAL_PROC_AND_INDEPENDENT_SIGCONT",
+          "receiptDigest": "3d19f9f20d2791a4c7c1ce155b06c0fad25dfbaf9e6c9d0e37b8db6b236595b0",
+          "preparedAt": 1794657601000
+        },
+        {
+          "attemptId": "fd991155-f91b-4c4c-8a20-cb7886ad7bd7",
+          "scheduledWakeAt": 1794658080000,
+          "wakeObservedAt": 1794658080000,
+          "independentWakeAttempted": true,
+          "parkedBeforeConnect": true,
+          "independentWakeSource": "LOCAL_PROC_AND_INDEPENDENT_SIGCONT",
+          "receiptDigest": "c340366f942388b0c0be6d898d14b173edac75a35e3ed2f5c718efd36bb2d409",
+          "preparedAt": 1794657601000
+        },
+        {
+          "attemptId": "b41f17dc-9aa7-4657-b0ff-a721cf681848",
+          "scheduledWakeAt": 1794658090000,
+          "wakeObservedAt": 1794658090000,
+          "independentWakeAttempted": true,
+          "parkedBeforeConnect": true,
+          "independentWakeSource": "LOCAL_PROC_AND_INDEPENDENT_SIGCONT",
+          "receiptDigest": "9e79911b727f16ad48564311c71ae4df751df4647b3b3604516d937386e8948e",
+          "preparedAt": 1794657601000
+        },
+        {
+          "attemptId": "bdaa9b1f-9400-4048-b4ae-e1a9862b5f69",
+          "scheduledWakeAt": 1794658100000,
+          "wakeObservedAt": 1794658100000,
+          "independentWakeAttempted": true,
+          "parkedBeforeConnect": true,
+          "independentWakeSource": "LOCAL_PROC_AND_INDEPENDENT_SIGCONT",
+          "receiptDigest": "d23d9bf7a225df850a11be467cab86cf508a1c2562a3203bcfeb26bc505ec77c",
+          "preparedAt": 1794657601000
+        }
+      ]
+    },
+    "signature": "OYNoSAXeSp7hDh+EXj3E+eXgDNwvmh9B0RMPq59mBKh4RZb4hl6Aw9cZbBNMlDg67JwSEFMMknPSSJl0DP+TCQ=="
+  },
+  "ledger": {
+    "schema": "nukmiris.b1a.observation/v1",
+    "issuer": "local-independent-observer",
+    "keyId": "730c2a44770688bbebe9309c7b228b1803ea523dea7e1f32feac6244264d4389",
+    "sessionId": "11111111-1111-4111-8111-111111111111",
+    "recordType": "LEDGER",
+    "issuedAt": 1794658129000,
+    "expiresAt": 1794658189000,
+    "payload": {
+      "scope": "22222222-2222-4222-8222-222222222222",
+      "epoch": 1,
+      "revision": "b1a2-gateway-e000001-r1",
+      "clockSource": "independent-fake-clock",
+      "observedUntil": 1794658129000,
+      "recordsDigest": "747e447539ef020a405fc56f4d5b4c923626c52a393093f0721650e5429c2a7f",
+      "checkpoint": {
+        "sequence": 8,
+        "hash": "4b6b343db532569c03d76abdfdb2cc8dd8e7c330de4f59927bfd78109269ceb3"
+      },
+      "rawRefs": [
+        "7187a526ffb13bcc8bb2ef0b66412cb9705cda2d66b9117a67499c78e7f56c9b"
+      ],
+      "transitPolicy": {
+        "upperMs": 5000,
+        "measuredMaxRttMs": 0,
+        "measurementRefs": [
+          "bfa87eda4c561961e4b73cfe6f44cf47a327d743020fadf39b60dd0cb23d0633",
+          "8775fb117641a8e399b93c9f8440882326167e819a251b73bb0d091e529e2504",
+          "42c1c0a1390d83e0760520a4c5bd56e72c51452e338ba75ed379c40a0ba83728"
+        ],
+        "validUntil": 1794658200000,
+        "scope": "LOCAL_MEASURED_EXPERIMENT_ONLY",
+        "clockSource": "independent-observer-clock"
+      }
+    },
+    "signature": "Vt2LZnRVQG6DqWC9GOBqrJDcNHfp+2V6jZM13FmHPp31P31JgN2u3AazNk4AoMZhP3EVTDOKR2phR7l6eMZFDQ=="
+  },
+  "ledgerRecords": [
+    {
+      "event": "TLS_READY",
+      "at": 1794657601000,
+      "connectionId": "d7654886-1765-4e86-af27-17438fa10adb",
+      "authenticatedFingerprint": "8E:87:3E:5F:AB:F3:D2:5C:97:0C:48:56:E0:8B:70:8A:6C:0F:93:73:9D:F9:50:92:29:E1:E2:CF:7C:C7:DA:7F",
+      "authenticatedEpoch": null,
+      "authenticatedRevision": null,
+      "remoteAddress": "127.0.0.1",
+      "remotePort": 55860,
+      "sequence": 1,
+      "previous": "0000000000000000000000000000000000000000000000000000000000000000",
+      "hash": "d058015c25986bc9c00c23602605d3636bcb5ce65e269117c248e3e68b6a1686"
+    },
+    {
+      "event": "TLS_READY",
+      "at": 1794657601000,
+      "connectionId": "36afc6c8-1382-4fd3-bbf8-992e1a19f9dc",
+      "authenticatedFingerprint": "8E:87:3E:5F:AB:F3:D2:5C:97:0C:48:56:E0:8B:70:8A:6C:0F:93:73:9D:F9:50:92:29:E1:E2:CF:7C:C7:DA:7F",
+      "authenticatedEpoch": null,
+      "authenticatedRevision": null,
+      "remoteAddress": "127.0.0.1",
+      "remotePort": 55866,
+      "sequence": 2,
+      "previous": "d058015c25986bc9c00c23602605d3636bcb5ce65e269117c248e3e68b6a1686",
+      "hash": "8e80501a0a987633a83f6a1cbcf4247467912dc208c2a1b734322a4c04a9dc70"
+    },
+    {
+      "event": "TLS_READY",
+      "at": 1794657601000,
+      "connectionId": "2759ee8f-9d1c-4ba2-a0c4-4cbf0845118d",
+      "authenticatedFingerprint": "8E:87:3E:5F:AB:F3:D2:5C:97:0C:48:56:E0:8B:70:8A:6C:0F:93:73:9D:F9:50:92:29:E1:E2:CF:7C:C7:DA:7F",
+      "authenticatedEpoch": null,
+      "authenticatedRevision": null,
+      "remoteAddress": "127.0.0.1",
+      "remotePort": 55870,
+      "sequence": 3,
+      "previous": "8e80501a0a987633a83f6a1cbcf4247467912dc208c2a1b734322a4c04a9dc70",
+      "hash": "9f08d46f7856e03b7bbc088f6f764aef4f595906ad197a176c1b3ec961ca6f8d"
+    },
+    {
+      "event": "TLS_READY",
+      "at": 1794657601000,
+      "connectionId": "fa9fcc4a-ce8d-4a13-b407-955935799c33",
+      "authenticatedFingerprint": "3F:10:C4:63:D6:83:22:C3:34:73:25:EC:EF:89:D8:98:D3:F5:8E:0B:6F:5E:B9:8C:5D:04:A4:43:44:F3:AC:97",
+      "authenticatedEpoch": 1,
+      "authenticatedRevision": "b1a2-gateway-e000001-r1",
+      "remoteAddress": "127.0.0.1",
+      "remotePort": 55878,
+      "sequence": 4,
+      "previous": "9f08d46f7856e03b7bbc088f6f764aef4f595906ad197a176c1b3ec961ca6f8d",
+      "hash": "8f4b3281595fea60804d04f5e70f7b6a29ea650d44ce30bb3185c28083c54e73"
+    },
+    {
+      "event": "TLS_READY",
+      "at": 1794657601000,
+      "connectionId": "b85297ae-aa73-4b7b-91ea-b92d8ca3180e",
+      "authenticatedFingerprint": "8E:87:3E:5F:AB:F3:D2:5C:97:0C:48:56:E0:8B:70:8A:6C:0F:93:73:9D:F9:50:92:29:E1:E2:CF:7C:C7:DA:7F",
+      "authenticatedEpoch": null,
+      "authenticatedRevision": null,
+      "remoteAddress": "127.0.0.1",
+      "remotePort": 55884,
+      "sequence": 5,
+      "previous": "8f4b3281595fea60804d04f5e70f7b6a29ea650d44ce30bb3185c28083c54e73",
+      "hash": "546d39107b2ff476a99d0084b2150b7662a27fc92dfac47cf4647ec83e8b5f6b"
+    },
+    {
+      "event": "TLS_READY",
+      "at": 1794657601000,
+      "connectionId": "a641e2e3-85bb-4d7d-a60b-a5250a7c6183",
+      "authenticatedFingerprint": "8E:87:3E:5F:AB:F3:D2:5C:97:0C:48:56:E0:8B:70:8A:6C:0F:93:73:9D:F9:50:92:29:E1:E2:CF:7C:C7:DA:7F",
+      "authenticatedEpoch": null,
+      "authenticatedRevision": null,
+      "remoteAddress": "127.0.0.1",
+      "remotePort": 55888,
+      "sequence": 6,
+      "previous": "546d39107b2ff476a99d0084b2150b7662a27fc92dfac47cf4647ec83e8b5f6b",
+      "hash": "e39f7e1e12e7063feef6c6442691ce84eaf703606a0092c495a59f73ac3afecd"
+    },
+    {
+      "event": "TLS_READY",
+      "at": 1794657601000,
+      "connectionId": "125bfa19-831c-4701-b359-a8656a6b0a57",
+      "authenticatedFingerprint": "8E:87:3E:5F:AB:F3:D2:5C:97:0C:48:56:E0:8B:70:8A:6C:0F:93:73:9D:F9:50:92:29:E1:E2:CF:7C:C7:DA:7F",
+      "authenticatedEpoch": null,
+      "authenticatedRevision": null,
+      "remoteAddress": "127.0.0.1",
+      "remotePort": 55892,
+      "sequence": 7,
+      "previous": "e39f7e1e12e7063feef6c6442691ce84eaf703606a0092c495a59f73ac3afecd",
+      "hash": "44bd056573e300cff13e4da94a19b4af4c96e89cd27435d5a504065d674acab0"
+    },
+    {
+      "event": "TLS_READY",
+      "at": 1794658129000,
+      "connectionId": "fb1d7e3c-eeb8-430c-8374-29eda4d8f095",
+      "authenticatedFingerprint": "8E:87:3E:5F:AB:F3:D2:5C:97:0C:48:56:E0:8B:70:8A:6C:0F:93:73:9D:F9:50:92:29:E1:E2:CF:7C:C7:DA:7F",
+      "authenticatedEpoch": null,
+      "authenticatedRevision": null,
+      "remoteAddress": "127.0.0.1",
+      "remotePort": 55894,
+      "sequence": 8,
+      "previous": "44bd056573e300cff13e4da94a19b4af4c96e89cd27435d5a504065d674acab0",
+      "hash": "4b6b343db532569c03d76abdfdb2cc8dd8e7c330de4f59927bfd78109269ceb3"
+    }
+  ],
+  "result": {
+    "state": "EVIDENCE_READY",
+    "timeModel": "BOUNDED_DRIFT_V2",
+    "physicalBoundary": 1794657656000,
+    "declaredAt": 1794657899000,
+    "evidenceCompletedAt": 1794658130000,
+    "thresholdBasis": "PROVISIONAL_SYNTHETIC_TARGET",
+    "derivationProtocol": "AUTHENTICATED_LEDGER_ACTIVITY_V1",
+    "derivedActivityCount": 1,
+    "derivedActivitiesDigest": "96cf80776b384dbd1489e2ceadf29c06026e48d9ab6c32789830c25553f46840",
+    "evidenceDigest": "f3bf3901df68035890077e4c530bf85ac88ad82e17a127ae9e32b638b69a48d7"
+  },
+  "records": [
+    {
+      "event": "INDEPENDENT_RECEIPT",
+      "at": 1794657601000,
+      "rawDigest": "5367151fbba65312c41cd7e2b1d7da0acaab9f6cbf478c1ee6339efb483de10b",
+      "source": "MUTUALLY_AUTHENTICATED_INDEPENDENT_FAKE",
+      "requestedAt": 1794657601000,
+      "observedAt": 1794657601000,
+      "raw": {
+        "sessionId": "11111111-1111-4111-8111-111111111111",
+        "nonce": "ff719f68-d3ee-42d8-9dcd-824c001f94f4",
+        "receivedAt": 1794657601000,
+        "sentAt": 1794657601000,
+        "clockSource": "independent-fake-clock"
+      }
+    },
+    {
+      "event": "INDEPENDENT_RECEIPT",
+      "at": 1794657601000,
+      "rawDigest": "5cefe8a152d7347c099d0c8f6c2a9fffdbc884c0fb94b0c31bb0981dfe31e79e",
+      "source": "MUTUALLY_AUTHENTICATED_INDEPENDENT_FAKE",
+      "requestedAt": 1794657601000,
+      "observedAt": 1794657601000,
+      "raw": {
+        "sessionId": "11111111-1111-4111-8111-111111111111",
+        "nonce": "36f2cb52-8cf5-4e4f-8833-e315e783fa71",
+        "receivedAt": 1794657601000,
+        "sentAt": 1794657601000,
+        "clockSource": "independent-fake-clock"
+      }
+    },
+    {
+      "event": "INDEPENDENT_RECEIPT",
+      "at": 1794657601000,
+      "rawDigest": "a66884662621708d5362227361229a5bb9ae4df18e47b13af8474630fc72cf09",
+      "source": "MUTUALLY_AUTHENTICATED_INDEPENDENT_FAKE",
+      "requestedAt": 1794657601000,
+      "observedAt": 1794657601000,
+      "raw": {
+        "sessionId": "11111111-1111-4111-8111-111111111111",
+        "nonce": "a2a406ec-bf0c-4882-9409-1bc2ca79f58d",
+        "receivedAt": 1794657601000,
+        "sentAt": 1794657601000,
+        "clockSource": "independent-fake-clock"
+      }
+    },
+    {
+      "event": "CANARY_SCHEDULE",
+      "attemptId": "e491e5af-7a41-48fc-8a53-8669079ec3e5",
+      "scheduledWakeAt": 1794657910000,
+      "sessionId": "11111111-1111-4111-8111-111111111111"
+    },
+    {
+      "event": "INDEPENDENT_CANARY_PREPARED",
+      "attemptId": "e491e5af-7a41-48fc-8a53-8669079ec3e5",
+      "scheduledWakeAt": 1794657910000,
+      "revision": "b1a2-gateway-e000001-r1",
+      "nonce": "e9b3790b-4e1f-4b37-9051-4f8d3dc3caec",
+      "pid": 375555,
+      "pidStart": "16235675",
+      "parkedBeforeConnect": true,
+      "source": "LOCAL_PROC_AND_INDEPENDENT_SIGCONT",
+      "preparedAt": 1794657601000
+    },
+    {
+      "event": "CANARY_SCHEDULE",
+      "attemptId": "19c9e6a3-ba5e-4153-ac19-87f447038c03",
+      "scheduledWakeAt": 1794657920000,
+      "sessionId": "11111111-1111-4111-8111-111111111111"
+    },
+    {
+      "event": "INDEPENDENT_CANARY_PREPARED",
+      "attemptId": "19c9e6a3-ba5e-4153-ac19-87f447038c03",
+      "scheduledWakeAt": 1794657920000,
+      "revision": "b1a2-gateway-e000001-r1",
+      "nonce": "d981274f-539f-4855-96d7-4cc9e236aba5",
+      "pid": 375563,
+      "pidStart": "16235679",
+      "parkedBeforeConnect": true,
+      "source": "LOCAL_PROC_AND_INDEPENDENT_SIGCONT",
+      "preparedAt": 1794657601000
+    },
+    {
+      "event": "CANARY_SCHEDULE",
+      "attemptId": "2fcd8382-446f-4a6e-947b-0efa73c86e62",
+      "scheduledWakeAt": 1794657930000,
+      "sessionId": "11111111-1111-4111-8111-111111111111"
+    },
+    {
+      "event": "INDEPENDENT_CANARY_PREPARED",
+      "attemptId": "2fcd8382-446f-4a6e-947b-0efa73c86e62",
+      "scheduledWakeAt": 1794657930000,
+      "revision": "b1a2-gateway-e000001-r1",
+      "nonce": "4b676907-4aa1-4bf2-885e-5a918103966a",
+      "pid": 375571,
+      "pidStart": "16235683",
+      "parkedBeforeConnect": true,
+      "source": "LOCAL_PROC_AND_INDEPENDENT_SIGCONT",
+      "preparedAt": 1794657601000
+    },
+    {
+      "event": "CANARY_SCHEDULE",
+      "attemptId": "9a8f6bb2-7bbc-4246-bda7-0bc920ddf6b5",
+      "scheduledWakeAt": 1794657940000,
+      "sessionId": "11111111-1111-4111-8111-111111111111"
+    },
+    {
+      "event": "INDEPENDENT_CANARY_PREPARED",
+      "attemptId": "9a8f6bb2-7bbc-4246-bda7-0bc920ddf6b5",
+      "scheduledWakeAt": 1794657940000,
+      "revision": "b1a2-gateway-e000001-r1",
+      "nonce": "5ace384d-87a3-4c6f-a8d0-a17a2e665b50",
+      "pid": 375579,
+      "pidStart": "16235686",
+      "parkedBeforeConnect": true,
+      "source": "LOCAL_PROC_AND_INDEPENDENT_SIGCONT",
+      "preparedAt": 1794657601000
+    },
+    {
+      "event": "CANARY_SCHEDULE",
+      "attemptId": "65f704b6-647d-4f00-9e1f-e3c14acbf56e",
+      "scheduledWakeAt": 1794657950000,
+      "sessionId": "11111111-1111-4111-8111-111111111111"
+    },
+    {
+      "event": "INDEPENDENT_CANARY_PREPARED",
+      "attemptId": "65f704b6-647d-4f00-9e1f-e3c14acbf56e",
+      "scheduledWakeAt": 1794657950000,
+      "revision": "b1a2-gateway-e000001-r1",
+      "nonce": "93acb00e-1be8-421f-b2a4-5a52a8adc250",
+      "pid": 375587,
+      "pidStart": "16235689",
+      "parkedBeforeConnect": true,
+      "source": "LOCAL_PROC_AND_INDEPENDENT_SIGCONT",
+      "preparedAt": 1794657601000
+    },
+    {
+      "event": "CANARY_SCHEDULE",
+      "attemptId": "12968025-1185-431c-9114-10051ac02568",
+      "scheduledWakeAt": 1794657960000,
+      "sessionId": "11111111-1111-4111-8111-111111111111"
+    },
+    {
+      "event": "INDEPENDENT_CANARY_PREPARED",
+      "attemptId": "12968025-1185-431c-9114-10051ac02568",
+      "scheduledWakeAt": 1794657960000,
+      "revision": "b1a2-gateway-e000001-r1",
+      "nonce": "4a47c612-8070-4464-9b00-5d0ca4f346f5",
+      "pid": 375595,
+      "pidStart": "16235693",
+      "parkedBeforeConnect": true,
+      "source": "LOCAL_PROC_AND_INDEPENDENT_SIGCONT",
+      "preparedAt": 1794657601000
+    },
+    {
+      "event": "CANARY_SCHEDULE",
+      "attemptId": "3b44a965-d4f1-40b1-a3bf-b6a84925cf7a",
+      "scheduledWakeAt": 1794657970000,
+      "sessionId": "11111111-1111-4111-8111-111111111111"
+    },
+    {
+      "event": "INDEPENDENT_CANARY_PREPARED",
+      "attemptId": "3b44a965-d4f1-40b1-a3bf-b6a84925cf7a",
+      "scheduledWakeAt": 1794657970000,
+      "revision": "b1a2-gateway-e000001-r1",
+      "nonce": "1881e2b3-b466-49ce-922e-823d02286e57",
+      "pid": 375603,
+      "pidStart": "16235696",
+      "parkedBeforeConnect": true,
+      "source": "LOCAL_PROC_AND_INDEPENDENT_SIGCONT",
+      "preparedAt": 1794657601000
+    },
+    {
+      "event": "CANARY_SCHEDULE",
+      "attemptId": "245cdc98-c586-45c0-9dab-79288a33d3ea",
+      "scheduledWakeAt": 1794657980000,
+      "sessionId": "11111111-1111-4111-8111-111111111111"
+    },
+    {
+      "event": "INDEPENDENT_CANARY_PREPARED",
+      "attemptId": "245cdc98-c586-45c0-9dab-79288a33d3ea",
+      "scheduledWakeAt": 1794657980000,
+      "revision": "b1a2-gateway-e000001-r1",
+      "nonce": "33535247-0b75-4701-b86f-af60d69c4d4e",
+      "pid": 375611,
+      "pidStart": "16235699",
+      "parkedBeforeConnect": true,
+      "source": "LOCAL_PROC_AND_INDEPENDENT_SIGCONT",
+      "preparedAt": 1794657601000
+    },
+    {
+      "event": "CANARY_SCHEDULE",
+      "attemptId": "24856fb6-3f60-4756-a75a-5893fb7e01d8",
+      "scheduledWakeAt": 1794657990000,
+      "sessionId": "11111111-1111-4111-8111-111111111111"
+    },
+    {
+      "event": "INDEPENDENT_CANARY_PREPARED",
+      "attemptId": "24856fb6-3f60-4756-a75a-5893fb7e01d8",
+      "scheduledWakeAt": 1794657990000,
+      "revision": "b1a2-gateway-e000001-r1",
+      "nonce": "861fc18c-c37e-42b8-87fb-7919744590d9",
+      "pid": 375619,
+      "pidStart": "16235704",
+      "parkedBeforeConnect": true,
+      "source": "LOCAL_PROC_AND_INDEPENDENT_SIGCONT",
+      "preparedAt": 1794657601000
+    },
+    {
+      "event": "CANARY_SCHEDULE",
+      "attemptId": "3d32aadf-552c-4b96-ad83-d6884f35055c",
+      "scheduledWakeAt": 1794658000000,
+      "sessionId": "11111111-1111-4111-8111-111111111111"
+    },
+    {
+      "event": "INDEPENDENT_CANARY_PREPARED",
+      "attemptId": "3d32aadf-552c-4b96-ad83-d6884f35055c",
+      "scheduledWakeAt": 1794658000000,
+      "revision": "b1a2-gateway-e000001-r1",
+      "nonce": "80cbc927-9d37-47df-bebd-4cd929e4a898",
+      "pid": 375627,
+      "pidStart": "16235708",
+      "parkedBeforeConnect": true,
+      "source": "LOCAL_PROC_AND_INDEPENDENT_SIGCONT",
+      "preparedAt": 1794657601000
+    },
+    {
+      "event": "CANARY_SCHEDULE",
+      "attemptId": "c6cce82e-ba41-4e86-99aa-a18513bcfe78",
+      "scheduledWakeAt": 1794658010000,
+      "sessionId": "11111111-1111-4111-8111-111111111111"
+    },
+    {
+      "event": "INDEPENDENT_CANARY_PREPARED",
+      "attemptId": "c6cce82e-ba41-4e86-99aa-a18513bcfe78",
+      "scheduledWakeAt": 1794658010000,
+      "revision": "b1a2-gateway-e000001-r1",
+      "nonce": "f8bbb4e6-22ac-490c-9ab1-10c858fbc642",
+      "pid": 375635,
+      "pidStart": "16235713",
+      "parkedBeforeConnect": true,
+      "source": "LOCAL_PROC_AND_INDEPENDENT_SIGCONT",
+      "preparedAt": 1794657601000
+    },
+    {
+      "event": "CANARY_SCHEDULE",
+      "attemptId": "6e242e3f-8e4f-4b07-81da-4e00813069ab",
+      "scheduledWakeAt": 1794658020000,
+      "sessionId": "11111111-1111-4111-8111-111111111111"
+    },
+    {
+      "event": "INDEPENDENT_CANARY_PREPARED",
+      "attemptId": "6e242e3f-8e4f-4b07-81da-4e00813069ab",
+      "scheduledWakeAt": 1794658020000,
+      "revision": "b1a2-gateway-e000001-r1",
+      "nonce": "0982b2de-27b3-46e7-9d94-de548bb705af",
+      "pid": 375643,
+      "pidStart": "16235717",
+      "parkedBeforeConnect": true,
+      "source": "LOCAL_PROC_AND_INDEPENDENT_SIGCONT",
+      "preparedAt": 1794657601000
+    },
+    {
+      "event": "CANARY_SCHEDULE",
+      "attemptId": "bd81f5d0-971d-4435-b12d-651d4d47225f",
+      "scheduledWakeAt": 1794658030000,
+      "sessionId": "11111111-1111-4111-8111-111111111111"
+    },
+    {
+      "event": "INDEPENDENT_CANARY_PREPARED",
+      "attemptId": "bd81f5d0-971d-4435-b12d-651d4d47225f",
+      "scheduledWakeAt": 1794658030000,
+      "revision": "b1a2-gateway-e000001-r1",
+      "nonce": "97d37181-87f1-4dc8-8aff-8f6e0445afa0",
+      "pid": 375651,
+      "pidStart": "16235721",
+      "parkedBeforeConnect": true,
+      "source": "LOCAL_PROC_AND_INDEPENDENT_SIGCONT",
+      "preparedAt": 1794657601000
+    },
+    {
+      "event": "CANARY_SCHEDULE",
+      "attemptId": "e032bfab-b232-4b12-939e-8ccd558e217c",
+      "scheduledWakeAt": 1794658040000,
+      "sessionId": "11111111-1111-4111-8111-111111111111"
+    },
+    {
+      "event": "INDEPENDENT_CANARY_PREPARED",
+      "attemptId": "e032bfab-b232-4b12-939e-8ccd558e217c",
+      "scheduledWakeAt": 1794658040000,
+      "revision": "b1a2-gateway-e000001-r1",
+      "nonce": "5d631413-6f05-4059-8d9b-5e2c997b2824",
+      "pid": 375659,
+      "pidStart": "16235724",
+      "parkedBeforeConnect": true,
+      "source": "LOCAL_PROC_AND_INDEPENDENT_SIGCONT",
+      "preparedAt": 1794657601000
+    },
+    {
+      "event": "CANARY_SCHEDULE",
+      "attemptId": "a7d33460-27c6-4132-81fb-c6ddf0045bb1",
+      "scheduledWakeAt": 1794658050000,
+      "sessionId": "11111111-1111-4111-8111-111111111111"
+    },
+    {
+      "event": "INDEPENDENT_CANARY_PREPARED",
+      "attemptId": "a7d33460-27c6-4132-81fb-c6ddf0045bb1",
+      "scheduledWakeAt": 1794658050000,
+      "revision": "b1a2-gateway-e000001-r1",
+      "nonce": "2b9fc3fe-1c14-493b-94df-2c1c886091d9",
+      "pid": 375667,
+      "pidStart": "16235728",
+      "parkedBeforeConnect": true,
+      "source": "LOCAL_PROC_AND_INDEPENDENT_SIGCONT",
+      "preparedAt": 1794657601000
+    },
+    {
+      "event": "CANARY_SCHEDULE",
+      "attemptId": "a399cad5-e30e-4f72-8c20-7b012760158c",
+      "scheduledWakeAt": 1794658060000,
+      "sessionId": "11111111-1111-4111-8111-111111111111"
+    },
+    {
+      "event": "INDEPENDENT_CANARY_PREPARED",
+      "attemptId": "a399cad5-e30e-4f72-8c20-7b012760158c",
+      "scheduledWakeAt": 1794658060000,
+      "revision": "b1a2-gateway-e000001-r1",
+      "nonce": "53525d1b-646f-4b00-8e30-8a24494aef4f",
+      "pid": 375675,
+      "pidStart": "16235731",
+      "parkedBeforeConnect": true,
+      "source": "LOCAL_PROC_AND_INDEPENDENT_SIGCONT",
+      "preparedAt": 1794657601000
+    },
+    {
+      "event": "CANARY_SCHEDULE",
+      "attemptId": "3c6397f9-dc3e-4722-a0a4-c25db3d0907c",
+      "scheduledWakeAt": 1794658070000,
+      "sessionId": "11111111-1111-4111-8111-111111111111"
+    },
+    {
+      "event": "INDEPENDENT_CANARY_PREPARED",
+      "attemptId": "3c6397f9-dc3e-4722-a0a4-c25db3d0907c",
+      "scheduledWakeAt": 1794658070000,
+      "revision": "b1a2-gateway-e000001-r1",
+      "nonce": "d7164c5d-10fb-4b4a-9b04-6a2783ec24be",
+      "pid": 375683,
+      "pidStart": "16235735",
+      "parkedBeforeConnect": true,
+      "source": "LOCAL_PROC_AND_INDEPENDENT_SIGCONT",
+      "preparedAt": 1794657601000
+    },
+    {
+      "event": "CANARY_SCHEDULE",
+      "attemptId": "fd991155-f91b-4c4c-8a20-cb7886ad7bd7",
+      "scheduledWakeAt": 1794658080000,
+      "sessionId": "11111111-1111-4111-8111-111111111111"
+    },
+    {
+      "event": "INDEPENDENT_CANARY_PREPARED",
+      "attemptId": "fd991155-f91b-4c4c-8a20-cb7886ad7bd7",
+      "scheduledWakeAt": 1794658080000,
+      "revision": "b1a2-gateway-e000001-r1",
+      "nonce": "9a52159c-e4d2-4a59-90a1-788071f78464",
+      "pid": 375691,
+      "pidStart": "16235738",
+      "parkedBeforeConnect": true,
+      "source": "LOCAL_PROC_AND_INDEPENDENT_SIGCONT",
+      "preparedAt": 1794657601000
+    },
+    {
+      "event": "CANARY_SCHEDULE",
+      "attemptId": "b41f17dc-9aa7-4657-b0ff-a721cf681848",
+      "scheduledWakeAt": 1794658090000,
+      "sessionId": "11111111-1111-4111-8111-111111111111"
+    },
+    {
+      "event": "INDEPENDENT_CANARY_PREPARED",
+      "attemptId": "b41f17dc-9aa7-4657-b0ff-a721cf681848",
+      "scheduledWakeAt": 1794658090000,
+      "revision": "b1a2-gateway-e000001-r1",
+      "nonce": "f53aa63a-55dc-4e32-8abd-436b04b23b61",
+      "pid": 375699,
+      "pidStart": "16235741",
+      "parkedBeforeConnect": true,
+      "source": "LOCAL_PROC_AND_INDEPENDENT_SIGCONT",
+      "preparedAt": 1794657601000
+    },
+    {
+      "event": "CANARY_SCHEDULE",
+      "attemptId": "bdaa9b1f-9400-4048-b4ae-e1a9862b5f69",
+      "scheduledWakeAt": 1794658100000,
+      "sessionId": "11111111-1111-4111-8111-111111111111"
+    },
+    {
+      "event": "INDEPENDENT_CANARY_PREPARED",
+      "attemptId": "bdaa9b1f-9400-4048-b4ae-e1a9862b5f69",
+      "scheduledWakeAt": 1794658100000,
+      "revision": "b1a2-gateway-e000001-r1",
+      "nonce": "6dfe961a-1698-4eb3-8a0e-2b13d570a8d6",
+      "pid": 375707,
+      "pidStart": "16235745",
+      "parkedBeforeConnect": true,
+      "source": "LOCAL_PROC_AND_INDEPENDENT_SIGCONT",
+      "preparedAt": 1794657601000
+    },
+    {
+      "event": "INDEPENDENT_RECEIPT",
+      "at": 1794657899000,
+      "rawDigest": "d354970f89f94339b8cb9851cb59cba00a7bfd454691751eb89b38fcdf40a9ce",
+      "source": "run",
+      "requestedAt": 1794657899000,
+      "observedAt": 1794657899000,
+      "raw": {
+        "name": "b1a2-gateway"
+      }
+    },
+    {
+      "event": "INDEPENDENT_RECEIPT",
+      "at": 1794657899000,
+      "rawDigest": "d354970f89f94339b8cb9851cb59cba00a7bfd454691751eb89b38fcdf40a9ce",
+      "source": "run",
+      "requestedAt": 1794657899000,
+      "observedAt": 1794657899000,
+      "raw": {
+        "name": "b1a2-gateway"
+      }
+    },
+    {
+      "event": "INDEPENDENT_RECEIPT",
+      "at": 1794657899000,
+      "rawDigest": "d354970f89f94339b8cb9851cb59cba00a7bfd454691751eb89b38fcdf40a9ce",
+      "source": "run",
+      "requestedAt": 1794657899000,
+      "observedAt": 1794657899000,
+      "raw": {
+        "name": "b1a2-gateway"
+      }
+    },
+    {
+      "event": "INDEPENDENT_RECEIPT",
+      "at": 1794657899000,
+      "rawDigest": "b51efc5a7023b4bdf5b5cb170b02d01c987ed72ba7e9708aa4eb3b3dc674fc9c",
+      "source": "monitoring",
+      "requestedAt": 1794657899000,
+      "observedAt": 1794657899000,
+      "raw": {
+        "timeSeries": [
+          {
+            "metric": {
+              "type": "run.googleapis.com/container/instance_count",
+              "labels": {
+                "state": "active"
+              }
+            },
+            "resource": {
+              "type": "cloud_run_revision",
+              "labels": {
+                "service_name": "b1a2-gateway",
+                "revision_name": "b1a2-gateway-e000001-r1"
+              }
+            },
+            "points": [
+              {
+                "interval": {
+                  "endTime": "2026-11-14T12:00:56.000Z"
+                },
+                "value": {
+                  "int64Value": "0"
+                }
+              },
+              {
+                "interval": {
+                  "endTime": "2026-11-14T12:01:56.000Z"
+                },
+                "value": {
+                  "int64Value": "0"
+                }
+              },
+              {
+                "interval": {
+                  "endTime": "2026-11-14T12:02:56.000Z"
+                },
+                "value": {
+                  "int64Value": "0"
+                }
+              }
+            ]
+          },
+          {
+            "metric": {
+              "type": "run.googleapis.com/container/instance_count",
+              "labels": {
+                "state": "idle"
+              }
+            },
+            "resource": {
+              "type": "cloud_run_revision",
+              "labels": {
+                "service_name": "b1a2-gateway",
+                "revision_name": "b1a2-gateway-e000001-r1"
+              }
+            },
+            "points": [
+              {
+                "interval": {
+                  "endTime": "2026-11-14T12:00:56.000Z"
+                },
+                "value": {
+                  "int64Value": "0"
+                }
+              },
+              {
+                "interval": {
+                  "endTime": "2026-11-14T12:01:56.000Z"
+                },
+                "value": {
+                  "int64Value": "0"
+                }
+              },
+              {
+                "interval": {
+                  "endTime": "2026-11-14T12:02:56.000Z"
+                },
+                "value": {
+                  "int64Value": "0"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "event": "INDEPENDENT_RECEIPT",
+      "at": 1794657899000,
+      "rawDigest": "44bdde5001ee71a41f619d377907dc70337db9328ac2364d967d972888f44b82",
+      "source": "run",
+      "requestedAt": 1794657899000,
+      "observedAt": 1794657899000,
+      "raw": {
+        "done": true,
+        "metadata": {
+          "endTime": "2026-11-14T12:00:30.000Z"
+        }
+      }
+    },
+    {
+      "event": "INDEPENDENT_RECEIPT",
+      "at": 1794657899000,
+      "rawDigest": "32b7b1af349d4860b789d7480ea771744a49fcae207b10325c63a0854572cb84",
+      "source": "run",
+      "requestedAt": 1794657899000,
+      "observedAt": 1794657899000,
+      "raw": {
+        "error": "deleted"
+      }
+    },
+    {
+      "event": "INDEPENDENT_CANARY_WAKE",
+      "attemptId": "e491e5af-7a41-48fc-8a53-8669079ec3e5",
+      "scheduledWakeAt": 1794657910000,
+      "revision": "b1a2-gateway-e000001-r1",
+      "nonce": "e9b3790b-4e1f-4b37-9051-4f8d3dc3caec",
+      "pid": 375555,
+      "pidStart": "16235675",
+      "parkedBeforeConnect": true,
+      "source": "LOCAL_PROC_AND_INDEPENDENT_SIGCONT",
+      "preparedAt": 1794657601000,
+      "wakeObservedAt": 1794657910000,
+      "independent": true,
+      "independentWakeAttempted": true,
+      "terminatedBeforeWake": true
+    },
+    {
+      "event": "CANARY_OBSERVATION",
+      "attemptId": "e491e5af-7a41-48fc-8a53-8669079ec3e5",
+      "scheduledWakeAt": 1794657910000,
+      "wakeObservedAt": 1794657910000,
+      "independentWakeAttempted": true,
+      "parkedBeforeConnect": true,
+      "independentWakeSource": "LOCAL_PROC_AND_INDEPENDENT_SIGCONT",
+      "receiptDigest": "2e3a34ef3c31c083f94b630a2132ad805c8100aec2b3d4dc6e9d51733c67082d",
+      "preparedAt": 1794657601000
+    },
+    {
+      "event": "INDEPENDENT_CANARY_WAKE",
+      "attemptId": "19c9e6a3-ba5e-4153-ac19-87f447038c03",
+      "scheduledWakeAt": 1794657920000,
+      "revision": "b1a2-gateway-e000001-r1",
+      "nonce": "d981274f-539f-4855-96d7-4cc9e236aba5",
+      "pid": 375563,
+      "pidStart": "16235679",
+      "parkedBeforeConnect": true,
+      "source": "LOCAL_PROC_AND_INDEPENDENT_SIGCONT",
+      "preparedAt": 1794657601000,
+      "wakeObservedAt": 1794657920000,
+      "independent": true,
+      "independentWakeAttempted": true,
+      "terminatedBeforeWake": true
+    },
+    {
+      "event": "CANARY_OBSERVATION",
+      "attemptId": "19c9e6a3-ba5e-4153-ac19-87f447038c03",
+      "scheduledWakeAt": 1794657920000,
+      "wakeObservedAt": 1794657920000,
+      "independentWakeAttempted": true,
+      "parkedBeforeConnect": true,
+      "independentWakeSource": "LOCAL_PROC_AND_INDEPENDENT_SIGCONT",
+      "receiptDigest": "7b4835b26292de0177e8662673ae626521531f145a85391677909127d3ab7faa",
+      "preparedAt": 1794657601000
+    },
+    {
+      "event": "INDEPENDENT_CANARY_WAKE",
+      "attemptId": "2fcd8382-446f-4a6e-947b-0efa73c86e62",
+      "scheduledWakeAt": 1794657930000,
+      "revision": "b1a2-gateway-e000001-r1",
+      "nonce": "4b676907-4aa1-4bf2-885e-5a918103966a",
+      "pid": 375571,
+      "pidStart": "16235683",
+      "parkedBeforeConnect": true,
+      "source": "LOCAL_PROC_AND_INDEPENDENT_SIGCONT",
+      "preparedAt": 1794657601000,
+      "wakeObservedAt": 1794657930000,
+      "independent": true,
+      "independentWakeAttempted": true,
+      "terminatedBeforeWake": true
+    },
+    {
+      "event": "CANARY_OBSERVATION",
+      "attemptId": "2fcd8382-446f-4a6e-947b-0efa73c86e62",
+      "scheduledWakeAt": 1794657930000,
+      "wakeObservedAt": 1794657930000,
+      "independentWakeAttempted": true,
+      "parkedBeforeConnect": true,
+      "independentWakeSource": "LOCAL_PROC_AND_INDEPENDENT_SIGCONT",
+      "receiptDigest": "e15990bf789a268a5bd26b2051039a5cedf5d62ed2d52ccfc8113261e274ca49",
+      "preparedAt": 1794657601000
+    },
+    {
+      "event": "INDEPENDENT_CANARY_WAKE",
+      "attemptId": "9a8f6bb2-7bbc-4246-bda7-0bc920ddf6b5",
+      "scheduledWakeAt": 1794657940000,
+      "revision": "b1a2-gateway-e000001-r1",
+      "nonce": "5ace384d-87a3-4c6f-a8d0-a17a2e665b50",
+      "pid": 375579,
+      "pidStart": "16235686",
+      "parkedBeforeConnect": true,
+      "source": "LOCAL_PROC_AND_INDEPENDENT_SIGCONT",
+      "preparedAt": 1794657601000,
+      "wakeObservedAt": 1794657940000,
+      "independent": true,
+      "independentWakeAttempted": true,
+      "terminatedBeforeWake": true
+    },
+    {
+      "event": "CANARY_OBSERVATION",
+      "attemptId": "9a8f6bb2-7bbc-4246-bda7-0bc920ddf6b5",
+      "scheduledWakeAt": 1794657940000,
+      "wakeObservedAt": 1794657940000,
+      "independentWakeAttempted": true,
+      "parkedBeforeConnect": true,
+      "independentWakeSource": "LOCAL_PROC_AND_INDEPENDENT_SIGCONT",
+      "receiptDigest": "c44efe3022a96835f42939e6a95722ec5dc08288f8993ff19b3df55ed33cde7e",
+      "preparedAt": 1794657601000
+    },
+    {
+      "event": "INDEPENDENT_CANARY_WAKE",
+      "attemptId": "65f704b6-647d-4f00-9e1f-e3c14acbf56e",
+      "scheduledWakeAt": 1794657950000,
+      "revision": "b1a2-gateway-e000001-r1",
+      "nonce": "93acb00e-1be8-421f-b2a4-5a52a8adc250",
+      "pid": 375587,
+      "pidStart": "16235689",
+      "parkedBeforeConnect": true,
+      "source": "LOCAL_PROC_AND_INDEPENDENT_SIGCONT",
+      "preparedAt": 1794657601000,
+      "wakeObservedAt": 1794657950000,
+      "independent": true,
+      "independentWakeAttempted": true,
+      "terminatedBeforeWake": true
+    },
+    {
+      "event": "CANARY_OBSERVATION",
+      "attemptId": "65f704b6-647d-4f00-9e1f-e3c14acbf56e",
+      "scheduledWakeAt": 1794657950000,
+      "wakeObservedAt": 1794657950000,
+      "independentWakeAttempted": true,
+      "parkedBeforeConnect": true,
+      "independentWakeSource": "LOCAL_PROC_AND_INDEPENDENT_SIGCONT",
+      "receiptDigest": "43fe4e21859c6c4db94338990ba7a6d5758a7170a348f6a4805c61b023e3b864",
+      "preparedAt": 1794657601000
+    },
+    {
+      "event": "INDEPENDENT_CANARY_WAKE",
+      "attemptId": "12968025-1185-431c-9114-10051ac02568",
+      "scheduledWakeAt": 1794657960000,
+      "revision": "b1a2-gateway-e000001-r1",
+      "nonce": "4a47c612-8070-4464-9b00-5d0ca4f346f5",
+      "pid": 375595,
+      "pidStart": "16235693",
+      "parkedBeforeConnect": true,
+      "source": "LOCAL_PROC_AND_INDEPENDENT_SIGCONT",
+      "preparedAt": 1794657601000,
+      "wakeObservedAt": 1794657960000,
+      "independent": true,
+      "independentWakeAttempted": true,
+      "terminatedBeforeWake": true
+    },
+    {
+      "event": "CANARY_OBSERVATION",
+      "attemptId": "12968025-1185-431c-9114-10051ac02568",
+      "scheduledWakeAt": 1794657960000,
+      "wakeObservedAt": 1794657960000,
+      "independentWakeAttempted": true,
+      "parkedBeforeConnect": true,
+      "independentWakeSource": "LOCAL_PROC_AND_INDEPENDENT_SIGCONT",
+      "receiptDigest": "f2f53f7208caf1f4b9d8b7dc47e8b7981a36350c195960d79684bd651fee0c81",
+      "preparedAt": 1794657601000
+    },
+    {
+      "event": "INDEPENDENT_CANARY_WAKE",
+      "attemptId": "3b44a965-d4f1-40b1-a3bf-b6a84925cf7a",
+      "scheduledWakeAt": 1794657970000,
+      "revision": "b1a2-gateway-e000001-r1",
+      "nonce": "1881e2b3-b466-49ce-922e-823d02286e57",
+      "pid": 375603,
+      "pidStart": "16235696",
+      "parkedBeforeConnect": true,
+      "source": "LOCAL_PROC_AND_INDEPENDENT_SIGCONT",
+      "preparedAt": 1794657601000,
+      "wakeObservedAt": 1794657970000,
+      "independent": true,
+      "independentWakeAttempted": true,
+      "terminatedBeforeWake": true
+    },
+    {
+      "event": "CANARY_OBSERVATION",
+      "attemptId": "3b44a965-d4f1-40b1-a3bf-b6a84925cf7a",
+      "scheduledWakeAt": 1794657970000,
+      "wakeObservedAt": 1794657970000,
+      "independentWakeAttempted": true,
+      "parkedBeforeConnect": true,
+      "independentWakeSource": "LOCAL_PROC_AND_INDEPENDENT_SIGCONT",
+      "receiptDigest": "97defaba2817c297e11a57f90c31bfe541ce5193413046562319264c844caff8",
+      "preparedAt": 1794657601000
+    },
+    {
+      "event": "INDEPENDENT_CANARY_WAKE",
+      "attemptId": "245cdc98-c586-45c0-9dab-79288a33d3ea",
+      "scheduledWakeAt": 1794657980000,
+      "revision": "b1a2-gateway-e000001-r1",
+      "nonce": "33535247-0b75-4701-b86f-af60d69c4d4e",
+      "pid": 375611,
+      "pidStart": "16235699",
+      "parkedBeforeConnect": true,
+      "source": "LOCAL_PROC_AND_INDEPENDENT_SIGCONT",
+      "preparedAt": 1794657601000,
+      "wakeObservedAt": 1794657980000,
+      "independent": true,
+      "independentWakeAttempted": true,
+      "terminatedBeforeWake": true
+    },
+    {
+      "event": "CANARY_OBSERVATION",
+      "attemptId": "245cdc98-c586-45c0-9dab-79288a33d3ea",
+      "scheduledWakeAt": 1794657980000,
+      "wakeObservedAt": 1794657980000,
+      "independentWakeAttempted": true,
+      "parkedBeforeConnect": true,
+      "independentWakeSource": "LOCAL_PROC_AND_INDEPENDENT_SIGCONT",
+      "receiptDigest": "7721ff6a7c404ea3ec4b452ac013f260b5c9d9e0e813bf36596dd6e0a4112b42",
+      "preparedAt": 1794657601000
+    },
+    {
+      "event": "INDEPENDENT_CANARY_WAKE",
+      "attemptId": "24856fb6-3f60-4756-a75a-5893fb7e01d8",
+      "scheduledWakeAt": 1794657990000,
+      "revision": "b1a2-gateway-e000001-r1",
+      "nonce": "861fc18c-c37e-42b8-87fb-7919744590d9",
+      "pid": 375619,
+      "pidStart": "16235704",
+      "parkedBeforeConnect": true,
+      "source": "LOCAL_PROC_AND_INDEPENDENT_SIGCONT",
+      "preparedAt": 1794657601000,
+      "wakeObservedAt": 1794657990000,
+      "independent": true,
+      "independentWakeAttempted": true,
+      "terminatedBeforeWake": true
+    },
+    {
+      "event": "CANARY_OBSERVATION",
+      "attemptId": "24856fb6-3f60-4756-a75a-5893fb7e01d8",
+      "scheduledWakeAt": 1794657990000,
+      "wakeObservedAt": 1794657990000,
+      "independentWakeAttempted": true,
+      "parkedBeforeConnect": true,
+      "independentWakeSource": "LOCAL_PROC_AND_INDEPENDENT_SIGCONT",
+      "receiptDigest": "f83f4e4fb8a34bc1f4c453e77bf677322ff4dcaa9751e5ac8b6d8e4af0a1d673",
+      "preparedAt": 1794657601000
+    },
+    {
+      "event": "INDEPENDENT_CANARY_WAKE",
+      "attemptId": "3d32aadf-552c-4b96-ad83-d6884f35055c",
+      "scheduledWakeAt": 1794658000000,
+      "revision": "b1a2-gateway-e000001-r1",
+      "nonce": "80cbc927-9d37-47df-bebd-4cd929e4a898",
+      "pid": 375627,
+      "pidStart": "16235708",
+      "parkedBeforeConnect": true,
+      "source": "LOCAL_PROC_AND_INDEPENDENT_SIGCONT",
+      "preparedAt": 1794657601000,
+      "wakeObservedAt": 1794658000000,
+      "independent": true,
+      "independentWakeAttempted": true,
+      "terminatedBeforeWake": true
+    },
+    {
+      "event": "CANARY_OBSERVATION",
+      "attemptId": "3d32aadf-552c-4b96-ad83-d6884f35055c",
+      "scheduledWakeAt": 1794658000000,
+      "wakeObservedAt": 1794658000000,
+      "independentWakeAttempted": true,
+      "parkedBeforeConnect": true,
+      "independentWakeSource": "LOCAL_PROC_AND_INDEPENDENT_SIGCONT",
+      "receiptDigest": "75bdf928d23375cbb147c0e17f543c16f60a1a5f486acaad69d0ad51798b9678",
+      "preparedAt": 1794657601000
+    },
+    {
+      "event": "INDEPENDENT_CANARY_WAKE",
+      "attemptId": "c6cce82e-ba41-4e86-99aa-a18513bcfe78",
+      "scheduledWakeAt": 1794658010000,
+      "revision": "b1a2-gateway-e000001-r1",
+      "nonce": "f8bbb4e6-22ac-490c-9ab1-10c858fbc642",
+      "pid": 375635,
+      "pidStart": "16235713",
+      "parkedBeforeConnect": true,
+      "source": "LOCAL_PROC_AND_INDEPENDENT_SIGCONT",
+      "preparedAt": 1794657601000,
+      "wakeObservedAt": 1794658010000,
+      "independent": true,
+      "independentWakeAttempted": true,
+      "terminatedBeforeWake": true
+    },
+    {
+      "event": "CANARY_OBSERVATION",
+      "attemptId": "c6cce82e-ba41-4e86-99aa-a18513bcfe78",
+      "scheduledWakeAt": 1794658010000,
+      "wakeObservedAt": 1794658010000,
+      "independentWakeAttempted": true,
+      "parkedBeforeConnect": true,
+      "independentWakeSource": "LOCAL_PROC_AND_INDEPENDENT_SIGCONT",
+      "receiptDigest": "61e25da18ef2784c08e84ef73929ce95a4c78a5074cbbe09fddae9e38fd10724",
+      "preparedAt": 1794657601000
+    },
+    {
+      "event": "INDEPENDENT_CANARY_WAKE",
+      "attemptId": "6e242e3f-8e4f-4b07-81da-4e00813069ab",
+      "scheduledWakeAt": 1794658020000,
+      "revision": "b1a2-gateway-e000001-r1",
+      "nonce": "0982b2de-27b3-46e7-9d94-de548bb705af",
+      "pid": 375643,
+      "pidStart": "16235717",
+      "parkedBeforeConnect": true,
+      "source": "LOCAL_PROC_AND_INDEPENDENT_SIGCONT",
+      "preparedAt": 1794657601000,
+      "wakeObservedAt": 1794658020000,
+      "independent": true,
+      "independentWakeAttempted": true,
+      "terminatedBeforeWake": true
+    },
+    {
+      "event": "CANARY_OBSERVATION",
+      "attemptId": "6e242e3f-8e4f-4b07-81da-4e00813069ab",
+      "scheduledWakeAt": 1794658020000,
+      "wakeObservedAt": 1794658020000,
+      "independentWakeAttempted": true,
+      "parkedBeforeConnect": true,
+      "independentWakeSource": "LOCAL_PROC_AND_INDEPENDENT_SIGCONT",
+      "receiptDigest": "07020dac2786d03b09012cf11b217a76287250a5471a4fd91af23b7a3b359639",
+      "preparedAt": 1794657601000
+    },
+    {
+      "event": "INDEPENDENT_CANARY_WAKE",
+      "attemptId": "bd81f5d0-971d-4435-b12d-651d4d47225f",
+      "scheduledWakeAt": 1794658030000,
+      "revision": "b1a2-gateway-e000001-r1",
+      "nonce": "97d37181-87f1-4dc8-8aff-8f6e0445afa0",
+      "pid": 375651,
+      "pidStart": "16235721",
+      "parkedBeforeConnect": true,
+      "source": "LOCAL_PROC_AND_INDEPENDENT_SIGCONT",
+      "preparedAt": 1794657601000,
+      "wakeObservedAt": 1794658030000,
+      "independent": true,
+      "independentWakeAttempted": true,
+      "terminatedBeforeWake": true
+    },
+    {
+      "event": "CANARY_OBSERVATION",
+      "attemptId": "bd81f5d0-971d-4435-b12d-651d4d47225f",
+      "scheduledWakeAt": 1794658030000,
+      "wakeObservedAt": 1794658030000,
+      "independentWakeAttempted": true,
+      "parkedBeforeConnect": true,
+      "independentWakeSource": "LOCAL_PROC_AND_INDEPENDENT_SIGCONT",
+      "receiptDigest": "079753854ae23b7bf609de5d1c4e5ef3e9d540e7bedc9008c18f4615555ac35b",
+      "preparedAt": 1794657601000
+    },
+    {
+      "event": "INDEPENDENT_CANARY_WAKE",
+      "attemptId": "e032bfab-b232-4b12-939e-8ccd558e217c",
+      "scheduledWakeAt": 1794658040000,
+      "revision": "b1a2-gateway-e000001-r1",
+      "nonce": "5d631413-6f05-4059-8d9b-5e2c997b2824",
+      "pid": 375659,
+      "pidStart": "16235724",
+      "parkedBeforeConnect": true,
+      "source": "LOCAL_PROC_AND_INDEPENDENT_SIGCONT",
+      "preparedAt": 1794657601000,
+      "wakeObservedAt": 1794658040000,
+      "independent": true,
+      "independentWakeAttempted": true,
+      "terminatedBeforeWake": true
+    },
+    {
+      "event": "CANARY_OBSERVATION",
+      "attemptId": "e032bfab-b232-4b12-939e-8ccd558e217c",
+      "scheduledWakeAt": 1794658040000,
+      "wakeObservedAt": 1794658040000,
+      "independentWakeAttempted": true,
+      "parkedBeforeConnect": true,
+      "independentWakeSource": "LOCAL_PROC_AND_INDEPENDENT_SIGCONT",
+      "receiptDigest": "5af093305d424910d053f121ba6e014f15abba1921dc3cbf60bd9a9678b3d304",
+      "preparedAt": 1794657601000
+    },
+    {
+      "event": "INDEPENDENT_CANARY_WAKE",
+      "attemptId": "a7d33460-27c6-4132-81fb-c6ddf0045bb1",
+      "scheduledWakeAt": 1794658050000,
+      "revision": "b1a2-gateway-e000001-r1",
+      "nonce": "2b9fc3fe-1c14-493b-94df-2c1c886091d9",
+      "pid": 375667,
+      "pidStart": "16235728",
+      "parkedBeforeConnect": true,
+      "source": "LOCAL_PROC_AND_INDEPENDENT_SIGCONT",
+      "preparedAt": 1794657601000,
+      "wakeObservedAt": 1794658050000,
+      "independent": true,
+      "independentWakeAttempted": true,
+      "terminatedBeforeWake": true
+    },
+    {
+      "event": "CANARY_OBSERVATION",
+      "attemptId": "a7d33460-27c6-4132-81fb-c6ddf0045bb1",
+      "scheduledWakeAt": 1794658050000,
+      "wakeObservedAt": 1794658050000,
+      "independentWakeAttempted": true,
+      "parkedBeforeConnect": true,
+      "independentWakeSource": "LOCAL_PROC_AND_INDEPENDENT_SIGCONT",
+      "receiptDigest": "1e2f582a4b04e4da5ada6d85644048ddda6a1bd79de23bbbb6748334e80402a6",
+      "preparedAt": 1794657601000
+    },
+    {
+      "event": "INDEPENDENT_CANARY_WAKE",
+      "attemptId": "a399cad5-e30e-4f72-8c20-7b012760158c",
+      "scheduledWakeAt": 1794658060000,
+      "revision": "b1a2-gateway-e000001-r1",
+      "nonce": "53525d1b-646f-4b00-8e30-8a24494aef4f",
+      "pid": 375675,
+      "pidStart": "16235731",
+      "parkedBeforeConnect": true,
+      "source": "LOCAL_PROC_AND_INDEPENDENT_SIGCONT",
+      "preparedAt": 1794657601000,
+      "wakeObservedAt": 1794658060000,
+      "independent": true,
+      "independentWakeAttempted": true,
+      "terminatedBeforeWake": true
+    },
+    {
+      "event": "CANARY_OBSERVATION",
+      "attemptId": "a399cad5-e30e-4f72-8c20-7b012760158c",
+      "scheduledWakeAt": 1794658060000,
+      "wakeObservedAt": 1794658060000,
+      "independentWakeAttempted": true,
+      "parkedBeforeConnect": true,
+      "independentWakeSource": "LOCAL_PROC_AND_INDEPENDENT_SIGCONT",
+      "receiptDigest": "15793f3df6734655657645c9ab6a980fe6cfb284d4ba288648d045a290cb0505",
+      "preparedAt": 1794657601000
+    },
+    {
+      "event": "INDEPENDENT_CANARY_WAKE",
+      "attemptId": "3c6397f9-dc3e-4722-a0a4-c25db3d0907c",
+      "scheduledWakeAt": 1794658070000,
+      "revision": "b1a2-gateway-e000001-r1",
+      "nonce": "d7164c5d-10fb-4b4a-9b04-6a2783ec24be",
+      "pid": 375683,
+      "pidStart": "16235735",
+      "parkedBeforeConnect": true,
+      "source": "LOCAL_PROC_AND_INDEPENDENT_SIGCONT",
+      "preparedAt": 1794657601000,
+      "wakeObservedAt": 1794658070000,
+      "independent": true,
+      "independentWakeAttempted": true,
+      "terminatedBeforeWake": true
+    },
+    {
+      "event": "CANARY_OBSERVATION",
+      "attemptId": "3c6397f9-dc3e-4722-a0a4-c25db3d0907c",
+      "scheduledWakeAt": 1794658070000,
+      "wakeObservedAt": 1794658070000,
+      "independentWakeAttempted": true,
+      "parkedBeforeConnect": true,
+      "independentWakeSource": "LOCAL_PROC_AND_INDEPENDENT_SIGCONT",
+      "receiptDigest": "3d19f9f20d2791a4c7c1ce155b06c0fad25dfbaf9e6c9d0e37b8db6b236595b0",
+      "preparedAt": 1794657601000
+    },
+    {
+      "event": "INDEPENDENT_CANARY_WAKE",
+      "attemptId": "fd991155-f91b-4c4c-8a20-cb7886ad7bd7",
+      "scheduledWakeAt": 1794658080000,
+      "revision": "b1a2-gateway-e000001-r1",
+      "nonce": "9a52159c-e4d2-4a59-90a1-788071f78464",
+      "pid": 375691,
+      "pidStart": "16235738",
+      "parkedBeforeConnect": true,
+      "source": "LOCAL_PROC_AND_INDEPENDENT_SIGCONT",
+      "preparedAt": 1794657601000,
+      "wakeObservedAt": 1794658080000,
+      "independent": true,
+      "independentWakeAttempted": true,
+      "terminatedBeforeWake": true
+    },
+    {
+      "event": "CANARY_OBSERVATION",
+      "attemptId": "fd991155-f91b-4c4c-8a20-cb7886ad7bd7",
+      "scheduledWakeAt": 1794658080000,
+      "wakeObservedAt": 1794658080000,
+      "independentWakeAttempted": true,
+      "parkedBeforeConnect": true,
+      "independentWakeSource": "LOCAL_PROC_AND_INDEPENDENT_SIGCONT",
+      "receiptDigest": "c340366f942388b0c0be6d898d14b173edac75a35e3ed2f5c718efd36bb2d409",
+      "preparedAt": 1794657601000
+    },
+    {
+      "event": "INDEPENDENT_CANARY_WAKE",
+      "attemptId": "b41f17dc-9aa7-4657-b0ff-a721cf681848",
+      "scheduledWakeAt": 1794658090000,
+      "revision": "b1a2-gateway-e000001-r1",
+      "nonce": "f53aa63a-55dc-4e32-8abd-436b04b23b61",
+      "pid": 375699,
+      "pidStart": "16235741",
+      "parkedBeforeConnect": true,
+      "source": "LOCAL_PROC_AND_INDEPENDENT_SIGCONT",
+      "preparedAt": 1794657601000,
+      "wakeObservedAt": 1794658090000,
+      "independent": true,
+      "independentWakeAttempted": true,
+      "terminatedBeforeWake": true
+    },
+    {
+      "event": "CANARY_OBSERVATION",
+      "attemptId": "b41f17dc-9aa7-4657-b0ff-a721cf681848",
+      "scheduledWakeAt": 1794658090000,
+      "wakeObservedAt": 1794658090000,
+      "independentWakeAttempted": true,
+      "parkedBeforeConnect": true,
+      "independentWakeSource": "LOCAL_PROC_AND_INDEPENDENT_SIGCONT",
+      "receiptDigest": "9e79911b727f16ad48564311c71ae4df751df4647b3b3604516d937386e8948e",
+      "preparedAt": 1794657601000
+    },
+    {
+      "event": "INDEPENDENT_CANARY_WAKE",
+      "attemptId": "bdaa9b1f-9400-4048-b4ae-e1a9862b5f69",
+      "scheduledWakeAt": 1794658100000,
+      "revision": "b1a2-gateway-e000001-r1",
+      "nonce": "6dfe961a-1698-4eb3-8a0e-2b13d570a8d6",
+      "pid": 375707,
+      "pidStart": "16235745",
+      "parkedBeforeConnect": true,
+      "source": "LOCAL_PROC_AND_INDEPENDENT_SIGCONT",
+      "preparedAt": 1794657601000,
+      "wakeObservedAt": 1794658100000,
+      "independent": true,
+      "independentWakeAttempted": true,
+      "terminatedBeforeWake": true
+    },
+    {
+      "event": "CANARY_OBSERVATION",
+      "attemptId": "bdaa9b1f-9400-4048-b4ae-e1a9862b5f69",
+      "scheduledWakeAt": 1794658100000,
+      "wakeObservedAt": 1794658100000,
+      "independentWakeAttempted": true,
+      "parkedBeforeConnect": true,
+      "independentWakeSource": "LOCAL_PROC_AND_INDEPENDENT_SIGCONT",
+      "receiptDigest": "d23d9bf7a225df850a11be467cab86cf508a1c2562a3203bcfeb26bc505ec77c",
+      "preparedAt": 1794657601000
+    },
+    {
+      "event": "INDEPENDENT_RECEIPT",
+      "at": 1794658129000,
+      "rawDigest": "7187a526ffb13bcc8bb2ef0b66412cb9705cda2d66b9117a67499c78e7f56c9b",
+      "source": "MUTUALLY_AUTHENTICATED_INDEPENDENT_FAKE",
+      "requestedAt": 1794658129000,
+      "observedAt": 1794658129000,
+      "raw": {
+        "records": [
+          {
+            "event": "TLS_READY",
+            "at": 1794657601000,
+            "connectionId": "d7654886-1765-4e86-af27-17438fa10adb",
+            "authenticatedFingerprint": "8E:87:3E:5F:AB:F3:D2:5C:97:0C:48:56:E0:8B:70:8A:6C:0F:93:73:9D:F9:50:92:29:E1:E2:CF:7C:C7:DA:7F",
+            "authenticatedEpoch": null,
+            "authenticatedRevision": null,
+            "remoteAddress": "127.0.0.1",
+            "remotePort": 55860,
+            "sequence": 1,
+            "previous": "0000000000000000000000000000000000000000000000000000000000000000",
+            "hash": "d058015c25986bc9c00c23602605d3636bcb5ce65e269117c248e3e68b6a1686"
+          },
+          {
+            "event": "TLS_READY",
+            "at": 1794657601000,
+            "connectionId": "36afc6c8-1382-4fd3-bbf8-992e1a19f9dc",
+            "authenticatedFingerprint": "8E:87:3E:5F:AB:F3:D2:5C:97:0C:48:56:E0:8B:70:8A:6C:0F:93:73:9D:F9:50:92:29:E1:E2:CF:7C:C7:DA:7F",
+            "authenticatedEpoch": null,
+            "authenticatedRevision": null,
+            "remoteAddress": "127.0.0.1",
+            "remotePort": 55866,
+            "sequence": 2,
+            "previous": "d058015c25986bc9c00c23602605d3636bcb5ce65e269117c248e3e68b6a1686",
+            "hash": "8e80501a0a987633a83f6a1cbcf4247467912dc208c2a1b734322a4c04a9dc70"
+          },
+          {
+            "event": "TLS_READY",
+            "at": 1794657601000,
+            "connectionId": "2759ee8f-9d1c-4ba2-a0c4-4cbf0845118d",
+            "authenticatedFingerprint": "8E:87:3E:5F:AB:F3:D2:5C:97:0C:48:56:E0:8B:70:8A:6C:0F:93:73:9D:F9:50:92:29:E1:E2:CF:7C:C7:DA:7F",
+            "authenticatedEpoch": null,
+            "authenticatedRevision": null,
+            "remoteAddress": "127.0.0.1",
+            "remotePort": 55870,
+            "sequence": 3,
+            "previous": "8e80501a0a987633a83f6a1cbcf4247467912dc208c2a1b734322a4c04a9dc70",
+            "hash": "9f08d46f7856e03b7bbc088f6f764aef4f595906ad197a176c1b3ec961ca6f8d"
+          },
+          {
+            "event": "TLS_READY",
+            "at": 1794657601000,
+            "connectionId": "fa9fcc4a-ce8d-4a13-b407-955935799c33",
+            "authenticatedFingerprint": "3F:10:C4:63:D6:83:22:C3:34:73:25:EC:EF:89:D8:98:D3:F5:8E:0B:6F:5E:B9:8C:5D:04:A4:43:44:F3:AC:97",
+            "authenticatedEpoch": 1,
+            "authenticatedRevision": "b1a2-gateway-e000001-r1",
+            "remoteAddress": "127.0.0.1",
+            "remotePort": 55878,
+            "sequence": 4,
+            "previous": "9f08d46f7856e03b7bbc088f6f764aef4f595906ad197a176c1b3ec961ca6f8d",
+            "hash": "8f4b3281595fea60804d04f5e70f7b6a29ea650d44ce30bb3185c28083c54e73"
+          },
+          {
+            "event": "TLS_READY",
+            "at": 1794657601000,
+            "connectionId": "b85297ae-aa73-4b7b-91ea-b92d8ca3180e",
+            "authenticatedFingerprint": "8E:87:3E:5F:AB:F3:D2:5C:97:0C:48:56:E0:8B:70:8A:6C:0F:93:73:9D:F9:50:92:29:E1:E2:CF:7C:C7:DA:7F",
+            "authenticatedEpoch": null,
+            "authenticatedRevision": null,
+            "remoteAddress": "127.0.0.1",
+            "remotePort": 55884,
+            "sequence": 5,
+            "previous": "8f4b3281595fea60804d04f5e70f7b6a29ea650d44ce30bb3185c28083c54e73",
+            "hash": "546d39107b2ff476a99d0084b2150b7662a27fc92dfac47cf4647ec83e8b5f6b"
+          },
+          {
+            "event": "TLS_READY",
+            "at": 1794657601000,
+            "connectionId": "a641e2e3-85bb-4d7d-a60b-a5250a7c6183",
+            "authenticatedFingerprint": "8E:87:3E:5F:AB:F3:D2:5C:97:0C:48:56:E0:8B:70:8A:6C:0F:93:73:9D:F9:50:92:29:E1:E2:CF:7C:C7:DA:7F",
+            "authenticatedEpoch": null,
+            "authenticatedRevision": null,
+            "remoteAddress": "127.0.0.1",
+            "remotePort": 55888,
+            "sequence": 6,
+            "previous": "546d39107b2ff476a99d0084b2150b7662a27fc92dfac47cf4647ec83e8b5f6b",
+            "hash": "e39f7e1e12e7063feef6c6442691ce84eaf703606a0092c495a59f73ac3afecd"
+          },
+          {
+            "event": "TLS_READY",
+            "at": 1794657601000,
+            "connectionId": "125bfa19-831c-4701-b359-a8656a6b0a57",
+            "authenticatedFingerprint": "8E:87:3E:5F:AB:F3:D2:5C:97:0C:48:56:E0:8B:70:8A:6C:0F:93:73:9D:F9:50:92:29:E1:E2:CF:7C:C7:DA:7F",
+            "authenticatedEpoch": null,
+            "authenticatedRevision": null,
+            "remoteAddress": "127.0.0.1",
+            "remotePort": 55892,
+            "sequence": 7,
+            "previous": "e39f7e1e12e7063feef6c6442691ce84eaf703606a0092c495a59f73ac3afecd",
+            "hash": "44bd056573e300cff13e4da94a19b4af4c96e89cd27435d5a504065d674acab0"
+          },
+          {
+            "event": "TLS_READY",
+            "at": 1794658129000,
+            "connectionId": "fb1d7e3c-eeb8-430c-8374-29eda4d8f095",
+            "authenticatedFingerprint": "8E:87:3E:5F:AB:F3:D2:5C:97:0C:48:56:E0:8B:70:8A:6C:0F:93:73:9D:F9:50:92:29:E1:E2:CF:7C:C7:DA:7F",
+            "authenticatedEpoch": null,
+            "authenticatedRevision": null,
+            "remoteAddress": "127.0.0.1",
+            "remotePort": 55894,
+            "sequence": 8,
+            "previous": "44bd056573e300cff13e4da94a19b4af4c96e89cd27435d5a504065d674acab0",
+            "hash": "4b6b343db532569c03d76abdfdb2cc8dd8e7c330de4f59927bfd78109269ceb3"
+          }
+        ],
+        "checkpoint": {
+          "sequence": 8,
+          "hash": "4b6b343db532569c03d76abdfdb2cc8dd8e7c330de4f59927bfd78109269ceb3"
+        },
+        "observedUntil": 1794658129000,
+        "sessionId": "11111111-1111-4111-8111-111111111111",
+        "nonce": "af1e7ef8-2635-46fb-b882-2b33d2f21d04",
+        "clockSource": "independent-fake-clock"
+      }
+    },
+    {
+      "event": "INDEPENDENT_RECEIPT",
+      "at": 1794658130000,
+      "rawDigest": "7383383fd275db2637966dc48ed101e696005d4bb72c6d25ebc2a1f0211784c8",
+      "source": "monitoring",
+      "requestedAt": 1794658130000,
+      "observedAt": 1794658130000,
+      "raw": {
+        "timeSeries": [
+          {
+            "metric": {
+              "type": "run.googleapis.com/container/instance_count",
+              "labels": {
+                "state": "active"
+              }
+            },
+            "resource": {
+              "type": "cloud_run_revision",
+              "labels": {
+                "service_name": "b1a2-gateway",
+                "revision_name": "b1a2-gateway-e000001-r1"
+              }
+            },
+            "points": [
+              {
+                "interval": {
+                  "endTime": "2026-11-14T12:00:56.000Z"
+                },
+                "value": {
+                  "int64Value": "0"
+                }
+              },
+              {
+                "interval": {
+                  "endTime": "2026-11-14T12:01:56.000Z"
+                },
+                "value": {
+                  "int64Value": "0"
+                }
+              },
+              {
+                "interval": {
+                  "endTime": "2026-11-14T12:02:56.000Z"
+                },
+                "value": {
+                  "int64Value": "0"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

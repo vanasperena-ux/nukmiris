@@ -1,0 +1,9 @@
+{
+  "scope": "SELECTED_READABLE_SYNTHETIC_EVIDENCE_ONLY",
+  "filesAuditedBeforeAuditAndChecksumManifests": 46,
+  "utf8": true,
+  "privateKeyCredentialPatternMatches": 0,
+  "originalBlockedBinaryChunksIncluded": 0,
+  "customerDataSource": "NONE; generated proof fixtures only",
+  "notAClaimOfIndependentAcceptance": true
+}

@@ -1,0 +1,160 @@
+TAP version 13
+# Subtest: C-2/P6b: historical V1 remains verifiable but every B1a-2 operational, recovery and promotion gate refuses it
+ok 1 - C-2/P6b: historical V1 remains verifiable but every B1a-2 operational, recovery and promotion gate refuses it
+  ---
+  duration_ms: 15.123505
+  type: 'test'
+  ...
+# Subtest: C-2: V2 fence with a legacy primary or additional clock also fails closed
+ok 2 - C-2: V2 fence with a legacy primary or additional clock also fails closed
+  ---
+  duration_ms: 3.759891
+  type: 'test'
+  ...
+# Subtest: C-2: corrected V2 evidence still reconciles original work and explicitly promotes through restricted PostgreSQL
+ok 3 - C-2: corrected V2 evidence still reconciles original work and explicitly promotes through restricted PostgreSQL
+  ---
+  duration_ms: 6504.020183
+  type: 'test'
+  ...
+# Subtest: P-3 durable seven-step local simulation, crash after CAS, readback without replay and independent emergency
+ok 4 - P-3 durable seven-step local simulation, crash after CAS, readback without replay and independent emergency
+  ---
+  duration_ms: 7.347836
+  type: 'test'
+  ...
+# Subtest: P-3 unknown outcome or missing permission holds; cannot replay, promote, or impersonate deployer
+ok 5 - P-3 unknown outcome or missing permission holds; cannot replay, promote, or impersonate deployer
+  ---
+  duration_ms: 0.97178
+  type: 'test'
+  ...
+# Subtest: P-6 every generated resource has dependency-ordered teardown and residual policy
+ok 6 - P-6 every generated resource has dependency-ordered teardown and residual policy
+  ---
+  duration_ms: 6.469224
+  type: 'test'
+  ...
+# Subtest: D-3 emergency remains executable with an unresolved operation and unavailable SQL hold
+ok 7 - D-3 emergency remains executable with an unresolved operation and unavailable SQL hold
+  ---
+  duration_ms: 1.376529
+  type: 'test'
+  ...
+# Subtest: D-2/P-2 end-to-end independent adapters: real mTLS clock/ledger, Google-shaped 60s/120s metrics, 20 native stopped canaries and signed retirement
+ok 8 - D-2/P-2 end-to-end independent adapters: real mTLS clock/ledger, Google-shaped 60s/120s metrics, 20 native stopped canaries and signed retirement
+  ---
+  duration_ms: 1175.085535
+  type: 'test'
+  ...
+# Subtest: P-2 forged caller wake booleans cannot become signed canary evidence
+ok 9 - P-2 forged caller wake booleans cannot become signed canary evidence
+  ---
+  duration_ms: 0.891591
+  type: 'test'
+  ...
+# Subtest: D-2 realistic 60s sampling,120s visibility delay,20 delayed canaries reaches EVIDENCE_READY
+ok 10 - D-2 realistic 60s sampling,120s visibility delay,20 delayed canaries reaches EVIDENCE_READY
+  ---
+  duration_ms: 8.386675
+  type: 'test'
+  ...
+# Subtest: C-1/P10b: authenticated TLS/REQUEST/EFFECT eight minutes after fence cannot be hidden by caller activities
+ok 11 - C-1/P10b: authenticated TLS/REQUEST/EFFECT eight minutes after fence cannot be hidden by caller activities
+  ---
+  duration_ms: 4.262486
+  type: 'test'
+  ...
+# Subtest: C-1/P10b: signed transit interval overlapping fence is HOLD with an empty caller list
+ok 12 - C-1/P10b: signed transit interval overlapping fence is HOLD with an empty caller list
+  ---
+  duration_ms: 2.91584
+  type: 'test'
+  ...
+# Subtest: C-1/H-1: standalone old TLS and REQUEST are violations; an unbound EFFECT never fabricates initiation
+ok 13 - C-1/H-1: standalone old TLS and REQUEST are violations; an unbound EFFECT never fabricates initiation
+  ---
+  duration_ms: 8.063465
+  type: 'test'
+  ...
+# Subtest: C-1/P9: canary REQUEST outranks unrelated incomplete trial, only 19 trials, metrics and short tail
+ok 14 - C-1/P9: canary REQUEST outranks unrelated incomplete trial, only 19 trials, metrics and short tail
+  ---
+  duration_ms: 6.980902
+  type: 'test'
+  ...
+# Subtest: C-1: scan all authenticated activity before HOLD for another interval, metrics, deletion or trials
+ok 15 - C-1: scan all authenticated activity before HOLD for another interval, metrics, deletion or trials
+  ---
+  duration_ms: 3.559694
+  type: 'test'
+  ...
+# Subtest: C-1: delayed application inherits the original pre-fence request, but a later write is a violation
+ok 16 - C-1: delayed application inherits the original pre-fence request, but a later write is a violation
+  ---
+  duration_ms: 4.051963
+  type: 'test'
+  ...
+# Subtest: C-1: only a signed bounded transit policy can authorize derived activity
+ok 17 - C-1: only a signed bounded transit policy can authorize derived activity
+  ---
+  duration_ms: 6.126176
+  type: 'test'
+  ...
+# Subtest: C-1: signature, session, chain, checkpoint and exact records digest fail closed before a violation
+ok 18 - C-1: signature, session, chain, checkpoint and exact records digest fail closed before a violation
+  ---
+  duration_ms: 5.039677
+  type: 'test'
+  ...
+# Subtest: C-1: a caller activity cannot alter the ledger-derived digest or invent a violation
+ok 19 - C-1: a caller activity cannot alter the ledger-derived digest or invent a violation
+  ---
+  duration_ms: 4.113064
+  type: 'test'
+  ...
+# Subtest: C-1/H-2: all three original signed realistic-latency bundles reverify without changing historical results
+ok 20 - C-1/H-2: all three original signed realistic-latency bundles reverify without changing historical results
+  ---
+  duration_ms: 18.761155
+  type: 'test'
+  ...
+# Subtest: D-2 physical deadline is separate from delayed reporting and cannot be waived
+ok 21 - D-2 physical deadline is separate from delayed reporting and cannot be waived
+  ---
+  duration_ms: 2.6997
+  type: 'test'
+  ...
+# Subtest: D-2 every state and every sampling interval must be present, zero and fresh
+ok 22 - D-2 every state and every sampling interval must be present, zero and fresh
+  ---
+  duration_ms: 12.288245
+  type: 'test'
+  ...
+# Subtest: D-2 missing/late deletion and incomplete canary or network-tail evidence holds
+ok 23 - D-2 missing/late deletion and incomplete canary or network-tail evidence holds
+  ---
+  duration_ms: 10.432587
+  type: 'test'
+  ...
+# Subtest: D-2 frozen old sender after minutes is VIOLATION even with incomplete unrelated metrics
+ok 24 - D-2 frozen old sender after minutes is VIOLATION even with incomplete unrelated metrics
+  ---
+  duration_ms: 1.869881
+  type: 'test'
+  ...
+# Subtest: D-2 pre-fence initiation with delayed application is retained; stale signatures cannot promote
+ok 25 - D-2 pre-fence initiation with delayed application is retained; stale signatures cannot promote
+  ---
+  duration_ms: 5.588399
+  type: 'test'
+  ...
+1..25
+# tests 25
+# suites 0
+# pass 25
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 8040.191125
