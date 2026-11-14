@@ -147,6 +147,7 @@ export function authenticatedObservation(token, type) {
  * Sampling data must be authenticated by an independent CLOCK envelope.
  */
 export function measuredClock(payload) {
+  const extended = payload.model === "BOUNDED_DRIFT_V2";
   const {
     referenceClockSource,
     remoteClockSource,
@@ -170,7 +171,16 @@ export function measuredClock(payload) {
     driftPpm < 0 ||
     driftPpm > 1000 ||
     validUntil <= measuredAt ||
-    validUntil - measuredAt > 60000
+    validUntil - measuredAt > (extended ? 21600000 : 60000) ||
+    (extended &&
+      (![payload.maxExtrapolationMs, payload.resyncAllowanceMs].every(
+        Number.isFinite,
+      ) ||
+        payload.maxExtrapolationMs <= 0 ||
+        payload.maxExtrapolationMs > 21600000 ||
+        validUntil - measuredAt > payload.maxExtrapolationMs ||
+        payload.resyncAllowanceMs < 0 ||
+        payload.resyncAllowanceMs > 60000))
   )
     fail("measured_clock_required");
   let lower = -Infinity,
@@ -200,6 +210,17 @@ export function measuredClock(payload) {
     uncertaintyMs:
       (upper - lower) / 2 +
       2 * precisionMs +
-      (driftPpm * (validUntil - measuredAt)) / 1000000,
+      (extended
+        ? payload.resyncAllowanceMs
+        : (driftPpm * (validUntil - measuredAt)) / 1000000),
+    ...(extended
+      ? {
+          model: payload.model,
+          baseUncertaintyMs: (upper - lower) / 2 + 2 * precisionMs,
+          driftPpm,
+          resyncAllowanceMs: payload.resyncAllowanceMs,
+          maxExtrapolationMs: payload.maxExtrapolationMs,
+        }
+      : {}),
   });
 }

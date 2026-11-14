@@ -1,3 +1,4 @@
+import { retirementV2 } from "../../b1a2/runtime/retirement.mjs";
 import { hash, id } from "../../src/protocol.mjs";
 import {
   authenticatedObservation,
@@ -18,7 +19,23 @@ export function retirementDecision({
   ledgerRecords = [],
   now,
   uncertaintyMs,
+  clocks = [],
 }) {
+  if (
+    authenticatedObservation(fence, "FENCE")?.payload.retirementModel ===
+    "METRIC_LATENCY_V2"
+  )
+    return retirementV2({
+      fence,
+      clock,
+      clocks,
+      activities,
+      canary,
+      ledger,
+      ledgerRecords,
+      now,
+      uncertaintyMs,
+    });
   const hold = (reason) => ({ state: "HOLD", reason });
   for (const activity of activities) {
     const result = classify({ fence, clock, activity, now, uncertaintyMs });

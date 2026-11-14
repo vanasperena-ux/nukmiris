@@ -58,6 +58,9 @@ export function cloudFixture({
     });
   }
   const clockPayload = {
+    model: "BOUNDED_DRIFT_V2",
+    maxExtrapolationMs: 21600000,
+    resyncAllowanceMs: 0,
     referenceClockSource: "fixture-observer-clock",
     remoteClockSource: "fixture-gateway-clock",
     samples: [

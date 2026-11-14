@@ -1,0 +1,2441 @@
+{
+  "variable": {
+    "provisioning_authorized": {
+      "type": "bool",
+      "default": false,
+      "validation": {
+        "condition": "${var.provisioning_authorized == false}",
+        "error_message": "B1a preparation cannot provision. Separate reviewed source change and owner resource authorization required."
+      }
+    },
+    "organization_mode": {
+      "type": "string",
+      "default": "ORG_ENFORCED",
+      "validation": {
+        "condition": "${contains([\"UNDECIDED\", \"ORG_ENFORCED\", \"STANDALONE_REVIEW_REQUIRED\"], var.organization_mode)}",
+        "error_message": "Owner organization decision required."
+      }
+    },
+    "standalone_risk_reviewed": {
+      "type": "bool",
+      "default": false
+    },
+    "runtime_project_number": {
+      "type": "string",
+      "default": "111111111111"
+    },
+    "session_started_at": {
+      "type": "string",
+      "default": "2026-11-14T12:00:00.000Z"
+    },
+    "billing_account": {
+      "type": "string",
+      "default": "000000-000000-000000"
+    },
+    "candidate_image": {
+      "type": "string",
+      "default": "us-central1-docker.pkg.dev/b1a2-fixture-run/b1a2/harness@sha256:dc01d76b91e833a516ad97220d47d28aac050e24e0e559612a4cbcaad17e7c29"
+    },
+    "fake_host_image": {
+      "type": "string",
+      "default": "UNAPPROVED_IMMUTABLE_HOST_IMAGE_REQUIRED"
+    },
+    "owner_inputs_approved": {
+      "type": "bool",
+      "default": false,
+      "validation": {
+        "condition": "${var.owner_inputs_approved == false}",
+        "error_message": "B1a-2 source-only: changing flags cannot authorize execution."
+      }
+    }
+  },
+  "locals": {
+    "region": "us-central1",
+    "labels": {
+      "purpose": "b1a-synthetic-proof",
+      "expires": "2026-12-17",
+      "owner": "assignment-required"
+    },
+    "b1a2_input_digest": "1303a6d371b4162f481bcc2e610043fce005bc246ee71dee78191c9ba2a6ab3e",
+    "b1a2_fixture_only": true
+  },
+  "resource": {
+    "terraform_data": {
+      "never_apply": {
+        "input": "B1A_SOURCE_ONLY",
+        "lifecycle": {
+          "precondition": [
+            {
+              "condition": "${var.provisioning_authorized}",
+              "error_message": "STOP: only local validation authorized. Do not plan/apply."
+            },
+            {
+              "condition": "${var.organization_mode != \"UNDECIDED\" && (var.organization_mode != \"STANDALONE_REVIEW_REQUIRED\" || var.standalone_risk_reviewed)}",
+              "error_message": "Owner organization/standalone decision and review are unresolved."
+            },
+            {
+              "condition": "${timecmp(timestamp(), timeadd(var.session_started_at, \"6h\")) < 0}",
+              "error_message": "Session expired; do not recreate resources."
+            },
+            {
+              "condition": "${var.owner_inputs_approved}",
+              "error_message": "Exact inputs, hashes, images, FX, named operators and window require separate owner approval."
+            }
+          ]
+        }
+      }
+    },
+    "google_compute_network": {
+      "run": {
+        "name": "b1a2-run",
+        "auto_create_subnetworks": false,
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "b1a2-fixture-run"
+      },
+      "fake": {
+        "name": "b1a2-fake",
+        "auto_create_subnetworks": false,
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "b1a2-fixture-fake"
+      }
+    },
+    "google_compute_subnetwork": {
+      "gateway": {
+        "name": "b1a2-gateway",
+        "network": "${google_compute_network.run.id}",
+        "region": "${local.region}",
+        "ip_cidr_range": "10.91.0.0/26",
+        "private_ip_google_access": true,
+        "stack_type": "IPV4_ONLY",
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "b1a2-fixture-run"
+      },
+      "private": {
+        "name": "b1a2-private",
+        "network": "${google_compute_network.run.id}",
+        "region": "${local.region}",
+        "ip_cidr_range": "10.91.1.0/26",
+        "private_ip_google_access": true,
+        "stack_type": "IPV4_ONLY",
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "b1a2-fixture-run"
+      },
+      "fake": {
+        "name": "b1a2-fake",
+        "network": "${google_compute_network.fake.id}",
+        "region": "${local.region}",
+        "ip_cidr_range": "10.92.0.0/26",
+        "private_ip_google_access": true,
+        "stack_type": "IPV4_ONLY",
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "b1a2-fixture-fake"
+      }
+    },
+    "google_sql_database_instance": {
+      "epoch": {
+        "name": "b1a2-epoch",
+        "database_version": "POSTGRES_17",
+        "region": "${local.region}",
+        "deletion_protection": false,
+        "settings": {
+          "edition": "ENTERPRISE",
+          "tier": "db-f1-micro",
+          "availability_type": "ZONAL",
+          "disk_size": 10,
+          "disk_type": "PD_SSD",
+          "disk_autoresize": false,
+          "deletion_protection_enabled": false,
+          "retain_backups_on_delete": false,
+          "final_backup_config": {
+            "enabled": false
+          },
+          "backup_configuration": {
+            "enabled": true,
+            "point_in_time_recovery_enabled": true,
+            "transaction_log_retention_days": 1,
+            "backup_retention_settings": {
+              "retained_backups": 1
+            }
+          },
+          "ip_configuration": {
+            "ipv4_enabled": false,
+            "ssl_mode": "ENCRYPTED_ONLY",
+            "server_ca_mode": "GOOGLE_MANAGED_CAS_CA",
+            "psc_config": {
+              "psc_enabled": true,
+              "allowed_consumer_projects": [
+                "b1a2-fixture-run"
+              ]
+            }
+          },
+          "database_flags": [
+            {
+              "name": "cloudsql.iam_authentication",
+              "value": "on"
+            },
+            {
+              "name": "timezone",
+              "value": "UTC"
+            }
+          ],
+          "user_labels": "${local.labels}"
+        },
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "b1a2-fixture-run"
+      }
+    },
+    "google_compute_address": {
+      "sql_run": {
+        "name": "b1a2-sql-run",
+        "address_type": "INTERNAL",
+        "address": "10.91.1.12",
+        "subnetwork": "${google_compute_subnetwork.private.id}",
+        "region": "${local.region}",
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "b1a2-fixture-run"
+      },
+      "nat": {
+        "name": "b1a2-nat-ip",
+        "region": "${local.region}",
+        "labels": "${local.labels}",
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "b1a2-fixture-run"
+      },
+      "fake": {
+        "name": "b1a2-fake-ip",
+        "region": "${local.region}",
+        "labels": "${local.labels}",
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "b1a2-fixture-fake"
+      }
+    },
+    "google_compute_forwarding_rule": {
+      "sql_run": {
+        "name": "b1a2-sql-run",
+        "region": "${local.region}",
+        "network": "${google_compute_network.run.id}",
+        "ip_address": "${google_compute_address.sql_run.id}",
+        "target": "${google_sql_database_instance.epoch.psc_service_attachment_link}",
+        "load_balancing_scheme": "",
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "b1a2-fixture-run"
+      }
+    },
+    "google_compute_router": {
+      "gateway": {
+        "name": "b1a2-gateway-router",
+        "region": "${local.region}",
+        "network": "${google_compute_network.run.id}",
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "b1a2-fixture-run"
+      }
+    },
+    "google_compute_router_nat": {
+      "gateway": {
+        "name": "b1a2-gateway-only",
+        "region": "${local.region}",
+        "router": "${google_compute_router.gateway.name}",
+        "nat_ip_allocate_option": "MANUAL_ONLY",
+        "nat_ips": [
+          "${google_compute_address.nat.self_link}"
+        ],
+        "source_subnetwork_ip_ranges_to_nat": "LIST_OF_SUBNETWORKS",
+        "subnetwork": [
+          {
+            "name": "${google_compute_subnetwork.gateway.id}",
+            "source_ip_ranges_to_nat": [
+              "ALL_IP_RANGES"
+            ]
+          }
+        ],
+        "log_config": {
+          "enable": true,
+          "filter": "ALL"
+        },
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "b1a2-fixture-run"
+      }
+    },
+    "google_compute_firewall": {
+      "deny_run_v4": {
+        "name": "b1a2-deny-run-v4",
+        "network": "${google_compute_network.run.id}",
+        "direction": "EGRESS",
+        "priority": 65534,
+        "destination_ranges": [
+          "0.0.0.0/0"
+        ],
+        "deny": [
+          {
+            "protocol": "all"
+          }
+        ],
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "b1a2-fixture-run"
+      },
+      "deny_run_v6": {
+        "name": "b1a2-deny-run-v6",
+        "network": "${google_compute_network.run.id}",
+        "direction": "EGRESS",
+        "priority": 65534,
+        "destination_ranges": [
+          "::/0"
+        ],
+        "deny": [
+          {
+            "protocol": "all"
+          }
+        ],
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "b1a2-fixture-run"
+      },
+      "deny_fake_v4": {
+        "name": "b1a2-deny-fake-v4",
+        "network": "${google_compute_network.fake.id}",
+        "direction": "EGRESS",
+        "priority": 65534,
+        "destination_ranges": [
+          "0.0.0.0/0"
+        ],
+        "deny": [
+          {
+            "protocol": "all"
+          }
+        ],
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "b1a2-fixture-fake"
+      },
+      "deny_fake_v6": {
+        "name": "b1a2-deny-fake-v6",
+        "network": "${google_compute_network.fake.id}",
+        "direction": "EGRESS",
+        "priority": 65534,
+        "destination_ranges": [
+          "::/0"
+        ],
+        "deny": [
+          {
+            "protocol": "all"
+          }
+        ],
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "b1a2-fixture-fake"
+      },
+      "epoch_deny_1_v4": {
+        "name": "b1a2-e000001-deny-v4",
+        "network": "${google_compute_network.run.id}",
+        "direction": "EGRESS",
+        "priority": 100,
+        "disabled": true,
+        "target_tags": [
+          "b1a2-e000001"
+        ],
+        "destination_ranges": [
+          "0.0.0.0/0"
+        ],
+        "deny": [
+          {
+            "protocol": "all"
+          }
+        ],
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "b1a2-fixture-run"
+      },
+      "epoch_deny_1_v6": {
+        "name": "b1a2-e000001-deny-v6",
+        "network": "${google_compute_network.run.id}",
+        "direction": "EGRESS",
+        "priority": 100,
+        "disabled": true,
+        "target_tags": [
+          "b1a2-e000001"
+        ],
+        "destination_ranges": [
+          "::/0"
+        ],
+        "deny": [
+          {
+            "protocol": "all"
+          }
+        ],
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "b1a2-fixture-run"
+      },
+      "gateway_fake_1": {
+        "name": "b1a2-e000001-fake-allow",
+        "network": "${google_compute_network.run.id}",
+        "direction": "EGRESS",
+        "priority": 1000,
+        "target_tags": [
+          "b1a2-e000001"
+        ],
+        "destination_ranges": [
+          "${google_compute_address.fake.address}/32"
+        ],
+        "allow": [
+          {
+            "protocol": "tcp",
+            "ports": [
+              "443"
+            ]
+          }
+        ],
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "b1a2-fixture-run"
+      },
+      "epoch_deny_2_v4": {
+        "name": "b1a2-e000002-deny-v4",
+        "network": "${google_compute_network.run.id}",
+        "direction": "EGRESS",
+        "priority": 100,
+        "disabled": true,
+        "target_tags": [
+          "b1a2-e000002"
+        ],
+        "destination_ranges": [
+          "0.0.0.0/0"
+        ],
+        "deny": [
+          {
+            "protocol": "all"
+          }
+        ],
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "b1a2-fixture-run"
+      },
+      "epoch_deny_2_v6": {
+        "name": "b1a2-e000002-deny-v6",
+        "network": "${google_compute_network.run.id}",
+        "direction": "EGRESS",
+        "priority": 100,
+        "disabled": true,
+        "target_tags": [
+          "b1a2-e000002"
+        ],
+        "destination_ranges": [
+          "::/0"
+        ],
+        "deny": [
+          {
+            "protocol": "all"
+          }
+        ],
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "b1a2-fixture-run"
+      },
+      "gateway_fake_2": {
+        "name": "b1a2-e000002-fake-allow",
+        "network": "${google_compute_network.run.id}",
+        "direction": "EGRESS",
+        "priority": 1000,
+        "target_tags": [
+          "b1a2-e000002"
+        ],
+        "destination_ranges": [
+          "${google_compute_address.fake.address}/32"
+        ],
+        "allow": [
+          {
+            "protocol": "tcp",
+            "ports": [
+              "443"
+            ]
+          }
+        ],
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "b1a2-fixture-run"
+      },
+      "fake_ingress_nat": {
+        "name": "b1a2-fake-ingress-nat",
+        "network": "${google_compute_network.fake.id}",
+        "direction": "INGRESS",
+        "source_ranges": [
+          "${google_compute_address.nat.address}/32"
+        ],
+        "target_tags": [
+          "b1a2-fake"
+        ],
+        "allow": [
+          {
+            "protocol": "tcp",
+            "ports": [
+              "443"
+            ]
+          }
+        ],
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "b1a2-fixture-fake"
+      },
+      "sql_run": {
+        "name": "b1a2-sql-run",
+        "network": "${google_compute_network.run.id}",
+        "direction": "EGRESS",
+        "priority": 1000,
+        "target_tags": [
+          "b1a2-e000001",
+          "b1a2-e000002",
+          "b1a2-worker",
+          "b1a2-ingress",
+          "b1a2-sealer"
+        ],
+        "destination_ranges": [
+          "10.91.1.12/32"
+        ],
+        "allow": [
+          {
+            "protocol": "tcp",
+            "ports": [
+              "5432"
+            ]
+          }
+        ],
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "b1a2-fixture-run"
+      },
+      "restricted_run": {
+        "name": "b1a2-restricted-run",
+        "network": "${google_compute_network.run.id}",
+        "direction": "EGRESS",
+        "priority": 1000,
+        "target_tags": [
+          "b1a2-e000001",
+          "b1a2-e000002",
+          "b1a2-worker",
+          "b1a2-ingress",
+          "b1a2-sealer"
+        ],
+        "destination_ranges": [
+          "199.36.153.4/30"
+        ],
+        "allow": [
+          {
+            "protocol": "tcp",
+            "ports": [
+              "443"
+            ]
+          }
+        ],
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "b1a2-fixture-run"
+      },
+      "fake_iap": {
+        "name": "b1a2-fake-iap-443",
+        "network": "${google_compute_network.fake.id}",
+        "direction": "INGRESS",
+        "source_ranges": [
+          "35.235.240.0/20"
+        ],
+        "target_tags": [
+          "b1a2-fake"
+        ],
+        "allow": [
+          {
+            "protocol": "tcp",
+            "ports": [
+              "443"
+            ]
+          }
+        ],
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "b1a2-fixture-fake"
+      },
+      "restricted_fake": {
+        "name": "b1a2-restricted-fake",
+        "network": "${google_compute_network.fake.id}",
+        "direction": "EGRESS",
+        "priority": 1000,
+        "target_tags": [
+          "b1a2-fake"
+        ],
+        "destination_ranges": [
+          "199.36.153.4/30"
+        ],
+        "allow": [
+          {
+            "protocol": "tcp",
+            "ports": [
+              "443"
+            ]
+          }
+        ],
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "b1a2-fixture-fake"
+      }
+    },
+    "google_compute_route": {
+      "restricted_run": {
+        "name": "b1a2-restricted-run",
+        "network": "${google_compute_network.run.id}",
+        "dest_range": "199.36.153.4/30",
+        "next_hop_gateway": "default-internet-gateway",
+        "priority": 900,
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "b1a2-fixture-run"
+      },
+      "restricted_fake": {
+        "name": "b1a2-restricted-fake",
+        "network": "${google_compute_network.fake.id}",
+        "dest_range": "199.36.153.4/30",
+        "next_hop_gateway": "default-internet-gateway",
+        "priority": 900,
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "b1a2-fixture-fake"
+      }
+    },
+    "google_dns_managed_zone": {
+      "apis_run": {
+        "name": "b1a2-apis-run",
+        "dns_name": "googleapis.com.",
+        "visibility": "private",
+        "private_visibility_config": {
+          "networks": [
+            {
+              "network_url": "${google_compute_network.run.id}"
+            }
+          ]
+        },
+        "labels": "${local.labels}",
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "b1a2-fixture-run"
+      },
+      "runapp_run": {
+        "name": "b1a2-runapp-run",
+        "dns_name": "run.app.",
+        "visibility": "private",
+        "private_visibility_config": {
+          "networks": [
+            {
+              "network_url": "${google_compute_network.run.id}"
+            }
+          ]
+        },
+        "labels": "${local.labels}",
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "b1a2-fixture-run"
+      },
+      "sql_run": {
+        "name": "b1a2-sql-run",
+        "dns_name": "${trimsuffix(google_sql_database_instance.epoch.dns_name, \".\")}.",
+        "visibility": "private",
+        "private_visibility_config": {
+          "networks": [
+            {
+              "network_url": "${google_compute_network.run.id}"
+            }
+          ]
+        },
+        "labels": "${local.labels}",
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "b1a2-fixture-run"
+      },
+      "apis_fake": {
+        "name": "b1a2-apis-fake",
+        "dns_name": "googleapis.com.",
+        "visibility": "private",
+        "private_visibility_config": {
+          "networks": [
+            {
+              "network_url": "${google_compute_network.fake.id}"
+            }
+          ]
+        },
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "b1a2-fixture-fake"
+      }
+    },
+    "google_dns_record_set": {
+      "apis_run": {
+        "name": "*.googleapis.com.",
+        "type": "A",
+        "ttl": 30,
+        "managed_zone": "${google_dns_managed_zone.apis_run.name}",
+        "rrdatas": [
+          "199.36.153.4",
+          "199.36.153.5",
+          "199.36.153.6",
+          "199.36.153.7"
+        ],
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "b1a2-fixture-run"
+      },
+      "runapp_run": {
+        "name": "*.run.app.",
+        "type": "A",
+        "ttl": 30,
+        "managed_zone": "${google_dns_managed_zone.runapp_run.name}",
+        "rrdatas": [
+          "199.36.153.4",
+          "199.36.153.5",
+          "199.36.153.6",
+          "199.36.153.7"
+        ],
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "b1a2-fixture-run"
+      },
+      "sql_run": {
+        "name": "${google_dns_managed_zone.sql_run.dns_name}",
+        "type": "A",
+        "ttl": 30,
+        "managed_zone": "${google_dns_managed_zone.sql_run.name}",
+        "rrdatas": [
+          "${google_compute_address.sql_run.address}"
+        ],
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "b1a2-fixture-run"
+      },
+      "apis_fake": {
+        "name": "*.googleapis.com.",
+        "type": "A",
+        "ttl": 30,
+        "managed_zone": "${google_dns_managed_zone.apis_fake.name}",
+        "rrdatas": [
+          "199.36.153.4",
+          "199.36.153.5",
+          "199.36.153.6",
+          "199.36.153.7"
+        ],
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "b1a2-fixture-fake"
+      }
+    },
+    "google_service_account": {
+      "ingress": {
+        "account_id": "b1a2-ingress",
+        "display_name": "B1a2 ingress",
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "b1a2-fixture-run"
+      },
+      "worker": {
+        "account_id": "b1a2-worker",
+        "display_name": "B1a2 worker",
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "b1a2-fixture-run"
+      },
+      "gw_e000001": {
+        "account_id": "b1a2-gateway-old",
+        "display_name": "B1a2 gatewayOld",
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "b1a2-fixture-run"
+      },
+      "gw_e000002": {
+        "account_id": "b1a2-gateway-next",
+        "display_name": "B1a2 gatewayNext",
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "b1a2-fixture-run"
+      },
+      "controller": {
+        "account_id": "b1a2-controller",
+        "display_name": "B1a2 controller",
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "b1a2-fixture-run"
+      },
+      "kill": {
+        "account_id": "b1a2-kill",
+        "display_name": "B1a2 kill",
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "b1a2-fixture-run"
+      },
+      "observer": {
+        "account_id": "b1a2-observer",
+        "display_name": "B1a2 observer",
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "b1a2-fixture-custody"
+      },
+      "sealer": {
+        "account_id": "b1a2-sealer",
+        "display_name": "B1a2 sealer",
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "b1a2-fixture-run"
+      },
+      "deployer": {
+        "account_id": "b1a2-deployer",
+        "display_name": "B1a2 deployer",
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "b1a2-fixture-run"
+      },
+      "fake": {
+        "account_id": "b1a2-fake",
+        "display_name": "B1a2 fake",
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "b1a2-fixture-fake"
+      },
+      "cleanup": {
+        "account_id": "b1a2-cleanup",
+        "display_name": "B1a2 cleanup",
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "b1a2-fixture-run"
+      },
+      "custody_cleanup": {
+        "account_id": "b1a2-custody-cleanup",
+        "display_name": "B1a2 custodyCleanup",
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "b1a2-fixture-custody"
+      }
+    },
+    "google_cloud_run_v2_service": {
+      "ingress": {
+        "name": "b1a2-ingress",
+        "location": "${local.region}",
+        "deletion_protection": false,
+        "ingress": "INGRESS_TRAFFIC_ALL",
+        "labels": "${local.labels}",
+        "scaling": {
+          "min_instance_count": 1,
+          "max_instance_count": 1
+        },
+        "template": {
+          "revision": "b1a2-ingress-e000001-r1",
+          "service_account": "${google_service_account.ingress.email}",
+          "labels": {
+            "purpose": "b1a-synthetic-proof",
+            "expires": "2026-12-17",
+            "owner": "assignment-required",
+            "deployment_epoch": "e000001"
+          },
+          "timeout": "15s",
+          "max_instance_request_concurrency": 1,
+          "scaling": {
+            "min_instance_count": 1,
+            "max_instance_count": 1
+          },
+          "containers": [
+            {
+              "image": "${var.candidate_image}",
+              "env": [
+                {
+                  "name": "B1A2_ROLE",
+                  "value": "ingress"
+                },
+                {
+                  "name": "B1A2_MODE",
+                  "value": "INERT_UNCONFIGURED"
+                }
+              ],
+              "ports": [
+                {
+                  "container_port": 8080
+                }
+              ],
+              "resources": {
+                "limits": {
+                  "cpu": "1",
+                  "memory": "512Mi"
+                },
+                "cpu_idle": true,
+                "startup_cpu_boost": false
+              },
+              "startup_probe": {
+                "http_get": {
+                  "path": "/healthz",
+                  "port": 8080
+                },
+                "period_seconds": 2,
+                "failure_threshold": 30
+              },
+              "readiness_probe": {
+                "http_get": {
+                  "path": "/healthz",
+                  "port": 8080
+                },
+                "period_seconds": 2,
+                "failure_threshold": 3
+              },
+              "volume_mounts": [
+                {
+                  "name": "synthetic-bundle",
+                  "mount_path": "/secrets"
+                }
+              ]
+            }
+          ],
+          "vpc_access": {
+            "egress": "ALL_TRAFFIC",
+            "network_interfaces": [
+              {
+                "network": "${google_compute_network.run.name}",
+                "subnetwork": "${google_compute_subnetwork.private.name}",
+                "tags": [
+                  "b1a2-ingress"
+                ]
+              }
+            ]
+          },
+          "volumes": [
+            {
+              "name": "synthetic-bundle",
+              "secret": {
+                "secret": "${google_secret_manager_secret.bundle_ingress.secret_id}",
+                "items": [
+                  {
+                    "version": "1",
+                    "path": "manifest.json"
+                  },
+                  {
+                    "version": "2",
+                    "path": "profile.json"
+                  },
+                  {
+                    "version": "3",
+                    "path": "database.json"
+                  },
+                  {
+                    "version": "4",
+                    "path": "callerKey.txt"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "traffic": [
+          {
+            "type": "TRAFFIC_TARGET_ALLOCATION_TYPE_LATEST",
+            "percent": 100
+          }
+        ],
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "b1a2-fixture-run"
+      },
+      "gateway": {
+        "name": "b1a2-gateway",
+        "location": "${local.region}",
+        "deletion_protection": false,
+        "ingress": "INGRESS_TRAFFIC_INTERNAL_ONLY",
+        "labels": "${local.labels}",
+        "scaling": {
+          "min_instance_count": 1,
+          "max_instance_count": 2
+        },
+        "template": {
+          "revision": "b1a2-gateway-inert-bootstrap",
+          "service_account": "${google_service_account.gw_e000001.email}",
+          "labels": {
+            "purpose": "b1a-synthetic-proof",
+            "expires": "2026-12-17",
+            "owner": "assignment-required",
+            "deployment_epoch": "e000001"
+          },
+          "timeout": "15s",
+          "max_instance_request_concurrency": 1,
+          "scaling": {
+            "min_instance_count": 1,
+            "max_instance_count": 1
+          },
+          "containers": [
+            {
+              "image": "${var.candidate_image}",
+              "env": [
+                {
+                  "name": "B1A2_ROLE",
+                  "value": "gateway"
+                },
+                {
+                  "name": "B1A2_MODE",
+                  "value": "INERT_UNCONFIGURED"
+                }
+              ],
+              "ports": [
+                {
+                  "container_port": 8080
+                }
+              ],
+              "resources": {
+                "limits": {
+                  "cpu": "1",
+                  "memory": "512Mi"
+                },
+                "cpu_idle": false,
+                "startup_cpu_boost": false
+              },
+              "startup_probe": {
+                "http_get": {
+                  "path": "/healthz",
+                  "port": 8080
+                },
+                "period_seconds": 2,
+                "failure_threshold": 30
+              },
+              "readiness_probe": {
+                "http_get": {
+                  "path": "/healthz",
+                  "port": 8080
+                },
+                "period_seconds": 2,
+                "failure_threshold": 3
+              },
+              "volume_mounts": [
+                {
+                  "name": "synthetic-bundle",
+                  "mount_path": "/secrets"
+                }
+              ]
+            }
+          ],
+          "vpc_access": {
+            "egress": "ALL_TRAFFIC",
+            "network_interfaces": [
+              {
+                "network": "${google_compute_network.run.name}",
+                "subnetwork": "${google_compute_subnetwork.gateway.name}",
+                "tags": [
+                  "b1a2-e000001"
+                ]
+              }
+            ]
+          },
+          "volumes": [
+            {
+              "name": "synthetic-bundle",
+              "secret": {
+                "secret": "${google_secret_manager_secret.effect_e000001.secret_id}",
+                "items": [
+                  {
+                    "version": "1",
+                    "path": "manifest.json"
+                  },
+                  {
+                    "version": "2",
+                    "path": "profile.json"
+                  },
+                  {
+                    "version": "3",
+                    "path": "database.json"
+                  },
+                  {
+                    "version": "4",
+                    "path": "callerKey.txt"
+                  },
+                  {
+                    "version": "5",
+                    "path": "tls.json"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "traffic": [
+          {
+            "type": "TRAFFIC_TARGET_ALLOCATION_TYPE_LATEST",
+            "percent": 100
+          }
+        ],
+        "lifecycle": {
+          "ignore_changes": [
+            "template",
+            "traffic"
+          ]
+        },
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "b1a2-fixture-run"
+      },
+      "sealer": {
+        "name": "b1a2-sealer",
+        "location": "${local.region}",
+        "deletion_protection": false,
+        "ingress": "INGRESS_TRAFFIC_INTERNAL_ONLY",
+        "labels": "${local.labels}",
+        "scaling": {
+          "min_instance_count": 1,
+          "max_instance_count": 1
+        },
+        "template": {
+          "revision": "b1a2-sealer-e000001-r1",
+          "service_account": "${google_service_account.sealer.email}",
+          "labels": {
+            "purpose": "b1a-synthetic-proof",
+            "expires": "2026-12-17",
+            "owner": "assignment-required",
+            "deployment_epoch": "e000001"
+          },
+          "timeout": "15s",
+          "max_instance_request_concurrency": 1,
+          "scaling": {
+            "min_instance_count": 1,
+            "max_instance_count": 1
+          },
+          "containers": [
+            {
+              "image": "${var.candidate_image}",
+              "env": [
+                {
+                  "name": "B1A2_ROLE",
+                  "value": "sealer"
+                },
+                {
+                  "name": "B1A2_MODE",
+                  "value": "INERT_UNCONFIGURED"
+                }
+              ],
+              "ports": [
+                {
+                  "container_port": 8080
+                }
+              ],
+              "resources": {
+                "limits": {
+                  "cpu": "1",
+                  "memory": "512Mi"
+                },
+                "cpu_idle": true,
+                "startup_cpu_boost": false
+              },
+              "startup_probe": {
+                "http_get": {
+                  "path": "/healthz",
+                  "port": 8080
+                },
+                "period_seconds": 2,
+                "failure_threshold": 30
+              },
+              "readiness_probe": {
+                "http_get": {
+                  "path": "/healthz",
+                  "port": 8080
+                },
+                "period_seconds": 2,
+                "failure_threshold": 3
+              },
+              "volume_mounts": [
+                {
+                  "name": "synthetic-bundle",
+                  "mount_path": "/secrets"
+                }
+              ]
+            }
+          ],
+          "vpc_access": {
+            "egress": "ALL_TRAFFIC",
+            "network_interfaces": [
+              {
+                "network": "${google_compute_network.run.name}",
+                "subnetwork": "${google_compute_subnetwork.private.name}",
+                "tags": [
+                  "b1a2-sealer"
+                ]
+              }
+            ]
+          },
+          "volumes": [
+            {
+              "name": "synthetic-bundle",
+              "secret": {
+                "secret": "${google_secret_manager_secret.bundle_sealer.secret_id}",
+                "items": [
+                  {
+                    "version": "1",
+                    "path": "manifest.json"
+                  },
+                  {
+                    "version": "2",
+                    "path": "profile.json"
+                  },
+                  {
+                    "version": "3",
+                    "path": "database.json"
+                  },
+                  {
+                    "version": "4",
+                    "path": "callerKey.txt"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "traffic": [
+          {
+            "type": "TRAFFIC_TARGET_ALLOCATION_TYPE_LATEST",
+            "percent": 100
+          }
+        ],
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "b1a2-fixture-run"
+      }
+    },
+    "google_cloud_run_v2_worker_pool": {
+      "worker": {
+        "name": "b1a2-worker",
+        "location": "${local.region}",
+        "deletion_protection": false,
+        "labels": "${local.labels}",
+        "scaling": {
+          "manual_instance_count": 1,
+          "scaling_mode": "MANUAL"
+        },
+        "template": {
+          "revision": "b1a2-worker-e000001-r1",
+          "service_account": "${google_service_account.worker.email}",
+          "labels": "${local.labels}",
+          "containers": [
+            {
+              "image": "${var.candidate_image}",
+              "env": [
+                {
+                  "name": "B1A2_ROLE",
+                  "value": "worker"
+                },
+                {
+                  "name": "B1A2_MODE",
+                  "value": "INERT_UNCONFIGURED"
+                }
+              ],
+              "resources": {
+                "limits": {
+                  "cpu": "1",
+                  "memory": "1Gi"
+                }
+              },
+              "volume_mounts": [
+                {
+                  "name": "synthetic-bundle",
+                  "mount_path": "/secrets"
+                }
+              ]
+            }
+          ],
+          "vpc_access": {
+            "egress": "ALL_TRAFFIC",
+            "network_interfaces": [
+              {
+                "network": "${google_compute_network.run.name}",
+                "subnetwork": "${google_compute_subnetwork.private.name}",
+                "tags": [
+                  "b1a2-worker"
+                ]
+              }
+            ]
+          },
+          "volumes": [
+            {
+              "name": "synthetic-bundle",
+              "secret": {
+                "secret": "${google_secret_manager_secret.bundle_worker.secret_id}",
+                "items": [
+                  {
+                    "version": "1",
+                    "path": "manifest.json"
+                  },
+                  {
+                    "version": "2",
+                    "path": "profile.json"
+                  },
+                  {
+                    "version": "3",
+                    "path": "database.json"
+                  },
+                  {
+                    "version": "4",
+                    "path": "callerKey.txt"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "b1a2-fixture-run"
+      }
+    },
+    "google_secret_manager_secret": {
+      "effect_e000001": {
+        "secret_id": "b1a2-effect-old",
+        "replication": {
+          "auto": {}
+        },
+        "labels": "${local.labels}",
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "b1a2-fixture-run"
+      },
+      "effect_e000002": {
+        "secret_id": "b1a2-effect-next",
+        "replication": {
+          "auto": {}
+        },
+        "labels": "${local.labels}",
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "b1a2-fixture-run"
+      },
+      "worker_db": {
+        "secret_id": "b1a2-worker-db",
+        "replication": {
+          "auto": {}
+        },
+        "labels": "${local.labels}",
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "b1a2-fixture-run"
+      },
+      "ingress_db": {
+        "secret_id": "b1a2-ingress-db",
+        "replication": {
+          "auto": {}
+        },
+        "labels": "${local.labels}",
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "b1a2-fixture-run"
+      },
+      "controller_db": {
+        "secret_id": "b1a2-controller-db",
+        "replication": {
+          "auto": {}
+        },
+        "labels": "${local.labels}",
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "b1a2-fixture-run"
+      },
+      "sealer_db": {
+        "secret_id": "b1a2-sealer-db",
+        "replication": {
+          "auto": {}
+        },
+        "labels": "${local.labels}",
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "b1a2-fixture-run"
+      },
+      "observer_signing": {
+        "secret_id": "b1a2-observer-signing",
+        "replication": {
+          "auto": {}
+        },
+        "labels": "${local.labels}",
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "b1a2-fixture-custody"
+      },
+      "bundle_worker": {
+        "secret_id": "b1a2-worker-bundle",
+        "replication": {
+          "auto": {}
+        },
+        "labels": "${local.labels}",
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "b1a2-fixture-run"
+      },
+      "bundle_ingress": {
+        "secret_id": "b1a2-ingress-bundle",
+        "replication": {
+          "auto": {}
+        },
+        "labels": "${local.labels}",
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "b1a2-fixture-run"
+      },
+      "bundle_sealer": {
+        "secret_id": "b1a2-sealer-bundle",
+        "replication": {
+          "auto": {}
+        },
+        "labels": "${local.labels}",
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "b1a2-fixture-run"
+      }
+    },
+    "google_storage_bucket": {
+      "custody": {
+        "name": "b1a2-fixture-custody-evidence",
+        "location": "US-CENTRAL1",
+        "uniform_bucket_level_access": true,
+        "public_access_prevention": "enforced",
+        "versioning": {
+          "enabled": true
+        },
+        "force_destroy": false,
+        "labels": "${local.labels}",
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "b1a2-fixture-custody"
+      }
+    },
+    "google_kms_key_ring": {
+      "effect": {
+        "name": "b1a2-effect",
+        "location": "${local.region}",
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "b1a2-fixture-run"
+      },
+      "custody": {
+        "name": "b1a2-custody",
+        "location": "${local.region}",
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "b1a2-fixture-custody"
+      }
+    },
+    "google_kms_crypto_key": {
+      "effect": {
+        "name": "b1a2-effect",
+        "key_ring": "${google_kms_key_ring.effect.id}",
+        "destroy_scheduled_duration": "86400s",
+        "rotation_period": "2592000s",
+        "labels": "${local.labels}",
+        "depends_on": [
+          "terraform_data.never_apply"
+        ]
+      },
+      "custody": {
+        "name": "b1a2-custody",
+        "key_ring": "${google_kms_key_ring.custody.id}",
+        "destroy_scheduled_duration": "86400s",
+        "rotation_period": "2592000s",
+        "labels": "${local.labels}",
+        "depends_on": [
+          "terraform_data.never_apply"
+        ]
+      }
+    },
+    "google_artifact_registry_repository": {
+      "harness": {
+        "location": "${local.region}",
+        "repository_id": "b1a2",
+        "format": "DOCKER",
+        "labels": "${local.labels}",
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "b1a2-fixture-run"
+      }
+    },
+    "google_compute_instance": {
+      "fake": {
+        "name": "b1a2-fake",
+        "zone": "us-central1-a",
+        "machine_type": "e2-micro",
+        "boot_disk": {
+          "initialize_params": {
+            "image": "${var.fake_host_image}",
+            "size": 10,
+            "type": "pd-standard"
+          }
+        },
+        "network_interface": [
+          {
+            "subnetwork": "${google_compute_subnetwork.fake.id}",
+            "access_config": [
+              {
+                "nat_ip": "${google_compute_address.fake.address}"
+              }
+            ]
+          }
+        ],
+        "service_account": {
+          "email": "${google_service_account.fake.email}",
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform"
+          ]
+        },
+        "metadata": {
+          "block-project-ssh-keys": "true",
+          "enable-oslogin": "TRUE",
+          "b1a2-lifetime-seconds": "21600",
+          "b1a2-container-image": "us-central1-docker.pkg.dev/b1a2-fixture-run/b1a2/harness@sha256:dc01d76b91e833a516ad97220d47d28aac050e24e0e559612a4cbcaad17e7c29",
+          "b1a2-activation": "REVIEWED_SOURCE_CHANGE_REQUIRED",
+          "b1a2-owner-inputs": "UNAPPROVED"
+        },
+        "tags": [
+          "b1a2-fake"
+        ],
+        "labels": "${local.labels}",
+        "deletion_protection": false,
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "b1a2-fixture-fake"
+      }
+    },
+    "google_cloud_run_v2_service_iam_member": {
+      "worker_gateway": {
+        "location": "${local.region}",
+        "name": "${google_cloud_run_v2_service.gateway.name}",
+        "role": "roles/run.invoker",
+        "member": "serviceAccount:${google_service_account.worker.email}",
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "b1a2-fixture-run"
+      },
+      "ingress_sealer": {
+        "location": "${local.region}",
+        "name": "${google_cloud_run_v2_service.sealer.name}",
+        "role": "roles/run.invoker",
+        "member": "serviceAccount:${google_service_account.ingress.email}",
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "b1a2-fixture-run"
+      }
+    },
+    "google_secret_manager_secret_iam_member": {
+      "effect_e000001": {
+        "secret_id": "${google_secret_manager_secret.effect_e000001.id}",
+        "role": "roles/secretmanager.secretAccessor",
+        "member": "serviceAccount:${google_service_account.gw_e000001.email}",
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "b1a2-fixture-run"
+      },
+      "effect_e000002": {
+        "secret_id": "${google_secret_manager_secret.effect_e000002.id}",
+        "role": "roles/secretmanager.secretAccessor",
+        "member": "serviceAccount:${google_service_account.gw_e000002.email}",
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "b1a2-fixture-run"
+      },
+      "worker_db": {
+        "secret_id": "${google_secret_manager_secret.worker_db.id}",
+        "role": "roles/secretmanager.secretAccessor",
+        "member": "serviceAccount:${google_service_account.worker.email}",
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "b1a2-fixture-run"
+      },
+      "ingress_db": {
+        "secret_id": "${google_secret_manager_secret.ingress_db.id}",
+        "role": "roles/secretmanager.secretAccessor",
+        "member": "serviceAccount:${google_service_account.ingress.email}",
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "b1a2-fixture-run"
+      },
+      "controller_db": {
+        "secret_id": "${google_secret_manager_secret.controller_db.id}",
+        "role": "roles/secretmanager.secretAccessor",
+        "member": "serviceAccount:${google_service_account.controller.email}",
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "b1a2-fixture-run"
+      },
+      "sealer_db": {
+        "secret_id": "${google_secret_manager_secret.sealer_db.id}",
+        "role": "roles/secretmanager.secretAccessor",
+        "member": "serviceAccount:${google_service_account.sealer.email}",
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "b1a2-fixture-run"
+      },
+      "observer_signing": {
+        "secret_id": "${google_secret_manager_secret.observer_signing.id}",
+        "role": "roles/secretmanager.secretAccessor",
+        "member": "serviceAccount:${google_service_account.observer.email}",
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "b1a2-fixture-custody"
+      },
+      "bundle_worker": {
+        "secret_id": "${google_secret_manager_secret.bundle_worker.id}",
+        "role": "roles/secretmanager.secretAccessor",
+        "member": "serviceAccount:b1a2-worker@b1a2-fixture-run.iam.gserviceaccount.com",
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "b1a2-fixture-run"
+      },
+      "bundle_ingress": {
+        "secret_id": "${google_secret_manager_secret.bundle_ingress.id}",
+        "role": "roles/secretmanager.secretAccessor",
+        "member": "serviceAccount:b1a2-ingress@b1a2-fixture-run.iam.gserviceaccount.com",
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "b1a2-fixture-run"
+      },
+      "bundle_sealer": {
+        "secret_id": "${google_secret_manager_secret.bundle_sealer.id}",
+        "role": "roles/secretmanager.secretAccessor",
+        "member": "serviceAccount:b1a2-sealer@b1a2-fixture-run.iam.gserviceaccount.com",
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "b1a2-fixture-run"
+      },
+      "scope_11": {
+        "secret_id": "projects/b1a2-fixture-run/secrets/b1a2-effect-old",
+        "role": "${google_project_iam_custom_role.scope_11.name}",
+        "member": "serviceAccount:b1a2-kill@b1a2-fixture-run.iam.gserviceaccount.com",
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "b1a2-fixture-run"
+      },
+      "scope_15": {
+        "secret_id": "projects/b1a2-fixture-custody/secrets/b1a2-observer-signing",
+        "role": "${google_project_iam_custom_role.scope_15.name}",
+        "member": "serviceAccount:b1a2-observer@b1a2-fixture-custody.iam.gserviceaccount.com",
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "b1a2-fixture-custody"
+      }
+    },
+    "google_kms_crypto_key_iam_member": {
+      "effect_1": {
+        "crypto_key_id": "${google_kms_crypto_key.effect.id}",
+        "role": "roles/cloudkms.cryptoKeyDecrypter",
+        "member": "serviceAccount:${google_service_account.gw_e000001.email}",
+        "depends_on": [
+          "terraform_data.never_apply"
+        ]
+      },
+      "effect_2": {
+        "crypto_key_id": "${google_kms_crypto_key.effect.id}",
+        "role": "roles/cloudkms.cryptoKeyDecrypter",
+        "member": "serviceAccount:${google_service_account.gw_e000002.email}",
+        "depends_on": [
+          "terraform_data.never_apply"
+        ]
+      },
+      "sealer": {
+        "crypto_key_id": "${google_kms_crypto_key.custody.id}",
+        "role": "roles/cloudkms.cryptoKeyEncrypterDecrypter",
+        "member": "serviceAccount:${google_service_account.sealer.email}",
+        "depends_on": [
+          "terraform_data.never_apply"
+        ]
+      },
+      "scope_12": {
+        "crypto_key_id": "projects/b1a2-fixture-run/locations/us-central1/keyRings/b1a2-effect/cryptoKeys/b1a2-effect",
+        "role": "${google_project_iam_custom_role.scope_12.name}",
+        "member": "serviceAccount:b1a2-kill@b1a2-fixture-run.iam.gserviceaccount.com",
+        "depends_on": [
+          "terraform_data.never_apply"
+        ]
+      }
+    },
+    "google_storage_bucket_iam_member": {
+      "sealer_create": {
+        "bucket": "${google_storage_bucket.custody.name}",
+        "role": "roles/storage.objectCreator",
+        "member": "serviceAccount:${google_service_account.sealer.email}",
+        "depends_on": [
+          "terraform_data.never_apply"
+        ]
+      },
+      "observer_read": {
+        "bucket": "${google_storage_bucket.custody.name}",
+        "role": "roles/storage.objectViewer",
+        "member": "serviceAccount:${google_service_account.observer.email}",
+        "depends_on": [
+          "terraform_data.never_apply"
+        ]
+      },
+      "fake_create": {
+        "bucket": "${google_storage_bucket.custody.name}",
+        "role": "roles/storage.objectCreator",
+        "member": "serviceAccount:${google_service_account.fake.email}",
+        "depends_on": [
+          "terraform_data.never_apply"
+        ]
+      },
+      "sealer_recovery": {
+        "bucket": "${google_storage_bucket.custody.name}",
+        "role": "roles/storage.objectViewer",
+        "member": "serviceAccount:b1a2-sealer@b1a2-fixture-run.iam.gserviceaccount.com",
+        "condition": {
+          "title": "B1a2RecordsOnly",
+          "expression": "resource.name.startsWith(\"projects/_/buckets/b1a2-fixture-custody-evidence/objects/sessions/\")"
+        },
+        "depends_on": [
+          "terraform_data.never_apply"
+        ]
+      },
+      "scope_16": {
+        "bucket": "b1a2-fixture-custody-evidence",
+        "role": "${google_project_iam_custom_role.scope_16.name}",
+        "member": "serviceAccount:b1a2-observer@b1a2-fixture-custody.iam.gserviceaccount.com",
+        "depends_on": [
+          "terraform_data.never_apply"
+        ]
+      },
+      "scope_23": {
+        "bucket": "b1a2-fixture-custody-evidence",
+        "role": "${google_project_iam_custom_role.scope_23.name}",
+        "member": "serviceAccount:b1a2-custody-cleanup@b1a2-fixture-custody.iam.gserviceaccount.com",
+        "depends_on": [
+          "terraform_data.never_apply"
+        ]
+      }
+    },
+    "google_billing_budget": {
+      "session": {
+        "billing_account": "${var.billing_account}",
+        "display_name": "B1a2 SYNTHETIC FX example; alerts are not hard caps",
+        "amount": {
+          "specified_amount": {
+            "currency_code": "MXN",
+            "units": "410",
+            "nanos": 0
+          }
+        },
+        "budget_filter": {
+          "projects": [
+            "projects/b1a2-fixture-run",
+            "projects/b1a2-fixture-custody",
+            "projects/b1a2-fixture-fake"
+          ],
+          "credit_types_treatment": "EXCLUDE_ALL_CREDITS",
+          "calendar_period": "MONTH"
+        },
+        "threshold_rules": [
+          {
+            "threshold_percent": 0.5,
+            "spend_basis": "CURRENT_SPEND"
+          },
+          {
+            "threshold_percent": 0.75,
+            "spend_basis": "CURRENT_SPEND"
+          },
+          {
+            "threshold_percent": 0.9,
+            "spend_basis": "CURRENT_SPEND"
+          },
+          {
+            "threshold_percent": 1,
+            "spend_basis": "CURRENT_SPEND"
+          }
+        ],
+        "depends_on": [
+          "terraform_data.never_apply"
+        ]
+      }
+    },
+    "google_org_policy_policy": {
+      "all_traffic": {
+        "count": "${var.organization_mode == \"ORG_ENFORCED\" ? 1 : 0}",
+        "name": "projects/${var.runtime_project_number}/policies/run.allowedVPCEgress",
+        "parent": "projects/${var.runtime_project_number}",
+        "spec": {
+          "rules": [
+            {
+              "values": {
+                "allowed_values": [
+                  "all-traffic"
+                ]
+              }
+            }
+          ]
+        },
+        "depends_on": [
+          "terraform_data.never_apply"
+        ]
+      }
+    },
+    "google_project_iam_custom_role": {
+      "scope_0": {
+        "role_id": "b1a2_scope_0",
+        "title": "B1a2 deployer scoped 0",
+        "permissions": [
+          "run.services.create",
+          "run.services.get",
+          "run.services.update",
+          "run.revisions.get",
+          "run.revisions.list",
+          "run.operations.get",
+          "run.workerpools.create",
+          "run.workerpools.get",
+          "run.workerpools.update"
+        ],
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "b1a2-fixture-run"
+      },
+      "scope_1": {
+        "role_id": "b1a2_scope_1",
+        "title": "B1a2 deployer scoped 1",
+        "permissions": [
+          "iam.serviceAccounts.actAs"
+        ],
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "b1a2-fixture-run"
+      },
+      "scope_2": {
+        "role_id": "b1a2_scope_2",
+        "title": "B1a2 deployer scoped 2",
+        "permissions": [
+          "iam.serviceAccounts.actAs"
+        ],
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "b1a2-fixture-run"
+      },
+      "scope_3": {
+        "role_id": "b1a2_scope_3",
+        "title": "B1a2 deployer scoped 3",
+        "permissions": [
+          "iam.serviceAccounts.actAs"
+        ],
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "b1a2-fixture-run"
+      },
+      "scope_4": {
+        "role_id": "b1a2_scope_4",
+        "title": "B1a2 deployer scoped 4",
+        "permissions": [
+          "iam.serviceAccounts.actAs"
+        ],
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "b1a2-fixture-run"
+      },
+      "scope_5": {
+        "role_id": "b1a2_scope_5",
+        "title": "B1a2 deployer scoped 5",
+        "permissions": [
+          "iam.serviceAccounts.actAs"
+        ],
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "b1a2-fixture-run"
+      },
+      "scope_6": {
+        "role_id": "b1a2_scope_6",
+        "title": "B1a2 kill scoped 6",
+        "permissions": [
+          "run.services.get",
+          "run.services.update",
+          "run.services.delete",
+          "run.revisions.get",
+          "run.revisions.list",
+          "run.revisions.delete",
+          "run.operations.get",
+          "run.workerpools.get",
+          "run.workerpools.delete",
+          "compute.firewalls.get",
+          "compute.firewalls.update"
+        ],
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "b1a2-fixture-run"
+      },
+      "scope_7": {
+        "role_id": "b1a2_scope_7",
+        "title": "B1a2 kill scoped 7",
+        "permissions": [
+          "iam.serviceAccounts.actAs"
+        ],
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "b1a2-fixture-run"
+      },
+      "scope_8": {
+        "role_id": "b1a2_scope_8",
+        "title": "B1a2 deployer scoped 8",
+        "permissions": [
+          "artifactregistry.repositories.get",
+          "artifactregistry.repositories.downloadArtifacts"
+        ],
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "b1a2-fixture-run"
+      },
+      "scope_9": {
+        "role_id": "b1a2_scope_9",
+        "title": "B1a2 kill scoped 9",
+        "permissions": [
+          "artifactregistry.repositories.get",
+          "artifactregistry.repositories.downloadArtifacts"
+        ],
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "b1a2-fixture-run"
+      },
+      "scope_10": {
+        "role_id": "b1a2_scope_10",
+        "title": "B1a2 fake scoped 10",
+        "permissions": [
+          "artifactregistry.repositories.get",
+          "artifactregistry.repositories.downloadArtifacts"
+        ],
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "b1a2-fixture-run"
+      },
+      "scope_11": {
+        "role_id": "b1a2_scope_11",
+        "title": "B1a2 kill scoped 11",
+        "permissions": [
+          "secretmanager.secrets.getIamPolicy",
+          "secretmanager.secrets.setIamPolicy"
+        ],
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "b1a2-fixture-run"
+      },
+      "scope_12": {
+        "role_id": "b1a2_scope_12",
+        "title": "B1a2 kill scoped 12",
+        "permissions": [
+          "cloudkms.cryptoKeys.getIamPolicy",
+          "cloudkms.cryptoKeys.setIamPolicy"
+        ],
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "b1a2-fixture-run"
+      },
+      "scope_13": {
+        "role_id": "b1a2_scope_13",
+        "title": "B1a2 observer scoped 13",
+        "permissions": [
+          "run.services.get",
+          "run.revisions.get",
+          "run.revisions.list",
+          "run.operations.get",
+          "serviceusage.services.get",
+          "serviceusage.quotas.get",
+          "monitoring.timeSeries.list",
+          "logging.logEntries.list"
+        ],
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "b1a2-fixture-run"
+      },
+      "scope_14": {
+        "role_id": "b1a2_scope_14",
+        "title": "B1a2 observer scoped 14",
+        "permissions": [
+          "compute.instances.get",
+          "compute.instances.list",
+          "iap.tunnelInstances.accessViaIAP",
+          "logging.logEntries.list"
+        ],
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "b1a2-fixture-fake"
+      },
+      "scope_15": {
+        "role_id": "b1a2_scope_15",
+        "title": "B1a2 observer scoped 15",
+        "permissions": [
+          "secretmanager.versions.access"
+        ],
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "b1a2-fixture-custody"
+      },
+      "scope_16": {
+        "role_id": "b1a2_scope_16",
+        "title": "B1a2 observer scoped 16",
+        "permissions": [
+          "storage.objects.get",
+          "storage.objects.list"
+        ],
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "b1a2-fixture-custody"
+      },
+      "scope_17": {
+        "role_id": "b1a2_scope_17",
+        "title": "B1a2 cleanup scoped 17",
+        "permissions": [
+          "run.services.get",
+          "run.services.delete",
+          "run.workerpools.get",
+          "run.workerpools.delete",
+          "run.revisions.get",
+          "run.revisions.list",
+          "compute.forwardingRules.get",
+          "compute.forwardingRules.delete",
+          "compute.addresses.get",
+          "compute.addresses.delete",
+          "compute.routers.get",
+          "compute.routers.update",
+          "compute.routers.delete",
+          "compute.subnetworks.get",
+          "compute.subnetworks.delete",
+          "compute.firewalls.get",
+          "compute.firewalls.delete",
+          "compute.routes.get",
+          "compute.routes.delete",
+          "compute.networks.get",
+          "compute.networks.delete",
+          "cloudsql.instances.get",
+          "cloudsql.instances.delete",
+          "cloudsql.backupRuns.list",
+          "cloudsql.backupRuns.delete",
+          "dns.managedZones.get",
+          "dns.managedZones.delete",
+          "dns.resourceRecordSets.list",
+          "dns.changes.create",
+          "secretmanager.secrets.get",
+          "secretmanager.secrets.delete",
+          "secretmanager.versions.list",
+          "secretmanager.versions.destroy",
+          "artifactregistry.repositories.get",
+          "artifactregistry.repositories.delete",
+          "iam.serviceAccounts.get",
+          "iam.serviceAccounts.delete",
+          "resourcemanager.projects.get",
+          "cloudasset.assets.searchAllResources"
+        ],
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "b1a2-fixture-run"
+      },
+      "scope_18": {
+        "role_id": "b1a2_scope_18",
+        "title": "B1a2 cleanup scoped 18",
+        "permissions": [
+          "compute.instances.get",
+          "compute.instances.delete",
+          "compute.disks.get",
+          "compute.disks.delete",
+          "compute.addresses.get",
+          "compute.addresses.delete",
+          "compute.subnetworks.get",
+          "compute.subnetworks.delete",
+          "compute.firewalls.get",
+          "compute.firewalls.delete",
+          "compute.routes.get",
+          "compute.routes.delete",
+          "compute.networks.get",
+          "compute.networks.delete",
+          "dns.managedZones.get",
+          "dns.managedZones.delete",
+          "dns.resourceRecordSets.list",
+          "dns.changes.create",
+          "resourcemanager.projects.get",
+          "cloudasset.assets.searchAllResources"
+        ],
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "b1a2-fixture-fake"
+      },
+      "scope_19": {
+        "role_id": "b1a2_scope_19",
+        "title": "B1a2 custodyCleanup scoped 19",
+        "permissions": [
+          "storage.buckets.get",
+          "storage.buckets.delete",
+          "storage.objects.get",
+          "storage.objects.list",
+          "storage.objects.delete",
+          "cloudkms.cryptoKeyVersions.list",
+          "cloudkms.cryptoKeyVersions.destroy",
+          "secretmanager.secrets.get",
+          "secretmanager.secrets.delete",
+          "secretmanager.versions.list",
+          "secretmanager.versions.destroy",
+          "resourcemanager.projects.get",
+          "cloudasset.assets.searchAllResources"
+        ],
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "b1a2-fixture-custody"
+      },
+      "scope_20": {
+        "role_id": "b1a2_scope_20",
+        "title": "B1a2 cleanup scoped 20",
+        "permissions": [
+          "iam.roles.get",
+          "iam.roles.delete",
+          "resourcemanager.projects.getIamPolicy",
+          "resourcemanager.projects.setIamPolicy",
+          "iam.serviceAccounts.get",
+          "iam.serviceAccounts.delete",
+          "iam.serviceAccounts.getIamPolicy",
+          "iam.serviceAccounts.setIamPolicy",
+          "secretmanager.secrets.getIamPolicy",
+          "secretmanager.secrets.setIamPolicy",
+          "cloudkms.cryptoKeys.getIamPolicy",
+          "cloudkms.cryptoKeys.setIamPolicy",
+          "cloudkms.cryptoKeyVersions.list",
+          "cloudkms.cryptoKeyVersions.destroy",
+          "artifactregistry.repositories.getIamPolicy",
+          "artifactregistry.repositories.setIamPolicy",
+          "run.services.getIamPolicy",
+          "run.services.setIamPolicy",
+          "orgpolicy.policies.get",
+          "orgpolicy.policies.delete"
+        ],
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "b1a2-fixture-run"
+      },
+      "scope_21": {
+        "role_id": "b1a2_scope_21",
+        "title": "B1a2 custodyCleanup scoped 21",
+        "permissions": [
+          "iam.roles.get",
+          "iam.roles.delete",
+          "resourcemanager.projects.getIamPolicy",
+          "resourcemanager.projects.setIamPolicy",
+          "iam.serviceAccounts.get",
+          "iam.serviceAccounts.delete",
+          "iam.serviceAccounts.getIamPolicy",
+          "iam.serviceAccounts.setIamPolicy",
+          "secretmanager.secrets.getIamPolicy",
+          "secretmanager.secrets.setIamPolicy",
+          "cloudkms.cryptoKeys.getIamPolicy",
+          "cloudkms.cryptoKeys.setIamPolicy",
+          "cloudkms.cryptoKeyVersions.list",
+          "cloudkms.cryptoKeyVersions.destroy",
+          "artifactregistry.repositories.getIamPolicy",
+          "artifactregistry.repositories.setIamPolicy",
+          "run.services.getIamPolicy",
+          "run.services.setIamPolicy",
+          "orgpolicy.policies.get",
+          "orgpolicy.policies.delete"
+        ],
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "b1a2-fixture-custody"
+      },
+      "scope_22": {
+        "role_id": "b1a2_scope_22",
+        "title": "B1a2 cleanup scoped 22",
+        "permissions": [
+          "iam.roles.get",
+          "iam.roles.delete",
+          "iam.serviceAccounts.get",
+          "iam.serviceAccounts.delete",
+          "resourcemanager.projects.getIamPolicy",
+          "resourcemanager.projects.setIamPolicy"
+        ],
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "b1a2-fixture-fake"
+      },
+      "scope_23": {
+        "role_id": "b1a2_scope_23",
+        "title": "B1a2 custodyCleanup scoped 23",
+        "permissions": [
+          "storage.buckets.get",
+          "storage.buckets.delete",
+          "storage.buckets.getIamPolicy",
+          "storage.buckets.setIamPolicy",
+          "storage.objects.get",
+          "storage.objects.list",
+          "storage.objects.delete"
+        ],
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "b1a2-fixture-custody"
+      }
+    },
+    "google_project_iam_member": {
+      "scope_0": {
+        "role": "${google_project_iam_custom_role.scope_0.name}",
+        "member": "serviceAccount:b1a2-deployer@b1a2-fixture-run.iam.gserviceaccount.com",
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "b1a2-fixture-run"
+      },
+      "scope_6": {
+        "role": "${google_project_iam_custom_role.scope_6.name}",
+        "member": "serviceAccount:b1a2-kill@b1a2-fixture-run.iam.gserviceaccount.com",
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "b1a2-fixture-run"
+      },
+      "scope_13": {
+        "role": "${google_project_iam_custom_role.scope_13.name}",
+        "member": "serviceAccount:b1a2-observer@b1a2-fixture-custody.iam.gserviceaccount.com",
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "b1a2-fixture-run"
+      },
+      "scope_14": {
+        "role": "${google_project_iam_custom_role.scope_14.name}",
+        "member": "serviceAccount:b1a2-observer@b1a2-fixture-custody.iam.gserviceaccount.com",
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "b1a2-fixture-fake"
+      },
+      "scope_17": {
+        "role": "${google_project_iam_custom_role.scope_17.name}",
+        "member": "serviceAccount:b1a2-cleanup@b1a2-fixture-run.iam.gserviceaccount.com",
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "b1a2-fixture-run"
+      },
+      "scope_18": {
+        "role": "${google_project_iam_custom_role.scope_18.name}",
+        "member": "serviceAccount:b1a2-cleanup@b1a2-fixture-run.iam.gserviceaccount.com",
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "b1a2-fixture-fake"
+      },
+      "scope_19": {
+        "role": "${google_project_iam_custom_role.scope_19.name}",
+        "member": "serviceAccount:b1a2-custody-cleanup@b1a2-fixture-custody.iam.gserviceaccount.com",
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "b1a2-fixture-custody"
+      },
+      "scope_20": {
+        "role": "${google_project_iam_custom_role.scope_20.name}",
+        "member": "serviceAccount:b1a2-cleanup@b1a2-fixture-run.iam.gserviceaccount.com",
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "b1a2-fixture-run"
+      },
+      "scope_21": {
+        "role": "${google_project_iam_custom_role.scope_21.name}",
+        "member": "serviceAccount:b1a2-custody-cleanup@b1a2-fixture-custody.iam.gserviceaccount.com",
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "b1a2-fixture-custody"
+      },
+      "scope_22": {
+        "role": "${google_project_iam_custom_role.scope_22.name}",
+        "member": "serviceAccount:b1a2-cleanup@b1a2-fixture-run.iam.gserviceaccount.com",
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "b1a2-fixture-fake"
+      }
+    },
+    "google_service_account_iam_member": {
+      "scope_1": {
+        "service_account_id": "projects/b1a2-fixture-run/serviceAccounts/b1a2-gateway-old@b1a2-fixture-run.iam.gserviceaccount.com",
+        "role": "${google_project_iam_custom_role.scope_1.name}",
+        "member": "serviceAccount:b1a2-deployer@b1a2-fixture-run.iam.gserviceaccount.com",
+        "depends_on": [
+          "terraform_data.never_apply"
+        ]
+      },
+      "scope_2": {
+        "service_account_id": "projects/b1a2-fixture-run/serviceAccounts/b1a2-gateway-next@b1a2-fixture-run.iam.gserviceaccount.com",
+        "role": "${google_project_iam_custom_role.scope_2.name}",
+        "member": "serviceAccount:b1a2-deployer@b1a2-fixture-run.iam.gserviceaccount.com",
+        "depends_on": [
+          "terraform_data.never_apply"
+        ]
+      },
+      "scope_3": {
+        "service_account_id": "projects/b1a2-fixture-run/serviceAccounts/b1a2-ingress@b1a2-fixture-run.iam.gserviceaccount.com",
+        "role": "${google_project_iam_custom_role.scope_3.name}",
+        "member": "serviceAccount:b1a2-deployer@b1a2-fixture-run.iam.gserviceaccount.com",
+        "depends_on": [
+          "terraform_data.never_apply"
+        ]
+      },
+      "scope_4": {
+        "service_account_id": "projects/b1a2-fixture-run/serviceAccounts/b1a2-sealer@b1a2-fixture-run.iam.gserviceaccount.com",
+        "role": "${google_project_iam_custom_role.scope_4.name}",
+        "member": "serviceAccount:b1a2-deployer@b1a2-fixture-run.iam.gserviceaccount.com",
+        "depends_on": [
+          "terraform_data.never_apply"
+        ]
+      },
+      "scope_5": {
+        "service_account_id": "projects/b1a2-fixture-run/serviceAccounts/b1a2-worker@b1a2-fixture-run.iam.gserviceaccount.com",
+        "role": "${google_project_iam_custom_role.scope_5.name}",
+        "member": "serviceAccount:b1a2-deployer@b1a2-fixture-run.iam.gserviceaccount.com",
+        "depends_on": [
+          "terraform_data.never_apply"
+        ]
+      },
+      "scope_7": {
+        "service_account_id": "projects/b1a2-fixture-run/serviceAccounts/b1a2-gateway-next@b1a2-fixture-run.iam.gserviceaccount.com",
+        "role": "${google_project_iam_custom_role.scope_7.name}",
+        "member": "serviceAccount:b1a2-kill@b1a2-fixture-run.iam.gserviceaccount.com",
+        "depends_on": [
+          "terraform_data.never_apply"
+        ]
+      }
+    },
+    "google_artifact_registry_repository_iam_member": {
+      "scope_8": {
+        "location": "us-central1",
+        "repository": "b1a2",
+        "role": "${google_project_iam_custom_role.scope_8.name}",
+        "member": "serviceAccount:b1a2-deployer@b1a2-fixture-run.iam.gserviceaccount.com",
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "b1a2-fixture-run"
+      },
+      "scope_9": {
+        "location": "us-central1",
+        "repository": "b1a2",
+        "role": "${google_project_iam_custom_role.scope_9.name}",
+        "member": "serviceAccount:b1a2-kill@b1a2-fixture-run.iam.gserviceaccount.com",
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "b1a2-fixture-run"
+      },
+      "scope_10": {
+        "location": "us-central1",
+        "repository": "b1a2",
+        "role": "${google_project_iam_custom_role.scope_10.name}",
+        "member": "serviceAccount:b1a2-fake@b1a2-fixture-fake.iam.gserviceaccount.com",
+        "depends_on": [
+          "terraform_data.never_apply"
+        ],
+        "project": "b1a2-fixture-run"
+      }
+    }
+  }
+}

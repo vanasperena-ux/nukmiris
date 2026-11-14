@@ -1,0 +1,1979 @@
+{
+  "mode": "SYNTHETIC_FIXTURE_NOT_AUTHORIZED",
+  "oldResourceCount": 119,
+  "placementRemovedCount": 30,
+  "placementRemoved": [
+    "google_compute_network.custody",
+    "google_compute_subnetwork.custody",
+    "google_compute_subnetwork.proxy",
+    "google_compute_subnetwork.psc_nat",
+    "google_compute_address.sql_custody",
+    "google_compute_address.sealer_consumer",
+    "google_compute_address.sealer_lb",
+    "google_compute_forwarding_rule.sql_custody",
+    "google_compute_forwarding_rule.sealer_lb",
+    "google_compute_forwarding_rule.sealer_consumer",
+    "google_compute_firewall.deny_custody_v4",
+    "google_compute_firewall.deny_custody_v6",
+    "google_compute_firewall.sql_custody",
+    "google_compute_firewall.sealer_call",
+    "google_compute_firewall.restricted_custody",
+    "google_compute_route.restricted_custody",
+    "google_dns_managed_zone.apis_custody",
+    "google_dns_managed_zone.runapp_custody",
+    "google_dns_managed_zone.sql_custody",
+    "google_dns_managed_zone.sealer",
+    "google_dns_record_set.apis_custody",
+    "google_dns_record_set.runapp_custody",
+    "google_dns_record_set.sql_custody",
+    "google_dns_record_set.sealer",
+    "google_compute_region_network_endpoint_group.sealer",
+    "google_compute_region_backend_service.sealer",
+    "google_compute_region_url_map.sealer",
+    "google_compute_region_ssl_certificate.sealer",
+    "google_compute_region_target_https_proxy.sealer",
+    "google_compute_service_attachment.sealer"
+  ],
+  "postPlacementCount": 89,
+  "candidateResourceCount": 140,
+  "inventory": [
+    {
+      "address": "terraform_data.never_apply",
+      "type": "terraform_data",
+      "key": "never_apply",
+      "project": "b1a2-fixture-run",
+      "name": "never_apply",
+      "dependencies": [],
+      "cleanupRole": "cleanup",
+      "lifetimeSeconds": 21600,
+      "retention": "DELETE_EXACT_RESOURCE"
+    },
+    {
+      "address": "google_compute_network.run",
+      "type": "google_compute_network",
+      "key": "run",
+      "project": "b1a2-fixture-run",
+      "name": "b1a2-run",
+      "dependencies": [
+        "terraform_data.never_apply"
+      ],
+      "cleanupRole": "cleanup",
+      "lifetimeSeconds": 21600,
+      "retention": "DELETE_EXACT_RESOURCE"
+    },
+    {
+      "address": "google_compute_network.fake",
+      "type": "google_compute_network",
+      "key": "fake",
+      "project": "b1a2-fixture-fake",
+      "name": "b1a2-fake",
+      "dependencies": [
+        "terraform_data.never_apply"
+      ],
+      "cleanupRole": "cleanup",
+      "lifetimeSeconds": 21600,
+      "retention": "DELETE_EXACT_RESOURCE"
+    },
+    {
+      "address": "google_compute_subnetwork.gateway",
+      "type": "google_compute_subnetwork",
+      "key": "gateway",
+      "project": "b1a2-fixture-run",
+      "name": "b1a2-gateway",
+      "dependencies": [
+        "terraform_data.never_apply",
+        "google_compute_network.run"
+      ],
+      "cleanupRole": "cleanup",
+      "lifetimeSeconds": 21600,
+      "retention": "DELETE_EXACT_RESOURCE"
+    },
+    {
+      "address": "google_compute_subnetwork.private",
+      "type": "google_compute_subnetwork",
+      "key": "private",
+      "project": "b1a2-fixture-run",
+      "name": "b1a2-private",
+      "dependencies": [
+        "terraform_data.never_apply",
+        "google_compute_network.run"
+      ],
+      "cleanupRole": "cleanup",
+      "lifetimeSeconds": 21600,
+      "retention": "DELETE_EXACT_RESOURCE"
+    },
+    {
+      "address": "google_compute_subnetwork.fake",
+      "type": "google_compute_subnetwork",
+      "key": "fake",
+      "project": "b1a2-fixture-fake",
+      "name": "b1a2-fake",
+      "dependencies": [
+        "terraform_data.never_apply",
+        "google_compute_network.fake"
+      ],
+      "cleanupRole": "cleanup",
+      "lifetimeSeconds": 21600,
+      "retention": "DELETE_EXACT_RESOURCE"
+    },
+    {
+      "address": "google_sql_database_instance.epoch",
+      "type": "google_sql_database_instance",
+      "key": "epoch",
+      "project": "b1a2-fixture-run",
+      "name": "b1a2-epoch",
+      "dependencies": [
+        "terraform_data.never_apply"
+      ],
+      "cleanupRole": "cleanup",
+      "lifetimeSeconds": 21600,
+      "retention": "B1A_ONLY_1_DAY_NO_FINAL_OR_RETAINED"
+    },
+    {
+      "address": "google_compute_address.sql_run",
+      "type": "google_compute_address",
+      "key": "sql_run",
+      "project": "b1a2-fixture-run",
+      "name": "b1a2-sql-run",
+      "dependencies": [
+        "terraform_data.never_apply",
+        "google_compute_subnetwork.private"
+      ],
+      "cleanupRole": "cleanup",
+      "lifetimeSeconds": 21600,
+      "retention": "DELETE_EXACT_RESOURCE"
+    },
+    {
+      "address": "google_compute_address.nat",
+      "type": "google_compute_address",
+      "key": "nat",
+      "project": "b1a2-fixture-run",
+      "name": "b1a2-nat-ip",
+      "dependencies": [
+        "terraform_data.never_apply"
+      ],
+      "cleanupRole": "cleanup",
+      "lifetimeSeconds": 21600,
+      "retention": "DELETE_EXACT_RESOURCE"
+    },
+    {
+      "address": "google_compute_address.fake",
+      "type": "google_compute_address",
+      "key": "fake",
+      "project": "b1a2-fixture-fake",
+      "name": "b1a2-fake-ip",
+      "dependencies": [
+        "terraform_data.never_apply"
+      ],
+      "cleanupRole": "cleanup",
+      "lifetimeSeconds": 21600,
+      "retention": "DELETE_EXACT_RESOURCE"
+    },
+    {
+      "address": "google_compute_forwarding_rule.sql_run",
+      "type": "google_compute_forwarding_rule",
+      "key": "sql_run",
+      "project": "b1a2-fixture-run",
+      "name": "b1a2-sql-run",
+      "dependencies": [
+        "terraform_data.never_apply",
+        "google_compute_network.run",
+        "google_compute_address.sql_run",
+        "google_sql_database_instance.epoch"
+      ],
+      "cleanupRole": "cleanup",
+      "lifetimeSeconds": 21600,
+      "retention": "DELETE_EXACT_RESOURCE"
+    },
+    {
+      "address": "google_compute_router.gateway",
+      "type": "google_compute_router",
+      "key": "gateway",
+      "project": "b1a2-fixture-run",
+      "name": "b1a2-gateway-router",
+      "dependencies": [
+        "terraform_data.never_apply",
+        "google_compute_network.run"
+      ],
+      "cleanupRole": "cleanup",
+      "lifetimeSeconds": 21600,
+      "retention": "DELETE_EXACT_RESOURCE"
+    },
+    {
+      "address": "google_compute_router_nat.gateway",
+      "type": "google_compute_router_nat",
+      "key": "gateway",
+      "project": "b1a2-fixture-run",
+      "name": "b1a2-gateway-only",
+      "dependencies": [
+        "terraform_data.never_apply",
+        "google_compute_router.gateway",
+        "google_compute_address.nat",
+        "google_compute_subnetwork.gateway"
+      ],
+      "cleanupRole": "cleanup",
+      "lifetimeSeconds": 21600,
+      "retention": "DELETE_EXACT_RESOURCE"
+    },
+    {
+      "address": "google_compute_firewall.deny_run_v4",
+      "type": "google_compute_firewall",
+      "key": "deny_run_v4",
+      "project": "b1a2-fixture-run",
+      "name": "b1a2-deny-run-v4",
+      "dependencies": [
+        "terraform_data.never_apply",
+        "google_compute_network.run"
+      ],
+      "cleanupRole": "cleanup",
+      "lifetimeSeconds": 21600,
+      "retention": "DELETE_EXACT_RESOURCE"
+    },
+    {
+      "address": "google_compute_firewall.deny_run_v6",
+      "type": "google_compute_firewall",
+      "key": "deny_run_v6",
+      "project": "b1a2-fixture-run",
+      "name": "b1a2-deny-run-v6",
+      "dependencies": [
+        "terraform_data.never_apply",
+        "google_compute_network.run"
+      ],
+      "cleanupRole": "cleanup",
+      "lifetimeSeconds": 21600,
+      "retention": "DELETE_EXACT_RESOURCE"
+    },
+    {
+      "address": "google_compute_firewall.deny_fake_v4",
+      "type": "google_compute_firewall",
+      "key": "deny_fake_v4",
+      "project": "b1a2-fixture-fake",
+      "name": "b1a2-deny-fake-v4",
+      "dependencies": [
+        "terraform_data.never_apply",
+        "google_compute_network.fake"
+      ],
+      "cleanupRole": "cleanup",
+      "lifetimeSeconds": 21600,
+      "retention": "DELETE_EXACT_RESOURCE"
+    },
+    {
+      "address": "google_compute_firewall.deny_fake_v6",
+      "type": "google_compute_firewall",
+      "key": "deny_fake_v6",
+      "project": "b1a2-fixture-fake",
+      "name": "b1a2-deny-fake-v6",
+      "dependencies": [
+        "terraform_data.never_apply",
+        "google_compute_network.fake"
+      ],
+      "cleanupRole": "cleanup",
+      "lifetimeSeconds": 21600,
+      "retention": "DELETE_EXACT_RESOURCE"
+    },
+    {
+      "address": "google_compute_firewall.epoch_deny_1_v4",
+      "type": "google_compute_firewall",
+      "key": "epoch_deny_1_v4",
+      "project": "b1a2-fixture-run",
+      "name": "b1a2-e000001-deny-v4",
+      "dependencies": [
+        "terraform_data.never_apply",
+        "google_compute_network.run"
+      ],
+      "cleanupRole": "cleanup",
+      "lifetimeSeconds": 21600,
+      "retention": "DELETE_EXACT_RESOURCE"
+    },
+    {
+      "address": "google_compute_firewall.epoch_deny_1_v6",
+      "type": "google_compute_firewall",
+      "key": "epoch_deny_1_v6",
+      "project": "b1a2-fixture-run",
+      "name": "b1a2-e000001-deny-v6",
+      "dependencies": [
+        "terraform_data.never_apply",
+        "google_compute_network.run"
+      ],
+      "cleanupRole": "cleanup",
+      "lifetimeSeconds": 21600,
+      "retention": "DELETE_EXACT_RESOURCE"
+    },
+    {
+      "address": "google_compute_firewall.gateway_fake_1",
+      "type": "google_compute_firewall",
+      "key": "gateway_fake_1",
+      "project": "b1a2-fixture-run",
+      "name": "b1a2-e000001-fake-allow",
+      "dependencies": [
+        "terraform_data.never_apply",
+        "google_compute_network.run",
+        "google_compute_address.fake"
+      ],
+      "cleanupRole": "cleanup",
+      "lifetimeSeconds": 21600,
+      "retention": "DELETE_EXACT_RESOURCE"
+    },
+    {
+      "address": "google_compute_firewall.epoch_deny_2_v4",
+      "type": "google_compute_firewall",
+      "key": "epoch_deny_2_v4",
+      "project": "b1a2-fixture-run",
+      "name": "b1a2-e000002-deny-v4",
+      "dependencies": [
+        "terraform_data.never_apply",
+        "google_compute_network.run"
+      ],
+      "cleanupRole": "cleanup",
+      "lifetimeSeconds": 21600,
+      "retention": "DELETE_EXACT_RESOURCE"
+    },
+    {
+      "address": "google_compute_firewall.epoch_deny_2_v6",
+      "type": "google_compute_firewall",
+      "key": "epoch_deny_2_v6",
+      "project": "b1a2-fixture-run",
+      "name": "b1a2-e000002-deny-v6",
+      "dependencies": [
+        "terraform_data.never_apply",
+        "google_compute_network.run"
+      ],
+      "cleanupRole": "cleanup",
+      "lifetimeSeconds": 21600,
+      "retention": "DELETE_EXACT_RESOURCE"
+    },
+    {
+      "address": "google_compute_firewall.gateway_fake_2",
+      "type": "google_compute_firewall",
+      "key": "gateway_fake_2",
+      "project": "b1a2-fixture-run",
+      "name": "b1a2-e000002-fake-allow",
+      "dependencies": [
+        "terraform_data.never_apply",
+        "google_compute_network.run",
+        "google_compute_address.fake"
+      ],
+      "cleanupRole": "cleanup",
+      "lifetimeSeconds": 21600,
+      "retention": "DELETE_EXACT_RESOURCE"
+    },
+    {
+      "address": "google_compute_firewall.fake_ingress_nat",
+      "type": "google_compute_firewall",
+      "key": "fake_ingress_nat",
+      "project": "b1a2-fixture-fake",
+      "name": "b1a2-fake-ingress-nat",
+      "dependencies": [
+        "terraform_data.never_apply",
+        "google_compute_network.fake",
+        "google_compute_address.nat"
+      ],
+      "cleanupRole": "cleanup",
+      "lifetimeSeconds": 21600,
+      "retention": "DELETE_EXACT_RESOURCE"
+    },
+    {
+      "address": "google_compute_firewall.sql_run",
+      "type": "google_compute_firewall",
+      "key": "sql_run",
+      "project": "b1a2-fixture-run",
+      "name": "b1a2-sql-run",
+      "dependencies": [
+        "terraform_data.never_apply",
+        "google_compute_network.run"
+      ],
+      "cleanupRole": "cleanup",
+      "lifetimeSeconds": 21600,
+      "retention": "DELETE_EXACT_RESOURCE"
+    },
+    {
+      "address": "google_compute_firewall.restricted_run",
+      "type": "google_compute_firewall",
+      "key": "restricted_run",
+      "project": "b1a2-fixture-run",
+      "name": "b1a2-restricted-run",
+      "dependencies": [
+        "terraform_data.never_apply",
+        "google_compute_network.run"
+      ],
+      "cleanupRole": "cleanup",
+      "lifetimeSeconds": 21600,
+      "retention": "DELETE_EXACT_RESOURCE"
+    },
+    {
+      "address": "google_compute_firewall.fake_iap",
+      "type": "google_compute_firewall",
+      "key": "fake_iap",
+      "project": "b1a2-fixture-fake",
+      "name": "b1a2-fake-iap-443",
+      "dependencies": [
+        "terraform_data.never_apply",
+        "google_compute_network.fake"
+      ],
+      "cleanupRole": "cleanup",
+      "lifetimeSeconds": 21600,
+      "retention": "DELETE_EXACT_RESOURCE"
+    },
+    {
+      "address": "google_compute_firewall.restricted_fake",
+      "type": "google_compute_firewall",
+      "key": "restricted_fake",
+      "project": "b1a2-fixture-fake",
+      "name": "b1a2-restricted-fake",
+      "dependencies": [
+        "terraform_data.never_apply",
+        "google_compute_network.fake"
+      ],
+      "cleanupRole": "cleanup",
+      "lifetimeSeconds": 21600,
+      "retention": "DELETE_EXACT_RESOURCE"
+    },
+    {
+      "address": "google_compute_route.restricted_run",
+      "type": "google_compute_route",
+      "key": "restricted_run",
+      "project": "b1a2-fixture-run",
+      "name": "b1a2-restricted-run",
+      "dependencies": [
+        "terraform_data.never_apply",
+        "google_compute_network.run"
+      ],
+      "cleanupRole": "cleanup",
+      "lifetimeSeconds": 21600,
+      "retention": "DELETE_EXACT_RESOURCE"
+    },
+    {
+      "address": "google_compute_route.restricted_fake",
+      "type": "google_compute_route",
+      "key": "restricted_fake",
+      "project": "b1a2-fixture-fake",
+      "name": "b1a2-restricted-fake",
+      "dependencies": [
+        "terraform_data.never_apply",
+        "google_compute_network.fake"
+      ],
+      "cleanupRole": "cleanup",
+      "lifetimeSeconds": 21600,
+      "retention": "DELETE_EXACT_RESOURCE"
+    },
+    {
+      "address": "google_dns_managed_zone.apis_run",
+      "type": "google_dns_managed_zone",
+      "key": "apis_run",
+      "project": "b1a2-fixture-run",
+      "name": "b1a2-apis-run",
+      "dependencies": [
+        "terraform_data.never_apply",
+        "google_compute_network.run"
+      ],
+      "cleanupRole": "cleanup",
+      "lifetimeSeconds": 21600,
+      "retention": "DELETE_EXACT_RESOURCE"
+    },
+    {
+      "address": "google_dns_managed_zone.runapp_run",
+      "type": "google_dns_managed_zone",
+      "key": "runapp_run",
+      "project": "b1a2-fixture-run",
+      "name": "b1a2-runapp-run",
+      "dependencies": [
+        "terraform_data.never_apply",
+        "google_compute_network.run"
+      ],
+      "cleanupRole": "cleanup",
+      "lifetimeSeconds": 21600,
+      "retention": "DELETE_EXACT_RESOURCE"
+    },
+    {
+      "address": "google_dns_managed_zone.sql_run",
+      "type": "google_dns_managed_zone",
+      "key": "sql_run",
+      "project": "b1a2-fixture-run",
+      "name": "b1a2-sql-run",
+      "dependencies": [
+        "terraform_data.never_apply",
+        "google_sql_database_instance.epoch",
+        "google_compute_network.run"
+      ],
+      "cleanupRole": "cleanup",
+      "lifetimeSeconds": 21600,
+      "retention": "DELETE_EXACT_RESOURCE"
+    },
+    {
+      "address": "google_dns_managed_zone.apis_fake",
+      "type": "google_dns_managed_zone",
+      "key": "apis_fake",
+      "project": "b1a2-fixture-fake",
+      "name": "b1a2-apis-fake",
+      "dependencies": [
+        "terraform_data.never_apply",
+        "google_compute_network.fake"
+      ],
+      "cleanupRole": "cleanup",
+      "lifetimeSeconds": 21600,
+      "retention": "DELETE_EXACT_RESOURCE"
+    },
+    {
+      "address": "google_dns_record_set.apis_run",
+      "type": "google_dns_record_set",
+      "key": "apis_run",
+      "project": "b1a2-fixture-run",
+      "name": "*.googleapis.com.",
+      "dependencies": [
+        "terraform_data.never_apply",
+        "google_dns_managed_zone.apis_run"
+      ],
+      "cleanupRole": "cleanup",
+      "lifetimeSeconds": 21600,
+      "retention": "DELETE_EXACT_RESOURCE"
+    },
+    {
+      "address": "google_dns_record_set.runapp_run",
+      "type": "google_dns_record_set",
+      "key": "runapp_run",
+      "project": "b1a2-fixture-run",
+      "name": "*.run.app.",
+      "dependencies": [
+        "terraform_data.never_apply",
+        "google_dns_managed_zone.runapp_run"
+      ],
+      "cleanupRole": "cleanup",
+      "lifetimeSeconds": 21600,
+      "retention": "DELETE_EXACT_RESOURCE"
+    },
+    {
+      "address": "google_dns_record_set.sql_run",
+      "type": "google_dns_record_set",
+      "key": "sql_run",
+      "project": "b1a2-fixture-run",
+      "name": "${google_dns_managed_zone.sql_run.dns_name}",
+      "dependencies": [
+        "terraform_data.never_apply",
+        "google_dns_managed_zone.sql_run",
+        "google_compute_address.sql_run"
+      ],
+      "cleanupRole": "cleanup",
+      "lifetimeSeconds": 21600,
+      "retention": "DELETE_EXACT_RESOURCE"
+    },
+    {
+      "address": "google_dns_record_set.apis_fake",
+      "type": "google_dns_record_set",
+      "key": "apis_fake",
+      "project": "b1a2-fixture-fake",
+      "name": "*.googleapis.com.",
+      "dependencies": [
+        "terraform_data.never_apply",
+        "google_dns_managed_zone.apis_fake"
+      ],
+      "cleanupRole": "cleanup",
+      "lifetimeSeconds": 21600,
+      "retention": "DELETE_EXACT_RESOURCE"
+    },
+    {
+      "address": "google_service_account.ingress",
+      "type": "google_service_account",
+      "key": "ingress",
+      "project": "b1a2-fixture-run",
+      "name": "b1a2-ingress",
+      "dependencies": [
+        "terraform_data.never_apply"
+      ],
+      "cleanupRole": "cleanup",
+      "lifetimeSeconds": 21600,
+      "retention": "DELETE_EXACT_RESOURCE"
+    },
+    {
+      "address": "google_service_account.worker",
+      "type": "google_service_account",
+      "key": "worker",
+      "project": "b1a2-fixture-run",
+      "name": "b1a2-worker",
+      "dependencies": [
+        "terraform_data.never_apply"
+      ],
+      "cleanupRole": "cleanup",
+      "lifetimeSeconds": 21600,
+      "retention": "DELETE_EXACT_RESOURCE"
+    },
+    {
+      "address": "google_service_account.gw_e000001",
+      "type": "google_service_account",
+      "key": "gw_e000001",
+      "project": "b1a2-fixture-run",
+      "name": "b1a2-gateway-old",
+      "dependencies": [
+        "terraform_data.never_apply"
+      ],
+      "cleanupRole": "cleanup",
+      "lifetimeSeconds": 21600,
+      "retention": "DELETE_EXACT_RESOURCE"
+    },
+    {
+      "address": "google_service_account.gw_e000002",
+      "type": "google_service_account",
+      "key": "gw_e000002",
+      "project": "b1a2-fixture-run",
+      "name": "b1a2-gateway-next",
+      "dependencies": [
+        "terraform_data.never_apply"
+      ],
+      "cleanupRole": "cleanup",
+      "lifetimeSeconds": 21600,
+      "retention": "DELETE_EXACT_RESOURCE"
+    },
+    {
+      "address": "google_service_account.controller",
+      "type": "google_service_account",
+      "key": "controller",
+      "project": "b1a2-fixture-run",
+      "name": "b1a2-controller",
+      "dependencies": [
+        "terraform_data.never_apply"
+      ],
+      "cleanupRole": "cleanup",
+      "lifetimeSeconds": 21600,
+      "retention": "DELETE_EXACT_RESOURCE"
+    },
+    {
+      "address": "google_service_account.kill",
+      "type": "google_service_account",
+      "key": "kill",
+      "project": "b1a2-fixture-run",
+      "name": "b1a2-kill",
+      "dependencies": [
+        "terraform_data.never_apply"
+      ],
+      "cleanupRole": "cleanup",
+      "lifetimeSeconds": 21600,
+      "retention": "DELETE_EXACT_RESOURCE"
+    },
+    {
+      "address": "google_service_account.observer",
+      "type": "google_service_account",
+      "key": "observer",
+      "project": "b1a2-fixture-custody",
+      "name": "b1a2-observer",
+      "dependencies": [
+        "terraform_data.never_apply"
+      ],
+      "cleanupRole": "custodyCleanup",
+      "lifetimeSeconds": 21600,
+      "retention": "DELETE_EXACT_RESOURCE"
+    },
+    {
+      "address": "google_service_account.sealer",
+      "type": "google_service_account",
+      "key": "sealer",
+      "project": "b1a2-fixture-run",
+      "name": "b1a2-sealer",
+      "dependencies": [
+        "terraform_data.never_apply"
+      ],
+      "cleanupRole": "cleanup",
+      "lifetimeSeconds": 21600,
+      "retention": "DELETE_EXACT_RESOURCE"
+    },
+    {
+      "address": "google_service_account.deployer",
+      "type": "google_service_account",
+      "key": "deployer",
+      "project": "b1a2-fixture-run",
+      "name": "b1a2-deployer",
+      "dependencies": [
+        "terraform_data.never_apply"
+      ],
+      "cleanupRole": "cleanup",
+      "lifetimeSeconds": 21600,
+      "retention": "DELETE_EXACT_RESOURCE"
+    },
+    {
+      "address": "google_service_account.fake",
+      "type": "google_service_account",
+      "key": "fake",
+      "project": "b1a2-fixture-fake",
+      "name": "b1a2-fake",
+      "dependencies": [
+        "terraform_data.never_apply"
+      ],
+      "cleanupRole": "cleanup",
+      "lifetimeSeconds": 21600,
+      "retention": "DELETE_EXACT_RESOURCE"
+    },
+    {
+      "address": "google_service_account.cleanup",
+      "type": "google_service_account",
+      "key": "cleanup",
+      "project": "b1a2-fixture-run",
+      "name": "b1a2-cleanup",
+      "dependencies": [
+        "terraform_data.never_apply"
+      ],
+      "cleanupRole": "cleanup",
+      "lifetimeSeconds": 21600,
+      "retention": "DELETE_EXACT_RESOURCE"
+    },
+    {
+      "address": "google_service_account.custody_cleanup",
+      "type": "google_service_account",
+      "key": "custody_cleanup",
+      "project": "b1a2-fixture-custody",
+      "name": "b1a2-custody-cleanup",
+      "dependencies": [
+        "terraform_data.never_apply"
+      ],
+      "cleanupRole": "custodyCleanup",
+      "lifetimeSeconds": 21600,
+      "retention": "DELETE_EXACT_RESOURCE"
+    },
+    {
+      "address": "google_cloud_run_v2_service.ingress",
+      "type": "google_cloud_run_v2_service",
+      "key": "ingress",
+      "project": "b1a2-fixture-run",
+      "name": "b1a2-ingress",
+      "dependencies": [
+        "terraform_data.never_apply",
+        "google_service_account.ingress",
+        "google_compute_network.run",
+        "google_compute_subnetwork.private",
+        "google_secret_manager_secret.bundle_ingress"
+      ],
+      "cleanupRole": "cleanup",
+      "lifetimeSeconds": 21600,
+      "retention": "DELETE_EXACT_RESOURCE"
+    },
+    {
+      "address": "google_cloud_run_v2_service.gateway",
+      "type": "google_cloud_run_v2_service",
+      "key": "gateway",
+      "project": "b1a2-fixture-run",
+      "name": "b1a2-gateway",
+      "dependencies": [
+        "terraform_data.never_apply",
+        "google_service_account.gw_e000001",
+        "google_compute_network.run",
+        "google_compute_subnetwork.gateway",
+        "google_secret_manager_secret.effect_e000001"
+      ],
+      "cleanupRole": "cleanup",
+      "lifetimeSeconds": 21600,
+      "retention": "DELETE_EXACT_RESOURCE"
+    },
+    {
+      "address": "google_cloud_run_v2_service.sealer",
+      "type": "google_cloud_run_v2_service",
+      "key": "sealer",
+      "project": "b1a2-fixture-run",
+      "name": "b1a2-sealer",
+      "dependencies": [
+        "terraform_data.never_apply",
+        "google_service_account.sealer",
+        "google_compute_network.run",
+        "google_compute_subnetwork.private",
+        "google_secret_manager_secret.bundle_sealer"
+      ],
+      "cleanupRole": "cleanup",
+      "lifetimeSeconds": 21600,
+      "retention": "DELETE_EXACT_RESOURCE"
+    },
+    {
+      "address": "google_cloud_run_v2_worker_pool.worker",
+      "type": "google_cloud_run_v2_worker_pool",
+      "key": "worker",
+      "project": "b1a2-fixture-run",
+      "name": "b1a2-worker",
+      "dependencies": [
+        "terraform_data.never_apply",
+        "google_service_account.worker",
+        "google_compute_network.run",
+        "google_compute_subnetwork.private",
+        "google_secret_manager_secret.bundle_worker"
+      ],
+      "cleanupRole": "cleanup",
+      "lifetimeSeconds": 21600,
+      "retention": "DELETE_EXACT_RESOURCE"
+    },
+    {
+      "address": "google_secret_manager_secret.effect_e000001",
+      "type": "google_secret_manager_secret",
+      "key": "effect_e000001",
+      "project": "b1a2-fixture-run",
+      "name": "b1a2-effect-old",
+      "dependencies": [
+        "terraform_data.never_apply"
+      ],
+      "cleanupRole": "cleanup",
+      "lifetimeSeconds": 21600,
+      "retention": "DELETE_EXACT_RESOURCE"
+    },
+    {
+      "address": "google_secret_manager_secret.effect_e000002",
+      "type": "google_secret_manager_secret",
+      "key": "effect_e000002",
+      "project": "b1a2-fixture-run",
+      "name": "b1a2-effect-next",
+      "dependencies": [
+        "terraform_data.never_apply"
+      ],
+      "cleanupRole": "cleanup",
+      "lifetimeSeconds": 21600,
+      "retention": "DELETE_EXACT_RESOURCE"
+    },
+    {
+      "address": "google_secret_manager_secret.worker_db",
+      "type": "google_secret_manager_secret",
+      "key": "worker_db",
+      "project": "b1a2-fixture-run",
+      "name": "b1a2-worker-db",
+      "dependencies": [
+        "terraform_data.never_apply"
+      ],
+      "cleanupRole": "cleanup",
+      "lifetimeSeconds": 21600,
+      "retention": "DELETE_EXACT_RESOURCE"
+    },
+    {
+      "address": "google_secret_manager_secret.ingress_db",
+      "type": "google_secret_manager_secret",
+      "key": "ingress_db",
+      "project": "b1a2-fixture-run",
+      "name": "b1a2-ingress-db",
+      "dependencies": [
+        "terraform_data.never_apply"
+      ],
+      "cleanupRole": "cleanup",
+      "lifetimeSeconds": 21600,
+      "retention": "DELETE_EXACT_RESOURCE"
+    },
+    {
+      "address": "google_secret_manager_secret.controller_db",
+      "type": "google_secret_manager_secret",
+      "key": "controller_db",
+      "project": "b1a2-fixture-run",
+      "name": "b1a2-controller-db",
+      "dependencies": [
+        "terraform_data.never_apply"
+      ],
+      "cleanupRole": "cleanup",
+      "lifetimeSeconds": 21600,
+      "retention": "DELETE_EXACT_RESOURCE"
+    },
+    {
+      "address": "google_secret_manager_secret.sealer_db",
+      "type": "google_secret_manager_secret",
+      "key": "sealer_db",
+      "project": "b1a2-fixture-run",
+      "name": "b1a2-sealer-db",
+      "dependencies": [
+        "terraform_data.never_apply"
+      ],
+      "cleanupRole": "cleanup",
+      "lifetimeSeconds": 21600,
+      "retention": "DELETE_EXACT_RESOURCE"
+    },
+    {
+      "address": "google_secret_manager_secret.observer_signing",
+      "type": "google_secret_manager_secret",
+      "key": "observer_signing",
+      "project": "b1a2-fixture-custody",
+      "name": "b1a2-observer-signing",
+      "dependencies": [
+        "terraform_data.never_apply"
+      ],
+      "cleanupRole": "custodyCleanup",
+      "lifetimeSeconds": 21600,
+      "retention": "DELETE_EXACT_RESOURCE"
+    },
+    {
+      "address": "google_secret_manager_secret.bundle_worker",
+      "type": "google_secret_manager_secret",
+      "key": "bundle_worker",
+      "project": "b1a2-fixture-run",
+      "name": "b1a2-worker-bundle",
+      "dependencies": [
+        "terraform_data.never_apply"
+      ],
+      "cleanupRole": "cleanup",
+      "lifetimeSeconds": 21600,
+      "retention": "DELETE_EXACT_RESOURCE"
+    },
+    {
+      "address": "google_secret_manager_secret.bundle_ingress",
+      "type": "google_secret_manager_secret",
+      "key": "bundle_ingress",
+      "project": "b1a2-fixture-run",
+      "name": "b1a2-ingress-bundle",
+      "dependencies": [
+        "terraform_data.never_apply"
+      ],
+      "cleanupRole": "cleanup",
+      "lifetimeSeconds": 21600,
+      "retention": "DELETE_EXACT_RESOURCE"
+    },
+    {
+      "address": "google_secret_manager_secret.bundle_sealer",
+      "type": "google_secret_manager_secret",
+      "key": "bundle_sealer",
+      "project": "b1a2-fixture-run",
+      "name": "b1a2-sealer-bundle",
+      "dependencies": [
+        "terraform_data.never_apply"
+      ],
+      "cleanupRole": "cleanup",
+      "lifetimeSeconds": 21600,
+      "retention": "DELETE_EXACT_RESOURCE"
+    },
+    {
+      "address": "google_storage_bucket.custody",
+      "type": "google_storage_bucket",
+      "key": "custody",
+      "project": "b1a2-fixture-custody",
+      "name": "b1a2-fixture-custody-evidence",
+      "dependencies": [
+        "terraform_data.never_apply"
+      ],
+      "cleanupRole": "custodyCleanup",
+      "lifetimeSeconds": 21600,
+      "retention": "DELETE_EXACT_RESOURCE"
+    },
+    {
+      "address": "google_kms_key_ring.effect",
+      "type": "google_kms_key_ring",
+      "key": "effect",
+      "project": "b1a2-fixture-run",
+      "name": "b1a2-effect",
+      "dependencies": [
+        "terraform_data.never_apply"
+      ],
+      "cleanupRole": "cleanup",
+      "lifetimeSeconds": 21600,
+      "retention": "NON_DELETABLE_METADATA; KEY_VERSIONS_DESTROY_AND_PROJECT_DISPOSAL"
+    },
+    {
+      "address": "google_kms_key_ring.custody",
+      "type": "google_kms_key_ring",
+      "key": "custody",
+      "project": "b1a2-fixture-custody",
+      "name": "b1a2-custody",
+      "dependencies": [
+        "terraform_data.never_apply"
+      ],
+      "cleanupRole": "custodyCleanup",
+      "lifetimeSeconds": 21600,
+      "retention": "NON_DELETABLE_METADATA; KEY_VERSIONS_DESTROY_AND_PROJECT_DISPOSAL"
+    },
+    {
+      "address": "google_kms_crypto_key.effect",
+      "type": "google_kms_crypto_key",
+      "key": "effect",
+      "project": "b1a2-fixture-run",
+      "name": "b1a2-effect",
+      "dependencies": [
+        "terraform_data.never_apply",
+        "google_kms_key_ring.effect"
+      ],
+      "cleanupRole": "cleanup",
+      "lifetimeSeconds": 21600,
+      "retention": "NON_DELETABLE_METADATA; KEY_VERSIONS_DESTROY_AND_PROJECT_DISPOSAL"
+    },
+    {
+      "address": "google_kms_crypto_key.custody",
+      "type": "google_kms_crypto_key",
+      "key": "custody",
+      "project": "b1a2-fixture-custody",
+      "name": "b1a2-custody",
+      "dependencies": [
+        "terraform_data.never_apply",
+        "google_kms_key_ring.custody"
+      ],
+      "cleanupRole": "custodyCleanup",
+      "lifetimeSeconds": 21600,
+      "retention": "NON_DELETABLE_METADATA; KEY_VERSIONS_DESTROY_AND_PROJECT_DISPOSAL"
+    },
+    {
+      "address": "google_artifact_registry_repository.harness",
+      "type": "google_artifact_registry_repository",
+      "key": "harness",
+      "project": "b1a2-fixture-run",
+      "name": "b1a2",
+      "dependencies": [
+        "terraform_data.never_apply"
+      ],
+      "cleanupRole": "cleanup",
+      "lifetimeSeconds": 21600,
+      "retention": "DELETE_EXACT_RESOURCE"
+    },
+    {
+      "address": "google_compute_instance.fake",
+      "type": "google_compute_instance",
+      "key": "fake",
+      "project": "b1a2-fixture-fake",
+      "name": "b1a2-fake",
+      "dependencies": [
+        "terraform_data.never_apply",
+        "google_compute_subnetwork.fake",
+        "google_compute_address.fake",
+        "google_service_account.fake"
+      ],
+      "cleanupRole": "cleanup",
+      "lifetimeSeconds": 21600,
+      "retention": "DELETE_EXACT_RESOURCE"
+    },
+    {
+      "address": "google_cloud_run_v2_service_iam_member.worker_gateway",
+      "type": "google_cloud_run_v2_service_iam_member",
+      "key": "worker_gateway",
+      "project": "b1a2-fixture-run",
+      "name": "${google_cloud_run_v2_service.gateway.name}",
+      "dependencies": [
+        "terraform_data.never_apply",
+        "google_cloud_run_v2_service.gateway",
+        "google_service_account.worker"
+      ],
+      "cleanupRole": "cleanup",
+      "lifetimeSeconds": 21600,
+      "retention": "DELETE_EXACT_RESOURCE"
+    },
+    {
+      "address": "google_cloud_run_v2_service_iam_member.ingress_sealer",
+      "type": "google_cloud_run_v2_service_iam_member",
+      "key": "ingress_sealer",
+      "project": "b1a2-fixture-run",
+      "name": "${google_cloud_run_v2_service.sealer.name}",
+      "dependencies": [
+        "terraform_data.never_apply",
+        "google_cloud_run_v2_service.sealer",
+        "google_service_account.ingress"
+      ],
+      "cleanupRole": "cleanup",
+      "lifetimeSeconds": 21600,
+      "retention": "DELETE_EXACT_RESOURCE"
+    },
+    {
+      "address": "google_secret_manager_secret_iam_member.effect_e000001",
+      "type": "google_secret_manager_secret_iam_member",
+      "key": "effect_e000001",
+      "project": "b1a2-fixture-run",
+      "name": "${google_secret_manager_secret.effect_e000001.id}",
+      "dependencies": [
+        "terraform_data.never_apply",
+        "google_secret_manager_secret.effect_e000001",
+        "google_service_account.gw_e000001"
+      ],
+      "cleanupRole": "cleanup",
+      "lifetimeSeconds": 21600,
+      "retention": "DELETE_EXACT_RESOURCE"
+    },
+    {
+      "address": "google_secret_manager_secret_iam_member.effect_e000002",
+      "type": "google_secret_manager_secret_iam_member",
+      "key": "effect_e000002",
+      "project": "b1a2-fixture-run",
+      "name": "${google_secret_manager_secret.effect_e000002.id}",
+      "dependencies": [
+        "terraform_data.never_apply",
+        "google_secret_manager_secret.effect_e000002",
+        "google_service_account.gw_e000002"
+      ],
+      "cleanupRole": "cleanup",
+      "lifetimeSeconds": 21600,
+      "retention": "DELETE_EXACT_RESOURCE"
+    },
+    {
+      "address": "google_secret_manager_secret_iam_member.worker_db",
+      "type": "google_secret_manager_secret_iam_member",
+      "key": "worker_db",
+      "project": "b1a2-fixture-run",
+      "name": "${google_secret_manager_secret.worker_db.id}",
+      "dependencies": [
+        "terraform_data.never_apply",
+        "google_secret_manager_secret.worker_db",
+        "google_service_account.worker"
+      ],
+      "cleanupRole": "cleanup",
+      "lifetimeSeconds": 21600,
+      "retention": "DELETE_EXACT_RESOURCE"
+    },
+    {
+      "address": "google_secret_manager_secret_iam_member.ingress_db",
+      "type": "google_secret_manager_secret_iam_member",
+      "key": "ingress_db",
+      "project": "b1a2-fixture-run",
+      "name": "${google_secret_manager_secret.ingress_db.id}",
+      "dependencies": [
+        "terraform_data.never_apply",
+        "google_secret_manager_secret.ingress_db",
+        "google_service_account.ingress"
+      ],
+      "cleanupRole": "cleanup",
+      "lifetimeSeconds": 21600,
+      "retention": "DELETE_EXACT_RESOURCE"
+    },
+    {
+      "address": "google_secret_manager_secret_iam_member.controller_db",
+      "type": "google_secret_manager_secret_iam_member",
+      "key": "controller_db",
+      "project": "b1a2-fixture-run",
+      "name": "${google_secret_manager_secret.controller_db.id}",
+      "dependencies": [
+        "terraform_data.never_apply",
+        "google_secret_manager_secret.controller_db",
+        "google_service_account.controller"
+      ],
+      "cleanupRole": "cleanup",
+      "lifetimeSeconds": 21600,
+      "retention": "DELETE_EXACT_RESOURCE"
+    },
+    {
+      "address": "google_secret_manager_secret_iam_member.sealer_db",
+      "type": "google_secret_manager_secret_iam_member",
+      "key": "sealer_db",
+      "project": "b1a2-fixture-run",
+      "name": "${google_secret_manager_secret.sealer_db.id}",
+      "dependencies": [
+        "terraform_data.never_apply",
+        "google_secret_manager_secret.sealer_db",
+        "google_service_account.sealer"
+      ],
+      "cleanupRole": "cleanup",
+      "lifetimeSeconds": 21600,
+      "retention": "DELETE_EXACT_RESOURCE"
+    },
+    {
+      "address": "google_secret_manager_secret_iam_member.observer_signing",
+      "type": "google_secret_manager_secret_iam_member",
+      "key": "observer_signing",
+      "project": "b1a2-fixture-custody",
+      "name": "${google_secret_manager_secret.observer_signing.id}",
+      "dependencies": [
+        "terraform_data.never_apply",
+        "google_secret_manager_secret.observer_signing",
+        "google_service_account.observer"
+      ],
+      "cleanupRole": "custodyCleanup",
+      "lifetimeSeconds": 21600,
+      "retention": "DELETE_EXACT_RESOURCE"
+    },
+    {
+      "address": "google_secret_manager_secret_iam_member.bundle_worker",
+      "type": "google_secret_manager_secret_iam_member",
+      "key": "bundle_worker",
+      "project": "b1a2-fixture-run",
+      "name": "${google_secret_manager_secret.bundle_worker.id}",
+      "dependencies": [
+        "terraform_data.never_apply",
+        "google_secret_manager_secret.bundle_worker"
+      ],
+      "cleanupRole": "cleanup",
+      "lifetimeSeconds": 21600,
+      "retention": "DELETE_EXACT_RESOURCE"
+    },
+    {
+      "address": "google_secret_manager_secret_iam_member.bundle_ingress",
+      "type": "google_secret_manager_secret_iam_member",
+      "key": "bundle_ingress",
+      "project": "b1a2-fixture-run",
+      "name": "${google_secret_manager_secret.bundle_ingress.id}",
+      "dependencies": [
+        "terraform_data.never_apply",
+        "google_secret_manager_secret.bundle_ingress"
+      ],
+      "cleanupRole": "cleanup",
+      "lifetimeSeconds": 21600,
+      "retention": "DELETE_EXACT_RESOURCE"
+    },
+    {
+      "address": "google_secret_manager_secret_iam_member.bundle_sealer",
+      "type": "google_secret_manager_secret_iam_member",
+      "key": "bundle_sealer",
+      "project": "b1a2-fixture-run",
+      "name": "${google_secret_manager_secret.bundle_sealer.id}",
+      "dependencies": [
+        "terraform_data.never_apply",
+        "google_secret_manager_secret.bundle_sealer"
+      ],
+      "cleanupRole": "cleanup",
+      "lifetimeSeconds": 21600,
+      "retention": "DELETE_EXACT_RESOURCE"
+    },
+    {
+      "address": "google_secret_manager_secret_iam_member.scope_11",
+      "type": "google_secret_manager_secret_iam_member",
+      "key": "scope_11",
+      "project": "b1a2-fixture-run",
+      "name": "projects/b1a2-fixture-run/secrets/b1a2-effect-old",
+      "dependencies": [
+        "terraform_data.never_apply",
+        "google_project_iam_custom_role.scope_11"
+      ],
+      "cleanupRole": "cleanup",
+      "lifetimeSeconds": 21600,
+      "retention": "DELETE_EXACT_RESOURCE"
+    },
+    {
+      "address": "google_secret_manager_secret_iam_member.scope_15",
+      "type": "google_secret_manager_secret_iam_member",
+      "key": "scope_15",
+      "project": "b1a2-fixture-custody",
+      "name": "projects/b1a2-fixture-custody/secrets/b1a2-observer-signing",
+      "dependencies": [
+        "terraform_data.never_apply",
+        "google_project_iam_custom_role.scope_15"
+      ],
+      "cleanupRole": "custodyCleanup",
+      "lifetimeSeconds": 21600,
+      "retention": "DELETE_EXACT_RESOURCE"
+    },
+    {
+      "address": "google_kms_crypto_key_iam_member.effect_1",
+      "type": "google_kms_crypto_key_iam_member",
+      "key": "effect_1",
+      "project": "b1a2-fixture-run",
+      "name": "effect_1",
+      "dependencies": [
+        "terraform_data.never_apply",
+        "google_kms_crypto_key.effect",
+        "google_service_account.gw_e000001"
+      ],
+      "cleanupRole": "cleanup",
+      "lifetimeSeconds": 21600,
+      "retention": "DELETE_EXACT_RESOURCE"
+    },
+    {
+      "address": "google_kms_crypto_key_iam_member.effect_2",
+      "type": "google_kms_crypto_key_iam_member",
+      "key": "effect_2",
+      "project": "b1a2-fixture-run",
+      "name": "effect_2",
+      "dependencies": [
+        "terraform_data.never_apply",
+        "google_kms_crypto_key.effect",
+        "google_service_account.gw_e000002"
+      ],
+      "cleanupRole": "cleanup",
+      "lifetimeSeconds": 21600,
+      "retention": "DELETE_EXACT_RESOURCE"
+    },
+    {
+      "address": "google_kms_crypto_key_iam_member.sealer",
+      "type": "google_kms_crypto_key_iam_member",
+      "key": "sealer",
+      "project": "b1a2-fixture-custody",
+      "name": "sealer",
+      "dependencies": [
+        "terraform_data.never_apply",
+        "google_kms_crypto_key.custody",
+        "google_service_account.sealer"
+      ],
+      "cleanupRole": "custodyCleanup",
+      "lifetimeSeconds": 21600,
+      "retention": "DELETE_EXACT_RESOURCE"
+    },
+    {
+      "address": "google_kms_crypto_key_iam_member.scope_12",
+      "type": "google_kms_crypto_key_iam_member",
+      "key": "scope_12",
+      "project": "b1a2-fixture-run",
+      "name": "scope_12",
+      "dependencies": [
+        "terraform_data.never_apply",
+        "google_project_iam_custom_role.scope_12"
+      ],
+      "cleanupRole": "cleanup",
+      "lifetimeSeconds": 21600,
+      "retention": "DELETE_EXACT_RESOURCE"
+    },
+    {
+      "address": "google_storage_bucket_iam_member.sealer_create",
+      "type": "google_storage_bucket_iam_member",
+      "key": "sealer_create",
+      "project": "b1a2-fixture-custody",
+      "name": "${google_storage_bucket.custody.name}",
+      "dependencies": [
+        "terraform_data.never_apply",
+        "google_storage_bucket.custody",
+        "google_service_account.sealer"
+      ],
+      "cleanupRole": "custodyCleanup",
+      "lifetimeSeconds": 21600,
+      "retention": "DELETE_EXACT_RESOURCE"
+    },
+    {
+      "address": "google_storage_bucket_iam_member.observer_read",
+      "type": "google_storage_bucket_iam_member",
+      "key": "observer_read",
+      "project": "b1a2-fixture-custody",
+      "name": "${google_storage_bucket.custody.name}",
+      "dependencies": [
+        "terraform_data.never_apply",
+        "google_storage_bucket.custody",
+        "google_service_account.observer"
+      ],
+      "cleanupRole": "custodyCleanup",
+      "lifetimeSeconds": 21600,
+      "retention": "DELETE_EXACT_RESOURCE"
+    },
+    {
+      "address": "google_storage_bucket_iam_member.fake_create",
+      "type": "google_storage_bucket_iam_member",
+      "key": "fake_create",
+      "project": "b1a2-fixture-custody",
+      "name": "${google_storage_bucket.custody.name}",
+      "dependencies": [
+        "terraform_data.never_apply",
+        "google_storage_bucket.custody",
+        "google_service_account.fake"
+      ],
+      "cleanupRole": "custodyCleanup",
+      "lifetimeSeconds": 21600,
+      "retention": "DELETE_EXACT_RESOURCE"
+    },
+    {
+      "address": "google_storage_bucket_iam_member.sealer_recovery",
+      "type": "google_storage_bucket_iam_member",
+      "key": "sealer_recovery",
+      "project": "b1a2-fixture-custody",
+      "name": "${google_storage_bucket.custody.name}",
+      "dependencies": [
+        "terraform_data.never_apply",
+        "google_storage_bucket.custody"
+      ],
+      "cleanupRole": "custodyCleanup",
+      "lifetimeSeconds": 21600,
+      "retention": "DELETE_EXACT_RESOURCE"
+    },
+    {
+      "address": "google_storage_bucket_iam_member.scope_16",
+      "type": "google_storage_bucket_iam_member",
+      "key": "scope_16",
+      "project": "b1a2-fixture-custody",
+      "name": "b1a2-fixture-custody-evidence",
+      "dependencies": [
+        "terraform_data.never_apply",
+        "google_project_iam_custom_role.scope_16"
+      ],
+      "cleanupRole": "custodyCleanup",
+      "lifetimeSeconds": 21600,
+      "retention": "DELETE_EXACT_RESOURCE"
+    },
+    {
+      "address": "google_storage_bucket_iam_member.scope_23",
+      "type": "google_storage_bucket_iam_member",
+      "key": "scope_23",
+      "project": "b1a2-fixture-custody",
+      "name": "b1a2-fixture-custody-evidence",
+      "dependencies": [
+        "terraform_data.never_apply",
+        "google_project_iam_custom_role.scope_23"
+      ],
+      "cleanupRole": "custodyCleanup",
+      "lifetimeSeconds": 21600,
+      "retention": "DELETE_EXACT_RESOURCE"
+    },
+    {
+      "address": "google_billing_budget.session",
+      "type": "google_billing_budget",
+      "key": "session",
+      "project": "b1a2-fixture-run",
+      "name": "session",
+      "dependencies": [
+        "terraform_data.never_apply"
+      ],
+      "cleanupRole": "cleanup",
+      "lifetimeSeconds": 21600,
+      "retention": "DELETE_EXACT_RESOURCE"
+    },
+    {
+      "address": "google_org_policy_policy.all_traffic",
+      "type": "google_org_policy_policy",
+      "key": "all_traffic",
+      "project": "b1a2-fixture-run",
+      "name": "projects/${var.runtime_project_number}/policies/run.allowedVPCEgress",
+      "dependencies": [
+        "terraform_data.never_apply"
+      ],
+      "cleanupRole": "cleanup",
+      "lifetimeSeconds": 21600,
+      "retention": "DELETE_EXACT_RESOURCE"
+    },
+    {
+      "address": "google_project_iam_custom_role.scope_0",
+      "type": "google_project_iam_custom_role",
+      "key": "scope_0",
+      "project": "b1a2-fixture-run",
+      "name": "b1a2_scope_0",
+      "dependencies": [
+        "terraform_data.never_apply"
+      ],
+      "cleanupRole": "cleanup",
+      "lifetimeSeconds": 21600,
+      "retention": "DELETE_EXACT_RESOURCE"
+    },
+    {
+      "address": "google_project_iam_custom_role.scope_1",
+      "type": "google_project_iam_custom_role",
+      "key": "scope_1",
+      "project": "b1a2-fixture-run",
+      "name": "b1a2_scope_1",
+      "dependencies": [
+        "terraform_data.never_apply"
+      ],
+      "cleanupRole": "cleanup",
+      "lifetimeSeconds": 21600,
+      "retention": "DELETE_EXACT_RESOURCE"
+    },
+    {
+      "address": "google_project_iam_custom_role.scope_2",
+      "type": "google_project_iam_custom_role",
+      "key": "scope_2",
+      "project": "b1a2-fixture-run",
+      "name": "b1a2_scope_2",
+      "dependencies": [
+        "terraform_data.never_apply"
+      ],
+      "cleanupRole": "cleanup",
+      "lifetimeSeconds": 21600,
+      "retention": "DELETE_EXACT_RESOURCE"
+    },
+    {
+      "address": "google_project_iam_custom_role.scope_3",
+      "type": "google_project_iam_custom_role",
+      "key": "scope_3",
+      "project": "b1a2-fixture-run",
+      "name": "b1a2_scope_3",
+      "dependencies": [
+        "terraform_data.never_apply"
+      ],
+      "cleanupRole": "cleanup",
+      "lifetimeSeconds": 21600,
+      "retention": "DELETE_EXACT_RESOURCE"
+    },
+    {
+      "address": "google_project_iam_custom_role.scope_4",
+      "type": "google_project_iam_custom_role",
+      "key": "scope_4",
+      "project": "b1a2-fixture-run",
+      "name": "b1a2_scope_4",
+      "dependencies": [
+        "terraform_data.never_apply"
+      ],
+      "cleanupRole": "cleanup",
+      "lifetimeSeconds": 21600,
+      "retention": "DELETE_EXACT_RESOURCE"
+    },
+    {
+      "address": "google_project_iam_custom_role.scope_5",
+      "type": "google_project_iam_custom_role",
+      "key": "scope_5",
+      "project": "b1a2-fixture-run",
+      "name": "b1a2_scope_5",
+      "dependencies": [
+        "terraform_data.never_apply"
+      ],
+      "cleanupRole": "cleanup",
+      "lifetimeSeconds": 21600,
+      "retention": "DELETE_EXACT_RESOURCE"
+    },
+    {
+      "address": "google_project_iam_custom_role.scope_6",
+      "type": "google_project_iam_custom_role",
+      "key": "scope_6",
+      "project": "b1a2-fixture-run",
+      "name": "b1a2_scope_6",
+      "dependencies": [
+        "terraform_data.never_apply"
+      ],
+      "cleanupRole": "cleanup",
+      "lifetimeSeconds": 21600,
+      "retention": "DELETE_EXACT_RESOURCE"
+    },
+    {
+      "address": "google_project_iam_custom_role.scope_7",
+      "type": "google_project_iam_custom_role",
+      "key": "scope_7",
+      "project": "b1a2-fixture-run",
+      "name": "b1a2_scope_7",
+      "dependencies": [
+        "terraform_data.never_apply"
+      ],
+      "cleanupRole": "cleanup",
+      "lifetimeSeconds": 21600,
+      "retention": "DELETE_EXACT_RESOURCE"
+    },
+    {
+      "address": "google_project_iam_custom_role.scope_8",
+      "type": "google_project_iam_custom_role",
+      "key": "scope_8",
+      "project": "b1a2-fixture-run",
+      "name": "b1a2_scope_8",
+      "dependencies": [
+        "terraform_data.never_apply"
+      ],
+      "cleanupRole": "cleanup",
+      "lifetimeSeconds": 21600,
+      "retention": "DELETE_EXACT_RESOURCE"
+    },
+    {
+      "address": "google_project_iam_custom_role.scope_9",
+      "type": "google_project_iam_custom_role",
+      "key": "scope_9",
+      "project": "b1a2-fixture-run",
+      "name": "b1a2_scope_9",
+      "dependencies": [
+        "terraform_data.never_apply"
+      ],
+      "cleanupRole": "cleanup",
+      "lifetimeSeconds": 21600,
+      "retention": "DELETE_EXACT_RESOURCE"
+    },
+    {
+      "address": "google_project_iam_custom_role.scope_10",
+      "type": "google_project_iam_custom_role",
+      "key": "scope_10",
+      "project": "b1a2-fixture-run",
+      "name": "b1a2_scope_10",
+      "dependencies": [
+        "terraform_data.never_apply"
+      ],
+      "cleanupRole": "cleanup",
+      "lifetimeSeconds": 21600,
+      "retention": "DELETE_EXACT_RESOURCE"
+    },
+    {
+      "address": "google_project_iam_custom_role.scope_11",
+      "type": "google_project_iam_custom_role",
+      "key": "scope_11",
+      "project": "b1a2-fixture-run",
+      "name": "b1a2_scope_11",
+      "dependencies": [
+        "terraform_data.never_apply"
+      ],
+      "cleanupRole": "cleanup",
+      "lifetimeSeconds": 21600,
+      "retention": "DELETE_EXACT_RESOURCE"
+    },
+    {
+      "address": "google_project_iam_custom_role.scope_12",
+      "type": "google_project_iam_custom_role",
+      "key": "scope_12",
+      "project": "b1a2-fixture-run",
+      "name": "b1a2_scope_12",
+      "dependencies": [
+        "terraform_data.never_apply"
+      ],
+      "cleanupRole": "cleanup",
+      "lifetimeSeconds": 21600,
+      "retention": "DELETE_EXACT_RESOURCE"
+    },
+    {
+      "address": "google_project_iam_custom_role.scope_13",
+      "type": "google_project_iam_custom_role",
+      "key": "scope_13",
+      "project": "b1a2-fixture-run",
+      "name": "b1a2_scope_13",
+      "dependencies": [
+        "terraform_data.never_apply"
+      ],
+      "cleanupRole": "cleanup",
+      "lifetimeSeconds": 21600,
+      "retention": "DELETE_EXACT_RESOURCE"
+    },
+    {
+      "address": "google_project_iam_custom_role.scope_14",
+      "type": "google_project_iam_custom_role",
+      "key": "scope_14",
+      "project": "b1a2-fixture-fake",
+      "name": "b1a2_scope_14",
+      "dependencies": [
+        "terraform_data.never_apply"
+      ],
+      "cleanupRole": "cleanup",
+      "lifetimeSeconds": 21600,
+      "retention": "DELETE_EXACT_RESOURCE"
+    },
+    {
+      "address": "google_project_iam_custom_role.scope_15",
+      "type": "google_project_iam_custom_role",
+      "key": "scope_15",
+      "project": "b1a2-fixture-custody",
+      "name": "b1a2_scope_15",
+      "dependencies": [
+        "terraform_data.never_apply"
+      ],
+      "cleanupRole": "custodyCleanup",
+      "lifetimeSeconds": 21600,
+      "retention": "DELETE_EXACT_RESOURCE"
+    },
+    {
+      "address": "google_project_iam_custom_role.scope_16",
+      "type": "google_project_iam_custom_role",
+      "key": "scope_16",
+      "project": "b1a2-fixture-custody",
+      "name": "b1a2_scope_16",
+      "dependencies": [
+        "terraform_data.never_apply"
+      ],
+      "cleanupRole": "custodyCleanup",
+      "lifetimeSeconds": 21600,
+      "retention": "DELETE_EXACT_RESOURCE"
+    },
+    {
+      "address": "google_project_iam_custom_role.scope_17",
+      "type": "google_project_iam_custom_role",
+      "key": "scope_17",
+      "project": "b1a2-fixture-run",
+      "name": "b1a2_scope_17",
+      "dependencies": [
+        "terraform_data.never_apply"
+      ],
+      "cleanupRole": "cleanup",
+      "lifetimeSeconds": 21600,
+      "retention": "DELETE_EXACT_RESOURCE"
+    },
+    {
+      "address": "google_project_iam_custom_role.scope_18",
+      "type": "google_project_iam_custom_role",
+      "key": "scope_18",
+      "project": "b1a2-fixture-fake",
+      "name": "b1a2_scope_18",
+      "dependencies": [
+        "terraform_data.never_apply"
+      ],
+      "cleanupRole": "cleanup",
+      "lifetimeSeconds": 21600,
+      "retention": "DELETE_EXACT_RESOURCE"
+    },
+    {
+      "address": "google_project_iam_custom_role.scope_19",
+      "type": "google_project_iam_custom_role",
+      "key": "scope_19",
+      "project": "b1a2-fixture-custody",
+      "name": "b1a2_scope_19",
+      "dependencies": [
+        "terraform_data.never_apply"
+      ],
+      "cleanupRole": "custodyCleanup",
+      "lifetimeSeconds": 21600,
+      "retention": "DELETE_EXACT_RESOURCE"
+    },
+    {
+      "address": "google_project_iam_custom_role.scope_20",
+      "type": "google_project_iam_custom_role",
+      "key": "scope_20",
+      "project": "b1a2-fixture-run",
+      "name": "b1a2_scope_20",
+      "dependencies": [
+        "terraform_data.never_apply"
+      ],
+      "cleanupRole": "cleanup",
+      "lifetimeSeconds": 21600,
+      "retention": "DELETE_EXACT_RESOURCE"
+    },
+    {
+      "address": "google_project_iam_custom_role.scope_21",
+      "type": "google_project_iam_custom_role",
+      "key": "scope_21",
+      "project": "b1a2-fixture-custody",
+      "name": "b1a2_scope_21",
+      "dependencies": [
+        "terraform_data.never_apply"
+      ],
+      "cleanupRole": "custodyCleanup",
+      "lifetimeSeconds": 21600,
+      "retention": "DELETE_EXACT_RESOURCE"
+    },
+    {
+      "address": "google_project_iam_custom_role.scope_22",
+      "type": "google_project_iam_custom_role",
+      "key": "scope_22",
+      "project": "b1a2-fixture-fake",
+      "name": "b1a2_scope_22",
+      "dependencies": [
+        "terraform_data.never_apply"
+      ],
+      "cleanupRole": "cleanup",
+      "lifetimeSeconds": 21600,
+      "retention": "DELETE_EXACT_RESOURCE"
+    },
+    {
+      "address": "google_project_iam_custom_role.scope_23",
+      "type": "google_project_iam_custom_role",
+      "key": "scope_23",
+      "project": "b1a2-fixture-custody",
+      "name": "b1a2_scope_23",
+      "dependencies": [
+        "terraform_data.never_apply"
+      ],
+      "cleanupRole": "custodyCleanup",
+      "lifetimeSeconds": 21600,
+      "retention": "DELETE_EXACT_RESOURCE"
+    },
+    {
+      "address": "google_project_iam_member.scope_0",
+      "type": "google_project_iam_member",
+      "key": "scope_0",
+      "project": "b1a2-fixture-run",
+      "name": "scope_0",
+      "dependencies": [
+        "terraform_data.never_apply",
+        "google_project_iam_custom_role.scope_0"
+      ],
+      "cleanupRole": "cleanup",
+      "lifetimeSeconds": 21600,
+      "retention": "DELETE_EXACT_RESOURCE"
+    },
+    {
+      "address": "google_project_iam_member.scope_6",
+      "type": "google_project_iam_member",
+      "key": "scope_6",
+      "project": "b1a2-fixture-run",
+      "name": "scope_6",
+      "dependencies": [
+        "terraform_data.never_apply",
+        "google_project_iam_custom_role.scope_6"
+      ],
+      "cleanupRole": "cleanup",
+      "lifetimeSeconds": 21600,
+      "retention": "DELETE_EXACT_RESOURCE"
+    },
+    {
+      "address": "google_project_iam_member.scope_13",
+      "type": "google_project_iam_member",
+      "key": "scope_13",
+      "project": "b1a2-fixture-run",
+      "name": "scope_13",
+      "dependencies": [
+        "terraform_data.never_apply",
+        "google_project_iam_custom_role.scope_13"
+      ],
+      "cleanupRole": "cleanup",
+      "lifetimeSeconds": 21600,
+      "retention": "DELETE_EXACT_RESOURCE"
+    },
+    {
+      "address": "google_project_iam_member.scope_14",
+      "type": "google_project_iam_member",
+      "key": "scope_14",
+      "project": "b1a2-fixture-fake",
+      "name": "scope_14",
+      "dependencies": [
+        "terraform_data.never_apply",
+        "google_project_iam_custom_role.scope_14"
+      ],
+      "cleanupRole": "cleanup",
+      "lifetimeSeconds": 21600,
+      "retention": "DELETE_EXACT_RESOURCE"
+    },
+    {
+      "address": "google_project_iam_member.scope_17",
+      "type": "google_project_iam_member",
+      "key": "scope_17",
+      "project": "b1a2-fixture-run",
+      "name": "scope_17",
+      "dependencies": [
+        "terraform_data.never_apply",
+        "google_project_iam_custom_role.scope_17"
+      ],
+      "cleanupRole": "cleanup",
+      "lifetimeSeconds": 21600,
+      "retention": "DELETE_EXACT_RESOURCE"
+    },
+    {
+      "address": "google_project_iam_member.scope_18",
+      "type": "google_project_iam_member",
+      "key": "scope_18",
+      "project": "b1a2-fixture-fake",
+      "name": "scope_18",
+      "dependencies": [
+        "terraform_data.never_apply",
+        "google_project_iam_custom_role.scope_18"
+      ],
+      "cleanupRole": "cleanup",
+      "lifetimeSeconds": 21600,
+      "retention": "DELETE_EXACT_RESOURCE"
+    },
+    {
+      "address": "google_project_iam_member.scope_19",
+      "type": "google_project_iam_member",
+      "key": "scope_19",
+      "project": "b1a2-fixture-custody",
+      "name": "scope_19",
+      "dependencies": [
+        "terraform_data.never_apply",
+        "google_project_iam_custom_role.scope_19"
+      ],
+      "cleanupRole": "custodyCleanup",
+      "lifetimeSeconds": 21600,
+      "retention": "DELETE_EXACT_RESOURCE"
+    },
+    {
+      "address": "google_project_iam_member.scope_20",
+      "type": "google_project_iam_member",
+      "key": "scope_20",
+      "project": "b1a2-fixture-run",
+      "name": "scope_20",
+      "dependencies": [
+        "terraform_data.never_apply",
+        "google_project_iam_custom_role.scope_20"
+      ],
+      "cleanupRole": "cleanup",
+      "lifetimeSeconds": 21600,
+      "retention": "DELETE_EXACT_RESOURCE"
+    },
+    {
+      "address": "google_project_iam_member.scope_21",
+      "type": "google_project_iam_member",
+      "key": "scope_21",
+      "project": "b1a2-fixture-custody",
+      "name": "scope_21",
+      "dependencies": [
+        "terraform_data.never_apply",
+        "google_project_iam_custom_role.scope_21"
+      ],
+      "cleanupRole": "custodyCleanup",
+      "lifetimeSeconds": 21600,
+      "retention": "DELETE_EXACT_RESOURCE"
+    },
+    {
+      "address": "google_project_iam_member.scope_22",
+      "type": "google_project_iam_member",
+      "key": "scope_22",
+      "project": "b1a2-fixture-fake",
+      "name": "scope_22",
+      "dependencies": [
+        "terraform_data.never_apply",
+        "google_project_iam_custom_role.scope_22"
+      ],
+      "cleanupRole": "cleanup",
+      "lifetimeSeconds": 21600,
+      "retention": "DELETE_EXACT_RESOURCE"
+    },
+    {
+      "address": "google_service_account_iam_member.scope_1",
+      "type": "google_service_account_iam_member",
+      "key": "scope_1",
+      "project": "b1a2-fixture-run",
+      "name": "scope_1",
+      "dependencies": [
+        "terraform_data.never_apply",
+        "google_project_iam_custom_role.scope_1"
+      ],
+      "cleanupRole": "cleanup",
+      "lifetimeSeconds": 21600,
+      "retention": "DELETE_EXACT_RESOURCE"
+    },
+    {
+      "address": "google_service_account_iam_member.scope_2",
+      "type": "google_service_account_iam_member",
+      "key": "scope_2",
+      "project": "b1a2-fixture-run",
+      "name": "scope_2",
+      "dependencies": [
+        "terraform_data.never_apply",
+        "google_project_iam_custom_role.scope_2"
+      ],
+      "cleanupRole": "cleanup",
+      "lifetimeSeconds": 21600,
+      "retention": "DELETE_EXACT_RESOURCE"
+    },
+    {
+      "address": "google_service_account_iam_member.scope_3",
+      "type": "google_service_account_iam_member",
+      "key": "scope_3",
+      "project": "b1a2-fixture-run",
+      "name": "scope_3",
+      "dependencies": [
+        "terraform_data.never_apply",
+        "google_project_iam_custom_role.scope_3"
+      ],
+      "cleanupRole": "cleanup",
+      "lifetimeSeconds": 21600,
+      "retention": "DELETE_EXACT_RESOURCE"
+    },
+    {
+      "address": "google_service_account_iam_member.scope_4",
+      "type": "google_service_account_iam_member",
+      "key": "scope_4",
+      "project": "b1a2-fixture-run",
+      "name": "scope_4",
+      "dependencies": [
+        "terraform_data.never_apply",
+        "google_project_iam_custom_role.scope_4"
+      ],
+      "cleanupRole": "cleanup",
+      "lifetimeSeconds": 21600,
+      "retention": "DELETE_EXACT_RESOURCE"
+    },
+    {
+      "address": "google_service_account_iam_member.scope_5",
+      "type": "google_service_account_iam_member",
+      "key": "scope_5",
+      "project": "b1a2-fixture-run",
+      "name": "scope_5",
+      "dependencies": [
+        "terraform_data.never_apply",
+        "google_project_iam_custom_role.scope_5"
+      ],
+      "cleanupRole": "cleanup",
+      "lifetimeSeconds": 21600,
+      "retention": "DELETE_EXACT_RESOURCE"
+    },
+    {
+      "address": "google_service_account_iam_member.scope_7",
+      "type": "google_service_account_iam_member",
+      "key": "scope_7",
+      "project": "b1a2-fixture-run",
+      "name": "scope_7",
+      "dependencies": [
+        "terraform_data.never_apply",
+        "google_project_iam_custom_role.scope_7"
+      ],
+      "cleanupRole": "cleanup",
+      "lifetimeSeconds": 21600,
+      "retention": "DELETE_EXACT_RESOURCE"
+    },
+    {
+      "address": "google_artifact_registry_repository_iam_member.scope_8",
+      "type": "google_artifact_registry_repository_iam_member",
+      "key": "scope_8",
+      "project": "b1a2-fixture-run",
+      "name": "scope_8",
+      "dependencies": [
+        "terraform_data.never_apply",
+        "google_project_iam_custom_role.scope_8"
+      ],
+      "cleanupRole": "cleanup",
+      "lifetimeSeconds": 21600,
+      "retention": "DELETE_EXACT_RESOURCE"
+    },
+    {
+      "address": "google_artifact_registry_repository_iam_member.scope_9",
+      "type": "google_artifact_registry_repository_iam_member",
+      "key": "scope_9",
+      "project": "b1a2-fixture-run",
+      "name": "scope_9",
+      "dependencies": [
+        "terraform_data.never_apply",
+        "google_project_iam_custom_role.scope_9"
+      ],
+      "cleanupRole": "cleanup",
+      "lifetimeSeconds": 21600,
+      "retention": "DELETE_EXACT_RESOURCE"
+    },
+    {
+      "address": "google_artifact_registry_repository_iam_member.scope_10",
+      "type": "google_artifact_registry_repository_iam_member",
+      "key": "scope_10",
+      "project": "b1a2-fixture-run",
+      "name": "scope_10",
+      "dependencies": [
+        "terraform_data.never_apply",
+        "google_project_iam_custom_role.scope_10"
+      ],
+      "cleanupRole": "cleanup",
+      "lifetimeSeconds": 21600,
+      "retention": "DELETE_EXACT_RESOURCE"
+    }
+  ]
+}

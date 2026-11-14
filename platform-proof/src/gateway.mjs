@@ -6,7 +6,11 @@ import { preparedProfile, preparedTarget } from "../b1a/runtime/profile.mjs";
 /** Service authentication identifies a caller; it is NOT an effect permit. */
 export async function startGateway(
   config,
-  { hook = async () => {}, trace = () => {} } = {},
+  {
+    hook = async () => {},
+    trace = () => {},
+    readiness = async () => true,
+  } = {},
 ) {
   if (
     (config.mode !== MODE && !preparedProfile(config.prepared)) ||
@@ -21,6 +25,7 @@ export async function startGateway(
   if (!preparedTarget(target)) endpoint(target);
   const store = new GatewayStore(config.prepared?.database ?? config.database, {
       sessionId: config.prepared?.controlSessionId ?? config.controlSessionId,
+      entryVersion: config.entryVersion ?? 1,
     }),
     active = new Set();
   const server = http.createServer((req, res) => {
@@ -31,8 +36,8 @@ export async function startGateway(
         return;
       }
       if (req.method === "GET" && req.url === "/readyz") {
-        res.writeHead(200);
-        res.end("synthetic gateway initialized; dispatch remains SQL-gated");
+        res.writeHead((await readiness()) ? 200 : 503);
+        res.end("synthetic gateway; readiness and dispatch remain SQL-gated");
         return;
       }
       if (
@@ -53,6 +58,8 @@ export async function startGateway(
       id(p.scopeId);
       id(p.attemptId);
       const work = (async () => {
+        if (!(await readiness()))
+          return { state: "HELD", reason: "runtime_authority_unavailable" };
         const permit = await store.enter(
           p.scopeId,
           p.attemptId,
