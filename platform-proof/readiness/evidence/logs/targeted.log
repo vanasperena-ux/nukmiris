@@ -1,0 +1,36 @@
+
+> nukmiris-inc1-local-proof@0.1.0 test:readiness
+> node --test --test-concurrency=1 test/readiness-*.test.mjs
+
+✔ G-3 offline account receipt template never grants readiness; published schema/template are exact and no account facts invented (11.145731ms)
+✔ G-3 structurally valid simulated receipts retain runtime/account/cloud hold and separate technical identities despite one human (1.470469ms)
+✔ G-3 missing account facts, invalid currency/FX, unknown keys, stale evidence, window and impersonation ambiguity hold (5.581369ms)
+✔ O-4/5/6/7 six-hour cost model reproducible, $2 restore removed, contingency/tax/FX/lag/retention separated; repeats consume allocation (163.793971ms)
+✔ O-5 supports $30 offline alert conversion only with explicit current FX; unchanged historical $20 remains valid; >30 rejects (1.751225ms)
+✔ H-3 Q29/Q30/Q31 partial retired identities are retained as HOLD, never ignored (27.339484ms)
+✔ H-3 conclusive authenticated old traffic remains VIOLATION despite misleading header identities or another partial record (6.193837ms)
+✔ H-3 provider startup rejects missing/wrong/conflicting gateway maps before listening (1.334327ms)
+✔ H-3 mounted live profile cannot redefine the approved gateway epoch/revision pair (4.357646ms)
+✔ G-2 native separate process SIGSTOP after TLS then post-fence write on that same connection is a violation; signed raw ledger preserved (590.56014ms)
+✔ G-3 sole human may independently construct kill/cleanup controllers with NO deployer grants/credential and seven shutdown steps remain exact (7.591126ms)
+✔ G-3 every exact inventory resource has a receipt slot, manual billing and nondeletable KMS residuals remain explicit (4.665052ms)
+✔ G-3 cleanup restart replays authenticated intent; no repeated destructive call; missing Terraform state is NOT independent absence (7.120799ms)
+✔ G-3 cleanup corrupt ledger and changed original identity fail closed before destructive calls (1.185026ms)
+✔ G-2/1 valid independently signed sample collects conservative intervals but never certifies a finite cloud bound (9.163276ms)
+✔ G-2/2 missing, forged, copied and stale source evidence hold (6.902256ms)
+✔ G-2/3,5 long delivery/buffering after a pre-fence write is held without relabeling it as a new send (2.98995ms)
+✔ G-2/4,6 frozen old sender writes on its pre-fence connection after the fence: VIOLATION (3.600043ms)
+✔ G-2/7 mismatched session, provider, epoch, revision, flow or raw digest never becomes accepted measurement (2.977712ms)
+✔ G-2/8 uncertain fence ordering, incomplete phases and inconsistent clock ordering hold (5.924017ms)
+✔ G-2/9 signed but late/unobserved canary wake holds; unsigned assertions are rejected (3.801662ms)
+✔ G-2/10 absent or exceeded hypotheses and cloud-scoped sample maxima cannot authorize retirement (6.811131ms)
+✔ G-2 probe refuses cloud mode, remote targets and non-synthetic payload before socket access (0.590545ms)
+✔ G-2 invalid clock collection, missing provider pin and outside-horizon export timestamp hold without throwing (2.766709ms)
+ℹ tests 24
+ℹ suites 0
+ℹ pass 24
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1523.093907

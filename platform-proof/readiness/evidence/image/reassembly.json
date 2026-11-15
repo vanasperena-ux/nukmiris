@@ -1,0 +1,14 @@
+{
+  "scope": "TWO_FRESH_LOCAL_SOURCE_EXPORTS_AND_OFFLINE_NPM_INSTALLS_SAME_HOST_NOT_INDEPENDENT_HUMAN",
+  "testedSource": "9b526c048d5df1b3fbcf03e8f33c3ba53979b492",
+  "testedTree": "74801a03193011c24385d6ff36fb60178d61f107",
+  "allArtifactFieldsIdentical": true,
+  "imageConfigId": "sha256:1931766e764e9b400e3781796fa416421dda01fc992d69c4933295f29c30f888",
+  "sourceLayerDigest": "sha256:6b18c59d7cf8ea39b77cd5a7f46e87656dd87326009e8900b94604cf7c297ed3",
+  "canonicalUncompressedOciManifestDigest": "sha256:2f4f4b87448651dc8aef36de244771c33c96edf421983e066ef2375fd4713e80",
+  "dockerArchiveSha256": "21679e621c173331df503c9ce7326457884a596955e18869502fdf58c0ab8484",
+  "sourceManifestSha256": "aed8880aad1c9d25b8718cb7ed7f7080229836c4e082ebab2f5225df91d511a4",
+  "filesCompared": 188,
+  "base": "node@sha256:a9f5f7c91a432850b2a8a7797adf5eadb6c733ceed61167806cee7ea7fbc29df",
+  "registryDigest": null
+}

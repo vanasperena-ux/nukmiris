@@ -1,0 +1,71 @@
+[
+  {
+    "suite": "targeted",
+    "argv": [
+      "npm",
+      "run",
+      "test:readiness"
+    ],
+    "testedSource": "9b526c048d5df1b3fbcf03e8f33c3ba53979b492",
+    "testedTree": "74801a03193011c24385d6ff36fb60178d61f107",
+    "startedAt": "2026-11-14T23:48:39.220793+00:00",
+    "elapsedSeconds": 1.752,
+    "endedAt": "2026-11-14T23:48:40.973302+00:00",
+    "exitCode": 0
+  },
+  {
+    "suite": "full",
+    "argv": [
+      "npm",
+      "test"
+    ],
+    "testedSource": "9b526c048d5df1b3fbcf03e8f33c3ba53979b492",
+    "testedTree": "74801a03193011c24385d6ff36fb60178d61f107",
+    "startedAt": "2026-11-14T23:48:40.981319+00:00",
+    "elapsedSeconds": 435.772,
+    "endedAt": "2026-11-14T23:55:56.753531+00:00",
+    "exitCode": 0
+  },
+  {
+    "suite": "fault",
+    "argv": [
+      "npm",
+      "run",
+      "test:fault"
+    ],
+    "testedSource": "9b526c048d5df1b3fbcf03e8f33c3ba53979b492",
+    "testedTree": "74801a03193011c24385d6ff36fb60178d61f107",
+    "startedAt": "2026-11-14T23:55:56.764160+00:00",
+    "elapsedSeconds": 389.731,
+    "endedAt": "2026-11-15T00:02:26.495344+00:00",
+    "exitCode": 0
+  },
+  {
+    "suite": "concurrency",
+    "argv": [
+      "npm",
+      "run",
+      "test:concurrency"
+    ],
+    "testedSource": "9b526c048d5df1b3fbcf03e8f33c3ba53979b492",
+    "testedTree": "74801a03193011c24385d6ff36fb60178d61f107",
+    "startedAt": "2026-11-15T00:02:26.502942+00:00",
+    "elapsedSeconds": 40.527,
+    "endedAt": "2026-11-15T00:03:07.030361+00:00",
+    "exitCode": 0
+  },
+  {
+    "suite": "scope",
+    "argv": [
+      "npm",
+      "run",
+      "readiness:check"
+    ],
+    "testedSource": "9b526c048d5df1b3fbcf03e8f33c3ba53979b492",
+    "testedTree": "74801a03193011c24385d6ff36fb60178d61f107",
+    "startedAt": "2026-11-15T00:03:07.036406+00:00",
+    "elapsedSeconds": 4.073,
+    "endedAt": "2026-11-15T00:03:11.108929+00:00",
+    "exitCode": 0
+  }
+]

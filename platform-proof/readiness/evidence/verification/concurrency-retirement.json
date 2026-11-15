@@ -1,0 +1,33 @@
+{
+  "scope": "LOCAL_REVERIFICATION_ONLY",
+  "testedSource": "9b526c048d5df1b3fbcf03e8f33c3ba53979b492",
+  "result": {
+    "state": "EVIDENCE_READY",
+    "timeModel": "BOUNDED_DRIFT_V2",
+    "physicalBoundary": 1794657656000,
+    "declaredAt": 1794657899000,
+    "evidenceCompletedAt": 1794658130000,
+    "thresholdBasis": "PROVISIONAL_SYNTHETIC_TARGET",
+    "derivationProtocol": "AUTHENTICATED_LEDGER_ACTIVITY_V1",
+    "derivedActivityCount": 1,
+    "derivedActivitiesDigest": "bd8b86ab9ec3c1f32e9e487bc865ccd6341bad3e568aa64c68af829bd0e5f24f",
+    "evidenceDigest": "ff29f977eb790156bd667e1b3fcaa7d2df324fd359e4e3ebafb63a74bff920e2"
+  },
+  "recordedResult": {
+    "state": "EVIDENCE_READY",
+    "timeModel": "BOUNDED_DRIFT_V2",
+    "physicalBoundary": 1794657656000,
+    "declaredAt": 1794657899000,
+    "evidenceCompletedAt": 1794658130000,
+    "thresholdBasis": "PROVISIONAL_SYNTHETIC_TARGET",
+    "derivationProtocol": "AUTHENTICATED_LEDGER_ACTIVITY_V1",
+    "derivedActivityCount": 1,
+    "derivedActivitiesDigest": "bd8b86ab9ec3c1f32e9e487bc865ccd6341bad3e568aa64c68af829bd0e5f24f",
+    "evidenceDigest": "ff29f977eb790156bd667e1b3fcaa7d2df324fd359e4e3ebafb63a74bff920e2"
+  },
+  "originalResultPreserved": true,
+  "derivedActivityCount": 1,
+  "canaries": 20,
+  "authenticatedSignaturesVerified": true,
+  "livePromotionAuthorized": false
+}

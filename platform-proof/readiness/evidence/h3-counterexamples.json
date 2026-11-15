@@ -1,0 +1,125 @@
+{
+  "scope": "LOCAL_SIGNED_FIXTURES_WITH_INDEPENDENTLY_REGENERATED_KEYS_NOT_HISTORICAL_RAW",
+  "baselineSource": "ade1c3be3b66f81aa05a26e06fa6c8e707d0526c",
+  "correctedSource": "9b526c048d5df1b3fbcf03e8f33c3ba53979b492",
+  "rows": [
+    {
+      "case": "Q29",
+      "fields": {
+        "authenticatedEpoch": 1,
+        "authenticatedRevision": "old-r9"
+      },
+      "baseline": {
+        "state": "EVIDENCE_READY",
+        "timeModel": "BOUNDED_DRIFT_V2",
+        "physicalBoundary": 59000,
+        "declaredAt": 299000,
+        "evidenceCompletedAt": 530000,
+        "thresholdBasis": "PROVISIONAL_SYNTHETIC_TARGET",
+        "derivationProtocol": "AUTHENTICATED_LEDGER_ACTIVITY_V1",
+        "derivedActivityCount": 0,
+        "derivedActivitiesDigest": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "evidenceDigest": "7fa835768321a0d8ebeab662afb2311926e9dfe22062b5a52dd41e78323e2bf1"
+      },
+      "corrected": {
+        "state": "HOLD",
+        "reason": "provider_retired_identity_ambiguous",
+        "derivationProtocol": "AUTHENTICATED_LEDGER_ACTIVITY_V1",
+        "derivedActivityCount": 2,
+        "derivedActivitiesDigest": "f25e5e0a077ea258568ac321cef22bd3d0ae2e6bb8bf2238d07c30f0efabbe46"
+      }
+    },
+    {
+      "case": "Q30",
+      "fields": {
+        "authenticatedEpoch": 1
+      },
+      "baseline": {
+        "state": "EVIDENCE_READY",
+        "timeModel": "BOUNDED_DRIFT_V2",
+        "physicalBoundary": 59000,
+        "declaredAt": 299000,
+        "evidenceCompletedAt": 530000,
+        "thresholdBasis": "PROVISIONAL_SYNTHETIC_TARGET",
+        "derivationProtocol": "AUTHENTICATED_LEDGER_ACTIVITY_V1",
+        "derivedActivityCount": 0,
+        "derivedActivitiesDigest": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "evidenceDigest": "fa1bb3169679cb56d5e10945c42d00cef49a0c1b605a2a049e9777820a63e66e"
+      },
+      "corrected": {
+        "state": "HOLD",
+        "reason": "provider_retired_identity_ambiguous",
+        "derivationProtocol": "AUTHENTICATED_LEDGER_ACTIVITY_V1",
+        "derivedActivityCount": 2,
+        "derivedActivitiesDigest": "d7b11c11d8a62e0ed488d6fe8f3f0b6b95cc2ac79a1ef76ae0ea5fe746f8d06b"
+      }
+    },
+    {
+      "case": "Q31",
+      "fields": {
+        "authenticatedRevision": "old-r1"
+      },
+      "baseline": {
+        "state": "HOLD",
+        "reason": "provider_activity_identity_missing",
+        "derivationProtocol": "AUTHENTICATED_LEDGER_ACTIVITY_V1",
+        "derivedActivityCount": 1,
+        "derivedActivitiesDigest": "4abdd0f44f9eebd59f2ee22a7f0257450f1ea7fd70f79e7ab97fa4e08e4185d6"
+      },
+      "corrected": {
+        "state": "HOLD",
+        "reason": "provider_retired_identity_ambiguous",
+        "derivationProtocol": "AUTHENTICATED_LEDGER_ACTIVITY_V1",
+        "derivedActivityCount": 2,
+        "derivedActivitiesDigest": "d234c47237590d85981984cf21b46f4c30605aadc33016806e519d3e9878d7f9"
+      }
+    },
+    {
+      "case": "conflicting-epoch",
+      "fields": {
+        "authenticatedEpoch": 2,
+        "authenticatedRevision": "old-r1"
+      },
+      "baseline": {
+        "state": "EVIDENCE_READY",
+        "timeModel": "BOUNDED_DRIFT_V2",
+        "physicalBoundary": 59000,
+        "declaredAt": 299000,
+        "evidenceCompletedAt": 530000,
+        "thresholdBasis": "PROVISIONAL_SYNTHETIC_TARGET",
+        "derivationProtocol": "AUTHENTICATED_LEDGER_ACTIVITY_V1",
+        "derivedActivityCount": 0,
+        "derivedActivitiesDigest": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "evidenceDigest": "b9740b54e1469e9ca31dca8c2edac0171b0815c1d94c9725f9aaad13e2594d07"
+      },
+      "corrected": {
+        "state": "HOLD",
+        "reason": "provider_retired_identity_ambiguous",
+        "derivationProtocol": "AUTHENTICATED_LEDGER_ACTIVITY_V1",
+        "derivedActivityCount": 2,
+        "derivedActivitiesDigest": "ed14afd0722ac9c05746cb3f5c87932809ce94f167594c254613187c64b42c14"
+      }
+    },
+    {
+      "case": "exact-old",
+      "fields": {
+        "authenticatedEpoch": 1,
+        "authenticatedRevision": "old-r1"
+      },
+      "baseline": {
+        "state": "VIOLATION",
+        "reason": "post_fence_initiation",
+        "derivationProtocol": "AUTHENTICATED_LEDGER_ACTIVITY_V1",
+        "derivedActivityCount": 2,
+        "derivedActivitiesDigest": "775ba3e7c6429bc8ba251646f1a20a0401d262351cc6bfa42f994b3d8ce4030a"
+      },
+      "corrected": {
+        "state": "VIOLATION",
+        "reason": "post_fence_initiation",
+        "derivationProtocol": "AUTHENTICATED_LEDGER_ACTIVITY_V1",
+        "derivedActivityCount": 2,
+        "derivedActivitiesDigest": "775ba3e7c6429bc8ba251646f1a20a0401d262351cc6bfa42f994b3d8ce4030a"
+      }
+    }
+  ]
+}

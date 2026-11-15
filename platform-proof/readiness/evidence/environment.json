@@ -1,0 +1,29 @@
+{
+  "scope": "LOCAL_LINUX_SYNTHETIC_NOT_GCP",
+  "testedSource": "9b526c048d5df1b3fbcf03e8f33c3ba53979b492",
+  "testedTree": "74801a03193011c24385d6ff36fb60178d61f107",
+  "node": "v24.19.0",
+  "npm": "11.9.0",
+  "python": "3.12.14",
+  "kernel": "6.18.57",
+  "architecture": "x86_64",
+  "postgresImage": "postgres@sha256:839fbb5a4942a7758dd93e18b42ea5649807491a0545b5eeeb8f0b8bb11857a5",
+  "postgresMeasuredEvidence": "native/full-v2-retirement-gates/result.json (copied after all suites complete)",
+  "terraform": {
+    "format_version": "1.0",
+    "terraform_version": "1.17.2",
+    "platform": "linux_amd64",
+    "provider_selections": {},
+    "terraform_outdated": false
+  },
+  "cloudCalls": 0,
+  "cloudCredentialsAccessed": false,
+  "registryPush": false,
+  "spendingAuthorized": false,
+  "independentHumanImageReproduction": false,
+  "nativeWindows": "NOT_EXECUTED",
+  "postgresMeasured": {
+    "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg12+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 12.2.0-14+deb12u1) 12.2.0, 64-bit",
+    "timezone": "UTC"
+  }
+}

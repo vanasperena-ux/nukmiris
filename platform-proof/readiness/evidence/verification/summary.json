@@ -1,0 +1,182 @@
+{
+  "scope": "LOCAL_REVERIFICATION_AT_RECORDED_TIMES_NOT_GCP_AUTHORITY",
+  "testedSource": "9b526c048d5df1b3fbcf03e8f33c3ba53979b492",
+  "ledgers": [
+    {
+      "suite": "full",
+      "verifier": "scripts/verify-evidence.mjs",
+      "cases": 27,
+      "exitCode": 0
+    },
+    {
+      "suite": "full",
+      "verifier": "b1a/verify-evidence.mjs",
+      "cases": 27,
+      "exitCode": 0
+    },
+    {
+      "suite": "fault",
+      "verifier": "scripts/verify-evidence.mjs",
+      "cases": 23,
+      "exitCode": 0
+    },
+    {
+      "suite": "fault",
+      "verifier": "b1a/verify-evidence.mjs",
+      "cases": 23,
+      "exitCode": 0
+    },
+    {
+      "suite": "concurrency",
+      "verifier": "scripts/verify-evidence.mjs",
+      "cases": 6,
+      "exitCode": 0
+    },
+    {
+      "suite": "concurrency",
+      "verifier": "b1a/verify-evidence.mjs",
+      "cases": 6,
+      "exitCode": 0
+    }
+  ],
+  "retirements": [
+    {
+      "suite": "full",
+      "derivedActivityCount": 1,
+      "state": "EVIDENCE_READY"
+    },
+    {
+      "suite": "fault",
+      "derivedActivityCount": 1,
+      "state": "EVIDENCE_READY"
+    },
+    {
+      "suite": "concurrency",
+      "derivedActivityCount": 1,
+      "state": "EVIDENCE_READY"
+    },
+    {
+      "historicalFile": "b1a2/evidence/retirement/concurrency.json",
+      "originalSource": "ecc085f3a2e413c9f3a228066292b81ad9c1be73",
+      "derivedActivityCount": 0,
+      "state": "EVIDENCE_READY",
+      "originalResultPreserved": true
+    },
+    {
+      "historicalFile": "b1a2/evidence/retirement/fault.json",
+      "originalSource": "ecc085f3a2e413c9f3a228066292b81ad9c1be73",
+      "derivedActivityCount": 0,
+      "state": "EVIDENCE_READY",
+      "originalResultPreserved": true
+    },
+    {
+      "historicalFile": "b1a2/evidence/retirement/full.json",
+      "originalSource": "ecc085f3a2e413c9f3a228066292b81ad9c1be73",
+      "derivedActivityCount": 0,
+      "state": "EVIDENCE_READY",
+      "originalResultPreserved": true
+    },
+    {
+      "historicalFile": "b1a2/evidence/c1-c2/retirement/concurrency.json",
+      "originalSource": "ade1c3be3b66f81aa05a26e06fa6c8e707d0526c",
+      "derivedActivityCount": 1,
+      "state": "EVIDENCE_READY",
+      "originalResultPreserved": true
+    },
+    {
+      "historicalFile": "b1a2/evidence/c1-c2/retirement/fault.json",
+      "originalSource": "ade1c3be3b66f81aa05a26e06fa6c8e707d0526c",
+      "derivedActivityCount": 1,
+      "state": "EVIDENCE_READY",
+      "originalResultPreserved": true
+    },
+    {
+      "historicalFile": "b1a2/evidence/c1-c2/retirement/full.json",
+      "originalSource": "ade1c3be3b66f81aa05a26e06fa6c8e707d0526c",
+      "derivedActivityCount": 1,
+      "state": "EVIDENCE_READY",
+      "originalResultPreserved": true
+    },
+    {
+      "historicalFile": "b1a2/evidence/c1-c2/retirement/targeted.json",
+      "originalSource": "ade1c3be3b66f81aa05a26e06fa6c8e707d0526c",
+      "derivedActivityCount": 1,
+      "state": "EVIDENCE_READY",
+      "originalResultPreserved": true
+    }
+  ],
+  "transit": [
+    {
+      "suite": "targeted",
+      "state": "VIOLATION",
+      "gate": {
+        "state": "HOLD",
+        "reason": "transit_violation_abort_and_independent_kill_required",
+        "collectionState": "VIOLATION",
+        "dispatchEnabled": false,
+        "promotionAuthorized": false,
+        "automaticResend": false,
+        "newIdentityAllocated": false
+      },
+      "signaturesVerified": true,
+      "fullLedgerChainAndDigestVerified": true,
+      "oldTlsReady": 1,
+      "requests": 1,
+      "effects": 1
+    },
+    {
+      "suite": "full",
+      "state": "VIOLATION",
+      "gate": {
+        "state": "HOLD",
+        "reason": "transit_violation_abort_and_independent_kill_required",
+        "collectionState": "VIOLATION",
+        "dispatchEnabled": false,
+        "promotionAuthorized": false,
+        "automaticResend": false,
+        "newIdentityAllocated": false
+      },
+      "signaturesVerified": true,
+      "fullLedgerChainAndDigestVerified": true,
+      "oldTlsReady": 1,
+      "requests": 1,
+      "effects": 1
+    },
+    {
+      "suite": "fault",
+      "state": "VIOLATION",
+      "gate": {
+        "state": "HOLD",
+        "reason": "transit_violation_abort_and_independent_kill_required",
+        "collectionState": "VIOLATION",
+        "dispatchEnabled": false,
+        "promotionAuthorized": false,
+        "automaticResend": false,
+        "newIdentityAllocated": false
+      },
+      "signaturesVerified": true,
+      "fullLedgerChainAndDigestVerified": true,
+      "oldTlsReady": 1,
+      "requests": 1,
+      "effects": 1
+    },
+    {
+      "suite": "concurrency",
+      "state": "VIOLATION",
+      "gate": {
+        "state": "HOLD",
+        "reason": "transit_violation_abort_and_independent_kill_required",
+        "collectionState": "VIOLATION",
+        "dispatchEnabled": false,
+        "promotionAuthorized": false,
+        "automaticResend": false,
+        "newIdentityAllocated": false
+      },
+      "signaturesVerified": true,
+      "fullLedgerChainAndDigestVerified": true,
+      "oldTlsReady": 1,
+      "requests": 1,
+      "effects": 1
+    }
+  ]
+}

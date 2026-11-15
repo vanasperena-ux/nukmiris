@@ -1,0 +1,175 @@
+
+> nukmiris-inc1-local-proof@0.1.0 test
+> node --test --test-concurrency=1 test/*.test.mjs
+
+✔ B-2/P4: authenticated post-fence initiation is VIOLATION before metrics completeness (15.043698ms)
+✔ B-2: a conclusive write or older-epoch connect cannot be hidden by unrelated invalid fields (3.182845ms)
+✔ B-2: incomplete, stale, contradictory samples never turn pre-fence traffic into containment proof (7.255128ms)
+✔ B-2: explicit measured clock uncertainty and named clock sources are mandatory for CLOUD (4.699312ms)
+✔ B-2: measured offsets across two clocks distinguish pre-fence bytes, ambiguity and post-fence initiation (4.085783ms)
+✔ B-2: caller-controlled sourceVerified, serialized copies and mutated evidence have no authority (1.988105ms)
+✔ B-2: trusted issuer, public-key pin, role, session, and signature are independently checked (1.652118ms)
+✔ B-2: authentic expired records cannot PASS but retain a conclusive historical violation (2.07896ms)
+✔ B-2: four-timestamp clock calibration rejects contradictory samples and includes drift/precision (0.346143ms)
+{"nativeClockMeasurement":{"referenceClockSource":"native-parent-observer","remoteClockSource":"native-child-modeled-offset1000","remoteMinusReferenceMs":1000,"measuredAt":1794700121281,"validUntil":1794700126281,"uncertaintyMs":2.25,"samples":[[1794700121279,1794700122280,1794700122280,1794700121280],[1794700121280,1794700122280,1794700122280,1794700121280],[1794700121280,1794700122280,1794700122280,1794700121280],[1794700121280,1794700122280,1794700122280,1794700121280],[1794700121280,1794700122280,1794700122280,1794700121280],[1794700121280,1794700122280,1794700122280,1794700121281],[1794700121281,1794700122281,1794700122281,1794700121281],[1794700121281,1794700122281,1794700122281,1794700121281],[1794700121281,1794700122281,1794700122281,1794700121281],[1794700121281,1794700122281,1794700122281,1794700121281],[1794700121281,1794700122281,1794700122281,1794700121281],[1794700121281,1794700122281,1794700122281,1794700121281]],"cloudClockMeasurement":false}}
+✔ native four-timestamp clock sampling measures explicit uncertainty; no cloud-default tolerance (33.009854ms)
+▶ B-8: intentional PostgreSQL startup failure captures state/logs before scoped cleanup
+  ✔ failed owned fixture (7913.146907ms)
+✔ B-8: intentional PostgreSQL startup failure captures state/logs before scoped cleanup (7931.095268ms)
+✔ B-8: diagnostics redact generated secrets and bound log size (0.438509ms)
+✔ published evidence verifier consumes the exact helper scope and testedSource schema (43.591691ms)
+✔ published evidence verifier rejects missing source pin and a false hash-chain head (99.859077ms)
+✔ B-4: BEFORE_SERVER cannot mint a continuation without a confirmed COMMIT (4296.668944ms)
+✔ B-4: ACK_LOST cannot mint a continuation without a confirmed COMMIT (5061.709371ms)
+✔ B-4: ROLLBACK_TAG cannot mint a continuation without a confirmed COMMIT (5696.027171ms)
+✔ B-5: positive proof BAD_EPOCH remains UNKNOWN and is never resent (4167.803362ms)
+✔ B-5: positive proof BAD_REVISION remains UNKNOWN and is never resent (4629.075764ms)
+✔ B-3: stop sends only direct SIGKILL to an observed stopped process (3946.063309ms)
+✔ B-5: prepared Cloud SQL config requires a CA and DNS verification; no network or ADC (3374.889514ms)
+✔ independent fake ledger authenticates per-epoch client certificate; spoofed epoch cannot apply (5125.788877ms)
+✔ cloud profile is pure privileged configuration; serialized or copied capabilities cannot bypass literal local defaults (5001.218358ms)
+✔ B-1/P2: complete 54-cell cross-product, 20 real instrumented suspensions per cell (136034.217714ms)
+ℹ B1a cross-product completed 180/1080
+ℹ B1a cross-product completed 360/1080
+ℹ B1a cross-product completed 540/1080
+ℹ B1a cross-product completed 720/1080
+ℹ B1a cross-product completed 900/1080
+ℹ B1a cross-product completed 1080/1080
+✔ B-1/P3: 400 uninstrumented asynchronous suspensions, 130 direct kills and durable replay decisions (47657.817441ms)
+ℹ B1a asynchronous completed 100/400
+ℹ B1a asynchronous completed 200/400
+ℹ B1a asynchronous completed 300/400
+ℹ B1a asynchronous completed 400/400
+✔ B-5: native PostgreSQL TLS verifies both CA and hostname without fallback (5060.269572ms)
+✔ B-2/B-3: real stopped/kill trace distinguishes pre-exit bytes from later provider application (4768.893648ms)
+✔ B1a controller prints exact seven steps, independent kill, no execute mode or cloud SDK (41.62162ms)
+✔ B1a inventory covers EVERY generated resource and teardown explicitly carries retained descendants (2.730945ms)
+✔ B1a network/IAM/SQL bounds, alerts and spend-cap template preserve fail-closed boundary (2.076406ms)
+✔ inert container profile health is alive, readiness/invocation false across restart (17.176316ms)
+✔ elapsed-time supervisor plans teardown on deadline and never resurrects on monthly reset or regressed clock (1.023106ms)
+✔ retirement contract: complete authenticated modeled bundle required; absent data holds (9.709865ms)
+✔ session SQL: billing pause/reset and process restart leave dispatch durably inert (5279.791139ms)
+✔ session SQL: immutable six-hour limit and expiry prevent new entry (3916.033668ms)
+✔ sealer: unavailable, cold, failed journal or dishonest response never causes a false ACK (4554.018097ms)
+✔ retirement promotion rejects another session, scope or predecessor even when signed bundle is internally valid (4.026084ms)
+✔ B1a aggregate gateway SQL login cap bounds old/new overlap without privilege fallback (4290.908968ms)
+✔ B1a controller recovery marks only retired ENTERED as UNKNOWN, preserving original bindings (4834.476416ms)
+✔ P-2 Google protocol adapters use only localhost fixtures; typed metric states are complete and immutable (22.913877ms)
+✔ P-2 live cloud/credential access cannot be enabled by environment or flags (0.365852ms)
+✔ P-5 threshold, budget reset/delay, capacity pause, worker restart, suspension/recovery and expiry never auto-enable (1.100771ms)
+✔ P-5 journal failure cannot prevent hold, unavailable SQL triggers independent emergency and stops renewal (0.397008ms)
+✔ P-1/P-5 independent renewal cannot restore expired/revoked authority or survive a failed renewal (0.496907ms)
+✔ C-2/P6b: historical V1 remains verifiable but every B1a-2 operational, recovery and promotion gate refuses it (13.679675ms)
+✔ C-2: V2 fence with a legacy primary or additional clock also fails closed (2.967687ms)
+✔ C-2: corrected V2 evidence still reconciles original work and explicitly promotes through restricted PostgreSQL (5091.977249ms)
+✔ P-3 durable seven-step local simulation, crash after CAS, readback without replay and independent emergency (11.559064ms)
+✔ P-3 unknown outcome or missing permission holds; cannot replay, promote, or impersonate deployer (1.453283ms)
+✔ P-6 every generated resource has dependency-ordered teardown and residual policy (10.48998ms)
+✔ D-3 emergency remains executable with an unresolved operation and unavailable SQL hold (1.470929ms)
+✔ P-1/P-6 GCS recovery lists the bucket and reads only current-session objects; managed IAM principals exist before binding (5.079345ms)
+✔ P-7 exact synthetic fixture validates locally, never as an owner provisioning plan (4.595668ms)
+✔ P-7 missing or inconsistent account/session/operator/image inputs fail closed (0.690463ms)
+✔ P-5 MXN amount derives from explicit USD/approved FX; stale,missing or inconsistent conversion rejects (0.331982ms)
+✔ P-5 tax,FX uncertainty,lag and retained costs are explicit sensitivities (0.278633ms)
+✔ P-1/P-2 ambiguous custody PUT resolves only original immutable slot; concurrent writers cannot fork (41.140679ms)
+✔ P-4 provider crash restart requires independently retained head; corrupt, missing and partial writes hold (8.544498ms)
+✔ D-2/P-2 end-to-end independent adapters: real mTLS clock/ledger, Google-shaped 60s/120s metrics, 20 native stopped canaries and signed retirement (1561.789008ms)
+✔ P-2 forged caller wake booleans cannot become signed canary evidence (2.148944ms)
+✔ D-3 every concrete command maps to its independent principal and scoped IAM permissions (5.617973ms)
+✔ D-3 missing traffic/delete/firewall/actAs rights block instead of borrowing deployer (1.331032ms)
+✔ P-3 seven steps remain ordered; CLI/CI execution flags cannot invoke any cloud command (128.759114ms)
+✔ P-2/P-7 exact service/API/quota protocol preflight holds on unknown, missing or mismatched evidence (55.139158ms)
+✔ P-1 cross-process preparation requires independent actual config and purpose-bound signed identities for all roles (43.428038ms)
+✔ P-4 deployable fake accepts epoch-bound mTLS effect; observer exports fsynced ledger; unauthorized identities reject (396.061822ms)
+✔ P-4 modeled old-tag deny blocks only new connections, preserving the established-flow termination requirement (0.351701ms)
+✔ D-2 realistic 60s sampling,120s visibility delay,20 delayed canaries reaches EVIDENCE_READY (9.291675ms)
+✔ C-1/P10b: authenticated TLS/REQUEST/EFFECT eight minutes after fence cannot be hidden by caller activities (4.855824ms)
+✔ C-1/P10b: signed transit interval overlapping fence is HOLD with an empty caller list (3.168184ms)
+✔ C-1/H-1: standalone old TLS and REQUEST are violations; an unbound EFFECT never fabricates initiation (8.534414ms)
+✔ C-1/P9: canary REQUEST outranks unrelated incomplete trial, only 19 trials, metrics and short tail (7.328376ms)
+✔ C-1: scan all authenticated activity before HOLD for another interval, metrics, deletion or trials (3.918615ms)
+✔ C-1: delayed application inherits the original pre-fence request, but a later write is a violation (4.21247ms)
+✔ C-1: only a signed bounded transit policy can authorize derived activity (6.149561ms)
+✔ C-1: signature, session, chain, checkpoint and exact records digest fail closed before a violation (5.592365ms)
+✔ C-1: a caller activity cannot alter the ledger-derived digest or invent a violation (4.892448ms)
+✔ C-1/H-2: all three original signed realistic-latency bundles reverify without changing historical results (16.336543ms)
+✔ D-2 physical deadline is separate from delayed reporting and cannot be waived (3.106161ms)
+✔ D-2 every state and every sampling interval must be present, zero and fresh (11.479716ms)
+✔ D-2 missing/late deletion and incomplete canary or network-tail evidence holds (9.215121ms)
+✔ D-2 frozen old sender after minutes is VIOLATION even with incomplete unrelated metrics (1.767778ms)
+✔ D-2 pre-fence initiation with delayed application is retained; stale signatures cannot promote (5.708007ms)
+✔ P-1 all five restricted roles support pinned private SQL TLS; runtime never accepts installer/admin, public host or fallback (414.49779ms)
+✔ P-1 mounted identity/session/epoch/revision/expiry/image/secret invalid states remain inert (8.818234ms)
+✔ P-1 full synthetic SQL admission → independent custody → worker → COMMIT-gated gateway → mTLS fake, restart and revocation (5973.26609ms)
+✔ P-3 exact teardown preserves independent cleanup authority, handles lost destroy ack, forbids replay and unknown/replaced state (2.259758ms)
+✔ P-3 independent NAT/permission/key-version absence is not fabricated from a nonexistent NAT subresource or missing state (25.597894ms)
+✔ D-1/P5 authenticated late initiation 10000ms remains VIOLATION (9.523939ms)
+✔ D-1/P5 authenticated late initiation 150000ms remains VIOLATION (3.032443ms)
+✔ D-1/P5 authenticated late initiation 600000ms remains VIOLATION (2.128272ms)
+✔ D-1 bounded extrapolation does not invent precision beyond horizon or at overlapping boundary (2.711277ms)
+✔ D-1 multiple authenticated measurements intersect; inconsistent offsets fail closed (2.754601ms)
+✔ campaign: 1000 randomized real SIGSTOP/SIGCONT schedules, all classified (91398.901359ms)
+ℹ completed 100 real suspended/resumed schedules
+ℹ completed 200 real suspended/resumed schedules
+ℹ completed 300 real suspended/resumed schedules
+ℹ completed 400 real suspended/resumed schedules
+ℹ completed 500 real suspended/resumed schedules
+ℹ completed 600 real suspended/resumed schedules
+ℹ completed 700 real suspended/resumed schedules
+ℹ completed 800 real suspended/resumed schedules
+ℹ completed 900 real suspended/resumed schedules
+ℹ completed 1000 real suspended/resumed schedules
+✔ concurrency: one invocation for 32 same-attempt callers, replay and distinct operations (4883.831433ms)
+✔ faults: lost COMMIT acknowledgement cannot recreate a permit (5136.557608ms)
+✔ faults: provider response loss, rejection, TLS stall and deadline stay held without resend (5959.777907ms)
+✔ faults: crash after COMMIT, restart and replay keep ENTERED/UNKNOWN non-resumable (4540.309175ms)
+✔ faults: pre-exit accepted request can apply after completed local termination (3955.033653ms)
+✔ faults: scope binding, immutable operation and role separation (4015.496582ms)
+✔ counterexample: unsafe keep-alive sends again on an old connection; corrected gateway never does (3745.528381ms)
+✔ dead-man: 20 independently awakened stopped processes; silence is not death (10804.420948ms)
+▶ fixture: labeled independent SQL volume is removed after the fixture closes
+  ✔ create and use disposable volume (4760.148678ms)
+✔ fixture: labeled independent SQL volume is removed after the fixture closes (4774.460971ms)
+✔ permission: consume once in gateway continuation; durable row/replay is never a ticket (4489.313456ms)
+✔ permission: gateway cannot plan/rearm; invalid binding fails UNKNOWN with no network (3807.311117ms)
+✔ permission: both authority/COMMIT race orders serialize; retirement is not physical fencing (3718.768393ms)
+✔ plan pins: Enterprise/shared-core, region, limits, identity/epoch, no retained/final backups (5.765522ms)
+✔ plan-only guard: all resources depend on impossible apply gate; no live token or auto-apply workflow (1.745436ms)
+✔ operational tools are print-only and reject execution; exactly seven fence steps (117.750796ms)
+✔ additive offline calculator reproduces prior evidence and six-hour/max-one/G1 scenarios (51.036684ms)
+✔ G-3 offline account receipt template never grants readiness; published schema/template are exact and no account facts invented (6.949766ms)
+✔ G-3 structurally valid simulated receipts retain runtime/account/cloud hold and separate technical identities despite one human (1.378042ms)
+✔ G-3 missing account facts, invalid currency/FX, unknown keys, stale evidence, window and impersonation ambiguity hold (4.860931ms)
+✔ O-4/5/6/7 six-hour cost model reproducible, $2 restore removed, contingency/tax/FX/lag/retention separated; repeats consume allocation (139.414329ms)
+✔ O-5 supports $30 offline alert conversion only with explicit current FX; unchanged historical $20 remains valid; >30 rejects (1.950509ms)
+✔ H-3 Q29/Q30/Q31 partial retired identities are retained as HOLD, never ignored (16.514006ms)
+✔ H-3 conclusive authenticated old traffic remains VIOLATION despite misleading header identities or another partial record (3.869143ms)
+✔ H-3 provider startup rejects missing/wrong/conflicting gateway maps before listening (1.272926ms)
+✔ H-3 mounted live profile cannot redefine the approved gateway epoch/revision pair (3.488087ms)
+✔ G-2 native separate process SIGSTOP after TLS then post-fence write on that same connection is a violation; signed raw ledger preserved (554.944841ms)
+✔ G-3 sole human may independently construct kill/cleanup controllers with NO deployer grants/credential and seven shutdown steps remain exact (25.131442ms)
+✔ G-3 every exact inventory resource has a receipt slot, manual billing and nondeletable KMS residuals remain explicit (174.180575ms)
+✔ G-3 cleanup restart replays authenticated intent; no repeated destructive call; missing Terraform state is NOT independent absence (35.819927ms)
+✔ G-3 cleanup corrupt ledger and changed original identity fail closed before destructive calls (3.438845ms)
+✔ G-2/1 valid independently signed sample collects conservative intervals but never certifies a finite cloud bound (8.950169ms)
+✔ G-2/2 missing, forged, copied and stale source evidence hold (7.056774ms)
+✔ G-2/3,5 long delivery/buffering after a pre-fence write is held without relabeling it as a new send (2.976439ms)
+✔ G-2/4,6 frozen old sender writes on its pre-fence connection after the fence: VIOLATION (3.400889ms)
+✔ G-2/7 mismatched session, provider, epoch, revision, flow or raw digest never becomes accepted measurement (2.572501ms)
+✔ G-2/8 uncertain fence ordering, incomplete phases and inconsistent clock ordering hold (5.788165ms)
+✔ G-2/9 signed but late/unobserved canary wake holds; unsigned assertions are rejected (3.368691ms)
+✔ G-2/10 absent or exceeded hypotheses and cloud-scoped sample maxima cannot authorize retirement (6.400422ms)
+✔ G-2 probe refuses cloud mode, remote targets and non-synthetic payload before socket access (0.559238ms)
+✔ G-2 invalid clock collection, missing provider pin and outside-horizon export timestamp hold without throwing (2.865205ms)
+✔ isolation: literal loopback, isolated database names and roles only (0.946823ms)
+✔ ledger: modify, reorder, truncate, rehash and partial-record tampering fail against independent checkpoint (14.867005ms)
+✔ classifier: pre-fence late arrival differs from post-fence initiation (0.39853ms)
+✔ classifier: absent, stale, wrong-scope, missing deletion and heartbeat-only evidence fail closed (5.334643ms)
+ℹ tests 140
+ℹ suites 0
+ℹ pass 140
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 435622.853545
