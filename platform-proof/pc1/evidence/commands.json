@@ -1,0 +1,141 @@
+[
+  {
+    "stage": "full",
+    "argv": [
+      "npm",
+      "test"
+    ],
+    "source": "78f182b2282cbbeb39408c3d57fae841ca70aab5",
+    "cwd": "platform-proof",
+    "startedAt": "2026-11-15T19:37:26.151938+00:00",
+    "finishedAt": "2026-11-15T19:44:34.687457+00:00",
+    "durationSeconds": 428.5355304910008,
+    "exitCode": 0
+  },
+  {
+    "stage": "fault",
+    "argv": [
+      "npm",
+      "run",
+      "test:fault"
+    ],
+    "source": "78f182b2282cbbeb39408c3d57fae841ca70aab5",
+    "cwd": "platform-proof",
+    "startedAt": "2026-11-15T19:44:34.689349+00:00",
+    "finishedAt": "2026-11-15T19:51:03.285300+00:00",
+    "durationSeconds": 388.5959730659997,
+    "exitCode": 0
+  },
+  {
+    "stage": "concurrency",
+    "argv": [
+      "npm",
+      "run",
+      "test:concurrency"
+    ],
+    "source": "78f182b2282cbbeb39408c3d57fae841ca70aab5",
+    "cwd": "platform-proof",
+    "startedAt": "2026-11-15T19:51:03.286363+00:00",
+    "finishedAt": "2026-11-15T19:51:45.175196+00:00",
+    "durationSeconds": 41.888848614999006,
+    "exitCode": 0
+  },
+  {
+    "stage": "readiness",
+    "argv": [
+      "npm",
+      "run",
+      "test:readiness"
+    ],
+    "source": "78f182b2282cbbeb39408c3d57fae841ca70aab5",
+    "cwd": "platform-proof",
+    "startedAt": "2026-11-15T19:51:45.176611+00:00",
+    "finishedAt": "2026-11-15T19:51:46.652025+00:00",
+    "durationSeconds": 1.4754269830009434,
+    "exitCode": 0
+  },
+  {
+    "stage": "python",
+    "argv": [
+      "python3",
+      "-I",
+      "pc1/test_security.py"
+    ],
+    "source": "78f182b2282cbbeb39408c3d57fae841ca70aab5",
+    "cwd": "platform-proof",
+    "startedAt": "2026-11-15T19:51:46.652939+00:00",
+    "finishedAt": "2026-11-15T19:51:50.715454+00:00",
+    "durationSeconds": 4.062524078999559,
+    "exitCode": 0
+  },
+  {
+    "stage": "scope",
+    "argv": [
+      "npm",
+      "run",
+      "pc1:check"
+    ],
+    "source": "78f182b2282cbbeb39408c3d57fae841ca70aab5",
+    "cwd": "platform-proof",
+    "startedAt": "2026-11-15T19:51:50.716770+00:00",
+    "finishedAt": "2026-11-15T19:51:54.562959+00:00",
+    "durationSeconds": 3.846205990999806,
+    "exitCode": 0
+  },
+  {
+    "stage": "readiness-scope",
+    "argv": [
+      "npm",
+      "run",
+      "readiness:check"
+    ],
+    "source": "78f182b2282cbbeb39408c3d57fae841ca70aab5",
+    "cwd": "platform-proof",
+    "startedAt": "2026-11-15T19:51:54.564955+00:00",
+    "finishedAt": "2026-11-15T19:51:58.164209+00:00",
+    "durationSeconds": 3.599246566000147,
+    "exitCode": 0
+  },
+  {
+    "stage": "base-scope",
+    "argv": [
+      "npm",
+      "run",
+      "check"
+    ],
+    "source": "78f182b2282cbbeb39408c3d57fae841ca70aab5",
+    "cwd": "platform-proof",
+    "startedAt": "2026-11-15T19:51:58.166624+00:00",
+    "finishedAt": "2026-11-15T19:51:58.682954+00:00",
+    "durationSeconds": 0.5163420809985837,
+    "exitCode": 0
+  },
+  {
+    "stage": "b1a-scope",
+    "argv": [
+      "npm",
+      "run",
+      "b1a:check"
+    ],
+    "source": "78f182b2282cbbeb39408c3d57fae841ca70aab5",
+    "cwd": "platform-proof",
+    "startedAt": "2026-11-15T19:51:58.683843+00:00",
+    "finishedAt": "2026-11-15T19:51:59.354067+00:00",
+    "durationSeconds": 0.670253928999955,
+    "exitCode": 0
+  },
+  {
+    "stage": "b1a2-scope",
+    "argv": [
+      "npm",
+      "run",
+      "b1a2:check"
+    ],
+    "source": "78f182b2282cbbeb39408c3d57fae841ca70aab5",
+    "cwd": "platform-proof",
+    "startedAt": "2026-11-15T19:51:59.354659+00:00",
+    "finishedAt": "2026-11-15T19:52:00.482881+00:00",
+    "durationSeconds": 1.128234436000639,
+    "exitCode": 0
+  }
+]

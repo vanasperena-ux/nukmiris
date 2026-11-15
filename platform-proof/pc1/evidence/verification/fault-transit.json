@@ -1,0 +1,62 @@
+{
+  "scope": "LOCAL_REPLAY_AT_RECORDED_TIME_NOT_LIVE_PROMOTION_AUTHORITY",
+  "runtimeSource": "78f182b2282cbbeb39408c3d57fae841ca70aab5",
+  "signaturesVerified": true,
+  "ledgerChainAndDigestVerified": true,
+  "result": {
+    "state": "VIOLATION",
+    "reason": "independently_observed_post_fence_initiation",
+    "dispatchEnabled": false,
+    "promotionAuthorized": false,
+    "containmentProven": false,
+    "observedDelayMs": {
+      "lower": 0,
+      "upper": 13.5146484375
+    },
+    "phaseIntervals": {
+      "CONNECT_BEGIN": {
+        "lower": 1794772262938.4976,
+        "upper": 1794772262951.5024,
+        "uncertaintyMs": 6.50244140625
+      },
+      "TCP_CONNECTED": {
+        "lower": 1794772262945.497,
+        "upper": 1794772262958.503,
+        "uncertaintyMs": 6.5029296875
+      },
+      "TLS_ESTABLISHED": {
+        "lower": 1794772262948.497,
+        "upper": 1794772262961.503,
+        "uncertaintyMs": 6.5029296875
+      },
+      "WRITE_BEGIN": {
+        "lower": 1794772263032.4927,
+        "upper": 1794772263045.5073,
+        "uncertaintyMs": 6.50732421875
+      },
+      "WRITE_END": {
+        "lower": 1794772263033.4927,
+        "upper": 1794772263046.5073,
+        "uncertaintyMs": 6.50732421875
+      }
+    },
+    "providerArrival": {
+      "lower": 1794772263032.9927,
+      "upper": 1794772263046.0073,
+      "uncertaintyMs": 6.50732421875
+    },
+    "connectionId": "64e4e729-8e65-4441-acac-6a9869bd7bcb",
+    "evidenceDigest": "71ec0f11e98a9a00ebf4cc36f92f1f0365a416223b72481aea590cdc3cec77ee",
+    "sampleCount": 1,
+    "initiationClass": "POST_FENCE"
+  },
+  "gate": {
+    "state": "HOLD",
+    "reason": "transit_violation_abort_and_independent_kill_required",
+    "collectionState": "VIOLATION",
+    "dispatchEnabled": false,
+    "promotionAuthorized": false,
+    "automaticResend": false,
+    "newIdentityAllocated": false
+  }
+}

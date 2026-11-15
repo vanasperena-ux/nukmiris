@@ -1,0 +1,38 @@
+# Paste this block in an ordinary Windows PowerShell console from the extracted
+# PC1 kit folder. This is interactive input, not an unsigned .ps1 invocation.
+# Do not change ExecutionPolicy, use -ExecutionPolicy Bypass, or run as admin.
+$ErrorActionPreference = 'Stop'
+$Distro = 'Ubuntu-24.04'                  # Your Docker-integrated WSL2 distro
+$MachineLabel = 'owner-separate-host-2'  # Non-secret operator-chosen label
+$DockerImageStore = 'classic'           # Set to actual choice: classic/containerd
+$windows = Get-CimInstance -ClassName Win32_OperatingSystem
+if ($windows.Caption -notmatch 'Windows 11') { throw 'Windows 11 required.' }
+if (-not [Environment]::Is64BitOperatingSystem) { throw 'Windows x64 required.' }
+$desktopPath = Join-Path $env:ProgramFiles 'Docker\Docker\Docker Desktop.exe'
+if (-not (Test-Path -LiteralPath $desktopPath)) { throw 'Read Docker Desktop About version and adapt only this receipt capture; no silent version guess.' }
+$desktopVersion = (Get-Item -LiteralPath $desktopPath).VersionInfo.ProductVersion
+$wslVersion = (& wsl.exe --version 2>&1 | Out-String).Trim()
+if ($LASTEXITCODE -ne 0) { throw 'Cannot read WSL version.' }
+$receipt = Join-Path (Get-Location).Path 'windows-host.json'
+if (Test-Path -LiteralPath $receipt) { throw 'Host receipt already exists. Preserve it; use a fresh extracted kit folder.' }
+[ordered]@{
+  capturedAtUtc = (Get-Date).ToUniversalTime().ToString('o')
+  windowsCaption = $windows.Caption
+  windowsVersion = $windows.Version
+  windowsBuild = $windows.BuildNumber
+  os64Bit = [Environment]::Is64BitOperatingSystem
+  selectedDistro = $Distro
+  wslVersion = $wslVersion
+  dockerDesktopVersion = $desktopVersion
+  selectedDockerImageStore = $DockerImageStore
+  operatorMachineLabel = $MachineLabel
+  executionPolicy = @(Get-ExecutionPolicy -List | Select-Object Scope, ExecutionPolicy)
+  captureMethod = 'INTERACTIVE_POWERSHELL_NO_POLICY_CHANGE'
+} | ConvertTo-Json -Depth 5 | Set-Content -LiteralPath $receipt -Encoding UTF8
+Get-FileHash -Algorithm SHA256 -LiteralPath $receipt
+$kitWsl = (& wsl.exe -d $Distro --exec wslpath -a -u (Get-Location).Path | Out-String).Trim()
+if ($LASTEXITCODE -ne 0) { throw 'Cannot resolve kit path in WSL.' }
+$receiptWsl = (& wsl.exe -d $Distro --exec wslpath -a -u $receipt | Out-String).Trim()
+if ($LASTEXITCODE -ne 0) { throw 'Cannot resolve receipt path in WSL.' }
+# Run only after checking the kit checksum and reading README.md:
+# & wsl.exe -d $Distro --exec /usr/bin/env -u BASH_ENV -u ENV bash --noprofile --norc ($kitWsl + '/verify-pc1-wsl.sh') $receiptWsl

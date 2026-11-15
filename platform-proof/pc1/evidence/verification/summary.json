@@ -1,0 +1,139 @@
+[
+  {
+    "suite": "full",
+    "verifier": "original-ledgers",
+    "exitCode": 0,
+    "argv": [
+      "node",
+      "scripts/verify-evidence.mjs",
+      "/tmp/nukmiris-pc1-tests/full/b1a"
+    ]
+  },
+  {
+    "suite": "full",
+    "verifier": "b1a-ledgers",
+    "exitCode": 0,
+    "argv": [
+      "node",
+      "b1a/verify-evidence.mjs",
+      "/tmp/nukmiris-pc1-tests/full/b1a"
+    ]
+  },
+  {
+    "suite": "full",
+    "verifier": "retirement",
+    "exitCode": 0,
+    "argv": [
+      "node",
+      "b1a2/evidence/verify-retirement.mjs",
+      "/tmp/nukmiris-pc1-tests/full/b1a2/observer-retirement.json",
+      "78f182b2282cbbeb39408c3d57fae841ca70aab5"
+    ]
+  },
+  {
+    "suite": "full",
+    "verifier": "transit",
+    "exitCode": 0,
+    "argv": [
+      "node",
+      "readiness/evidence/verify-transit.mjs",
+      "/tmp/nukmiris-pc1-tests/full/b1a2/readiness-native-transit.json",
+      "78f182b2282cbbeb39408c3d57fae841ca70aab5"
+    ]
+  },
+  {
+    "suite": "fault",
+    "verifier": "original-ledgers",
+    "exitCode": 0,
+    "argv": [
+      "node",
+      "scripts/verify-evidence.mjs",
+      "/tmp/nukmiris-pc1-tests/fault/b1a"
+    ]
+  },
+  {
+    "suite": "fault",
+    "verifier": "b1a-ledgers",
+    "exitCode": 0,
+    "argv": [
+      "node",
+      "b1a/verify-evidence.mjs",
+      "/tmp/nukmiris-pc1-tests/fault/b1a"
+    ]
+  },
+  {
+    "suite": "fault",
+    "verifier": "retirement",
+    "exitCode": 0,
+    "argv": [
+      "node",
+      "b1a2/evidence/verify-retirement.mjs",
+      "/tmp/nukmiris-pc1-tests/fault/b1a2/observer-retirement.json",
+      "78f182b2282cbbeb39408c3d57fae841ca70aab5"
+    ]
+  },
+  {
+    "suite": "fault",
+    "verifier": "transit",
+    "exitCode": 0,
+    "argv": [
+      "node",
+      "readiness/evidence/verify-transit.mjs",
+      "/tmp/nukmiris-pc1-tests/fault/b1a2/readiness-native-transit.json",
+      "78f182b2282cbbeb39408c3d57fae841ca70aab5"
+    ]
+  },
+  {
+    "suite": "concurrency",
+    "verifier": "original-ledgers",
+    "exitCode": 0,
+    "argv": [
+      "node",
+      "scripts/verify-evidence.mjs",
+      "/tmp/nukmiris-pc1-tests/concurrency/b1a"
+    ]
+  },
+  {
+    "suite": "concurrency",
+    "verifier": "b1a-ledgers",
+    "exitCode": 0,
+    "argv": [
+      "node",
+      "b1a/verify-evidence.mjs",
+      "/tmp/nukmiris-pc1-tests/concurrency/b1a"
+    ]
+  },
+  {
+    "suite": "concurrency",
+    "verifier": "retirement",
+    "exitCode": 0,
+    "argv": [
+      "node",
+      "b1a2/evidence/verify-retirement.mjs",
+      "/tmp/nukmiris-pc1-tests/concurrency/b1a2/observer-retirement.json",
+      "78f182b2282cbbeb39408c3d57fae841ca70aab5"
+    ]
+  },
+  {
+    "suite": "concurrency",
+    "verifier": "transit",
+    "exitCode": 0,
+    "argv": [
+      "node",
+      "readiness/evidence/verify-transit.mjs",
+      "/tmp/nukmiris-pc1-tests/concurrency/b1a2/readiness-native-transit.json",
+      "78f182b2282cbbeb39408c3d57fae841ca70aab5"
+    ]
+  },
+  {
+    "suite": "readiness",
+    "verifier": "transit",
+    "exitCode": 0,
+    "argv": [
+      "node",
+      "readiness/evidence/verify-transit.mjs",
+      "/tmp/nukmiris-pc1-tests/readiness/b1a2/readiness-native-transit.json",
+      "78f182b2282cbbeb39408c3d57fae841ca70aab5"
+    ]
+  }
+]

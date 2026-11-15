@@ -1,0 +1,2 @@
+{"scope":"LOCAL_PACKAGED_MTLS_AND_SOURCE_ALLOWLIST_NOT_GCP","image":"sha256:cdeed164f6cdba2ea419b5e92ef340326383feef16d97a3f1df4412c3954657a","nonRootUser":"node","syntheticEffects":1,"unknownIdentityRejected":true,"unauthorizedSourceRejected":true,"exportedLedgerVerified":true,"keysMountedOutsideImage":true}
+{"scope":"LOCAL_CLEANUP","containerRemoved":true,"fixtureDirectoryRemoved":true}

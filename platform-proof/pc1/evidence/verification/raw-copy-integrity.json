@@ -1,0 +1,230 @@
+[
+  {
+    "path": "platform-proof/pc1/evidence/build-a/config.json",
+    "localOriginal": "/tmp/nukmiris-pc1-final-build-a/config.json",
+    "sha256": "cdeed164f6cdba2ea419b5e92ef340326383feef16d97a3f1df4412c3954657a",
+    "byteIdentical": true
+  },
+  {
+    "path": "platform-proof/pc1/evidence/build-a/npm-ci.log",
+    "localOriginal": "/tmp/nukmiris-pc1-final-build-a/npm-ci.log",
+    "sha256": "985b7989b849d3916254c2df214ea05f546e529d8a9526a387b25daa9818e982",
+    "byteIdentical": true
+  },
+  {
+    "path": "platform-proof/pc1/evidence/build-a/artifact.json",
+    "localOriginal": "/tmp/nukmiris-pc1-final-build-a/artifact.json",
+    "sha256": "1c537f2c5ce6ddece146acf1ddfb383758e4150e3025c8dbc80b6fc6291583ca",
+    "byteIdentical": true
+  },
+  {
+    "path": "platform-proof/pc1/evidence/build-a/oci-manifest.json",
+    "localOriginal": "/tmp/nukmiris-pc1-final-build-a/oci-manifest.json",
+    "sha256": "f52c1948e758368f270f491d5a19d05f791e0bf0431bcd32ba4db1d11e3ed4bd",
+    "byteIdentical": true
+  },
+  {
+    "path": "platform-proof/pc1/evidence/build-a/security/image-load.stdout.log",
+    "localOriginal": "/tmp/nukmiris-pc1-final-build-a/security/image-load.stdout.log",
+    "sha256": "393b36687cdcf54c7890e15812c46fcfcbb7d313894e41bc7c5f17fa2322a47f",
+    "byteIdentical": true
+  },
+  {
+    "path": "platform-proof/pc1/evidence/build-a/security/security-evaluation.json",
+    "localOriginal": "/tmp/nukmiris-pc1-final-build-a/security/security-evaluation.json",
+    "sha256": "a47d2f9ceff8bdb01e9acba7e5739bdd4af5433319f6c83b6de035e41d98f882",
+    "byteIdentical": true
+  },
+  {
+    "path": "platform-proof/pc1/evidence/build-a/security/runtime-probe.stdout.log",
+    "localOriginal": "/tmp/nukmiris-pc1-final-build-a/security/runtime-probe.stdout.log",
+    "sha256": "d81b35c50b28415e168cc3dc5c5125be910d91504218d1e2aa80c341f6e657cb",
+    "byteIdentical": true
+  },
+  {
+    "path": "platform-proof/pc1/evidence/build-a/security/scanner-version.stderr.log",
+    "localOriginal": "/tmp/nukmiris-pc1-final-build-a/security/scanner-version.stderr.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "byteIdentical": true
+  },
+  {
+    "path": "platform-proof/pc1/evidence/build-a/security/scan-receipt.json",
+    "localOriginal": "/tmp/nukmiris-pc1-final-build-a/security/scan-receipt.json",
+    "sha256": "fe076f630a75bf2f966d6029c36ca81f6c0ca0f8777f086fc9234cd2b01d7b0a",
+    "byteIdentical": true
+  },
+  {
+    "path": "platform-proof/pc1/evidence/build-a/security/runtime-probe.json",
+    "localOriginal": "/tmp/nukmiris-pc1-final-build-a/security/runtime-probe.json",
+    "sha256": "e9273536531909c4e926faf7839b437ae480a0410865ff38dec0d6372a977435",
+    "byteIdentical": true
+  },
+  {
+    "path": "platform-proof/pc1/evidence/build-a/security/sbom.stdout.log",
+    "localOriginal": "/tmp/nukmiris-pc1-final-build-a/security/sbom.stdout.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "byteIdentical": true
+  },
+  {
+    "path": "platform-proof/pc1/evidence/build-a/security/runtime-probe.stderr.log",
+    "localOriginal": "/tmp/nukmiris-pc1-final-build-a/security/runtime-probe.stderr.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "byteIdentical": true
+  },
+  {
+    "path": "platform-proof/pc1/evidence/build-a/security/scan.stderr.log",
+    "localOriginal": "/tmp/nukmiris-pc1-final-build-a/security/scan.stderr.log",
+    "sha256": "8f8887705b808ed90a1ac2b39d5bb2a0e58ac9e4779e913f8ee9c77187933b66",
+    "byteIdentical": true
+  },
+  {
+    "path": "platform-proof/pc1/evidence/build-a/security/image-load.stderr.log",
+    "localOriginal": "/tmp/nukmiris-pc1-final-build-a/security/image-load.stderr.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "byteIdentical": true
+  },
+  {
+    "path": "platform-proof/pc1/evidence/build-a/security/sbom.cdx.json",
+    "localOriginal": "/tmp/nukmiris-pc1-final-build-a/security/sbom.cdx.json",
+    "sha256": "60d0a94e47d40bd102ae3e1b62b22f5d16c092adefbfee154e6f1b2a070c1a56",
+    "byteIdentical": true
+  },
+  {
+    "path": "platform-proof/pc1/evidence/build-a/security/scanner-version.stdout.log",
+    "localOriginal": "/tmp/nukmiris-pc1-final-build-a/security/scanner-version.stdout.log",
+    "sha256": "3fb54aa2b21f0cb798950ace48bd226e388b49f75af4e8f19392bf09267bdcb5",
+    "byteIdentical": true
+  },
+  {
+    "path": "platform-proof/pc1/evidence/build-a/security/sbom.stderr.log",
+    "localOriginal": "/tmp/nukmiris-pc1-final-build-a/security/sbom.stderr.log",
+    "sha256": "a5caec9e3e69bffcca0ac4899f126c4c65f6aa43a654e7d37d5a060a6aaf0109",
+    "byteIdentical": true
+  },
+  {
+    "path": "platform-proof/pc1/evidence/build-a/security/scan.stdout.log",
+    "localOriginal": "/tmp/nukmiris-pc1-final-build-a/security/scan.stdout.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "byteIdentical": true
+  },
+  {
+    "path": "platform-proof/pc1/evidence/build-a/security/vulnerabilities.json",
+    "localOriginal": "/tmp/nukmiris-pc1-final-build-a/security/vulnerabilities.json",
+    "sha256": "f40f1e5aee65ac7101cd90e2c66e8b4e278375b0f80330a4b6b85c2fc30fd32c",
+    "byteIdentical": true
+  },
+  {
+    "path": "platform-proof/pc1/evidence/build-b/config.json",
+    "localOriginal": "/tmp/nukmiris-pc1-final-build-b/config.json",
+    "sha256": "cdeed164f6cdba2ea419b5e92ef340326383feef16d97a3f1df4412c3954657a",
+    "byteIdentical": true
+  },
+  {
+    "path": "platform-proof/pc1/evidence/build-b/npm-ci.log",
+    "localOriginal": "/tmp/nukmiris-pc1-final-build-b/npm-ci.log",
+    "sha256": "c1f0d93ab39ba744ff700eee63ebf623c6baaa1dd4f6d5c67464b8039784b491",
+    "byteIdentical": true
+  },
+  {
+    "path": "platform-proof/pc1/evidence/build-b/artifact.json",
+    "localOriginal": "/tmp/nukmiris-pc1-final-build-b/artifact.json",
+    "sha256": "1c537f2c5ce6ddece146acf1ddfb383758e4150e3025c8dbc80b6fc6291583ca",
+    "byteIdentical": true
+  },
+  {
+    "path": "platform-proof/pc1/evidence/build-b/oci-manifest.json",
+    "localOriginal": "/tmp/nukmiris-pc1-final-build-b/oci-manifest.json",
+    "sha256": "f52c1948e758368f270f491d5a19d05f791e0bf0431bcd32ba4db1d11e3ed4bd",
+    "byteIdentical": true
+  },
+  {
+    "path": "platform-proof/pc1/evidence/build-b/security/image-load.stdout.log",
+    "localOriginal": "/tmp/nukmiris-pc1-final-build-b/security/image-load.stdout.log",
+    "sha256": "393b36687cdcf54c7890e15812c46fcfcbb7d313894e41bc7c5f17fa2322a47f",
+    "byteIdentical": true
+  },
+  {
+    "path": "platform-proof/pc1/evidence/build-b/security/security-evaluation.json",
+    "localOriginal": "/tmp/nukmiris-pc1-final-build-b/security/security-evaluation.json",
+    "sha256": "a47d2f9ceff8bdb01e9acba7e5739bdd4af5433319f6c83b6de035e41d98f882",
+    "byteIdentical": true
+  },
+  {
+    "path": "platform-proof/pc1/evidence/build-b/security/runtime-probe.stdout.log",
+    "localOriginal": "/tmp/nukmiris-pc1-final-build-b/security/runtime-probe.stdout.log",
+    "sha256": "d81b35c50b28415e168cc3dc5c5125be910d91504218d1e2aa80c341f6e657cb",
+    "byteIdentical": true
+  },
+  {
+    "path": "platform-proof/pc1/evidence/build-b/security/scanner-version.stderr.log",
+    "localOriginal": "/tmp/nukmiris-pc1-final-build-b/security/scanner-version.stderr.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "byteIdentical": true
+  },
+  {
+    "path": "platform-proof/pc1/evidence/build-b/security/scan-receipt.json",
+    "localOriginal": "/tmp/nukmiris-pc1-final-build-b/security/scan-receipt.json",
+    "sha256": "03e67cf9fb90a943d71af10836417e27760ba3c525a92db3b257f99b82c3ed83",
+    "byteIdentical": true
+  },
+  {
+    "path": "platform-proof/pc1/evidence/build-b/security/runtime-probe.json",
+    "localOriginal": "/tmp/nukmiris-pc1-final-build-b/security/runtime-probe.json",
+    "sha256": "e9273536531909c4e926faf7839b437ae480a0410865ff38dec0d6372a977435",
+    "byteIdentical": true
+  },
+  {
+    "path": "platform-proof/pc1/evidence/build-b/security/sbom.stdout.log",
+    "localOriginal": "/tmp/nukmiris-pc1-final-build-b/security/sbom.stdout.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "byteIdentical": true
+  },
+  {
+    "path": "platform-proof/pc1/evidence/build-b/security/runtime-probe.stderr.log",
+    "localOriginal": "/tmp/nukmiris-pc1-final-build-b/security/runtime-probe.stderr.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "byteIdentical": true
+  },
+  {
+    "path": "platform-proof/pc1/evidence/build-b/security/scan.stderr.log",
+    "localOriginal": "/tmp/nukmiris-pc1-final-build-b/security/scan.stderr.log",
+    "sha256": "46d5abb9253d5045d5e5f1277103ea975d5105de33ccbc3140602e60878d70a9",
+    "byteIdentical": true
+  },
+  {
+    "path": "platform-proof/pc1/evidence/build-b/security/image-load.stderr.log",
+    "localOriginal": "/tmp/nukmiris-pc1-final-build-b/security/image-load.stderr.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "byteIdentical": true
+  },
+  {
+    "path": "platform-proof/pc1/evidence/build-b/security/sbom.cdx.json",
+    "localOriginal": "/tmp/nukmiris-pc1-final-build-b/security/sbom.cdx.json",
+    "sha256": "1a7df81b83fff041dd99a0cb52d4605cf9cc59ef4811e31287234a4050de932e",
+    "byteIdentical": true
+  },
+  {
+    "path": "platform-proof/pc1/evidence/build-b/security/scanner-version.stdout.log",
+    "localOriginal": "/tmp/nukmiris-pc1-final-build-b/security/scanner-version.stdout.log",
+    "sha256": "3fb54aa2b21f0cb798950ace48bd226e388b49f75af4e8f19392bf09267bdcb5",
+    "byteIdentical": true
+  },
+  {
+    "path": "platform-proof/pc1/evidence/build-b/security/sbom.stderr.log",
+    "localOriginal": "/tmp/nukmiris-pc1-final-build-b/security/sbom.stderr.log",
+    "sha256": "7395a1ad4caa5a3eef0cc05ab965d852e9e17ec5d0ef18eb16ec36840673c809",
+    "byteIdentical": true
+  },
+  {
+    "path": "platform-proof/pc1/evidence/build-b/security/scan.stdout.log",
+    "localOriginal": "/tmp/nukmiris-pc1-final-build-b/security/scan.stdout.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "byteIdentical": true
+  },
+  {
+    "path": "platform-proof/pc1/evidence/build-b/security/vulnerabilities.json",
+    "localOriginal": "/tmp/nukmiris-pc1-final-build-b/security/vulnerabilities.json",
+    "sha256": "0cc95d0bf8593191f2cea4036184fab4c5cd0480a6e5a14c2085b7d2a8cca097",
+    "byteIdentical": true
+  }
+]

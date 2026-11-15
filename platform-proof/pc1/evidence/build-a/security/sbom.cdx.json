@@ -1,0 +1,5358 @@
+{
+  "$schema": "http://cyclonedx.org/schema/bom-1.7.schema.json",
+  "bomFormat": "CycloneDX",
+  "specVersion": "1.7",
+  "serialNumber": "urn:uuid:5c985a36-a23e-4ae5-bb06-7171ec35f8f3",
+  "version": 1,
+  "metadata": {
+    "timestamp": "2026-11-15T19:35:07+00:00",
+    "tools": {
+      "components": [
+        {
+          "type": "application",
+          "manufacturer": {
+            "name": "Aqua Security Software Ltd."
+          },
+          "group": "aquasecurity",
+          "name": "trivy",
+          "version": "0.76.2"
+        }
+      ]
+    },
+    "component": {
+      "bom-ref": "a791ceb9-8a1b-458c-90c9-904a2e07934c",
+      "type": "container",
+      "name": "/tmp/nukmiris-pc1-final-build-a/candidate.docker.tar",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:DiffID",
+          "value": "sha256:0762a1f6557d1e88a761ab05aa7f65a10dc0e559913ea13befb873d907e1a396"
+        },
+        {
+          "name": "aquasecurity:trivy:DiffID",
+          "value": "sha256:1f5d28bd51650f429293f7730ede274b81dc0744aa918bc887133c4ad610258c"
+        },
+        {
+          "name": "aquasecurity:trivy:DiffID",
+          "value": "sha256:275a30dd8ce958b21daa9ad962c6fbc09f98306ee2f486b65c9075dc257b1412"
+        },
+        {
+          "name": "aquasecurity:trivy:DiffID",
+          "value": "sha256:2cef49adb7d7902c61ecdd385036e3c7fb7c9f0ada96a41901797c77b7daedd7"
+        },
+        {
+          "name": "aquasecurity:trivy:DiffID",
+          "value": "sha256:2e7e048c8b43ab2a1f69ee041025502f890b3faaee2053015a3c3e7256d9ec25"
+        },
+        {
+          "name": "aquasecurity:trivy:DiffID",
+          "value": "sha256:4cde6b0bb6f50a5f255eef7b2a42162c661cf776b803225dcac9a659e396bb6b"
+        },
+        {
+          "name": "aquasecurity:trivy:DiffID",
+          "value": "sha256:4d049f83d9cf21d1f5cc0e11deaf36df02790d0e60c1a3829538fb4b61685368"
+        },
+        {
+          "name": "aquasecurity:trivy:DiffID",
+          "value": "sha256:621c35e751a51a9a9dc3e80aa0b7fe8be2a93402ea6ccd307d30852cd7776cda"
+        },
+        {
+          "name": "aquasecurity:trivy:DiffID",
+          "value": "sha256:6e18ad80f3d64a8cbbcd1ff2e8a0d5ce7282cf664e816b86183a59d30a618e8a"
+        },
+        {
+          "name": "aquasecurity:trivy:DiffID",
+          "value": "sha256:6f1cdceb6a3146f0ccb986521156bef8a422cdbb0863396f7f751f575ba308f4"
+        },
+        {
+          "name": "aquasecurity:trivy:DiffID",
+          "value": "sha256:7db505d90756626f425c6c5468eca565c82f589b144ecaa4f411ad9bbf79e614"
+        },
+        {
+          "name": "aquasecurity:trivy:DiffID",
+          "value": "sha256:8a3b315d45080ecb38e39d42d28e951303c67c2ce7482bcdbbc3b5424be19013"
+        },
+        {
+          "name": "aquasecurity:trivy:DiffID",
+          "value": "sha256:9486261b5a13f63ca6904b36721527ac8f19df53d300560138d69ae9b4c203de"
+        },
+        {
+          "name": "aquasecurity:trivy:DiffID",
+          "value": "sha256:ad51d0769d16ba578106a177987dfe3d2e02c1668c852b795b2f6b024068242a"
+        },
+        {
+          "name": "aquasecurity:trivy:DiffID",
+          "value": "sha256:af5aa97ebe6ce1604747ec1e21af7136ded391bcabe4acef882e718a87c86bcc"
+        },
+        {
+          "name": "aquasecurity:trivy:DiffID",
+          "value": "sha256:b5764396d8d3f88c6c91b8e97022f147ec721afcf85710d96775922e0df881af"
+        },
+        {
+          "name": "aquasecurity:trivy:DiffID",
+          "value": "sha256:b64fe4bb89ff075efc03878811052cbaf4f9dd891aed968e9ed6993fedf1f4a7"
+        },
+        {
+          "name": "aquasecurity:trivy:DiffID",
+          "value": "sha256:bd3cdfae1d3fdd83a2231d608969b38b82349777c2fff9a7c12d54f8ac5c9b38"
+        },
+        {
+          "name": "aquasecurity:trivy:DiffID",
+          "value": "sha256:c0e409312adc366898967307565f692bb33d43a439d3de48e27d14b742389725"
+        },
+        {
+          "name": "aquasecurity:trivy:DiffID",
+          "value": "sha256:c16b2ec4b1493bad1b1de23d659c899e60abb166bda756d02792f0a03ba54a43"
+        },
+        {
+          "name": "aquasecurity:trivy:DiffID",
+          "value": "sha256:e1e9e5b6e62842ea0d27a67b2c7a187808a11d39fe1eca627f62caef80a89161"
+        },
+        {
+          "name": "aquasecurity:trivy:DiffID",
+          "value": "sha256:f0e42608573850bddc6e1dcabb8a6ea34676a336964b3dbf006a4451f448be9f"
+        },
+        {
+          "name": "aquasecurity:trivy:DiffID",
+          "value": "sha256:f29ad80e1401e0516f9b969f0ec179d9d418c58bf001f6828ea1ca3a24055240"
+        },
+        {
+          "name": "aquasecurity:trivy:ImageID",
+          "value": "sha256:cdeed164f6cdba2ea419b5e92ef340326383feef16d97a3f1df4412c3954657a"
+        },
+        {
+          "name": "aquasecurity:trivy:Labels:nukmiris.scope",
+          "value": "PC1_LOCAL_SYNTHETIC_UNACCEPTED_CANDIDATE"
+        },
+        {
+          "name": "aquasecurity:trivy:Labels:nukmiris.source",
+          "value": "78f182b2282cbbeb39408c3d57fae841ca70aab5"
+        },
+        {
+          "name": "aquasecurity:trivy:SchemaVersion",
+          "value": "2"
+        },
+        {
+          "name": "aquasecurity:trivy:Size",
+          "value": "157046272"
+        }
+      ]
+    }
+  },
+  "components": [
+    {
+      "bom-ref": "44a0c56e-4bcb-4ddd-9c35-3c7ddc74843e",
+      "type": "operating-system",
+      "name": "debian",
+      "version": "13.7",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:Class",
+          "value": "os-pkgs"
+        },
+        {
+          "name": "aquasecurity:trivy:Type",
+          "value": "debian"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:deb/debian/base-files@13.8%2Bdeb13u7?arch=amd64&distro=debian-13.7",
+      "type": "library",
+      "supplier": {
+        "name": "Santiago Vila <sanvila@debian.org>"
+      },
+      "name": "base-files",
+      "version": "13.8+deb13u7",
+      "licenses": [
+        {
+          "license": {
+            "id": "GPL-2.0-or-later"
+          }
+        },
+        {
+          "license": {
+            "id": "GPL-2.0-only"
+          }
+        },
+        {
+          "license": {
+            "name": "verbatim"
+          }
+        }
+      ],
+      "purl": "pkg:deb/debian/base-files@13.8%2Bdeb13u7?arch=amd64&distro=debian-13.7",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:LayerDiffID",
+          "value": "sha256:9486261b5a13f63ca6904b36721527ac8f19df53d300560138d69ae9b4c203de"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgID",
+          "value": "base-files@13.8+deb13u7"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "debian"
+        },
+        {
+          "name": "aquasecurity:trivy:SrcName",
+          "value": "base-files"
+        },
+        {
+          "name": "aquasecurity:trivy:SrcVersion",
+          "value": "13.8+deb13u7"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:deb/debian/ca-certificates@20250419%2Bdeb13u1?arch=all&distro=debian-13.7",
+      "type": "library",
+      "supplier": {
+        "name": "Julien Cristau <jcristau@debian.org>"
+      },
+      "name": "ca-certificates",
+      "version": "20250419+deb13u1",
+      "licenses": [
+        {
+          "license": {
+            "id": "GPL-2.0-or-later"
+          }
+        },
+        {
+          "license": {
+            "id": "GPL-2.0-only"
+          }
+        },
+        {
+          "license": {
+            "id": "MPL-2.0"
+          }
+        }
+      ],
+      "purl": "pkg:deb/debian/ca-certificates@20250419%2Bdeb13u1?arch=all&distro=debian-13.7",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:LayerDiffID",
+          "value": "sha256:0762a1f6557d1e88a761ab05aa7f65a10dc0e559913ea13befb873d907e1a396"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgID",
+          "value": "ca-certificates@20250419+deb13u1"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "debian"
+        },
+        {
+          "name": "aquasecurity:trivy:SrcName",
+          "value": "ca-certificates"
+        },
+        {
+          "name": "aquasecurity:trivy:SrcVersion",
+          "value": "20250419+deb13u1"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:deb/debian/gcc-14-base@14.2.0-19?arch=amd64&distro=debian-13.7",
+      "type": "library",
+      "supplier": {
+        "name": "Debian GCC Maintainers <debian-gcc@lists.debian.org>"
+      },
+      "name": "gcc-14-base",
+      "version": "14.2.0-19",
+      "licenses": [
+        {
+          "license": {
+            "id": "GPL-2.0-or-later"
+          }
+        },
+        {
+          "license": {
+            "id": "GPL-3.0-only"
+          }
+        },
+        {
+          "license": {
+            "id": "GFDL-1.2-only"
+          }
+        },
+        {
+          "license": {
+            "id": "Artistic-2.0"
+          }
+        },
+        {
+          "license": {
+            "id": "LGPL-2.0-or-later"
+          }
+        }
+      ],
+      "purl": "pkg:deb/debian/gcc-14-base@14.2.0-19?arch=amd64&distro=debian-13.7",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:LayerDiffID",
+          "value": "sha256:7db505d90756626f425c6c5468eca565c82f589b144ecaa4f411ad9bbf79e614"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgID",
+          "value": "gcc-14-base@14.2.0-19"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "debian"
+        },
+        {
+          "name": "aquasecurity:trivy:SrcName",
+          "value": "gcc-14"
+        },
+        {
+          "name": "aquasecurity:trivy:SrcRelease",
+          "value": "19"
+        },
+        {
+          "name": "aquasecurity:trivy:SrcVersion",
+          "value": "14.2.0"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:deb/debian/libc6@2.41-12%2Bdeb13u4?arch=amd64&distro=debian-13.7",
+      "type": "library",
+      "supplier": {
+        "name": "GNU Libc Maintainers <debian-glibc@lists.debian.org>"
+      },
+      "name": "libc6",
+      "version": "2.41-12+deb13u4",
+      "licenses": [
+        {
+          "license": {
+            "id": "LGPL-2.1-or-later"
+          }
+        },
+        {
+          "license": {
+            "id": "LGPL-2.0-or-later"
+          }
+        },
+        {
+          "license": {
+            "name": "LGPL-2.1-or-later WITH link-exception"
+          }
+        },
+        {
+          "license": {
+            "id": "LGPL-3.0-or-later"
+          }
+        },
+        {
+          "license": {
+            "id": "GPL-2.0-or-later"
+          }
+        },
+        {
+          "license": {
+            "name": "GPL-2.0-or-later WITH link-exception"
+          }
+        },
+        {
+          "license": {
+            "id": "GPL-2.0-only"
+          }
+        },
+        {
+          "license": {
+            "id": "GPL-3.0-or-later"
+          }
+        },
+        {
+          "license": {
+            "id": "FSFAP"
+          }
+        },
+        {
+          "license": {
+            "name": "Carnegie"
+          }
+        },
+        {
+          "license": {
+            "name": "Inner-Net"
+          }
+        },
+        {
+          "license": {
+            "name": "MIT-like-Lord"
+          }
+        },
+        {
+          "license": {
+            "name": "BSD-like-Spencer"
+          }
+        },
+        {
+          "license": {
+            "name": "PCRE"
+          }
+        },
+        {
+          "license": {
+            "name": "BSD-3-clause-Carnegie"
+          }
+        },
+        {
+          "license": {
+            "id": "Unicode-DFS-2016"
+          }
+        },
+        {
+          "license": {
+            "id": "BSL-1.0"
+          }
+        },
+        {
+          "license": {
+            "id": "SunPro"
+          }
+        },
+        {
+          "license": {
+            "name": "CORE-MATH"
+          }
+        },
+        {
+          "license": {
+            "name": "BSD-3-clause-Berkeley"
+          }
+        },
+        {
+          "license": {
+            "name": "BSD-3-clause-WIDE"
+          }
+        },
+        {
+          "license": {
+            "id": "BSD-2-Clause"
+          }
+        },
+        {
+          "license": {
+            "name": "BSD-3-clause-Oracle"
+          }
+        },
+        {
+          "license": {
+            "name": "DEC"
+          }
+        },
+        {
+          "license": {
+            "name": "IBM"
+          }
+        },
+        {
+          "license": {
+            "id": "ISC"
+          }
+        },
+        {
+          "license": {
+            "name": "Univ-Coimbra"
+          }
+        },
+        {
+          "license": {
+            "name": "public-domain"
+          }
+        },
+        {
+          "license": {
+            "id": "GPL-3.0-only"
+          }
+        },
+        {
+          "license": {
+            "id": "LGPL-2.0-only"
+          }
+        },
+        {
+          "license": {
+            "id": "LGPL-2.1-only"
+          }
+        },
+        {
+          "license": {
+            "id": "LGPL-3.0-only"
+          }
+        }
+      ],
+      "purl": "pkg:deb/debian/libc6@2.41-12%2Bdeb13u4?arch=amd64&distro=debian-13.7",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:LayerDiffID",
+          "value": "sha256:8a3b315d45080ecb38e39d42d28e951303c67c2ce7482bcdbbc3b5424be19013"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgID",
+          "value": "libc6@2.41-12+deb13u4"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "debian"
+        },
+        {
+          "name": "aquasecurity:trivy:SrcName",
+          "value": "glibc"
+        },
+        {
+          "name": "aquasecurity:trivy:SrcRelease",
+          "value": "12+deb13u4"
+        },
+        {
+          "name": "aquasecurity:trivy:SrcVersion",
+          "value": "2.41"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:deb/debian/libgcc-s1@14.2.0-19?arch=amd64&distro=debian-13.7",
+      "type": "library",
+      "supplier": {
+        "name": "Debian GCC Maintainers <debian-gcc@lists.debian.org>"
+      },
+      "name": "libgcc-s1",
+      "version": "14.2.0-19",
+      "purl": "pkg:deb/debian/libgcc-s1@14.2.0-19?arch=amd64&distro=debian-13.7",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:LayerDiffID",
+          "value": "sha256:c16b2ec4b1493bad1b1de23d659c899e60abb166bda756d02792f0a03ba54a43"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgID",
+          "value": "libgcc-s1@14.2.0-19"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "debian"
+        },
+        {
+          "name": "aquasecurity:trivy:SrcName",
+          "value": "gcc-14"
+        },
+        {
+          "name": "aquasecurity:trivy:SrcRelease",
+          "value": "19"
+        },
+        {
+          "name": "aquasecurity:trivy:SrcVersion",
+          "value": "14.2.0"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:deb/debian/libgomp1@14.2.0-19?arch=amd64&distro=debian-13.7",
+      "type": "library",
+      "supplier": {
+        "name": "Debian GCC Maintainers <debian-gcc@lists.debian.org>"
+      },
+      "name": "libgomp1",
+      "version": "14.2.0-19",
+      "purl": "pkg:deb/debian/libgomp1@14.2.0-19?arch=amd64&distro=debian-13.7",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:LayerDiffID",
+          "value": "sha256:1f5d28bd51650f429293f7730ede274b81dc0744aa918bc887133c4ad610258c"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgID",
+          "value": "libgomp1@14.2.0-19"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "debian"
+        },
+        {
+          "name": "aquasecurity:trivy:SrcName",
+          "value": "gcc-14"
+        },
+        {
+          "name": "aquasecurity:trivy:SrcRelease",
+          "value": "19"
+        },
+        {
+          "name": "aquasecurity:trivy:SrcVersion",
+          "value": "14.2.0"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:deb/debian/libssl3t64@3.5.7-1~deb13u3?arch=amd64&distro=debian-13.7",
+      "type": "library",
+      "supplier": {
+        "name": "Debian OpenSSL Team <pkg-openssl-devel@alioth-lists.debian.net>"
+      },
+      "name": "libssl3t64",
+      "version": "3.5.7-1~deb13u3",
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0"
+          }
+        },
+        {
+          "license": {
+            "id": "Artistic-2.0"
+          }
+        },
+        {
+          "license": {
+            "id": "GPL-1.0-or-later"
+          }
+        },
+        {
+          "license": {
+            "id": "GPL-1.0-only"
+          }
+        }
+      ],
+      "purl": "pkg:deb/debian/libssl3t64@3.5.7-1~deb13u3?arch=amd64&distro=debian-13.7",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:LayerDiffID",
+          "value": "sha256:2cef49adb7d7902c61ecdd385036e3c7fb7c9f0ada96a41901797c77b7daedd7"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgID",
+          "value": "libssl3t64@3.5.7-1~deb13u3"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "debian"
+        },
+        {
+          "name": "aquasecurity:trivy:SrcName",
+          "value": "openssl"
+        },
+        {
+          "name": "aquasecurity:trivy:SrcRelease",
+          "value": "1~deb13u3"
+        },
+        {
+          "name": "aquasecurity:trivy:SrcVersion",
+          "value": "3.5.7"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:deb/debian/libstdc%2B%2B6@14.2.0-19?arch=amd64&distro=debian-13.7",
+      "type": "library",
+      "supplier": {
+        "name": "Debian GCC Maintainers <debian-gcc@lists.debian.org>"
+      },
+      "name": "libstdc++6",
+      "version": "14.2.0-19",
+      "purl": "pkg:deb/debian/libstdc%2B%2B6@14.2.0-19?arch=amd64&distro=debian-13.7",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:LayerDiffID",
+          "value": "sha256:6e18ad80f3d64a8cbbcd1ff2e8a0d5ce7282cf664e816b86183a59d30a618e8a"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgID",
+          "value": "libstdc++6@14.2.0-19"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "debian"
+        },
+        {
+          "name": "aquasecurity:trivy:SrcName",
+          "value": "gcc-14"
+        },
+        {
+          "name": "aquasecurity:trivy:SrcRelease",
+          "value": "19"
+        },
+        {
+          "name": "aquasecurity:trivy:SrcVersion",
+          "value": "14.2.0"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:deb/debian/libzstd1@1.5.7%2Bdfsg-1?arch=amd64&distro=debian-13.7",
+      "type": "library",
+      "supplier": {
+        "name": "RPM packaging team <team+pkg-rpm@tracker.debian.org>"
+      },
+      "name": "libzstd1",
+      "version": "1.5.7+dfsg-1",
+      "licenses": [
+        {
+          "license": {
+            "id": "BSD-3-Clause"
+          }
+        },
+        {
+          "license": {
+            "id": "GPL-2.0-only"
+          }
+        },
+        {
+          "license": {
+            "id": "Zlib"
+          }
+        },
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "purl": "pkg:deb/debian/libzstd1@1.5.7%2Bdfsg-1?arch=amd64&distro=debian-13.7",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:LayerDiffID",
+          "value": "sha256:c0e409312adc366898967307565f692bb33d43a439d3de48e27d14b742389725"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgID",
+          "value": "libzstd1@1.5.7+dfsg-1"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "debian"
+        },
+        {
+          "name": "aquasecurity:trivy:SrcName",
+          "value": "libzstd"
+        },
+        {
+          "name": "aquasecurity:trivy:SrcRelease",
+          "value": "1"
+        },
+        {
+          "name": "aquasecurity:trivy:SrcVersion",
+          "value": "1.5.7+dfsg"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:deb/debian/media-types@13.0.0?arch=all&distro=debian-13.7",
+      "type": "library",
+      "supplier": {
+        "name": "Mime-Support Packagers <team+debian-mimesupport-packagers@tracker.debian.org>"
+      },
+      "name": "media-types",
+      "version": "13.0.0",
+      "licenses": [
+        {
+          "license": {
+            "name": "ad-hoc"
+          }
+        }
+      ],
+      "purl": "pkg:deb/debian/media-types@13.0.0?arch=all&distro=debian-13.7",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:LayerDiffID",
+          "value": "sha256:275a30dd8ce958b21daa9ad962c6fbc09f98306ee2f486b65c9075dc257b1412"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgID",
+          "value": "media-types@13.0.0"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "debian"
+        },
+        {
+          "name": "aquasecurity:trivy:SrcName",
+          "value": "media-types"
+        },
+        {
+          "name": "aquasecurity:trivy:SrcVersion",
+          "value": "13.0.0"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:deb/debian/netbase@6.5?arch=all&distro=debian-13.7",
+      "type": "library",
+      "supplier": {
+        "name": "Marco d'Itri <md@linux.it>"
+      },
+      "name": "netbase",
+      "version": "6.5",
+      "licenses": [
+        {
+          "license": {
+            "id": "GPL-2.0-only"
+          }
+        }
+      ],
+      "purl": "pkg:deb/debian/netbase@6.5?arch=all&distro=debian-13.7",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:LayerDiffID",
+          "value": "sha256:621c35e751a51a9a9dc3e80aa0b7fe8be2a93402ea6ccd307d30852cd7776cda"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgID",
+          "value": "netbase@6.5"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "debian"
+        },
+        {
+          "name": "aquasecurity:trivy:SrcName",
+          "value": "netbase"
+        },
+        {
+          "name": "aquasecurity:trivy:SrcVersion",
+          "value": "6.5"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:deb/debian/tzdata-legacy@2026f-0%2Bdeb13u1?arch=all&distro=debian-13.7",
+      "type": "library",
+      "supplier": {
+        "name": "GNU Libc Maintainers <debian-glibc@lists.debian.org>"
+      },
+      "name": "tzdata-legacy",
+      "version": "2026f-0+deb13u1",
+      "licenses": [
+        {
+          "license": {
+            "name": "public-domain"
+          }
+        }
+      ],
+      "purl": "pkg:deb/debian/tzdata-legacy@2026f-0%2Bdeb13u1?arch=all&distro=debian-13.7",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:LayerDiffID",
+          "value": "sha256:b5764396d8d3f88c6c91b8e97022f147ec721afcf85710d96775922e0df881af"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgID",
+          "value": "tzdata-legacy@2026f-0+deb13u1"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "debian"
+        },
+        {
+          "name": "aquasecurity:trivy:SrcName",
+          "value": "tzdata"
+        },
+        {
+          "name": "aquasecurity:trivy:SrcRelease",
+          "value": "0+deb13u1"
+        },
+        {
+          "name": "aquasecurity:trivy:SrcVersion",
+          "value": "2026f"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:deb/debian/tzdata@2026f-0%2Bdeb13u1?arch=all&distro=debian-13.7",
+      "type": "library",
+      "supplier": {
+        "name": "GNU Libc Maintainers <debian-glibc@lists.debian.org>"
+      },
+      "name": "tzdata",
+      "version": "2026f-0+deb13u1",
+      "licenses": [
+        {
+          "license": {
+            "name": "public-domain"
+          }
+        }
+      ],
+      "purl": "pkg:deb/debian/tzdata@2026f-0%2Bdeb13u1?arch=all&distro=debian-13.7",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:LayerDiffID",
+          "value": "sha256:b64fe4bb89ff075efc03878811052cbaf4f9dd891aed968e9ed6993fedf1f4a7"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgID",
+          "value": "tzdata@2026f-0+deb13u1"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "debian"
+        },
+        {
+          "name": "aquasecurity:trivy:SrcName",
+          "value": "tzdata"
+        },
+        {
+          "name": "aquasecurity:trivy:SrcRelease",
+          "value": "0+deb13u1"
+        },
+        {
+          "name": "aquasecurity:trivy:SrcVersion",
+          "value": "2026f"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:deb/debian/zlib1g@1.3.dfsg%2Breally1.3.1-1%2Bdeb13u1?arch=amd64&distro=debian-13.7&epoch=1",
+      "type": "library",
+      "supplier": {
+        "name": "Mark Brown <broonie@debian.org>"
+      },
+      "name": "zlib1g",
+      "version": "1:1.3.dfsg+really1.3.1-1+deb13u1",
+      "licenses": [
+        {
+          "license": {
+            "id": "Zlib"
+          }
+        }
+      ],
+      "purl": "pkg:deb/debian/zlib1g@1.3.dfsg%2Breally1.3.1-1%2Bdeb13u1?arch=amd64&distro=debian-13.7&epoch=1",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:LayerDiffID",
+          "value": "sha256:2e7e048c8b43ab2a1f69ee041025502f890b3faaee2053015a3c3e7256d9ec25"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgID",
+          "value": "zlib1g@1:1.3.dfsg+really1.3.1-1+deb13u1"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "debian"
+        },
+        {
+          "name": "aquasecurity:trivy:SrcEpoch",
+          "value": "1"
+        },
+        {
+          "name": "aquasecurity:trivy:SrcName",
+          "value": "zlib"
+        },
+        {
+          "name": "aquasecurity:trivy:SrcRelease",
+          "value": "1+deb13u1"
+        },
+        {
+          "name": "aquasecurity:trivy:SrcVersion",
+          "value": "1.3.dfsg+really1.3.1"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:npm/nukmiris-inc1-local-proof@0.1.0",
+      "type": "library",
+      "name": "nukmiris-inc1-local-proof",
+      "version": "0.1.0",
+      "purl": "pkg:npm/nukmiris-inc1-local-proof@0.1.0",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:FilePath",
+          "value": "proof/package.json"
+        },
+        {
+          "name": "aquasecurity:trivy:LayerDiffID",
+          "value": "sha256:e1e9e5b6e62842ea0d27a67b2c7a187808a11d39fe1eca627f62caef80a89161"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgID",
+          "value": "nukmiris-inc1-local-proof@0.1.0"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "node-pkg"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:npm/pg-cloudflare@1.4.1",
+      "type": "library",
+      "name": "pg-cloudflare",
+      "version": "1.4.1",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "purl": "pkg:npm/pg-cloudflare@1.4.1",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:FilePath",
+          "value": "proof/node_modules/pg-cloudflare/package.json"
+        },
+        {
+          "name": "aquasecurity:trivy:LayerDiffID",
+          "value": "sha256:e1e9e5b6e62842ea0d27a67b2c7a187808a11d39fe1eca627f62caef80a89161"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgID",
+          "value": "pg-cloudflare@1.4.1"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "node-pkg"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:npm/pg-connection-string@2.14.1",
+      "type": "library",
+      "name": "pg-connection-string",
+      "version": "2.14.1",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "purl": "pkg:npm/pg-connection-string@2.14.1",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:FilePath",
+          "value": "proof/node_modules/pg-connection-string/package.json"
+        },
+        {
+          "name": "aquasecurity:trivy:LayerDiffID",
+          "value": "sha256:e1e9e5b6e62842ea0d27a67b2c7a187808a11d39fe1eca627f62caef80a89161"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgID",
+          "value": "pg-connection-string@2.14.1"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "node-pkg"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:npm/pg-int8@1.0.1",
+      "type": "library",
+      "name": "pg-int8",
+      "version": "1.0.1",
+      "licenses": [
+        {
+          "license": {
+            "id": "ISC"
+          }
+        }
+      ],
+      "purl": "pkg:npm/pg-int8@1.0.1",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:FilePath",
+          "value": "proof/node_modules/pg-int8/package.json"
+        },
+        {
+          "name": "aquasecurity:trivy:LayerDiffID",
+          "value": "sha256:e1e9e5b6e62842ea0d27a67b2c7a187808a11d39fe1eca627f62caef80a89161"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgID",
+          "value": "pg-int8@1.0.1"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "node-pkg"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:npm/pg-pool@3.14.0",
+      "type": "library",
+      "name": "pg-pool",
+      "version": "3.14.0",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "purl": "pkg:npm/pg-pool@3.14.0",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:FilePath",
+          "value": "proof/node_modules/pg-pool/package.json"
+        },
+        {
+          "name": "aquasecurity:trivy:LayerDiffID",
+          "value": "sha256:e1e9e5b6e62842ea0d27a67b2c7a187808a11d39fe1eca627f62caef80a89161"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgID",
+          "value": "pg-pool@3.14.0"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "node-pkg"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:npm/pg-protocol@1.16.1",
+      "type": "library",
+      "name": "pg-protocol",
+      "version": "1.16.1",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "purl": "pkg:npm/pg-protocol@1.16.1",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:FilePath",
+          "value": "proof/node_modules/pg-protocol/package.json"
+        },
+        {
+          "name": "aquasecurity:trivy:LayerDiffID",
+          "value": "sha256:e1e9e5b6e62842ea0d27a67b2c7a187808a11d39fe1eca627f62caef80a89161"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgID",
+          "value": "pg-protocol@1.16.1"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "node-pkg"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:npm/pg-types@2.2.0",
+      "type": "library",
+      "name": "pg-types",
+      "version": "2.2.0",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "purl": "pkg:npm/pg-types@2.2.0",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:FilePath",
+          "value": "proof/node_modules/pg-types/package.json"
+        },
+        {
+          "name": "aquasecurity:trivy:LayerDiffID",
+          "value": "sha256:e1e9e5b6e62842ea0d27a67b2c7a187808a11d39fe1eca627f62caef80a89161"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgID",
+          "value": "pg-types@2.2.0"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "node-pkg"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:npm/pg@8.16.3",
+      "type": "library",
+      "name": "pg",
+      "version": "8.16.3",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "purl": "pkg:npm/pg@8.16.3",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:FilePath",
+          "value": "proof/node_modules/pg/package.json"
+        },
+        {
+          "name": "aquasecurity:trivy:LayerDiffID",
+          "value": "sha256:e1e9e5b6e62842ea0d27a67b2c7a187808a11d39fe1eca627f62caef80a89161"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgID",
+          "value": "pg@8.16.3"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "node-pkg"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:npm/pgpass@1.0.5",
+      "type": "library",
+      "name": "pgpass",
+      "version": "1.0.5",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "purl": "pkg:npm/pgpass@1.0.5",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:FilePath",
+          "value": "proof/node_modules/pgpass/package.json"
+        },
+        {
+          "name": "aquasecurity:trivy:LayerDiffID",
+          "value": "sha256:e1e9e5b6e62842ea0d27a67b2c7a187808a11d39fe1eca627f62caef80a89161"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgID",
+          "value": "pgpass@1.0.5"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "node-pkg"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:npm/postgres-array@2.0.0",
+      "type": "library",
+      "name": "postgres-array",
+      "version": "2.0.0",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "purl": "pkg:npm/postgres-array@2.0.0",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:FilePath",
+          "value": "proof/node_modules/postgres-array/package.json"
+        },
+        {
+          "name": "aquasecurity:trivy:LayerDiffID",
+          "value": "sha256:e1e9e5b6e62842ea0d27a67b2c7a187808a11d39fe1eca627f62caef80a89161"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgID",
+          "value": "postgres-array@2.0.0"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "node-pkg"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:npm/postgres-bytea@1.0.1",
+      "type": "library",
+      "name": "postgres-bytea",
+      "version": "1.0.1",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "purl": "pkg:npm/postgres-bytea@1.0.1",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:FilePath",
+          "value": "proof/node_modules/postgres-bytea/package.json"
+        },
+        {
+          "name": "aquasecurity:trivy:LayerDiffID",
+          "value": "sha256:e1e9e5b6e62842ea0d27a67b2c7a187808a11d39fe1eca627f62caef80a89161"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgID",
+          "value": "postgres-bytea@1.0.1"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "node-pkg"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:npm/postgres-date@1.0.7",
+      "type": "library",
+      "name": "postgres-date",
+      "version": "1.0.7",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "purl": "pkg:npm/postgres-date@1.0.7",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:FilePath",
+          "value": "proof/node_modules/postgres-date/package.json"
+        },
+        {
+          "name": "aquasecurity:trivy:LayerDiffID",
+          "value": "sha256:e1e9e5b6e62842ea0d27a67b2c7a187808a11d39fe1eca627f62caef80a89161"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgID",
+          "value": "postgres-date@1.0.7"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "node-pkg"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:npm/postgres-interval@1.2.0",
+      "type": "library",
+      "name": "postgres-interval",
+      "version": "1.2.0",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "purl": "pkg:npm/postgres-interval@1.2.0",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:FilePath",
+          "value": "proof/node_modules/postgres-interval/package.json"
+        },
+        {
+          "name": "aquasecurity:trivy:LayerDiffID",
+          "value": "sha256:e1e9e5b6e62842ea0d27a67b2c7a187808a11d39fe1eca627f62caef80a89161"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgID",
+          "value": "postgres-interval@1.2.0"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "node-pkg"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:npm/split2@4.2.0",
+      "type": "library",
+      "name": "split2",
+      "version": "4.2.0",
+      "licenses": [
+        {
+          "license": {
+            "id": "ISC"
+          }
+        }
+      ],
+      "purl": "pkg:npm/split2@4.2.0",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:FilePath",
+          "value": "proof/node_modules/split2/package.json"
+        },
+        {
+          "name": "aquasecurity:trivy:LayerDiffID",
+          "value": "sha256:e1e9e5b6e62842ea0d27a67b2c7a187808a11d39fe1eca627f62caef80a89161"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgID",
+          "value": "split2@4.2.0"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "node-pkg"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:npm/xtend@4.0.2",
+      "type": "library",
+      "name": "xtend",
+      "version": "4.0.2",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "purl": "pkg:npm/xtend@4.0.2",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:FilePath",
+          "value": "proof/node_modules/xtend/package.json"
+        },
+        {
+          "name": "aquasecurity:trivy:LayerDiffID",
+          "value": "sha256:e1e9e5b6e62842ea0d27a67b2c7a187808a11d39fe1eca627f62caef80a89161"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgID",
+          "value": "xtend@4.0.2"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "node-pkg"
+        }
+      ]
+    }
+  ],
+  "dependencies": [
+    {
+      "ref": "44a0c56e-4bcb-4ddd-9c35-3c7ddc74843e",
+      "dependsOn": [
+        "pkg:deb/debian/base-files@13.8%2Bdeb13u7?arch=amd64&distro=debian-13.7",
+        "pkg:deb/debian/ca-certificates@20250419%2Bdeb13u1?arch=all&distro=debian-13.7",
+        "pkg:deb/debian/gcc-14-base@14.2.0-19?arch=amd64&distro=debian-13.7",
+        "pkg:deb/debian/libc6@2.41-12%2Bdeb13u4?arch=amd64&distro=debian-13.7",
+        "pkg:deb/debian/libgcc-s1@14.2.0-19?arch=amd64&distro=debian-13.7",
+        "pkg:deb/debian/libgomp1@14.2.0-19?arch=amd64&distro=debian-13.7",
+        "pkg:deb/debian/libssl3t64@3.5.7-1~deb13u3?arch=amd64&distro=debian-13.7",
+        "pkg:deb/debian/libstdc%2B%2B6@14.2.0-19?arch=amd64&distro=debian-13.7",
+        "pkg:deb/debian/libzstd1@1.5.7%2Bdfsg-1?arch=amd64&distro=debian-13.7",
+        "pkg:deb/debian/media-types@13.0.0?arch=all&distro=debian-13.7",
+        "pkg:deb/debian/netbase@6.5?arch=all&distro=debian-13.7",
+        "pkg:deb/debian/tzdata-legacy@2026f-0%2Bdeb13u1?arch=all&distro=debian-13.7",
+        "pkg:deb/debian/tzdata@2026f-0%2Bdeb13u1?arch=all&distro=debian-13.7",
+        "pkg:deb/debian/zlib1g@1.3.dfsg%2Breally1.3.1-1%2Bdeb13u1?arch=amd64&distro=debian-13.7&epoch=1"
+      ]
+    },
+    {
+      "ref": "a791ceb9-8a1b-458c-90c9-904a2e07934c",
+      "dependsOn": [
+        "44a0c56e-4bcb-4ddd-9c35-3c7ddc74843e",
+        "pkg:npm/nukmiris-inc1-local-proof@0.1.0",
+        "pkg:npm/pg-cloudflare@1.4.1",
+        "pkg:npm/pg-connection-string@2.14.1",
+        "pkg:npm/pg-int8@1.0.1",
+        "pkg:npm/pg-pool@3.14.0",
+        "pkg:npm/pg-protocol@1.16.1",
+        "pkg:npm/pg-types@2.2.0",
+        "pkg:npm/pg@8.16.3",
+        "pkg:npm/pgpass@1.0.5",
+        "pkg:npm/postgres-array@2.0.0",
+        "pkg:npm/postgres-bytea@1.0.1",
+        "pkg:npm/postgres-date@1.0.7",
+        "pkg:npm/postgres-interval@1.2.0",
+        "pkg:npm/split2@4.2.0",
+        "pkg:npm/xtend@4.0.2"
+      ]
+    },
+    {
+      "ref": "pkg:deb/debian/base-files@13.8%2Bdeb13u7?arch=amd64&distro=debian-13.7",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:deb/debian/ca-certificates@20250419%2Bdeb13u1?arch=all&distro=debian-13.7",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:deb/debian/gcc-14-base@14.2.0-19?arch=amd64&distro=debian-13.7",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:deb/debian/libc6@2.41-12%2Bdeb13u4?arch=amd64&distro=debian-13.7",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:deb/debian/libgcc-s1@14.2.0-19?arch=amd64&distro=debian-13.7",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:deb/debian/libgomp1@14.2.0-19?arch=amd64&distro=debian-13.7",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:deb/debian/libssl3t64@3.5.7-1~deb13u3?arch=amd64&distro=debian-13.7",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:deb/debian/libstdc%2B%2B6@14.2.0-19?arch=amd64&distro=debian-13.7",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:deb/debian/libzstd1@1.5.7%2Bdfsg-1?arch=amd64&distro=debian-13.7",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:deb/debian/media-types@13.0.0?arch=all&distro=debian-13.7",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:deb/debian/netbase@6.5?arch=all&distro=debian-13.7",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:deb/debian/tzdata-legacy@2026f-0%2Bdeb13u1?arch=all&distro=debian-13.7",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:deb/debian/tzdata@2026f-0%2Bdeb13u1?arch=all&distro=debian-13.7",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:deb/debian/zlib1g@1.3.dfsg%2Breally1.3.1-1%2Bdeb13u1?arch=amd64&distro=debian-13.7&epoch=1",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:npm/nukmiris-inc1-local-proof@0.1.0",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:npm/pg-cloudflare@1.4.1",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:npm/pg-connection-string@2.14.1",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:npm/pg-int8@1.0.1",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:npm/pg-pool@3.14.0",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:npm/pg-protocol@1.16.1",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:npm/pg-types@2.2.0",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:npm/pg@8.16.3",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:npm/pgpass@1.0.5",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:npm/postgres-array@2.0.0",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:npm/postgres-bytea@1.0.1",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:npm/postgres-date@1.0.7",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:npm/postgres-interval@1.2.0",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:npm/split2@4.2.0",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:npm/xtend@4.0.2",
+      "dependsOn": []
+    }
+  ],
+  "vulnerabilities": [
+    {
+      "id": "CVE-2010-4756",
+      "source": {
+        "name": "debian",
+        "url": "https://salsa.debian.org/security-tracker-team/security-tracker"
+      },
+      "ratings": [
+        {
+          "source": {
+            "name": "debian"
+          },
+          "severity": "low"
+        },
+        {
+          "source": {
+            "name": "nvd"
+          },
+          "score": 4,
+          "severity": "medium",
+          "method": "CVSSv2",
+          "vector": "AV:N/AC:L/Au:S/C:N/I:N/A:P"
+        },
+        {
+          "source": {
+            "name": "redhat"
+          },
+          "score": 5,
+          "severity": "low",
+          "method": "CVSSv2",
+          "vector": "AV:N/AC:L/Au:N/C:N/I:N/A:P"
+        }
+      ],
+      "cwes": [
+        399
+      ],
+      "description": "The glob implementation in the GNU C Library (aka glibc or libc6) allows remote authenticated users to cause a denial of service (CPU and memory consumption) via crafted glob expressions that do not match any pathnames, as demonstrated by glob expressions in STAT commands to an FTP daemon, a different vulnerability than CVE-2010-2632.",
+      "advisories": [
+        {
+          "url": "https://avd.aquasec.com/nvd/cve-2010-4756"
+        },
+        {
+          "url": "http://cxib.net/stuff/glob-0day.c"
+        },
+        {
+          "url": "http://securityreason.com/achievement_securityalert/89"
+        },
+        {
+          "url": "http://securityreason.com/exploitalert/9223"
+        },
+        {
+          "url": "https://access.redhat.com/security/cve/CVE-2010-4756"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=681681"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2010-4756"
+        },
+        {
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2010-4756"
+        },
+        {
+          "url": "https://security.netapp.com/advisory/ntap-20241108-0002/"
+        },
+        {
+          "url": "https://www.cve.org/CVERecord?id=CVE-2010-4756"
+        }
+      ],
+      "published": "2011-03-02T20:00:01+00:00",
+      "updated": "2026-04-29T01:13:23+00:00",
+      "affects": [
+        {
+          "ref": "pkg:deb/debian/libc6@2.41-12%2Bdeb13u4?arch=amd64&distro=debian-13.7",
+          "versions": [
+            {
+              "version": "2.41-12+deb13u4",
+              "status": "affected"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "CVE-2018-20796",
+      "source": {
+        "name": "debian",
+        "url": "https://salsa.debian.org/security-tracker-team/security-tracker"
+      },
+      "ratings": [
+        {
+          "source": {
+            "name": "cbl-mariner"
+          },
+          "severity": "high"
+        },
+        {
+          "source": {
+            "name": "debian"
+          },
+          "severity": "low"
+        },
+        {
+          "source": {
+            "name": "nvd"
+          },
+          "score": 5,
+          "severity": "medium",
+          "method": "CVSSv2",
+          "vector": "AV:N/AC:L/Au:N/C:N/I:N/A:P"
+        },
+        {
+          "source": {
+            "name": "nvd"
+          },
+          "score": 7.5,
+          "severity": "high",
+          "method": "CVSSv3",
+          "vector": "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H"
+        },
+        {
+          "source": {
+            "name": "redhat"
+          },
+          "score": 5.3,
+          "severity": "medium",
+          "method": "CVSSv3",
+          "vector": "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L"
+        }
+      ],
+      "cwes": [
+        674
+      ],
+      "description": "In the GNU C Library (aka glibc or libc6) through 2.29, check_dst_limits_calc_pos_1 in posix/regexec.c has Uncontrolled Recursion, as demonstrated by '(\\227|)(\\\\1\\\\1|t1|\\\\\\2537)+' in grep.",
+      "advisories": [
+        {
+          "url": "https://avd.aquasec.com/nvd/cve-2018-20796"
+        },
+        {
+          "url": "http://www.securityfocus.com/bid/107160"
+        },
+        {
+          "url": "https://access.redhat.com/security/cve/CVE-2018-20796"
+        },
+        {
+          "url": "https://debbugs.gnu.org/cgi/bugreport.cgi?bug=34141"
+        },
+        {
+          "url": "https://lists.gnu.org/archive/html/bug-gnulib/2019-01/msg00108.html"
+        },
+        {
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2018-20796"
+        },
+        {
+          "url": "https://security.netapp.com/advisory/ntap-20190315-0002/"
+        },
+        {
+          "url": "https://support.f5.com/csp/article/K26346590?utm_source=f5support&amp%3Butm_medium=RSS"
+        },
+        {
+          "url": "https://www.cve.org/CVERecord?id=CVE-2018-20796"
+        }
+      ],
+      "published": "2019-02-26T02:29:00+00:00",
+      "updated": "2026-06-17T01:53:29+00:00",
+      "affects": [
+        {
+          "ref": "pkg:deb/debian/libc6@2.41-12%2Bdeb13u4?arch=amd64&distro=debian-13.7",
+          "versions": [
+            {
+              "version": "2.41-12+deb13u4",
+              "status": "affected"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "CVE-2019-1010022",
+      "source": {
+        "name": "debian",
+        "url": "https://salsa.debian.org/security-tracker-team/security-tracker"
+      },
+      "ratings": [
+        {
+          "source": {
+            "name": "debian"
+          },
+          "severity": "low"
+        },
+        {
+          "source": {
+            "name": "nvd"
+          },
+          "score": 7.5,
+          "severity": "high",
+          "method": "CVSSv2",
+          "vector": "AV:N/AC:L/Au:N/C:P/I:P/A:P"
+        },
+        {
+          "source": {
+            "name": "nvd"
+          },
+          "score": 9.8,
+          "severity": "critical",
+          "method": "CVSSv3",
+          "vector": "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H"
+        }
+      ],
+      "cwes": [
+        119
+      ],
+      "description": "GNU Libc current is affected by: Mitigation bypass. The impact is: Attacker may bypass stack guard protection. The component is: nptl. The attack vector is: Exploit stack buffer overflow vulnerability and use this bypass vulnerability to bypass stack guard. NOTE: Upstream comments indicate \"this is being treated as a non-security bug and no real threat.",
+      "advisories": [
+        {
+          "url": "https://avd.aquasec.com/nvd/cve-2019-1010022"
+        },
+        {
+          "url": "https://access.redhat.com/security/cve/CVE-2019-1010022"
+        },
+        {
+          "url": "https://cert-portal.siemens.com/productcert/html/ssa-398330.html"
+        },
+        {
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2019-1010022"
+        },
+        {
+          "url": "https://security-tracker.debian.org/tracker/CVE-2019-1010022"
+        },
+        {
+          "url": "https://sourceware.org/bugzilla/show_bug.cgi?id=22850"
+        },
+        {
+          "url": "https://sourceware.org/bugzilla/show_bug.cgi?id=22850#c3"
+        },
+        {
+          "url": "https://ubuntu.com/security/CVE-2019-1010022"
+        },
+        {
+          "url": "https://www.cve.org/CVERecord?id=CVE-2019-1010022"
+        }
+      ],
+      "published": "2019-07-15T04:15:13+00:00",
+      "updated": "2026-10-14T09:17:15+00:00",
+      "affects": [
+        {
+          "ref": "pkg:deb/debian/libc6@2.41-12%2Bdeb13u4?arch=amd64&distro=debian-13.7",
+          "versions": [
+            {
+              "version": "2.41-12+deb13u4",
+              "status": "affected"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "CVE-2019-1010023",
+      "source": {
+        "name": "debian",
+        "url": "https://salsa.debian.org/security-tracker-team/security-tracker"
+      },
+      "ratings": [
+        {
+          "source": {
+            "name": "debian"
+          },
+          "severity": "low"
+        },
+        {
+          "source": {
+            "name": "nvd"
+          },
+          "score": 6.8,
+          "severity": "medium",
+          "method": "CVSSv2",
+          "vector": "AV:N/AC:M/Au:N/C:P/I:P/A:P"
+        },
+        {
+          "source": {
+            "name": "nvd"
+          },
+          "score": 8.8,
+          "severity": "high",
+          "method": "CVSSv3",
+          "vector": "CVSS:3.0/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H"
+        },
+        {
+          "source": {
+            "name": "redhat"
+          },
+          "score": 7.8,
+          "severity": "low",
+          "method": "CVSSv3",
+          "vector": "CVSS:3.0/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H"
+        }
+      ],
+      "description": "GNU Libc current is affected by: Re-mapping current loaded library with malicious ELF file. The impact is: In worst case attacker may evaluate privileges. The component is: libld. The attack vector is: Attacker sends 2 ELF files to victim and asks to run ldd on it. ldd execute code. NOTE: Upstream comments indicate \"this is being treated as a non-security bug and no real threat.",
+      "advisories": [
+        {
+          "url": "https://avd.aquasec.com/nvd/cve-2019-1010023"
+        },
+        {
+          "url": "http://www.securityfocus.com/bid/109167"
+        },
+        {
+          "url": "https://access.redhat.com/security/cve/CVE-2019-1010023"
+        },
+        {
+          "url": "https://cert-portal.siemens.com/productcert/html/ssa-398330.html"
+        },
+        {
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2019-1010023"
+        },
+        {
+          "url": "https://security-tracker.debian.org/tracker/CVE-2019-1010023"
+        },
+        {
+          "url": "https://sourceware.org/bugzilla/show_bug.cgi?id=22851"
+        },
+        {
+          "url": "https://support.f5.com/csp/article/K11932200?utm_source=f5support&amp%3Butm_medium=RSS"
+        },
+        {
+          "url": "https://ubuntu.com/security/CVE-2019-1010023"
+        },
+        {
+          "url": "https://www.cve.org/CVERecord?id=CVE-2019-1010023"
+        }
+      ],
+      "published": "2019-07-15T04:15:13+00:00",
+      "updated": "2026-10-14T09:17:15+00:00",
+      "affects": [
+        {
+          "ref": "pkg:deb/debian/libc6@2.41-12%2Bdeb13u4?arch=amd64&distro=debian-13.7",
+          "versions": [
+            {
+              "version": "2.41-12+deb13u4",
+              "status": "affected"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "CVE-2019-1010024",
+      "source": {
+        "name": "debian",
+        "url": "https://salsa.debian.org/security-tracker-team/security-tracker"
+      },
+      "ratings": [
+        {
+          "source": {
+            "name": "debian"
+          },
+          "severity": "low"
+        },
+        {
+          "source": {
+            "name": "nvd"
+          },
+          "score": 5,
+          "severity": "medium",
+          "method": "CVSSv2",
+          "vector": "AV:N/AC:L/Au:N/C:P/I:N/A:N"
+        },
+        {
+          "source": {
+            "name": "nvd"
+          },
+          "score": 5.3,
+          "severity": "medium",
+          "method": "CVSSv3",
+          "vector": "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N"
+        },
+        {
+          "source": {
+            "name": "redhat"
+          },
+          "score": 5.3,
+          "severity": "medium",
+          "method": "CVSSv3",
+          "vector": "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N"
+        }
+      ],
+      "cwes": [
+        200
+      ],
+      "description": "GNU Libc current is affected by: Mitigation bypass. The impact is: Attacker may bypass ASLR using cache of thread stack and heap. The component is: glibc. NOTE: Upstream comments indicate \"this is being treated as a non-security bug and no real threat.",
+      "advisories": [
+        {
+          "url": "https://avd.aquasec.com/nvd/cve-2019-1010024"
+        },
+        {
+          "url": "http://www.securityfocus.com/bid/109162"
+        },
+        {
+          "url": "https://access.redhat.com/security/cve/CVE-2019-1010024"
+        },
+        {
+          "url": "https://cert-portal.siemens.com/productcert/html/ssa-398330.html"
+        },
+        {
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2019-1010024"
+        },
+        {
+          "url": "https://security-tracker.debian.org/tracker/CVE-2019-1010024"
+        },
+        {
+          "url": "https://sourceware.org/bugzilla/show_bug.cgi?id=22852"
+        },
+        {
+          "url": "https://support.f5.com/csp/article/K06046097"
+        },
+        {
+          "url": "https://support.f5.com/csp/article/K06046097?utm_source=f5support&amp%3Butm_medium=RSS"
+        },
+        {
+          "url": "https://ubuntu.com/security/CVE-2019-1010024"
+        },
+        {
+          "url": "https://www.cve.org/CVERecord?id=CVE-2019-1010024"
+        }
+      ],
+      "published": "2019-07-15T04:15:13+00:00",
+      "updated": "2026-10-14T09:17:15+00:00",
+      "affects": [
+        {
+          "ref": "pkg:deb/debian/libc6@2.41-12%2Bdeb13u4?arch=amd64&distro=debian-13.7",
+          "versions": [
+            {
+              "version": "2.41-12+deb13u4",
+              "status": "affected"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "CVE-2019-1010025",
+      "source": {
+        "name": "debian",
+        "url": "https://salsa.debian.org/security-tracker-team/security-tracker"
+      },
+      "ratings": [
+        {
+          "source": {
+            "name": "debian"
+          },
+          "severity": "low"
+        },
+        {
+          "source": {
+            "name": "nvd"
+          },
+          "score": 5,
+          "severity": "medium",
+          "method": "CVSSv2",
+          "vector": "AV:N/AC:L/Au:N/C:P/I:N/A:N"
+        },
+        {
+          "source": {
+            "name": "nvd"
+          },
+          "score": 5.3,
+          "severity": "medium",
+          "method": "CVSSv3",
+          "vector": "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N"
+        },
+        {
+          "source": {
+            "name": "redhat"
+          },
+          "score": 2.9,
+          "severity": "low",
+          "method": "CVSSv3",
+          "vector": "CVSS:3.0/AV:L/AC:H/PR:N/UI:N/S:U/C:L/I:N/A:N"
+        }
+      ],
+      "cwes": [
+        330
+      ],
+      "description": "GNU Libc current is affected by: Mitigation bypass. The impact is: Attacker may guess the heap addresses of pthread_created thread. The component is: glibc. NOTE: the vendor's position is \"ASLR bypass itself is not a vulnerability.",
+      "advisories": [
+        {
+          "url": "https://avd.aquasec.com/nvd/cve-2019-1010025"
+        },
+        {
+          "url": "https://access.redhat.com/security/cve/CVE-2019-1010025"
+        },
+        {
+          "url": "https://cert-portal.siemens.com/productcert/html/ssa-398330.html"
+        },
+        {
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2019-1010025"
+        },
+        {
+          "url": "https://security-tracker.debian.org/tracker/CVE-2019-1010025"
+        },
+        {
+          "url": "https://sourceware.org/bugzilla/show_bug.cgi?id=22853"
+        },
+        {
+          "url": "https://support.f5.com/csp/article/K06046097"
+        },
+        {
+          "url": "https://support.f5.com/csp/article/K06046097?utm_source=f5support&amp%3Butm_medium=RSS"
+        },
+        {
+          "url": "https://ubuntu.com/security/CVE-2019-1010025"
+        },
+        {
+          "url": "https://www.cve.org/CVERecord?id=CVE-2019-1010025"
+        }
+      ],
+      "published": "2019-07-15T04:15:13+00:00",
+      "updated": "2026-10-14T09:17:15+00:00",
+      "affects": [
+        {
+          "ref": "pkg:deb/debian/libc6@2.41-12%2Bdeb13u4?arch=amd64&distro=debian-13.7",
+          "versions": [
+            {
+              "version": "2.41-12+deb13u4",
+              "status": "affected"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "CVE-2019-9192",
+      "source": {
+        "name": "debian",
+        "url": "https://salsa.debian.org/security-tracker-team/security-tracker"
+      },
+      "ratings": [
+        {
+          "source": {
+            "name": "cbl-mariner"
+          },
+          "severity": "high"
+        },
+        {
+          "source": {
+            "name": "debian"
+          },
+          "severity": "low"
+        },
+        {
+          "source": {
+            "name": "nvd"
+          },
+          "score": 5,
+          "severity": "medium",
+          "method": "CVSSv2",
+          "vector": "AV:N/AC:L/Au:N/C:N/I:N/A:P"
+        },
+        {
+          "source": {
+            "name": "nvd"
+          },
+          "score": 7.5,
+          "severity": "high",
+          "method": "CVSSv3",
+          "vector": "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H"
+        },
+        {
+          "source": {
+            "name": "redhat"
+          },
+          "score": 2.8,
+          "severity": "low",
+          "method": "CVSSv3",
+          "vector": "CVSS:3.0/AV:L/AC:L/PR:L/UI:R/S:U/C:N/I:N/A:L"
+        }
+      ],
+      "cwes": [
+        674
+      ],
+      "description": "In the GNU C Library (aka glibc or libc6) through 2.29, check_dst_limits_calc_pos_1 in posix/regexec.c has Uncontrolled Recursion, as demonstrated by '(|)(\\\\1\\\\1)*' in grep, a different issue than CVE-2018-20796. NOTE: the software maintainer disputes that this is a vulnerability because the behavior occurs only with a crafted pattern",
+      "advisories": [
+        {
+          "url": "https://avd.aquasec.com/nvd/cve-2019-9192"
+        },
+        {
+          "url": "https://access.redhat.com/security/cve/CVE-2019-9192"
+        },
+        {
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2019-9192"
+        },
+        {
+          "url": "https://sourceware.org/bugzilla/show_bug.cgi?id=24269"
+        },
+        {
+          "url": "https://support.f5.com/csp/article/K26346590?utm_source=f5support&amp%3Butm_medium=RSS"
+        },
+        {
+          "url": "https://www.cve.org/CVERecord?id=CVE-2019-9192"
+        }
+      ],
+      "published": "2019-02-26T18:29:00+00:00",
+      "updated": "2026-06-17T02:43:19+00:00",
+      "affects": [
+        {
+          "ref": "pkg:deb/debian/libc6@2.41-12%2Bdeb13u4?arch=amd64&distro=debian-13.7",
+          "versions": [
+            {
+              "version": "2.41-12+deb13u4",
+              "status": "affected"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "CVE-2026-100290",
+      "source": {
+        "name": "debian",
+        "url": "https://salsa.debian.org/security-tracker-team/security-tracker"
+      },
+      "ratings": [],
+      "cwes": [
+        415
+      ],
+      "description": "The regcomp and regexec functions in the GNU C Library version 2.3 to version 2.44 may read freed memory and free the same heap block twice when a memory allocation fails while a regular expression is compiled or matched.  The re_dfa_add_node (the NFA node table) and build_range_exp (bracket ranges) grow several arrays with consecutive realloc calls and store the new pointers only after all of them succeed.  When a later call fails, the pattern buffer keeps pointers to blocks that were already freed, and the error cleanup frees them again.  In regexec, the back-reference cache (match_ctx_add_entry) frees its array when a realloc fails but keeps the pointer, which is freed again on the error path.\n\nAn attacker does not need to supply a crafted regular expression: patterns large enough to grow these arrays are common.  The failure has to hit a specific allocation, though, so the issue can only be reached when the system is already under memory pressure.  An attacker who supplies the pattern or the subject string has little control over which allocation fails, so the expected impact is a crash of the process.  This issue affects all architectures and ABIs supported by the GNU C Library.",
+      "advisories": [
+        {
+          "url": "https://avd.aquasec.com/nvd/cve-2026-100290"
+        },
+        {
+          "url": "https://sourceware.org/bugzilla/show_bug.cgi?id=31935"
+        },
+        {
+          "url": "https://sourceware.org/bugzilla/show_bug.cgi?id=34991"
+        },
+        {
+          "url": "https://sourceware.org/git/?p=glibc.git;a=blob_plain;f=advisories/GLIBC-SA-2026-0028"
+        }
+      ],
+      "published": "2026-11-11T16:17:24+00:00",
+      "updated": "2026-11-12T22:09:39+00:00",
+      "affects": [
+        {
+          "ref": "pkg:deb/debian/libc6@2.41-12%2Bdeb13u4?arch=amd64&distro=debian-13.7",
+          "versions": [
+            {
+              "version": "2.41-12+deb13u4",
+              "status": "affected"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "CVE-2026-102010",
+      "source": {
+        "name": "debian",
+        "url": "https://salsa.debian.org/security-tracker-team/security-tracker"
+      },
+      "ratings": [
+        {
+          "source": {
+            "name": "alma"
+          },
+          "severity": "medium"
+        },
+        {
+          "source": {
+            "name": "oracle-oval"
+          },
+          "severity": "medium"
+        },
+        {
+          "source": {
+            "name": "redhat"
+          },
+          "score": 7,
+          "severity": "medium",
+          "method": "CVSSv31",
+          "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:L/I:L/A:H"
+        },
+        {
+          "source": {
+            "name": "rocky"
+          },
+          "severity": "medium"
+        }
+      ],
+      "cwes": [
+        825
+      ],
+      "description": "A flaw was found in GCC. When an application calls the erase_if function on a binary heap priority queue in libstdc++, the library reallocates storage but fails to update its internal entry pointer. An attacker capable of triggering this operation can exploit this use-after-free condition, leading to a Denial of Service (DoS) via an application crash or potential memory corruption.",
+      "advisories": [
+        {
+          "url": "https://avd.aquasec.com/nvd/cve-2026-102010"
+        },
+        {
+          "url": "https://access.redhat.com/errata/RHSA-2026:73642"
+        },
+        {
+          "url": "https://access.redhat.com/errata/RHSA-2026:74569"
+        },
+        {
+          "url": "https://access.redhat.com/errata/RHSA-2026:89830"
+        },
+        {
+          "url": "https://access.redhat.com/errata/RHSA-2026:89891"
+        },
+        {
+          "url": "https://access.redhat.com/errata/RHSA-2026:90915"
+        },
+        {
+          "url": "https://access.redhat.com/errata/RHSA-2026:95581"
+        },
+        {
+          "url": "https://access.redhat.com/errata/RHSA-2026:98474"
+        },
+        {
+          "url": "https://access.redhat.com/errata/RHSA-2026:98475"
+        },
+        {
+          "url": "https://access.redhat.com/errata/RHSA-2026:98483"
+        },
+        {
+          "url": "https://access.redhat.com/errata/RHSA-2026:98576"
+        },
+        {
+          "url": "https://access.redhat.com/errata/RHSA-2026:98577"
+        },
+        {
+          "url": "https://access.redhat.com/errata/RHSA-2026:98580"
+        },
+        {
+          "url": "https://access.redhat.com/errata/RHSA-2026:99032"
+        },
+        {
+          "url": "https://access.redhat.com/errata/RHSA-2026:99041"
+        },
+        {
+          "url": "https://access.redhat.com/errata/RHSA-2026:99089"
+        },
+        {
+          "url": "https://access.redhat.com/security/cve/CVE-2026-102010"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/2478395"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=2478395"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=2537811"
+        },
+        {
+          "url": "https://creativecommons.org/licenses/by/4.0/"
+        },
+        {
+          "url": "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-102010"
+        },
+        {
+          "url": "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-95619"
+        },
+        {
+          "url": "https://errata.almalinux.org/8/ALSA-2026-90915.html"
+        },
+        {
+          "url": "https://errata.rockylinux.org/RLSA-2026:89830"
+        },
+        {
+          "url": "https://linux.oracle.com/cve/CVE-2026-102010.html"
+        },
+        {
+          "url": "https://linux.oracle.com/errata/ELSA-2026-90915.html"
+        },
+        {
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-102010"
+        },
+        {
+          "url": "https://www.cve.org/CVERecord?id=CVE-2026-102010"
+        }
+      ],
+      "published": "2026-09-28T19:16:48+00:00",
+      "updated": "2026-11-11T20:17:04+00:00",
+      "affects": [
+        {
+          "ref": "pkg:deb/debian/gcc-14-base@14.2.0-19?arch=amd64&distro=debian-13.7",
+          "versions": [
+            {
+              "version": "14.2.0-19",
+              "status": "affected"
+            }
+          ]
+        },
+        {
+          "ref": "pkg:deb/debian/libgcc-s1@14.2.0-19?arch=amd64&distro=debian-13.7",
+          "versions": [
+            {
+              "version": "14.2.0-19",
+              "status": "affected"
+            }
+          ]
+        },
+        {
+          "ref": "pkg:deb/debian/libgomp1@14.2.0-19?arch=amd64&distro=debian-13.7",
+          "versions": [
+            {
+              "version": "14.2.0-19",
+              "status": "affected"
+            }
+          ]
+        },
+        {
+          "ref": "pkg:deb/debian/libstdc%2B%2B6@14.2.0-19?arch=amd64&distro=debian-13.7",
+          "versions": [
+            {
+              "version": "14.2.0-19",
+              "status": "affected"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "CVE-2026-107496",
+      "source": {
+        "name": "debian",
+        "url": "https://salsa.debian.org/security-tracker-team/security-tracker"
+      },
+      "ratings": [
+        {
+          "source": {
+            "name": "ubuntu"
+          },
+          "severity": "medium"
+        }
+      ],
+      "cwes": [
+        835
+      ],
+      "description": "Issue summary: Encrypting a CMS message to an EC certificate whose group order\nis 1 may cause CMS_encrypt() or CMS_encrypt_ex() to loop indefinitely.\n\nImpact summary: An attacker able to supply the recipient certificate to an\napplication performing CMS encryption can cause that application to loop\nindefinitely, consuming CPU and resulting in Denial of Service.\n\nCWE: CWE-835: Loop with Unreachable Exit Condition ('Infinite Loop')\n\nDescription: CMS_encrypt() and CMS_encrypt_ex() encrypt a message to one or\nmore recipient certificates and, for an EC recipient, generate an ephemeral\nkey in the recipient's group. If the certificate declares a group order of 1,\nrandom scalar generation can only produce zero. The key generation routine\nthen retries without limit while waiting for a nonzero private scalar, so the\ncall never returns.\n\nThe OpenSSL TLS and QUIC implementations do not use this path. An application\nis exposed only if it calls CMS_encrypt() or CMS_encrypt_ex() with a recipient\ncertificate whose EC parameters are attacker-controlled. Certificates with\nnormal EC group orders do not trigger the loop.\n\nOpenSSL 4.0 and later reject unknown explicit EC groups in default builds.\nThese versions are affected only when configured with the\nenable-ec_explicit_curves option.\n\nThe result is a hang that consumes a CPU core until the process is\ninterrupted, a Denial of Service. The severity is Low because the attacker\nmust supply the recipient certificate and the application must choose to\nencrypt to it; ordinary CMS encryption to trusted recipients is unaffected.\n\nThe fix makes EC key generation fail when the group has no valid nonzero\nprivate scalar, instead of retrying indefinitely.\n\nFIPS impact: no\nThe FIPS modules in 4.1, 4.0, 3.5 and 3.0 are not affected. The FIPS provider\ndoes not support arbitrary explicit EC domain parameters, so an order-1 group\nis rejected during key import before the vulnerable key generation path is\nreached.",
+      "advisories": [
+        {
+          "url": "https://avd.aquasec.com/nvd/cve-2026-107496"
+        },
+        {
+          "url": "https://github.com/openssl/openssl/commit/36e15b618decdff1b116eead6747718e6e729ad2"
+        },
+        {
+          "url": "https://github.com/openssl/openssl/commit/a0051cfe699bf5a047bc1c4faef65f80f7987366"
+        },
+        {
+          "url": "https://github.com/openssl/openssl/commit/a8531368ddb1f86d2a2782a8b693926bb67b59e7"
+        },
+        {
+          "url": "https://openssl-library.org/news/secadv/20261110.txt"
+        },
+        {
+          "url": "https://www.cve.org/CVERecord?id=CVE-2026-107496"
+        }
+      ],
+      "published": "2026-11-10T19:18:02+00:00",
+      "updated": "2026-11-10T22:10:04+00:00",
+      "affects": [
+        {
+          "ref": "pkg:deb/debian/libssl3t64@3.5.7-1~deb13u3?arch=amd64&distro=debian-13.7",
+          "versions": [
+            {
+              "version": "3.5.7-1~deb13u3",
+              "status": "affected"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "CVE-2026-114690",
+      "source": {
+        "name": "debian",
+        "url": "https://salsa.debian.org/security-tracker-team/security-tracker"
+      },
+      "ratings": [
+        {
+          "source": {
+            "name": "alma"
+          },
+          "severity": "medium"
+        },
+        {
+          "source": {
+            "name": "redhat"
+          },
+          "score": 6.2,
+          "severity": "medium",
+          "method": "CVSSv31",
+          "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H"
+        }
+      ],
+      "cwes": [
+        787
+      ],
+      "description": "A flaw was found in GCC. An out-of-bounds memory access vulnerability exists in the libstdc++ parallel search implementation due to an undersized internal buffer. A local attacker can exploit this flaw by providing crafted search data to an application compiled with parallel mode, causing the process to crash and leading to a Denial of Service (DoS).",
+      "advisories": [
+        {
+          "url": "https://avd.aquasec.com/nvd/cve-2026-114690"
+        },
+        {
+          "url": "https://access.redhat.com/errata/RHSA-2026:95581"
+        },
+        {
+          "url": "https://access.redhat.com/errata/RHSA-2026:95981"
+        },
+        {
+          "url": "https://access.redhat.com/errata/RHSA-2026:98115"
+        },
+        {
+          "url": "https://access.redhat.com/errata/RHSA-2026:98524"
+        },
+        {
+          "url": "https://access.redhat.com/errata/RHSA-2026:98526"
+        },
+        {
+          "url": "https://access.redhat.com/errata/RHSA-2026:98534"
+        },
+        {
+          "url": "https://access.redhat.com/errata/RHSA-2026:98633"
+        },
+        {
+          "url": "https://access.redhat.com/errata/RHSA-2026:98640"
+        },
+        {
+          "url": "https://access.redhat.com/errata/RHSA-2026:98648"
+        },
+        {
+          "url": "https://access.redhat.com/errata/RHSA-2026:99632"
+        },
+        {
+          "url": "https://access.redhat.com/security/cve/CVE-2026-114690"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/2478508"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/2478652"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=2478652"
+        },
+        {
+          "url": "https://errata.almalinux.org/8/ALSA-2026-98115.html"
+        },
+        {
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-114690"
+        },
+        {
+          "url": "https://www.cve.org/CVERecord?id=CVE-2026-114690"
+        }
+      ],
+      "published": "2026-10-30T08:16:55+00:00",
+      "updated": "2026-11-13T13:17:50+00:00",
+      "affects": [
+        {
+          "ref": "pkg:deb/debian/gcc-14-base@14.2.0-19?arch=amd64&distro=debian-13.7",
+          "versions": [
+            {
+              "version": "14.2.0-19",
+              "status": "affected"
+            }
+          ]
+        },
+        {
+          "ref": "pkg:deb/debian/libgcc-s1@14.2.0-19?arch=amd64&distro=debian-13.7",
+          "versions": [
+            {
+              "version": "14.2.0-19",
+              "status": "affected"
+            }
+          ]
+        },
+        {
+          "ref": "pkg:deb/debian/libgomp1@14.2.0-19?arch=amd64&distro=debian-13.7",
+          "versions": [
+            {
+              "version": "14.2.0-19",
+              "status": "affected"
+            }
+          ]
+        },
+        {
+          "ref": "pkg:deb/debian/libstdc%2B%2B6@14.2.0-19?arch=amd64&distro=debian-13.7",
+          "versions": [
+            {
+              "version": "14.2.0-19",
+              "status": "affected"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "CVE-2026-114691",
+      "source": {
+        "name": "debian",
+        "url": "https://salsa.debian.org/security-tracker-team/security-tracker"
+      },
+      "ratings": [
+        {
+          "source": {
+            "name": "alma"
+          },
+          "severity": "medium"
+        },
+        {
+          "source": {
+            "name": "redhat"
+          },
+          "score": 5.9,
+          "severity": "medium",
+          "method": "CVSSv31",
+          "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:H"
+        }
+      ],
+      "cwes": [
+        190
+      ],
+      "description": "A flaw was found in the libstdc++ component of GCC. An attacker who can provide an excessively large element count to a boolean vector (std::vector<bool>) constructor can trigger an integer wrap during internal memory calculations. This issue leaves the container in an inconsistent state, leading to out-of-bounds memory access and resulting in an application crash or a Denial of Service (DoS) during subsequent operations.",
+      "advisories": [
+        {
+          "url": "https://avd.aquasec.com/nvd/cve-2026-114691"
+        },
+        {
+          "url": "https://access.redhat.com/errata/RHSA-2026:95581"
+        },
+        {
+          "url": "https://access.redhat.com/errata/RHSA-2026:95981"
+        },
+        {
+          "url": "https://access.redhat.com/errata/RHSA-2026:98115"
+        },
+        {
+          "url": "https://access.redhat.com/errata/RHSA-2026:98524"
+        },
+        {
+          "url": "https://access.redhat.com/errata/RHSA-2026:98526"
+        },
+        {
+          "url": "https://access.redhat.com/errata/RHSA-2026:98534"
+        },
+        {
+          "url": "https://access.redhat.com/errata/RHSA-2026:98633"
+        },
+        {
+          "url": "https://access.redhat.com/errata/RHSA-2026:98640"
+        },
+        {
+          "url": "https://access.redhat.com/errata/RHSA-2026:98648"
+        },
+        {
+          "url": "https://access.redhat.com/errata/RHSA-2026:99632"
+        },
+        {
+          "url": "https://access.redhat.com/security/cve/CVE-2026-114691"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/2478508"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/2478652"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=2478508"
+        },
+        {
+          "url": "https://errata.almalinux.org/8/ALSA-2026-98115.html"
+        },
+        {
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-114691"
+        },
+        {
+          "url": "https://www.cve.org/CVERecord?id=CVE-2026-114691"
+        }
+      ],
+      "published": "2026-10-30T08:16:55+00:00",
+      "updated": "2026-11-13T13:17:51+00:00",
+      "affects": [
+        {
+          "ref": "pkg:deb/debian/gcc-14-base@14.2.0-19?arch=amd64&distro=debian-13.7",
+          "versions": [
+            {
+              "version": "14.2.0-19",
+              "status": "affected"
+            }
+          ]
+        },
+        {
+          "ref": "pkg:deb/debian/libgcc-s1@14.2.0-19?arch=amd64&distro=debian-13.7",
+          "versions": [
+            {
+              "version": "14.2.0-19",
+              "status": "affected"
+            }
+          ]
+        },
+        {
+          "ref": "pkg:deb/debian/libgomp1@14.2.0-19?arch=amd64&distro=debian-13.7",
+          "versions": [
+            {
+              "version": "14.2.0-19",
+              "status": "affected"
+            }
+          ]
+        },
+        {
+          "ref": "pkg:deb/debian/libstdc%2B%2B6@14.2.0-19?arch=amd64&distro=debian-13.7",
+          "versions": [
+            {
+              "version": "14.2.0-19",
+              "status": "affected"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "CVE-2026-115455",
+      "source": {
+        "name": "debian",
+        "url": "https://salsa.debian.org/security-tracker-team/security-tracker"
+      },
+      "ratings": [
+        {
+          "source": {
+            "name": "redhat"
+          },
+          "score": 6.5,
+          "severity": "medium",
+          "method": "CVSSv31",
+          "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:L/A:H"
+        }
+      ],
+      "cwes": [
+        787
+      ],
+      "description": "A flaw was found in GCC libstdc++. When an application extracts data into a bitset from a wide-character stream, internal stack memory allocation fails to properly account for character size and alignment. An attacker capable of supplying crafted input to an affected application could trigger a stack-based buffer overflow leading denial of service (DoS).",
+      "advisories": [
+        {
+          "url": "https://avd.aquasec.com/nvd/cve-2026-115455"
+        },
+        {
+          "url": "https://access.redhat.com/errata/RHSA-2026:94989"
+        },
+        {
+          "url": "https://access.redhat.com/errata/RHSA-2026:95581"
+        },
+        {
+          "url": "https://access.redhat.com/errata/RHSA-2026:98526"
+        },
+        {
+          "url": "https://access.redhat.com/errata/RHSA-2026:98534"
+        },
+        {
+          "url": "https://access.redhat.com/errata/RHSA-2026:98633"
+        },
+        {
+          "url": "https://access.redhat.com/errata/RHSA-2026:98640"
+        },
+        {
+          "url": "https://access.redhat.com/errata/RHSA-2026:98648"
+        },
+        {
+          "url": "https://access.redhat.com/errata/RHSA-2026:99632"
+        },
+        {
+          "url": "https://access.redhat.com/security/cve/CVE-2026-115455"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=2562933"
+        },
+        {
+          "url": "https://gcc.gnu.org/cgit/gcc/commit/?id=5d419c69ce2e6b86d7da75f18736904885674219"
+        },
+        {
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-115455"
+        },
+        {
+          "url": "https://www.cve.org/CVERecord?id=CVE-2026-115455"
+        }
+      ],
+      "published": "2026-10-30T08:16:55+00:00",
+      "updated": "2026-11-13T05:17:56+00:00",
+      "affects": [
+        {
+          "ref": "pkg:deb/debian/gcc-14-base@14.2.0-19?arch=amd64&distro=debian-13.7",
+          "versions": [
+            {
+              "version": "14.2.0-19",
+              "status": "affected"
+            }
+          ]
+        },
+        {
+          "ref": "pkg:deb/debian/libgcc-s1@14.2.0-19?arch=amd64&distro=debian-13.7",
+          "versions": [
+            {
+              "version": "14.2.0-19",
+              "status": "affected"
+            }
+          ]
+        },
+        {
+          "ref": "pkg:deb/debian/libgomp1@14.2.0-19?arch=amd64&distro=debian-13.7",
+          "versions": [
+            {
+              "version": "14.2.0-19",
+              "status": "affected"
+            }
+          ]
+        },
+        {
+          "ref": "pkg:deb/debian/libstdc%2B%2B6@14.2.0-19?arch=amd64&distro=debian-13.7",
+          "versions": [
+            {
+              "version": "14.2.0-19",
+              "status": "affected"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "CVE-2026-115456",
+      "source": {
+        "name": "debian",
+        "url": "https://salsa.debian.org/security-tracker-team/security-tracker"
+      },
+      "ratings": [
+        {
+          "source": {
+            "name": "redhat"
+          },
+          "score": 3.7,
+          "severity": "low",
+          "method": "CVSSv31",
+          "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:L"
+        }
+      ],
+      "cwes": [
+        125
+      ],
+      "description": "A flaw was found in gcc. An attacker could cause a Denial of Service (DoS) by passing a string that is not null-terminated to the std::from_chars() function in the libstdc++ library. This issue triggers an out-of-bounds read beyond the allocated buffer, potentially leading to invalid data parsing or an application crash.",
+      "advisories": [
+        {
+          "url": "https://avd.aquasec.com/nvd/cve-2026-115456"
+        },
+        {
+          "url": "https://access.redhat.com/errata/RHSA-2026:95581"
+        },
+        {
+          "url": "https://access.redhat.com/errata/RHSA-2026:95981"
+        },
+        {
+          "url": "https://access.redhat.com/errata/RHSA-2026:98524"
+        },
+        {
+          "url": "https://access.redhat.com/errata/RHSA-2026:98526"
+        },
+        {
+          "url": "https://access.redhat.com/errata/RHSA-2026:98534"
+        },
+        {
+          "url": "https://access.redhat.com/errata/RHSA-2026:98633"
+        },
+        {
+          "url": "https://access.redhat.com/errata/RHSA-2026:98640"
+        },
+        {
+          "url": "https://access.redhat.com/errata/RHSA-2026:98648"
+        },
+        {
+          "url": "https://access.redhat.com/errata/RHSA-2026:99632"
+        },
+        {
+          "url": "https://access.redhat.com/security/cve/CVE-2026-115456"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=2563044"
+        },
+        {
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-115456"
+        },
+        {
+          "url": "https://www.cve.org/CVERecord?id=CVE-2026-115456"
+        }
+      ],
+      "published": "2026-10-30T09:17:14+00:00",
+      "updated": "2026-11-13T14:17:47+00:00",
+      "affects": [
+        {
+          "ref": "pkg:deb/debian/gcc-14-base@14.2.0-19?arch=amd64&distro=debian-13.7",
+          "versions": [
+            {
+              "version": "14.2.0-19",
+              "status": "affected"
+            }
+          ]
+        },
+        {
+          "ref": "pkg:deb/debian/libgcc-s1@14.2.0-19?arch=amd64&distro=debian-13.7",
+          "versions": [
+            {
+              "version": "14.2.0-19",
+              "status": "affected"
+            }
+          ]
+        },
+        {
+          "ref": "pkg:deb/debian/libgomp1@14.2.0-19?arch=amd64&distro=debian-13.7",
+          "versions": [
+            {
+              "version": "14.2.0-19",
+              "status": "affected"
+            }
+          ]
+        },
+        {
+          "ref": "pkg:deb/debian/libstdc%2B%2B6@14.2.0-19?arch=amd64&distro=debian-13.7",
+          "versions": [
+            {
+              "version": "14.2.0-19",
+              "status": "affected"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "CVE-2026-115819",
+      "source": {
+        "name": "debian",
+        "url": "https://salsa.debian.org/security-tracker-team/security-tracker"
+      },
+      "ratings": [],
+      "cwes": [
+        193
+      ],
+      "description": "Calling the wide scanf family of functions (swscanf, fwscanf, wscanf, vswscanf, vfwscanf and vwscanf) with a %s or %[ conversion without the 'l' length modifier in the GNU C Library version 2.2 to version 2.44 writes an extra null byte one past the end of the destination array when the converted multibyte string and its terminating null byte exactly fill that array.\n\nThese conversions store each wide input character into the caller's char array as a multibyte sequence.  The conversion ends with the sequence that returns to the initial shift state, which also stores the terminating null byte, and the functions then append a second null byte.  A destination sized for the converted string and one terminator, as the C standard requires the caller to provide, is therefore written one byte past its end.  The out-of-bounds byte is always a null byte, which may corrupt adjacent data or crash the process.  An attacker who supplies the input can trigger the overflow with a string whose converted length exactly fills the destination.\n\nThe narrow scanf functions, the %ls and %l[ conversions into a wchar_t array, and the 'a' and 'm' allocation modifiers are not affected, and storing a wide scanf conversion into a narrow char array is uncommon.  This issue affects all architectures and ABIs supported by the GNU C Library.",
+      "advisories": [
+        {
+          "url": "https://avd.aquasec.com/nvd/cve-2026-115819"
+        },
+        {
+          "url": "https://sourceware.org/bugzilla/show_bug.cgi?id=34989"
+        },
+        {
+          "url": "https://sourceware.org/git/?p=glibc.git;a=blob_plain;f=advisories/GLIBC-SA-2026-0027"
+        }
+      ],
+      "published": "2026-11-11T16:17:24+00:00",
+      "updated": "2026-11-12T22:09:39+00:00",
+      "affects": [
+        {
+          "ref": "pkg:deb/debian/libc6@2.41-12%2Bdeb13u4?arch=amd64&distro=debian-13.7",
+          "versions": [
+            {
+              "version": "2.41-12+deb13u4",
+              "status": "affected"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "CVE-2026-18374",
+      "source": {
+        "name": "debian",
+        "url": "https://salsa.debian.org/security-tracker-team/security-tracker"
+      },
+      "ratings": [
+        {
+          "source": {
+            "name": "alma"
+          },
+          "severity": "medium"
+        },
+        {
+          "source": {
+            "name": "oracle-oval"
+          },
+          "severity": "medium"
+        },
+        {
+          "source": {
+            "name": "redhat"
+          },
+          "score": 4.9,
+          "severity": "medium",
+          "method": "CVSSv31",
+          "vector": "CVSS:3.1/AV:L/AC:H/PR:N/UI:N/S:U/C:L/I:L/A:L"
+        },
+        {
+          "source": {
+            "name": "rocky"
+          },
+          "severity": "medium"
+        },
+        {
+          "source": {
+            "name": "ubuntu"
+          },
+          "severity": "medium"
+        }
+      ],
+      "cwes": [
+        787
+      ],
+      "description": "Passing an effectively empty string to the `,ccs=` syntax extension of the mode argument in the `fopen` function in the GNU C Library version 2.45 or earlier may result in a heap buffer overflow when the mode string input to the function is attacker controlled.\n\n\n\nThis usage pattern is not seen in applications in common GNU/Linux distributions and applications that process user-supplied values for `ccs` should not pass them through without validation.",
+      "advisories": [
+        {
+          "url": "https://avd.aquasec.com/nvd/cve-2026-18374"
+        },
+        {
+          "url": "http://www.openwall.com/lists/oss-security/2026/08/27/6"
+        },
+        {
+          "url": "https://access.redhat.com/errata/RHSA-2026:79281"
+        },
+        {
+          "url": "https://access.redhat.com/security/cve/CVE-2026-18374"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/2513603"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/2513608"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/2523249"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/2523274"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/2524870"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=2513603"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=2513608"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=2523249"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=2523274"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=2524870"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=2525256"
+        },
+        {
+          "url": "https://creativecommons.org/licenses/by/4.0/"
+        },
+        {
+          "url": "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-18374"
+        },
+        {
+          "url": "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-19542"
+        },
+        {
+          "url": "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-6368"
+        },
+        {
+          "url": "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-6791"
+        },
+        {
+          "url": "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-77117"
+        },
+        {
+          "url": "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-80489"
+        },
+        {
+          "url": "https://errata.almalinux.org/9/ALSA-2026-79281.html"
+        },
+        {
+          "url": "https://errata.rockylinux.org/RLSA-2026:79281"
+        },
+        {
+          "url": "https://linux.oracle.com/cve/CVE-2026-18374.html"
+        },
+        {
+          "url": "https://linux.oracle.com/errata/ELSA-2026-84753.html"
+        },
+        {
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-18374"
+        },
+        {
+          "url": "https://sourceware.org/bugzilla/show_bug.cgi?id=34574"
+        },
+        {
+          "url": "https://sourceware.org/git/?p=glibc.git;a=blob;f=advisories/GLIBC-SA-2026-0015"
+        },
+        {
+          "url": "https://sourceware.org/git/?p=glibc.git;a=blob_plain;f=advisories/GLIBC-SA-2026-0015"
+        },
+        {
+          "url": "https://ubuntu.com/security/notices/USN-9065-1"
+        },
+        {
+          "url": "https://www.cve.org/CVERecord?id=CVE-2026-18374"
+        }
+      ],
+      "published": "2026-08-27T20:17:03+00:00",
+      "updated": "2026-09-03T16:43:15+00:00",
+      "affects": [
+        {
+          "ref": "pkg:deb/debian/libc6@2.41-12%2Bdeb13u4?arch=amd64&distro=debian-13.7",
+          "versions": [
+            {
+              "version": "2.41-12+deb13u4",
+              "status": "affected"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "CVE-2026-19499",
+      "source": {
+        "name": "debian",
+        "url": "https://salsa.debian.org/security-tracker-team/security-tracker"
+      },
+      "ratings": [
+        {
+          "source": {
+            "name": "alma"
+          },
+          "severity": "medium"
+        },
+        {
+          "source": {
+            "name": "oracle-oval"
+          },
+          "severity": "medium"
+        },
+        {
+          "source": {
+            "name": "redhat"
+          },
+          "score": 6.8,
+          "severity": "medium",
+          "method": "CVSSv31",
+          "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:R/S:U/C:L/I:H/A:H"
+        },
+        {
+          "source": {
+            "name": "rocky"
+          },
+          "severity": "medium"
+        },
+        {
+          "source": {
+            "name": "ubuntu"
+          },
+          "severity": "medium"
+        }
+      ],
+      "cwes": [
+        122
+      ],
+      "description": "Calling strfmon and strfmon_l in the GNU C Library version 2.38 to 2.44 can write past the end of the caller-supplied output buffer when a conversion uses right-justified width padding.\n\nExploitation requires an application code path that calls strfmon or strfmon_l with right-justified width padding into a destination buffer that is large enough for the padding to succeed but too small for the internal memmove call. The field width or format may be attacker-influenced or a fixed susceptible pattern in the caller.\n\nAt the time of publication, no network-facing application impact is known.",
+      "advisories": [
+        {
+          "url": "https://avd.aquasec.com/nvd/cve-2026-19499"
+        },
+        {
+          "url": "https://access.redhat.com/errata/RHSA-2026:76781"
+        },
+        {
+          "url": "https://access.redhat.com/security/cve/CVE-2026-19499"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=2513603"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=2513608"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=2523249"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=2523258"
+        },
+        {
+          "url": "https://creativecommons.org/licenses/by/4.0/"
+        },
+        {
+          "url": "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-19499"
+        },
+        {
+          "url": "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-19542"
+        },
+        {
+          "url": "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-6368"
+        },
+        {
+          "url": "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-6791"
+        },
+        {
+          "url": "https://errata.almalinux.org/10/ALSA-2026-76781.html"
+        },
+        {
+          "url": "https://errata.rockylinux.org/RLSA-2026:76781"
+        },
+        {
+          "url": "https://linux.oracle.com/cve/CVE-2026-19499.html"
+        },
+        {
+          "url": "https://linux.oracle.com/errata/ELSA-2026-76781.html"
+        },
+        {
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-19499"
+        },
+        {
+          "url": "https://sourceware.org/bugzilla/show_bug.cgi?id=34510"
+        },
+        {
+          "url": "https://sourceware.org/git/?p=glibc.git;a=blob_plain;f=advisories/GLIBC-SA-2026-0017"
+        },
+        {
+          "url": "https://ubuntu.com/security/notices/USN-8737-1"
+        },
+        {
+          "url": "https://ubuntu.com/security/notices/USN-8737-2"
+        },
+        {
+          "url": "https://www.cve.org/CVERecord?id=CVE-2026-19499"
+        }
+      ],
+      "published": "2026-09-14T18:17:45+00:00",
+      "updated": "2026-09-18T18:17:47+00:00",
+      "affects": [
+        {
+          "ref": "pkg:deb/debian/libc6@2.41-12%2Bdeb13u4?arch=amd64&distro=debian-13.7",
+          "versions": [
+            {
+              "version": "2.41-12+deb13u4",
+              "status": "affected"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "CVE-2026-19542",
+      "source": {
+        "name": "debian",
+        "url": "https://salsa.debian.org/security-tracker-team/security-tracker"
+      },
+      "ratings": [
+        {
+          "source": {
+            "name": "alma"
+          },
+          "severity": "medium"
+        },
+        {
+          "source": {
+            "name": "oracle-oval"
+          },
+          "severity": "medium"
+        },
+        {
+          "source": {
+            "name": "redhat"
+          },
+          "score": 4.2,
+          "severity": "medium",
+          "method": "CVSSv31",
+          "vector": "CVSS:3.1/AV:L/AC:H/PR:L/UI:R/S:U/C:L/I:L/A:L"
+        },
+        {
+          "source": {
+            "name": "rocky"
+          },
+          "severity": "medium"
+        },
+        {
+          "source": {
+            "name": "ubuntu"
+          },
+          "severity": "medium"
+        }
+      ],
+      "cwes": [
+        121
+      ],
+      "description": "Calling tdelete on a sufficiently deep tree in the GNU C Library version 2.1 to 2.44 may write one pointer past the end of an alloca-allocated array on the stack, which may crash the application.\n\nThe tdelete implementation keeps an explicit stack of parent nodes for rebalancing, which is grown as needed while descending the tree.  Two rebalancing branches push an additional entry without checking the capacity, and write past the array when the stack is exactly full. Triggering this requires a node at a depth of exactly 40 (or 40 plus a multiple of 20), which implies a tree with at least a million nodes, so an attacker must drive a large number of insertions and deletions through an application that uses tsearch and tdelete.  The written value is a pointer into a tree node and is not directly attacker controlled.  No affected application in common distributions has been identified.",
+      "advisories": [
+        {
+          "url": "https://avd.aquasec.com/nvd/cve-2026-19542"
+        },
+        {
+          "url": "https://access.redhat.com/errata/RHSA-2026:79281"
+        },
+        {
+          "url": "https://access.redhat.com/security/cve/CVE-2026-19542"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/2513603"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/2513608"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/2523249"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/2523274"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/2524870"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=2513603"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=2513608"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=2523249"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=2523274"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=2524870"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=2525256"
+        },
+        {
+          "url": "https://creativecommons.org/licenses/by/4.0/"
+        },
+        {
+          "url": "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-18374"
+        },
+        {
+          "url": "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-19542"
+        },
+        {
+          "url": "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-6368"
+        },
+        {
+          "url": "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-6791"
+        },
+        {
+          "url": "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-77117"
+        },
+        {
+          "url": "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-80489"
+        },
+        {
+          "url": "https://errata.almalinux.org/9/ALSA-2026-79281.html"
+        },
+        {
+          "url": "https://errata.rockylinux.org/RLSA-2026:79281"
+        },
+        {
+          "url": "https://linux.oracle.com/cve/CVE-2026-19542.html"
+        },
+        {
+          "url": "https://linux.oracle.com/errata/ELSA-2026-80798.html"
+        },
+        {
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-19542"
+        },
+        {
+          "url": "https://sourceware.org/bugzilla/show_bug.cgi?id=34506"
+        },
+        {
+          "url": "https://sourceware.org/git/?p=glibc.git;a=blob_plain;f=advisories/GLIBC-SA-2026-0018"
+        },
+        {
+          "url": "https://ubuntu.com/security/notices/USN-8737-1"
+        },
+        {
+          "url": "https://ubuntu.com/security/notices/USN-8737-2"
+        },
+        {
+          "url": "https://www.cve.org/CVERecord?id=CVE-2026-19542"
+        }
+      ],
+      "published": "2026-09-14T18:17:46+00:00",
+      "updated": "2026-09-18T18:17:47+00:00",
+      "affects": [
+        {
+          "ref": "pkg:deb/debian/libc6@2.41-12%2Bdeb13u4?arch=amd64&distro=debian-13.7",
+          "versions": [
+            {
+              "version": "2.41-12+deb13u4",
+              "status": "affected"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "CVE-2026-5435",
+      "source": {
+        "name": "debian",
+        "url": "https://salsa.debian.org/security-tracker-team/security-tracker"
+      },
+      "ratings": [
+        {
+          "source": {
+            "name": "alma"
+          },
+          "severity": "medium"
+        },
+        {
+          "source": {
+            "name": "oracle-oval"
+          },
+          "severity": "medium"
+        },
+        {
+          "source": {
+            "name": "redhat"
+          },
+          "score": 5.9,
+          "severity": "medium",
+          "method": "CVSSv31",
+          "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:L/I:N/A:H"
+        },
+        {
+          "source": {
+            "name": "rocky"
+          },
+          "severity": "medium"
+        },
+        {
+          "source": {
+            "name": "ubuntu"
+          },
+          "severity": "medium"
+        }
+      ],
+      "cwes": [
+        787
+      ],
+      "description": "The deprecated functions ns_printrrf, ns_printrr and fp_nquery in the GNU C Library version 2.2 and newer fail to enforce the caller-supplied buffer length, and can result in an out-of-bounds write when printing TSIG records.",
+      "advisories": [
+        {
+          "url": "https://avd.aquasec.com/nvd/cve-2026-5435"
+        },
+        {
+          "url": "https://access.redhat.com/errata/RHSA-2026:42952"
+        },
+        {
+          "url": "https://access.redhat.com/security/cve/CVE-2026-5435"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/2459854"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/2463465"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/2463539"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=2459854"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=2463465"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=2463539"
+        },
+        {
+          "url": "https://cert-portal.siemens.com/productcert/html/ssa-082556.html"
+        },
+        {
+          "url": "https://creativecommons.org/licenses/by/4.0/"
+        },
+        {
+          "url": "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-5435"
+        },
+        {
+          "url": "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-5928"
+        },
+        {
+          "url": "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-6238"
+        },
+        {
+          "url": "https://errata.almalinux.org/9/ALSA-2026-42952.html"
+        },
+        {
+          "url": "https://errata.rockylinux.org/RLSA-2026:42952"
+        },
+        {
+          "url": "https://inbox.sourceware.org/libc-alpha/cover.1777546194.git.fweimer@redhat.com/"
+        },
+        {
+          "url": "https://inbox.sourceware.org/libc-announce/7a655d55-276f-41fe-b550-feb3ebb2ce91@redhat.com/T/#u"
+        },
+        {
+          "url": "https://linux.oracle.com/cve/CVE-2026-5435.html"
+        },
+        {
+          "url": "https://linux.oracle.com/errata/ELSA-2026-500297.html"
+        },
+        {
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-5435"
+        },
+        {
+          "url": "https://sourceware.org/bugzilla/show_bug.cgi?id=34033"
+        },
+        {
+          "url": "https://sourceware.org/git/?p=glibc.git;a=blob_plain;f=advisories/GLIBC-SA-2026-0011"
+        },
+        {
+          "url": "https://ubuntu.com/security/notices/USN-8611-1"
+        },
+        {
+          "url": "https://www.cve.org/CVERecord?id=CVE-2026-5435"
+        }
+      ],
+      "published": "2026-04-28T13:19:22+00:00",
+      "updated": "2026-11-11T23:10:00+00:00",
+      "affects": [
+        {
+          "ref": "pkg:deb/debian/libc6@2.41-12%2Bdeb13u4?arch=amd64&distro=debian-13.7",
+          "versions": [
+            {
+              "version": "2.41-12+deb13u4",
+              "status": "affected"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "CVE-2026-6238",
+      "source": {
+        "name": "debian",
+        "url": "https://salsa.debian.org/security-tracker-team/security-tracker"
+      },
+      "ratings": [
+        {
+          "source": {
+            "name": "alma"
+          },
+          "severity": "medium"
+        },
+        {
+          "source": {
+            "name": "oracle-oval"
+          },
+          "severity": "medium"
+        },
+        {
+          "source": {
+            "name": "redhat"
+          },
+          "score": 6.5,
+          "severity": "medium",
+          "method": "CVSSv31",
+          "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:L/I:N/A:H"
+        },
+        {
+          "source": {
+            "name": "rocky"
+          },
+          "severity": "medium"
+        },
+        {
+          "source": {
+            "name": "ubuntu"
+          },
+          "severity": "medium"
+        }
+      ],
+      "cwes": [
+        126
+      ],
+      "description": "The deprecated functions ns_printrrf, ns_printrr and fp_nquery in the GNU C Library version 2.0.1 to version 2.43 fail to validate the RDATA content against the RDATA length in a DNS response when processing A6, CERT, LOC, TKEY or TSIG records, which may allow an attacker to craft a DNS response, causing a target application to crash or read uninitialized memory.\n\nThese functions are for application debugging only and hence not in the path of code executed by the DNS resolver.  Further, they have been deprecated since version 2.34 and should not be used by any new applications.  Applications should consider porting away from these interfaces since they may be removed in future versions.",
+      "advisories": [
+        {
+          "url": "https://avd.aquasec.com/nvd/cve-2026-6238"
+        },
+        {
+          "url": "https://access.redhat.com/errata/RHSA-2026:42952"
+        },
+        {
+          "url": "https://access.redhat.com/security/cve/CVE-2026-6238"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/2459854"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/2463465"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/2463539"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=2459854"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=2463465"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=2463539"
+        },
+        {
+          "url": "https://cert-portal.siemens.com/productcert/html/ssa-082556.html"
+        },
+        {
+          "url": "https://creativecommons.org/licenses/by/4.0/"
+        },
+        {
+          "url": "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-5435"
+        },
+        {
+          "url": "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-5928"
+        },
+        {
+          "url": "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-6238"
+        },
+        {
+          "url": "https://errata.almalinux.org/9/ALSA-2026-42952.html"
+        },
+        {
+          "url": "https://errata.rockylinux.org/RLSA-2026:42952"
+        },
+        {
+          "url": "https://inbox.sourceware.org/libc-alpha/cover.1777546194.git.fweimer@redhat.com/"
+        },
+        {
+          "url": "https://inbox.sourceware.org/libc-announce/7a655d55-276f-41fe-b550-feb3ebb2ce91@redhat.com/T/#u"
+        },
+        {
+          "url": "https://linux.oracle.com/cve/CVE-2026-6238.html"
+        },
+        {
+          "url": "https://linux.oracle.com/errata/ELSA-2026-500297.html"
+        },
+        {
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-6238"
+        },
+        {
+          "url": "https://sourceware.org/bugzilla/show_bug.cgi?id=34069"
+        },
+        {
+          "url": "https://sourceware.org/git/?p=glibc.git;a=blob_plain;f=advisories/GLIBC-SA-2026-0012"
+        },
+        {
+          "url": "https://ubuntu.com/security/notices/USN-8611-1"
+        },
+        {
+          "url": "https://www.cve.org/CVERecord?id=CVE-2026-6238"
+        }
+      ],
+      "published": "2026-04-28T19:37:47+00:00",
+      "updated": "2026-11-11T21:10:00+00:00",
+      "affects": [
+        {
+          "ref": "pkg:deb/debian/libc6@2.41-12%2Bdeb13u4?arch=amd64&distro=debian-13.7",
+          "versions": [
+            {
+              "version": "2.41-12+deb13u4",
+              "status": "affected"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "CVE-2026-6368",
+      "source": {
+        "name": "debian",
+        "url": "https://salsa.debian.org/security-tracker-team/security-tracker"
+      },
+      "ratings": [
+        {
+          "source": {
+            "name": "alma"
+          },
+          "severity": "medium"
+        },
+        {
+          "source": {
+            "name": "oracle-oval"
+          },
+          "severity": "medium"
+        },
+        {
+          "source": {
+            "name": "redhat"
+          },
+          "score": 5.5,
+          "severity": "medium",
+          "method": "CVSSv31",
+          "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:H"
+        },
+        {
+          "source": {
+            "name": "rocky"
+          },
+          "severity": "medium"
+        },
+        {
+          "source": {
+            "name": "ubuntu"
+          },
+          "severity": "medium"
+        }
+      ],
+      "cwes": [
+        908
+      ],
+      "description": "Calling wordexp with WRDE_APPEND in the GNU C Library version 2.0 to version 2.43 can cause the interface to return invalid memory in the we_wordv member, which on subsequent calls to wordfree may abort the process.",
+      "advisories": [
+        {
+          "url": "https://avd.aquasec.com/nvd/cve-2026-6368"
+        },
+        {
+          "url": "https://access.redhat.com/errata/RHSA-2026:79281"
+        },
+        {
+          "url": "https://access.redhat.com/security/cve/CVE-2026-6368"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/2513603"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/2513608"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/2523249"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/2523274"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/2524870"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=2513603"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=2513608"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=2523249"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=2523274"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=2524870"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=2525256"
+        },
+        {
+          "url": "https://creativecommons.org/licenses/by/4.0/"
+        },
+        {
+          "url": "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-18374"
+        },
+        {
+          "url": "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-19542"
+        },
+        {
+          "url": "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-6368"
+        },
+        {
+          "url": "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-6791"
+        },
+        {
+          "url": "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-77117"
+        },
+        {
+          "url": "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-80489"
+        },
+        {
+          "url": "https://errata.almalinux.org/9/ALSA-2026-79281.html"
+        },
+        {
+          "url": "https://errata.rockylinux.org/RLSA-2026:79281"
+        },
+        {
+          "url": "https://linux.oracle.com/cve/CVE-2026-6368.html"
+        },
+        {
+          "url": "https://linux.oracle.com/errata/ELSA-2026-79281.html"
+        },
+        {
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-6368"
+        },
+        {
+          "url": "https://sourceware.org/bugzilla/show_bug.cgi?id=34090"
+        },
+        {
+          "url": "https://sourceware.org/git/?p=glibc.git;a=blob;f=advisories/GLIBC-SA-2026-0014"
+        },
+        {
+          "url": "https://sourceware.org/git/?p=glibc.git;a=blob;f=advisories/GLIBC-SA-2026-0014;h=1e9a0039f07471ddfe6816e5df04875bec409f92;hb=HEAD"
+        },
+        {
+          "url": "https://ubuntu.com/security/notices/USN-8737-1"
+        },
+        {
+          "url": "https://ubuntu.com/security/notices/USN-8737-2"
+        },
+        {
+          "url": "https://www.cve.org/CVERecord?id=CVE-2026-6368"
+        }
+      ],
+      "published": "2026-08-10T19:17:30+00:00",
+      "updated": "2026-09-03T16:43:15+00:00",
+      "affects": [
+        {
+          "ref": "pkg:deb/debian/libc6@2.41-12%2Bdeb13u4?arch=amd64&distro=debian-13.7",
+          "versions": [
+            {
+              "version": "2.41-12+deb13u4",
+              "status": "affected"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "CVE-2026-6791",
+      "source": {
+        "name": "debian",
+        "url": "https://salsa.debian.org/security-tracker-team/security-tracker"
+      },
+      "ratings": [
+        {
+          "source": {
+            "name": "alma"
+          },
+          "severity": "medium"
+        },
+        {
+          "source": {
+            "name": "oracle-oval"
+          },
+          "severity": "medium"
+        },
+        {
+          "source": {
+            "name": "redhat"
+          },
+          "score": 5.9,
+          "severity": "medium",
+          "method": "CVSSv31",
+          "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:H"
+        },
+        {
+          "source": {
+            "name": "rocky"
+          },
+          "severity": "medium"
+        },
+        {
+          "source": {
+            "name": "ubuntu"
+          },
+          "severity": "medium"
+        }
+      ],
+      "cwes": [
+        121
+      ],
+      "description": "When expanding paths that begin with a tilde (~) followed by a username, the internal parse_tilde function extracts the username to determine the user's home directory.  The implementation allocates memory for this username directly on the stack using the strndupa macro. Because the size of this allocation was determined by the length of the user-supplied input without any bounds checks, passing an excessively long username e.g. thousands of characters, forces the thread to exhaust its stack space. Thus if an application passes untrusted, attacker-controlled input to the wordexp function, an attacker can trigger a stack clash.",
+      "advisories": [
+        {
+          "url": "https://avd.aquasec.com/nvd/cve-2026-6791"
+        },
+        {
+          "url": "https://access.redhat.com/errata/RHSA-2026:79281"
+        },
+        {
+          "url": "https://access.redhat.com/security/cve/CVE-2026-6791"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/2513603"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/2513608"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/2523249"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/2523274"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/2524870"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=2513603"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=2513608"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=2523249"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=2523274"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=2524870"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=2525256"
+        },
+        {
+          "url": "https://creativecommons.org/licenses/by/4.0/"
+        },
+        {
+          "url": "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-18374"
+        },
+        {
+          "url": "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-19542"
+        },
+        {
+          "url": "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-6368"
+        },
+        {
+          "url": "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-6791"
+        },
+        {
+          "url": "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-77117"
+        },
+        {
+          "url": "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-80489"
+        },
+        {
+          "url": "https://errata.almalinux.org/9/ALSA-2026-79281.html"
+        },
+        {
+          "url": "https://errata.rockylinux.org/RLSA-2026:79281"
+        },
+        {
+          "url": "https://linux.oracle.com/cve/CVE-2026-6791.html"
+        },
+        {
+          "url": "https://linux.oracle.com/errata/ELSA-2026-79281.html"
+        },
+        {
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-6791"
+        },
+        {
+          "url": "https://sourceware.org/bugzilla/show_bug.cgi?id=34091"
+        },
+        {
+          "url": "https://sourceware.org/git/?p=glibc.git;a=blob;f=advisories/GLIBC-SA-2026-0013"
+        },
+        {
+          "url": "https://ubuntu.com/security/notices/USN-8737-1"
+        },
+        {
+          "url": "https://ubuntu.com/security/notices/USN-8737-2"
+        },
+        {
+          "url": "https://www.cve.org/CVERecord?id=CVE-2026-6791"
+        }
+      ],
+      "published": "2026-08-10T19:17:30+00:00",
+      "updated": "2026-10-24T16:10:00+00:00",
+      "affects": [
+        {
+          "ref": "pkg:deb/debian/libc6@2.41-12%2Bdeb13u4?arch=amd64&distro=debian-13.7",
+          "versions": [
+            {
+              "version": "2.41-12+deb13u4",
+              "status": "affected"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "CVE-2026-77117",
+      "source": {
+        "name": "debian",
+        "url": "https://salsa.debian.org/security-tracker-team/security-tracker"
+      },
+      "ratings": [
+        {
+          "source": {
+            "name": "alma"
+          },
+          "severity": "medium"
+        },
+        {
+          "source": {
+            "name": "oracle-oval"
+          },
+          "severity": "medium"
+        },
+        {
+          "source": {
+            "name": "redhat"
+          },
+          "score": 5.9,
+          "severity": "medium",
+          "method": "CVSSv31",
+          "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:H"
+        },
+        {
+          "source": {
+            "name": "rocky"
+          },
+          "severity": "medium"
+        },
+        {
+          "source": {
+            "name": "ubuntu"
+          },
+          "severity": "medium"
+        }
+      ],
+      "cwes": [
+        835
+      ],
+      "description": "Converting crafted SHIFT_JISX0213 input to UCS-4 or the internal wide character encoding, for example with iconv, in the GNU C Library version 2.3 to 2.44 may result in the converter making no progress, causing the calling application to hang.\n\nSome SHIFT_JISX0213 sequences decode to two code points.  If the output buffer has room for only the first one, the converter stores the second in the conversion state and returns E2BIG, but it never clears that pending character after emitting it on the next call.  The converter then keeps emitting the pending character without consuming further input, so an application that retries the conversion loops forever. The input must be attacker controlled and the application must convert it with an output buffer small enough to split the two code points. Only the SHIFT_JISX0213 character set is affected, which is not commonly used.  The related defect in the EUC_JISX0213 converter is tracked separately as CVE-2026-80489.",
+      "advisories": [
+        {
+          "url": "https://avd.aquasec.com/nvd/cve-2026-77117"
+        },
+        {
+          "url": "https://access.redhat.com/errata/RHSA-2026:79281"
+        },
+        {
+          "url": "https://access.redhat.com/security/cve/CVE-2026-77117"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/2513603"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/2513608"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/2523249"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/2523274"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/2524870"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=2513603"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=2513608"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=2523249"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=2523274"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=2524870"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=2525256"
+        },
+        {
+          "url": "https://creativecommons.org/licenses/by/4.0/"
+        },
+        {
+          "url": "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-18374"
+        },
+        {
+          "url": "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-19542"
+        },
+        {
+          "url": "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-6368"
+        },
+        {
+          "url": "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-6791"
+        },
+        {
+          "url": "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-77117"
+        },
+        {
+          "url": "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-80489"
+        },
+        {
+          "url": "https://errata.almalinux.org/9/ALSA-2026-79281.html"
+        },
+        {
+          "url": "https://errata.rockylinux.org/RLSA-2026:79281"
+        },
+        {
+          "url": "https://linux.oracle.com/cve/CVE-2026-77117.html"
+        },
+        {
+          "url": "https://linux.oracle.com/errata/ELSA-2026-84753.html"
+        },
+        {
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-77117"
+        },
+        {
+          "url": "https://sourceware.org/bugzilla/show_bug.cgi?id=34556"
+        },
+        {
+          "url": "https://sourceware.org/git/?p=glibc.git;a=blob_plain;f=advisories/GLIBC-SA-2026-0019"
+        },
+        {
+          "url": "https://ubuntu.com/security/notices/USN-8737-1"
+        },
+        {
+          "url": "https://ubuntu.com/security/notices/USN-8737-2"
+        },
+        {
+          "url": "https://www.cve.org/CVERecord?id=CVE-2026-77117"
+        }
+      ],
+      "published": "2026-09-15T11:17:12+00:00",
+      "updated": "2026-09-18T18:17:47+00:00",
+      "affects": [
+        {
+          "ref": "pkg:deb/debian/libc6@2.41-12%2Bdeb13u4?arch=amd64&distro=debian-13.7",
+          "versions": [
+            {
+              "version": "2.41-12+deb13u4",
+              "status": "affected"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "CVE-2026-80489",
+      "source": {
+        "name": "debian",
+        "url": "https://salsa.debian.org/security-tracker-team/security-tracker"
+      },
+      "ratings": [
+        {
+          "source": {
+            "name": "alma"
+          },
+          "severity": "medium"
+        },
+        {
+          "source": {
+            "name": "oracle-oval"
+          },
+          "severity": "medium"
+        },
+        {
+          "source": {
+            "name": "redhat"
+          },
+          "score": 5.9,
+          "severity": "medium",
+          "method": "CVSSv31",
+          "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:H"
+        },
+        {
+          "source": {
+            "name": "rocky"
+          },
+          "severity": "medium"
+        },
+        {
+          "source": {
+            "name": "ubuntu"
+          },
+          "severity": "medium"
+        }
+      ],
+      "cwes": [
+        835
+      ],
+      "description": "Converting crafted EUC_JISX0213 input to UCS-4 or the internal wide character encoding, for example with iconv, in the GNU C Library version 2.3 to 2.44 may result in the converter making no progress, causing the calling application to hang.\n\nSome EUC_JISX0213 sequences decode to two code points.  If the output buffer has room for only the first one, the converter stores the second in the conversion state and returns E2BIG, but it never clears that pending character after emitting it on the next call.  The converter then keeps emitting the pending character without consuming further input, so an application that retries the conversion loops forever. The input must be attacker controlled and the application must convert it with an output buffer small enough to split the two code points. Only the EUC_JISX0213 character set is affected, which is not commonly used.  The related defect in SHIFT_JISX0213 converter is tracked separately as CVE-2026-77117.",
+      "advisories": [
+        {
+          "url": "https://avd.aquasec.com/nvd/cve-2026-80489"
+        },
+        {
+          "url": "https://access.redhat.com/errata/RHSA-2026:79281"
+        },
+        {
+          "url": "https://access.redhat.com/security/cve/CVE-2026-80489"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/2513603"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/2513608"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/2523249"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/2523274"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/2524870"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=2513603"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=2513608"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=2523249"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=2523274"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=2524870"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=2525256"
+        },
+        {
+          "url": "https://creativecommons.org/licenses/by/4.0/"
+        },
+        {
+          "url": "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-18374"
+        },
+        {
+          "url": "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-19542"
+        },
+        {
+          "url": "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-6368"
+        },
+        {
+          "url": "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-6791"
+        },
+        {
+          "url": "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-77117"
+        },
+        {
+          "url": "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-80489"
+        },
+        {
+          "url": "https://errata.almalinux.org/9/ALSA-2026-79281.html"
+        },
+        {
+          "url": "https://errata.rockylinux.org/RLSA-2026:79281"
+        },
+        {
+          "url": "https://linux.oracle.com/cve/CVE-2026-80489.html"
+        },
+        {
+          "url": "https://linux.oracle.com/errata/ELSA-2026-84753.html"
+        },
+        {
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-80489"
+        },
+        {
+          "url": "https://sourceware.org/bugzilla/show_bug.cgi?id=34568"
+        },
+        {
+          "url": "https://sourceware.org/git/?p=glibc.git;a=blob_plain;f=advisories/GLIBC-SA-2026-0020"
+        },
+        {
+          "url": "https://ubuntu.com/security/notices/USN-8737-1"
+        },
+        {
+          "url": "https://ubuntu.com/security/notices/USN-8737-2"
+        },
+        {
+          "url": "https://www.cve.org/CVERecord?id=CVE-2026-80489"
+        }
+      ],
+      "published": "2026-09-15T11:17:12+00:00",
+      "updated": "2026-09-18T18:17:47+00:00",
+      "affects": [
+        {
+          "ref": "pkg:deb/debian/libc6@2.41-12%2Bdeb13u4?arch=amd64&distro=debian-13.7",
+          "versions": [
+            {
+              "version": "2.41-12+deb13u4",
+              "status": "affected"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "CVE-2026-84243",
+      "source": {
+        "name": "debian",
+        "url": "https://salsa.debian.org/security-tracker-team/security-tracker"
+      },
+      "ratings": [
+        {
+          "source": {
+            "name": "redhat"
+          },
+          "score": 7,
+          "severity": "medium",
+          "method": "CVSSv31",
+          "vector": "CVSS:3.1/AV:L/AC:H/PR:L/UI:N/S:U/C:H/I:H/A:H"
+        },
+        {
+          "source": {
+            "name": "ubuntu"
+          },
+          "severity": "medium"
+        }
+      ],
+      "cwes": [
+        22
+      ],
+      "description": "The gettext family of functions in the GNU C Library version 2.0 and later accept LANGUAGE environment variable entries that contain '/' or that are equal to \"..\", unless the program is setuid or setgid (AT_SECURE).  An attacker who can set LANGUAGE in the environment of a program that uses gettext can make it load a message catalog (.mo file) from an arbitrary location in the file system.  A crafted .mo file can crash the program through out-of-range offsets, or supply translations whose format directives do not match the arguments passed by the program.  That causes undefined behaviour in the printf family of functions and may allow arbitrary code execution with the privileges of the program.  The safety of message catalogs relies on them being installed in trusted, read-only locations, and the directory traversal bypasses this.\n\nThe fix for CVE-2014-0475 rejects \"..\" path components in locale names passed to setlocale or taken from the LC_ALL, LC_* and LANG environment variables.  gettext reads LANGUAGE directly and appends each colon-separated entry to the message catalog directory, so that fix did not cover LANGUAGE.\n\nLANGUAGE is only used when the LC_MESSAGES locale is not \"C\", \"C.<encoding>\" or \"POSIX\", so the attacker must also be able to select another installed locale, for example through LANG or LC_ALL.  Exploitation also requires that the attacker can place the crafted file in a location readable by the target program, and that the environment crosses a trust boundary without the program running as AT_SECURE.  An example is an SSH server that accepts LANGUAGE and LANG from clients through the AcceptEnv directive and restricts an account to a forced command; the attacker may use this to escape the restriction.",
+      "advisories": [
+        {
+          "url": "https://avd.aquasec.com/nvd/cve-2026-84243"
+        },
+        {
+          "url": "https://access.redhat.com/security/cve/CVE-2026-84243"
+        },
+        {
+          "url": "https://inbox.sourceware.org/libc-alpha/20261012112453.47383-1-avinal.xlvii@gmail.com"
+        },
+        {
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-84243"
+        },
+        {
+          "url": "https://sourceware.org/bugzilla/show_bug.cgi?id=17142"
+        },
+        {
+          "url": "https://sourceware.org/git/?p=glibc.git;a=blob_plain;f=advisories/GLIBC-SA-2026-0025"
+        },
+        {
+          "url": "https://ubuntu.com/security/notices/USN-9065-1"
+        },
+        {
+          "url": "https://www.cve.org/CVERecord?id=CVE-2026-84243"
+        }
+      ],
+      "published": "2026-10-30T18:18:13+00:00",
+      "updated": "2026-10-31T04:18:21+00:00",
+      "affects": [
+        {
+          "ref": "pkg:deb/debian/libc6@2.41-12%2Bdeb13u4?arch=amd64&distro=debian-13.7",
+          "versions": [
+            {
+              "version": "2.41-12+deb13u4",
+              "status": "affected"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "CVE-2026-8674",
+      "source": {
+        "name": "debian",
+        "url": "https://salsa.debian.org/security-tracker-team/security-tracker"
+      },
+      "ratings": [
+        {
+          "source": {
+            "name": "alma"
+          },
+          "severity": "medium"
+        },
+        {
+          "source": {
+            "name": "oracle-oval"
+          },
+          "severity": "medium"
+        },
+        {
+          "source": {
+            "name": "redhat"
+          },
+          "score": 5.3,
+          "severity": "medium",
+          "method": "CVSSv31",
+          "vector": "CVSS:3.1/AV:A/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:H"
+        },
+        {
+          "source": {
+            "name": "rocky"
+          },
+          "severity": "medium"
+        },
+        {
+          "source": {
+            "name": "ubuntu"
+          },
+          "severity": "medium"
+        }
+      ],
+      "cwes": [
+        617
+      ],
+      "description": "Initializing the DNS stub resolver from an /etc/resolv.conf file, or a LOCALDOMAIN environment variable, whose search list contains a domain of roughly 200 characters or more in the GNU C Library version 2.26 to 2.44 results in an assertion failure which aborts the process.\n\nThe resolver truncates the search list when copying it into the fixed-size _res.defdname buffer, then asserts that the copy is consistent with the full configuration.  The consistency check compared against the wrong size and did not handle a first entry that does not fit, so a correctly truncated list failed the assertion.  Any process that resolves names through the library is affected, including long-running processes that reload /etc/resolv.conf on the next query after it changes.  Search domains are commonly written to /etc/resolv.conf from data received over DHCP or from a VPN server, so an attacker on the local network may be able to trigger this without privileges on the target system, subject to validation by the network configuration software.",
+      "advisories": [
+        {
+          "url": "https://avd.aquasec.com/nvd/cve-2026-8674"
+        },
+        {
+          "url": "http://www.openwall.com/lists/oss-security/2026/09/17/4"
+        },
+        {
+          "url": "https://access.redhat.com/errata/RHSA-2026:95618"
+        },
+        {
+          "url": "https://access.redhat.com/security/cve/CVE-2026-8674"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/2531725"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/2536382"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/2538209"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/2538306"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=2531725"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=2536382"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=2538209"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=2538306"
+        },
+        {
+          "url": "https://creativecommons.org/licenses/by/4.0/"
+        },
+        {
+          "url": "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-8674"
+        },
+        {
+          "url": "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-86805"
+        },
+        {
+          "url": "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-89092"
+        },
+        {
+          "url": "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-95818"
+        },
+        {
+          "url": "https://errata.almalinux.org/9/ALSA-2026-95618.html"
+        },
+        {
+          "url": "https://errata.rockylinux.org/RLSA-2026:95618"
+        },
+        {
+          "url": "https://joshua.hu/fuzzing-glibc-libresolv"
+        },
+        {
+          "url": "https://linux.oracle.com/cve/CVE-2026-8674.html"
+        },
+        {
+          "url": "https://linux.oracle.com/errata/ELSA-2026-96087.html"
+        },
+        {
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-8674"
+        },
+        {
+          "url": "https://sourceware.org/bugzilla/show_bug.cgi?id=31026"
+        },
+        {
+          "url": "https://sourceware.org/git/?p=glibc.git;a=blob;f=advisories/GLIBC-SA-2026-0021"
+        },
+        {
+          "url": "https://sourceware.org/git/?p=glibc.git;a=blob_plain;f=advisories/GLIBC-SA-2026-0021"
+        },
+        {
+          "url": "https://sourceware.org/git/?p=glibc.git;a=commit;h=506ea57086bfb9ce3daff1c14246a1cb532aba0a"
+        },
+        {
+          "url": "https://ubuntu.com/security/notices/USN-9065-1"
+        },
+        {
+          "url": "https://www.cve.org/CVERecord?id=CVE-2026-8674"
+        },
+        {
+          "url": "https://www.openwall.com/lists/oss-security/2026/09/17/4"
+        }
+      ],
+      "published": "2026-09-17T17:16:53+00:00",
+      "updated": "2026-09-18T18:17:47+00:00",
+      "affects": [
+        {
+          "ref": "pkg:deb/debian/libc6@2.41-12%2Bdeb13u4?arch=amd64&distro=debian-13.7",
+          "versions": [
+            {
+              "version": "2.41-12+deb13u4",
+              "status": "affected"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "CVE-2026-86805",
+      "source": {
+        "name": "debian",
+        "url": "https://salsa.debian.org/security-tracker-team/security-tracker"
+      },
+      "ratings": [
+        {
+          "source": {
+            "name": "alma"
+          },
+          "severity": "medium"
+        },
+        {
+          "source": {
+            "name": "amazon"
+          },
+          "severity": "high"
+        },
+        {
+          "source": {
+            "name": "oracle-oval"
+          },
+          "severity": "medium"
+        },
+        {
+          "source": {
+            "name": "redhat"
+          },
+          "score": 7,
+          "severity": "medium",
+          "method": "CVSSv31",
+          "vector": "CVSS:3.1/AV:L/AC:H/PR:L/UI:N/S:U/C:H/I:H/A:H"
+        },
+        {
+          "source": {
+            "name": "rocky"
+          },
+          "severity": "medium"
+        },
+        {
+          "source": {
+            "name": "ubuntu"
+          },
+          "severity": "medium"
+        }
+      ],
+      "cwes": [
+        367
+      ],
+      "description": "A time-of-check to time-of-use (TOCTOU) race condition in the dynamic loader (ld.so) of the GNU C Library (glibc) versions 2.14 through 2.44 allows a local attacker to escalate privileges. When expanding $ORIGIN in DT_RPATH for setuid/setgid (AT_SECURE) programs, glibc validates the lexically normalized search path against the trusted directories but then opens the raw, un-normalized path. On systems where the Linux fs.protected_hardlinks sysctl is disabled, a local attacker who hard-links such a program into an attacker-controlled directory and wins a race to replace an intermediate path component with a symbolic link can direct the loader outside the trusted directory, causing it to load an attacker-controlled shared object and execute arbitrary code with the elevated privileges of the program.\n\nExploitation requires an installed setuid or setgid binary whose DT_RPATH uses $ORIGIN followed by \"..\" traversal that normalizes into a trusted directory, and the ability to hard-link that binary and win the race by swapping a path component for a symbolic link. Major Linux-based OS distributions ship with fs.protected_hardlinks enabled by default and mitigate the vulnerability.",
+      "advisories": [
+        {
+          "url": "https://avd.aquasec.com/nvd/cve-2026-86805"
+        },
+        {
+          "url": "https://access.redhat.com/errata/RHSA-2026:95618"
+        },
+        {
+          "url": "https://access.redhat.com/security/cve/CVE-2026-86805"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/2531725"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/2536382"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/2538209"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/2538306"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=2531725"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=2536382"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=2538209"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=2538306"
+        },
+        {
+          "url": "https://creativecommons.org/licenses/by/4.0/"
+        },
+        {
+          "url": "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-8674"
+        },
+        {
+          "url": "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-86805"
+        },
+        {
+          "url": "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-89092"
+        },
+        {
+          "url": "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-95818"
+        },
+        {
+          "url": "https://errata.almalinux.org/9/ALSA-2026-95618.html"
+        },
+        {
+          "url": "https://errata.rockylinux.org/RLSA-2026:95618"
+        },
+        {
+          "url": "https://linux.oracle.com/cve/CVE-2026-86805.html"
+        },
+        {
+          "url": "https://linux.oracle.com/errata/ELSA-2026-96087.html"
+        },
+        {
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-86805"
+        },
+        {
+          "url": "https://sourceware.org/bugzilla/show_bug.cgi?id=34360"
+        },
+        {
+          "url": "https://sourceware.org/git/?p=glibc.git;a=blob;f=advisories/GLIBC-SA-2026-0022"
+        },
+        {
+          "url": "https://sourceware.org/git/?p=glibc.git;a=blob_plain;f=advisories/GLIBC-SA-2026-0022"
+        },
+        {
+          "url": "https://ubuntu.com/security/notices/USN-9065-1"
+        },
+        {
+          "url": "https://www.cve.org/CVERecord?id=CVE-2026-86805"
+        }
+      ],
+      "published": "2026-09-22T16:18:06+00:00",
+      "updated": "2026-09-23T04:17:57+00:00",
+      "affects": [
+        {
+          "ref": "pkg:deb/debian/libc6@2.41-12%2Bdeb13u4?arch=amd64&distro=debian-13.7",
+          "versions": [
+            {
+              "version": "2.41-12+deb13u4",
+              "status": "affected"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "CVE-2026-88822",
+      "source": {
+        "name": "debian",
+        "url": "https://salsa.debian.org/security-tracker-team/security-tracker"
+      },
+      "ratings": [
+        {
+          "source": {
+            "name": "ubuntu"
+          },
+          "severity": "medium"
+        }
+      ],
+      "cwes": [
+        457
+      ],
+      "description": "Issue summary: QUIC, when performing automated peer detection, may allow\nuninitialized stack data to leak into the received address which is then used\nas the destination for outgoing packets.\n\nImpact summary: Applications using QUIC's automated peer detection mechanism\nmay receive an invalid address, leading to connection loss and disclosure of\nuninitialized stack data to an attacker observing the outgoing network traffic.\n\nCWE: CWE-457 (Use of Uninitialized Variable)\n\nDescription: The OpenSSL QUIC stack contains a feature in which, when using an\nalready connected socket, it will auto-detect the peer address during the SSL\nhandshake.  This feature uses the getpeername() function, passing a buffer of\nsufficient length to hold any supported address family, but passes a buffer\nlength that is only sized such that larger addresses, such as IPv6, cannot be\nretrieved. The getpeername() function however, still returns the full address\nlength, which is accepted as the valid input buffer length, leading to the\naddress buffer containing uninitialized stack data instead of the actual peer\naddress. The invalid peer address is then used as destination for the outgoing\npackets which leads to a connectivity breakage and a leakage of the\nuninitialized stack data to passive network observers.\n\nFIPS impact: no\nThe FIPS modules in 4.0, 3.6, 3.5, 3.4, and 3.0 are not affected by this CVE as\nthe affected protocol is not implemented in the FIPS module.",
+      "advisories": [
+        {
+          "url": "https://avd.aquasec.com/nvd/cve-2026-88822"
+        },
+        {
+          "url": "https://github.com/openssl/openssl/commit/1a73dc590cbad62d6f0329ea4779eadaa8d8fd75"
+        },
+        {
+          "url": "https://github.com/openssl/openssl/commit/7b4f5344aa0401e7b777640050b5257ed2a70e88"
+        },
+        {
+          "url": "https://github.com/openssl/openssl/commit/911eee8eb7550b95a206f1ad8cbdb986098982f3"
+        },
+        {
+          "url": "https://openssl-library.org/news/secadv/20261110.txt"
+        },
+        {
+          "url": "https://www.cve.org/CVERecord?id=CVE-2026-88822"
+        }
+      ],
+      "published": "2026-11-10T19:21:34+00:00",
+      "updated": "2026-11-10T22:10:04+00:00",
+      "affects": [
+        {
+          "ref": "pkg:deb/debian/libssl3t64@3.5.7-1~deb13u3?arch=amd64&distro=debian-13.7",
+          "versions": [
+            {
+              "version": "3.5.7-1~deb13u3",
+              "status": "affected"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "CVE-2026-88823",
+      "source": {
+        "name": "debian",
+        "url": "https://salsa.debian.org/security-tracker-team/security-tracker"
+      },
+      "ratings": [
+        {
+          "source": {
+            "name": "ubuntu"
+          },
+          "severity": "medium"
+        }
+      ],
+      "cwes": [
+        325
+      ],
+      "description": "Issue summary: The AES-GCM-SIV implementation treats a zero-length Additional\nAuthenticated Data (AAD) update as a reset of all the AAD supplied so far,\ninstead of leaving the AAD unchanged. An application that supplies its AAD in\nseveral fragments, one of which is empty, therefore produces or verifies\nmessages whose authentication tag does not cover the AAD supplied before\nthe empty fragment.\n\nImpact summary: Data an application intended to authenticate alongside a\nmessage is silently left unauthenticated. An attacker can forge the AAD of such\na message.\n\nCWE: CWE-325: Missing Cryptographic Step\n\nDescription: An application passing AAD in multiple chunks of which some have\nzero length will have the previous AAD chunks effectively unauthenticated. Also,\non context re-initialisation, the AAD was not reset, which meant that any AAD\naccumulated from the previous context usage were also included in the AAD of the\nnew message.\n\nThe fix makes a zero-length AAD update a no-op and clears any accumulated AAD\nwhenever the context is re-initialised with a key or a nonce.\nA re-initialisation that only changes parameters keeps the AAD.\n\nFIPS impact: no\nThe FIPS modules are not affected, as AES-GCM-SIV is not a FIPS approved\nalgorithm and is implemented only in the default provider, outside the\nOpenSSL FIPS module boundary.",
+      "advisories": [
+        {
+          "url": "https://avd.aquasec.com/nvd/cve-2026-88823"
+        },
+        {
+          "url": "https://github.com/openssl/openssl/commit/159e1de0c448d7b9f09ad768c8e141def4aa1eb4"
+        },
+        {
+          "url": "https://github.com/openssl/openssl/commit/2f5fc833ff9b5bfe00b32f8b5c74f73c5773c682"
+        },
+        {
+          "url": "https://github.com/openssl/openssl/commit/6747b1a278816dd7db46438040a70b0b5e5e0a90"
+        },
+        {
+          "url": "https://openssl-library.org/news/secadv/20261110.txt"
+        },
+        {
+          "url": "https://www.cve.org/CVERecord?id=CVE-2026-88823"
+        }
+      ],
+      "published": "2026-11-10T19:21:34+00:00",
+      "updated": "2026-11-10T22:10:04+00:00",
+      "affects": [
+        {
+          "ref": "pkg:deb/debian/libssl3t64@3.5.7-1~deb13u3?arch=amd64&distro=debian-13.7",
+          "versions": [
+            {
+              "version": "3.5.7-1~deb13u3",
+              "status": "affected"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "CVE-2026-89092",
+      "source": {
+        "name": "debian",
+        "url": "https://salsa.debian.org/security-tracker-team/security-tracker"
+      },
+      "ratings": [
+        {
+          "source": {
+            "name": "alma"
+          },
+          "severity": "medium"
+        },
+        {
+          "source": {
+            "name": "oracle-oval"
+          },
+          "severity": "medium"
+        },
+        {
+          "source": {
+            "name": "redhat"
+          },
+          "score": 4.2,
+          "severity": "medium",
+          "method": "CVSSv31",
+          "vector": "CVSS:3.1/AV:A/AC:H/PR:N/UI:N/S:U/C:N/I:L/A:L"
+        },
+        {
+          "source": {
+            "name": "rocky"
+          },
+          "severity": "medium"
+        },
+        {
+          "source": {
+            "name": "ubuntu"
+          },
+          "severity": "medium"
+        }
+      ],
+      "cwes": [
+        789
+      ],
+      "description": "The nscd service in the GNU C Library 2.3.4 onwards may crash due to a \nstack overflow when a malicious DNS server returns too large a response \nfor a DNS query, resulting in degraded DNS resolution for the system.\n\n\n\nExploitation of this bug needs a system that has nscd enabled and using \nan untrusted DNS server for name resolution, with the compromised DNS \nserver being capable of processing records large enough to result in a \nstack overflow in an nscd thread stack.  During experimentation, bind 9 \nwas unable to handle large records, but that could change in future or \nwith a different name server.  In typical installations, nscd is \nexecuted in an isolated context as its own user without a shell, due to \nwhich any compromise of that service is isolated.\n\n\n\nThere is a remote possibility of nscd cache corruption if an attacker \nmanages to get the stack pointer into a desired point in the heap, \npotentially resulting in other caches in nscd being overwritten with \ncorrupt data through the stack overflow, until the buggy code path \neventually results in a crash.\n\n\n\nFinally, a crash in nscd may result in performance degradation when \nresolving names, but it does not result in a denial of service.",
+      "advisories": [
+        {
+          "url": "https://avd.aquasec.com/nvd/cve-2026-89092"
+        },
+        {
+          "url": "http://www.openwall.com/lists/oss-security/2026/09/11/2"
+        },
+        {
+          "url": "https://access.redhat.com/errata/RHSA-2026:95618"
+        },
+        {
+          "url": "https://access.redhat.com/security/cve/CVE-2026-89092"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/2531725"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/2536382"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/2538209"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/2538306"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=2531725"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=2536382"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=2538209"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=2538306"
+        },
+        {
+          "url": "https://creativecommons.org/licenses/by/4.0/"
+        },
+        {
+          "url": "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-8674"
+        },
+        {
+          "url": "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-86805"
+        },
+        {
+          "url": "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-89092"
+        },
+        {
+          "url": "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-95818"
+        },
+        {
+          "url": "https://errata.almalinux.org/9/ALSA-2026-95618.html"
+        },
+        {
+          "url": "https://errata.rockylinux.org/RLSA-2026:95618"
+        },
+        {
+          "url": "https://linux.oracle.com/cve/CVE-2026-89092.html"
+        },
+        {
+          "url": "https://linux.oracle.com/errata/ELSA-2026-96087.html"
+        },
+        {
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-89092"
+        },
+        {
+          "url": "https://sourceware.org/bugzilla/show_bug.cgi?id=34624"
+        },
+        {
+          "url": "https://sourceware.org/git/?p=glibc.git;a=blob;f=advisories/GLIBC-SA-2026-0016"
+        },
+        {
+          "url": "https://sourceware.org/git/?p=glibc.git;a=blob_plain;f=advisories/GLIBC-SA-2026-0016"
+        },
+        {
+          "url": "https://ubuntu.com/security/notices/USN-9065-1"
+        },
+        {
+          "url": "https://www.cve.org/CVERecord?id=CVE-2026-89092"
+        }
+      ],
+      "published": "2026-09-11T02:18:35+00:00",
+      "updated": "2026-10-26T23:10:00+00:00",
+      "affects": [
+        {
+          "ref": "pkg:deb/debian/libc6@2.41-12%2Bdeb13u4?arch=amd64&distro=debian-13.7",
+          "versions": [
+            {
+              "version": "2.41-12+deb13u4",
+              "status": "affected"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "CVE-2026-95619",
+      "source": {
+        "name": "debian",
+        "url": "https://salsa.debian.org/security-tracker-team/security-tracker"
+      },
+      "ratings": [
+        {
+          "source": {
+            "name": "alma"
+          },
+          "severity": "medium"
+        },
+        {
+          "source": {
+            "name": "oracle-oval"
+          },
+          "severity": "medium"
+        },
+        {
+          "source": {
+            "name": "redhat"
+          },
+          "score": 7.7,
+          "severity": "medium",
+          "method": "CVSSv31",
+          "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:L/I:H/A:H"
+        },
+        {
+          "source": {
+            "name": "rocky"
+          },
+          "severity": "medium"
+        },
+        {
+          "source": {
+            "name": "ubuntu"
+          },
+          "severity": "medium"
+        }
+      ],
+      "cwes": [
+        190
+      ],
+      "description": "A flaw was found in libstdc++. An integer overflow can occur when processing large inputs to the aligned operator new in the C++ library. This vulnerability could lead to an undersized memory allocation, potentially causing memory corruption or application instability.",
+      "advisories": [
+        {
+          "url": "https://avd.aquasec.com/nvd/cve-2026-95619"
+        },
+        {
+          "url": "https://access.redhat.com/errata/RHSA-2026:58503"
+        },
+        {
+          "url": "https://access.redhat.com/errata/RHSA-2026:67275"
+        },
+        {
+          "url": "https://access.redhat.com/errata/RHSA-2026:89830"
+        },
+        {
+          "url": "https://access.redhat.com/errata/RHSA-2026:98475"
+        },
+        {
+          "url": "https://access.redhat.com/errata/RHSA-2026:99032"
+        },
+        {
+          "url": "https://access.redhat.com/security/cve/CVE-2026-95619"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/2478395"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/2537811"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=2478395"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=2537811"
+        },
+        {
+          "url": "https://creativecommons.org/licenses/by/4.0/"
+        },
+        {
+          "url": "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-102010"
+        },
+        {
+          "url": "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-95619"
+        },
+        {
+          "url": "https://errata.almalinux.org/8/ALSA-2026-89830.html"
+        },
+        {
+          "url": "https://errata.rockylinux.org/RLSA-2026:89830"
+        },
+        {
+          "url": "https://gcc.gnu.org/pipermail/gcc-patches/2026-September/732381.html"
+        },
+        {
+          "url": "https://linux.oracle.com/cve/CVE-2026-95619.html"
+        },
+        {
+          "url": "https://linux.oracle.com/errata/ELSA-2026-89830.html"
+        },
+        {
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-95619"
+        },
+        {
+          "url": "https://www.cve.org/CVERecord?id=CVE-2026-95619"
+        }
+      ],
+      "published": "2026-09-22T13:17:13+00:00",
+      "updated": "2026-11-11T20:17:10+00:00",
+      "affects": [
+        {
+          "ref": "pkg:deb/debian/gcc-14-base@14.2.0-19?arch=amd64&distro=debian-13.7",
+          "versions": [
+            {
+              "version": "14.2.0-19",
+              "status": "affected"
+            }
+          ]
+        },
+        {
+          "ref": "pkg:deb/debian/libgcc-s1@14.2.0-19?arch=amd64&distro=debian-13.7",
+          "versions": [
+            {
+              "version": "14.2.0-19",
+              "status": "affected"
+            }
+          ]
+        },
+        {
+          "ref": "pkg:deb/debian/libgomp1@14.2.0-19?arch=amd64&distro=debian-13.7",
+          "versions": [
+            {
+              "version": "14.2.0-19",
+              "status": "affected"
+            }
+          ]
+        },
+        {
+          "ref": "pkg:deb/debian/libstdc%2B%2B6@14.2.0-19?arch=amd64&distro=debian-13.7",
+          "versions": [
+            {
+              "version": "14.2.0-19",
+              "status": "affected"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "CVE-2026-95691",
+      "source": {
+        "name": "debian",
+        "url": "https://salsa.debian.org/security-tracker-team/security-tracker"
+      },
+      "ratings": [
+        {
+          "source": {
+            "name": "ubuntu"
+          },
+          "severity": "medium"
+        }
+      ],
+      "cwes": [
+        416
+      ],
+      "description": "Issue summary: A retransmitted QUIC CRYPTO frame can release packet storage\nwhile the TLS record layer retains a direct pointer into that storage causing\nuse after free.\n\nImpact summary: A malicious QUIC server can cause a heap-use-after-free read\nin the OpenSSL QUIC client. The server can also identify one allocator-adjacent\nbyte through the client's protected Handshake response.\n\nCWE: CWE-416: Use After Free\n\nDescription: During CRYPTO stream processing, a pointer into the first frame's\nmemory on the stream is lent to the TLS handshake processing. The memory\nmust remain stable until it is processed and released. However the processing\nof retransmitted CRYPTO frames could release the memory if the retransmitted\nframe fully overlapped the existing frame. This then causes use-after-free read\nwhen the TLS handshake processing continues.\n\nThe use-after-free read can lead to a Denial-of-Service of the client\napplication or a minor leak of information about the heap memory contents\nthat might be overwritten with other data, subsequently allocated by\nthe application, to the peer.\n\nFIPS impact: no\nThe FIPS module is not affected as the QUIC implementation is outside of\nthe OpenSSL FIPS module boundary.",
+      "advisories": [
+        {
+          "url": "https://avd.aquasec.com/nvd/cve-2026-95691"
+        },
+        {
+          "url": "https://github.com/openssl/openssl/commit/dd90ceb99a3c2ddba336bb4a00be9ebabd84c2a1"
+        },
+        {
+          "url": "https://github.com/openssl/openssl/commit/ec9d4de9d03989b29db5a3d7efdb4c285deaf386"
+        },
+        {
+          "url": "https://github.com/openssl/openssl/commit/f6244675833e097c2429a40d1b206d95385bd42f"
+        },
+        {
+          "url": "https://openssl-library.org/news/secadv/20261110.txt"
+        },
+        {
+          "url": "https://www.cve.org/CVERecord?id=CVE-2026-95691"
+        }
+      ],
+      "published": "2026-11-10T19:21:39+00:00",
+      "updated": "2026-11-10T22:10:04+00:00",
+      "affects": [
+        {
+          "ref": "pkg:deb/debian/libssl3t64@3.5.7-1~deb13u3?arch=amd64&distro=debian-13.7",
+          "versions": [
+            {
+              "version": "3.5.7-1~deb13u3",
+              "status": "affected"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "CVE-2026-95692",
+      "source": {
+        "name": "debian",
+        "url": "https://salsa.debian.org/security-tracker-team/security-tracker"
+      },
+      "ratings": [
+        {
+          "source": {
+            "name": "ubuntu"
+          },
+          "severity": "medium"
+        }
+      ],
+      "cwes": [
+        125
+      ],
+      "description": "Issue summary: Setting an AES-GCM-SIV IV shorter than the expected nonce\nlength via EVP_CipherInit_ex() may trigger a heap out-of-bounds read.\nSupplying a longer IV is silently truncated instead of rejected.\n\nImpact summary: An application passing a caller-supplied IV of the wrong\nlength may crash or read beyond its buffer. Because trailing IV bytes are\nignored, an attacker who knows one message and tag may forge messages under a\ndifferent IV.\n\nCWE: CWE-125: Out-of-bounds Read\n\nDescription: AES-GCM-SIV copies the caller-supplied IV or nonce into its\ninternal state using a copy whose length is taken from the expected nonce size\nrather than from the length the caller actually provided. When the caller\npasses a shorter IV, the copy reads past the end of the caller's buffer;\nAddressSanitizer confirms a heap out-of-bounds read reached through\nEVP_CipherInit_ex() into ossl_aes_gcm_siv_init(). When the caller passes a\nlonger IV, the implementation silently discards the trailing bytes instead of\nrejecting the length.\n\nThe truncation breaks the binding between the IV and the computed\nauthentication tag. An attacker who has observed a message and its tag under\none IV can produce a message and tag that verify under a different IV whose\nfirst bytes match, since the surplus bytes never influence the computation.\nThe message itself is unchanged, so this is a failure of IV commitment rather\nthan a classic existential forgery.\n\nOnly applications that call EVP_CipherInit_ex() (or the equivalent provider\ncipher initialization) with an IV length other than the standard 12 bytes for\nAES-GCM-SIV are affected. The severity is limited because the out-of-bounds\nread is small and attacker-controlled only in length, and the forgery requires\nan unusual IV length choice by the application.\n\nFIPS impact: no\nThe FIPS modules are not affected by this issue, as AES-GCM-SIV is not an\napproved algorithm.",
+      "advisories": [
+        {
+          "url": "https://avd.aquasec.com/nvd/cve-2026-95692"
+        },
+        {
+          "url": "https://github.com/openssl/openssl/commit/257a3427aa0ef8d9dd2ef5b3e2d1c021a221b116"
+        },
+        {
+          "url": "https://github.com/openssl/openssl/commit/510872388f5d145cf870868b3d288a23822cb776"
+        },
+        {
+          "url": "https://github.com/openssl/openssl/commit/70a47ac78b6f3be1b22fb1551bd0bfcff4f29613"
+        },
+        {
+          "url": "https://openssl-library.org/news/secadv/20261110.txt"
+        },
+        {
+          "url": "https://www.cve.org/CVERecord?id=CVE-2026-95692"
+        }
+      ],
+      "published": "2026-11-10T19:21:39+00:00",
+      "updated": "2026-11-10T22:10:04+00:00",
+      "affects": [
+        {
+          "ref": "pkg:deb/debian/libssl3t64@3.5.7-1~deb13u3?arch=amd64&distro=debian-13.7",
+          "versions": [
+            {
+              "version": "3.5.7-1~deb13u3",
+              "status": "affected"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "CVE-2026-95818",
+      "source": {
+        "name": "debian",
+        "url": "https://salsa.debian.org/security-tracker-team/security-tracker"
+      },
+      "ratings": [
+        {
+          "source": {
+            "name": "alma"
+          },
+          "severity": "medium"
+        },
+        {
+          "source": {
+            "name": "oracle-oval"
+          },
+          "severity": "medium"
+        },
+        {
+          "source": {
+            "name": "redhat"
+          },
+          "score": 7,
+          "severity": "medium",
+          "method": "CVSSv31",
+          "vector": "CVSS:3.1/AV:L/AC:H/PR:L/UI:N/S:U/C:H/I:H/A:H"
+        },
+        {
+          "source": {
+            "name": "rocky"
+          },
+          "severity": "medium"
+        },
+        {
+          "source": {
+            "name": "ubuntu"
+          },
+          "severity": "medium"
+        }
+      ],
+      "cwes": [
+        121
+      ],
+      "description": "A stack-based buffer overflow in the dynamic loader (ld.so) of the GNU C Library (glibc) versions 2.14 through 2.44 allows a local attacker to crash or corrupt the memory of setuid/setgid (AT_SECURE) programs.\n\nWhen such a program's DT_RPATH or DT_RUNPATH begins with $ORIGIN and is followed by NUL or '/' the loader both reads past the end of the path buffer and writes past the end of a stack-allocated internal buffer. The corrupted loader stack can lead to a loader crash (denial of service) and limited disclosure of process memory.",
+      "advisories": [
+        {
+          "url": "https://avd.aquasec.com/nvd/cve-2026-95818"
+        },
+        {
+          "url": "https://access.redhat.com/errata/RHSA-2026:95618"
+        },
+        {
+          "url": "https://access.redhat.com/security/cve/CVE-2026-95818"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/2531725"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/2536382"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/2538209"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/2538306"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=2531725"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=2536382"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=2538209"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=2538306"
+        },
+        {
+          "url": "https://creativecommons.org/licenses/by/4.0/"
+        },
+        {
+          "url": "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-8674"
+        },
+        {
+          "url": "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-86805"
+        },
+        {
+          "url": "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-89092"
+        },
+        {
+          "url": "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-95818"
+        },
+        {
+          "url": "https://errata.almalinux.org/9/ALSA-2026-95618.html"
+        },
+        {
+          "url": "https://errata.rockylinux.org/RLSA-2026:95618"
+        },
+        {
+          "url": "https://linux.oracle.com/cve/CVE-2026-95818.html"
+        },
+        {
+          "url": "https://linux.oracle.com/errata/ELSA-2026-96087.html"
+        },
+        {
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-95818"
+        },
+        {
+          "url": "https://sourceware.org/bugzilla/show_bug.cgi?id=34360"
+        },
+        {
+          "url": "https://sourceware.org/git/?p=glibc.git;a=blob;f=advisories/GLIBC-SA-2026-0023"
+        },
+        {
+          "url": "https://sourceware.org/git/?p=glibc.git;a=blob_plain;f=advisories/GLIBC-SA-2026-0023"
+        },
+        {
+          "url": "https://ubuntu.com/security/notices/USN-9065-1"
+        },
+        {
+          "url": "https://www.cve.org/CVERecord?id=CVE-2026-95818"
+        }
+      ],
+      "published": "2026-09-22T17:17:32+00:00",
+      "updated": "2026-09-22T19:56:19+00:00",
+      "affects": [
+        {
+          "ref": "pkg:deb/debian/libc6@2.41-12%2Bdeb13u4?arch=amd64&distro=debian-13.7",
+          "versions": [
+            {
+              "version": "2.41-12+deb13u4",
+              "status": "affected"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "CVE-2026-97399",
+      "source": {
+        "name": "debian",
+        "url": "https://salsa.debian.org/security-tracker-team/security-tracker"
+      },
+      "ratings": [
+        {
+          "source": {
+            "name": "redhat"
+          },
+          "score": 3.7,
+          "severity": "low",
+          "method": "CVSSv31",
+          "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:L"
+        },
+        {
+          "source": {
+            "name": "ubuntu"
+          },
+          "severity": "medium"
+        }
+      ],
+      "cwes": [
+        126
+      ],
+      "description": "The strncasecmp function in the GNU C Library 2.24 and later optimized for the Power8 architecture may read one byte beyond the input size limit, which may crash a program when that byte is not readable.\n\nThis condition may happen when the input strings to the strncasecmp function are attacker controlled in an application and they match all the way up to the edge of their page and the neighbouring page is either not mapped or is not readable.",
+      "advisories": [
+        {
+          "url": "https://avd.aquasec.com/nvd/cve-2026-97399"
+        },
+        {
+          "url": "http://www.openwall.com/lists/oss-security/2026/09/28/7"
+        },
+        {
+          "url": "https://access.redhat.com/security/cve/CVE-2026-97399"
+        },
+        {
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-97399"
+        },
+        {
+          "url": "https://sourceware.org/bugzilla/show_bug.cgi?id=34683"
+        },
+        {
+          "url": "https://sourceware.org/git/?p=glibc.git;a=blob;f=advisories/GLIBC-SA-2026-0024"
+        },
+        {
+          "url": "https://sourceware.org/git/?p=glibc.git;a=blob_plain;f=advisories/GLIBC-SA-2026-0024"
+        },
+        {
+          "url": "https://ubuntu.com/security/notices/USN-9065-1"
+        },
+        {
+          "url": "https://www.cve.org/CVERecord?id=CVE-2026-97399"
+        }
+      ],
+      "published": "2026-09-28T16:17:18+00:00",
+      "updated": "2026-09-29T21:36:39+00:00",
+      "affects": [
+        {
+          "ref": "pkg:deb/debian/libc6@2.41-12%2Bdeb13u4?arch=amd64&distro=debian-13.7",
+          "versions": [
+            {
+              "version": "2.41-12+deb13u4",
+              "status": "affected"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

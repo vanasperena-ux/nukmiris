@@ -1,0 +1,19 @@
+{
+  "status": "LOCAL_TESTS_COMPLETE_INDEPENDENT_REVIEW_PENDING",
+  "testedSource": "78f182b2282cbbeb39408c3d57fae841ca70aab5",
+  "testedTree": "85b9f50e1dea52a8948a91d2f1f507889cac2479",
+  "base": "564be22d57ec895208002925c9ac1a2f7abd4a8e",
+  "implementationPr": 24,
+  "ownerSecondHost": "NOT_EXECUTED",
+  "claudePC1Review": "PENDING",
+  "registryDigest": null,
+  "oldImagePermanentLocalTestOnly": true,
+  "rawVulnerabilitiesAndSbom": "COMPLETE_IN_EVIDENCE",
+  "rawSqlExports": "THREE_SELECTED_CASES_PUBLISHED; other bytes session-local with hash index",
+  "sourceBoundary": "platform-proof only;1,087 historical/application files unchanged",
+  "sourceOnlyApplyGuard": true,
+  "liveCloudExecution": false,
+  "cloudOrProviderActivation": false,
+  "exceptions": [],
+  "publicationReadback": "SEPARATE_ADDITIVE_RECEIPT_AFTER_ACTUAL_GITHUB_DOWNLOAD"
+}

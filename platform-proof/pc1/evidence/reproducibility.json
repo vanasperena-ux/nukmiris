@@ -1,0 +1,36 @@
+{
+  "testedSource": "78f182b2282cbbeb39408c3d57fae841ca70aab5",
+  "testedTree": "85b9f50e1dea52a8948a91d2f1f507889cac2479",
+  "sameEnvironmentTwoFreshInstalls": true,
+  "sourceAndDependencyManifestsEqual": true,
+  "builds": [
+    {
+      "build": "a",
+      "hashes": {
+        "sourceLayerDigest": "sha256:e1e9e5b6e62842ea0d27a67b2c7a187808a11d39fe1eca627f62caef80a89161",
+        "imageConfigId": "sha256:cdeed164f6cdba2ea419b5e92ef340326383feef16d97a3f1df4412c3954657a",
+        "canonicalUncompressedOciManifestDigest": "sha256:f52c1948e758368f270f491d5a19d05f791e0bf0431bcd32ba4db1d11e3ed4bd",
+        "dockerArchiveSha256": "ceb375af667795107d25075a115918bff5e15a7481ceab983b6c432926c5158b"
+      },
+      "ownApplicationFilesVerified": 188,
+      "publicCompatibilityFilesVerified": 2,
+      "canonicalEntries": 190,
+      "status": "PASS"
+    },
+    {
+      "build": "b",
+      "hashes": {
+        "sourceLayerDigest": "sha256:e1e9e5b6e62842ea0d27a67b2c7a187808a11d39fe1eca627f62caef80a89161",
+        "imageConfigId": "sha256:cdeed164f6cdba2ea419b5e92ef340326383feef16d97a3f1df4412c3954657a",
+        "canonicalUncompressedOciManifestDigest": "sha256:f52c1948e758368f270f491d5a19d05f791e0bf0431bcd32ba4db1d11e3ed4bd",
+        "dockerArchiveSha256": "ceb375af667795107d25075a115918bff5e15a7481ceab983b6c432926c5158b"
+      },
+      "ownApplicationFilesVerified": 188,
+      "publicCompatibilityFilesVerified": 2,
+      "canonicalEntries": 190,
+      "status": "PASS"
+    }
+  ],
+  "ownerIndependentHost": "NOT_EXECUTED",
+  "registryDigest": null
+}

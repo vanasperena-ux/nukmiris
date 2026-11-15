@@ -1,0 +1,95 @@
+{
+  "node": "v24.22.3",
+  "versions": {
+    "node": "24.22.3",
+    "acorn": "8.18.0",
+    "ada": "4.0.0",
+    "amaro": "1.1.11",
+    "ares": "1.34.9",
+    "brotli": "1.2.1",
+    "cldr": "48.0",
+    "icu": "78.3",
+    "llhttp": "9.4.4",
+    "merve": "1.2.2",
+    "modules": "137",
+    "napi": "10",
+    "nbytes": "0.1.4",
+    "ncrypto": "0.0.1",
+    "nghttp2": "1.70.0",
+    "nghttp3": "",
+    "ngtcp2": "",
+    "openssl": "3.5.9",
+    "simdjson": "4.6.11",
+    "simdutf": "6.4.0",
+    "sqlite": "3.54.1",
+    "tz": "2026e",
+    "undici": "7.30.2",
+    "unicode": "17.0",
+    "uv": "1.52.1",
+    "uvwasi": "0.0.23",
+    "v8": "13.6.233.17-node.63",
+    "zlib": "1.3.2.1-motley-285e94b",
+    "zstd": "1.5.7"
+  },
+  "uid": 1000,
+  "gid": 1000,
+  "execPath": "/nodejs/bin/node",
+  "nodeSha256": "a7ec1b37e6ff9d187e4198c5b6df9a4eb1c74dd31804fb3bac55cc4ceca1ac01",
+  "sharedOpenSSL": false,
+  "debian": "13.7",
+  "os": "PRETTY_NAME=\"Distroless\"\nNAME=\"Debian GNU/Linux\"\nID=\"debian\"\nVERSION_ID=\"13\"\nVERSION=\"Debian GNU/Linux 13 (trixie)\"\nHOME_URL=\"https://github.com/GoogleContainerTools/distroless\"\nSUPPORT_URL=\"https://github.com/GoogleContainerTools/distroless/blob/master/README.md\"\nBUG_REPORT_URL=\"https://github.com/GoogleContainerTools/distroless/issues/new\"\n",
+  "passwd": "root:x:0:0:root:/root:/sbin/nologin\nnobody:x:65534:65534:nobody:/nonexistent:/sbin/nologin\nnonroot:x:65532:65532:nonroot:/home/nonroot:/sbin/nologin\n",
+  "group": "root:x:0:\nnobody:x:65534:\ntty:x:5:\nstaff:x:50:\nnonroot:x:65532:\n",
+  "loadedFiles": [
+    "/nodejs/bin/node",
+    "/usr/lib/x86_64-linux-gnu/libc.so.6",
+    "/usr/lib/x86_64-linux-gnu/libpthread.so.0",
+    "/usr/lib/x86_64-linux-gnu/libgcc_s.so.1",
+    "/usr/lib/x86_64-linux-gnu/libm.so.6",
+    "/usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.33",
+    "/usr/lib/x86_64-linux-gnu/libdl.so.2",
+    "/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2"
+  ],
+  "tooling": [
+    {
+      "path": "/usr/local/lib/node_modules/npm",
+      "present": false
+    },
+    {
+      "path": "/usr/local/lib/node_modules/corepack",
+      "present": false
+    },
+    {
+      "path": "/usr/local/bin/npm",
+      "present": false
+    },
+    {
+      "path": "/usr/local/bin/npx",
+      "present": false
+    },
+    {
+      "path": "/usr/local/bin/corepack",
+      "present": false
+    },
+    {
+      "path": "/usr/local/bin/yarn",
+      "present": false
+    },
+    {
+      "path": "/usr/local/bin/yarnpkg",
+      "present": false
+    },
+    {
+      "path": "/bin/sh",
+      "present": false
+    },
+    {
+      "path": "/usr/bin/apt",
+      "present": false
+    },
+    {
+      "path": "/usr/bin/dpkg",
+      "present": false
+    }
+  ]
+}

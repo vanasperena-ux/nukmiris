@@ -1,0 +1,26 @@
+test_archive_configuration_and_layer_integrity (__main__.BuildValidation.test_archive_configuration_and_layer_integrity) ... ok
+test_bad_roots_paths_data_and_symlinks (__main__.BuildValidation.test_bad_roots_paths_data_and_symlinks) ... ok
+test_cli_rejects_optimization_before_any_action (__main__.BuildValidation.test_cli_rejects_optimization_before_any_action) ... ok
+test_explicit_commit_and_output_scope_validation (__main__.BuildValidation.test_explicit_commit_and_output_scope_validation) ... ok
+test_lockfile_integrity_and_origin (__main__.BuildValidation.test_lockfile_integrity_and_origin) ... ok
+test_no_security_asserts (__main__.BuildValidation.test_no_security_asserts) ... ok
+test_private_key_headers_normal_and_optimized (__main__.BuildValidation.test_private_key_headers_normal_and_optimized) ... ok
+test_valid_runtime_file (__main__.BuildValidation.test_valid_runtime_file) ... ok
+test_checksums_and_failure_package_support_unicode_and_spaces (__main__.OperatorAndFailureEvidence.test_checksums_and_failure_package_support_unicode_and_spaces) ... ok
+test_incomplete_scan_keeps_hold_and_raw_diagnostics (__main__.OperatorAndFailureEvidence.test_incomplete_scan_keeps_hold_and_raw_diagnostics) ... ok
+test_missing_windows_receipt_cannot_be_complete (__main__.OperatorAndFailureEvidence.test_missing_windows_receipt_cannot_be_complete) ... ok
+test_restricted_powershell_receipt_is_valid_without_policy_change (__main__.OperatorAndFailureEvidence.test_restricted_powershell_receipt_is_valid_without_policy_change) ... ok
+test_debian_epoch_release_and_purl_are_bound_without_dropping_findings (__main__.VulnerabilityGate.test_debian_epoch_release_and_purl_are_bound_without_dropping_findings) ... ok
+test_finding_cannot_omit_or_forge_attribution (__main__.VulnerabilityGate.test_finding_cannot_omit_or_forge_attribution) ... ok
+test_missing_corrupt_stale_or_untrusted_evidence_fails_closed (__main__.VulnerabilityGate.test_missing_corrupt_stale_or_untrusted_evidence_fails_closed) ... ok
+test_nonfixable_runtime_and_application_severe_are_hold (__main__.VulnerabilityGate.test_nonfixable_runtime_and_application_severe_are_hold) ... ok
+test_scanner_success_with_fixable_high_is_hold (__main__.VulnerabilityGate.test_scanner_success_with_fixable_high_is_hold) ... ok
+test_valid_complete_scan_is_only_local_candidate (__main__.VulnerabilityGate.test_valid_complete_scan_is_only_local_candidate) ... ok
+test_zero_cve_scan_does_not_hide_old_node (__main__.VulnerabilityGate.test_zero_cve_scan_does_not_hide_old_node) ... ok
+
+----------------------------------------------------------------------
+Ran 19 tests in 3.634s
+
+OK
+{"file": "archive.tar", "sha256": "916e9f088594211665d7a49ebff924fc34f8f1306d36322a7bc96c0d41412b7e", "verification": "pinned checksum and official HTTPS checksum; no signed publisher attestation claimed"}
+{"resultsArchive": "/tmp/nukmiris-pc1-espacio-\u00f1-0802d0k0/nukmiris-pc1-espacio-\u00f1-0802d0k0-results.zip", "sha256": "1ada1de206b915740ed5890adb806dc6b12c45996c2c959733b91b8c0f05b32b", "status": "INCOMPLETE_HOLD_PRESERVE_FINDINGS"}

@@ -1,0 +1,10 @@
+{"verdict": "HOLD", "reasons": ["insufficient_or_invalid_evidence: sbom_format_invalid"], "vulnerabilityCounts": {}, "fixableCriticalHigh": 0, "runtimeCriticalHigh": 0, "exceptions": [], "productionOrCloudAuthorization": false, "severityPolicy": "Trivy vendor-selected Severity; all raw CVSS/vendor data retained, no ignore rules", "reachabilityPolicy": "all retained OS packages and application dependencies conservatively reachable"}
+Traceback (most recent call last):
+  File "/workspace/work/nukmiris-pc1-hardening/platform-proof/readiness/build-image.py", line 180, in <module>
+    if __name__ == '__main__': main()
+                               ^^^^^^
+  File "/workspace/work/nukmiris-pc1-hardening/platform-proof/readiness/build-image.py", line 176, in main
+    subprocess.run([sys.executable,'-I',str(scan),'--build',args.out,'--repo',args.repo,
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py", line 571, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3', '-I', '/workspace/work/nukmiris-pc1-hardening/platform-proof/pc1/scan-image.py', '--build', '/tmp/nukmiris-pc1-build-a', '--repo', '..', '--trivy', '/tmp/nukmiris-pc1-tools/trivy/trivy', '--trivy-cache', '/tmp/nukmiris-pc1-trivy-cache']' returned non-zero exit status 1.

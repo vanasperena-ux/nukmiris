@@ -1,0 +1,188 @@
+{
+  "node": "v24.22.3",
+  "versions": {
+    "node": "24.22.3",
+    "acorn": "8.18.0",
+    "ada": "4.0.0",
+    "amaro": "1.1.11",
+    "ares": "1.34.9",
+    "brotli": "1.2.1",
+    "cldr": "48.0",
+    "icu": "78.3",
+    "llhttp": "9.4.4",
+    "merve": "1.2.2",
+    "modules": "137",
+    "napi": "10",
+    "nbytes": "0.1.4",
+    "ncrypto": "0.0.1",
+    "nghttp2": "1.70.0",
+    "nghttp3": "",
+    "ngtcp2": "",
+    "openssl": "3.5.9",
+    "simdjson": "4.6.11",
+    "simdutf": "6.4.0",
+    "sqlite": "3.54.1",
+    "tz": "2026e",
+    "undici": "7.30.2",
+    "unicode": "17.0",
+    "uv": "1.52.1",
+    "uvwasi": "0.0.23",
+    "v8": "13.6.233.17-node.63",
+    "zlib": "1.3.2.1-motley-285e94b",
+    "zstd": "1.5.7"
+  },
+  "uid": 1000,
+  "gid": 1000,
+  "execPath": "/nodejs/bin/node",
+  "nodeSha256": "a7ec1b37e6ff9d187e4198c5b6df9a4eb1c74dd31804fb3bac55cc4ceca1ac01",
+  "sharedOpenSSL": false,
+  "debian": "13.7",
+  "loadedFiles": [
+    {
+      "path": "/nodejs/bin/node",
+      "sha256": "a7ec1b37e6ff9d187e4198c5b6df9a4eb1c74dd31804fb3bac55cc4ceca1ac01"
+    },
+    {
+      "path": "/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2",
+      "sha256": "c8438e4fde1934e61c88311633f00949ff645d5c04cdb8671fa3d78164d2f307"
+    },
+    {
+      "path": "/usr/lib/x86_64-linux-gnu/libc.so.6",
+      "sha256": "9792e3cbb541c8f44c7acf5f14f4022ea62998ecc787d326bed4d8b6547dfd92"
+    },
+    {
+      "path": "/usr/lib/x86_64-linux-gnu/libdl.so.2",
+      "sha256": "295fa521a03cd2faa99974f378c9e23dd622021ec7d32bcad4f8ea61aec8a872"
+    },
+    {
+      "path": "/usr/lib/x86_64-linux-gnu/libgcc_s.so.1",
+      "sha256": "30c61ab012a4241bed033725a09b61f5fdd3bb7df95ee852d0b096520524c7af"
+    },
+    {
+      "path": "/usr/lib/x86_64-linux-gnu/libm.so.6",
+      "sha256": "6d567d53e895273ca14a1f9dc164fc6c8d39aed2f60aa46a733c2784228915f3"
+    },
+    {
+      "path": "/usr/lib/x86_64-linux-gnu/libpthread.so.0",
+      "sha256": "85e21f7dba0394411d00959176fd18b470e575b0b05f1f4f41e5636802ce0500"
+    },
+    {
+      "path": "/usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.33",
+      "sha256": "972bb2a18b71140dab0240f8a1f68ab3fb1d56bcd4c4f824a91b70888faf5a00"
+    }
+  ],
+  "tooling": [
+    {
+      "path": "/usr/local/lib/node_modules/npm",
+      "present": false
+    },
+    {
+      "path": "/usr/local/lib/node_modules/corepack",
+      "present": false
+    },
+    {
+      "path": "/usr/local/bin/npm",
+      "present": false
+    },
+    {
+      "path": "/usr/local/bin/npx",
+      "present": false
+    },
+    {
+      "path": "/usr/local/bin/corepack",
+      "present": false
+    },
+    {
+      "path": "/usr/local/bin/yarn",
+      "present": false
+    },
+    {
+      "path": "/usr/local/bin/yarnpkg",
+      "present": false
+    },
+    {
+      "path": "/usr/bin/npm",
+      "present": false
+    },
+    {
+      "path": "/usr/bin/npx",
+      "present": false
+    },
+    {
+      "path": "/usr/bin/corepack",
+      "present": false
+    },
+    {
+      "path": "/usr/bin/yarn",
+      "present": false
+    },
+    {
+      "path": "/nodejs/bin/npm",
+      "present": false
+    },
+    {
+      "path": "/nodejs/bin/npx",
+      "present": false
+    },
+    {
+      "path": "/nodejs/bin/corepack",
+      "present": false
+    },
+    {
+      "path": "/nodejs/bin/yarn",
+      "present": false
+    },
+    {
+      "path": "/opt/yarn",
+      "present": false
+    },
+    {
+      "path": "/bin/sh",
+      "present": false
+    },
+    {
+      "path": "/bin/bash",
+      "present": false
+    },
+    {
+      "path": "/usr/bin/apt",
+      "present": false
+    },
+    {
+      "path": "/usr/bin/dpkg",
+      "present": false
+    }
+  ],
+  "roots": [
+    ".dockerenv",
+    "bin",
+    "boot",
+    "dev",
+    "etc",
+    "home",
+    "lib",
+    "lib64",
+    "nodejs",
+    "pc1-probe.mjs",
+    "proc",
+    "proof",
+    "root",
+    "run",
+    "sbin",
+    "sys",
+    "tmp",
+    "usr",
+    "var"
+  ],
+  "passwd": "root:x:0:0:root:/root:/sbin/nologin\nnobody:x:65534:65534:nobody:/nonexistent:/sbin/nologin\nnonroot:x:65532:65532:nonroot:/home/nonroot:/sbin/nologin\nnode:x:1000:1000:Node runtime:/home/node:/sbin/nologin\n",
+  "group": "root:x:0:\nnobody:x:65534:\ntty:x:5:\nstaff:x:50:\nnonroot:x:65532:\nnode:x:1000:\n",
+  "representativeModules": [
+    "crypto",
+    "tls",
+    "zlib",
+    "dns",
+    "https",
+    "pg"
+  ],
+  "scope": "LOCAL_READONLY_NETWORK_NONE_PROBE_NOT_PRODUCTION_ATTESTATION"
+}

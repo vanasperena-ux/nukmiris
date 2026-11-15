@@ -1,0 +1,23 @@
+{
+  "scope": "LINUX_HELPER_ONLY_NOT_WINDOWS_WSL_OR_OWNER_ACCEPTANCE",
+  "results": [
+    {
+      "stage": "source",
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "stage": "builds",
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "stage": "smoke",
+      "exitCode": 0,
+      "stdout": "{\"status\": \"PASS\", \"syntheticOnly\": true, \"packagedSqlRevocation\": \"readiness stub; no actual PostgreSQL test in this procedure\"}\n",
+      "stderr": ""
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+
+> nukmiris-inc1-local-proof@0.1.0 b1a2:check
+> node b1a2/check.mjs
+
+{
+  "mode": "LOCAL_SYNTHETIC_ONLY",
+  "base": "d3fa65192374ca206ff1f6d166a789c295a15e97",
+  "accepted": "b4d0be0cb98c7f2b69be318e18b93f4de102c511",
+  "acceptedTree": "03d08322e27d9d54485fa887b482743fe076556b",
+  "manifestFiles": 127,
+  "changedFiles": 558,
+  "scannedFiles": 616,
+  "secretScan": "PASS",
+  "providerCredentialVariables": 0,
+  "protectedSource": "UNCHANGED",
+  "note": "Repository-content scan, not a forensic scan of unrelated host accounts; runtime uses explicit loopback only."
+}
+{"scope":"B1A_SOURCE_ONLY","base":"2ca5cf215b68f187bfa48b42aaa041bbe93cf56d","accepted":"b4d0be0cb98c7f2b69be318e18b93f4de102c511","historicalFilesVerified":35,"changeBoundary":"platform-proof ONLY","sourceHead":"78f182b2282cbbeb39408c3d57fae841ca70aab5","sourceTree":"85b9f50e1dea52a8948a91d2f1f507889cac2479","actualCloudResourcesCreated":0,"actualProviderCalls":0}
+{"scope":"B1A2_LOCAL_SOURCE_ONLY","historicalFilesVerified":107,"acceptedApplication":"UNCHANGED","cloudExecution":false,"resourceCount":140,"placementRemoved":30,"teardownAuthority":"STATIC_SCOPE_COVERAGE_PASS","actualCloudEvidence":"NOT_PROVEN"}
+npm notice
+npm notice New major version of npm available! 11.19.1 -> 12.2.2
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.2
+npm notice To update run: npm install -g npm@12.2.2
+npm notice

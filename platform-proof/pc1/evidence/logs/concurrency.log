@@ -1,0 +1,47 @@
+
+> nukmiris-inc1-local-proof@0.1.0 test:concurrency
+> node --test --test-concurrency=1 test/concurrency.test.mjs test/b1a-session.test.mjs test/b1a2-journal.test.mjs test/b1a2-controller.test.mjs test/b1a2-startup.test.mjs test/b1a2-observer.test.mjs test/b1a2-teardown.test.mjs test/b1a2-preparation.test.mjs test/readiness-native-transit.test.mjs test/readiness-operations.test.mjs test/pc1-hardening.test.mjs
+
+✔ retirement contract: complete authenticated modeled bundle required; absent data holds (13.909861ms)
+✔ session SQL: billing pause/reset and process restart leave dispatch durably inert (5777.871657ms)
+✔ session SQL: immutable six-hour limit and expiry prevent new entry (3458.803604ms)
+✔ sealer: unavailable, cold, failed journal or dishonest response never causes a false ACK (4365.135276ms)
+✔ retirement promotion rejects another session, scope or predecessor even when signed bundle is internally valid (3.2196ms)
+✔ B1a aggregate gateway SQL login cap bounds old/new overlap without privilege fallback (3317.701606ms)
+✔ B1a controller recovery marks only retired ENTERED as UNKNOWN, preserving original bindings (3351.079824ms)
+✔ C-2/P6b: historical V1 remains verifiable but every B1a-2 operational, recovery and promotion gate refuses it (13.3023ms)
+✔ C-2: V2 fence with a legacy primary or additional clock also fails closed (3.388441ms)
+✔ C-2: corrected V2 evidence still reconciles original work and explicitly promotes through restricted PostgreSQL (4542.629946ms)
+✔ P-3 durable seven-step local simulation, crash after CAS, readback without replay and independent emergency (5.816404ms)
+✔ P-3 unknown outcome or missing permission holds; cannot replay, promote, or impersonate deployer (1.80322ms)
+✔ P-6 every generated resource has dependency-ordered teardown and residual policy (14.226198ms)
+✔ D-3 emergency remains executable with an unresolved operation and unavailable SQL hold (20.038221ms)
+✔ P-1/P-2 ambiguous custody PUT resolves only original immutable slot; concurrent writers cannot fork (48.359951ms)
+✔ P-4 provider crash restart requires independently retained head; corrupt, missing and partial writes hold (8.523463ms)
+✔ D-2/P-2 end-to-end independent adapters: real mTLS clock/ledger, Google-shaped 60s/120s metrics, 20 native stopped canaries and signed retirement (1216.268652ms)
+✔ P-2 forged caller wake booleans cannot become signed canary evidence (0.905021ms)
+✔ P-1 cross-process preparation requires independent actual config and purpose-bound signed identities for all roles (43.013843ms)
+✔ P-1 mounted identity/session/epoch/revision/expiry/image/secret invalid states remain inert (7.207264ms)
+✔ P-1 full synthetic SQL admission → independent custody → worker → COMMIT-gated gateway → mTLS fake, restart and revocation (5612.700706ms)
+✔ P-3 exact teardown preserves independent cleanup authority, handles lost destroy ack, forbids replay and unknown/replaced state (2.35061ms)
+✔ P-3 independent NAT/permission/key-version absence is not fabricated from a nonexistent NAT subresource or missing state (25.690122ms)
+✔ concurrency: one invocation for 32 same-attempt callers, replay and distinct operations (3967.87484ms)
+✔ PC-1 explicit build validation, normal/-O/-OO key checks and fail-closed scan counterexamples (3907.412449ms)
+✔ G-2 native separate process SIGSTOP after TLS then post-fence write on that same connection is a violation; signed raw ledger preserved (703.276115ms)
+✔ G-3 sole human may independently construct kill/cleanup controllers with NO deployer grants/credential and seven shutdown steps remain exact (5.789996ms)
+✔ G-3 every exact inventory resource has a receipt slot, manual billing and nondeletable KMS residuals remain explicit (3.999825ms)
+✔ G-3 cleanup restart replays authenticated intent; no repeated destructive call; missing Terraform state is NOT independent absence (7.888895ms)
+✔ G-3 cleanup corrupt ledger and changed original identity fail closed before destructive calls (1.109062ms)
+ℹ tests 30
+ℹ suites 0
+ℹ pass 30
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 41648.099394
+npm notice
+npm notice New major version of npm available! 11.19.1 -> 12.2.2
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.2
+npm notice To update run: npm install -g npm@12.2.2
+npm notice
