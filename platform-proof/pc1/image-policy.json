@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "reviewedAt": "2026-11-15T19:15:00Z",
+  "maxPolicyAgeHours": 168,
+  "maxDatabaseAgeHours": 24,
+  "base": "gcr.io/distroless/nodejs24-debian13@sha256:6abfcb367ebc291572c774c1592a986be2ab26a2486f73093401327495a5962a",
+  "baseConfigId": "sha256:aa456d5b0d14c99ec011ddd5f28c7d540501bbfb2df41b26e8d83b2b426dae33",
+  "nodeVersion": "24.22.3",
+  "minimumNodeVersion": "24.22.3",
+  "nodeBinarySha256": "a7ec1b37e6ff9d187e4198c5b6df9a4eb1c74dd31804fb3bac55cc4ceca1ac01",
+  "nodeArchiveSha256": "4f2b175a6d53a5c617a80dba2676238a0688cef28c6da4eba35c7d844e66fcfb",
+  "npmVersion": "11.19.1",
+  "openSSLVersion": "3.5.9",
+  "debianVersion": "13.7",
+  "scannerVersion": "0.76.2",
+  "scannerBinarySha256": "6a972c69606c7b3ea4c6bdcc6fc9332ea9ad38381624310c1e85cc77345909f3",
+  "scannerArchiveSha256": "bc0fc726e017b8927a62b2d3531d7a84ee01769daf5c99ed866dced54089fdbf",
+  "databaseRepository": "ghcr.io/aquasecurity/trivy-db:2",
+  "reachableOSPolicy": "ALL_RETAINED_OS_PACKAGES_POTENTIALLY_REACHABLE",
+  "exceptions": [],
+  "permanentlyDeniedImageIds": ["sha256:1931766e764e9b400e3781796fa416421dda01fc992d69c4933295f29c30f888"],
+  "officialSources": [
+    "https://nodejs.org/en/blog/release/v24.22.3",
+    "https://nodejs.org/en/blog/vulnerability/november-2026-security-releases",
+    "https://nodejs.org/en/blog/vulnerability/october-2026-security-releases",
+    "https://nodejs.org/dist/index.json",
+    "https://github.com/GoogleContainerTools/distroless/blob/main/nodejs/README.md",
+    "https://github.com/GoogleContainerTools/distroless/blob/main/SUPPORT_POLICY.md",
+    "https://github.com/aquasecurity/trivy/releases/tag/v0.76.2"
+  ]
+}
