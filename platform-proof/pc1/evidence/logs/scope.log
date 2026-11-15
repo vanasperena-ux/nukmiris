@@ -1,0 +1,10 @@
+
+> nukmiris-inc1-local-proof@0.1.0 pc1:check
+> node pc1/check.mjs
+
+{"scope":"PC1_LOCAL_SECURITY_ONLY","base":"564be22d57ec895208002925c9ac1a2f7abd4a8e","historicalAndApplicationFilesVerified":1087,"liveCloudExecution":false,"sourceOnlyApplyGuard":"UNCHANGED_BYTES","cloudOrProviders":"NOT_EXECUTED"}
+npm notice
+npm notice New major version of npm available! 11.19.1 -> 12.2.2
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.2
+npm notice To update run: npm install -g npm@12.2.2
+npm notice

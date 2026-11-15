@@ -1,0 +1,54 @@
+[
+    {
+        "Id": "sha256:acc4f266fe185051b46dfc34636d386fe0b6af823d21205a3a4e6a429677755b",
+        "RepoTags": [
+            "node:24.22.3-trixie-slim"
+        ],
+        "RepoDigests": [
+            "node@sha256:af02d57b57719b9657a45199a79264a9437940cd55b3c7b3fc99615654f124a0"
+        ],
+        "Parent": "",
+        "Comment": "buildkit.dockerfile.v0",
+        "Created": "2026-11-11T22:59:51.435360149Z",
+        "DockerVersion": "",
+        "Author": "",
+        "Architecture": "amd64",
+        "Os": "linux",
+        "Size": 234633444,
+        "GraphDriver": {
+            "Data": null,
+            "Name": "vfs"
+        },
+        "RootFS": {
+            "Type": "layers",
+            "Layers": [
+                "sha256:dd57f90311a2567b55ff22eeacff1602fd04ad7566e315957731359eab173b90",
+                "sha256:0f079896db8a96ffbc8221713a7fb493fccb5a74b804897d2be032c383b4aa39",
+                "sha256:243faa29328ab266e203cb09c063ffb1c15432a9e63f53bc3d33f5e10b543b2b",
+                "sha256:8fda72e5950aa765515dc2d28a14fc875b095ebf5db380d89e1d599df6832aaf",
+                "sha256:fcd44f416dbc8525ccc3a3647fcfcd70f461b2cb0675abe51fb5227c0f62318a"
+            ]
+        },
+        "Metadata": {
+            "LastTagTime": "0001-01-01T00:00:00Z"
+        },
+        "Config": {
+            "Cmd": [
+                "node"
+            ],
+            "Entrypoint": [
+                "docker-entrypoint.sh"
+            ],
+            "Env": [
+                "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+                "NODE_VERSION=24.22.3",
+                "YARN_VERSION=1.22.22"
+            ],
+            "Labels": null,
+            "OnBuild": null,
+            "User": "",
+            "Volumes": null,
+            "WorkingDir": ""
+        }
+    }
+]

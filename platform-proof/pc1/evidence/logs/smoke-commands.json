@@ -1,0 +1,29 @@
+[
+  {
+    "stage": "inert-smoke",
+    "source": "78f182b2282cbbeb39408c3d57fae841ca70aab5",
+    "image": "sha256:cdeed164f6cdba2ea419b5e92ef340326383feef16d97a3f1df4412c3954657a",
+    "startedAt": "2026-11-15T19:36:01.550531+00:00",
+    "finishedAt": "2026-11-15T19:36:03.974786+00:00",
+    "durationSeconds": 2.4242668530005176,
+    "exitCode": 0
+  },
+  {
+    "stage": "startup-smoke",
+    "source": "78f182b2282cbbeb39408c3d57fae841ca70aab5",
+    "image": "sha256:cdeed164f6cdba2ea419b5e92ef340326383feef16d97a3f1df4412c3954657a",
+    "startedAt": "2026-11-15T19:36:03.975456+00:00",
+    "finishedAt": "2026-11-15T19:36:05.151039+00:00",
+    "durationSeconds": 1.175598372999957,
+    "exitCode": 0
+  },
+  {
+    "stage": "fake-smoke",
+    "source": "78f182b2282cbbeb39408c3d57fae841ca70aab5",
+    "image": "sha256:cdeed164f6cdba2ea419b5e92ef340326383feef16d97a3f1df4412c3954657a",
+    "startedAt": "2026-11-15T19:36:05.151282+00:00",
+    "finishedAt": "2026-11-15T19:36:07.135685+00:00",
+    "durationSeconds": 1.9844187469989265,
+    "exitCode": 0
+  }
+]

@@ -1,0 +1,107 @@
+nonroot: Pulling from distroless/nodejs24-debian13
+2cc7ee286bf3: Pulling fs layer
+c172f21841df: Pulling fs layer
+fc4330146a1c: Pulling fs layer
+777e9d0975e4: Pulling fs layer
+d6b1b89eccac: Pulling fs layer
+2780920e5dbf: Pulling fs layer
+7c12895b777b: Pulling fs layer
+3214acf345c0: Pulling fs layer
+52630fc75a18: Pulling fs layer
+dd64bf2dd177: Pulling fs layer
+b839dfae01f6: Pulling fs layer
+c3c9c2f21e6c: Pulling fs layer
+ec1b04bf2eb2: Pulling fs layer
+b96fe2995f90: Pulling fs layer
+810e2b405a08: Pulling fs layer
+bd8962e29291: Pulling fs layer
+208bf18bfcdc: Pulling fs layer
+dd0d9bfd3bee: Pulling fs layer
+7cc70dfd88cf: Pulling fs layer
+8224d91da70b: Pulling fs layer
+1a4be5562d92: Pulling fs layer
+1e78a1b517b4: Pulling fs layer
+d6b1b89eccac: Waiting
+2780920e5dbf: Waiting
+7c12895b777b: Waiting
+3214acf345c0: Waiting
+52630fc75a18: Waiting
+dd64bf2dd177: Waiting
+b839dfae01f6: Waiting
+c3c9c2f21e6c: Waiting
+ec1b04bf2eb2: Waiting
+b96fe2995f90: Waiting
+810e2b405a08: Waiting
+bd8962e29291: Waiting
+208bf18bfcdc: Waiting
+dd0d9bfd3bee: Waiting
+7cc70dfd88cf: Waiting
+8224d91da70b: Waiting
+1a4be5562d92: Waiting
+1e78a1b517b4: Waiting
+777e9d0975e4: Waiting
+c172f21841df: Verifying Checksum
+c172f21841df: Download complete
+fc4330146a1c: Verifying Checksum
+fc4330146a1c: Download complete
+2cc7ee286bf3: Verifying Checksum
+2cc7ee286bf3: Download complete
+2cc7ee286bf3: Pull complete
+c172f21841df: Pull complete
+fc4330146a1c: Pull complete
+777e9d0975e4: Verifying Checksum
+777e9d0975e4: Download complete
+777e9d0975e4: Pull complete
+7c12895b777b: Verifying Checksum
+7c12895b777b: Download complete
+2780920e5dbf: Verifying Checksum
+2780920e5dbf: Download complete
+d6b1b89eccac: Verifying Checksum
+d6b1b89eccac: Download complete
+d6b1b89eccac: Pull complete
+2780920e5dbf: Pull complete
+7c12895b777b: Pull complete
+dd64bf2dd177: Download complete
+b839dfae01f6: Verifying Checksum
+b839dfae01f6: Download complete
+52630fc75a18: Verifying Checksum
+52630fc75a18: Download complete
+3214acf345c0: Verifying Checksum
+3214acf345c0: Download complete
+3214acf345c0: Pull complete
+52630fc75a18: Pull complete
+c3c9c2f21e6c: Verifying Checksum
+c3c9c2f21e6c: Download complete
+dd64bf2dd177: Pull complete
+b839dfae01f6: Pull complete
+c3c9c2f21e6c: Pull complete
+ec1b04bf2eb2: Download complete
+ec1b04bf2eb2: Pull complete
+810e2b405a08: Verifying Checksum
+810e2b405a08: Download complete
+208bf18bfcdc: Verifying Checksum
+208bf18bfcdc: Download complete
+b96fe2995f90: Download complete
+b96fe2995f90: Pull complete
+810e2b405a08: Pull complete
+bd8962e29291: Verifying Checksum
+bd8962e29291: Download complete
+bd8962e29291: Pull complete
+208bf18bfcdc: Pull complete
+7cc70dfd88cf: Verifying Checksum
+7cc70dfd88cf: Download complete
+dd0d9bfd3bee: Download complete
+dd0d9bfd3bee: Pull complete
+7cc70dfd88cf: Pull complete
+8224d91da70b: Verifying Checksum
+8224d91da70b: Download complete
+8224d91da70b: Pull complete
+1a4be5562d92: Verifying Checksum
+1a4be5562d92: Download complete
+1a4be5562d92: Pull complete
+1e78a1b517b4: Verifying Checksum
+1e78a1b517b4: Download complete
+1e78a1b517b4: Pull complete
+Digest: sha256:6abfcb367ebc291572c774c1592a986be2ab26a2486f73093401327495a5962a
+Status: Downloaded newer image for gcr.io/distroless/nodejs24-debian13:nonroot
+gcr.io/distroless/nodejs24-debian13:nonroot

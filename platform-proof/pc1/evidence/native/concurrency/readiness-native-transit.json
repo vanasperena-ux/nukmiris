@@ -1,0 +1,508 @@
+{
+  "scope": "LOCAL_NATIVE_SIGNALS_AND_MTLS_NOT_GCP",
+  "testedSource": "78f182b2282cbbeb39408c3d57fae841ca70aab5",
+  "sessionId": "11111111-1111-4111-8111-111111111111",
+  "probePublicKey": "-----BEGIN PUBLIC KEY-----\nMCowBQYDK2VwAyEAev7emFyAokNIXCQfqyaby9KBoizCpYJo1ev93webgtQ=\n-----END PUBLIC KEY-----\n",
+  "observerPublicKey": "-----BEGIN PUBLIC KEY-----\nMCowBQYDK2VwAyEAcrHqY15egC1oh2HaxkBux2BKnHwVGC5w170x1XwtjDo=\n-----END PUBLIC KEY-----\n",
+  "pid": 87775,
+  "linuxStartTicks": "1598261",
+  "stopObserved": true,
+  "fenceAt": 1794772304940,
+  "now": 1794772305038,
+  "clock": {
+    "schema": "nukmiris.b1a.observation/v1",
+    "issuer": "independent-native-provider-observer",
+    "keyId": "acf4824ab9ce33154f8dd61f29927417f16fabc4580581add4388b3cdb335732",
+    "sessionId": "11111111-1111-4111-8111-111111111111",
+    "recordType": "CLOCK",
+    "issuedAt": 1794772304876,
+    "expiresAt": 1794772364876,
+    "payload": {
+      "model": "BOUNDED_DRIFT_V2",
+      "referenceClockSource": "independent-observer-clock",
+      "remoteClockSource": "independent-fake-clock",
+      "samples": [
+        [
+          1794772304849,
+          1794772304863,
+          1794772304863,
+          1794772304865
+        ],
+        [
+          1794772304865,
+          1794772304870,
+          1794772304870,
+          1794772304870
+        ],
+        [
+          1794772304870,
+          1794772304874,
+          1794772304874,
+          1794772304875
+        ]
+      ],
+      "precisionMs": 1,
+      "driftPpm": 50,
+      "resyncAllowanceMs": 2,
+      "maxExtrapolationMs": 60000,
+      "measuredAt": 1794772304875,
+      "validUntil": 1794772364875,
+      "rawRefs": [
+        "f4e8ad0f40693af0398bf91c46a0593615ffdc4d136be8ba7b641ec2feb4aaec",
+        "b2accd0c772aa90f2eea30c78ee5a20b1505a4eff80095910c5d346e5a163daf",
+        "f2bff47ff66ea100e45dadc0bb8b2596aa825197b7b14579d2b6a250742407be"
+      ],
+      "driftBasis": "DECLARED_CONSERVATIVE_BOUND_PLUS_MEASURED_OFFSETS; actual cloud bound remains unproven"
+    },
+    "signature": "2RhrAYo7b26A9Sp2KEK49YTyKNWnGujdh/qlqQ7HXM1b7EOTus32H2Ms1A6PAVG+q1Jxfm1pYdjEr2OpeXyPDA=="
+  },
+  "probe": {
+    "schema": "nukmiris.b1a.observation/v1",
+    "issuer": "independent-native-probe",
+    "keyId": "9bfe6cf2284eb38ddb7acce27a02c66a41d66a6f3a87c3da982f1ee9df4620ee",
+    "sessionId": "11111111-1111-4111-8111-111111111111",
+    "recordType": "ACTIVITY",
+    "issuedAt": 1794772305026,
+    "expiresAt": 1794772365026,
+    "payload": {
+      "protocol": "INDEPENDENT_TRANSIT_MEASUREMENT_V1",
+      "scopeId": "22222222-2222-4222-8222-222222222222",
+      "epoch": 1,
+      "revision": "b1a2-gateway-e000001-r1",
+      "attemptId": "e1e9d575-ed7b-4baf-abc9-7e0deb51236d",
+      "operationId": "1212a8ce-8c2f-4380-8064-fc9d52589c4a",
+      "payloadDigest": "a8198524f58e72b56283ab71ebddada22840f108b46ef7165bb3fca9919c5558",
+      "providerFingerprint": "BC:6A:39:DE:49:34:0F:D7:1B:43:9D:A9:9B:D6:35:59:33:9D:B3:EA:E0:83:06:A7:31:AF:09:C8:36:96:C8:0F",
+      "probeFingerprint": "6E:4F:6F:43:27:A2:96:0F:2C:0E:C3:82:5B:2D:68:F4:6A:84:22:3C:A9:8A:2D:C4:CD:BF:79:C9:FF:24:DF:9E",
+      "localPort": 53066,
+      "clockSource": "independent-observer-clock",
+      "phases": [
+        {
+          "phase": "CONNECT_BEGIN",
+          "at": 1794772304926,
+          "monotonicNs": "15982656284855"
+        },
+        {
+          "phase": "TCP_CONNECTED",
+          "at": 1794772304934,
+          "monotonicNs": "15982663883770"
+        },
+        {
+          "phase": "TLS_ESTABLISHED",
+          "at": 1794772304937,
+          "monotonicNs": "15982667249355"
+        },
+        {
+          "phase": "WRITE_BEGIN",
+          "at": 1794772305020,
+          "monotonicNs": "15982750382000"
+        },
+        {
+          "phase": "WRITE_END",
+          "at": 1794772305021,
+          "monotonicNs": "15982751210838"
+        }
+      ]
+    },
+    "signature": "l6olqlM1ZD0LR0D+hK/dbgDoKUQwgDfcosF9o4ICdCsZHQQJgeCI9NAOpqaiZBB6+9GZjyDHIlZrpkKeTG/fDw=="
+  },
+  "ledger": {
+    "schema": "nukmiris.b1a.observation/v1",
+    "issuer": "independent-native-provider-observer",
+    "keyId": "acf4824ab9ce33154f8dd61f29927417f16fabc4580581add4388b3cdb335732",
+    "sessionId": "11111111-1111-4111-8111-111111111111",
+    "recordType": "LEDGER",
+    "issuedAt": 1794772305037,
+    "expiresAt": 1794772365037,
+    "payload": {
+      "scope": "22222222-2222-4222-8222-222222222222",
+      "epoch": 1,
+      "revision": "b1a2-gateway-e000001-r1",
+      "clockSource": "independent-fake-clock",
+      "observedUntil": 1794772305036,
+      "recordsDigest": "ab7c5d36e54f9e7ccb419422cbef4fdd05fb25cb428abfba418530532c2def69",
+      "checkpoint": {
+        "sequence": 9,
+        "hash": "4f847828582a9a2ce222b69609ba40e02ec7ceed7f35b794bb0cd064805cf8f6"
+      },
+      "rawRefs": [
+        "a7f2e88b6006e6376ea79dec9a04e98db9867f82ea4d04fde5c2201bad5f7558"
+      ],
+      "providerFingerprint": "BC:6A:39:DE:49:34:0F:D7:1B:43:9D:A9:9B:D6:35:59:33:9D:B3:EA:E0:83:06:A7:31:AF:09:C8:36:96:C8:0F"
+    },
+    "signature": "YP94b83kQemqwDrrthdBxqSap63z01MXwfoR2mWZc2u2Ui0CGWGt+PGK9umYo/OUJokRRYxrxL6iK6qgq+kRDA=="
+  },
+  "ledgerRecords": [
+    {
+      "event": "TLS_READY",
+      "at": 1794772304861,
+      "connectionId": "bac770b6-b194-46b9-8bee-54c81d9daecb",
+      "authenticatedFingerprint": "D2:47:41:53:52:76:4A:9F:8E:9B:A3:DA:8E:3F:9D:B6:C8:CB:EC:2F:9E:8A:A4:A8:2E:D9:B7:69:CB:0A:07:EF",
+      "authenticatedEpoch": null,
+      "authenticatedRevision": null,
+      "remoteAddress": "127.0.0.1",
+      "remotePort": 53022,
+      "sequence": 1,
+      "previous": "0000000000000000000000000000000000000000000000000000000000000000",
+      "hash": "3c261a7afd7a6f5d8f1d8edc9a25131c8eea9535a8256c99cd302133d9d8f179"
+    },
+    {
+      "event": "TLS_READY",
+      "at": 1794772304869,
+      "connectionId": "c541cbbf-7916-42ac-bca2-f4203749028e",
+      "authenticatedFingerprint": "D2:47:41:53:52:76:4A:9F:8E:9B:A3:DA:8E:3F:9D:B6:C8:CB:EC:2F:9E:8A:A4:A8:2E:D9:B7:69:CB:0A:07:EF",
+      "authenticatedEpoch": null,
+      "authenticatedRevision": null,
+      "remoteAddress": "127.0.0.1",
+      "remotePort": 53028,
+      "sequence": 2,
+      "previous": "3c261a7afd7a6f5d8f1d8edc9a25131c8eea9535a8256c99cd302133d9d8f179",
+      "hash": "8d0e0657fcb22f54e222908f1a8900d3b54e73b7607f2cbfdbc004f86ec89665"
+    },
+    {
+      "event": "TLS_READY",
+      "at": 1794772304874,
+      "connectionId": "75043231-607d-4fba-a2ad-eb708cb05f67",
+      "authenticatedFingerprint": "D2:47:41:53:52:76:4A:9F:8E:9B:A3:DA:8E:3F:9D:B6:C8:CB:EC:2F:9E:8A:A4:A8:2E:D9:B7:69:CB:0A:07:EF",
+      "authenticatedEpoch": null,
+      "authenticatedRevision": null,
+      "remoteAddress": "127.0.0.1",
+      "remotePort": 53036,
+      "sequence": 3,
+      "previous": "8d0e0657fcb22f54e222908f1a8900d3b54e73b7607f2cbfdbc004f86ec89665",
+      "hash": "d8e5e9ed116bd9d456a60295b4a585b2eb19e54248f7d53ced1c99fa5fffc819"
+    },
+    {
+      "event": "TLS_READY",
+      "at": 1794772304880,
+      "connectionId": "abd6a0ba-3530-49eb-8e56-77fc5609bfa9",
+      "authenticatedFingerprint": "D2:47:41:53:52:76:4A:9F:8E:9B:A3:DA:8E:3F:9D:B6:C8:CB:EC:2F:9E:8A:A4:A8:2E:D9:B7:69:CB:0A:07:EF",
+      "authenticatedEpoch": null,
+      "authenticatedRevision": null,
+      "remoteAddress": "127.0.0.1",
+      "remotePort": 53052,
+      "sequence": 4,
+      "previous": "d8e5e9ed116bd9d456a60295b4a585b2eb19e54248f7d53ced1c99fa5fffc819",
+      "hash": "722841df6a66fd584757608c348f057d1d303b52d5d90480f4c17b3ad337d172"
+    },
+    {
+      "event": "TLS_READY",
+      "at": 1794772304939,
+      "connectionId": "50d07d77-2cea-40ee-8744-36e2009deafd",
+      "authenticatedFingerprint": "6E:4F:6F:43:27:A2:96:0F:2C:0E:C3:82:5B:2D:68:F4:6A:84:22:3C:A9:8A:2D:C4:CD:BF:79:C9:FF:24:DF:9E",
+      "authenticatedEpoch": 1,
+      "authenticatedRevision": "b1a2-gateway-e000001-r1",
+      "remoteAddress": "127.0.0.1",
+      "remotePort": 53066,
+      "sequence": 5,
+      "previous": "722841df6a66fd584757608c348f057d1d303b52d5d90480f4c17b3ad337d172",
+      "hash": "83346b4132beb1aff286bbd8b2178022b8da7267319f34d59e5ac71700da3372"
+    },
+    {
+      "event": "REQUEST",
+      "at": 1794772305023,
+      "connectionId": "50d07d77-2cea-40ee-8744-36e2009deafd",
+      "scopeId": "22222222-2222-4222-8222-222222222222",
+      "attemptId": "e1e9d575-ed7b-4baf-abc9-7e0deb51236d",
+      "operationId": "1212a8ce-8c2f-4380-8064-fc9d52589c4a",
+      "epoch": 1,
+      "revision": "b1a2-gateway-e000001-r1",
+      "payloadDigest": "a8198524f58e72b56283ab71ebddada22840f108b46ef7165bb3fca9919c5558",
+      "actualDigest": "a8198524f58e72b56283ab71ebddada22840f108b46ef7165bb3fca9919c5558",
+      "authenticatedEpoch": 1,
+      "authenticatedRevision": "b1a2-gateway-e000001-r1",
+      "authenticatedFingerprint": "6E:4F:6F:43:27:A2:96:0F:2C:0E:C3:82:5B:2D:68:F4:6A:84:22:3C:A9:8A:2D:C4:CD:BF:79:C9:FF:24:DF:9E",
+      "sequence": 6,
+      "previous": "83346b4132beb1aff286bbd8b2178022b8da7267319f34d59e5ac71700da3372",
+      "hash": "88bcb0a0281bf3b6e5b6f5d328c34164aaed5c8b54743d39ab7a30a35e9c5ec3"
+    },
+    {
+      "event": "EFFECT",
+      "at": 1794772305023,
+      "connectionId": "50d07d77-2cea-40ee-8744-36e2009deafd",
+      "scopeId": "22222222-2222-4222-8222-222222222222",
+      "attemptId": "e1e9d575-ed7b-4baf-abc9-7e0deb51236d",
+      "operationId": "1212a8ce-8c2f-4380-8064-fc9d52589c4a",
+      "epoch": 1,
+      "revision": "b1a2-gateway-e000001-r1",
+      "payloadDigest": "a8198524f58e72b56283ab71ebddada22840f108b46ef7165bb3fca9919c5558",
+      "sequence": 7,
+      "previous": "88bcb0a0281bf3b6e5b6f5d328c34164aaed5c8b54743d39ab7a30a35e9c5ec3",
+      "hash": "5f6d2119429058f8462122bcc33fac283b8601fed1f95239d00867032a1a83d0"
+    },
+    {
+      "event": "RESPONSE",
+      "at": 1794772305023,
+      "connectionId": "50d07d77-2cea-40ee-8744-36e2009deafd",
+      "scopeId": "22222222-2222-4222-8222-222222222222",
+      "attemptId": "e1e9d575-ed7b-4baf-abc9-7e0deb51236d",
+      "operationId": "1212a8ce-8c2f-4380-8064-fc9d52589c4a",
+      "epoch": 1,
+      "revision": "b1a2-gateway-e000001-r1",
+      "payloadDigest": "a8198524f58e72b56283ab71ebddada22840f108b46ef7165bb3fca9919c5558",
+      "sequence": 8,
+      "previous": "5f6d2119429058f8462122bcc33fac283b8601fed1f95239d00867032a1a83d0",
+      "hash": "1e54cb5443e0ca1428a4474937e33b3bff230b62f0b51857de7e7e57f6e71a18"
+    },
+    {
+      "event": "TLS_READY",
+      "at": 1794772305035,
+      "connectionId": "c0bd8a3d-15e4-43d5-8f4a-a3ab6507615c",
+      "authenticatedFingerprint": "D2:47:41:53:52:76:4A:9F:8E:9B:A3:DA:8E:3F:9D:B6:C8:CB:EC:2F:9E:8A:A4:A8:2E:D9:B7:69:CB:0A:07:EF",
+      "authenticatedEpoch": null,
+      "authenticatedRevision": null,
+      "remoteAddress": "127.0.0.1",
+      "remotePort": 53080,
+      "sequence": 9,
+      "previous": "1e54cb5443e0ca1428a4474937e33b3bff230b62f0b51857de7e7e57f6e71a18",
+      "hash": "4f847828582a9a2ce222b69609ba40e02ec7ceed7f35b794bb0cd064805cf8f6"
+    }
+  ],
+  "result": {
+    "state": "VIOLATION",
+    "reason": "independently_observed_post_fence_initiation",
+    "dispatchEnabled": false,
+    "promotionAuthorized": false,
+    "containmentProven": false,
+    "observedDelayMs": {
+      "lower": 0,
+      "upper": 13.01513671875
+    },
+    "phaseIntervals": {
+      "CONNECT_BEGIN": {
+        "lower": 1794772304919.997,
+        "upper": 1794772304932.003,
+        "uncertaintyMs": 6.0029296875
+      },
+      "TCP_CONNECTED": {
+        "lower": 1794772304927.9968,
+        "upper": 1794772304940.0032,
+        "uncertaintyMs": 6.003173828125
+      },
+      "TLS_ESTABLISHED": {
+        "lower": 1794772304930.9966,
+        "upper": 1794772304943.0034,
+        "uncertaintyMs": 6.00341796875
+      },
+      "WRITE_BEGIN": {
+        "lower": 1794772305013.9924,
+        "upper": 1794772305026.0076,
+        "uncertaintyMs": 6.007568359375
+      },
+      "WRITE_END": {
+        "lower": 1794772305014.9924,
+        "upper": 1794772305027.0076,
+        "uncertaintyMs": 6.007568359375
+      }
+    },
+    "providerArrival": {
+      "lower": 1794772305014.9924,
+      "upper": 1794772305027.0076,
+      "uncertaintyMs": 6.007568359375
+    },
+    "connectionId": "50d07d77-2cea-40ee-8744-36e2009deafd",
+    "evidenceDigest": "0ccdf5e4097083573aa9892759056177a7914e25965b02cd74922678f2eea2c4",
+    "sampleCount": 1,
+    "initiationClass": "POST_FENCE"
+  },
+  "gate": {
+    "state": "HOLD",
+    "reason": "transit_violation_abort_and_independent_kill_required",
+    "collectionState": "VIOLATION",
+    "dispatchEnabled": false,
+    "promotionAuthorized": false,
+    "automaticResend": false,
+    "newIdentityAllocated": false
+  },
+  "records": [
+    {
+      "event": "INDEPENDENT_RECEIPT",
+      "at": 1794772304865,
+      "rawDigest": "f4e8ad0f40693af0398bf91c46a0593615ffdc4d136be8ba7b641ec2feb4aaec",
+      "source": "MUTUALLY_AUTHENTICATED_INDEPENDENT_FAKE",
+      "requestedAt": 1794772304849,
+      "observedAt": 1794772304865,
+      "raw": {
+        "sessionId": "11111111-1111-4111-8111-111111111111",
+        "nonce": "78c343a2-b747-4810-8c7a-ca0fb3330a6a",
+        "receivedAt": 1794772304863,
+        "sentAt": 1794772304863,
+        "clockSource": "independent-fake-clock"
+      }
+    },
+    {
+      "event": "INDEPENDENT_RECEIPT",
+      "at": 1794772304870,
+      "rawDigest": "b2accd0c772aa90f2eea30c78ee5a20b1505a4eff80095910c5d346e5a163daf",
+      "source": "MUTUALLY_AUTHENTICATED_INDEPENDENT_FAKE",
+      "requestedAt": 1794772304865,
+      "observedAt": 1794772304870,
+      "raw": {
+        "sessionId": "11111111-1111-4111-8111-111111111111",
+        "nonce": "62b98f9a-b16d-4bb5-a874-437fb698eb0f",
+        "receivedAt": 1794772304870,
+        "sentAt": 1794772304870,
+        "clockSource": "independent-fake-clock"
+      }
+    },
+    {
+      "event": "INDEPENDENT_RECEIPT",
+      "at": 1794772304875,
+      "rawDigest": "f2bff47ff66ea100e45dadc0bb8b2596aa825197b7b14579d2b6a250742407be",
+      "source": "MUTUALLY_AUTHENTICATED_INDEPENDENT_FAKE",
+      "requestedAt": 1794772304870,
+      "observedAt": 1794772304875,
+      "raw": {
+        "sessionId": "11111111-1111-4111-8111-111111111111",
+        "nonce": "bf6ced26-0fe7-483a-9290-5010aea8882f",
+        "receivedAt": 1794772304874,
+        "sentAt": 1794772304874,
+        "clockSource": "independent-fake-clock"
+      }
+    },
+    {
+      "event": "INDEPENDENT_RECEIPT",
+      "at": 1794772305037,
+      "rawDigest": "a7f2e88b6006e6376ea79dec9a04e98db9867f82ea4d04fde5c2201bad5f7558",
+      "source": "MUTUALLY_AUTHENTICATED_INDEPENDENT_FAKE",
+      "requestedAt": 1794772305029,
+      "observedAt": 1794772305037,
+      "raw": {
+        "records": [
+          {
+            "event": "TLS_READY",
+            "at": 1794772304861,
+            "connectionId": "bac770b6-b194-46b9-8bee-54c81d9daecb",
+            "authenticatedFingerprint": "D2:47:41:53:52:76:4A:9F:8E:9B:A3:DA:8E:3F:9D:B6:C8:CB:EC:2F:9E:8A:A4:A8:2E:D9:B7:69:CB:0A:07:EF",
+            "authenticatedEpoch": null,
+            "authenticatedRevision": null,
+            "remoteAddress": "127.0.0.1",
+            "remotePort": 53022,
+            "sequence": 1,
+            "previous": "0000000000000000000000000000000000000000000000000000000000000000",
+            "hash": "3c261a7afd7a6f5d8f1d8edc9a25131c8eea9535a8256c99cd302133d9d8f179"
+          },
+          {
+            "event": "TLS_READY",
+            "at": 1794772304869,
+            "connectionId": "c541cbbf-7916-42ac-bca2-f4203749028e",
+            "authenticatedFingerprint": "D2:47:41:53:52:76:4A:9F:8E:9B:A3:DA:8E:3F:9D:B6:C8:CB:EC:2F:9E:8A:A4:A8:2E:D9:B7:69:CB:0A:07:EF",
+            "authenticatedEpoch": null,
+            "authenticatedRevision": null,
+            "remoteAddress": "127.0.0.1",
+            "remotePort": 53028,
+            "sequence": 2,
+            "previous": "3c261a7afd7a6f5d8f1d8edc9a25131c8eea9535a8256c99cd302133d9d8f179",
+            "hash": "8d0e0657fcb22f54e222908f1a8900d3b54e73b7607f2cbfdbc004f86ec89665"
+          },
+          {
+            "event": "TLS_READY",
+            "at": 1794772304874,
+            "connectionId": "75043231-607d-4fba-a2ad-eb708cb05f67",
+            "authenticatedFingerprint": "D2:47:41:53:52:76:4A:9F:8E:9B:A3:DA:8E:3F:9D:B6:C8:CB:EC:2F:9E:8A:A4:A8:2E:D9:B7:69:CB:0A:07:EF",
+            "authenticatedEpoch": null,
+            "authenticatedRevision": null,
+            "remoteAddress": "127.0.0.1",
+            "remotePort": 53036,
+            "sequence": 3,
+            "previous": "8d0e0657fcb22f54e222908f1a8900d3b54e73b7607f2cbfdbc004f86ec89665",
+            "hash": "d8e5e9ed116bd9d456a60295b4a585b2eb19e54248f7d53ced1c99fa5fffc819"
+          },
+          {
+            "event": "TLS_READY",
+            "at": 1794772304880,
+            "connectionId": "abd6a0ba-3530-49eb-8e56-77fc5609bfa9",
+            "authenticatedFingerprint": "D2:47:41:53:52:76:4A:9F:8E:9B:A3:DA:8E:3F:9D:B6:C8:CB:EC:2F:9E:8A:A4:A8:2E:D9:B7:69:CB:0A:07:EF",
+            "authenticatedEpoch": null,
+            "authenticatedRevision": null,
+            "remoteAddress": "127.0.0.1",
+            "remotePort": 53052,
+            "sequence": 4,
+            "previous": "d8e5e9ed116bd9d456a60295b4a585b2eb19e54248f7d53ced1c99fa5fffc819",
+            "hash": "722841df6a66fd584757608c348f057d1d303b52d5d90480f4c17b3ad337d172"
+          },
+          {
+            "event": "TLS_READY",
+            "at": 1794772304939,
+            "connectionId": "50d07d77-2cea-40ee-8744-36e2009deafd",
+            "authenticatedFingerprint": "6E:4F:6F:43:27:A2:96:0F:2C:0E:C3:82:5B:2D:68:F4:6A:84:22:3C:A9:8A:2D:C4:CD:BF:79:C9:FF:24:DF:9E",
+            "authenticatedEpoch": 1,
+            "authenticatedRevision": "b1a2-gateway-e000001-r1",
+            "remoteAddress": "127.0.0.1",
+            "remotePort": 53066,
+            "sequence": 5,
+            "previous": "722841df6a66fd584757608c348f057d1d303b52d5d90480f4c17b3ad337d172",
+            "hash": "83346b4132beb1aff286bbd8b2178022b8da7267319f34d59e5ac71700da3372"
+          },
+          {
+            "event": "REQUEST",
+            "at": 1794772305023,
+            "connectionId": "50d07d77-2cea-40ee-8744-36e2009deafd",
+            "scopeId": "22222222-2222-4222-8222-222222222222",
+            "attemptId": "e1e9d575-ed7b-4baf-abc9-7e0deb51236d",
+            "operationId": "1212a8ce-8c2f-4380-8064-fc9d52589c4a",
+            "epoch": 1,
+            "revision": "b1a2-gateway-e000001-r1",
+            "payloadDigest": "a8198524f58e72b56283ab71ebddada22840f108b46ef7165bb3fca9919c5558",
+            "actualDigest": "a8198524f58e72b56283ab71ebddada22840f108b46ef7165bb3fca9919c5558",
+            "authenticatedEpoch": 1,
+            "authenticatedRevision": "b1a2-gateway-e000001-r1",
+            "authenticatedFingerprint": "6E:4F:6F:43:27:A2:96:0F:2C:0E:C3:82:5B:2D:68:F4:6A:84:22:3C:A9:8A:2D:C4:CD:BF:79:C9:FF:24:DF:9E",
+            "sequence": 6,
+            "previous": "83346b4132beb1aff286bbd8b2178022b8da7267319f34d59e5ac71700da3372",
+            "hash": "88bcb0a0281bf3b6e5b6f5d328c34164aaed5c8b54743d39ab7a30a35e9c5ec3"
+          },
+          {
+            "event": "EFFECT",
+            "at": 1794772305023,
+            "connectionId": "50d07d77-2cea-40ee-8744-36e2009deafd",
+            "scopeId": "22222222-2222-4222-8222-222222222222",
+            "attemptId": "e1e9d575-ed7b-4baf-abc9-7e0deb51236d",
+            "operationId": "1212a8ce-8c2f-4380-8064-fc9d52589c4a",
+            "epoch": 1,
+            "revision": "b1a2-gateway-e000001-r1",
+            "payloadDigest": "a8198524f58e72b56283ab71ebddada22840f108b46ef7165bb3fca9919c5558",
+            "sequence": 7,
+            "previous": "88bcb0a0281bf3b6e5b6f5d328c34164aaed5c8b54743d39ab7a30a35e9c5ec3",
+            "hash": "5f6d2119429058f8462122bcc33fac283b8601fed1f95239d00867032a1a83d0"
+          },
+          {
+            "event": "RESPONSE",
+            "at": 1794772305023,
+            "connectionId": "50d07d77-2cea-40ee-8744-36e2009deafd",
+            "scopeId": "22222222-2222-4222-8222-222222222222",
+            "attemptId": "e1e9d575-ed7b-4baf-abc9-7e0deb51236d",
+            "operationId": "1212a8ce-8c2f-4380-8064-fc9d52589c4a",
+            "epoch": 1,
+            "revision": "b1a2-gateway-e000001-r1",
+            "payloadDigest": "a8198524f58e72b56283ab71ebddada22840f108b46ef7165bb3fca9919c5558",
+            "sequence": 8,
+            "previous": "5f6d2119429058f8462122bcc33fac283b8601fed1f95239d00867032a1a83d0",
+            "hash": "1e54cb5443e0ca1428a4474937e33b3bff230b62f0b51857de7e7e57f6e71a18"
+          },
+          {
+            "event": "TLS_READY",
+            "at": 1794772305035,
+            "connectionId": "c0bd8a3d-15e4-43d5-8f4a-a3ab6507615c",
+            "authenticatedFingerprint": "D2:47:41:53:52:76:4A:9F:8E:9B:A3:DA:8E:3F:9D:B6:C8:CB:EC:2F:9E:8A:A4:A8:2E:D9:B7:69:CB:0A:07:EF",
+            "authenticatedEpoch": null,
+            "authenticatedRevision": null,
+            "remoteAddress": "127.0.0.1",
+            "remotePort": 53080,
+            "sequence": 9,
+            "previous": "1e54cb5443e0ca1428a4474937e33b3bff230b62f0b51857de7e7e57f6e71a18",
+            "hash": "4f847828582a9a2ce222b69609ba40e02ec7ceed7f35b794bb0cd064805cf8f6"
+          }
+        ],
+        "checkpoint": {
+          "sequence": 9,
+          "hash": "4f847828582a9a2ce222b69609ba40e02ec7ceed7f35b794bb0cd064805cf8f6"
+        },
+        "observedUntil": 1794772305036,
+        "sessionId": "11111111-1111-4111-8111-111111111111",
+        "nonce": "779ee441-e068-4a31-b8d8-5de07bf53a5c",
+        "clockSource": "independent-fake-clock"
+      }
+    }
+  ]
+}

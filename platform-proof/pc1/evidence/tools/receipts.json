@@ -1,0 +1,44 @@
+[
+  {
+    "file": "node.tar.xz",
+    "url": "https://nodejs.org/dist/v24.22.3/node-v24.22.3-linux-x64.tar.xz",
+    "sha256": "4f2b175a6d53a5c617a80dba2676238a0688cef28c6da4eba35c7d844e66fcfb",
+    "bytes": 32064292
+  },
+  {
+    "file": "node-checksums.txt",
+    "url": "https://nodejs.org/dist/v24.22.3/SHASUMS256.txt",
+    "sha256": "06d17307d84ec057dd2783863f12cb228c9273f9424b330532e4e3699f5d47c9",
+    "bytes": 3171
+  },
+  {
+    "file": "trivy.tar.gz",
+    "url": "https://github.com/aquasecurity/trivy/releases/download/v0.76.2/trivy_0.76.2_Linux-64bit.tar.gz",
+    "sha256": "bc0fc726e017b8927a62b2d3531d7a84ee01769daf5c99ed866dced54089fdbf",
+    "bytes": 52714130
+  },
+  {
+    "file": "trivy-checksums.txt",
+    "url": "https://github.com/aquasecurity/trivy/releases/download/v0.76.2/trivy_0.76.2_checksums.txt",
+    "sha256": "802e4ac1418ed967cd3c4b901f4f71ca00b7363ede67778665a22d9f13f58c83",
+    "bytes": 2121
+  },
+  {
+    "file": "node-security.html",
+    "url": "https://nodejs.org/en/blog/vulnerability/november-2026-security-releases",
+    "sha256": "e5860b0809369acc0792fc48b7aaa92e661042ece93828c49a869af0801872c2",
+    "bytes": 326951
+  },
+  {
+    "file": "node-release.html",
+    "url": "https://nodejs.org/en/blog/release/v24.22.3",
+    "sha256": "b6a1075e115c9290cb316a8ff03dda32dad44eab545dd25669215e827917343d",
+    "bytes": 295280
+  },
+  {
+    "file": "node-index.json",
+    "url": "https://nodejs.org/dist/index.json",
+    "sha256": "ecbf1d9f49532daf606cd495537d2ff7ab28f441e877ae40821738d56e2a0a80",
+    "bytes": 337814
+  }
+]

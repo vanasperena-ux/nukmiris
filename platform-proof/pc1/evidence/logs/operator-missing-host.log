@@ -1,0 +1,5 @@
+A Windows host receipt is mandatory, including direct WSL use. Paste Capture-Windows-Host.txt in ordinary Windows PowerShell first. No ExecutionPolicy change is needed.
+{"resultsArchive": "/tmp/nukmiris-pc1-windows-ZjPTzVfB/nukmiris-pc1-windows-ZjPTzVfB-results.zip", "sha256": "080c2accbfea617da03e3ad18dbec5d394d2a2c3bddc56b5aef791536fdbc0cc", "status": "INCOMPLETE_HOLD_PRESERVE_FINDINGS"}
+
+RUN_DIRECTORY=/tmp/nukmiris-pc1-windows-ZjPTzVfB
+HOLD at initialization. Preserve partial findings; no fallback or gate bypass.

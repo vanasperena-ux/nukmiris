@@ -1,0 +1,14 @@
+{
+  "verdict": "HOLD",
+  "reasons": [
+    "insufficient_or_invalid_evidence: finding_attribution_mismatch"
+  ],
+  "vulnerabilityCounts": {},
+  "findings": [],
+  "fixableCriticalHigh": 0,
+  "runtimeCriticalHigh": 0,
+  "exceptions": [],
+  "productionOrCloudAuthorization": false,
+  "severityPolicy": "Trivy vendor-selected Severity; all raw CVSS/vendor data retained, no ignore rules",
+  "reachabilityPolicy": "all retained OS packages and application dependencies conservatively reachable"
+}

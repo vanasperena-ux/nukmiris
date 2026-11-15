@@ -1,0 +1,119 @@
+{
+  "scope": "CODEX_LINUX_LOCAL_SYNTHETIC_NOT_OWNER_WINDOWS",
+  "testedSource": "78f182b2282cbbeb39408c3d57fae841ca70aab5",
+  "testedTree": "85b9f50e1dea52a8948a91d2f1f507889cac2479",
+  "os": "Linux-6.18.57-x86_64-with-glibc2.41",
+  "python": "3.12.14",
+  "node": "v24.22.3",
+  "versions": {
+    "node": "24.22.3",
+    "acorn": "8.18.0",
+    "ada": "4.0.0",
+    "amaro": "1.1.11",
+    "ares": "1.34.9",
+    "brotli": "1.2.1",
+    "cldr": "48.0",
+    "icu": "78.3",
+    "llhttp": "9.4.4",
+    "merve": "1.2.2",
+    "modules": "137",
+    "napi": "10",
+    "nbytes": "0.1.4",
+    "ncrypto": "0.0.1",
+    "nghttp2": "1.70.0",
+    "nghttp3": "",
+    "ngtcp2": "",
+    "openssl": "3.5.9",
+    "simdjson": "4.6.11",
+    "simdutf": "6.4.0",
+    "sqlite": "3.54.1",
+    "tz": "2026e",
+    "undici": "7.30.2",
+    "unicode": "17.0",
+    "uv": "1.52.1",
+    "uvwasi": "0.0.23",
+    "v8": "13.6.233.17-node.63",
+    "zlib": "1.3.2.1-motley-285e94b",
+    "zstd": "1.5.7"
+  },
+  "docker": {
+    "Client": {
+      "Version": "28.4.0",
+      "ApiVersion": "1.51",
+      "DefaultAPIVersion": "1.51",
+      "GitCommit": "d8eb465",
+      "GoVersion": "go1.24.7",
+      "Os": "linux",
+      "Arch": "amd64",
+      "BuildTime": "Wed Sep  3 20:56:28 2025",
+      "Context": "default"
+    },
+    "Server": {
+      "Platform": {
+        "Name": "Docker Engine - Community"
+      },
+      "Components": [
+        {
+          "Name": "Engine",
+          "Version": "28.4.0",
+          "Details": {
+            "ApiVersion": "1.51",
+            "Arch": "amd64",
+            "BuildTime": "Wed Sep  3 20:58:50 2025",
+            "Experimental": "false",
+            "GitCommit": "249d679",
+            "GoVersion": "go1.24.7",
+            "KernelVersion": "6.18.57",
+            "MinAPIVersion": "1.24",
+            "Os": "linux"
+          }
+        },
+        {
+          "Name": "containerd",
+          "Version": "v1.7.28",
+          "Details": {
+            "GitCommit": "b98a3aace656320842a23f4a392a33f46af97866"
+          }
+        },
+        {
+          "Name": "runc",
+          "Version": "1.3.0",
+          "Details": {
+            "GitCommit": "v1.3.0-0-g4ca628d"
+          }
+        },
+        {
+          "Name": "docker-init",
+          "Version": "0.19.0",
+          "Details": {
+            "GitCommit": "de40ad0"
+          }
+        }
+      ],
+      "Version": "28.4.0",
+      "ApiVersion": "1.51",
+      "MinAPIVersion": "1.24",
+      "GitCommit": "249d679",
+      "GoVersion": "go1.24.7",
+      "Os": "linux",
+      "Arch": "amd64",
+      "KernelVersion": "6.18.57",
+      "BuildTime": "2025-09-03T20:58:50.000000000+00:00"
+    }
+  },
+  "ownerWindowsWsl": "NOT_EXECUTED",
+  "scanDatabase": "build-a/security/scan-receipt.json",
+  "credentialAccess": false,
+  "registryPush": false,
+  "cloudProvisioning": false,
+  "realProviders": false,
+  "postgresMeasured": {
+    "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg12+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 12.2.0-14+deb12u1) 12.2.0, 64-bit",
+    "timezone": "UTC"
+  },
+  "tlsOverrides": {
+    "NODE_TLS_REJECT_UNAUTHORIZED": "UNSET",
+    "NODE_OPTIONS": "UNSET",
+    "OPENSSL_CONF": "UNSET"
+  }
+}

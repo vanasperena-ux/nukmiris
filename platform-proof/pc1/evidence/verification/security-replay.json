@@ -1,0 +1,16 @@
+[
+  {
+    "build": "a",
+    "verdict": "PASS_LOCAL_PENDING_INDEPENDENT_REVIEW",
+    "replayedAtRecordedTime": "2026-11-15T19:35:10.679460+00:00",
+    "match": true,
+    "freshSecurityApproval": false
+  },
+  {
+    "build": "b",
+    "verdict": "PASS_LOCAL_PENDING_INDEPENDENT_REVIEW",
+    "replayedAtRecordedTime": "2026-11-15T19:35:44.813390+00:00",
+    "match": true,
+    "freshSecurityApproval": false
+  }
+]

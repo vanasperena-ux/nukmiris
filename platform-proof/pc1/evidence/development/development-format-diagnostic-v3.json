@@ -1,0 +1,547 @@
+{
+  "verdict": "PASS_LOCAL_PENDING_INDEPENDENT_REVIEW",
+  "reasons": [],
+  "vulnerabilityCounts": {
+    "MEDIUM": 39,
+    "LOW": 12,
+    "UNKNOWN": 2
+  },
+  "findings": [
+    {
+      "VulnerabilityID": "CVE-2026-102010",
+      "PkgName": "gcc-14-base",
+      "InstalledVersion": "14.2.0-19",
+      "FixedVersion": null,
+      "Status": "affected",
+      "Severity": "MEDIUM",
+      "reachability": "POTENTIALLY_RUNTIME_OS",
+      "fixable": false
+    },
+    {
+      "VulnerabilityID": "CVE-2026-114690",
+      "PkgName": "gcc-14-base",
+      "InstalledVersion": "14.2.0-19",
+      "FixedVersion": null,
+      "Status": "affected",
+      "Severity": "MEDIUM",
+      "reachability": "POTENTIALLY_RUNTIME_OS",
+      "fixable": false
+    },
+    {
+      "VulnerabilityID": "CVE-2026-114691",
+      "PkgName": "gcc-14-base",
+      "InstalledVersion": "14.2.0-19",
+      "FixedVersion": null,
+      "Status": "affected",
+      "Severity": "MEDIUM",
+      "reachability": "POTENTIALLY_RUNTIME_OS",
+      "fixable": false
+    },
+    {
+      "VulnerabilityID": "CVE-2026-115455",
+      "PkgName": "gcc-14-base",
+      "InstalledVersion": "14.2.0-19",
+      "FixedVersion": null,
+      "Status": "affected",
+      "Severity": "MEDIUM",
+      "reachability": "POTENTIALLY_RUNTIME_OS",
+      "fixable": false
+    },
+    {
+      "VulnerabilityID": "CVE-2026-95619",
+      "PkgName": "gcc-14-base",
+      "InstalledVersion": "14.2.0-19",
+      "FixedVersion": null,
+      "Status": "affected",
+      "Severity": "MEDIUM",
+      "reachability": "POTENTIALLY_RUNTIME_OS",
+      "fixable": false
+    },
+    {
+      "VulnerabilityID": "CVE-2026-115456",
+      "PkgName": "gcc-14-base",
+      "InstalledVersion": "14.2.0-19",
+      "FixedVersion": null,
+      "Status": "affected",
+      "Severity": "LOW",
+      "reachability": "POTENTIALLY_RUNTIME_OS",
+      "fixable": false
+    },
+    {
+      "VulnerabilityID": "CVE-2026-18374",
+      "PkgName": "libc6",
+      "InstalledVersion": "2.41-12+deb13u4",
+      "FixedVersion": null,
+      "Status": "affected",
+      "Severity": "MEDIUM",
+      "reachability": "POTENTIALLY_RUNTIME_OS",
+      "fixable": false
+    },
+    {
+      "VulnerabilityID": "CVE-2026-19499",
+      "PkgName": "libc6",
+      "InstalledVersion": "2.41-12+deb13u4",
+      "FixedVersion": null,
+      "Status": "affected",
+      "Severity": "MEDIUM",
+      "reachability": "POTENTIALLY_RUNTIME_OS",
+      "fixable": false
+    },
+    {
+      "VulnerabilityID": "CVE-2026-19542",
+      "PkgName": "libc6",
+      "InstalledVersion": "2.41-12+deb13u4",
+      "FixedVersion": null,
+      "Status": "affected",
+      "Severity": "MEDIUM",
+      "reachability": "POTENTIALLY_RUNTIME_OS",
+      "fixable": false
+    },
+    {
+      "VulnerabilityID": "CVE-2026-5435",
+      "PkgName": "libc6",
+      "InstalledVersion": "2.41-12+deb13u4",
+      "FixedVersion": null,
+      "Status": "affected",
+      "Severity": "MEDIUM",
+      "reachability": "POTENTIALLY_RUNTIME_OS",
+      "fixable": false
+    },
+    {
+      "VulnerabilityID": "CVE-2026-6238",
+      "PkgName": "libc6",
+      "InstalledVersion": "2.41-12+deb13u4",
+      "FixedVersion": null,
+      "Status": "affected",
+      "Severity": "MEDIUM",
+      "reachability": "POTENTIALLY_RUNTIME_OS",
+      "fixable": false
+    },
+    {
+      "VulnerabilityID": "CVE-2026-6368",
+      "PkgName": "libc6",
+      "InstalledVersion": "2.41-12+deb13u4",
+      "FixedVersion": null,
+      "Status": "affected",
+      "Severity": "MEDIUM",
+      "reachability": "POTENTIALLY_RUNTIME_OS",
+      "fixable": false
+    },
+    {
+      "VulnerabilityID": "CVE-2026-6791",
+      "PkgName": "libc6",
+      "InstalledVersion": "2.41-12+deb13u4",
+      "FixedVersion": null,
+      "Status": "affected",
+      "Severity": "MEDIUM",
+      "reachability": "POTENTIALLY_RUNTIME_OS",
+      "fixable": false
+    },
+    {
+      "VulnerabilityID": "CVE-2026-77117",
+      "PkgName": "libc6",
+      "InstalledVersion": "2.41-12+deb13u4",
+      "FixedVersion": null,
+      "Status": "affected",
+      "Severity": "MEDIUM",
+      "reachability": "POTENTIALLY_RUNTIME_OS",
+      "fixable": false
+    },
+    {
+      "VulnerabilityID": "CVE-2026-80489",
+      "PkgName": "libc6",
+      "InstalledVersion": "2.41-12+deb13u4",
+      "FixedVersion": null,
+      "Status": "affected",
+      "Severity": "MEDIUM",
+      "reachability": "POTENTIALLY_RUNTIME_OS",
+      "fixable": false
+    },
+    {
+      "VulnerabilityID": "CVE-2026-84243",
+      "PkgName": "libc6",
+      "InstalledVersion": "2.41-12+deb13u4",
+      "FixedVersion": null,
+      "Status": "affected",
+      "Severity": "MEDIUM",
+      "reachability": "POTENTIALLY_RUNTIME_OS",
+      "fixable": false
+    },
+    {
+      "VulnerabilityID": "CVE-2026-8674",
+      "PkgName": "libc6",
+      "InstalledVersion": "2.41-12+deb13u4",
+      "FixedVersion": null,
+      "Status": "affected",
+      "Severity": "MEDIUM",
+      "reachability": "POTENTIALLY_RUNTIME_OS",
+      "fixable": false
+    },
+    {
+      "VulnerabilityID": "CVE-2026-86805",
+      "PkgName": "libc6",
+      "InstalledVersion": "2.41-12+deb13u4",
+      "FixedVersion": null,
+      "Status": "affected",
+      "Severity": "MEDIUM",
+      "reachability": "POTENTIALLY_RUNTIME_OS",
+      "fixable": false
+    },
+    {
+      "VulnerabilityID": "CVE-2026-89092",
+      "PkgName": "libc6",
+      "InstalledVersion": "2.41-12+deb13u4",
+      "FixedVersion": null,
+      "Status": "affected",
+      "Severity": "MEDIUM",
+      "reachability": "POTENTIALLY_RUNTIME_OS",
+      "fixable": false
+    },
+    {
+      "VulnerabilityID": "CVE-2026-95818",
+      "PkgName": "libc6",
+      "InstalledVersion": "2.41-12+deb13u4",
+      "FixedVersion": null,
+      "Status": "affected",
+      "Severity": "MEDIUM",
+      "reachability": "POTENTIALLY_RUNTIME_OS",
+      "fixable": false
+    },
+    {
+      "VulnerabilityID": "CVE-2010-4756",
+      "PkgName": "libc6",
+      "InstalledVersion": "2.41-12+deb13u4",
+      "FixedVersion": null,
+      "Status": "affected",
+      "Severity": "LOW",
+      "reachability": "POTENTIALLY_RUNTIME_OS",
+      "fixable": false
+    },
+    {
+      "VulnerabilityID": "CVE-2018-20796",
+      "PkgName": "libc6",
+      "InstalledVersion": "2.41-12+deb13u4",
+      "FixedVersion": null,
+      "Status": "affected",
+      "Severity": "LOW",
+      "reachability": "POTENTIALLY_RUNTIME_OS",
+      "fixable": false
+    },
+    {
+      "VulnerabilityID": "CVE-2019-1010022",
+      "PkgName": "libc6",
+      "InstalledVersion": "2.41-12+deb13u4",
+      "FixedVersion": null,
+      "Status": "affected",
+      "Severity": "LOW",
+      "reachability": "POTENTIALLY_RUNTIME_OS",
+      "fixable": false
+    },
+    {
+      "VulnerabilityID": "CVE-2019-1010023",
+      "PkgName": "libc6",
+      "InstalledVersion": "2.41-12+deb13u4",
+      "FixedVersion": null,
+      "Status": "affected",
+      "Severity": "LOW",
+      "reachability": "POTENTIALLY_RUNTIME_OS",
+      "fixable": false
+    },
+    {
+      "VulnerabilityID": "CVE-2019-1010024",
+      "PkgName": "libc6",
+      "InstalledVersion": "2.41-12+deb13u4",
+      "FixedVersion": null,
+      "Status": "affected",
+      "Severity": "LOW",
+      "reachability": "POTENTIALLY_RUNTIME_OS",
+      "fixable": false
+    },
+    {
+      "VulnerabilityID": "CVE-2019-1010025",
+      "PkgName": "libc6",
+      "InstalledVersion": "2.41-12+deb13u4",
+      "FixedVersion": null,
+      "Status": "affected",
+      "Severity": "LOW",
+      "reachability": "POTENTIALLY_RUNTIME_OS",
+      "fixable": false
+    },
+    {
+      "VulnerabilityID": "CVE-2019-9192",
+      "PkgName": "libc6",
+      "InstalledVersion": "2.41-12+deb13u4",
+      "FixedVersion": null,
+      "Status": "affected",
+      "Severity": "LOW",
+      "reachability": "POTENTIALLY_RUNTIME_OS",
+      "fixable": false
+    },
+    {
+      "VulnerabilityID": "CVE-2026-97399",
+      "PkgName": "libc6",
+      "InstalledVersion": "2.41-12+deb13u4",
+      "FixedVersion": null,
+      "Status": "affected",
+      "Severity": "LOW",
+      "reachability": "POTENTIALLY_RUNTIME_OS",
+      "fixable": false
+    },
+    {
+      "VulnerabilityID": "CVE-2026-100290",
+      "PkgName": "libc6",
+      "InstalledVersion": "2.41-12+deb13u4",
+      "FixedVersion": null,
+      "Status": "affected",
+      "Severity": "UNKNOWN",
+      "reachability": "POTENTIALLY_RUNTIME_OS",
+      "fixable": false
+    },
+    {
+      "VulnerabilityID": "CVE-2026-115819",
+      "PkgName": "libc6",
+      "InstalledVersion": "2.41-12+deb13u4",
+      "FixedVersion": null,
+      "Status": "affected",
+      "Severity": "UNKNOWN",
+      "reachability": "POTENTIALLY_RUNTIME_OS",
+      "fixable": false
+    },
+    {
+      "VulnerabilityID": "CVE-2026-102010",
+      "PkgName": "libgcc-s1",
+      "InstalledVersion": "14.2.0-19",
+      "FixedVersion": null,
+      "Status": "affected",
+      "Severity": "MEDIUM",
+      "reachability": "POTENTIALLY_RUNTIME_OS",
+      "fixable": false
+    },
+    {
+      "VulnerabilityID": "CVE-2026-114690",
+      "PkgName": "libgcc-s1",
+      "InstalledVersion": "14.2.0-19",
+      "FixedVersion": null,
+      "Status": "affected",
+      "Severity": "MEDIUM",
+      "reachability": "POTENTIALLY_RUNTIME_OS",
+      "fixable": false
+    },
+    {
+      "VulnerabilityID": "CVE-2026-114691",
+      "PkgName": "libgcc-s1",
+      "InstalledVersion": "14.2.0-19",
+      "FixedVersion": null,
+      "Status": "affected",
+      "Severity": "MEDIUM",
+      "reachability": "POTENTIALLY_RUNTIME_OS",
+      "fixable": false
+    },
+    {
+      "VulnerabilityID": "CVE-2026-115455",
+      "PkgName": "libgcc-s1",
+      "InstalledVersion": "14.2.0-19",
+      "FixedVersion": null,
+      "Status": "affected",
+      "Severity": "MEDIUM",
+      "reachability": "POTENTIALLY_RUNTIME_OS",
+      "fixable": false
+    },
+    {
+      "VulnerabilityID": "CVE-2026-95619",
+      "PkgName": "libgcc-s1",
+      "InstalledVersion": "14.2.0-19",
+      "FixedVersion": null,
+      "Status": "affected",
+      "Severity": "MEDIUM",
+      "reachability": "POTENTIALLY_RUNTIME_OS",
+      "fixable": false
+    },
+    {
+      "VulnerabilityID": "CVE-2026-115456",
+      "PkgName": "libgcc-s1",
+      "InstalledVersion": "14.2.0-19",
+      "FixedVersion": null,
+      "Status": "affected",
+      "Severity": "LOW",
+      "reachability": "POTENTIALLY_RUNTIME_OS",
+      "fixable": false
+    },
+    {
+      "VulnerabilityID": "CVE-2026-102010",
+      "PkgName": "libgomp1",
+      "InstalledVersion": "14.2.0-19",
+      "FixedVersion": null,
+      "Status": "affected",
+      "Severity": "MEDIUM",
+      "reachability": "POTENTIALLY_RUNTIME_OS",
+      "fixable": false
+    },
+    {
+      "VulnerabilityID": "CVE-2026-114690",
+      "PkgName": "libgomp1",
+      "InstalledVersion": "14.2.0-19",
+      "FixedVersion": null,
+      "Status": "affected",
+      "Severity": "MEDIUM",
+      "reachability": "POTENTIALLY_RUNTIME_OS",
+      "fixable": false
+    },
+    {
+      "VulnerabilityID": "CVE-2026-114691",
+      "PkgName": "libgomp1",
+      "InstalledVersion": "14.2.0-19",
+      "FixedVersion": null,
+      "Status": "affected",
+      "Severity": "MEDIUM",
+      "reachability": "POTENTIALLY_RUNTIME_OS",
+      "fixable": false
+    },
+    {
+      "VulnerabilityID": "CVE-2026-115455",
+      "PkgName": "libgomp1",
+      "InstalledVersion": "14.2.0-19",
+      "FixedVersion": null,
+      "Status": "affected",
+      "Severity": "MEDIUM",
+      "reachability": "POTENTIALLY_RUNTIME_OS",
+      "fixable": false
+    },
+    {
+      "VulnerabilityID": "CVE-2026-95619",
+      "PkgName": "libgomp1",
+      "InstalledVersion": "14.2.0-19",
+      "FixedVersion": null,
+      "Status": "affected",
+      "Severity": "MEDIUM",
+      "reachability": "POTENTIALLY_RUNTIME_OS",
+      "fixable": false
+    },
+    {
+      "VulnerabilityID": "CVE-2026-115456",
+      "PkgName": "libgomp1",
+      "InstalledVersion": "14.2.0-19",
+      "FixedVersion": null,
+      "Status": "affected",
+      "Severity": "LOW",
+      "reachability": "POTENTIALLY_RUNTIME_OS",
+      "fixable": false
+    },
+    {
+      "VulnerabilityID": "CVE-2026-107496",
+      "PkgName": "libssl3t64",
+      "InstalledVersion": "3.5.7-1~deb13u3",
+      "FixedVersion": null,
+      "Status": "affected",
+      "Severity": "MEDIUM",
+      "reachability": "POTENTIALLY_RUNTIME_OS",
+      "fixable": false
+    },
+    {
+      "VulnerabilityID": "CVE-2026-88822",
+      "PkgName": "libssl3t64",
+      "InstalledVersion": "3.5.7-1~deb13u3",
+      "FixedVersion": null,
+      "Status": "affected",
+      "Severity": "MEDIUM",
+      "reachability": "POTENTIALLY_RUNTIME_OS",
+      "fixable": false
+    },
+    {
+      "VulnerabilityID": "CVE-2026-88823",
+      "PkgName": "libssl3t64",
+      "InstalledVersion": "3.5.7-1~deb13u3",
+      "FixedVersion": null,
+      "Status": "affected",
+      "Severity": "MEDIUM",
+      "reachability": "POTENTIALLY_RUNTIME_OS",
+      "fixable": false
+    },
+    {
+      "VulnerabilityID": "CVE-2026-95691",
+      "PkgName": "libssl3t64",
+      "InstalledVersion": "3.5.7-1~deb13u3",
+      "FixedVersion": null,
+      "Status": "affected",
+      "Severity": "MEDIUM",
+      "reachability": "POTENTIALLY_RUNTIME_OS",
+      "fixable": false
+    },
+    {
+      "VulnerabilityID": "CVE-2026-95692",
+      "PkgName": "libssl3t64",
+      "InstalledVersion": "3.5.7-1~deb13u3",
+      "FixedVersion": null,
+      "Status": "affected",
+      "Severity": "MEDIUM",
+      "reachability": "POTENTIALLY_RUNTIME_OS",
+      "fixable": false
+    },
+    {
+      "VulnerabilityID": "CVE-2026-102010",
+      "PkgName": "libstdc++6",
+      "InstalledVersion": "14.2.0-19",
+      "FixedVersion": null,
+      "Status": "affected",
+      "Severity": "MEDIUM",
+      "reachability": "POTENTIALLY_RUNTIME_OS",
+      "fixable": false
+    },
+    {
+      "VulnerabilityID": "CVE-2026-114690",
+      "PkgName": "libstdc++6",
+      "InstalledVersion": "14.2.0-19",
+      "FixedVersion": null,
+      "Status": "affected",
+      "Severity": "MEDIUM",
+      "reachability": "POTENTIALLY_RUNTIME_OS",
+      "fixable": false
+    },
+    {
+      "VulnerabilityID": "CVE-2026-114691",
+      "PkgName": "libstdc++6",
+      "InstalledVersion": "14.2.0-19",
+      "FixedVersion": null,
+      "Status": "affected",
+      "Severity": "MEDIUM",
+      "reachability": "POTENTIALLY_RUNTIME_OS",
+      "fixable": false
+    },
+    {
+      "VulnerabilityID": "CVE-2026-115455",
+      "PkgName": "libstdc++6",
+      "InstalledVersion": "14.2.0-19",
+      "FixedVersion": null,
+      "Status": "affected",
+      "Severity": "MEDIUM",
+      "reachability": "POTENTIALLY_RUNTIME_OS",
+      "fixable": false
+    },
+    {
+      "VulnerabilityID": "CVE-2026-95619",
+      "PkgName": "libstdc++6",
+      "InstalledVersion": "14.2.0-19",
+      "FixedVersion": null,
+      "Status": "affected",
+      "Severity": "MEDIUM",
+      "reachability": "POTENTIALLY_RUNTIME_OS",
+      "fixable": false
+    },
+    {
+      "VulnerabilityID": "CVE-2026-115456",
+      "PkgName": "libstdc++6",
+      "InstalledVersion": "14.2.0-19",
+      "FixedVersion": null,
+      "Status": "affected",
+      "Severity": "LOW",
+      "reachability": "POTENTIALLY_RUNTIME_OS",
+      "fixable": false
+    }
+  ],
+  "fixableCriticalHigh": 0,
+  "runtimeCriticalHigh": 0,
+  "exceptions": [],
+  "productionOrCloudAuthorization": false,
+  "severityPolicy": "Trivy vendor-selected Severity; all raw CVSS/vendor data retained, no ignore rules",
+  "reachabilityPolicy": "all retained OS packages and application dependencies conservatively reachable"
+}

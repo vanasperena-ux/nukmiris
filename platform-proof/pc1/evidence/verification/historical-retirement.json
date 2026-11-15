@@ -1,0 +1,373 @@
+[
+  {
+    "path": "platform-proof/b1a2/evidence/c1-c2/retirement/concurrency.json",
+    "source": "ade1c3be3b66f81aa05a26e06fa6c8e707d0526c",
+    "exitCode": 0,
+    "result": {
+      "scope": "LOCAL_REVERIFICATION_ONLY",
+      "testedSource": "ade1c3be3b66f81aa05a26e06fa6c8e707d0526c",
+      "result": {
+        "state": "EVIDENCE_READY",
+        "timeModel": "BOUNDED_DRIFT_V2",
+        "physicalBoundary": 1794657656000,
+        "declaredAt": 1794657899000,
+        "evidenceCompletedAt": 1794658130000,
+        "thresholdBasis": "PROVISIONAL_SYNTHETIC_TARGET",
+        "derivationProtocol": "AUTHENTICATED_LEDGER_ACTIVITY_V1",
+        "derivedActivityCount": 1,
+        "derivedActivitiesDigest": "065e9a5b25563ee60d56bb898d73239e5271abd6e2f5d68279f822fa35589126",
+        "evidenceDigest": "3e7b305fe6b3e02227c2ae3fc40924dff9010a7331f1a46a029dd3110be30928"
+      },
+      "recordedResult": {
+        "state": "EVIDENCE_READY",
+        "timeModel": "BOUNDED_DRIFT_V2",
+        "physicalBoundary": 1794657656000,
+        "declaredAt": 1794657899000,
+        "evidenceCompletedAt": 1794658130000,
+        "thresholdBasis": "PROVISIONAL_SYNTHETIC_TARGET",
+        "derivationProtocol": "AUTHENTICATED_LEDGER_ACTIVITY_V1",
+        "derivedActivityCount": 1,
+        "derivedActivitiesDigest": "065e9a5b25563ee60d56bb898d73239e5271abd6e2f5d68279f822fa35589126",
+        "evidenceDigest": "3e7b305fe6b3e02227c2ae3fc40924dff9010a7331f1a46a029dd3110be30928"
+      },
+      "originalResultPreserved": true,
+      "derivedActivityCount": 1,
+      "canaries": 20,
+      "authenticatedSignaturesVerified": true,
+      "livePromotionAuthorized": false
+    }
+  },
+  {
+    "path": "platform-proof/b1a2/evidence/c1-c2/retirement/fault.json",
+    "source": "ade1c3be3b66f81aa05a26e06fa6c8e707d0526c",
+    "exitCode": 0,
+    "result": {
+      "scope": "LOCAL_REVERIFICATION_ONLY",
+      "testedSource": "ade1c3be3b66f81aa05a26e06fa6c8e707d0526c",
+      "result": {
+        "state": "EVIDENCE_READY",
+        "timeModel": "BOUNDED_DRIFT_V2",
+        "physicalBoundary": 1794657656000,
+        "declaredAt": 1794657899000,
+        "evidenceCompletedAt": 1794658130000,
+        "thresholdBasis": "PROVISIONAL_SYNTHETIC_TARGET",
+        "derivationProtocol": "AUTHENTICATED_LEDGER_ACTIVITY_V1",
+        "derivedActivityCount": 1,
+        "derivedActivitiesDigest": "ebad6790066d0e17210b7d09630efb081b8842037bcb48eb8c88fa4a58ed824e",
+        "evidenceDigest": "922b001402700c76ada331b39a2a00a28239db160bc8df32450a175b39518144"
+      },
+      "recordedResult": {
+        "state": "EVIDENCE_READY",
+        "timeModel": "BOUNDED_DRIFT_V2",
+        "physicalBoundary": 1794657656000,
+        "declaredAt": 1794657899000,
+        "evidenceCompletedAt": 1794658130000,
+        "thresholdBasis": "PROVISIONAL_SYNTHETIC_TARGET",
+        "derivationProtocol": "AUTHENTICATED_LEDGER_ACTIVITY_V1",
+        "derivedActivityCount": 1,
+        "derivedActivitiesDigest": "ebad6790066d0e17210b7d09630efb081b8842037bcb48eb8c88fa4a58ed824e",
+        "evidenceDigest": "922b001402700c76ada331b39a2a00a28239db160bc8df32450a175b39518144"
+      },
+      "originalResultPreserved": true,
+      "derivedActivityCount": 1,
+      "canaries": 20,
+      "authenticatedSignaturesVerified": true,
+      "livePromotionAuthorized": false
+    }
+  },
+  {
+    "path": "platform-proof/b1a2/evidence/c1-c2/retirement/full.json",
+    "source": "ade1c3be3b66f81aa05a26e06fa6c8e707d0526c",
+    "exitCode": 0,
+    "result": {
+      "scope": "LOCAL_REVERIFICATION_ONLY",
+      "testedSource": "ade1c3be3b66f81aa05a26e06fa6c8e707d0526c",
+      "result": {
+        "state": "EVIDENCE_READY",
+        "timeModel": "BOUNDED_DRIFT_V2",
+        "physicalBoundary": 1794657656000,
+        "declaredAt": 1794657899000,
+        "evidenceCompletedAt": 1794658130000,
+        "thresholdBasis": "PROVISIONAL_SYNTHETIC_TARGET",
+        "derivationProtocol": "AUTHENTICATED_LEDGER_ACTIVITY_V1",
+        "derivedActivityCount": 1,
+        "derivedActivitiesDigest": "ba00521dbc3d711a88c0b791f21ace9c33dab3f6f9ecc6c1082a9daedf50daaa",
+        "evidenceDigest": "d86113f99cab226b1747711ddb90de1fe124735b9bcedd86c2b026c5e65f9481"
+      },
+      "recordedResult": {
+        "state": "EVIDENCE_READY",
+        "timeModel": "BOUNDED_DRIFT_V2",
+        "physicalBoundary": 1794657656000,
+        "declaredAt": 1794657899000,
+        "evidenceCompletedAt": 1794658130000,
+        "thresholdBasis": "PROVISIONAL_SYNTHETIC_TARGET",
+        "derivationProtocol": "AUTHENTICATED_LEDGER_ACTIVITY_V1",
+        "derivedActivityCount": 1,
+        "derivedActivitiesDigest": "ba00521dbc3d711a88c0b791f21ace9c33dab3f6f9ecc6c1082a9daedf50daaa",
+        "evidenceDigest": "d86113f99cab226b1747711ddb90de1fe124735b9bcedd86c2b026c5e65f9481"
+      },
+      "originalResultPreserved": true,
+      "derivedActivityCount": 1,
+      "canaries": 20,
+      "authenticatedSignaturesVerified": true,
+      "livePromotionAuthorized": false
+    }
+  },
+  {
+    "path": "platform-proof/b1a2/evidence/c1-c2/retirement/targeted.json",
+    "source": "ade1c3be3b66f81aa05a26e06fa6c8e707d0526c",
+    "exitCode": 0,
+    "result": {
+      "scope": "LOCAL_REVERIFICATION_ONLY",
+      "testedSource": "ade1c3be3b66f81aa05a26e06fa6c8e707d0526c",
+      "result": {
+        "state": "EVIDENCE_READY",
+        "timeModel": "BOUNDED_DRIFT_V2",
+        "physicalBoundary": 1794657656000,
+        "declaredAt": 1794657899000,
+        "evidenceCompletedAt": 1794658130000,
+        "thresholdBasis": "PROVISIONAL_SYNTHETIC_TARGET",
+        "derivationProtocol": "AUTHENTICATED_LEDGER_ACTIVITY_V1",
+        "derivedActivityCount": 1,
+        "derivedActivitiesDigest": "96cf80776b384dbd1489e2ceadf29c06026e48d9ab6c32789830c25553f46840",
+        "evidenceDigest": "f3bf3901df68035890077e4c530bf85ac88ad82e17a127ae9e32b638b69a48d7"
+      },
+      "recordedResult": {
+        "state": "EVIDENCE_READY",
+        "timeModel": "BOUNDED_DRIFT_V2",
+        "physicalBoundary": 1794657656000,
+        "declaredAt": 1794657899000,
+        "evidenceCompletedAt": 1794658130000,
+        "thresholdBasis": "PROVISIONAL_SYNTHETIC_TARGET",
+        "derivationProtocol": "AUTHENTICATED_LEDGER_ACTIVITY_V1",
+        "derivedActivityCount": 1,
+        "derivedActivitiesDigest": "96cf80776b384dbd1489e2ceadf29c06026e48d9ab6c32789830c25553f46840",
+        "evidenceDigest": "f3bf3901df68035890077e4c530bf85ac88ad82e17a127ae9e32b638b69a48d7"
+      },
+      "originalResultPreserved": true,
+      "derivedActivityCount": 1,
+      "canaries": 20,
+      "authenticatedSignaturesVerified": true,
+      "livePromotionAuthorized": false
+    }
+  },
+  {
+    "path": "platform-proof/b1a2/evidence/retirement/concurrency.json",
+    "source": "ecc085f3a2e413c9f3a228066292b81ad9c1be73",
+    "exitCode": 0,
+    "result": {
+      "scope": "LOCAL_REVERIFICATION_ONLY",
+      "testedSource": "ecc085f3a2e413c9f3a228066292b81ad9c1be73",
+      "result": {
+        "state": "EVIDENCE_READY",
+        "timeModel": "BOUNDED_DRIFT_V2",
+        "physicalBoundary": 1794657656000,
+        "declaredAt": 1794657899000,
+        "evidenceCompletedAt": 1794658130000,
+        "thresholdBasis": "PROVISIONAL_SYNTHETIC_TARGET",
+        "derivationProtocol": "AUTHENTICATED_LEDGER_ACTIVITY_V1",
+        "derivedActivityCount": 0,
+        "derivedActivitiesDigest": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "evidenceDigest": "5eff3afd27d6f8d240cf17c2989f22b7edc3737e1dab9b27ad5598e083477d27"
+      },
+      "recordedResult": {
+        "state": "EVIDENCE_READY",
+        "timeModel": "BOUNDED_DRIFT_V2",
+        "physicalBoundary": 1794657656000,
+        "declaredAt": 1794657899000,
+        "evidenceCompletedAt": 1794658130000,
+        "thresholdBasis": "PROVISIONAL_SYNTHETIC_TARGET",
+        "evidenceDigest": "cfd7697ae71065cb02ac026645905b41194a292d14eb79b253aa73e0bdb7f1e5"
+      },
+      "originalResultPreserved": true,
+      "derivedActivityCount": 0,
+      "canaries": 20,
+      "authenticatedSignaturesVerified": true,
+      "livePromotionAuthorized": false
+    }
+  },
+  {
+    "path": "platform-proof/b1a2/evidence/retirement/fault.json",
+    "source": "ecc085f3a2e413c9f3a228066292b81ad9c1be73",
+    "exitCode": 0,
+    "result": {
+      "scope": "LOCAL_REVERIFICATION_ONLY",
+      "testedSource": "ecc085f3a2e413c9f3a228066292b81ad9c1be73",
+      "result": {
+        "state": "EVIDENCE_READY",
+        "timeModel": "BOUNDED_DRIFT_V2",
+        "physicalBoundary": 1794657656000,
+        "declaredAt": 1794657899000,
+        "evidenceCompletedAt": 1794658130000,
+        "thresholdBasis": "PROVISIONAL_SYNTHETIC_TARGET",
+        "derivationProtocol": "AUTHENTICATED_LEDGER_ACTIVITY_V1",
+        "derivedActivityCount": 0,
+        "derivedActivitiesDigest": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "evidenceDigest": "d2662dbc9cc94b7f3ff0a23a91caf01fc62c860379db8f15bff13085c82b09a7"
+      },
+      "recordedResult": {
+        "state": "EVIDENCE_READY",
+        "timeModel": "BOUNDED_DRIFT_V2",
+        "physicalBoundary": 1794657656000,
+        "declaredAt": 1794657899000,
+        "evidenceCompletedAt": 1794658130000,
+        "thresholdBasis": "PROVISIONAL_SYNTHETIC_TARGET",
+        "evidenceDigest": "17c85a3d731472feeb0db6fb52e23742b619199489daf3f639a18d29368c6af4"
+      },
+      "originalResultPreserved": true,
+      "derivedActivityCount": 0,
+      "canaries": 20,
+      "authenticatedSignaturesVerified": true,
+      "livePromotionAuthorized": false
+    }
+  },
+  {
+    "path": "platform-proof/b1a2/evidence/retirement/full.json",
+    "source": "ecc085f3a2e413c9f3a228066292b81ad9c1be73",
+    "exitCode": 0,
+    "result": {
+      "scope": "LOCAL_REVERIFICATION_ONLY",
+      "testedSource": "ecc085f3a2e413c9f3a228066292b81ad9c1be73",
+      "result": {
+        "state": "EVIDENCE_READY",
+        "timeModel": "BOUNDED_DRIFT_V2",
+        "physicalBoundary": 1794657656000,
+        "declaredAt": 1794657899000,
+        "evidenceCompletedAt": 1794658130000,
+        "thresholdBasis": "PROVISIONAL_SYNTHETIC_TARGET",
+        "derivationProtocol": "AUTHENTICATED_LEDGER_ACTIVITY_V1",
+        "derivedActivityCount": 0,
+        "derivedActivitiesDigest": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "evidenceDigest": "0342cb06384b26ab4cb314c2fae5ba9bee82f3782b6b8ad6dc3a088796e7ac5c"
+      },
+      "recordedResult": {
+        "state": "EVIDENCE_READY",
+        "timeModel": "BOUNDED_DRIFT_V2",
+        "physicalBoundary": 1794657656000,
+        "declaredAt": 1794657899000,
+        "evidenceCompletedAt": 1794658130000,
+        "thresholdBasis": "PROVISIONAL_SYNTHETIC_TARGET",
+        "evidenceDigest": "7003d4e0e6e083d91f23ed53187ae9fdd4e3731cdfdd243f59bc30477af69dc9"
+      },
+      "originalResultPreserved": true,
+      "derivedActivityCount": 0,
+      "canaries": 20,
+      "authenticatedSignaturesVerified": true,
+      "livePromotionAuthorized": false
+    }
+  },
+  {
+    "path": "platform-proof/readiness/evidence/retirement/concurrency.json",
+    "source": "9b526c048d5df1b3fbcf03e8f33c3ba53979b492",
+    "exitCode": 0,
+    "result": {
+      "scope": "LOCAL_REVERIFICATION_ONLY",
+      "testedSource": "9b526c048d5df1b3fbcf03e8f33c3ba53979b492",
+      "result": {
+        "state": "EVIDENCE_READY",
+        "timeModel": "BOUNDED_DRIFT_V2",
+        "physicalBoundary": 1794657656000,
+        "declaredAt": 1794657899000,
+        "evidenceCompletedAt": 1794658130000,
+        "thresholdBasis": "PROVISIONAL_SYNTHETIC_TARGET",
+        "derivationProtocol": "AUTHENTICATED_LEDGER_ACTIVITY_V1",
+        "derivedActivityCount": 1,
+        "derivedActivitiesDigest": "bd8b86ab9ec3c1f32e9e487bc865ccd6341bad3e568aa64c68af829bd0e5f24f",
+        "evidenceDigest": "ff29f977eb790156bd667e1b3fcaa7d2df324fd359e4e3ebafb63a74bff920e2"
+      },
+      "recordedResult": {
+        "state": "EVIDENCE_READY",
+        "timeModel": "BOUNDED_DRIFT_V2",
+        "physicalBoundary": 1794657656000,
+        "declaredAt": 1794657899000,
+        "evidenceCompletedAt": 1794658130000,
+        "thresholdBasis": "PROVISIONAL_SYNTHETIC_TARGET",
+        "derivationProtocol": "AUTHENTICATED_LEDGER_ACTIVITY_V1",
+        "derivedActivityCount": 1,
+        "derivedActivitiesDigest": "bd8b86ab9ec3c1f32e9e487bc865ccd6341bad3e568aa64c68af829bd0e5f24f",
+        "evidenceDigest": "ff29f977eb790156bd667e1b3fcaa7d2df324fd359e4e3ebafb63a74bff920e2"
+      },
+      "originalResultPreserved": true,
+      "derivedActivityCount": 1,
+      "canaries": 20,
+      "authenticatedSignaturesVerified": true,
+      "livePromotionAuthorized": false
+    }
+  },
+  {
+    "path": "platform-proof/readiness/evidence/retirement/fault.json",
+    "source": "9b526c048d5df1b3fbcf03e8f33c3ba53979b492",
+    "exitCode": 0,
+    "result": {
+      "scope": "LOCAL_REVERIFICATION_ONLY",
+      "testedSource": "9b526c048d5df1b3fbcf03e8f33c3ba53979b492",
+      "result": {
+        "state": "EVIDENCE_READY",
+        "timeModel": "BOUNDED_DRIFT_V2",
+        "physicalBoundary": 1794657656000,
+        "declaredAt": 1794657899000,
+        "evidenceCompletedAt": 1794658130000,
+        "thresholdBasis": "PROVISIONAL_SYNTHETIC_TARGET",
+        "derivationProtocol": "AUTHENTICATED_LEDGER_ACTIVITY_V1",
+        "derivedActivityCount": 1,
+        "derivedActivitiesDigest": "70ecd437b8788a8ade8ff0c5226edae752bad119c8291ebb64c8f3c52c6d3c38",
+        "evidenceDigest": "5f9691b8e36c35c3f79b71b6251cdbe9d4cdeaee3c829bec1ce0cfa8e089ca31"
+      },
+      "recordedResult": {
+        "state": "EVIDENCE_READY",
+        "timeModel": "BOUNDED_DRIFT_V2",
+        "physicalBoundary": 1794657656000,
+        "declaredAt": 1794657899000,
+        "evidenceCompletedAt": 1794658130000,
+        "thresholdBasis": "PROVISIONAL_SYNTHETIC_TARGET",
+        "derivationProtocol": "AUTHENTICATED_LEDGER_ACTIVITY_V1",
+        "derivedActivityCount": 1,
+        "derivedActivitiesDigest": "70ecd437b8788a8ade8ff0c5226edae752bad119c8291ebb64c8f3c52c6d3c38",
+        "evidenceDigest": "5f9691b8e36c35c3f79b71b6251cdbe9d4cdeaee3c829bec1ce0cfa8e089ca31"
+      },
+      "originalResultPreserved": true,
+      "derivedActivityCount": 1,
+      "canaries": 20,
+      "authenticatedSignaturesVerified": true,
+      "livePromotionAuthorized": false
+    }
+  },
+  {
+    "path": "platform-proof/readiness/evidence/retirement/full.json",
+    "source": "9b526c048d5df1b3fbcf03e8f33c3ba53979b492",
+    "exitCode": 0,
+    "result": {
+      "scope": "LOCAL_REVERIFICATION_ONLY",
+      "testedSource": "9b526c048d5df1b3fbcf03e8f33c3ba53979b492",
+      "result": {
+        "state": "EVIDENCE_READY",
+        "timeModel": "BOUNDED_DRIFT_V2",
+        "physicalBoundary": 1794657656000,
+        "declaredAt": 1794657899000,
+        "evidenceCompletedAt": 1794658130000,
+        "thresholdBasis": "PROVISIONAL_SYNTHETIC_TARGET",
+        "derivationProtocol": "AUTHENTICATED_LEDGER_ACTIVITY_V1",
+        "derivedActivityCount": 1,
+        "derivedActivitiesDigest": "1c78c105acd0da339c731a93509204547d3d1bcb43d9d84a3c80ee0f845db79b",
+        "evidenceDigest": "483ea4c14f10124cf402d190a64d5766673c0895b6cd6cb9a3d356e6eb6a1413"
+      },
+      "recordedResult": {
+        "state": "EVIDENCE_READY",
+        "timeModel": "BOUNDED_DRIFT_V2",
+        "physicalBoundary": 1794657656000,
+        "declaredAt": 1794657899000,
+        "evidenceCompletedAt": 1794658130000,
+        "thresholdBasis": "PROVISIONAL_SYNTHETIC_TARGET",
+        "derivationProtocol": "AUTHENTICATED_LEDGER_ACTIVITY_V1",
+        "derivedActivityCount": 1,
+        "derivedActivitiesDigest": "1c78c105acd0da339c731a93509204547d3d1bcb43d9d84a3c80ee0f845db79b",
+        "evidenceDigest": "483ea4c14f10124cf402d190a64d5766673c0895b6cd6cb9a3d356e6eb6a1413"
+      },
+      "originalResultPreserved": true,
+      "derivedActivityCount": 1,
+      "canaries": 20,
+      "authenticatedSignaturesVerified": true,
+      "livePromotionAuthorized": false
+    }
+  }
+]
