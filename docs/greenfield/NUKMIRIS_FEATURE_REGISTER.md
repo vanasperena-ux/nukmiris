@@ -1,6 +1,6 @@
 # NukMiris — Feature & Improvement Register
 
-**Version:** 1.4  
+**Version:** 1.5 (proposed register update)  
 **Established:** 2026-10-27  
 **Product baseline:** v0.8.1; local vNext L2 owner walkthrough on Windows (tested source `3d8f82bb047e6ed937750b7ce6e81ecd23ab9f42`)  
 **Purpose:** Living backlog for functional features, UX improvements, compliance, reliability, and maintenance. This is a planning source, **not** proof that implementation has been independently tested.
@@ -14,6 +14,8 @@
 - **Feature IDs never change.** New features receive NM-029, NM-030, etc. Preserve audit history and implementation/version evidence.
 
 ## Summary
+
+- **NM-046:** proposed pre-launch editable starter-service templates for 25 business types (125 suggested services); separate from approved SE-1.
 
 - **NM-001–NM-032:** original and previously agreed register items, retained with their original IDs. NM-029–NM-032 cover vNext date labels, uncertainty acknowledgments, multiple-appointment management parity and the three-option main menu.
 - **NM-033–NM-044:** additions from the complete vNext L2 owner walkthrough, classified as regressions, improvements, decisions to resolve, or testing infrastructure. New entries are **OPEN** or **DEFERRED**, not treated as implemented.
@@ -70,6 +72,7 @@
 | NM-043 | OPEN | P3 | Date-error text / UX copy | Optionally distinguish invalid date, unrecognized date, past date, and out-of-horizon date more clearly; keep an actionable route back to valid dates or existing buttons. | Test 24: `31 nov` and `29 feb 2027` were safely rejected but generic `No pude identificar bien la fecha` was used; past date and 365-day horizon already produced specific explanatory copy. Editorial improvement, not a current safety blocker. |
 | NM-044 | DEFERRED | P2 | Intent routing / human support | Revisit **context-aware unknown-text escalation to human support**, including natural-language requests for Juanita, state-aware fallback and durable owner handoff; do **not** turn every unrecognized word into human mode automatically without policy. | Previously raised during v0.8.1 review and deliberately deferred until legacy/runtime testing completed. Distinct from NM-033 (active support behavior), NM-034 (owner inbox) and NM-027 (provider failures). Requires explicit owner scope decision before Codex implementation. |
 | NM-045 | OPEN — NEXT CODEX VERSION | P1 | Human-support entry / UX parity | **Do not display current or upcoming appointment information when a customer enters human-support mode** via `humano` or `Hablar con alguien`. Show only the acknowledgment and instructions; subsequent support messages remain silent until `menu` exits. | Owner Windows PR #16 acceptance Step 8: Carlos had two upcoming appointments, but human-support entry prefixed only one (`Tu cita actual es para ...`), making the response misleading. Suppress appointment prefixes for zero/one/many bookings; preserve records and the all-upcoming summary on `menu` exit. Test button/command entry, zero/one/two bookings, restart and silent subsequent messages. **Required in next Codex version**, not a change to the running Windows profile. |
+| NM-046 | OPEN — PRE-LAUNCH; NOT IN SE-1 | P1 (proposed) | Owner onboarding / service catalog | **Offer preloaded editable service templates by business type** for 25 initial owner business categories. Owner can accept, rename, rewrite descriptions, configure duration/buffer/price/currency, activate/deactivate, remove suggestions and add their own services. | Start with 125 proposed Spanish-language suggestions in [`SERVICE_STARTER_CATALOG_25_TYPES.md`](SERVICE_STARTER_CATALOG_25_TYPES.md). No fabricated prices/durations; owner confirms choices before publishing. One service per appointment (Decision 147); no bulk overwrite/duplicate on repeat onboarding; per-business isolation; historical appointment snapshots unaffected. **Explicitly not part of already approved SE-1**; separate pre-launch implementation authorization required. |
 
 ## vNext L2 local owner testing — evidence & remaining gates (2026-11-05/06)
 
@@ -213,6 +216,10 @@
 | 2026-11-08 | Windows acceptance Step 12B confirmed C1: `hablar con alguien` in `NAME_REQUIRED` caused a booking (Juanita / fourth synthetic customer / Nov 9 09:30 / Sofía). Next Codex correction required; name collection NOT VERIFIED. |
 | 2026-11-08 | Added NM-045 (P1, OPEN — NEXT CODEX VERSION) for human-support entry to omit appointment summaries; recorded Steps 8–9 of Windows acceptance. |
 | 2026-11-06 | Audited the full vNext L2 local functional walkthrough and added NM-033–NM-044 for human support, owner handoff, calendar details, WhatsApp fidelity, date parsing, customer overlaps (decision), protected-operation reconciliation, test fixtures, stale actions, date copy and deferred natural-language human escalation; documented Tests 1–26 with evidence limits and status. |
+
+## Latest register addition (2026-11-15)
+
+- **NM-046:** Owner requested business-type-specific starter Services (dentist, nail salon, hair salon and 22 other types), preloaded into an editable catalog during business setup. Status OPEN; planned before launch, **not** assigned to the ongoing SE-1 implementation. See [`SERVICE_STARTER_CATALOG_25_TYPES.md`](SERVICE_STARTER_CATALOG_25_TYPES.md) for 125 suggested service names/descriptions and draft acceptance criteria. Preserve Decision 147 (exactly one service per appointment).
 
 ## How to maintain this register
 
