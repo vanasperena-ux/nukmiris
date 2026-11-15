@@ -7,6 +7,7 @@ package exception needs a separate dated, individual review, not a CLI flag.
 import collections
 import datetime as dt
 import re
+from urllib.parse import unquote, parse_qs
 
 
 def need(condition, message):
@@ -23,6 +24,26 @@ def timestamp(value):
 def version(value):
     need(re.fullmatch(r'v?\d+\.\d+\.\d+', value) is not None, 'invalid_node_version')
     return tuple(map(int, value.lstrip('v').split('.')))
+
+
+def package_version(package):
+    value = package['Version']
+    if package.get('Release'):
+        value += '-' + package['Release']
+    if package.get('Epoch'):
+        value = str(package['Epoch']) + ':' + value
+    return value
+
+
+def purl_version(purl):
+    raw, _, query = purl.rsplit('@',1)[1].partition('?')
+    value = unquote(raw)
+    epochs = parse_qs(query).get('epoch', [])
+    if epochs:
+        need(len(epochs) == 1 and epochs[0].isdigit() and ':' not in value, 'ambiguous_purl_epoch')
+        if int(epochs[0]):
+            value = epochs[0] + ':' + value
+    return value
 
 
 def evaluate(policy, artifact, scan, sbom, probe, receipt, now):
@@ -58,7 +79,7 @@ def evaluate(policy, artifact, scan, sbom, probe, receipt, now):
         need(scan['Metadata']['DiffIDs'] == expected_layers, 'scan_layer_identity_mismatch')
         need(scan['Metadata']['OS'] == {'Family': 'debian', 'Name': policy['debianVersion']}, 'os_coverage_missing')
         props = sbom['metadata']['component']['properties']
-        need(sbom['bomFormat'] == 'CycloneDX' and sbom['specVersion'] == '1.6', 'sbom_format_invalid')
+        need(sbom['bomFormat'] == 'CycloneDX' and sbom['specVersion'] == '1.7', 'sbom_format_invalid')
         need([p['value'] for p in props if p['name'] == 'aquasecurity:trivy:ImageID'] == [artifact['imageConfigId']], 'sbom_image_identity_mismatch')
         need(sorted(p['value'] for p in props if p['name'] == 'aquasecurity:trivy:DiffID') == sorted(expected_layers), 'sbom_layer_identity_mismatch')
         need(version(probe['node']) >= version(policy['minimumNodeVersion']) and version(probe['node'])[0] == 24,
@@ -76,11 +97,13 @@ def evaluate(policy, artifact, scan, sbom, probe, receipt, now):
             need(isinstance(result['Packages'], list) and result['Packages'], 'package_attribution_missing')
             for pkg in result['Packages']:
                 need(pkg['Identifier']['PURL'] and pkg['Name'] and pkg['Version'], 'package_identifier_missing')
+                need(purl_version(pkg['Identifier']['PURL']) == package_version(pkg),
+                     'package_full_version_purl_mismatch')
                 packages.append((result['Type'], pkg))
         os_packages = {p['Name']: p for kind, p in packages if kind == 'debian'}
         app_packages = {p['Name']: p['Version'] for kind, p in packages if kind == 'node-pkg'}
         need(len(os_packages) == 14, 'unexpected_os_package_inventory')
-        need(app_packages == receipt['expectedApplicationPackages'] and len(app_packages) == 14, 'application_dependency_coverage_mismatch')
+        need(app_packages == receipt['expectedApplicationPackages'] and len(app_packages) == 15, 'application_dependency_coverage_mismatch')
         purls = {p['Identifier']['PURL'] for _, p in packages}
         need(purls == {c['purl'] for c in sbom['components'] if c.get('purl')}, 'sbom_package_inventory_mismatch')
         need(not receipt['nativeAddonPaths'], 'native_addon_requires_new_reachability_review')
@@ -98,7 +121,7 @@ def evaluate(policy, artifact, scan, sbom, probe, receipt, now):
             known = {p['ID']: p for p in result['Packages']}
             for finding in result.get('Vulnerabilities') or []:
                 pkg = known[finding['PkgID']]
-                need(finding['PkgName'] == pkg['Name'] and finding['InstalledVersion'] == pkg['Version'] and
+                need(finding['PkgName'] == pkg['Name'] and finding['InstalledVersion'] == package_version(pkg) and
                      finding['PkgIdentifier']['PURL'] == pkg['Identifier']['PURL'], 'finding_attribution_mismatch')
                 severity = finding['Severity']
                 need(severity in ['UNKNOWN','LOW','MEDIUM','HIGH','CRITICAL'], 'unrecognized_severity')

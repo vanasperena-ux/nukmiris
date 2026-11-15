@@ -161,6 +161,7 @@ def main():
                                 'package':package if isinstance(package,str) else package[0]})
         lock = json.loads(subprocess.check_output(['git','-C',str(repo),'show',artifact['testedSource']+':platform-proof/package-lock.json']))
         expected = {p.removeprefix('node_modules/'):v['version'] for p,v in lock['packages'].items() if p}
+        expected[lock['packages']['']['name']] = lock['packages']['']['version']
         receipt.update({'loadedFileAttribution':attribution,'nativeAddonPaths':native,'expectedApplicationPackages':expected,
                         'integrityVerified':True,'scanFinishedAt':utc(),'registryPush':False,'registryDigest':None})
         result = gate.evaluate(policy,artifact,scan,sbom,probe,receipt,dt.datetime.now(dt.timezone.utc))

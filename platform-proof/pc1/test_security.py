@@ -36,6 +36,7 @@ def fixture():
                 'layerDigests':[{'digest':'sha256:'+'b'*64}]}
     lock = json.loads((PROOF / 'package-lock.json').read_text())
     expected = {k.removeprefix('node_modules/'):v['version'] for k,v in lock['packages'].items() if k}
+    expected[lock['packages']['']['name']] = lock['packages']['']['version']
     os_packages = [{'ID':n+'@1','Name':n,'Version':'1','Identifier':{'PURL':'pkg:deb/debian/'+n+'@1'},
                     'InstalledFiles':['/usr/lib/libc.so.6'] if i==0 else []}
                    for i,n in enumerate(['libc6']+['test-package-'+str(i) for i in range(13)])]
@@ -45,7 +46,7 @@ def fixture():
             'Metadata':{'ImageID':artifact['imageConfigId'],'DiffIDs':['sha256:'+'b'*64],
                         'OS':{'Family':'debian','Name':policy['debianVersion']}},
             'Results':[{'Type':'debian','Packages':os_packages},{'Type':'node-pkg','Packages':app_packages}]}
-    sbom = {'bomFormat':'CycloneDX','specVersion':'1.6','metadata':{'component':{'properties':[
+    sbom = {'bomFormat':'CycloneDX','specVersion':'1.7','metadata':{'component':{'properties':[
         {'name':'aquasecurity:trivy:ImageID','value':artifact['imageConfigId']},
         {'name':'aquasecurity:trivy:DiffID','value':'sha256:'+'b'*64}]}},
         'components':[{'purl':p['Identifier']['PURL']} for p in os_packages+app_packages]}
@@ -150,6 +151,21 @@ class VulnerabilityGate(unittest.TestCase):
     def test_zero_cve_scan_does_not_hide_old_node(self):
         data=fixture();data[4]['node']='v24.19.0'
         self.assertIn('node_below_explicit_security_floor',gate.evaluate(*data)['reasons'][0])
+
+    def test_debian_epoch_release_and_purl_are_bound_without_dropping_findings(self):
+        data=fixture();pkg=data[2]['Results'][0]['Packages'][0]
+        old=pkg['Identifier']['PURL'];pkg.update(Version='2.41',Release='12+deb13u4',Epoch=1)
+        pkg['ID']='libc6@1:2.41-12+deb13u4';pkg['Identifier']['PURL']='pkg:deb/debian/libc6@1%3A2.41-12%2Bdeb13u4'
+        for c in data[3]['components']:
+            if c['purl']==old:c['purl']=pkg['Identifier']['PURL']
+        severe(data);finding=data[2]['Results'][0]['Vulnerabilities'][0]
+        finding.update(InstalledVersion='1:2.41-12+deb13u4',Severity='MEDIUM')
+        result=gate.evaluate(*data);self.assertEqual(result['verdict'],'PASS_LOCAL_PENDING_INDEPENDENT_REVIEW',result)
+        self.assertEqual(result['vulnerabilityCounts'],{'MEDIUM':1})
+        self.assertEqual(gate.purl_version('pkg:deb/debian/libc6@2.41-12%2Bdeb13u4?epoch=1'),'1:2.41-12+deb13u4')
+        with self.assertRaises(ValueError):gate.purl_version('pkg:deb/debian/libc6@1%3A2.41?epoch=1')
+        finding['Severity']='HIGH';self.assertEqual(gate.evaluate(*data)['verdict'],'HOLD')
+        finding['InstalledVersion']='2.41';self.assertIn('finding_attribution_mismatch',gate.evaluate(*data)['reasons'][0])
 
     def test_missing_corrupt_stale_or_untrusted_evidence_fails_closed(self):
         mutations = [
