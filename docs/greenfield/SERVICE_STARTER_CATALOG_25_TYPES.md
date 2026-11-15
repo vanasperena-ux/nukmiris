@@ -3,7 +3,7 @@
 **Fecha:** 2026-11-15  
 **Estado:** Propuesta de contenido comercial para revisión del propietario; NO implementado.  
 **Registro:** NM-046 (precarga y personalización).  
-**Alcance:** 25 giros × 5 servicios sugeridos = 125 plantillas en español (México/LATAM).  
+**Alcance:** 26 giros × 5 servicios sugeridos = 130 plantillas en español (México/LATAM).  
 
 ## Reglas de producto
 
@@ -15,7 +15,7 @@
 - Para salud, odontología, veterinaria y psicología, el dueño/profesional verifica nomenclatura, habilitación y criterios de atención; consultas con urgencia no deben presentarse como citas de emergencia.
 - Estas plantillas **no amplían SE-1**, que sigue enfocado en crear/editar servicios y empleados manualmente. La precarga se programa como característica **prelanzamiento posterior**, sujeta a aprobación de alcance.
 
-## 25 tipos de negocio y servicios sugeridos
+## 26 tipos de negocio y servicios sugeridos
 
 ### 1. Salón de uñas
 
@@ -266,6 +266,18 @@
 | Limpieza de cocina | Servicio centrado en muebles y superficies de cocina. |
 | Limpieza de baños | Limpieza y desinfección de baños. |
 | Limpieza de mudanza | Limpieza de vivienda antes o después de mudarse. |
+
+### 26. Instalación y mantenimiento de aire acondicionado
+
+| Servicio sugerido | Descripción breve editable |
+|---|---|
+| Instalación de aire acondicionado nuevo | Instalación de un equipo nuevo, sujeta a revisión del lugar y especificaciones técnicas. |
+| Mantenimiento preventivo y limpieza | Limpieza periódica de filtros y componentes accesibles, con revisión básica de funcionamiento. |
+| Limpieza profunda de aire acondicionado | Limpieza detallada de componentes del equipo, según modelo y condiciones de acceso. |
+| Diagnóstico de fallas | Revisión técnica para identificar la causa de un problema de enfriamiento, ruido o funcionamiento. |
+| Reparación de aire acondicionado | Corrección de fallas identificadas, sujeta a diagnóstico, refacciones y cotización. |
+
+**Nota para el propietario:** confirmar tipo de equipo (minisplit, ventana, central, etc.), número de unidades y condiciones de acceso. Duración y precio deben establecerse según el trabajo real; la inspección o cotización previa puede ser necesaria. Una visita de instalación o mantenimiento se reserva como **un solo servicio por cita**, conforme a la Decisión 147.
 
 ## Criterios de aceptación de NM-046
 
