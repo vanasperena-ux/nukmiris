@@ -136,6 +136,7 @@ test("P-1 full synthetic SQL admission → independent custody → worker → CO
     ledger = await providerJournal(f.dir + "/b1a2-fake.jsonl"),
     fake = await startFakeProvider({
       tls: kit.server,
+      expectedGateways: [{ epoch: 1, revision: "inc1-r1" }],
       sessionId: session,
       scopeId: scope,
       ledger,

@@ -1,0 +1,56 @@
+[
+    {
+        "Id": "sha256:1931766e764e9b400e3781796fa416421dda01fc992d69c4933295f29c30f888",
+        "RepoTags": [],
+        "RepoDigests": [],
+        "Parent": "",
+        "Comment": "",
+        "Created": "1970-01-01T00:00:00Z",
+        "DockerVersion": "",
+        "Author": "",
+        "Architecture": "amd64",
+        "Os": "linux",
+        "Size": 229769034,
+        "GraphDriver": {
+            "Data": null,
+            "Name": "vfs"
+        },
+        "RootFS": {
+            "Type": "layers",
+            "Layers": [
+                "sha256:1d69a5fd31932841d7825ef4780c06f008eea65aaa9f3110fe09d5832ed5c7d8",
+                "sha256:1ecd584585e16573c2663ba440a96264e380d3b73d1aa134bd412832a7a9d007",
+                "sha256:26bfa8972980bd9e51648c04196656bce2b61da00740da02193ad26350dcec03",
+                "sha256:f8df5cf514d8a65c9cc96cb515c1551f829b4fe10355783d2e7f4edfb095d4b7",
+                "sha256:aaa6cd2b99bfcc6c44dbf6f7a291414c7fc026f228eadfd3bd5b608afbfecb81",
+                "sha256:6b18c59d7cf8ea39b77cd5a7f46e87656dd87326009e8900b94604cf7c297ed3"
+            ]
+        },
+        "Metadata": {
+            "LastTagTime": "0001-01-01T00:00:00Z"
+        },
+        "Config": {
+            "Cmd": null,
+            "Entrypoint": [
+                "node",
+                "b1a2/runtime/entrypoint.mjs"
+            ],
+            "Env": [
+                "B1A2_MODE=INERT_UNCONFIGURED",
+                "B1A2_ROLE=gateway",
+                "NODE_VERSION=24.19.0",
+                "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+                "PORT=8080",
+                "YARN_VERSION=1.22.22"
+            ],
+            "Labels": {
+                "nukmiris.scope": "LOCAL_SYNTHETIC_SOURCE_CANDIDATE",
+                "nukmiris.source": "9b526c048d5df1b3fbcf03e8f33c3ba53979b492"
+            },
+            "OnBuild": null,
+            "User": "node",
+            "Volumes": null,
+            "WorkingDir": "/proof"
+        }
+    }
+]

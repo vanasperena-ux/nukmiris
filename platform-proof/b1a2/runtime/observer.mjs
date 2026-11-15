@@ -230,6 +230,7 @@ export class IndependentObserver {
         recordsDigest: hash(v.records),
         checkpoint: v.checkpoint,
         rawRefs: [r.rawDigest],
+        providerFingerprint: r.peerFingerprint,
         ...(transitPolicy
           ? {
               transitPolicy: {

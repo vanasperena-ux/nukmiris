@@ -1,0 +1,160 @@
+[
+  {
+    "name": "build-a",
+    "argv": [
+      "python3",
+      "readiness/build-image.py",
+      "--repo",
+      "..",
+      "--source",
+      "9b526c048d5df1b3fbcf03e8f33c3ba53979b492",
+      "--cache",
+      "/tmp/b1a-npm-cache",
+      "--base-archive",
+      "/tmp/nukmiris-readiness-base.tar",
+      "--out",
+      "/tmp/nukmiris-readiness-final-build-a"
+    ],
+    "testedSource": "9b526c048d5df1b3fbcf03e8f33c3ba53979b492",
+    "startedAt": "2026-11-14T23:48:05.714354+00:00",
+    "elapsedSeconds": 2.406,
+    "exitCode": 0
+  },
+  {
+    "name": "build-b",
+    "argv": [
+      "python3",
+      "readiness/build-image.py",
+      "--repo",
+      "..",
+      "--source",
+      "9b526c048d5df1b3fbcf03e8f33c3ba53979b492",
+      "--cache",
+      "/tmp/b1a-npm-cache",
+      "--base-archive",
+      "/tmp/nukmiris-readiness-base.tar",
+      "--out",
+      "/tmp/nukmiris-readiness-final-build-b"
+    ],
+    "testedSource": "9b526c048d5df1b3fbcf03e8f33c3ba53979b492",
+    "startedAt": "2026-11-14T23:48:08.120753+00:00",
+    "elapsedSeconds": 1.19,
+    "exitCode": 0
+  },
+  {
+    "name": "load",
+    "argv": [
+      "docker",
+      "--host=unix:///var/run/docker.sock",
+      "--config",
+      "/tmp/nukmiris-readiness-docker-config",
+      "load",
+      "--input",
+      "/tmp/nukmiris-readiness-final-build-a/candidate.docker.tar"
+    ],
+    "testedSource": "9b526c048d5df1b3fbcf03e8f33c3ba53979b492",
+    "startedAt": "2026-11-14T23:48:09.311442+00:00",
+    "elapsedSeconds": 1.194,
+    "exitCode": 0
+  },
+  {
+    "name": "inert-smoke",
+    "argv": [
+      "node",
+      "b1a2/build/container-smoke.mjs",
+      "sha256:1931766e764e9b400e3781796fa416421dda01fc992d69c4933295f29c30f888"
+    ],
+    "testedSource": "9b526c048d5df1b3fbcf03e8f33c3ba53979b492",
+    "startedAt": "2026-11-14T23:48:10.506326+00:00",
+    "elapsedSeconds": 2.878,
+    "exitCode": 0
+  },
+  {
+    "name": "startup-negative-and-revocation-smoke",
+    "argv": [
+      "node",
+      "readiness/image-smoke.mjs",
+      "sha256:1931766e764e9b400e3781796fa416421dda01fc992d69c4933295f29c30f888"
+    ],
+    "testedSource": "9b526c048d5df1b3fbcf03e8f33c3ba53979b492",
+    "startedAt": "2026-11-14T23:48:13.384958+00:00",
+    "elapsedSeconds": 1.28,
+    "exitCode": 0
+  },
+  {
+    "name": "packaged-mtls-export-cleanup-smoke",
+    "argv": [
+      "node",
+      "readiness/package-fake-smoke.mjs",
+      "sha256:1931766e764e9b400e3781796fa416421dda01fc992d69c4933295f29c30f888"
+    ],
+    "testedSource": "9b526c048d5df1b3fbcf03e8f33c3ba53979b492",
+    "startedAt": "2026-11-14T23:48:14.665330+00:00",
+    "elapsedSeconds": 3.692,
+    "exitCode": 0
+  },
+  {
+    "name": "image-inspect",
+    "argv": [
+      "docker",
+      "--host=unix:///var/run/docker.sock",
+      "--config",
+      "/tmp/nukmiris-readiness-docker-config",
+      "image",
+      "inspect",
+      "sha256:1931766e764e9b400e3781796fa416421dda01fc992d69c4933295f29c30f888"
+    ],
+    "testedSource": "9b526c048d5df1b3fbcf03e8f33c3ba53979b492",
+    "startedAt": "2026-11-14T23:48:18.357970+00:00",
+    "elapsedSeconds": 0.012,
+    "exitCode": 0
+  },
+  {
+    "name": "docker-version",
+    "argv": [
+      "docker",
+      "--host=unix:///var/run/docker.sock",
+      "--config",
+      "/tmp/nukmiris-readiness-docker-config",
+      "version",
+      "--format",
+      "json"
+    ],
+    "testedSource": "9b526c048d5df1b3fbcf03e8f33c3ba53979b492",
+    "startedAt": "2026-11-14T23:48:18.370349+00:00",
+    "elapsedSeconds": 0.015,
+    "exitCode": 0
+  },
+  {
+    "name": "unload-owned-candidate",
+    "argv": [
+      "docker",
+      "--host=unix:///var/run/docker.sock",
+      "--config",
+      "/tmp/nukmiris-readiness-docker-config",
+      "image",
+      "rm",
+      "sha256:1931766e764e9b400e3781796fa416421dda01fc992d69c4933295f29c30f888"
+    ],
+    "testedSource": "9b526c048d5df1b3fbcf03e8f33c3ba53979b492",
+    "startedAt": "2026-11-14T23:48:18.385259+00:00",
+    "elapsedSeconds": 0.085,
+    "exitCode": 0
+  },
+  {
+    "name": "unload-owned-public-base",
+    "argv": [
+      "docker",
+      "--host=unix:///var/run/docker.sock",
+      "--config",
+      "/tmp/nukmiris-readiness-docker-config",
+      "image",
+      "rm",
+      "node@sha256:a9f5f7c91a432850b2a8a7797adf5eadb6c733ceed61167806cee7ea7fbc29df"
+    ],
+    "testedSource": "9b526c048d5df1b3fbcf03e8f33c3ba53979b492",
+    "startedAt": "2026-11-14T23:48:18.470500+00:00",
+    "elapsedSeconds": 0.375,
+    "exitCode": 0
+  }
+]

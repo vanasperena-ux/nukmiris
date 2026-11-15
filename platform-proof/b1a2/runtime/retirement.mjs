@@ -21,6 +21,11 @@ function deriveActivities(p, l, records, trials, ctx, now) {
   const old = (r) =>
     r?.authenticatedEpoch === p.retiredEpoch &&
     r.authenticatedRevision === p.retiredRevision;
+  const partial = (r) =>
+    !!r &&
+    !old(r) &&
+    (r.authenticatedEpoch === p.retiredEpoch ||
+      r.authenticatedRevision === p.retiredRevision);
   const canaries = new Set(trials.map((t) => t?.attemptId).filter(Boolean));
   const connections = new Map(),
     requests = new Map();
@@ -69,7 +74,9 @@ function deriveActivities(p, l, records, trials, ctx, now) {
     if (!["TLS_READY", "REQUEST", "EFFECT"].includes(r.event)) continue;
     const request = r.event === "EFFECT" ? unique(requests, r.attemptId) : r;
     const tls = unique(connections, request?.connectionId ?? r.connectionId);
-    const relevant = attributed(r) || (request && attributed(request));
+    const ambiguous = partial(r) || partial(request) || partial(tls);
+    const relevant =
+      ambiguous || attributed(r) || (request && attributed(request));
     const unknown =
       !relevant &&
       r.event !== "TLS_READY" &&
@@ -87,6 +94,7 @@ function deriveActivities(p, l, records, trials, ctx, now) {
       unresolved: null,
     };
     try {
+      if (ambiguous) throw Error("provider_retired_identity_ambiguous");
       if (unknown) throw Error("provider_activity_identity_missing");
       if (!finite(r.at)) throw Error("provider_activity_timestamp_invalid");
       if (r.event === "TLS_READY") {

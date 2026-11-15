@@ -1,0 +1,11 @@
+{
+  "method": "Fresh public Git shallow download; no local shared object database",
+  "testedSource": "9b526c048d5df1b3fbcf03e8f33c3ba53979b492",
+  "testedTree": "74801a03193011c24385d6ff36fb60178d61f107",
+  "allChangedSourceFilesVerified": 44,
+  "gitBlobIdsVerified": true,
+  "sourceLayerOwnFilesVerified": 188,
+  "runtimeAndLockFilesMatchedFreshGit": 47,
+  "imageCandidateDigest": "sha256:1931766e764e9b400e3781796fa416421dda01fc992d69c4933295f29c30f888",
+  "privateCredentialsRead": false
+}

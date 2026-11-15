@@ -14,6 +14,7 @@ import { CustodyJournal } from "./journal.mjs";
 import { IndependentObserver, CanaryScheduler } from "./observer.mjs";
 import { FakeEvidenceClient } from "./fake-client.mjs";
 import { startFakeProvider } from "./fake-provider.mjs";
+import { validateProviderIdentities } from "./provider-identities.mjs";
 import {
   prepareSyntheticProfile,
   prepareLocalMutualTlsTarget,
@@ -115,6 +116,11 @@ export function validateStartup({
   )
     throw Error("startup_epoch_revision_or_image");
   const cap = Object.freeze({ ...p });
+  if (role === "fake")
+    validateProviderIdentities(p.provider?.identities, [
+      { epoch: inputs.epochs.old, revision: inputs.epochs.oldRevision },
+      { epoch: inputs.epochs.next, revision: inputs.epochs.nextRevision },
+    ]);
   startupCaps.set(cap, { profile: cap, identityExpiresAt: who.expiresAt });
   return cap;
 }

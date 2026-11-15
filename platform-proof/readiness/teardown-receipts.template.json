@@ -1,0 +1,2805 @@
+{
+  "scope": "OFFLINE_CHECKLIST_NOT_CLOUD_EVIDENCE",
+  "resources": [
+    {
+      "address": "google_artifact_registry_repository_iam_member.scope_10",
+      "type": "google_artifact_registry_repository_iam_member",
+      "project": "b1a2-fixture-run",
+      "sequence": 1,
+      "requiredAuthority": "cleanup",
+      "originalResourceId": null,
+      "independentReadReceipt": null,
+      "deletionReceipt": null,
+      "status": "NOT_EXECUTED",
+      "successEvidence": "API deletion receipt AND subsequent exact-resource absence; missing permission remains HOLD",
+      "retention": "DELETE_EXACT_RESOURCE",
+      "manualBillingAccountAction": false,
+      "reviewAt": [
+        "after cleanup",
+        "+2h",
+        "+48h",
+        "billing statement"
+      ]
+    },
+    {
+      "address": "google_artifact_registry_repository_iam_member.scope_9",
+      "type": "google_artifact_registry_repository_iam_member",
+      "project": "b1a2-fixture-run",
+      "sequence": 2,
+      "requiredAuthority": "cleanup",
+      "originalResourceId": null,
+      "independentReadReceipt": null,
+      "deletionReceipt": null,
+      "status": "NOT_EXECUTED",
+      "successEvidence": "API deletion receipt AND subsequent exact-resource absence; missing permission remains HOLD",
+      "retention": "DELETE_EXACT_RESOURCE",
+      "manualBillingAccountAction": false,
+      "reviewAt": [
+        "after cleanup",
+        "+2h",
+        "+48h",
+        "billing statement"
+      ]
+    },
+    {
+      "address": "google_artifact_registry_repository_iam_member.scope_8",
+      "type": "google_artifact_registry_repository_iam_member",
+      "project": "b1a2-fixture-run",
+      "sequence": 3,
+      "requiredAuthority": "cleanup",
+      "originalResourceId": null,
+      "independentReadReceipt": null,
+      "deletionReceipt": null,
+      "status": "NOT_EXECUTED",
+      "successEvidence": "API deletion receipt AND subsequent exact-resource absence; missing permission remains HOLD",
+      "retention": "DELETE_EXACT_RESOURCE",
+      "manualBillingAccountAction": false,
+      "reviewAt": [
+        "after cleanup",
+        "+2h",
+        "+48h",
+        "billing statement"
+      ]
+    },
+    {
+      "address": "google_service_account_iam_member.scope_7",
+      "type": "google_service_account_iam_member",
+      "project": "b1a2-fixture-run",
+      "sequence": 4,
+      "requiredAuthority": "cleanup",
+      "originalResourceId": null,
+      "independentReadReceipt": null,
+      "deletionReceipt": null,
+      "status": "NOT_EXECUTED",
+      "successEvidence": "API deletion receipt AND subsequent exact-resource absence; missing permission remains HOLD",
+      "retention": "DELETE_EXACT_RESOURCE",
+      "manualBillingAccountAction": false,
+      "reviewAt": [
+        "after cleanup",
+        "+2h",
+        "+48h",
+        "billing statement"
+      ]
+    },
+    {
+      "address": "google_service_account_iam_member.scope_5",
+      "type": "google_service_account_iam_member",
+      "project": "b1a2-fixture-run",
+      "sequence": 5,
+      "requiredAuthority": "cleanup",
+      "originalResourceId": null,
+      "independentReadReceipt": null,
+      "deletionReceipt": null,
+      "status": "NOT_EXECUTED",
+      "successEvidence": "API deletion receipt AND subsequent exact-resource absence; missing permission remains HOLD",
+      "retention": "DELETE_EXACT_RESOURCE",
+      "manualBillingAccountAction": false,
+      "reviewAt": [
+        "after cleanup",
+        "+2h",
+        "+48h",
+        "billing statement"
+      ]
+    },
+    {
+      "address": "google_service_account_iam_member.scope_4",
+      "type": "google_service_account_iam_member",
+      "project": "b1a2-fixture-run",
+      "sequence": 6,
+      "requiredAuthority": "cleanup",
+      "originalResourceId": null,
+      "independentReadReceipt": null,
+      "deletionReceipt": null,
+      "status": "NOT_EXECUTED",
+      "successEvidence": "API deletion receipt AND subsequent exact-resource absence; missing permission remains HOLD",
+      "retention": "DELETE_EXACT_RESOURCE",
+      "manualBillingAccountAction": false,
+      "reviewAt": [
+        "after cleanup",
+        "+2h",
+        "+48h",
+        "billing statement"
+      ]
+    },
+    {
+      "address": "google_service_account_iam_member.scope_3",
+      "type": "google_service_account_iam_member",
+      "project": "b1a2-fixture-run",
+      "sequence": 7,
+      "requiredAuthority": "cleanup",
+      "originalResourceId": null,
+      "independentReadReceipt": null,
+      "deletionReceipt": null,
+      "status": "NOT_EXECUTED",
+      "successEvidence": "API deletion receipt AND subsequent exact-resource absence; missing permission remains HOLD",
+      "retention": "DELETE_EXACT_RESOURCE",
+      "manualBillingAccountAction": false,
+      "reviewAt": [
+        "after cleanup",
+        "+2h",
+        "+48h",
+        "billing statement"
+      ]
+    },
+    {
+      "address": "google_service_account_iam_member.scope_2",
+      "type": "google_service_account_iam_member",
+      "project": "b1a2-fixture-run",
+      "sequence": 8,
+      "requiredAuthority": "cleanup",
+      "originalResourceId": null,
+      "independentReadReceipt": null,
+      "deletionReceipt": null,
+      "status": "NOT_EXECUTED",
+      "successEvidence": "API deletion receipt AND subsequent exact-resource absence; missing permission remains HOLD",
+      "retention": "DELETE_EXACT_RESOURCE",
+      "manualBillingAccountAction": false,
+      "reviewAt": [
+        "after cleanup",
+        "+2h",
+        "+48h",
+        "billing statement"
+      ]
+    },
+    {
+      "address": "google_service_account_iam_member.scope_1",
+      "type": "google_service_account_iam_member",
+      "project": "b1a2-fixture-run",
+      "sequence": 9,
+      "requiredAuthority": "cleanup",
+      "originalResourceId": null,
+      "independentReadReceipt": null,
+      "deletionReceipt": null,
+      "status": "NOT_EXECUTED",
+      "successEvidence": "API deletion receipt AND subsequent exact-resource absence; missing permission remains HOLD",
+      "retention": "DELETE_EXACT_RESOURCE",
+      "manualBillingAccountAction": false,
+      "reviewAt": [
+        "after cleanup",
+        "+2h",
+        "+48h",
+        "billing statement"
+      ]
+    },
+    {
+      "address": "google_project_iam_member.scope_22",
+      "type": "google_project_iam_member",
+      "project": "b1a2-fixture-fake",
+      "sequence": 10,
+      "requiredAuthority": "cleanup",
+      "originalResourceId": null,
+      "independentReadReceipt": null,
+      "deletionReceipt": null,
+      "status": "NOT_EXECUTED",
+      "successEvidence": "API deletion receipt AND subsequent exact-resource absence; missing permission remains HOLD",
+      "retention": "DELETE_EXACT_RESOURCE",
+      "manualBillingAccountAction": false,
+      "reviewAt": [
+        "after cleanup",
+        "+2h",
+        "+48h",
+        "billing statement"
+      ]
+    },
+    {
+      "address": "google_project_iam_member.scope_21",
+      "type": "google_project_iam_member",
+      "project": "b1a2-fixture-custody",
+      "sequence": 11,
+      "requiredAuthority": "custodyCleanup",
+      "originalResourceId": null,
+      "independentReadReceipt": null,
+      "deletionReceipt": null,
+      "status": "NOT_EXECUTED",
+      "successEvidence": "API deletion receipt AND subsequent exact-resource absence; missing permission remains HOLD",
+      "retention": "DELETE_EXACT_RESOURCE",
+      "manualBillingAccountAction": false,
+      "reviewAt": [
+        "after cleanup",
+        "+2h",
+        "+48h",
+        "billing statement"
+      ]
+    },
+    {
+      "address": "google_project_iam_member.scope_20",
+      "type": "google_project_iam_member",
+      "project": "b1a2-fixture-run",
+      "sequence": 12,
+      "requiredAuthority": "cleanup",
+      "originalResourceId": null,
+      "independentReadReceipt": null,
+      "deletionReceipt": null,
+      "status": "NOT_EXECUTED",
+      "successEvidence": "API deletion receipt AND subsequent exact-resource absence; missing permission remains HOLD",
+      "retention": "DELETE_EXACT_RESOURCE",
+      "manualBillingAccountAction": false,
+      "reviewAt": [
+        "after cleanup",
+        "+2h",
+        "+48h",
+        "billing statement"
+      ]
+    },
+    {
+      "address": "google_project_iam_member.scope_19",
+      "type": "google_project_iam_member",
+      "project": "b1a2-fixture-custody",
+      "sequence": 13,
+      "requiredAuthority": "custodyCleanup",
+      "originalResourceId": null,
+      "independentReadReceipt": null,
+      "deletionReceipt": null,
+      "status": "NOT_EXECUTED",
+      "successEvidence": "API deletion receipt AND subsequent exact-resource absence; missing permission remains HOLD",
+      "retention": "DELETE_EXACT_RESOURCE",
+      "manualBillingAccountAction": false,
+      "reviewAt": [
+        "after cleanup",
+        "+2h",
+        "+48h",
+        "billing statement"
+      ]
+    },
+    {
+      "address": "google_project_iam_member.scope_18",
+      "type": "google_project_iam_member",
+      "project": "b1a2-fixture-fake",
+      "sequence": 14,
+      "requiredAuthority": "cleanup",
+      "originalResourceId": null,
+      "independentReadReceipt": null,
+      "deletionReceipt": null,
+      "status": "NOT_EXECUTED",
+      "successEvidence": "API deletion receipt AND subsequent exact-resource absence; missing permission remains HOLD",
+      "retention": "DELETE_EXACT_RESOURCE",
+      "manualBillingAccountAction": false,
+      "reviewAt": [
+        "after cleanup",
+        "+2h",
+        "+48h",
+        "billing statement"
+      ]
+    },
+    {
+      "address": "google_project_iam_member.scope_17",
+      "type": "google_project_iam_member",
+      "project": "b1a2-fixture-run",
+      "sequence": 15,
+      "requiredAuthority": "cleanup",
+      "originalResourceId": null,
+      "independentReadReceipt": null,
+      "deletionReceipt": null,
+      "status": "NOT_EXECUTED",
+      "successEvidence": "API deletion receipt AND subsequent exact-resource absence; missing permission remains HOLD",
+      "retention": "DELETE_EXACT_RESOURCE",
+      "manualBillingAccountAction": false,
+      "reviewAt": [
+        "after cleanup",
+        "+2h",
+        "+48h",
+        "billing statement"
+      ]
+    },
+    {
+      "address": "google_project_iam_member.scope_14",
+      "type": "google_project_iam_member",
+      "project": "b1a2-fixture-fake",
+      "sequence": 16,
+      "requiredAuthority": "cleanup",
+      "originalResourceId": null,
+      "independentReadReceipt": null,
+      "deletionReceipt": null,
+      "status": "NOT_EXECUTED",
+      "successEvidence": "API deletion receipt AND subsequent exact-resource absence; missing permission remains HOLD",
+      "retention": "DELETE_EXACT_RESOURCE",
+      "manualBillingAccountAction": false,
+      "reviewAt": [
+        "after cleanup",
+        "+2h",
+        "+48h",
+        "billing statement"
+      ]
+    },
+    {
+      "address": "google_project_iam_member.scope_13",
+      "type": "google_project_iam_member",
+      "project": "b1a2-fixture-run",
+      "sequence": 17,
+      "requiredAuthority": "cleanup",
+      "originalResourceId": null,
+      "independentReadReceipt": null,
+      "deletionReceipt": null,
+      "status": "NOT_EXECUTED",
+      "successEvidence": "API deletion receipt AND subsequent exact-resource absence; missing permission remains HOLD",
+      "retention": "DELETE_EXACT_RESOURCE",
+      "manualBillingAccountAction": false,
+      "reviewAt": [
+        "after cleanup",
+        "+2h",
+        "+48h",
+        "billing statement"
+      ]
+    },
+    {
+      "address": "google_project_iam_member.scope_6",
+      "type": "google_project_iam_member",
+      "project": "b1a2-fixture-run",
+      "sequence": 18,
+      "requiredAuthority": "cleanup",
+      "originalResourceId": null,
+      "independentReadReceipt": null,
+      "deletionReceipt": null,
+      "status": "NOT_EXECUTED",
+      "successEvidence": "API deletion receipt AND subsequent exact-resource absence; missing permission remains HOLD",
+      "retention": "DELETE_EXACT_RESOURCE",
+      "manualBillingAccountAction": false,
+      "reviewAt": [
+        "after cleanup",
+        "+2h",
+        "+48h",
+        "billing statement"
+      ]
+    },
+    {
+      "address": "google_project_iam_member.scope_0",
+      "type": "google_project_iam_member",
+      "project": "b1a2-fixture-run",
+      "sequence": 19,
+      "requiredAuthority": "cleanup",
+      "originalResourceId": null,
+      "independentReadReceipt": null,
+      "deletionReceipt": null,
+      "status": "NOT_EXECUTED",
+      "successEvidence": "API deletion receipt AND subsequent exact-resource absence; missing permission remains HOLD",
+      "retention": "DELETE_EXACT_RESOURCE",
+      "manualBillingAccountAction": false,
+      "reviewAt": [
+        "after cleanup",
+        "+2h",
+        "+48h",
+        "billing statement"
+      ]
+    },
+    {
+      "address": "google_project_iam_custom_role.scope_22",
+      "type": "google_project_iam_custom_role",
+      "project": "b1a2-fixture-fake",
+      "sequence": 20,
+      "requiredAuthority": "cleanup",
+      "originalResourceId": null,
+      "independentReadReceipt": null,
+      "deletionReceipt": null,
+      "status": "NOT_EXECUTED",
+      "successEvidence": "API deletion receipt AND subsequent exact-resource absence; missing permission remains HOLD",
+      "retention": "DELETE_EXACT_RESOURCE",
+      "manualBillingAccountAction": false,
+      "reviewAt": [
+        "after cleanup",
+        "+2h",
+        "+48h",
+        "billing statement"
+      ]
+    },
+    {
+      "address": "google_project_iam_custom_role.scope_21",
+      "type": "google_project_iam_custom_role",
+      "project": "b1a2-fixture-custody",
+      "sequence": 21,
+      "requiredAuthority": "custodyCleanup",
+      "originalResourceId": null,
+      "independentReadReceipt": null,
+      "deletionReceipt": null,
+      "status": "NOT_EXECUTED",
+      "successEvidence": "API deletion receipt AND subsequent exact-resource absence; missing permission remains HOLD",
+      "retention": "DELETE_EXACT_RESOURCE",
+      "manualBillingAccountAction": false,
+      "reviewAt": [
+        "after cleanup",
+        "+2h",
+        "+48h",
+        "billing statement"
+      ]
+    },
+    {
+      "address": "google_project_iam_custom_role.scope_20",
+      "type": "google_project_iam_custom_role",
+      "project": "b1a2-fixture-run",
+      "sequence": 22,
+      "requiredAuthority": "cleanup",
+      "originalResourceId": null,
+      "independentReadReceipt": null,
+      "deletionReceipt": null,
+      "status": "NOT_EXECUTED",
+      "successEvidence": "API deletion receipt AND subsequent exact-resource absence; missing permission remains HOLD",
+      "retention": "DELETE_EXACT_RESOURCE",
+      "manualBillingAccountAction": false,
+      "reviewAt": [
+        "after cleanup",
+        "+2h",
+        "+48h",
+        "billing statement"
+      ]
+    },
+    {
+      "address": "google_project_iam_custom_role.scope_19",
+      "type": "google_project_iam_custom_role",
+      "project": "b1a2-fixture-custody",
+      "sequence": 23,
+      "requiredAuthority": "custodyCleanup",
+      "originalResourceId": null,
+      "independentReadReceipt": null,
+      "deletionReceipt": null,
+      "status": "NOT_EXECUTED",
+      "successEvidence": "API deletion receipt AND subsequent exact-resource absence; missing permission remains HOLD",
+      "retention": "DELETE_EXACT_RESOURCE",
+      "manualBillingAccountAction": false,
+      "reviewAt": [
+        "after cleanup",
+        "+2h",
+        "+48h",
+        "billing statement"
+      ]
+    },
+    {
+      "address": "google_project_iam_custom_role.scope_18",
+      "type": "google_project_iam_custom_role",
+      "project": "b1a2-fixture-fake",
+      "sequence": 24,
+      "requiredAuthority": "cleanup",
+      "originalResourceId": null,
+      "independentReadReceipt": null,
+      "deletionReceipt": null,
+      "status": "NOT_EXECUTED",
+      "successEvidence": "API deletion receipt AND subsequent exact-resource absence; missing permission remains HOLD",
+      "retention": "DELETE_EXACT_RESOURCE",
+      "manualBillingAccountAction": false,
+      "reviewAt": [
+        "after cleanup",
+        "+2h",
+        "+48h",
+        "billing statement"
+      ]
+    },
+    {
+      "address": "google_project_iam_custom_role.scope_17",
+      "type": "google_project_iam_custom_role",
+      "project": "b1a2-fixture-run",
+      "sequence": 25,
+      "requiredAuthority": "cleanup",
+      "originalResourceId": null,
+      "independentReadReceipt": null,
+      "deletionReceipt": null,
+      "status": "NOT_EXECUTED",
+      "successEvidence": "API deletion receipt AND subsequent exact-resource absence; missing permission remains HOLD",
+      "retention": "DELETE_EXACT_RESOURCE",
+      "manualBillingAccountAction": false,
+      "reviewAt": [
+        "after cleanup",
+        "+2h",
+        "+48h",
+        "billing statement"
+      ]
+    },
+    {
+      "address": "google_project_iam_custom_role.scope_14",
+      "type": "google_project_iam_custom_role",
+      "project": "b1a2-fixture-fake",
+      "sequence": 26,
+      "requiredAuthority": "cleanup",
+      "originalResourceId": null,
+      "independentReadReceipt": null,
+      "deletionReceipt": null,
+      "status": "NOT_EXECUTED",
+      "successEvidence": "API deletion receipt AND subsequent exact-resource absence; missing permission remains HOLD",
+      "retention": "DELETE_EXACT_RESOURCE",
+      "manualBillingAccountAction": false,
+      "reviewAt": [
+        "after cleanup",
+        "+2h",
+        "+48h",
+        "billing statement"
+      ]
+    },
+    {
+      "address": "google_project_iam_custom_role.scope_13",
+      "type": "google_project_iam_custom_role",
+      "project": "b1a2-fixture-run",
+      "sequence": 27,
+      "requiredAuthority": "cleanup",
+      "originalResourceId": null,
+      "independentReadReceipt": null,
+      "deletionReceipt": null,
+      "status": "NOT_EXECUTED",
+      "successEvidence": "API deletion receipt AND subsequent exact-resource absence; missing permission remains HOLD",
+      "retention": "DELETE_EXACT_RESOURCE",
+      "manualBillingAccountAction": false,
+      "reviewAt": [
+        "after cleanup",
+        "+2h",
+        "+48h",
+        "billing statement"
+      ]
+    },
+    {
+      "address": "google_project_iam_custom_role.scope_10",
+      "type": "google_project_iam_custom_role",
+      "project": "b1a2-fixture-run",
+      "sequence": 28,
+      "requiredAuthority": "cleanup",
+      "originalResourceId": null,
+      "independentReadReceipt": null,
+      "deletionReceipt": null,
+      "status": "NOT_EXECUTED",
+      "successEvidence": "API deletion receipt AND subsequent exact-resource absence; missing permission remains HOLD",
+      "retention": "DELETE_EXACT_RESOURCE",
+      "manualBillingAccountAction": false,
+      "reviewAt": [
+        "after cleanup",
+        "+2h",
+        "+48h",
+        "billing statement"
+      ]
+    },
+    {
+      "address": "google_project_iam_custom_role.scope_9",
+      "type": "google_project_iam_custom_role",
+      "project": "b1a2-fixture-run",
+      "sequence": 29,
+      "requiredAuthority": "cleanup",
+      "originalResourceId": null,
+      "independentReadReceipt": null,
+      "deletionReceipt": null,
+      "status": "NOT_EXECUTED",
+      "successEvidence": "API deletion receipt AND subsequent exact-resource absence; missing permission remains HOLD",
+      "retention": "DELETE_EXACT_RESOURCE",
+      "manualBillingAccountAction": false,
+      "reviewAt": [
+        "after cleanup",
+        "+2h",
+        "+48h",
+        "billing statement"
+      ]
+    },
+    {
+      "address": "google_project_iam_custom_role.scope_8",
+      "type": "google_project_iam_custom_role",
+      "project": "b1a2-fixture-run",
+      "sequence": 30,
+      "requiredAuthority": "cleanup",
+      "originalResourceId": null,
+      "independentReadReceipt": null,
+      "deletionReceipt": null,
+      "status": "NOT_EXECUTED",
+      "successEvidence": "API deletion receipt AND subsequent exact-resource absence; missing permission remains HOLD",
+      "retention": "DELETE_EXACT_RESOURCE",
+      "manualBillingAccountAction": false,
+      "reviewAt": [
+        "after cleanup",
+        "+2h",
+        "+48h",
+        "billing statement"
+      ]
+    },
+    {
+      "address": "google_project_iam_custom_role.scope_7",
+      "type": "google_project_iam_custom_role",
+      "project": "b1a2-fixture-run",
+      "sequence": 31,
+      "requiredAuthority": "cleanup",
+      "originalResourceId": null,
+      "independentReadReceipt": null,
+      "deletionReceipt": null,
+      "status": "NOT_EXECUTED",
+      "successEvidence": "API deletion receipt AND subsequent exact-resource absence; missing permission remains HOLD",
+      "retention": "DELETE_EXACT_RESOURCE",
+      "manualBillingAccountAction": false,
+      "reviewAt": [
+        "after cleanup",
+        "+2h",
+        "+48h",
+        "billing statement"
+      ]
+    },
+    {
+      "address": "google_project_iam_custom_role.scope_6",
+      "type": "google_project_iam_custom_role",
+      "project": "b1a2-fixture-run",
+      "sequence": 32,
+      "requiredAuthority": "cleanup",
+      "originalResourceId": null,
+      "independentReadReceipt": null,
+      "deletionReceipt": null,
+      "status": "NOT_EXECUTED",
+      "successEvidence": "API deletion receipt AND subsequent exact-resource absence; missing permission remains HOLD",
+      "retention": "DELETE_EXACT_RESOURCE",
+      "manualBillingAccountAction": false,
+      "reviewAt": [
+        "after cleanup",
+        "+2h",
+        "+48h",
+        "billing statement"
+      ]
+    },
+    {
+      "address": "google_project_iam_custom_role.scope_5",
+      "type": "google_project_iam_custom_role",
+      "project": "b1a2-fixture-run",
+      "sequence": 33,
+      "requiredAuthority": "cleanup",
+      "originalResourceId": null,
+      "independentReadReceipt": null,
+      "deletionReceipt": null,
+      "status": "NOT_EXECUTED",
+      "successEvidence": "API deletion receipt AND subsequent exact-resource absence; missing permission remains HOLD",
+      "retention": "DELETE_EXACT_RESOURCE",
+      "manualBillingAccountAction": false,
+      "reviewAt": [
+        "after cleanup",
+        "+2h",
+        "+48h",
+        "billing statement"
+      ]
+    },
+    {
+      "address": "google_project_iam_custom_role.scope_4",
+      "type": "google_project_iam_custom_role",
+      "project": "b1a2-fixture-run",
+      "sequence": 34,
+      "requiredAuthority": "cleanup",
+      "originalResourceId": null,
+      "independentReadReceipt": null,
+      "deletionReceipt": null,
+      "status": "NOT_EXECUTED",
+      "successEvidence": "API deletion receipt AND subsequent exact-resource absence; missing permission remains HOLD",
+      "retention": "DELETE_EXACT_RESOURCE",
+      "manualBillingAccountAction": false,
+      "reviewAt": [
+        "after cleanup",
+        "+2h",
+        "+48h",
+        "billing statement"
+      ]
+    },
+    {
+      "address": "google_project_iam_custom_role.scope_3",
+      "type": "google_project_iam_custom_role",
+      "project": "b1a2-fixture-run",
+      "sequence": 35,
+      "requiredAuthority": "cleanup",
+      "originalResourceId": null,
+      "independentReadReceipt": null,
+      "deletionReceipt": null,
+      "status": "NOT_EXECUTED",
+      "successEvidence": "API deletion receipt AND subsequent exact-resource absence; missing permission remains HOLD",
+      "retention": "DELETE_EXACT_RESOURCE",
+      "manualBillingAccountAction": false,
+      "reviewAt": [
+        "after cleanup",
+        "+2h",
+        "+48h",
+        "billing statement"
+      ]
+    },
+    {
+      "address": "google_project_iam_custom_role.scope_2",
+      "type": "google_project_iam_custom_role",
+      "project": "b1a2-fixture-run",
+      "sequence": 36,
+      "requiredAuthority": "cleanup",
+      "originalResourceId": null,
+      "independentReadReceipt": null,
+      "deletionReceipt": null,
+      "status": "NOT_EXECUTED",
+      "successEvidence": "API deletion receipt AND subsequent exact-resource absence; missing permission remains HOLD",
+      "retention": "DELETE_EXACT_RESOURCE",
+      "manualBillingAccountAction": false,
+      "reviewAt": [
+        "after cleanup",
+        "+2h",
+        "+48h",
+        "billing statement"
+      ]
+    },
+    {
+      "address": "google_project_iam_custom_role.scope_1",
+      "type": "google_project_iam_custom_role",
+      "project": "b1a2-fixture-run",
+      "sequence": 37,
+      "requiredAuthority": "cleanup",
+      "originalResourceId": null,
+      "independentReadReceipt": null,
+      "deletionReceipt": null,
+      "status": "NOT_EXECUTED",
+      "successEvidence": "API deletion receipt AND subsequent exact-resource absence; missing permission remains HOLD",
+      "retention": "DELETE_EXACT_RESOURCE",
+      "manualBillingAccountAction": false,
+      "reviewAt": [
+        "after cleanup",
+        "+2h",
+        "+48h",
+        "billing statement"
+      ]
+    },
+    {
+      "address": "google_project_iam_custom_role.scope_0",
+      "type": "google_project_iam_custom_role",
+      "project": "b1a2-fixture-run",
+      "sequence": 38,
+      "requiredAuthority": "cleanup",
+      "originalResourceId": null,
+      "independentReadReceipt": null,
+      "deletionReceipt": null,
+      "status": "NOT_EXECUTED",
+      "successEvidence": "API deletion receipt AND subsequent exact-resource absence; missing permission remains HOLD",
+      "retention": "DELETE_EXACT_RESOURCE",
+      "manualBillingAccountAction": false,
+      "reviewAt": [
+        "after cleanup",
+        "+2h",
+        "+48h",
+        "billing statement"
+      ]
+    },
+    {
+      "address": "google_org_policy_policy.all_traffic",
+      "type": "google_org_policy_policy",
+      "project": "b1a2-fixture-run",
+      "sequence": 39,
+      "requiredAuthority": "cleanup",
+      "originalResourceId": null,
+      "independentReadReceipt": null,
+      "deletionReceipt": null,
+      "status": "NOT_EXECUTED",
+      "successEvidence": "API deletion receipt AND subsequent exact-resource absence; missing permission remains HOLD",
+      "retention": "DELETE_EXACT_RESOURCE",
+      "manualBillingAccountAction": false,
+      "reviewAt": [
+        "after cleanup",
+        "+2h",
+        "+48h",
+        "billing statement"
+      ]
+    },
+    {
+      "address": "google_billing_budget.session",
+      "type": "google_billing_budget",
+      "project": "b1a2-fixture-run",
+      "sequence": 40,
+      "requiredAuthority": "cleanup",
+      "originalResourceId": null,
+      "independentReadReceipt": null,
+      "deletionReceipt": null,
+      "status": "NOT_EXECUTED",
+      "successEvidence": "API deletion receipt AND subsequent exact-resource absence; missing permission remains HOLD",
+      "retention": "DELETE_EXACT_RESOURCE",
+      "manualBillingAccountAction": true,
+      "reviewAt": [
+        "after cleanup",
+        "+2h",
+        "+48h",
+        "billing statement"
+      ]
+    },
+    {
+      "address": "google_storage_bucket_iam_member.scope_23",
+      "type": "google_storage_bucket_iam_member",
+      "project": "b1a2-fixture-custody",
+      "sequence": 41,
+      "requiredAuthority": "custodyCleanup",
+      "originalResourceId": null,
+      "independentReadReceipt": null,
+      "deletionReceipt": null,
+      "status": "NOT_EXECUTED",
+      "successEvidence": "API deletion receipt AND subsequent exact-resource absence; missing permission remains HOLD",
+      "retention": "DELETE_EXACT_RESOURCE",
+      "manualBillingAccountAction": false,
+      "reviewAt": [
+        "after cleanup",
+        "+2h",
+        "+48h",
+        "billing statement"
+      ]
+    },
+    {
+      "address": "google_project_iam_custom_role.scope_23",
+      "type": "google_project_iam_custom_role",
+      "project": "b1a2-fixture-custody",
+      "sequence": 42,
+      "requiredAuthority": "custodyCleanup",
+      "originalResourceId": null,
+      "independentReadReceipt": null,
+      "deletionReceipt": null,
+      "status": "NOT_EXECUTED",
+      "successEvidence": "API deletion receipt AND subsequent exact-resource absence; missing permission remains HOLD",
+      "retention": "DELETE_EXACT_RESOURCE",
+      "manualBillingAccountAction": false,
+      "reviewAt": [
+        "after cleanup",
+        "+2h",
+        "+48h",
+        "billing statement"
+      ]
+    },
+    {
+      "address": "google_storage_bucket_iam_member.scope_16",
+      "type": "google_storage_bucket_iam_member",
+      "project": "b1a2-fixture-custody",
+      "sequence": 43,
+      "requiredAuthority": "custodyCleanup",
+      "originalResourceId": null,
+      "independentReadReceipt": null,
+      "deletionReceipt": null,
+      "status": "NOT_EXECUTED",
+      "successEvidence": "API deletion receipt AND subsequent exact-resource absence; missing permission remains HOLD",
+      "retention": "DELETE_EXACT_RESOURCE",
+      "manualBillingAccountAction": false,
+      "reviewAt": [
+        "after cleanup",
+        "+2h",
+        "+48h",
+        "billing statement"
+      ]
+    },
+    {
+      "address": "google_project_iam_custom_role.scope_16",
+      "type": "google_project_iam_custom_role",
+      "project": "b1a2-fixture-custody",
+      "sequence": 44,
+      "requiredAuthority": "custodyCleanup",
+      "originalResourceId": null,
+      "independentReadReceipt": null,
+      "deletionReceipt": null,
+      "status": "NOT_EXECUTED",
+      "successEvidence": "API deletion receipt AND subsequent exact-resource absence; missing permission remains HOLD",
+      "retention": "DELETE_EXACT_RESOURCE",
+      "manualBillingAccountAction": false,
+      "reviewAt": [
+        "after cleanup",
+        "+2h",
+        "+48h",
+        "billing statement"
+      ]
+    },
+    {
+      "address": "google_storage_bucket_iam_member.sealer_recovery",
+      "type": "google_storage_bucket_iam_member",
+      "project": "b1a2-fixture-custody",
+      "sequence": 45,
+      "requiredAuthority": "custodyCleanup",
+      "originalResourceId": null,
+      "independentReadReceipt": null,
+      "deletionReceipt": null,
+      "status": "NOT_EXECUTED",
+      "successEvidence": "API deletion receipt AND subsequent exact-resource absence; missing permission remains HOLD",
+      "retention": "DELETE_EXACT_RESOURCE",
+      "manualBillingAccountAction": false,
+      "reviewAt": [
+        "after cleanup",
+        "+2h",
+        "+48h",
+        "billing statement"
+      ]
+    },
+    {
+      "address": "google_storage_bucket_iam_member.fake_create",
+      "type": "google_storage_bucket_iam_member",
+      "project": "b1a2-fixture-custody",
+      "sequence": 46,
+      "requiredAuthority": "custodyCleanup",
+      "originalResourceId": null,
+      "independentReadReceipt": null,
+      "deletionReceipt": null,
+      "status": "NOT_EXECUTED",
+      "successEvidence": "API deletion receipt AND subsequent exact-resource absence; missing permission remains HOLD",
+      "retention": "DELETE_EXACT_RESOURCE",
+      "manualBillingAccountAction": false,
+      "reviewAt": [
+        "after cleanup",
+        "+2h",
+        "+48h",
+        "billing statement"
+      ]
+    },
+    {
+      "address": "google_storage_bucket_iam_member.observer_read",
+      "type": "google_storage_bucket_iam_member",
+      "project": "b1a2-fixture-custody",
+      "sequence": 47,
+      "requiredAuthority": "custodyCleanup",
+      "originalResourceId": null,
+      "independentReadReceipt": null,
+      "deletionReceipt": null,
+      "status": "NOT_EXECUTED",
+      "successEvidence": "API deletion receipt AND subsequent exact-resource absence; missing permission remains HOLD",
+      "retention": "DELETE_EXACT_RESOURCE",
+      "manualBillingAccountAction": false,
+      "reviewAt": [
+        "after cleanup",
+        "+2h",
+        "+48h",
+        "billing statement"
+      ]
+    },
+    {
+      "address": "google_storage_bucket_iam_member.sealer_create",
+      "type": "google_storage_bucket_iam_member",
+      "project": "b1a2-fixture-custody",
+      "sequence": 48,
+      "requiredAuthority": "custodyCleanup",
+      "originalResourceId": null,
+      "independentReadReceipt": null,
+      "deletionReceipt": null,
+      "status": "NOT_EXECUTED",
+      "successEvidence": "API deletion receipt AND subsequent exact-resource absence; missing permission remains HOLD",
+      "retention": "DELETE_EXACT_RESOURCE",
+      "manualBillingAccountAction": false,
+      "reviewAt": [
+        "after cleanup",
+        "+2h",
+        "+48h",
+        "billing statement"
+      ]
+    },
+    {
+      "address": "google_kms_crypto_key_iam_member.scope_12",
+      "type": "google_kms_crypto_key_iam_member",
+      "project": "b1a2-fixture-run",
+      "sequence": 49,
+      "requiredAuthority": "cleanup",
+      "originalResourceId": null,
+      "independentReadReceipt": null,
+      "deletionReceipt": null,
+      "status": "NOT_EXECUTED",
+      "successEvidence": "API deletion receipt AND subsequent exact-resource absence; missing permission remains HOLD",
+      "retention": "DELETE_EXACT_RESOURCE",
+      "manualBillingAccountAction": false,
+      "reviewAt": [
+        "after cleanup",
+        "+2h",
+        "+48h",
+        "billing statement"
+      ]
+    },
+    {
+      "address": "google_project_iam_custom_role.scope_12",
+      "type": "google_project_iam_custom_role",
+      "project": "b1a2-fixture-run",
+      "sequence": 50,
+      "requiredAuthority": "cleanup",
+      "originalResourceId": null,
+      "independentReadReceipt": null,
+      "deletionReceipt": null,
+      "status": "NOT_EXECUTED",
+      "successEvidence": "API deletion receipt AND subsequent exact-resource absence; missing permission remains HOLD",
+      "retention": "DELETE_EXACT_RESOURCE",
+      "manualBillingAccountAction": false,
+      "reviewAt": [
+        "after cleanup",
+        "+2h",
+        "+48h",
+        "billing statement"
+      ]
+    },
+    {
+      "address": "google_kms_crypto_key_iam_member.sealer",
+      "type": "google_kms_crypto_key_iam_member",
+      "project": "b1a2-fixture-custody",
+      "sequence": 51,
+      "requiredAuthority": "custodyCleanup",
+      "originalResourceId": null,
+      "independentReadReceipt": null,
+      "deletionReceipt": null,
+      "status": "NOT_EXECUTED",
+      "successEvidence": "API deletion receipt AND subsequent exact-resource absence; missing permission remains HOLD",
+      "retention": "DELETE_EXACT_RESOURCE",
+      "manualBillingAccountAction": false,
+      "reviewAt": [
+        "after cleanup",
+        "+2h",
+        "+48h",
+        "billing statement"
+      ]
+    },
+    {
+      "address": "google_kms_crypto_key_iam_member.effect_2",
+      "type": "google_kms_crypto_key_iam_member",
+      "project": "b1a2-fixture-run",
+      "sequence": 52,
+      "requiredAuthority": "cleanup",
+      "originalResourceId": null,
+      "independentReadReceipt": null,
+      "deletionReceipt": null,
+      "status": "NOT_EXECUTED",
+      "successEvidence": "API deletion receipt AND subsequent exact-resource absence; missing permission remains HOLD",
+      "retention": "DELETE_EXACT_RESOURCE",
+      "manualBillingAccountAction": false,
+      "reviewAt": [
+        "after cleanup",
+        "+2h",
+        "+48h",
+        "billing statement"
+      ]
+    },
+    {
+      "address": "google_kms_crypto_key_iam_member.effect_1",
+      "type": "google_kms_crypto_key_iam_member",
+      "project": "b1a2-fixture-run",
+      "sequence": 53,
+      "requiredAuthority": "cleanup",
+      "originalResourceId": null,
+      "independentReadReceipt": null,
+      "deletionReceipt": null,
+      "status": "NOT_EXECUTED",
+      "successEvidence": "API deletion receipt AND subsequent exact-resource absence; missing permission remains HOLD",
+      "retention": "DELETE_EXACT_RESOURCE",
+      "manualBillingAccountAction": false,
+      "reviewAt": [
+        "after cleanup",
+        "+2h",
+        "+48h",
+        "billing statement"
+      ]
+    },
+    {
+      "address": "google_secret_manager_secret_iam_member.scope_15",
+      "type": "google_secret_manager_secret_iam_member",
+      "project": "b1a2-fixture-custody",
+      "sequence": 54,
+      "requiredAuthority": "custodyCleanup",
+      "originalResourceId": null,
+      "independentReadReceipt": null,
+      "deletionReceipt": null,
+      "status": "NOT_EXECUTED",
+      "successEvidence": "API deletion receipt AND subsequent exact-resource absence; missing permission remains HOLD",
+      "retention": "DELETE_EXACT_RESOURCE",
+      "manualBillingAccountAction": false,
+      "reviewAt": [
+        "after cleanup",
+        "+2h",
+        "+48h",
+        "billing statement"
+      ]
+    },
+    {
+      "address": "google_project_iam_custom_role.scope_15",
+      "type": "google_project_iam_custom_role",
+      "project": "b1a2-fixture-custody",
+      "sequence": 55,
+      "requiredAuthority": "custodyCleanup",
+      "originalResourceId": null,
+      "independentReadReceipt": null,
+      "deletionReceipt": null,
+      "status": "NOT_EXECUTED",
+      "successEvidence": "API deletion receipt AND subsequent exact-resource absence; missing permission remains HOLD",
+      "retention": "DELETE_EXACT_RESOURCE",
+      "manualBillingAccountAction": false,
+      "reviewAt": [
+        "after cleanup",
+        "+2h",
+        "+48h",
+        "billing statement"
+      ]
+    },
+    {
+      "address": "google_secret_manager_secret_iam_member.scope_11",
+      "type": "google_secret_manager_secret_iam_member",
+      "project": "b1a2-fixture-run",
+      "sequence": 56,
+      "requiredAuthority": "cleanup",
+      "originalResourceId": null,
+      "independentReadReceipt": null,
+      "deletionReceipt": null,
+      "status": "NOT_EXECUTED",
+      "successEvidence": "API deletion receipt AND subsequent exact-resource absence; missing permission remains HOLD",
+      "retention": "DELETE_EXACT_RESOURCE",
+      "manualBillingAccountAction": false,
+      "reviewAt": [
+        "after cleanup",
+        "+2h",
+        "+48h",
+        "billing statement"
+      ]
+    },
+    {
+      "address": "google_project_iam_custom_role.scope_11",
+      "type": "google_project_iam_custom_role",
+      "project": "b1a2-fixture-run",
+      "sequence": 57,
+      "requiredAuthority": "cleanup",
+      "originalResourceId": null,
+      "independentReadReceipt": null,
+      "deletionReceipt": null,
+      "status": "NOT_EXECUTED",
+      "successEvidence": "API deletion receipt AND subsequent exact-resource absence; missing permission remains HOLD",
+      "retention": "DELETE_EXACT_RESOURCE",
+      "manualBillingAccountAction": false,
+      "reviewAt": [
+        "after cleanup",
+        "+2h",
+        "+48h",
+        "billing statement"
+      ]
+    },
+    {
+      "address": "google_secret_manager_secret_iam_member.bundle_sealer",
+      "type": "google_secret_manager_secret_iam_member",
+      "project": "b1a2-fixture-run",
+      "sequence": 58,
+      "requiredAuthority": "cleanup",
+      "originalResourceId": null,
+      "independentReadReceipt": null,
+      "deletionReceipt": null,
+      "status": "NOT_EXECUTED",
+      "successEvidence": "API deletion receipt AND subsequent exact-resource absence; missing permission remains HOLD",
+      "retention": "DELETE_EXACT_RESOURCE",
+      "manualBillingAccountAction": false,
+      "reviewAt": [
+        "after cleanup",
+        "+2h",
+        "+48h",
+        "billing statement"
+      ]
+    },
+    {
+      "address": "google_secret_manager_secret_iam_member.bundle_ingress",
+      "type": "google_secret_manager_secret_iam_member",
+      "project": "b1a2-fixture-run",
+      "sequence": 59,
+      "requiredAuthority": "cleanup",
+      "originalResourceId": null,
+      "independentReadReceipt": null,
+      "deletionReceipt": null,
+      "status": "NOT_EXECUTED",
+      "successEvidence": "API deletion receipt AND subsequent exact-resource absence; missing permission remains HOLD",
+      "retention": "DELETE_EXACT_RESOURCE",
+      "manualBillingAccountAction": false,
+      "reviewAt": [
+        "after cleanup",
+        "+2h",
+        "+48h",
+        "billing statement"
+      ]
+    },
+    {
+      "address": "google_secret_manager_secret_iam_member.bundle_worker",
+      "type": "google_secret_manager_secret_iam_member",
+      "project": "b1a2-fixture-run",
+      "sequence": 60,
+      "requiredAuthority": "cleanup",
+      "originalResourceId": null,
+      "independentReadReceipt": null,
+      "deletionReceipt": null,
+      "status": "NOT_EXECUTED",
+      "successEvidence": "API deletion receipt AND subsequent exact-resource absence; missing permission remains HOLD",
+      "retention": "DELETE_EXACT_RESOURCE",
+      "manualBillingAccountAction": false,
+      "reviewAt": [
+        "after cleanup",
+        "+2h",
+        "+48h",
+        "billing statement"
+      ]
+    },
+    {
+      "address": "google_secret_manager_secret_iam_member.observer_signing",
+      "type": "google_secret_manager_secret_iam_member",
+      "project": "b1a2-fixture-custody",
+      "sequence": 61,
+      "requiredAuthority": "custodyCleanup",
+      "originalResourceId": null,
+      "independentReadReceipt": null,
+      "deletionReceipt": null,
+      "status": "NOT_EXECUTED",
+      "successEvidence": "API deletion receipt AND subsequent exact-resource absence; missing permission remains HOLD",
+      "retention": "DELETE_EXACT_RESOURCE",
+      "manualBillingAccountAction": false,
+      "reviewAt": [
+        "after cleanup",
+        "+2h",
+        "+48h",
+        "billing statement"
+      ]
+    },
+    {
+      "address": "google_secret_manager_secret_iam_member.sealer_db",
+      "type": "google_secret_manager_secret_iam_member",
+      "project": "b1a2-fixture-run",
+      "sequence": 62,
+      "requiredAuthority": "cleanup",
+      "originalResourceId": null,
+      "independentReadReceipt": null,
+      "deletionReceipt": null,
+      "status": "NOT_EXECUTED",
+      "successEvidence": "API deletion receipt AND subsequent exact-resource absence; missing permission remains HOLD",
+      "retention": "DELETE_EXACT_RESOURCE",
+      "manualBillingAccountAction": false,
+      "reviewAt": [
+        "after cleanup",
+        "+2h",
+        "+48h",
+        "billing statement"
+      ]
+    },
+    {
+      "address": "google_secret_manager_secret_iam_member.controller_db",
+      "type": "google_secret_manager_secret_iam_member",
+      "project": "b1a2-fixture-run",
+      "sequence": 63,
+      "requiredAuthority": "cleanup",
+      "originalResourceId": null,
+      "independentReadReceipt": null,
+      "deletionReceipt": null,
+      "status": "NOT_EXECUTED",
+      "successEvidence": "API deletion receipt AND subsequent exact-resource absence; missing permission remains HOLD",
+      "retention": "DELETE_EXACT_RESOURCE",
+      "manualBillingAccountAction": false,
+      "reviewAt": [
+        "after cleanup",
+        "+2h",
+        "+48h",
+        "billing statement"
+      ]
+    },
+    {
+      "address": "google_secret_manager_secret_iam_member.ingress_db",
+      "type": "google_secret_manager_secret_iam_member",
+      "project": "b1a2-fixture-run",
+      "sequence": 64,
+      "requiredAuthority": "cleanup",
+      "originalResourceId": null,
+      "independentReadReceipt": null,
+      "deletionReceipt": null,
+      "status": "NOT_EXECUTED",
+      "successEvidence": "API deletion receipt AND subsequent exact-resource absence; missing permission remains HOLD",
+      "retention": "DELETE_EXACT_RESOURCE",
+      "manualBillingAccountAction": false,
+      "reviewAt": [
+        "after cleanup",
+        "+2h",
+        "+48h",
+        "billing statement"
+      ]
+    },
+    {
+      "address": "google_secret_manager_secret_iam_member.worker_db",
+      "type": "google_secret_manager_secret_iam_member",
+      "project": "b1a2-fixture-run",
+      "sequence": 65,
+      "requiredAuthority": "cleanup",
+      "originalResourceId": null,
+      "independentReadReceipt": null,
+      "deletionReceipt": null,
+      "status": "NOT_EXECUTED",
+      "successEvidence": "API deletion receipt AND subsequent exact-resource absence; missing permission remains HOLD",
+      "retention": "DELETE_EXACT_RESOURCE",
+      "manualBillingAccountAction": false,
+      "reviewAt": [
+        "after cleanup",
+        "+2h",
+        "+48h",
+        "billing statement"
+      ]
+    },
+    {
+      "address": "google_secret_manager_secret_iam_member.effect_e000002",
+      "type": "google_secret_manager_secret_iam_member",
+      "project": "b1a2-fixture-run",
+      "sequence": 66,
+      "requiredAuthority": "cleanup",
+      "originalResourceId": null,
+      "independentReadReceipt": null,
+      "deletionReceipt": null,
+      "status": "NOT_EXECUTED",
+      "successEvidence": "API deletion receipt AND subsequent exact-resource absence; missing permission remains HOLD",
+      "retention": "DELETE_EXACT_RESOURCE",
+      "manualBillingAccountAction": false,
+      "reviewAt": [
+        "after cleanup",
+        "+2h",
+        "+48h",
+        "billing statement"
+      ]
+    },
+    {
+      "address": "google_secret_manager_secret_iam_member.effect_e000001",
+      "type": "google_secret_manager_secret_iam_member",
+      "project": "b1a2-fixture-run",
+      "sequence": 67,
+      "requiredAuthority": "cleanup",
+      "originalResourceId": null,
+      "independentReadReceipt": null,
+      "deletionReceipt": null,
+      "status": "NOT_EXECUTED",
+      "successEvidence": "API deletion receipt AND subsequent exact-resource absence; missing permission remains HOLD",
+      "retention": "DELETE_EXACT_RESOURCE",
+      "manualBillingAccountAction": false,
+      "reviewAt": [
+        "after cleanup",
+        "+2h",
+        "+48h",
+        "billing statement"
+      ]
+    },
+    {
+      "address": "google_cloud_run_v2_service_iam_member.ingress_sealer",
+      "type": "google_cloud_run_v2_service_iam_member",
+      "project": "b1a2-fixture-run",
+      "sequence": 68,
+      "requiredAuthority": "cleanup",
+      "originalResourceId": null,
+      "independentReadReceipt": null,
+      "deletionReceipt": null,
+      "status": "NOT_EXECUTED",
+      "successEvidence": "API deletion receipt AND subsequent exact-resource absence; missing permission remains HOLD",
+      "retention": "DELETE_EXACT_RESOURCE",
+      "manualBillingAccountAction": false,
+      "reviewAt": [
+        "after cleanup",
+        "+2h",
+        "+48h",
+        "billing statement"
+      ]
+    },
+    {
+      "address": "google_cloud_run_v2_service_iam_member.worker_gateway",
+      "type": "google_cloud_run_v2_service_iam_member",
+      "project": "b1a2-fixture-run",
+      "sequence": 69,
+      "requiredAuthority": "cleanup",
+      "originalResourceId": null,
+      "independentReadReceipt": null,
+      "deletionReceipt": null,
+      "status": "NOT_EXECUTED",
+      "successEvidence": "API deletion receipt AND subsequent exact-resource absence; missing permission remains HOLD",
+      "retention": "DELETE_EXACT_RESOURCE",
+      "manualBillingAccountAction": false,
+      "reviewAt": [
+        "after cleanup",
+        "+2h",
+        "+48h",
+        "billing statement"
+      ]
+    },
+    {
+      "address": "google_compute_instance.fake",
+      "type": "google_compute_instance",
+      "project": "b1a2-fixture-fake",
+      "sequence": 70,
+      "requiredAuthority": "cleanup",
+      "originalResourceId": null,
+      "independentReadReceipt": null,
+      "deletionReceipt": null,
+      "status": "NOT_EXECUTED",
+      "successEvidence": "API deletion receipt AND subsequent exact-resource absence; missing permission remains HOLD",
+      "retention": "DELETE_EXACT_RESOURCE",
+      "manualBillingAccountAction": false,
+      "reviewAt": [
+        "after cleanup",
+        "+2h",
+        "+48h",
+        "billing statement"
+      ]
+    },
+    {
+      "address": "google_artifact_registry_repository.harness",
+      "type": "google_artifact_registry_repository",
+      "project": "b1a2-fixture-run",
+      "sequence": 71,
+      "requiredAuthority": "cleanup",
+      "originalResourceId": null,
+      "independentReadReceipt": null,
+      "deletionReceipt": null,
+      "status": "NOT_EXECUTED",
+      "successEvidence": "API deletion receipt AND subsequent exact-resource absence; missing permission remains HOLD",
+      "retention": "DELETE_EXACT_RESOURCE",
+      "manualBillingAccountAction": false,
+      "reviewAt": [
+        "after cleanup",
+        "+2h",
+        "+48h",
+        "billing statement"
+      ]
+    },
+    {
+      "address": "google_kms_crypto_key.custody",
+      "type": "google_kms_crypto_key",
+      "project": "b1a2-fixture-custody",
+      "sequence": 72,
+      "requiredAuthority": "custodyCleanup",
+      "originalResourceId": null,
+      "independentReadReceipt": null,
+      "deletionReceipt": null,
+      "status": "NOT_EXECUTED",
+      "successEvidence": "Residual metadata accepted only by separately authorized project disposal; key versions scheduled destroyed",
+      "retention": "NON_DELETABLE_METADATA; KEY_VERSIONS_DESTROY_AND_PROJECT_DISPOSAL",
+      "manualBillingAccountAction": false,
+      "reviewAt": [
+        "after cleanup",
+        "+2h",
+        "+48h",
+        "billing statement"
+      ]
+    },
+    {
+      "address": "google_kms_crypto_key.effect",
+      "type": "google_kms_crypto_key",
+      "project": "b1a2-fixture-run",
+      "sequence": 73,
+      "requiredAuthority": "cleanup",
+      "originalResourceId": null,
+      "independentReadReceipt": null,
+      "deletionReceipt": null,
+      "status": "NOT_EXECUTED",
+      "successEvidence": "Residual metadata accepted only by separately authorized project disposal; key versions scheduled destroyed",
+      "retention": "NON_DELETABLE_METADATA; KEY_VERSIONS_DESTROY_AND_PROJECT_DISPOSAL",
+      "manualBillingAccountAction": false,
+      "reviewAt": [
+        "after cleanup",
+        "+2h",
+        "+48h",
+        "billing statement"
+      ]
+    },
+    {
+      "address": "google_kms_key_ring.custody",
+      "type": "google_kms_key_ring",
+      "project": "b1a2-fixture-custody",
+      "sequence": 74,
+      "requiredAuthority": "custodyCleanup",
+      "originalResourceId": null,
+      "independentReadReceipt": null,
+      "deletionReceipt": null,
+      "status": "NOT_EXECUTED",
+      "successEvidence": "Residual metadata accepted only by separately authorized project disposal; key versions scheduled destroyed",
+      "retention": "NON_DELETABLE_METADATA; KEY_VERSIONS_DESTROY_AND_PROJECT_DISPOSAL",
+      "manualBillingAccountAction": false,
+      "reviewAt": [
+        "after cleanup",
+        "+2h",
+        "+48h",
+        "billing statement"
+      ]
+    },
+    {
+      "address": "google_kms_key_ring.effect",
+      "type": "google_kms_key_ring",
+      "project": "b1a2-fixture-run",
+      "sequence": 75,
+      "requiredAuthority": "cleanup",
+      "originalResourceId": null,
+      "independentReadReceipt": null,
+      "deletionReceipt": null,
+      "status": "NOT_EXECUTED",
+      "successEvidence": "Residual metadata accepted only by separately authorized project disposal; key versions scheduled destroyed",
+      "retention": "NON_DELETABLE_METADATA; KEY_VERSIONS_DESTROY_AND_PROJECT_DISPOSAL",
+      "manualBillingAccountAction": false,
+      "reviewAt": [
+        "after cleanup",
+        "+2h",
+        "+48h",
+        "billing statement"
+      ]
+    },
+    {
+      "address": "google_storage_bucket.custody",
+      "type": "google_storage_bucket",
+      "project": "b1a2-fixture-custody",
+      "sequence": 76,
+      "requiredAuthority": "custodyCleanup",
+      "originalResourceId": null,
+      "independentReadReceipt": null,
+      "deletionReceipt": null,
+      "status": "NOT_EXECUTED",
+      "successEvidence": "API deletion receipt AND subsequent exact-resource absence; missing permission remains HOLD",
+      "retention": "DELETE_EXACT_RESOURCE",
+      "manualBillingAccountAction": false,
+      "reviewAt": [
+        "after cleanup",
+        "+2h",
+        "+48h",
+        "billing statement"
+      ]
+    },
+    {
+      "address": "google_secret_manager_secret.observer_signing",
+      "type": "google_secret_manager_secret",
+      "project": "b1a2-fixture-custody",
+      "sequence": 77,
+      "requiredAuthority": "custodyCleanup",
+      "originalResourceId": null,
+      "independentReadReceipt": null,
+      "deletionReceipt": null,
+      "status": "NOT_EXECUTED",
+      "successEvidence": "API deletion receipt AND subsequent exact-resource absence; missing permission remains HOLD",
+      "retention": "DELETE_EXACT_RESOURCE",
+      "manualBillingAccountAction": false,
+      "reviewAt": [
+        "after cleanup",
+        "+2h",
+        "+48h",
+        "billing statement"
+      ]
+    },
+    {
+      "address": "google_secret_manager_secret.sealer_db",
+      "type": "google_secret_manager_secret",
+      "project": "b1a2-fixture-run",
+      "sequence": 78,
+      "requiredAuthority": "cleanup",
+      "originalResourceId": null,
+      "independentReadReceipt": null,
+      "deletionReceipt": null,
+      "status": "NOT_EXECUTED",
+      "successEvidence": "API deletion receipt AND subsequent exact-resource absence; missing permission remains HOLD",
+      "retention": "DELETE_EXACT_RESOURCE",
+      "manualBillingAccountAction": false,
+      "reviewAt": [
+        "after cleanup",
+        "+2h",
+        "+48h",
+        "billing statement"
+      ]
+    },
+    {
+      "address": "google_secret_manager_secret.controller_db",
+      "type": "google_secret_manager_secret",
+      "project": "b1a2-fixture-run",
+      "sequence": 79,
+      "requiredAuthority": "cleanup",
+      "originalResourceId": null,
+      "independentReadReceipt": null,
+      "deletionReceipt": null,
+      "status": "NOT_EXECUTED",
+      "successEvidence": "API deletion receipt AND subsequent exact-resource absence; missing permission remains HOLD",
+      "retention": "DELETE_EXACT_RESOURCE",
+      "manualBillingAccountAction": false,
+      "reviewAt": [
+        "after cleanup",
+        "+2h",
+        "+48h",
+        "billing statement"
+      ]
+    },
+    {
+      "address": "google_secret_manager_secret.ingress_db",
+      "type": "google_secret_manager_secret",
+      "project": "b1a2-fixture-run",
+      "sequence": 80,
+      "requiredAuthority": "cleanup",
+      "originalResourceId": null,
+      "independentReadReceipt": null,
+      "deletionReceipt": null,
+      "status": "NOT_EXECUTED",
+      "successEvidence": "API deletion receipt AND subsequent exact-resource absence; missing permission remains HOLD",
+      "retention": "DELETE_EXACT_RESOURCE",
+      "manualBillingAccountAction": false,
+      "reviewAt": [
+        "after cleanup",
+        "+2h",
+        "+48h",
+        "billing statement"
+      ]
+    },
+    {
+      "address": "google_secret_manager_secret.worker_db",
+      "type": "google_secret_manager_secret",
+      "project": "b1a2-fixture-run",
+      "sequence": 81,
+      "requiredAuthority": "cleanup",
+      "originalResourceId": null,
+      "independentReadReceipt": null,
+      "deletionReceipt": null,
+      "status": "NOT_EXECUTED",
+      "successEvidence": "API deletion receipt AND subsequent exact-resource absence; missing permission remains HOLD",
+      "retention": "DELETE_EXACT_RESOURCE",
+      "manualBillingAccountAction": false,
+      "reviewAt": [
+        "after cleanup",
+        "+2h",
+        "+48h",
+        "billing statement"
+      ]
+    },
+    {
+      "address": "google_secret_manager_secret.effect_e000002",
+      "type": "google_secret_manager_secret",
+      "project": "b1a2-fixture-run",
+      "sequence": 82,
+      "requiredAuthority": "cleanup",
+      "originalResourceId": null,
+      "independentReadReceipt": null,
+      "deletionReceipt": null,
+      "status": "NOT_EXECUTED",
+      "successEvidence": "API deletion receipt AND subsequent exact-resource absence; missing permission remains HOLD",
+      "retention": "DELETE_EXACT_RESOURCE",
+      "manualBillingAccountAction": false,
+      "reviewAt": [
+        "after cleanup",
+        "+2h",
+        "+48h",
+        "billing statement"
+      ]
+    },
+    {
+      "address": "google_cloud_run_v2_worker_pool.worker",
+      "type": "google_cloud_run_v2_worker_pool",
+      "project": "b1a2-fixture-run",
+      "sequence": 83,
+      "requiredAuthority": "cleanup",
+      "originalResourceId": null,
+      "independentReadReceipt": null,
+      "deletionReceipt": null,
+      "status": "NOT_EXECUTED",
+      "successEvidence": "API deletion receipt AND subsequent exact-resource absence; missing permission remains HOLD",
+      "retention": "DELETE_EXACT_RESOURCE",
+      "manualBillingAccountAction": false,
+      "reviewAt": [
+        "after cleanup",
+        "+2h",
+        "+48h",
+        "billing statement"
+      ]
+    },
+    {
+      "address": "google_secret_manager_secret.bundle_worker",
+      "type": "google_secret_manager_secret",
+      "project": "b1a2-fixture-run",
+      "sequence": 84,
+      "requiredAuthority": "cleanup",
+      "originalResourceId": null,
+      "independentReadReceipt": null,
+      "deletionReceipt": null,
+      "status": "NOT_EXECUTED",
+      "successEvidence": "API deletion receipt AND subsequent exact-resource absence; missing permission remains HOLD",
+      "retention": "DELETE_EXACT_RESOURCE",
+      "manualBillingAccountAction": false,
+      "reviewAt": [
+        "after cleanup",
+        "+2h",
+        "+48h",
+        "billing statement"
+      ]
+    },
+    {
+      "address": "google_cloud_run_v2_service.sealer",
+      "type": "google_cloud_run_v2_service",
+      "project": "b1a2-fixture-run",
+      "sequence": 85,
+      "requiredAuthority": "cleanup",
+      "originalResourceId": null,
+      "independentReadReceipt": null,
+      "deletionReceipt": null,
+      "status": "NOT_EXECUTED",
+      "successEvidence": "API deletion receipt AND subsequent exact-resource absence; missing permission remains HOLD",
+      "retention": "DELETE_EXACT_RESOURCE",
+      "manualBillingAccountAction": false,
+      "reviewAt": [
+        "after cleanup",
+        "+2h",
+        "+48h",
+        "billing statement"
+      ]
+    },
+    {
+      "address": "google_secret_manager_secret.bundle_sealer",
+      "type": "google_secret_manager_secret",
+      "project": "b1a2-fixture-run",
+      "sequence": 86,
+      "requiredAuthority": "cleanup",
+      "originalResourceId": null,
+      "independentReadReceipt": null,
+      "deletionReceipt": null,
+      "status": "NOT_EXECUTED",
+      "successEvidence": "API deletion receipt AND subsequent exact-resource absence; missing permission remains HOLD",
+      "retention": "DELETE_EXACT_RESOURCE",
+      "manualBillingAccountAction": false,
+      "reviewAt": [
+        "after cleanup",
+        "+2h",
+        "+48h",
+        "billing statement"
+      ]
+    },
+    {
+      "address": "google_cloud_run_v2_service.gateway",
+      "type": "google_cloud_run_v2_service",
+      "project": "b1a2-fixture-run",
+      "sequence": 87,
+      "requiredAuthority": "cleanup",
+      "originalResourceId": null,
+      "independentReadReceipt": null,
+      "deletionReceipt": null,
+      "status": "NOT_EXECUTED",
+      "successEvidence": "API deletion receipt AND subsequent exact-resource absence; missing permission remains HOLD",
+      "retention": "DELETE_EXACT_RESOURCE",
+      "manualBillingAccountAction": false,
+      "reviewAt": [
+        "after cleanup",
+        "+2h",
+        "+48h",
+        "billing statement"
+      ]
+    },
+    {
+      "address": "google_secret_manager_secret.effect_e000001",
+      "type": "google_secret_manager_secret",
+      "project": "b1a2-fixture-run",
+      "sequence": 88,
+      "requiredAuthority": "cleanup",
+      "originalResourceId": null,
+      "independentReadReceipt": null,
+      "deletionReceipt": null,
+      "status": "NOT_EXECUTED",
+      "successEvidence": "API deletion receipt AND subsequent exact-resource absence; missing permission remains HOLD",
+      "retention": "DELETE_EXACT_RESOURCE",
+      "manualBillingAccountAction": false,
+      "reviewAt": [
+        "after cleanup",
+        "+2h",
+        "+48h",
+        "billing statement"
+      ]
+    },
+    {
+      "address": "google_cloud_run_v2_service.ingress",
+      "type": "google_cloud_run_v2_service",
+      "project": "b1a2-fixture-run",
+      "sequence": 89,
+      "requiredAuthority": "cleanup",
+      "originalResourceId": null,
+      "independentReadReceipt": null,
+      "deletionReceipt": null,
+      "status": "NOT_EXECUTED",
+      "successEvidence": "API deletion receipt AND subsequent exact-resource absence; missing permission remains HOLD",
+      "retention": "DELETE_EXACT_RESOURCE",
+      "manualBillingAccountAction": false,
+      "reviewAt": [
+        "after cleanup",
+        "+2h",
+        "+48h",
+        "billing statement"
+      ]
+    },
+    {
+      "address": "google_secret_manager_secret.bundle_ingress",
+      "type": "google_secret_manager_secret",
+      "project": "b1a2-fixture-run",
+      "sequence": 90,
+      "requiredAuthority": "cleanup",
+      "originalResourceId": null,
+      "independentReadReceipt": null,
+      "deletionReceipt": null,
+      "status": "NOT_EXECUTED",
+      "successEvidence": "API deletion receipt AND subsequent exact-resource absence; missing permission remains HOLD",
+      "retention": "DELETE_EXACT_RESOURCE",
+      "manualBillingAccountAction": false,
+      "reviewAt": [
+        "after cleanup",
+        "+2h",
+        "+48h",
+        "billing statement"
+      ]
+    },
+    {
+      "address": "google_service_account.custody_cleanup",
+      "type": "google_service_account",
+      "project": "b1a2-fixture-custody",
+      "sequence": 91,
+      "requiredAuthority": "custodyCleanup",
+      "originalResourceId": null,
+      "independentReadReceipt": null,
+      "deletionReceipt": null,
+      "status": "NOT_EXECUTED",
+      "successEvidence": "API deletion receipt AND subsequent exact-resource absence; missing permission remains HOLD",
+      "retention": "DELETE_EXACT_RESOURCE",
+      "manualBillingAccountAction": false,
+      "reviewAt": [
+        "after cleanup",
+        "+2h",
+        "+48h",
+        "billing statement"
+      ]
+    },
+    {
+      "address": "google_service_account.cleanup",
+      "type": "google_service_account",
+      "project": "b1a2-fixture-run",
+      "sequence": 92,
+      "requiredAuthority": "cleanup",
+      "originalResourceId": null,
+      "independentReadReceipt": null,
+      "deletionReceipt": null,
+      "status": "NOT_EXECUTED",
+      "successEvidence": "API deletion receipt AND subsequent exact-resource absence; missing permission remains HOLD",
+      "retention": "DELETE_EXACT_RESOURCE",
+      "manualBillingAccountAction": false,
+      "reviewAt": [
+        "after cleanup",
+        "+2h",
+        "+48h",
+        "billing statement"
+      ]
+    },
+    {
+      "address": "google_service_account.fake",
+      "type": "google_service_account",
+      "project": "b1a2-fixture-fake",
+      "sequence": 93,
+      "requiredAuthority": "cleanup",
+      "originalResourceId": null,
+      "independentReadReceipt": null,
+      "deletionReceipt": null,
+      "status": "NOT_EXECUTED",
+      "successEvidence": "API deletion receipt AND subsequent exact-resource absence; missing permission remains HOLD",
+      "retention": "DELETE_EXACT_RESOURCE",
+      "manualBillingAccountAction": false,
+      "reviewAt": [
+        "after cleanup",
+        "+2h",
+        "+48h",
+        "billing statement"
+      ]
+    },
+    {
+      "address": "google_service_account.deployer",
+      "type": "google_service_account",
+      "project": "b1a2-fixture-run",
+      "sequence": 94,
+      "requiredAuthority": "cleanup",
+      "originalResourceId": null,
+      "independentReadReceipt": null,
+      "deletionReceipt": null,
+      "status": "NOT_EXECUTED",
+      "successEvidence": "API deletion receipt AND subsequent exact-resource absence; missing permission remains HOLD",
+      "retention": "DELETE_EXACT_RESOURCE",
+      "manualBillingAccountAction": false,
+      "reviewAt": [
+        "after cleanup",
+        "+2h",
+        "+48h",
+        "billing statement"
+      ]
+    },
+    {
+      "address": "google_service_account.sealer",
+      "type": "google_service_account",
+      "project": "b1a2-fixture-run",
+      "sequence": 95,
+      "requiredAuthority": "cleanup",
+      "originalResourceId": null,
+      "independentReadReceipt": null,
+      "deletionReceipt": null,
+      "status": "NOT_EXECUTED",
+      "successEvidence": "API deletion receipt AND subsequent exact-resource absence; missing permission remains HOLD",
+      "retention": "DELETE_EXACT_RESOURCE",
+      "manualBillingAccountAction": false,
+      "reviewAt": [
+        "after cleanup",
+        "+2h",
+        "+48h",
+        "billing statement"
+      ]
+    },
+    {
+      "address": "google_service_account.observer",
+      "type": "google_service_account",
+      "project": "b1a2-fixture-custody",
+      "sequence": 96,
+      "requiredAuthority": "custodyCleanup",
+      "originalResourceId": null,
+      "independentReadReceipt": null,
+      "deletionReceipt": null,
+      "status": "NOT_EXECUTED",
+      "successEvidence": "API deletion receipt AND subsequent exact-resource absence; missing permission remains HOLD",
+      "retention": "DELETE_EXACT_RESOURCE",
+      "manualBillingAccountAction": false,
+      "reviewAt": [
+        "after cleanup",
+        "+2h",
+        "+48h",
+        "billing statement"
+      ]
+    },
+    {
+      "address": "google_service_account.kill",
+      "type": "google_service_account",
+      "project": "b1a2-fixture-run",
+      "sequence": 97,
+      "requiredAuthority": "cleanup",
+      "originalResourceId": null,
+      "independentReadReceipt": null,
+      "deletionReceipt": null,
+      "status": "NOT_EXECUTED",
+      "successEvidence": "API deletion receipt AND subsequent exact-resource absence; missing permission remains HOLD",
+      "retention": "DELETE_EXACT_RESOURCE",
+      "manualBillingAccountAction": false,
+      "reviewAt": [
+        "after cleanup",
+        "+2h",
+        "+48h",
+        "billing statement"
+      ]
+    },
+    {
+      "address": "google_service_account.controller",
+      "type": "google_service_account",
+      "project": "b1a2-fixture-run",
+      "sequence": 98,
+      "requiredAuthority": "cleanup",
+      "originalResourceId": null,
+      "independentReadReceipt": null,
+      "deletionReceipt": null,
+      "status": "NOT_EXECUTED",
+      "successEvidence": "API deletion receipt AND subsequent exact-resource absence; missing permission remains HOLD",
+      "retention": "DELETE_EXACT_RESOURCE",
+      "manualBillingAccountAction": false,
+      "reviewAt": [
+        "after cleanup",
+        "+2h",
+        "+48h",
+        "billing statement"
+      ]
+    },
+    {
+      "address": "google_service_account.gw_e000002",
+      "type": "google_service_account",
+      "project": "b1a2-fixture-run",
+      "sequence": 99,
+      "requiredAuthority": "cleanup",
+      "originalResourceId": null,
+      "independentReadReceipt": null,
+      "deletionReceipt": null,
+      "status": "NOT_EXECUTED",
+      "successEvidence": "API deletion receipt AND subsequent exact-resource absence; missing permission remains HOLD",
+      "retention": "DELETE_EXACT_RESOURCE",
+      "manualBillingAccountAction": false,
+      "reviewAt": [
+        "after cleanup",
+        "+2h",
+        "+48h",
+        "billing statement"
+      ]
+    },
+    {
+      "address": "google_service_account.gw_e000001",
+      "type": "google_service_account",
+      "project": "b1a2-fixture-run",
+      "sequence": 100,
+      "requiredAuthority": "cleanup",
+      "originalResourceId": null,
+      "independentReadReceipt": null,
+      "deletionReceipt": null,
+      "status": "NOT_EXECUTED",
+      "successEvidence": "API deletion receipt AND subsequent exact-resource absence; missing permission remains HOLD",
+      "retention": "DELETE_EXACT_RESOURCE",
+      "manualBillingAccountAction": false,
+      "reviewAt": [
+        "after cleanup",
+        "+2h",
+        "+48h",
+        "billing statement"
+      ]
+    },
+    {
+      "address": "google_service_account.worker",
+      "type": "google_service_account",
+      "project": "b1a2-fixture-run",
+      "sequence": 101,
+      "requiredAuthority": "cleanup",
+      "originalResourceId": null,
+      "independentReadReceipt": null,
+      "deletionReceipt": null,
+      "status": "NOT_EXECUTED",
+      "successEvidence": "API deletion receipt AND subsequent exact-resource absence; missing permission remains HOLD",
+      "retention": "DELETE_EXACT_RESOURCE",
+      "manualBillingAccountAction": false,
+      "reviewAt": [
+        "after cleanup",
+        "+2h",
+        "+48h",
+        "billing statement"
+      ]
+    },
+    {
+      "address": "google_service_account.ingress",
+      "type": "google_service_account",
+      "project": "b1a2-fixture-run",
+      "sequence": 102,
+      "requiredAuthority": "cleanup",
+      "originalResourceId": null,
+      "independentReadReceipt": null,
+      "deletionReceipt": null,
+      "status": "NOT_EXECUTED",
+      "successEvidence": "API deletion receipt AND subsequent exact-resource absence; missing permission remains HOLD",
+      "retention": "DELETE_EXACT_RESOURCE",
+      "manualBillingAccountAction": false,
+      "reviewAt": [
+        "after cleanup",
+        "+2h",
+        "+48h",
+        "billing statement"
+      ]
+    },
+    {
+      "address": "google_dns_record_set.apis_fake",
+      "type": "google_dns_record_set",
+      "project": "b1a2-fixture-fake",
+      "sequence": 103,
+      "requiredAuthority": "cleanup",
+      "originalResourceId": null,
+      "independentReadReceipt": null,
+      "deletionReceipt": null,
+      "status": "NOT_EXECUTED",
+      "successEvidence": "API deletion receipt AND subsequent exact-resource absence; missing permission remains HOLD",
+      "retention": "DELETE_EXACT_RESOURCE",
+      "manualBillingAccountAction": false,
+      "reviewAt": [
+        "after cleanup",
+        "+2h",
+        "+48h",
+        "billing statement"
+      ]
+    },
+    {
+      "address": "google_dns_record_set.sql_run",
+      "type": "google_dns_record_set",
+      "project": "b1a2-fixture-run",
+      "sequence": 104,
+      "requiredAuthority": "cleanup",
+      "originalResourceId": null,
+      "independentReadReceipt": null,
+      "deletionReceipt": null,
+      "status": "NOT_EXECUTED",
+      "successEvidence": "API deletion receipt AND subsequent exact-resource absence; missing permission remains HOLD",
+      "retention": "DELETE_EXACT_RESOURCE",
+      "manualBillingAccountAction": false,
+      "reviewAt": [
+        "after cleanup",
+        "+2h",
+        "+48h",
+        "billing statement"
+      ]
+    },
+    {
+      "address": "google_dns_record_set.runapp_run",
+      "type": "google_dns_record_set",
+      "project": "b1a2-fixture-run",
+      "sequence": 105,
+      "requiredAuthority": "cleanup",
+      "originalResourceId": null,
+      "independentReadReceipt": null,
+      "deletionReceipt": null,
+      "status": "NOT_EXECUTED",
+      "successEvidence": "API deletion receipt AND subsequent exact-resource absence; missing permission remains HOLD",
+      "retention": "DELETE_EXACT_RESOURCE",
+      "manualBillingAccountAction": false,
+      "reviewAt": [
+        "after cleanup",
+        "+2h",
+        "+48h",
+        "billing statement"
+      ]
+    },
+    {
+      "address": "google_dns_record_set.apis_run",
+      "type": "google_dns_record_set",
+      "project": "b1a2-fixture-run",
+      "sequence": 106,
+      "requiredAuthority": "cleanup",
+      "originalResourceId": null,
+      "independentReadReceipt": null,
+      "deletionReceipt": null,
+      "status": "NOT_EXECUTED",
+      "successEvidence": "API deletion receipt AND subsequent exact-resource absence; missing permission remains HOLD",
+      "retention": "DELETE_EXACT_RESOURCE",
+      "manualBillingAccountAction": false,
+      "reviewAt": [
+        "after cleanup",
+        "+2h",
+        "+48h",
+        "billing statement"
+      ]
+    },
+    {
+      "address": "google_dns_managed_zone.apis_fake",
+      "type": "google_dns_managed_zone",
+      "project": "b1a2-fixture-fake",
+      "sequence": 107,
+      "requiredAuthority": "cleanup",
+      "originalResourceId": null,
+      "independentReadReceipt": null,
+      "deletionReceipt": null,
+      "status": "NOT_EXECUTED",
+      "successEvidence": "API deletion receipt AND subsequent exact-resource absence; missing permission remains HOLD",
+      "retention": "DELETE_EXACT_RESOURCE",
+      "manualBillingAccountAction": false,
+      "reviewAt": [
+        "after cleanup",
+        "+2h",
+        "+48h",
+        "billing statement"
+      ]
+    },
+    {
+      "address": "google_dns_managed_zone.sql_run",
+      "type": "google_dns_managed_zone",
+      "project": "b1a2-fixture-run",
+      "sequence": 108,
+      "requiredAuthority": "cleanup",
+      "originalResourceId": null,
+      "independentReadReceipt": null,
+      "deletionReceipt": null,
+      "status": "NOT_EXECUTED",
+      "successEvidence": "API deletion receipt AND subsequent exact-resource absence; missing permission remains HOLD",
+      "retention": "DELETE_EXACT_RESOURCE",
+      "manualBillingAccountAction": false,
+      "reviewAt": [
+        "after cleanup",
+        "+2h",
+        "+48h",
+        "billing statement"
+      ]
+    },
+    {
+      "address": "google_dns_managed_zone.runapp_run",
+      "type": "google_dns_managed_zone",
+      "project": "b1a2-fixture-run",
+      "sequence": 109,
+      "requiredAuthority": "cleanup",
+      "originalResourceId": null,
+      "independentReadReceipt": null,
+      "deletionReceipt": null,
+      "status": "NOT_EXECUTED",
+      "successEvidence": "API deletion receipt AND subsequent exact-resource absence; missing permission remains HOLD",
+      "retention": "DELETE_EXACT_RESOURCE",
+      "manualBillingAccountAction": false,
+      "reviewAt": [
+        "after cleanup",
+        "+2h",
+        "+48h",
+        "billing statement"
+      ]
+    },
+    {
+      "address": "google_dns_managed_zone.apis_run",
+      "type": "google_dns_managed_zone",
+      "project": "b1a2-fixture-run",
+      "sequence": 110,
+      "requiredAuthority": "cleanup",
+      "originalResourceId": null,
+      "independentReadReceipt": null,
+      "deletionReceipt": null,
+      "status": "NOT_EXECUTED",
+      "successEvidence": "API deletion receipt AND subsequent exact-resource absence; missing permission remains HOLD",
+      "retention": "DELETE_EXACT_RESOURCE",
+      "manualBillingAccountAction": false,
+      "reviewAt": [
+        "after cleanup",
+        "+2h",
+        "+48h",
+        "billing statement"
+      ]
+    },
+    {
+      "address": "google_compute_route.restricted_fake",
+      "type": "google_compute_route",
+      "project": "b1a2-fixture-fake",
+      "sequence": 111,
+      "requiredAuthority": "cleanup",
+      "originalResourceId": null,
+      "independentReadReceipt": null,
+      "deletionReceipt": null,
+      "status": "NOT_EXECUTED",
+      "successEvidence": "API deletion receipt AND subsequent exact-resource absence; missing permission remains HOLD",
+      "retention": "DELETE_EXACT_RESOURCE",
+      "manualBillingAccountAction": false,
+      "reviewAt": [
+        "after cleanup",
+        "+2h",
+        "+48h",
+        "billing statement"
+      ]
+    },
+    {
+      "address": "google_compute_route.restricted_run",
+      "type": "google_compute_route",
+      "project": "b1a2-fixture-run",
+      "sequence": 112,
+      "requiredAuthority": "cleanup",
+      "originalResourceId": null,
+      "independentReadReceipt": null,
+      "deletionReceipt": null,
+      "status": "NOT_EXECUTED",
+      "successEvidence": "API deletion receipt AND subsequent exact-resource absence; missing permission remains HOLD",
+      "retention": "DELETE_EXACT_RESOURCE",
+      "manualBillingAccountAction": false,
+      "reviewAt": [
+        "after cleanup",
+        "+2h",
+        "+48h",
+        "billing statement"
+      ]
+    },
+    {
+      "address": "google_compute_firewall.restricted_fake",
+      "type": "google_compute_firewall",
+      "project": "b1a2-fixture-fake",
+      "sequence": 113,
+      "requiredAuthority": "cleanup",
+      "originalResourceId": null,
+      "independentReadReceipt": null,
+      "deletionReceipt": null,
+      "status": "NOT_EXECUTED",
+      "successEvidence": "API deletion receipt AND subsequent exact-resource absence; missing permission remains HOLD",
+      "retention": "DELETE_EXACT_RESOURCE",
+      "manualBillingAccountAction": false,
+      "reviewAt": [
+        "after cleanup",
+        "+2h",
+        "+48h",
+        "billing statement"
+      ]
+    },
+    {
+      "address": "google_compute_firewall.fake_iap",
+      "type": "google_compute_firewall",
+      "project": "b1a2-fixture-fake",
+      "sequence": 114,
+      "requiredAuthority": "cleanup",
+      "originalResourceId": null,
+      "independentReadReceipt": null,
+      "deletionReceipt": null,
+      "status": "NOT_EXECUTED",
+      "successEvidence": "API deletion receipt AND subsequent exact-resource absence; missing permission remains HOLD",
+      "retention": "DELETE_EXACT_RESOURCE",
+      "manualBillingAccountAction": false,
+      "reviewAt": [
+        "after cleanup",
+        "+2h",
+        "+48h",
+        "billing statement"
+      ]
+    },
+    {
+      "address": "google_compute_firewall.restricted_run",
+      "type": "google_compute_firewall",
+      "project": "b1a2-fixture-run",
+      "sequence": 115,
+      "requiredAuthority": "cleanup",
+      "originalResourceId": null,
+      "independentReadReceipt": null,
+      "deletionReceipt": null,
+      "status": "NOT_EXECUTED",
+      "successEvidence": "API deletion receipt AND subsequent exact-resource absence; missing permission remains HOLD",
+      "retention": "DELETE_EXACT_RESOURCE",
+      "manualBillingAccountAction": false,
+      "reviewAt": [
+        "after cleanup",
+        "+2h",
+        "+48h",
+        "billing statement"
+      ]
+    },
+    {
+      "address": "google_compute_firewall.sql_run",
+      "type": "google_compute_firewall",
+      "project": "b1a2-fixture-run",
+      "sequence": 116,
+      "requiredAuthority": "cleanup",
+      "originalResourceId": null,
+      "independentReadReceipt": null,
+      "deletionReceipt": null,
+      "status": "NOT_EXECUTED",
+      "successEvidence": "API deletion receipt AND subsequent exact-resource absence; missing permission remains HOLD",
+      "retention": "DELETE_EXACT_RESOURCE",
+      "manualBillingAccountAction": false,
+      "reviewAt": [
+        "after cleanup",
+        "+2h",
+        "+48h",
+        "billing statement"
+      ]
+    },
+    {
+      "address": "google_compute_firewall.fake_ingress_nat",
+      "type": "google_compute_firewall",
+      "project": "b1a2-fixture-fake",
+      "sequence": 117,
+      "requiredAuthority": "cleanup",
+      "originalResourceId": null,
+      "independentReadReceipt": null,
+      "deletionReceipt": null,
+      "status": "NOT_EXECUTED",
+      "successEvidence": "API deletion receipt AND subsequent exact-resource absence; missing permission remains HOLD",
+      "retention": "DELETE_EXACT_RESOURCE",
+      "manualBillingAccountAction": false,
+      "reviewAt": [
+        "after cleanup",
+        "+2h",
+        "+48h",
+        "billing statement"
+      ]
+    },
+    {
+      "address": "google_compute_firewall.gateway_fake_2",
+      "type": "google_compute_firewall",
+      "project": "b1a2-fixture-run",
+      "sequence": 118,
+      "requiredAuthority": "cleanup",
+      "originalResourceId": null,
+      "independentReadReceipt": null,
+      "deletionReceipt": null,
+      "status": "NOT_EXECUTED",
+      "successEvidence": "API deletion receipt AND subsequent exact-resource absence; missing permission remains HOLD",
+      "retention": "DELETE_EXACT_RESOURCE",
+      "manualBillingAccountAction": false,
+      "reviewAt": [
+        "after cleanup",
+        "+2h",
+        "+48h",
+        "billing statement"
+      ]
+    },
+    {
+      "address": "google_compute_firewall.epoch_deny_2_v6",
+      "type": "google_compute_firewall",
+      "project": "b1a2-fixture-run",
+      "sequence": 119,
+      "requiredAuthority": "cleanup",
+      "originalResourceId": null,
+      "independentReadReceipt": null,
+      "deletionReceipt": null,
+      "status": "NOT_EXECUTED",
+      "successEvidence": "API deletion receipt AND subsequent exact-resource absence; missing permission remains HOLD",
+      "retention": "DELETE_EXACT_RESOURCE",
+      "manualBillingAccountAction": false,
+      "reviewAt": [
+        "after cleanup",
+        "+2h",
+        "+48h",
+        "billing statement"
+      ]
+    },
+    {
+      "address": "google_compute_firewall.epoch_deny_2_v4",
+      "type": "google_compute_firewall",
+      "project": "b1a2-fixture-run",
+      "sequence": 120,
+      "requiredAuthority": "cleanup",
+      "originalResourceId": null,
+      "independentReadReceipt": null,
+      "deletionReceipt": null,
+      "status": "NOT_EXECUTED",
+      "successEvidence": "API deletion receipt AND subsequent exact-resource absence; missing permission remains HOLD",
+      "retention": "DELETE_EXACT_RESOURCE",
+      "manualBillingAccountAction": false,
+      "reviewAt": [
+        "after cleanup",
+        "+2h",
+        "+48h",
+        "billing statement"
+      ]
+    },
+    {
+      "address": "google_compute_firewall.gateway_fake_1",
+      "type": "google_compute_firewall",
+      "project": "b1a2-fixture-run",
+      "sequence": 121,
+      "requiredAuthority": "cleanup",
+      "originalResourceId": null,
+      "independentReadReceipt": null,
+      "deletionReceipt": null,
+      "status": "NOT_EXECUTED",
+      "successEvidence": "API deletion receipt AND subsequent exact-resource absence; missing permission remains HOLD",
+      "retention": "DELETE_EXACT_RESOURCE",
+      "manualBillingAccountAction": false,
+      "reviewAt": [
+        "after cleanup",
+        "+2h",
+        "+48h",
+        "billing statement"
+      ]
+    },
+    {
+      "address": "google_compute_firewall.epoch_deny_1_v6",
+      "type": "google_compute_firewall",
+      "project": "b1a2-fixture-run",
+      "sequence": 122,
+      "requiredAuthority": "cleanup",
+      "originalResourceId": null,
+      "independentReadReceipt": null,
+      "deletionReceipt": null,
+      "status": "NOT_EXECUTED",
+      "successEvidence": "API deletion receipt AND subsequent exact-resource absence; missing permission remains HOLD",
+      "retention": "DELETE_EXACT_RESOURCE",
+      "manualBillingAccountAction": false,
+      "reviewAt": [
+        "after cleanup",
+        "+2h",
+        "+48h",
+        "billing statement"
+      ]
+    },
+    {
+      "address": "google_compute_firewall.epoch_deny_1_v4",
+      "type": "google_compute_firewall",
+      "project": "b1a2-fixture-run",
+      "sequence": 123,
+      "requiredAuthority": "cleanup",
+      "originalResourceId": null,
+      "independentReadReceipt": null,
+      "deletionReceipt": null,
+      "status": "NOT_EXECUTED",
+      "successEvidence": "API deletion receipt AND subsequent exact-resource absence; missing permission remains HOLD",
+      "retention": "DELETE_EXACT_RESOURCE",
+      "manualBillingAccountAction": false,
+      "reviewAt": [
+        "after cleanup",
+        "+2h",
+        "+48h",
+        "billing statement"
+      ]
+    },
+    {
+      "address": "google_compute_firewall.deny_fake_v6",
+      "type": "google_compute_firewall",
+      "project": "b1a2-fixture-fake",
+      "sequence": 124,
+      "requiredAuthority": "cleanup",
+      "originalResourceId": null,
+      "independentReadReceipt": null,
+      "deletionReceipt": null,
+      "status": "NOT_EXECUTED",
+      "successEvidence": "API deletion receipt AND subsequent exact-resource absence; missing permission remains HOLD",
+      "retention": "DELETE_EXACT_RESOURCE",
+      "manualBillingAccountAction": false,
+      "reviewAt": [
+        "after cleanup",
+        "+2h",
+        "+48h",
+        "billing statement"
+      ]
+    },
+    {
+      "address": "google_compute_firewall.deny_fake_v4",
+      "type": "google_compute_firewall",
+      "project": "b1a2-fixture-fake",
+      "sequence": 125,
+      "requiredAuthority": "cleanup",
+      "originalResourceId": null,
+      "independentReadReceipt": null,
+      "deletionReceipt": null,
+      "status": "NOT_EXECUTED",
+      "successEvidence": "API deletion receipt AND subsequent exact-resource absence; missing permission remains HOLD",
+      "retention": "DELETE_EXACT_RESOURCE",
+      "manualBillingAccountAction": false,
+      "reviewAt": [
+        "after cleanup",
+        "+2h",
+        "+48h",
+        "billing statement"
+      ]
+    },
+    {
+      "address": "google_compute_firewall.deny_run_v6",
+      "type": "google_compute_firewall",
+      "project": "b1a2-fixture-run",
+      "sequence": 126,
+      "requiredAuthority": "cleanup",
+      "originalResourceId": null,
+      "independentReadReceipt": null,
+      "deletionReceipt": null,
+      "status": "NOT_EXECUTED",
+      "successEvidence": "API deletion receipt AND subsequent exact-resource absence; missing permission remains HOLD",
+      "retention": "DELETE_EXACT_RESOURCE",
+      "manualBillingAccountAction": false,
+      "reviewAt": [
+        "after cleanup",
+        "+2h",
+        "+48h",
+        "billing statement"
+      ]
+    },
+    {
+      "address": "google_compute_firewall.deny_run_v4",
+      "type": "google_compute_firewall",
+      "project": "b1a2-fixture-run",
+      "sequence": 127,
+      "requiredAuthority": "cleanup",
+      "originalResourceId": null,
+      "independentReadReceipt": null,
+      "deletionReceipt": null,
+      "status": "NOT_EXECUTED",
+      "successEvidence": "API deletion receipt AND subsequent exact-resource absence; missing permission remains HOLD",
+      "retention": "DELETE_EXACT_RESOURCE",
+      "manualBillingAccountAction": false,
+      "reviewAt": [
+        "after cleanup",
+        "+2h",
+        "+48h",
+        "billing statement"
+      ]
+    },
+    {
+      "address": "google_compute_router_nat.gateway",
+      "type": "google_compute_router_nat",
+      "project": "b1a2-fixture-run",
+      "sequence": 128,
+      "requiredAuthority": "cleanup",
+      "originalResourceId": null,
+      "independentReadReceipt": null,
+      "deletionReceipt": null,
+      "status": "NOT_EXECUTED",
+      "successEvidence": "API deletion receipt AND subsequent exact-resource absence; missing permission remains HOLD",
+      "retention": "DELETE_EXACT_RESOURCE",
+      "manualBillingAccountAction": false,
+      "reviewAt": [
+        "after cleanup",
+        "+2h",
+        "+48h",
+        "billing statement"
+      ]
+    },
+    {
+      "address": "google_compute_router.gateway",
+      "type": "google_compute_router",
+      "project": "b1a2-fixture-run",
+      "sequence": 129,
+      "requiredAuthority": "cleanup",
+      "originalResourceId": null,
+      "independentReadReceipt": null,
+      "deletionReceipt": null,
+      "status": "NOT_EXECUTED",
+      "successEvidence": "API deletion receipt AND subsequent exact-resource absence; missing permission remains HOLD",
+      "retention": "DELETE_EXACT_RESOURCE",
+      "manualBillingAccountAction": false,
+      "reviewAt": [
+        "after cleanup",
+        "+2h",
+        "+48h",
+        "billing statement"
+      ]
+    },
+    {
+      "address": "google_compute_forwarding_rule.sql_run",
+      "type": "google_compute_forwarding_rule",
+      "project": "b1a2-fixture-run",
+      "sequence": 130,
+      "requiredAuthority": "cleanup",
+      "originalResourceId": null,
+      "independentReadReceipt": null,
+      "deletionReceipt": null,
+      "status": "NOT_EXECUTED",
+      "successEvidence": "API deletion receipt AND subsequent exact-resource absence; missing permission remains HOLD",
+      "retention": "DELETE_EXACT_RESOURCE",
+      "manualBillingAccountAction": false,
+      "reviewAt": [
+        "after cleanup",
+        "+2h",
+        "+48h",
+        "billing statement"
+      ]
+    },
+    {
+      "address": "google_compute_address.fake",
+      "type": "google_compute_address",
+      "project": "b1a2-fixture-fake",
+      "sequence": 131,
+      "requiredAuthority": "cleanup",
+      "originalResourceId": null,
+      "independentReadReceipt": null,
+      "deletionReceipt": null,
+      "status": "NOT_EXECUTED",
+      "successEvidence": "API deletion receipt AND subsequent exact-resource absence; missing permission remains HOLD",
+      "retention": "DELETE_EXACT_RESOURCE",
+      "manualBillingAccountAction": false,
+      "reviewAt": [
+        "after cleanup",
+        "+2h",
+        "+48h",
+        "billing statement"
+      ]
+    },
+    {
+      "address": "google_compute_address.nat",
+      "type": "google_compute_address",
+      "project": "b1a2-fixture-run",
+      "sequence": 132,
+      "requiredAuthority": "cleanup",
+      "originalResourceId": null,
+      "independentReadReceipt": null,
+      "deletionReceipt": null,
+      "status": "NOT_EXECUTED",
+      "successEvidence": "API deletion receipt AND subsequent exact-resource absence; missing permission remains HOLD",
+      "retention": "DELETE_EXACT_RESOURCE",
+      "manualBillingAccountAction": false,
+      "reviewAt": [
+        "after cleanup",
+        "+2h",
+        "+48h",
+        "billing statement"
+      ]
+    },
+    {
+      "address": "google_compute_address.sql_run",
+      "type": "google_compute_address",
+      "project": "b1a2-fixture-run",
+      "sequence": 133,
+      "requiredAuthority": "cleanup",
+      "originalResourceId": null,
+      "independentReadReceipt": null,
+      "deletionReceipt": null,
+      "status": "NOT_EXECUTED",
+      "successEvidence": "API deletion receipt AND subsequent exact-resource absence; missing permission remains HOLD",
+      "retention": "DELETE_EXACT_RESOURCE",
+      "manualBillingAccountAction": false,
+      "reviewAt": [
+        "after cleanup",
+        "+2h",
+        "+48h",
+        "billing statement"
+      ]
+    },
+    {
+      "address": "google_sql_database_instance.epoch",
+      "type": "google_sql_database_instance",
+      "project": "b1a2-fixture-run",
+      "sequence": 134,
+      "requiredAuthority": "cleanup",
+      "originalResourceId": null,
+      "independentReadReceipt": null,
+      "deletionReceipt": null,
+      "status": "NOT_EXECUTED",
+      "successEvidence": "API deletion receipt AND subsequent exact-resource absence; missing permission remains HOLD",
+      "retention": "B1A_ONLY_1_DAY_NO_FINAL_OR_RETAINED",
+      "manualBillingAccountAction": false,
+      "reviewAt": [
+        "after cleanup",
+        "+2h",
+        "+48h",
+        "billing statement"
+      ]
+    },
+    {
+      "address": "google_compute_subnetwork.fake",
+      "type": "google_compute_subnetwork",
+      "project": "b1a2-fixture-fake",
+      "sequence": 135,
+      "requiredAuthority": "cleanup",
+      "originalResourceId": null,
+      "independentReadReceipt": null,
+      "deletionReceipt": null,
+      "status": "NOT_EXECUTED",
+      "successEvidence": "API deletion receipt AND subsequent exact-resource absence; missing permission remains HOLD",
+      "retention": "DELETE_EXACT_RESOURCE",
+      "manualBillingAccountAction": false,
+      "reviewAt": [
+        "after cleanup",
+        "+2h",
+        "+48h",
+        "billing statement"
+      ]
+    },
+    {
+      "address": "google_compute_subnetwork.private",
+      "type": "google_compute_subnetwork",
+      "project": "b1a2-fixture-run",
+      "sequence": 136,
+      "requiredAuthority": "cleanup",
+      "originalResourceId": null,
+      "independentReadReceipt": null,
+      "deletionReceipt": null,
+      "status": "NOT_EXECUTED",
+      "successEvidence": "API deletion receipt AND subsequent exact-resource absence; missing permission remains HOLD",
+      "retention": "DELETE_EXACT_RESOURCE",
+      "manualBillingAccountAction": false,
+      "reviewAt": [
+        "after cleanup",
+        "+2h",
+        "+48h",
+        "billing statement"
+      ]
+    },
+    {
+      "address": "google_compute_subnetwork.gateway",
+      "type": "google_compute_subnetwork",
+      "project": "b1a2-fixture-run",
+      "sequence": 137,
+      "requiredAuthority": "cleanup",
+      "originalResourceId": null,
+      "independentReadReceipt": null,
+      "deletionReceipt": null,
+      "status": "NOT_EXECUTED",
+      "successEvidence": "API deletion receipt AND subsequent exact-resource absence; missing permission remains HOLD",
+      "retention": "DELETE_EXACT_RESOURCE",
+      "manualBillingAccountAction": false,
+      "reviewAt": [
+        "after cleanup",
+        "+2h",
+        "+48h",
+        "billing statement"
+      ]
+    },
+    {
+      "address": "google_compute_network.fake",
+      "type": "google_compute_network",
+      "project": "b1a2-fixture-fake",
+      "sequence": 138,
+      "requiredAuthority": "cleanup",
+      "originalResourceId": null,
+      "independentReadReceipt": null,
+      "deletionReceipt": null,
+      "status": "NOT_EXECUTED",
+      "successEvidence": "API deletion receipt AND subsequent exact-resource absence; missing permission remains HOLD",
+      "retention": "DELETE_EXACT_RESOURCE",
+      "manualBillingAccountAction": false,
+      "reviewAt": [
+        "after cleanup",
+        "+2h",
+        "+48h",
+        "billing statement"
+      ]
+    },
+    {
+      "address": "google_compute_network.run",
+      "type": "google_compute_network",
+      "project": "b1a2-fixture-run",
+      "sequence": 139,
+      "requiredAuthority": "cleanup",
+      "originalResourceId": null,
+      "independentReadReceipt": null,
+      "deletionReceipt": null,
+      "status": "NOT_EXECUTED",
+      "successEvidence": "API deletion receipt AND subsequent exact-resource absence; missing permission remains HOLD",
+      "retention": "DELETE_EXACT_RESOURCE",
+      "manualBillingAccountAction": false,
+      "reviewAt": [
+        "after cleanup",
+        "+2h",
+        "+48h",
+        "billing statement"
+      ]
+    },
+    {
+      "address": "terraform_data.never_apply",
+      "type": "terraform_data",
+      "project": "b1a2-fixture-run",
+      "sequence": 140,
+      "requiredAuthority": "cleanup",
+      "originalResourceId": null,
+      "independentReadReceipt": null,
+      "deletionReceipt": null,
+      "status": "NOT_EXECUTED",
+      "successEvidence": "API deletion receipt AND subsequent exact-resource absence; missing permission remains HOLD",
+      "retention": "DELETE_EXACT_RESOURCE",
+      "manualBillingAccountAction": false,
+      "reviewAt": [
+        "after cleanup",
+        "+2h",
+        "+48h",
+        "billing statement"
+      ]
+    }
+  ]
+}

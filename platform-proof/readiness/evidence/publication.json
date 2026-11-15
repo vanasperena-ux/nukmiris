@@ -1,0 +1,97 @@
+{
+  "scope": "G123_SOURCE_AND_LOCAL_SYNTHETIC_EVIDENCE_NOT_CLOUD_ACCEPTANCE",
+  "draftPR": 23,
+  "branch": "implementation/b1a-preprovision-g1-g3",
+  "base": "1e720fce1102dcf7867df567fabaf3b50eebf668",
+  "testedSource": "9b526c048d5df1b3fbcf03e8f33c3ba53979b492",
+  "testedTree": "74801a03193011c24385d6ff36fb60178d61f107",
+  "evidenceCommit": "See exact additive evidence-only commit in PR23 final handoff; avoids self-referential hashes",
+  "acceptedApplication": "b4d0be0cb98c7f2b69be318e18b93f4de102c511",
+  "results": {
+    "targeted": {
+      "tests": 24,
+      "pass": 24,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0
+    },
+    "full": {
+      "tests": 140,
+      "pass": 140,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0
+    },
+    "fault": {
+      "tests": 99,
+      "pass": 99,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0
+    },
+    "concurrency": {
+      "tests": 29,
+      "pass": 29,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0
+    }
+  },
+  "suitesOverlap": true,
+  "environment": "Node24.19.0 / measured PostgreSQL17.11 UTC / Linux / Docker28.4.0",
+  "image": {
+    "imageConfigId": "sha256:1931766e764e9b400e3781796fa416421dda01fc992d69c4933295f29c30f888",
+    "sourceLayerDigest": "sha256:6b18c59d7cf8ea39b77cd5a7f46e87656dd87326009e8900b94604cf7c297ed3",
+    "canonicalUncompressedOciManifestDigest": "sha256:2f4f4b87448651dc8aef36de244771c33c96edf421983e066ef2375fd4713e80",
+    "dockerArchiveSha256": "21679e621c173331df503c9ce7326457884a596955e18869502fdf58c0ab8484",
+    "sourceManifestSha256": "aed8880aad1c9d25b8718cb7ed7f7080229836c4e082ebab2f5225df91d511a4",
+    "base": "node@sha256:a9f5f7c91a432850b2a8a7797adf5eadb6c733ceed61167806cee7ea7fbc29df",
+    "registryDigest": null
+  },
+  "imageReassembliesMatched": 2,
+  "imageOwnFilesScanned": 188,
+  "imageRuntimeAndLockFilesFreshGitVerified": 47,
+  "imagePrivateKeysEmbedded": false,
+  "imageSmokes": {
+    "inert": true,
+    "negativeStartupAndStubSqlRevocation": true,
+    "packagedMtlsLedgerAndCleanup": true
+  },
+  "sourcePathsFreshGitVerified": 44,
+  "historicalAndApplicationFilesVerified": 827,
+  "providerLedgerCasesVerifiedByBothOriginalHelpers": 56,
+  "signedRetirementsVerified": 10,
+  "signedNativeTransitExportsVerified": 4,
+  "gateMatrix": {
+    "G1": "LOCAL_REPRODUCIBLE_IMAGE_CANDIDATE_PASS_PENDING_CLAUDE; old missing archives remain absent, new recipe not a historical recovery; registry gate OPEN",
+    "G2": "COLLECTION_ONLY_FAIL_CLOSED_PROTOCOL_IMPLEMENTED; finite cloud-wide bound NOT_ESTABLISHED; cloud dispatch/retirement/promotion HELD",
+    "G3": "LOCAL_SOURCE_AND_FIXTURES_PASS_PENDING_CLAUDE; actual account/permissions/cloud behavior NOT_EXECUTED"
+  },
+  "costs": {
+    "sixHourBaseUsd": "11.84",
+    "sixHourStressUsdEquivalent": "21.08",
+    "allocationUsd": "30.00",
+    "twoRepeatedRunsStressUsdEquivalent": "42.16",
+    "actualMxnFx": null,
+    "spendingAuthorized": false,
+    "hardCostCap": false
+  },
+  "actualCloudProofs": "NOT_EXECUTED",
+  "nativeWindows": "NOT_EXECUTED",
+  "sourceLiveCloudExecution": false,
+  "impossibleApplyGuard": "PRESERVED",
+  "cloudResourcesCreated": 0,
+  "cloudAccountOrCredentialAccess": false,
+  "realMetaCalendarCalls": 0,
+  "registryPush": false,
+  "blockedHistoricalUploadsRetried": false,
+  "applicationChanges": false,
+  "ownerDataChanges": false,
+  "mergedPRs": 0,
+  "independentReviewOfThisIncrement": "PENDING",
+  "stop": "No automatic cloud continuation; independent source review and later resource-specific owner authorization required"
+}

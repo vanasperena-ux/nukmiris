@@ -1,6 +1,7 @@
 import { execFile } from "node:child_process";
 import { promisify } from "node:util";
 import { hash } from "../../src/protocol.mjs";
+import { verifyRecords } from "../../src/ledger.mjs";
 import { LIVE_CLOUD_EXECUTION } from "../runtime/transport.mjs";
 const exec = promisify(execFile),
   caps = new WeakMap();
@@ -121,8 +122,42 @@ export class PreparedTerraformTeardown {
     this.transport = transport;
     this.journal = journal;
     this.pending = new Set();
+    this.loaded = false;
+  }
+  async load() {
+    if (this.loaded) return;
+    if (typeof this.journal.snapshot !== "function") {
+      if (this.mode !== "LOCAL_SIMULATION")
+        throw Error("authenticated_cleanup_journal_required");
+    } else {
+      await this.journal.load?.();
+      const snap = await this.journal.snapshot();
+      if (!Array.isArray(snap?.records))
+        throw Error("cleanup_journal_unavailable");
+      verifyRecords(snap.records, snap.checkpoint);
+      for (const r of snap.records) {
+        if (
+          ![
+            "EXACT_TERRAFORM_DESTROY_INTENT",
+            "EXACT_RESOURCE_ABSENT",
+            "KMS_VERSION_RETIRE_INTENT",
+          ].includes(r.event)
+        )
+          continue;
+        const original = this.bound.bindings.get(r.address);
+        if (
+          !original ||
+          (r.originalResourceId ?? r.originalKey) !== original.id
+        )
+          throw Error("cleanup_journal_original_identity_mismatch");
+        if (r.event === "EXACT_RESOURCE_ABSENT") this.pending.delete(r.address);
+        else this.pending.add(r.address);
+      }
+    }
+    this.loaded = true;
   }
   async removeExact(item) {
+    await this.load();
     const original = this.bound.bindings.get(item.address);
     if (!original)
       return {
@@ -134,7 +169,28 @@ export class PreparedTerraformTeardown {
     const before = await this.transport.state();
     this.#validate(before);
     const present = this.#lookup(before, item.address);
-    if (!present) return { state: "ABSENT", identity: item.address };
+    if (!present) {
+      const receipt = await this.transport.absence(original);
+      if (receipt?.id !== original.id || receipt.state !== "ABSENT")
+        return {
+          state: "HOLD",
+          identity: item.address,
+          reason: "independent_absence_required",
+        };
+      await this.journal.append({
+        event: "EXACT_RESOURCE_ABSENT",
+        address: item.address,
+        originalResourceId: original.id,
+        receipt,
+        resolvedOriginalIntent: true,
+      });
+      this.pending.delete(item.address);
+      return {
+        state: "ABSENT",
+        identity: item.address,
+        originalResourceId: original.id,
+      };
+    }
     if (present.id !== original.id)
       throw Error("original_resource_id_changed_held");
     if (this.pending.has(item.address))
@@ -143,6 +199,7 @@ export class PreparedTerraformTeardown {
         identity: item.address,
         reason: "ambiguous_prior_destroy; readback only",
       };
+    this.pending.add(item.address);
     await this.journal.append({
       event: "EXACT_TERRAFORM_DESTROY_INTENT",
       address: item.address,
@@ -150,7 +207,6 @@ export class PreparedTerraformTeardown {
       stateDigest: hash(before),
       cleanupPrincipal: this.cap.cleanupPrincipal,
     });
-    this.pending.add(item.address);
     try {
       await this.transport.destroyExact(item.address);
     } catch {
@@ -191,18 +247,19 @@ export class PreparedTerraformTeardown {
     };
   }
   async retireKeyVersions(item) {
+    await this.load();
     const original = this.bound.bindings.get(item.address);
     if (!original || item.type !== "google_kms_crypto_key")
       return { state: "HOLD" };
     const before = await this.transport.state();
     this.#validate(before);
-    await this.journal.append({
-      event: "KMS_VERSION_RETIRE_INTENT",
-      address: item.address,
-      originalKey: original.id,
-    });
     if (!this.pending.has(item.address)) {
       this.pending.add(item.address);
+      await this.journal.append({
+        event: "KMS_VERSION_RETIRE_INTENT",
+        address: item.address,
+        originalKey: original.id,
+      });
       try {
         await this.transport.destroyExact(item.address);
       } catch {
@@ -216,6 +273,7 @@ export class PreparedTerraformTeardown {
     return proof;
   }
   async resolve(item) {
+    await this.load();
     const original = this.bound.bindings.get(item.address),
       state = await this.transport.state();
     this.#validate(state);
@@ -225,6 +283,13 @@ export class PreparedTerraformTeardown {
     if (r?.state !== "ABSENT" || r.id !== original?.id)
       return { state: "HOLD", identity: item.address };
     this.pending.delete(item.address);
+    await this.journal.append({
+      event: "EXACT_RESOURCE_ABSENT",
+      address: item.address,
+      originalResourceId: original.id,
+      receipt: r,
+      resolvedOriginalIntent: true,
+    });
     return { state: "ABSENT", identity: item.address };
   }
   #lookup(state, address) {

@@ -1,0 +1,169 @@
+{
+  "mode": "OWNER_SUPPLIED",
+  "accountReceipts": {
+    "schema": "B1A_READ_ONLY_ACCOUNT_RECEIPTS_V1",
+    "provenance": {
+      "authorizationRef": null,
+      "capturedAt": null,
+      "validUntil": null,
+      "sourceDigests": []
+    },
+    "organization": {
+      "id": null,
+      "policyAdminPrincipal": null,
+      "policyAdministrationVerified": null,
+      "allTrafficPolicyVerified": null,
+      "noVpcDeploymentDeniedVerified": null
+    },
+    "projects": {
+      "runtime": {
+        "id": null,
+        "number": null,
+        "organizationId": null
+      },
+      "custody": {
+        "id": null,
+        "number": null,
+        "organizationId": null
+      },
+      "fake": {
+        "id": null,
+        "number": null,
+        "organizationId": null
+      }
+    },
+    "billing": {
+      "accountId": null,
+      "currency": "MXN",
+      "localPerUsd": null,
+      "fxAsOf": null,
+      "fxValidUntil": null,
+      "fxOwnerApprovalRef": null,
+      "trialExpiry": null,
+      "freeTrialEligibilityVerified": null,
+      "noAutomaticPaidUpgrade": null
+    },
+    "environment": {
+      "region": "us-central1",
+      "enabledApis": [],
+      "quotasVerified": null,
+      "skuAvailabilityVerified": null,
+      "sqlEdition": "ENTERPRISE",
+      "sqlTier": null,
+      "sqlPscTlsRoleCompatibilityVerified": null,
+      "sqlConnectionLimit": null,
+      "syntheticImageCandidate": null
+    },
+    "operator": {
+      "name": null,
+      "principal": null,
+      "singlePersonRiskAccepted": null,
+      "duties": [],
+      "policyApprovalRef": null
+    },
+    "technicalIdentities": {
+      "deployment": null,
+      "kill": null,
+      "cleanup": null,
+      "custodyCleanup": null
+    },
+    "authority": {
+      "independentlyScopedKillVerified": null,
+      "independentlyScopedCleanupVerified": null,
+      "directOperatorAccessWithoutDeployerVerified": null,
+      "cleanupSurvivesExperimentDeletionVerified": null,
+      "manualBillingBudgetCleanupAccepted": null,
+      "permissionReceipts": []
+    },
+    "window": {
+      "startsAt": null,
+      "expiresAt": null,
+      "terminationTargetMs": 60000,
+      "allocationUsd": "30.00",
+      "noSpendAuthorizedByThisReceipt": null,
+      "independentExpiryHoldVerified": null,
+      "cleanupResponsibilitiesAccepted": null
+    },
+    "retention": {
+      "b1aPitrDays": 1,
+      "b1aRestoreDrill": false,
+      "b1bRestoreRequired": null
+    }
+  },
+  "ownerApprovalRef": null,
+  "projects": {
+    "runtime": {
+      "id": null,
+      "number": null
+    },
+    "custody": {
+      "id": null,
+      "number": null
+    },
+    "fake": {
+      "id": null,
+      "number": null
+    }
+  },
+  "organizationMode": "ORG_ENFORCED",
+  "standaloneRiskReview": null,
+  "region": null,
+  "allowedApis": [
+    "run.googleapis.com",
+    "compute.googleapis.com",
+    "sqladmin.googleapis.com",
+    "storage.googleapis.com",
+    "secretmanager.googleapis.com",
+    "cloudkms.googleapis.com",
+    "monitoring.googleapis.com",
+    "logging.googleapis.com",
+    "artifactregistry.googleapis.com",
+    "dns.googleapis.com",
+    "iam.googleapis.com",
+    "serviceusage.googleapis.com",
+    "billingbudgets.googleapis.com",
+    "iap.googleapis.com"
+  ],
+  "quotas": {
+    "gatewayInstances": 2,
+    "workerInstances": 1,
+    "sqlConnections": 25
+  },
+  "names": null,
+  "serviceIdentities": {
+    "gatewayOld": null,
+    "gatewayNext": null,
+    "ingress": null,
+    "sealer": null,
+    "worker": null,
+    "controller": null,
+    "kill": null,
+    "cleanup": null,
+    "custodyCleanup": null,
+    "observer": null,
+    "deployer": null,
+    "fake": null
+  },
+  "network": null,
+  "epochs": null,
+  "session": null,
+  "operators": null,
+  "timing": {
+    "terminationTargetMs": 60000,
+    "canaryCount": 20,
+    "samplingIntervalMs": 60000,
+    "publicationLatencyMs": 120000,
+    "ownerApprovalRef": null
+  },
+  "images": null,
+  "budget": {
+    "billingAccountId": null,
+    "allocationUsd": "30.00",
+    "accountCurrency": null,
+    "localPerUsd": null,
+    "fxAsOf": null,
+    "fxValidUntil": null,
+    "fxApprovalRef": null
+  },
+  "optionalRestoreDrill": false
+}

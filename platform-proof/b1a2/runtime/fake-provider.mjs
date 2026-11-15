@@ -2,6 +2,7 @@ import https from "node:https";
 import { isIP } from "node:net";
 import { X509Certificate, randomUUID } from "node:crypto";
 import { canonical, hash, id } from "../../src/protocol.mjs";
+import { validateProviderIdentities } from "./provider-identities.mjs";
 function reply(res, status, value) {
   const body = Buffer.from(JSON.stringify(value));
   res.writeHead(status, {
@@ -26,6 +27,7 @@ function ipAllowed(address, list) {
 export async function startFakeProvider({
   tls,
   identities,
+  expectedGateways,
   sourceAllowlist,
   ledger,
   host = "127.0.0.1",
@@ -45,6 +47,7 @@ export async function startFakeProvider({
     throw Error("synthetic_provider_configuration_required");
   id(sessionId);
   id(scopeId);
+  identities = validateProviderIdentities(identities, expectedGateways);
   const plans = new Map(),
     sockets = new Set();
   const server = https.createServer(

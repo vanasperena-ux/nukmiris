@@ -43,6 +43,7 @@ test("D-2/P-2 end-to-end independent adapters: real mTLS clock/ledger, Google-sh
     ledger = await providerJournal(join(dir, "fake.jsonl")),
     fake = await startFakeProvider({
       tls: tls.server,
+      expectedGateways: [{ epoch: 1, revision: c.epochs.oldRevision }],
       identities: {
         [tls.observer.fingerprint]: { role: "observer" },
         [tls.gateway.fingerprint]: {

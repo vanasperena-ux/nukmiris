@@ -1,0 +1,20 @@
+
+> nukmiris-inc1-local-proof@0.1.0 readiness:check
+> node readiness/check.mjs
+
+{
+  "mode": "LOCAL_SYNTHETIC_ONLY",
+  "base": "d3fa65192374ca206ff1f6d166a789c295a15e97",
+  "accepted": "b4d0be0cb98c7f2b69be318e18b93f4de102c511",
+  "acceptedTree": "03d08322e27d9d54485fa887b482743fe076556b",
+  "manifestFiles": 127,
+  "changedFiles": 435,
+  "scannedFiles": 450,
+  "secretScan": "PASS",
+  "providerCredentialVariables": 0,
+  "protectedSource": "UNCHANGED",
+  "note": "Repository-content scan, not a forensic scan of unrelated host accounts; runtime uses explicit loopback only."
+}
+{"scope":"B1A_SOURCE_ONLY","base":"2ca5cf215b68f187bfa48b42aaa041bbe93cf56d","accepted":"b4d0be0cb98c7f2b69be318e18b93f4de102c511","historicalFilesVerified":35,"changeBoundary":"platform-proof ONLY","sourceHead":"9b526c048d5df1b3fbcf03e8f33c3ba53979b492","sourceTree":"74801a03193011c24385d6ff36fb60178d61f107","actualCloudResourcesCreated":0,"actualProviderCalls":0}
+{"scope":"B1A2_LOCAL_SOURCE_ONLY","historicalFilesVerified":107,"acceptedApplication":"UNCHANGED","cloudExecution":false,"resourceCount":140,"placementRemoved":30,"teardownAuthority":"STATIC_SCOPE_COVERAGE_PASS","actualCloudEvidence":"NOT_PROVEN"}
+{"scope":"G123_LOCAL_SOURCE_ONLY","base":"1e720fce1102dcf7867df567fabaf3b50eebf668","historicalAndApplicationFilesVerified":827,"changedTrackedPaths":44,"sourceOnlyApplyGuard":"PRESERVED","liveCloudExecution":false,"actualCloudProof":"NOT_EXECUTED"}
