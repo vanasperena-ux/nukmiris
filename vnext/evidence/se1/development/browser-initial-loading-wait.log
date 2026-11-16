@@ -1,0 +1,38 @@
+
+> nukmiris-wp1-synthetic-core@0.0.0 test:services:browser
+> npm run build && node local/services-browser.mjs chromium /tmp/nukmiris-se1-owner-final.png
+
+
+> nukmiris-wp1-synthetic-core@0.0.0 build
+> tsc -p tsconfig.json
+
+npm notice
+npm notice New major version of npm available! 11.19.1 -> 12.2.2
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.2
+npm notice To update run: npm install -g npm@12.2.2
+npm notice
+Pulling/verifying pinned PostgreSQL image (first download budget: 10 minutes).
+✖ SE1 real owner forms -> service/employee -> synthetic chat booking -> appointment and tenant isolation (18939.91009ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 21953.791422
+
+✖ failing tests:
+
+test at local/services-browser.mjs:10:1
+✖ SE1 real owner forms -> service/employee -> synthetic chat booking -> appointment and tenant isolation (18939.91009ms)
+  Error: browser condition timed out: !document.getElementById('service-form').hidden status=undefined
+      at until (file:///workspace/work/nukmiris-product-services-employees/vnext/local/services-browser.mjs:20:127)
+      at async TestContext.<anonymous> (file:///workspace/work/nukmiris-product-services-employees/vnext/local/services-browser.mjs:25:31)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)
+npm notice
+npm notice New major version of npm available! 11.19.1 -> 12.2.2
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.2
+npm notice To update run: npm install -g npm@12.2.2
+npm notice

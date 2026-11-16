@@ -1,0 +1,20 @@
+
+> nukmiris-wp1-synthetic-core@0.0.0 test:services
+> npm run build && node scripts/run-tests.mjs services
+
+
+> nukmiris-wp1-synthetic-core@0.0.0 build
+> tsc -p tsconfig.json
+
+src/application/interactive-booking.ts(120,35): error TS18048: 'view' is possibly 'undefined'.
+src/application/interactive-booking.ts(120,79): error TS18048: 'view' is possibly 'undefined'.
+npm notice
+npm notice New major version of npm available! 11.19.1 -> 12.2.2
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.2
+npm notice To update run: npm install -g npm@12.2.2
+npm notice
+npm notice
+npm notice New major version of npm available! 11.19.1 -> 12.2.2
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.2
+npm notice To update run: npm install -g npm@12.2.2
+npm notice

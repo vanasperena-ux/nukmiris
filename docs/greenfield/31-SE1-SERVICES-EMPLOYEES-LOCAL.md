@@ -15,17 +15,17 @@ Use Node24, npm, Git and Docker Desktop in Linux-container mode. Local evidence 
 Use the exact tested source in the PR/evidence, not a moving branch head. In ordinary PowerShell:
 
 ```powershell
-$Source = 'REPLACE_WITH_EXACT_TESTED_SOURCE_FROM_PR'
+$Source = '540fc4af57a29eba380c0f53df0bf3ad12093ad7'
 $Checkout = Join-Path $env:USERPROFILE 'Desktop\NukMiris SE1 Acceptance'
 if (Test-Path -LiteralPath $Checkout) { throw 'Choose a new checkout directory.' }
-git clone https://github.com/vanasperena-ux/nukmiris.git $Checkout
+git clone --single-branch --branch product/services-employees-local-owner https://github.com/vanasperena-ux/nukmiris.git $Checkout
 Set-Location -LiteralPath $Checkout
 git checkout --detach $Source
 Set-Location -LiteralPath (Join-Path $Checkout 'vnext')
 node --version
 npm.cmd ci --ignore-scripts
 npm.cmd run build
-$Profile = Join-Path $Checkout 'nukmiris-vnext-services-employees'
+$Profile = Join-Path $Checkout 'vnext\nukmiris-vnext-services-employees'
 if (Test-Path -LiteralPath $Profile) { throw 'First setup requires a NEW profile. Do not reset an existing profile.' }
 node local/cli.mjs book --state-dir "$Profile" --db-port 15462 --port 3107
 ```

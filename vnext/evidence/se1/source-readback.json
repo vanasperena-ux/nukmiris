@@ -1,0 +1,152 @@
+{
+  "source": "540fc4af57a29eba380c0f53df0bf3ad12093ad7",
+  "tree": "0dd4f535ad45bce6c0e818a470efd558069c71a9",
+  "retrieval": "anonymous public Git fetch into separate bare repository",
+  "verifiedAtUtc": "2026-11-16T00:45:44.256062+00:00",
+  "checks": [
+    {
+      "path": "docs/greenfield/31-SE1-SERVICES-EMPLOYEES-LOCAL.md",
+      "sha256": "3e8deb9ff79e00fb578ca408692844ecebaef5c4b134c5eafd102a24d0183452",
+      "gitBlob": "c4a699a4ed451fd2d504e20e991315e90518d1ad",
+      "matched": true
+    },
+    {
+      "path": "vnext/local/services-browser.mjs",
+      "sha256": "26037274cf7bda87f0cde0f43de513c6475808e4757ce1acc8c71e69b03d12ca",
+      "gitBlob": "6285d5e343274a67e84f4d58a05f88ea70117fcc",
+      "matched": true
+    },
+    {
+      "path": "vnext/local/services.test.mjs",
+      "sha256": "61b194be7187eeec2dcbcf85d9fd06b820f4921c39a72e808a613f5a8156894f",
+      "gitBlob": "9d46909b20b8aa23496e9312a20a00a51427f7b5",
+      "matched": true
+    },
+    {
+      "path": "vnext/local/web/owner.css",
+      "sha256": "bbe445c3d15ddea523ddd1d97720c9f5689b08151546340c21103e5cd55844dd",
+      "gitBlob": "c5044c4c7bbe3d8e720240cbf541a171bc4e3502",
+      "matched": true
+    },
+    {
+      "path": "vnext/local/web/owner.html",
+      "sha256": "334e48e190820456a793694591aa3f6c013edb44b606c45d28305a15ead5f224",
+      "gitBlob": "0ee88e9ed3aa75fdbc55735aa001de6d4eb7af60",
+      "matched": true
+    },
+    {
+      "path": "vnext/local/web/owner.js",
+      "sha256": "0b3e7b4c42295967654e3e0bdffc71246039eb1c32f50e0591a1856a64d22287",
+      "gitBlob": "fb0a061e167e6e8edc9bb1550ee0c2747ecf9cf5",
+      "matched": true
+    },
+    {
+      "path": "vnext/src/application/service-catalog.ts",
+      "sha256": "41326379a0575e9a40efd5290a60a25763ebb37fff5579193f73630798fccf05",
+      "gitBlob": "e0d15e080bd62ba6843ff393ae9a3505b89b7ff1",
+      "matched": true
+    },
+    {
+      "path": "vnext/src/infrastructure/postgres/migrations/010-services-employees.sql",
+      "sha256": "c44540252b65eb9023a2355c26810beca7ca1819c8b0acea4d4a7a128210b2be",
+      "gitBlob": "3f8bc05ca950b8463f867fa7516d85aac2435eac",
+      "matched": true
+    },
+    {
+      "path": "vnext/test/se1-services.test.ts",
+      "sha256": "7a2a7c9b69337f2b62538c90923f1f220922526fc55b5d4f44a0dc1bd0e320db",
+      "gitBlob": "48f8601652c74ea5c376c20b511cec906dbeea07",
+      "matched": true
+    },
+    {
+      "path": "docs/greenfield/NUKMIRIS_FEATURE_REGISTER.md",
+      "sha256": "1313e1a98b1242bd20fd21edd179b4c21007066f727b709c5821346601211b85",
+      "gitBlob": "bd60387b514662b79c222e483461815cc8f4d3f2",
+      "matched": true
+    },
+    {
+      "path": "vnext/local/booking-worker.mjs",
+      "sha256": "bede4fc9fc519c1c6ca0d3038905a8b508cdaa7d01c0397c146008f3c0aa07a4",
+      "gitBlob": "50e3d4438191e9c1181df7d690bf257c9fe7959e",
+      "matched": true
+    },
+    {
+      "path": "vnext/local/browser-smoke.mjs",
+      "sha256": "99280a201e70d68464934d1aa5721672d72572d2186c3384f7605347635a0708",
+      "gitBlob": "c4c26283e134b7e9e566971e84b799dad1fcb492",
+      "matched": true
+    },
+    {
+      "path": "vnext/local/fixture.mjs",
+      "sha256": "310c201c10a995ebad23104b805aa28fd1896c2d7bfe9a6f40e0c4dc00c80cb6",
+      "gitBlob": "a3e6d175322086ec30a08083bb4c387bd00ab721",
+      "matched": true
+    },
+    {
+      "path": "vnext/local/interactive-profile.mjs",
+      "sha256": "a0f6be69c02fd21a3ca6bb28dd200717c53a30262f568a10320639d9f2e6b33c",
+      "gitBlob": "6f1572626ac39abce09be473fe517f0e649729cc",
+      "matched": true
+    },
+    {
+      "path": "vnext/local/web/app.js",
+      "sha256": "f27f4b52d31339f4c813b713e9215f9e248496be5d350a09f6715fc9c1098e30",
+      "gitBlob": "ddc47c0f3a77f6095a55340f39bf6c92c781e668",
+      "matched": true
+    },
+    {
+      "path": "vnext/local/web/index.html",
+      "sha256": "f202dffc422b227a0f6225c6111eaf70a312b1fd2a0fd65c0e148bdfd06317b6",
+      "gitBlob": "bd362e5048b3b865ff5a8605ef93009171d6062b",
+      "matched": true
+    },
+    {
+      "path": "vnext/package.json",
+      "sha256": "d9c25cc9d3997537d5e13f01684a5c57bf10c382c922eac9d69044f8a76dfb27",
+      "gitBlob": "faaf531a68f635788d4848219657a66341b563f4",
+      "matched": true
+    },
+    {
+      "path": "vnext/scripts/run-tests.mjs",
+      "sha256": "341ef565ceeeffcc890216a0afa24645ec7671ce289ba11e97fe0f0742a002b7",
+      "gitBlob": "4c701d70f69c3c748707c9087109fdfb2cb2bda7",
+      "matched": true
+    },
+    {
+      "path": "vnext/src/application/availability-oracle.ts",
+      "sha256": "24181b025295279a7ac4ed595bad5d2e846660f27f17dac93e3d494b78ff1683",
+      "gitBlob": "63be7e16ce4c2bf58d27d928b57285f40cde4cb3",
+      "matched": true
+    },
+    {
+      "path": "vnext/src/application/interactive-booking.ts",
+      "sha256": "cba7dc4fab1771d39833929c2ec407a41a15f3a56f51eee628068e35d2465caa",
+      "gitBlob": "70f15284ef5ea7e5b386d39e97aaa238138789df",
+      "matched": true
+    },
+    {
+      "path": "vnext/src/application/prepare-operation.ts",
+      "sha256": "c8e1d8238aca418a9b64935666a610535ae65302ec12e2ef94f35a5918b15a42",
+      "gitBlob": "99bb230f5c06a7c02fa23a9da506188608d3b43f",
+      "matched": true
+    },
+    {
+      "path": "vnext/src/domain/availability.ts",
+      "sha256": "20ed44a31d65aa2c7629ebb6fb96b2933859a38e40d5a7ab64e1e2af1055fad8",
+      "gitBlob": "908b86d1088507cf9c3c3e1d32d751641fa5374f",
+      "matched": true
+    },
+    {
+      "path": "vnext/src/domain/whatsapp-presentation.ts",
+      "sha256": "c4223048ae4f2c4bec3e17cfde15f4eee4f5999ce15bed421c1dbc6033812bf2",
+      "gitBlob": "acff396653ef2be7e1f96f93181413b134377d1c",
+      "matched": true
+    },
+    {
+      "path": "vnext/test/support/postgres-fixture.ts",
+      "sha256": "c0e206ac2e5ef0c48cfd996058f7aadc14e1539895c7bf2ca0ea5e561c7458e6",
+      "gitBlob": "b4b45e144b44488368374fb5630c698ba706c90a",
+      "matched": true
+    }
+  ]
+}

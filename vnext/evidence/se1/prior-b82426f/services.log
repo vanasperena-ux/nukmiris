@@ -1,0 +1,35 @@
+
+> nukmiris-wp1-synthetic-core@0.0.0 test:services
+> npm run build && node scripts/run-tests.mjs services
+
+
+> nukmiris-wp1-synthetic-core@0.0.0 build
+> tsc -p tsconfig.json
+
+WP1 evidence run: /workspace/work/nukmiris-product-services-employees/vnext/evidence/runs/2026-11-16T00-21-48.926Z-services
+✔ SE1 configured service -> qualified employee -> immutable appointment snapshot and preserved confirmation (1046.55029ms)
+✔ SE1 no qualified employee or inactive service cannot create appointments (738.235721ms)
+✔ SE1 revisions, replay identity and role/tenant isolation are enforced in SQL (275.360499ms)
+✔ SE1 owner edit invalidates displayed slots before name/customer/booking allocation (666.436836ms)
+✔ SE1 edit between recheck and SQL preparation rejects atomically and progresses without retry (726.059021ms)
+✔ SE1 committed prepared booking and UNKNOWN survive catalog edits and new app objects (550.584921ms)
+✔ SE1 solo default resource automatically qualifies for new services; weekly hours filter availability (365.515704ms)
+✔ SE1 long catalogs paginate using valid lists and service selection survives restart (846.85659ms)
+✔ SE1 validation rejects bundles, malformed hours, amounts, missing fields and alternate tenant binding (1.312715ms)
+✔ SE1 configured new-customer booking still asks name after slot; commands never become names (1646.362148ms)
+✔ SE1 configured duration + post-service buffer excludes the same resource until the next valid grid slot (746.078592ms)
+✔ SE1 no active services renders honest text without invalid interactive lists or booking effects (308.308186ms)
+✔ SE1 SQL validates employee hours even when a corrupt writer omits the catalog revision increment (535.087245ms)
+✔ SE1 catalog change receipts and booked service snapshots are append-only (802.722666ms)
+✔ SE1 approved random allocation selects from every eligible employee and request replay never rerolls (714.537899ms)
+✔ SE1 crash after independent employee allocation reuses that allocation without drawing again (808.631906ms)
+✔ SE1 concurrent customers at one time allocate remaining eligible capacity without overlap (1177.866446ms)
+✔ SE1 dates before service selection request one service and Menu resets service pagination (759.10264ms)
+ℹ tests 18
+ℹ suites 0
+ℹ pass 18
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 12868.833112

@@ -1,0 +1,1047 @@
+[
+  {
+    "elapsed": 2,
+    "name": "nukmiris-vnext-1d7d7148e40f45e78ef462600a6889bd",
+    "state": {
+      "Status": "running",
+      "Running": true,
+      "Paused": false,
+      "Restarting": false,
+      "OOMKilled": false,
+      "Dead": false,
+      "Pid": 98414,
+      "ExitCode": 0,
+      "Error": "",
+      "StartedAt": "2026-11-15T23:49:28.676692472Z",
+      "FinishedAt": "0001-01-01T00:00:00Z"
+    },
+    "ports": "5432/tcp -> 127.0.0.1:29491\n",
+    "logs": "The default database encoding has accordingly been set to \"UTF8\".\nThe default text search configuration will be set to \"english\".\n\nData page checksums are disabled.\n\nfixing permissions on existing directory /var/lib/postgresql/data ... ok\ncreating subdirectories ... ok\nselecting dynamic shared memory implementation ... posix\nselecting default \"max_connections\" ... 100\nselecting default \"shared_buffers\" ... 128MB\nselecting default time zone ... Etc/UTC\ncreating configuration files ... ok\n"
+  },
+  {
+    "elapsed": 3,
+    "name": "nukmiris-vnext-1d7d7148e40f45e78ef462600a6889bd",
+    "state": {
+      "Status": "running",
+      "Running": true,
+      "Paused": false,
+      "Restarting": false,
+      "OOMKilled": false,
+      "Dead": false,
+      "Pid": 98414,
+      "ExitCode": 0,
+      "Error": "",
+      "StartedAt": "2026-11-15T23:49:28.676692472Z",
+      "FinishedAt": "0001-01-01T00:00:00Z"
+    },
+    "ports": "5432/tcp -> 127.0.0.1:29491\n",
+    "logs": "2026-11-15 23:49:29.807 UTC [48] LOG:  database system is shut down\n done\nserver stopped\n\nPostgreSQL init process complete; ready for start up.\n\n2026-11-15 23:49:29.914 UTC [1] LOG:  starting PostgreSQL 17.11 (Debian 17.11-1.pgdg12+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 12.2.0-14+deb12u1) 12.2.0, 64-bit\n2026-11-15 23:49:29.914 UTC [1] LOG:  listening on IPv4 address \"0.0.0.0\", port 5432\n2026-11-15 23:49:29.914 UTC [1] LOG:  listening on IPv6 address \"::\", port 5432\n2026-11-15 23:49:29.915 UTC [1] LOG:  listening on Unix socket \"/var/run/postgresql/.s.PGSQL.5432\"\n2026-11-15 23:49:29.918 UTC [62] LOG:  database system was shut down at 2026-11-15 23:49:29 UTC\n2026-11-15 23:49:29.920 UTC [1] LOG:  database system is ready to accept connections\n"
+  },
+  {
+    "elapsed": 4,
+    "name": "nukmiris-vnext-1d7d7148e40f45e78ef462600a6889bd",
+    "state": {
+      "Status": "running",
+      "Running": true,
+      "Paused": false,
+      "Restarting": false,
+      "OOMKilled": false,
+      "Dead": false,
+      "Pid": 98414,
+      "ExitCode": 0,
+      "Error": "",
+      "StartedAt": "2026-11-15T23:49:28.676692472Z",
+      "FinishedAt": "0001-01-01T00:00:00Z"
+    },
+    "ports": "5432/tcp -> 127.0.0.1:29491\n",
+    "logs": "2026-11-15 23:49:29.915 UTC [1] LOG:  listening on Unix socket \"/var/run/postgresql/.s.PGSQL.5432\"\n2026-11-15 23:49:29.918 UTC [62] LOG:  database system was shut down at 2026-11-15 23:49:29 UTC\n2026-11-15 23:49:29.920 UTC [1] LOG:  database system is ready to accept connections\n2026-11-15 23:49:30.578 UTC [76] ERROR:  catalog_request_conflict\n2026-11-15 23:49:30.578 UTC [76] CONTEXT:  PL/pgSQL function catalog_save(text,uuid,bigint,text,jsonb) line 10 at RAISE\n2026-11-15 23:49:30.578 UTC [76] STATEMENT:  SELECT core.catalog_save($1,$2,$3,$4,$5) v\n2026-11-15 23:49:30.587 UTC [76] ERROR:  catalog_qualification_denied\n2026-11-15 23:49:30.587 UTC [76] CONTEXT:  PL/pgSQL function catalog_save(text,uuid,bigint,text,jsonb) line 31 at RAISE\n2026-11-15 23:49:30.587 UTC [76] STATEMENT:  SELECT core.catalog_save($1,$2,$3,$4,$5) v\n2026-11-15 23:49:30.591 UTC [76] ERROR:  catalog_calendar_denied\n2026-11-15 23:49:30.591 UTC [76] CONTEXT:  PL/pgSQL function catalog_save(text,uuid,bigint,text,jsonb) line 29 at RAISE\n2026-11-15 23:49:30.591 UTC [76] STATEMENT:  SELECT core.catalog_save($1,$2,$3,$4,$5) v\n"
+  },
+  {
+    "elapsed": 5,
+    "name": "nukmiris-vnext-1d7d7148e40f45e78ef462600a6889bd",
+    "state": {
+      "Status": "running",
+      "Running": true,
+      "Paused": false,
+      "Restarting": false,
+      "OOMKilled": false,
+      "Dead": false,
+      "Pid": 98414,
+      "ExitCode": 0,
+      "Error": "",
+      "StartedAt": "2026-11-15T23:49:28.676692472Z",
+      "FinishedAt": "0001-01-01T00:00:00Z"
+    },
+    "ports": "5432/tcp -> 127.0.0.1:29491\n",
+    "logs": "2026-11-15 23:49:30.587 UTC [76] STATEMENT:  SELECT core.catalog_save($1,$2,$3,$4,$5) v\n2026-11-15 23:49:30.591 UTC [76] ERROR:  catalog_calendar_denied\n2026-11-15 23:49:30.591 UTC [76] CONTEXT:  PL/pgSQL function catalog_save(text,uuid,bigint,text,jsonb) line 29 at RAISE\n2026-11-15 23:49:30.591 UTC [76] STATEMENT:  SELECT core.catalog_save($1,$2,$3,$4,$5) v\n2026-11-15 23:49:31.608 UTC [81] ERROR:  catalog_revision_conflict\n2026-11-15 23:49:31.608 UTC [81] CONTEXT:  PL/pgSQL function catalog_save(text,uuid,bigint,text,jsonb) line 11 at RAISE\n2026-11-15 23:49:31.608 UTC [81] STATEMENT:  SELECT core.catalog_save($1,$2,$3,$4,$5) v\n2026-11-15 23:49:32.157 UTC [1] LOG:  received fast shutdown request\n2026-11-15 23:49:32.158 UTC [1] LOG:  aborting any active transactions\n2026-11-15 23:49:32.162 UTC [1] LOG:  background worker \"logical replication launcher\" (PID 65) exited with exit code 1\n2026-11-15 23:49:32.162 UTC [60] LOG:  shutting down\n2026-11-15 23:49:32.165 UTC [60] LOG:  checkpoint starting: shutdown immediate\n"
+  },
+  {
+    "elapsed": 6,
+    "name": "nukmiris-vnext-1d7d7148e40f45e78ef462600a6889bd",
+    "state": {
+      "Status": "exited",
+      "Running": false,
+      "Paused": false,
+      "Restarting": false,
+      "OOMKilled": false,
+      "Dead": false,
+      "Pid": 0,
+      "ExitCode": 0,
+      "Error": "",
+      "StartedAt": "2026-11-15T23:49:32.391608205Z",
+      "FinishedAt": "2026-11-15T23:49:32.847697105Z"
+    },
+    "ports": "",
+    "logs": "2026-11-15 23:49:32.537 UTC [1] LOG:  listening on IPv4 address \"0.0.0.0\", port 5432\n2026-11-15 23:49:32.537 UTC [1] LOG:  listening on IPv6 address \"::\", port 5432\n2026-11-15 23:49:32.538 UTC [1] LOG:  listening on Unix socket \"/var/run/postgresql/.s.PGSQL.5432\"\n2026-11-15 23:49:32.541 UTC [29] LOG:  database system was shut down at 2026-11-15 23:49:32 UTC\n2026-11-15 23:49:32.545 UTC [1] LOG:  database system is ready to accept connections\n2026-11-15 23:49:32.828 UTC [1] LOG:  received fast shutdown request\n2026-11-15 23:49:32.828 UTC [1] LOG:  aborting any active transactions\n2026-11-15 23:49:32.830 UTC [1] LOG:  background worker \"logical replication launcher\" (PID 32) exited with exit code 1\n2026-11-15 23:49:32.831 UTC [27] LOG:  shutting down\n2026-11-15 23:49:32.832 UTC [27] LOG:  checkpoint starting: shutdown immediate\n2026-11-15 23:49:32.843 UTC [27] LOG:  checkpoint complete: wrote 79 buffers (0.5%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.002 s, sync=0.009 s, total=0.012 s; sync files=36, longest=0.001 s, average=0.001 s; distance=47 kB, estimate=47 kB; lsn=0/1BDD878, redo lsn=0/1BDD878\n2026-11-15 23:49:32.845 UTC [1] LOG:  database system is shut down\n"
+  },
+  {
+    "elapsed": 7,
+    "name": "nukmiris-vnext-1d7d7148e40f45e78ef462600a6889bd",
+    "state": {
+      "Status": "exited",
+      "Running": false,
+      "Paused": false,
+      "Restarting": false,
+      "OOMKilled": false,
+      "Dead": false,
+      "Pid": 0,
+      "ExitCode": 0,
+      "Error": "",
+      "StartedAt": "2026-11-15T23:49:32.391608205Z",
+      "FinishedAt": "2026-11-15T23:49:32.847697105Z"
+    },
+    "ports": "",
+    "logs": "2026-11-15 23:49:32.537 UTC [1] LOG:  listening on IPv4 address \"0.0.0.0\", port 5432\n2026-11-15 23:49:32.537 UTC [1] LOG:  listening on IPv6 address \"::\", port 5432\n2026-11-15 23:49:32.538 UTC [1] LOG:  listening on Unix socket \"/var/run/postgresql/.s.PGSQL.5432\"\n2026-11-15 23:49:32.541 UTC [29] LOG:  database system was shut down at 2026-11-15 23:49:32 UTC\n2026-11-15 23:49:32.545 UTC [1] LOG:  database system is ready to accept connections\n2026-11-15 23:49:32.828 UTC [1] LOG:  received fast shutdown request\n2026-11-15 23:49:32.828 UTC [1] LOG:  aborting any active transactions\n2026-11-15 23:49:32.830 UTC [1] LOG:  background worker \"logical replication launcher\" (PID 32) exited with exit code 1\n2026-11-15 23:49:32.831 UTC [27] LOG:  shutting down\n2026-11-15 23:49:32.832 UTC [27] LOG:  checkpoint starting: shutdown immediate\n2026-11-15 23:49:32.843 UTC [27] LOG:  checkpoint complete: wrote 79 buffers (0.5%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.002 s, sync=0.009 s, total=0.012 s; sync files=36, longest=0.001 s, average=0.001 s; distance=47 kB, estimate=47 kB; lsn=0/1BDD878, redo lsn=0/1BDD878\n2026-11-15 23:49:32.845 UTC [1] LOG:  database system is shut down\n"
+  },
+  {
+    "elapsed": 8,
+    "name": "nukmiris-vnext-1d7d7148e40f45e78ef462600a6889bd",
+    "state": {
+      "Status": "exited",
+      "Running": false,
+      "Paused": false,
+      "Restarting": false,
+      "OOMKilled": false,
+      "Dead": false,
+      "Pid": 0,
+      "ExitCode": 0,
+      "Error": "",
+      "StartedAt": "2026-11-15T23:49:32.391608205Z",
+      "FinishedAt": "2026-11-15T23:49:32.847697105Z"
+    },
+    "ports": "",
+    "logs": "2026-11-15 23:49:32.537 UTC [1] LOG:  listening on IPv4 address \"0.0.0.0\", port 5432\n2026-11-15 23:49:32.537 UTC [1] LOG:  listening on IPv6 address \"::\", port 5432\n2026-11-15 23:49:32.538 UTC [1] LOG:  listening on Unix socket \"/var/run/postgresql/.s.PGSQL.5432\"\n2026-11-15 23:49:32.541 UTC [29] LOG:  database system was shut down at 2026-11-15 23:49:32 UTC\n2026-11-15 23:49:32.545 UTC [1] LOG:  database system is ready to accept connections\n2026-11-15 23:49:32.828 UTC [1] LOG:  received fast shutdown request\n2026-11-15 23:49:32.828 UTC [1] LOG:  aborting any active transactions\n2026-11-15 23:49:32.830 UTC [1] LOG:  background worker \"logical replication launcher\" (PID 32) exited with exit code 1\n2026-11-15 23:49:32.831 UTC [27] LOG:  shutting down\n2026-11-15 23:49:32.832 UTC [27] LOG:  checkpoint starting: shutdown immediate\n2026-11-15 23:49:32.843 UTC [27] LOG:  checkpoint complete: wrote 79 buffers (0.5%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.002 s, sync=0.009 s, total=0.012 s; sync files=36, longest=0.001 s, average=0.001 s; distance=47 kB, estimate=47 kB; lsn=0/1BDD878, redo lsn=0/1BDD878\n2026-11-15 23:49:32.845 UTC [1] LOG:  database system is shut down\n"
+  },
+  {
+    "elapsed": 9,
+    "name": "nukmiris-vnext-1d7d7148e40f45e78ef462600a6889bd",
+    "state": {
+      "Status": "exited",
+      "Running": false,
+      "Paused": false,
+      "Restarting": false,
+      "OOMKilled": false,
+      "Dead": false,
+      "Pid": 0,
+      "ExitCode": 0,
+      "Error": "",
+      "StartedAt": "2026-11-15T23:49:32.391608205Z",
+      "FinishedAt": "2026-11-15T23:49:32.847697105Z"
+    },
+    "ports": "",
+    "logs": "2026-11-15 23:49:32.537 UTC [1] LOG:  listening on IPv4 address \"0.0.0.0\", port 5432\n2026-11-15 23:49:32.537 UTC [1] LOG:  listening on IPv6 address \"::\", port 5432\n2026-11-15 23:49:32.538 UTC [1] LOG:  listening on Unix socket \"/var/run/postgresql/.s.PGSQL.5432\"\n2026-11-15 23:49:32.541 UTC [29] LOG:  database system was shut down at 2026-11-15 23:49:32 UTC\n2026-11-15 23:49:32.545 UTC [1] LOG:  database system is ready to accept connections\n2026-11-15 23:49:32.828 UTC [1] LOG:  received fast shutdown request\n2026-11-15 23:49:32.828 UTC [1] LOG:  aborting any active transactions\n2026-11-15 23:49:32.830 UTC [1] LOG:  background worker \"logical replication launcher\" (PID 32) exited with exit code 1\n2026-11-15 23:49:32.831 UTC [27] LOG:  shutting down\n2026-11-15 23:49:32.832 UTC [27] LOG:  checkpoint starting: shutdown immediate\n2026-11-15 23:49:32.843 UTC [27] LOG:  checkpoint complete: wrote 79 buffers (0.5%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.002 s, sync=0.009 s, total=0.012 s; sync files=36, longest=0.001 s, average=0.001 s; distance=47 kB, estimate=47 kB; lsn=0/1BDD878, redo lsn=0/1BDD878\n2026-11-15 23:49:32.845 UTC [1] LOG:  database system is shut down\n"
+  },
+  {
+    "elapsed": 10,
+    "name": "nukmiris-vnext-1d7d7148e40f45e78ef462600a6889bd",
+    "state": {
+      "Status": "exited",
+      "Running": false,
+      "Paused": false,
+      "Restarting": false,
+      "OOMKilled": false,
+      "Dead": false,
+      "Pid": 0,
+      "ExitCode": 0,
+      "Error": "",
+      "StartedAt": "2026-11-15T23:49:32.391608205Z",
+      "FinishedAt": "2026-11-15T23:49:32.847697105Z"
+    },
+    "ports": "",
+    "logs": "2026-11-15 23:49:32.537 UTC [1] LOG:  listening on IPv4 address \"0.0.0.0\", port 5432\n2026-11-15 23:49:32.537 UTC [1] LOG:  listening on IPv6 address \"::\", port 5432\n2026-11-15 23:49:32.538 UTC [1] LOG:  listening on Unix socket \"/var/run/postgresql/.s.PGSQL.5432\"\n2026-11-15 23:49:32.541 UTC [29] LOG:  database system was shut down at 2026-11-15 23:49:32 UTC\n2026-11-15 23:49:32.545 UTC [1] LOG:  database system is ready to accept connections\n2026-11-15 23:49:32.828 UTC [1] LOG:  received fast shutdown request\n2026-11-15 23:49:32.828 UTC [1] LOG:  aborting any active transactions\n2026-11-15 23:49:32.830 UTC [1] LOG:  background worker \"logical replication launcher\" (PID 32) exited with exit code 1\n2026-11-15 23:49:32.831 UTC [27] LOG:  shutting down\n2026-11-15 23:49:32.832 UTC [27] LOG:  checkpoint starting: shutdown immediate\n2026-11-15 23:49:32.843 UTC [27] LOG:  checkpoint complete: wrote 79 buffers (0.5%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.002 s, sync=0.009 s, total=0.012 s; sync files=36, longest=0.001 s, average=0.001 s; distance=47 kB, estimate=47 kB; lsn=0/1BDD878, redo lsn=0/1BDD878\n2026-11-15 23:49:32.845 UTC [1] LOG:  database system is shut down\n"
+  },
+  {
+    "elapsed": 11,
+    "name": "nukmiris-vnext-13c860837b8048d98ae6404513097b05",
+    "state": {
+      "Status": "exited",
+      "Running": false,
+      "Paused": false,
+      "Restarting": false,
+      "OOMKilled": false,
+      "Dead": false,
+      "Pid": 0,
+      "ExitCode": 1,
+      "Error": "",
+      "StartedAt": "2026-11-15T23:49:37.650691806Z",
+      "FinishedAt": "2026-11-15T23:49:37.816765365Z"
+    },
+    "ports": "",
+    "logs": "The files belonging to this database system will be owned by user \"postgres\".\nThis user must also own the server process.\n\nThe database cluster will be initialized with locale \"en_US.utf8\".\nThe default database encoding has accordingly been set to \"UTF8\".\nThe default text search configuration will be set to \"english\".\n\nData page checksums are disabled.\n\nfixing permissions on existing directory /var/lib/postgresql/data ... ok\ninitdb: error: could not create directory \"/var/lib/postgresql/data/pg_wal\": No space left on device\ninitdb: removing contents of data directory \"/var/lib/postgresql/data\"\n"
+  },
+  {
+    "elapsed": 11,
+    "name": "nukmiris-vnext-1d7d7148e40f45e78ef462600a6889bd",
+    "state": {
+      "Status": "exited",
+      "Running": false,
+      "Paused": false,
+      "Restarting": false,
+      "OOMKilled": false,
+      "Dead": false,
+      "Pid": 0,
+      "ExitCode": 0,
+      "Error": "",
+      "StartedAt": "2026-11-15T23:49:32.391608205Z",
+      "FinishedAt": "2026-11-15T23:49:32.847697105Z"
+    },
+    "ports": "",
+    "logs": "2026-11-15 23:49:32.537 UTC [1] LOG:  listening on IPv4 address \"0.0.0.0\", port 5432\n2026-11-15 23:49:32.537 UTC [1] LOG:  listening on IPv6 address \"::\", port 5432\n2026-11-15 23:49:32.538 UTC [1] LOG:  listening on Unix socket \"/var/run/postgresql/.s.PGSQL.5432\"\n2026-11-15 23:49:32.541 UTC [29] LOG:  database system was shut down at 2026-11-15 23:49:32 UTC\n2026-11-15 23:49:32.545 UTC [1] LOG:  database system is ready to accept connections\n2026-11-15 23:49:32.828 UTC [1] LOG:  received fast shutdown request\n2026-11-15 23:49:32.828 UTC [1] LOG:  aborting any active transactions\n2026-11-15 23:49:32.830 UTC [1] LOG:  background worker \"logical replication launcher\" (PID 32) exited with exit code 1\n2026-11-15 23:49:32.831 UTC [27] LOG:  shutting down\n2026-11-15 23:49:32.832 UTC [27] LOG:  checkpoint starting: shutdown immediate\n2026-11-15 23:49:32.843 UTC [27] LOG:  checkpoint complete: wrote 79 buffers (0.5%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.002 s, sync=0.009 s, total=0.012 s; sync files=36, longest=0.001 s, average=0.001 s; distance=47 kB, estimate=47 kB; lsn=0/1BDD878, redo lsn=0/1BDD878\n2026-11-15 23:49:32.845 UTC [1] LOG:  database system is shut down\n"
+  },
+  {
+    "elapsed": 12,
+    "name": "nukmiris-vnext-13c860837b8048d98ae6404513097b05",
+    "state": {
+      "Status": "exited",
+      "Running": false,
+      "Paused": false,
+      "Restarting": false,
+      "OOMKilled": false,
+      "Dead": false,
+      "Pid": 0,
+      "ExitCode": 1,
+      "Error": "",
+      "StartedAt": "2026-11-15T23:49:37.650691806Z",
+      "FinishedAt": "2026-11-15T23:49:37.816765365Z"
+    },
+    "ports": "",
+    "logs": "The files belonging to this database system will be owned by user \"postgres\".\nThis user must also own the server process.\n\nThe database cluster will be initialized with locale \"en_US.utf8\".\nThe default database encoding has accordingly been set to \"UTF8\".\nThe default text search configuration will be set to \"english\".\n\nData page checksums are disabled.\n\nfixing permissions on existing directory /var/lib/postgresql/data ... ok\ninitdb: error: could not create directory \"/var/lib/postgresql/data/pg_wal\": No space left on device\ninitdb: removing contents of data directory \"/var/lib/postgresql/data\"\n"
+  },
+  {
+    "elapsed": 12,
+    "name": "nukmiris-vnext-1d7d7148e40f45e78ef462600a6889bd",
+    "state": {
+      "Status": "exited",
+      "Running": false,
+      "Paused": false,
+      "Restarting": false,
+      "OOMKilled": false,
+      "Dead": false,
+      "Pid": 0,
+      "ExitCode": 0,
+      "Error": "",
+      "StartedAt": "2026-11-15T23:49:32.391608205Z",
+      "FinishedAt": "2026-11-15T23:49:32.847697105Z"
+    },
+    "ports": "",
+    "logs": "2026-11-15 23:49:32.537 UTC [1] LOG:  listening on IPv4 address \"0.0.0.0\", port 5432\n2026-11-15 23:49:32.537 UTC [1] LOG:  listening on IPv6 address \"::\", port 5432\n2026-11-15 23:49:32.538 UTC [1] LOG:  listening on Unix socket \"/var/run/postgresql/.s.PGSQL.5432\"\n2026-11-15 23:49:32.541 UTC [29] LOG:  database system was shut down at 2026-11-15 23:49:32 UTC\n2026-11-15 23:49:32.545 UTC [1] LOG:  database system is ready to accept connections\n2026-11-15 23:49:32.828 UTC [1] LOG:  received fast shutdown request\n2026-11-15 23:49:32.828 UTC [1] LOG:  aborting any active transactions\n2026-11-15 23:49:32.830 UTC [1] LOG:  background worker \"logical replication launcher\" (PID 32) exited with exit code 1\n2026-11-15 23:49:32.831 UTC [27] LOG:  shutting down\n2026-11-15 23:49:32.832 UTC [27] LOG:  checkpoint starting: shutdown immediate\n2026-11-15 23:49:32.843 UTC [27] LOG:  checkpoint complete: wrote 79 buffers (0.5%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.002 s, sync=0.009 s, total=0.012 s; sync files=36, longest=0.001 s, average=0.001 s; distance=47 kB, estimate=47 kB; lsn=0/1BDD878, redo lsn=0/1BDD878\n2026-11-15 23:49:32.845 UTC [1] LOG:  database system is shut down\n"
+  },
+  {
+    "elapsed": 13,
+    "name": "nukmiris-vnext-13c860837b8048d98ae6404513097b05",
+    "state": {
+      "Status": "exited",
+      "Running": false,
+      "Paused": false,
+      "Restarting": false,
+      "OOMKilled": false,
+      "Dead": false,
+      "Pid": 0,
+      "ExitCode": 1,
+      "Error": "",
+      "StartedAt": "2026-11-15T23:49:37.650691806Z",
+      "FinishedAt": "2026-11-15T23:49:37.816765365Z"
+    },
+    "ports": "",
+    "logs": "The files belonging to this database system will be owned by user \"postgres\".\nThis user must also own the server process.\n\nThe database cluster will be initialized with locale \"en_US.utf8\".\nThe default database encoding has accordingly been set to \"UTF8\".\nThe default text search configuration will be set to \"english\".\n\nData page checksums are disabled.\n\nfixing permissions on existing directory /var/lib/postgresql/data ... ok\ninitdb: error: could not create directory \"/var/lib/postgresql/data/pg_wal\": No space left on device\ninitdb: removing contents of data directory \"/var/lib/postgresql/data\"\n"
+  },
+  {
+    "elapsed": 13,
+    "name": "nukmiris-vnext-1d7d7148e40f45e78ef462600a6889bd",
+    "state": {
+      "Status": "exited",
+      "Running": false,
+      "Paused": false,
+      "Restarting": false,
+      "OOMKilled": false,
+      "Dead": false,
+      "Pid": 0,
+      "ExitCode": 0,
+      "Error": "",
+      "StartedAt": "2026-11-15T23:49:32.391608205Z",
+      "FinishedAt": "2026-11-15T23:49:32.847697105Z"
+    },
+    "ports": "",
+    "logs": "2026-11-15 23:49:32.537 UTC [1] LOG:  listening on IPv4 address \"0.0.0.0\", port 5432\n2026-11-15 23:49:32.537 UTC [1] LOG:  listening on IPv6 address \"::\", port 5432\n2026-11-15 23:49:32.538 UTC [1] LOG:  listening on Unix socket \"/var/run/postgresql/.s.PGSQL.5432\"\n2026-11-15 23:49:32.541 UTC [29] LOG:  database system was shut down at 2026-11-15 23:49:32 UTC\n2026-11-15 23:49:32.545 UTC [1] LOG:  database system is ready to accept connections\n2026-11-15 23:49:32.828 UTC [1] LOG:  received fast shutdown request\n2026-11-15 23:49:32.828 UTC [1] LOG:  aborting any active transactions\n2026-11-15 23:49:32.830 UTC [1] LOG:  background worker \"logical replication launcher\" (PID 32) exited with exit code 1\n2026-11-15 23:49:32.831 UTC [27] LOG:  shutting down\n2026-11-15 23:49:32.832 UTC [27] LOG:  checkpoint starting: shutdown immediate\n2026-11-15 23:49:32.843 UTC [27] LOG:  checkpoint complete: wrote 79 buffers (0.5%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.002 s, sync=0.009 s, total=0.012 s; sync files=36, longest=0.001 s, average=0.001 s; distance=47 kB, estimate=47 kB; lsn=0/1BDD878, redo lsn=0/1BDD878\n2026-11-15 23:49:32.845 UTC [1] LOG:  database system is shut down\n"
+  },
+  {
+    "elapsed": 14,
+    "name": "nukmiris-vnext-13c860837b8048d98ae6404513097b05",
+    "state": {
+      "Status": "exited",
+      "Running": false,
+      "Paused": false,
+      "Restarting": false,
+      "OOMKilled": false,
+      "Dead": false,
+      "Pid": 0,
+      "ExitCode": 1,
+      "Error": "",
+      "StartedAt": "2026-11-15T23:49:37.650691806Z",
+      "FinishedAt": "2026-11-15T23:49:37.816765365Z"
+    },
+    "ports": "",
+    "logs": "The files belonging to this database system will be owned by user \"postgres\".\nThis user must also own the server process.\n\nThe database cluster will be initialized with locale \"en_US.utf8\".\nThe default database encoding has accordingly been set to \"UTF8\".\nThe default text search configuration will be set to \"english\".\n\nData page checksums are disabled.\n\nfixing permissions on existing directory /var/lib/postgresql/data ... ok\ninitdb: error: could not create directory \"/var/lib/postgresql/data/pg_wal\": No space left on device\ninitdb: removing contents of data directory \"/var/lib/postgresql/data\"\n"
+  },
+  {
+    "elapsed": 14,
+    "name": "nukmiris-vnext-1d7d7148e40f45e78ef462600a6889bd",
+    "state": {
+      "Status": "exited",
+      "Running": false,
+      "Paused": false,
+      "Restarting": false,
+      "OOMKilled": false,
+      "Dead": false,
+      "Pid": 0,
+      "ExitCode": 0,
+      "Error": "",
+      "StartedAt": "2026-11-15T23:49:32.391608205Z",
+      "FinishedAt": "2026-11-15T23:49:32.847697105Z"
+    },
+    "ports": "",
+    "logs": "2026-11-15 23:49:32.537 UTC [1] LOG:  listening on IPv4 address \"0.0.0.0\", port 5432\n2026-11-15 23:49:32.537 UTC [1] LOG:  listening on IPv6 address \"::\", port 5432\n2026-11-15 23:49:32.538 UTC [1] LOG:  listening on Unix socket \"/var/run/postgresql/.s.PGSQL.5432\"\n2026-11-15 23:49:32.541 UTC [29] LOG:  database system was shut down at 2026-11-15 23:49:32 UTC\n2026-11-15 23:49:32.545 UTC [1] LOG:  database system is ready to accept connections\n2026-11-15 23:49:32.828 UTC [1] LOG:  received fast shutdown request\n2026-11-15 23:49:32.828 UTC [1] LOG:  aborting any active transactions\n2026-11-15 23:49:32.830 UTC [1] LOG:  background worker \"logical replication launcher\" (PID 32) exited with exit code 1\n2026-11-15 23:49:32.831 UTC [27] LOG:  shutting down\n2026-11-15 23:49:32.832 UTC [27] LOG:  checkpoint starting: shutdown immediate\n2026-11-15 23:49:32.843 UTC [27] LOG:  checkpoint complete: wrote 79 buffers (0.5%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.002 s, sync=0.009 s, total=0.012 s; sync files=36, longest=0.001 s, average=0.001 s; distance=47 kB, estimate=47 kB; lsn=0/1BDD878, redo lsn=0/1BDD878\n2026-11-15 23:49:32.845 UTC [1] LOG:  database system is shut down\n"
+  },
+  {
+    "elapsed": 15,
+    "name": "nukmiris-vnext-13c860837b8048d98ae6404513097b05",
+    "state": {
+      "Status": "exited",
+      "Running": false,
+      "Paused": false,
+      "Restarting": false,
+      "OOMKilled": false,
+      "Dead": false,
+      "Pid": 0,
+      "ExitCode": 1,
+      "Error": "",
+      "StartedAt": "2026-11-15T23:49:37.650691806Z",
+      "FinishedAt": "2026-11-15T23:49:37.816765365Z"
+    },
+    "ports": "",
+    "logs": "The files belonging to this database system will be owned by user \"postgres\".\nThis user must also own the server process.\n\nThe database cluster will be initialized with locale \"en_US.utf8\".\nThe default database encoding has accordingly been set to \"UTF8\".\nThe default text search configuration will be set to \"english\".\n\nData page checksums are disabled.\n\nfixing permissions on existing directory /var/lib/postgresql/data ... ok\ninitdb: error: could not create directory \"/var/lib/postgresql/data/pg_wal\": No space left on device\ninitdb: removing contents of data directory \"/var/lib/postgresql/data\"\n"
+  },
+  {
+    "elapsed": 15,
+    "name": "nukmiris-vnext-1d7d7148e40f45e78ef462600a6889bd",
+    "state": {
+      "Status": "exited",
+      "Running": false,
+      "Paused": false,
+      "Restarting": false,
+      "OOMKilled": false,
+      "Dead": false,
+      "Pid": 0,
+      "ExitCode": 0,
+      "Error": "",
+      "StartedAt": "2026-11-15T23:49:32.391608205Z",
+      "FinishedAt": "2026-11-15T23:49:32.847697105Z"
+    },
+    "ports": "",
+    "logs": "2026-11-15 23:49:32.537 UTC [1] LOG:  listening on IPv4 address \"0.0.0.0\", port 5432\n2026-11-15 23:49:32.537 UTC [1] LOG:  listening on IPv6 address \"::\", port 5432\n2026-11-15 23:49:32.538 UTC [1] LOG:  listening on Unix socket \"/var/run/postgresql/.s.PGSQL.5432\"\n2026-11-15 23:49:32.541 UTC [29] LOG:  database system was shut down at 2026-11-15 23:49:32 UTC\n2026-11-15 23:49:32.545 UTC [1] LOG:  database system is ready to accept connections\n2026-11-15 23:49:32.828 UTC [1] LOG:  received fast shutdown request\n2026-11-15 23:49:32.828 UTC [1] LOG:  aborting any active transactions\n2026-11-15 23:49:32.830 UTC [1] LOG:  background worker \"logical replication launcher\" (PID 32) exited with exit code 1\n2026-11-15 23:49:32.831 UTC [27] LOG:  shutting down\n2026-11-15 23:49:32.832 UTC [27] LOG:  checkpoint starting: shutdown immediate\n2026-11-15 23:49:32.843 UTC [27] LOG:  checkpoint complete: wrote 79 buffers (0.5%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.002 s, sync=0.009 s, total=0.012 s; sync files=36, longest=0.001 s, average=0.001 s; distance=47 kB, estimate=47 kB; lsn=0/1BDD878, redo lsn=0/1BDD878\n2026-11-15 23:49:32.845 UTC [1] LOG:  database system is shut down\n"
+  },
+  {
+    "elapsed": 16,
+    "name": "nukmiris-vnext-13c860837b8048d98ae6404513097b05",
+    "state": {
+      "Status": "exited",
+      "Running": false,
+      "Paused": false,
+      "Restarting": false,
+      "OOMKilled": false,
+      "Dead": false,
+      "Pid": 0,
+      "ExitCode": 1,
+      "Error": "",
+      "StartedAt": "2026-11-15T23:49:37.650691806Z",
+      "FinishedAt": "2026-11-15T23:49:37.816765365Z"
+    },
+    "ports": "",
+    "logs": "The files belonging to this database system will be owned by user \"postgres\".\nThis user must also own the server process.\n\nThe database cluster will be initialized with locale \"en_US.utf8\".\nThe default database encoding has accordingly been set to \"UTF8\".\nThe default text search configuration will be set to \"english\".\n\nData page checksums are disabled.\n\nfixing permissions on existing directory /var/lib/postgresql/data ... ok\ninitdb: error: could not create directory \"/var/lib/postgresql/data/pg_wal\": No space left on device\ninitdb: removing contents of data directory \"/var/lib/postgresql/data\"\n"
+  },
+  {
+    "elapsed": 16,
+    "name": "nukmiris-vnext-1d7d7148e40f45e78ef462600a6889bd",
+    "state": {
+      "Status": "exited",
+      "Running": false,
+      "Paused": false,
+      "Restarting": false,
+      "OOMKilled": false,
+      "Dead": false,
+      "Pid": 0,
+      "ExitCode": 0,
+      "Error": "",
+      "StartedAt": "2026-11-15T23:49:32.391608205Z",
+      "FinishedAt": "2026-11-15T23:49:32.847697105Z"
+    },
+    "ports": "",
+    "logs": "2026-11-15 23:49:32.537 UTC [1] LOG:  listening on IPv4 address \"0.0.0.0\", port 5432\n2026-11-15 23:49:32.537 UTC [1] LOG:  listening on IPv6 address \"::\", port 5432\n2026-11-15 23:49:32.538 UTC [1] LOG:  listening on Unix socket \"/var/run/postgresql/.s.PGSQL.5432\"\n2026-11-15 23:49:32.541 UTC [29] LOG:  database system was shut down at 2026-11-15 23:49:32 UTC\n2026-11-15 23:49:32.545 UTC [1] LOG:  database system is ready to accept connections\n2026-11-15 23:49:32.828 UTC [1] LOG:  received fast shutdown request\n2026-11-15 23:49:32.828 UTC [1] LOG:  aborting any active transactions\n2026-11-15 23:49:32.830 UTC [1] LOG:  background worker \"logical replication launcher\" (PID 32) exited with exit code 1\n2026-11-15 23:49:32.831 UTC [27] LOG:  shutting down\n2026-11-15 23:49:32.832 UTC [27] LOG:  checkpoint starting: shutdown immediate\n2026-11-15 23:49:32.843 UTC [27] LOG:  checkpoint complete: wrote 79 buffers (0.5%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.002 s, sync=0.009 s, total=0.012 s; sync files=36, longest=0.001 s, average=0.001 s; distance=47 kB, estimate=47 kB; lsn=0/1BDD878, redo lsn=0/1BDD878\n2026-11-15 23:49:32.845 UTC [1] LOG:  database system is shut down\n"
+  },
+  {
+    "elapsed": 17,
+    "name": "nukmiris-vnext-13c860837b8048d98ae6404513097b05",
+    "state": {
+      "Status": "exited",
+      "Running": false,
+      "Paused": false,
+      "Restarting": false,
+      "OOMKilled": false,
+      "Dead": false,
+      "Pid": 0,
+      "ExitCode": 1,
+      "Error": "",
+      "StartedAt": "2026-11-15T23:49:37.650691806Z",
+      "FinishedAt": "2026-11-15T23:49:37.816765365Z"
+    },
+    "ports": "",
+    "logs": "The files belonging to this database system will be owned by user \"postgres\".\nThis user must also own the server process.\n\nThe database cluster will be initialized with locale \"en_US.utf8\".\nThe default database encoding has accordingly been set to \"UTF8\".\nThe default text search configuration will be set to \"english\".\n\nData page checksums are disabled.\n\nfixing permissions on existing directory /var/lib/postgresql/data ... ok\ninitdb: error: could not create directory \"/var/lib/postgresql/data/pg_wal\": No space left on device\ninitdb: removing contents of data directory \"/var/lib/postgresql/data\"\n"
+  },
+  {
+    "elapsed": 17,
+    "name": "nukmiris-vnext-1d7d7148e40f45e78ef462600a6889bd",
+    "state": {
+      "Status": "exited",
+      "Running": false,
+      "Paused": false,
+      "Restarting": false,
+      "OOMKilled": false,
+      "Dead": false,
+      "Pid": 0,
+      "ExitCode": 0,
+      "Error": "",
+      "StartedAt": "2026-11-15T23:49:32.391608205Z",
+      "FinishedAt": "2026-11-15T23:49:32.847697105Z"
+    },
+    "ports": "",
+    "logs": "2026-11-15 23:49:32.537 UTC [1] LOG:  listening on IPv4 address \"0.0.0.0\", port 5432\n2026-11-15 23:49:32.537 UTC [1] LOG:  listening on IPv6 address \"::\", port 5432\n2026-11-15 23:49:32.538 UTC [1] LOG:  listening on Unix socket \"/var/run/postgresql/.s.PGSQL.5432\"\n2026-11-15 23:49:32.541 UTC [29] LOG:  database system was shut down at 2026-11-15 23:49:32 UTC\n2026-11-15 23:49:32.545 UTC [1] LOG:  database system is ready to accept connections\n2026-11-15 23:49:32.828 UTC [1] LOG:  received fast shutdown request\n2026-11-15 23:49:32.828 UTC [1] LOG:  aborting any active transactions\n2026-11-15 23:49:32.830 UTC [1] LOG:  background worker \"logical replication launcher\" (PID 32) exited with exit code 1\n2026-11-15 23:49:32.831 UTC [27] LOG:  shutting down\n2026-11-15 23:49:32.832 UTC [27] LOG:  checkpoint starting: shutdown immediate\n2026-11-15 23:49:32.843 UTC [27] LOG:  checkpoint complete: wrote 79 buffers (0.5%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.002 s, sync=0.009 s, total=0.012 s; sync files=36, longest=0.001 s, average=0.001 s; distance=47 kB, estimate=47 kB; lsn=0/1BDD878, redo lsn=0/1BDD878\n2026-11-15 23:49:32.845 UTC [1] LOG:  database system is shut down\n"
+  },
+  {
+    "elapsed": 18,
+    "name": "nukmiris-vnext-13c860837b8048d98ae6404513097b05",
+    "state": {
+      "Status": "exited",
+      "Running": false,
+      "Paused": false,
+      "Restarting": false,
+      "OOMKilled": false,
+      "Dead": false,
+      "Pid": 0,
+      "ExitCode": 1,
+      "Error": "",
+      "StartedAt": "2026-11-15T23:49:37.650691806Z",
+      "FinishedAt": "2026-11-15T23:49:37.816765365Z"
+    },
+    "ports": "",
+    "logs": "The files belonging to this database system will be owned by user \"postgres\".\nThis user must also own the server process.\n\nThe database cluster will be initialized with locale \"en_US.utf8\".\nThe default database encoding has accordingly been set to \"UTF8\".\nThe default text search configuration will be set to \"english\".\n\nData page checksums are disabled.\n\nfixing permissions on existing directory /var/lib/postgresql/data ... ok\ninitdb: error: could not create directory \"/var/lib/postgresql/data/pg_wal\": No space left on device\ninitdb: removing contents of data directory \"/var/lib/postgresql/data\"\n"
+  },
+  {
+    "elapsed": 18,
+    "name": "nukmiris-vnext-1d7d7148e40f45e78ef462600a6889bd",
+    "state": {
+      "Status": "exited",
+      "Running": false,
+      "Paused": false,
+      "Restarting": false,
+      "OOMKilled": false,
+      "Dead": false,
+      "Pid": 0,
+      "ExitCode": 0,
+      "Error": "",
+      "StartedAt": "2026-11-15T23:49:32.391608205Z",
+      "FinishedAt": "2026-11-15T23:49:32.847697105Z"
+    },
+    "ports": "",
+    "logs": "2026-11-15 23:49:32.537 UTC [1] LOG:  listening on IPv4 address \"0.0.0.0\", port 5432\n2026-11-15 23:49:32.537 UTC [1] LOG:  listening on IPv6 address \"::\", port 5432\n2026-11-15 23:49:32.538 UTC [1] LOG:  listening on Unix socket \"/var/run/postgresql/.s.PGSQL.5432\"\n2026-11-15 23:49:32.541 UTC [29] LOG:  database system was shut down at 2026-11-15 23:49:32 UTC\n2026-11-15 23:49:32.545 UTC [1] LOG:  database system is ready to accept connections\n2026-11-15 23:49:32.828 UTC [1] LOG:  received fast shutdown request\n2026-11-15 23:49:32.828 UTC [1] LOG:  aborting any active transactions\n2026-11-15 23:49:32.830 UTC [1] LOG:  background worker \"logical replication launcher\" (PID 32) exited with exit code 1\n2026-11-15 23:49:32.831 UTC [27] LOG:  shutting down\n2026-11-15 23:49:32.832 UTC [27] LOG:  checkpoint starting: shutdown immediate\n2026-11-15 23:49:32.843 UTC [27] LOG:  checkpoint complete: wrote 79 buffers (0.5%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.002 s, sync=0.009 s, total=0.012 s; sync files=36, longest=0.001 s, average=0.001 s; distance=47 kB, estimate=47 kB; lsn=0/1BDD878, redo lsn=0/1BDD878\n2026-11-15 23:49:32.845 UTC [1] LOG:  database system is shut down\n"
+  },
+  {
+    "elapsed": 19,
+    "name": "nukmiris-vnext-13c860837b8048d98ae6404513097b05",
+    "state": {
+      "Status": "exited",
+      "Running": false,
+      "Paused": false,
+      "Restarting": false,
+      "OOMKilled": false,
+      "Dead": false,
+      "Pid": 0,
+      "ExitCode": 1,
+      "Error": "",
+      "StartedAt": "2026-11-15T23:49:37.650691806Z",
+      "FinishedAt": "2026-11-15T23:49:37.816765365Z"
+    },
+    "ports": "",
+    "logs": "The files belonging to this database system will be owned by user \"postgres\".\nThis user must also own the server process.\n\nThe database cluster will be initialized with locale \"en_US.utf8\".\nThe default database encoding has accordingly been set to \"UTF8\".\nThe default text search configuration will be set to \"english\".\n\nData page checksums are disabled.\n\nfixing permissions on existing directory /var/lib/postgresql/data ... ok\ninitdb: error: could not create directory \"/var/lib/postgresql/data/pg_wal\": No space left on device\ninitdb: removing contents of data directory \"/var/lib/postgresql/data\"\n"
+  },
+  {
+    "elapsed": 19,
+    "name": "nukmiris-vnext-1d7d7148e40f45e78ef462600a6889bd",
+    "state": {
+      "Status": "exited",
+      "Running": false,
+      "Paused": false,
+      "Restarting": false,
+      "OOMKilled": false,
+      "Dead": false,
+      "Pid": 0,
+      "ExitCode": 0,
+      "Error": "",
+      "StartedAt": "2026-11-15T23:49:32.391608205Z",
+      "FinishedAt": "2026-11-15T23:49:32.847697105Z"
+    },
+    "ports": "",
+    "logs": "2026-11-15 23:49:32.537 UTC [1] LOG:  listening on IPv4 address \"0.0.0.0\", port 5432\n2026-11-15 23:49:32.537 UTC [1] LOG:  listening on IPv6 address \"::\", port 5432\n2026-11-15 23:49:32.538 UTC [1] LOG:  listening on Unix socket \"/var/run/postgresql/.s.PGSQL.5432\"\n2026-11-15 23:49:32.541 UTC [29] LOG:  database system was shut down at 2026-11-15 23:49:32 UTC\n2026-11-15 23:49:32.545 UTC [1] LOG:  database system is ready to accept connections\n2026-11-15 23:49:32.828 UTC [1] LOG:  received fast shutdown request\n2026-11-15 23:49:32.828 UTC [1] LOG:  aborting any active transactions\n2026-11-15 23:49:32.830 UTC [1] LOG:  background worker \"logical replication launcher\" (PID 32) exited with exit code 1\n2026-11-15 23:49:32.831 UTC [27] LOG:  shutting down\n2026-11-15 23:49:32.832 UTC [27] LOG:  checkpoint starting: shutdown immediate\n2026-11-15 23:49:32.843 UTC [27] LOG:  checkpoint complete: wrote 79 buffers (0.5%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.002 s, sync=0.009 s, total=0.012 s; sync files=36, longest=0.001 s, average=0.001 s; distance=47 kB, estimate=47 kB; lsn=0/1BDD878, redo lsn=0/1BDD878\n2026-11-15 23:49:32.845 UTC [1] LOG:  database system is shut down\n"
+  },
+  {
+    "elapsed": 20,
+    "name": "nukmiris-vnext-13c860837b8048d98ae6404513097b05",
+    "state": {
+      "Status": "exited",
+      "Running": false,
+      "Paused": false,
+      "Restarting": false,
+      "OOMKilled": false,
+      "Dead": false,
+      "Pid": 0,
+      "ExitCode": 1,
+      "Error": "",
+      "StartedAt": "2026-11-15T23:49:37.650691806Z",
+      "FinishedAt": "2026-11-15T23:49:37.816765365Z"
+    },
+    "ports": "",
+    "logs": "The files belonging to this database system will be owned by user \"postgres\".\nThis user must also own the server process.\n\nThe database cluster will be initialized with locale \"en_US.utf8\".\nThe default database encoding has accordingly been set to \"UTF8\".\nThe default text search configuration will be set to \"english\".\n\nData page checksums are disabled.\n\nfixing permissions on existing directory /var/lib/postgresql/data ... ok\ninitdb: error: could not create directory \"/var/lib/postgresql/data/pg_wal\": No space left on device\ninitdb: removing contents of data directory \"/var/lib/postgresql/data\"\n"
+  },
+  {
+    "elapsed": 20,
+    "name": "nukmiris-vnext-1d7d7148e40f45e78ef462600a6889bd",
+    "state": {
+      "Status": "exited",
+      "Running": false,
+      "Paused": false,
+      "Restarting": false,
+      "OOMKilled": false,
+      "Dead": false,
+      "Pid": 0,
+      "ExitCode": 0,
+      "Error": "",
+      "StartedAt": "2026-11-15T23:49:32.391608205Z",
+      "FinishedAt": "2026-11-15T23:49:32.847697105Z"
+    },
+    "ports": "",
+    "logs": "2026-11-15 23:49:32.537 UTC [1] LOG:  listening on IPv4 address \"0.0.0.0\", port 5432\n2026-11-15 23:49:32.537 UTC [1] LOG:  listening on IPv6 address \"::\", port 5432\n2026-11-15 23:49:32.538 UTC [1] LOG:  listening on Unix socket \"/var/run/postgresql/.s.PGSQL.5432\"\n2026-11-15 23:49:32.541 UTC [29] LOG:  database system was shut down at 2026-11-15 23:49:32 UTC\n2026-11-15 23:49:32.545 UTC [1] LOG:  database system is ready to accept connections\n2026-11-15 23:49:32.828 UTC [1] LOG:  received fast shutdown request\n2026-11-15 23:49:32.828 UTC [1] LOG:  aborting any active transactions\n2026-11-15 23:49:32.830 UTC [1] LOG:  background worker \"logical replication launcher\" (PID 32) exited with exit code 1\n2026-11-15 23:49:32.831 UTC [27] LOG:  shutting down\n2026-11-15 23:49:32.832 UTC [27] LOG:  checkpoint starting: shutdown immediate\n2026-11-15 23:49:32.843 UTC [27] LOG:  checkpoint complete: wrote 79 buffers (0.5%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.002 s, sync=0.009 s, total=0.012 s; sync files=36, longest=0.001 s, average=0.001 s; distance=47 kB, estimate=47 kB; lsn=0/1BDD878, redo lsn=0/1BDD878\n2026-11-15 23:49:32.845 UTC [1] LOG:  database system is shut down\n"
+  },
+  {
+    "elapsed": 21,
+    "name": "nukmiris-vnext-13c860837b8048d98ae6404513097b05",
+    "state": {
+      "Status": "exited",
+      "Running": false,
+      "Paused": false,
+      "Restarting": false,
+      "OOMKilled": false,
+      "Dead": false,
+      "Pid": 0,
+      "ExitCode": 1,
+      "Error": "",
+      "StartedAt": "2026-11-15T23:49:37.650691806Z",
+      "FinishedAt": "2026-11-15T23:49:37.816765365Z"
+    },
+    "ports": "",
+    "logs": "The files belonging to this database system will be owned by user \"postgres\".\nThis user must also own the server process.\n\nThe database cluster will be initialized with locale \"en_US.utf8\".\nThe default database encoding has accordingly been set to \"UTF8\".\nThe default text search configuration will be set to \"english\".\n\nData page checksums are disabled.\n\nfixing permissions on existing directory /var/lib/postgresql/data ... ok\ninitdb: error: could not create directory \"/var/lib/postgresql/data/pg_wal\": No space left on device\ninitdb: removing contents of data directory \"/var/lib/postgresql/data\"\n"
+  },
+  {
+    "elapsed": 21,
+    "name": "nukmiris-vnext-1d7d7148e40f45e78ef462600a6889bd",
+    "state": {
+      "Status": "exited",
+      "Running": false,
+      "Paused": false,
+      "Restarting": false,
+      "OOMKilled": false,
+      "Dead": false,
+      "Pid": 0,
+      "ExitCode": 0,
+      "Error": "",
+      "StartedAt": "2026-11-15T23:49:32.391608205Z",
+      "FinishedAt": "2026-11-15T23:49:32.847697105Z"
+    },
+    "ports": "",
+    "logs": "2026-11-15 23:49:32.537 UTC [1] LOG:  listening on IPv4 address \"0.0.0.0\", port 5432\n2026-11-15 23:49:32.537 UTC [1] LOG:  listening on IPv6 address \"::\", port 5432\n2026-11-15 23:49:32.538 UTC [1] LOG:  listening on Unix socket \"/var/run/postgresql/.s.PGSQL.5432\"\n2026-11-15 23:49:32.541 UTC [29] LOG:  database system was shut down at 2026-11-15 23:49:32 UTC\n2026-11-15 23:49:32.545 UTC [1] LOG:  database system is ready to accept connections\n2026-11-15 23:49:32.828 UTC [1] LOG:  received fast shutdown request\n2026-11-15 23:49:32.828 UTC [1] LOG:  aborting any active transactions\n2026-11-15 23:49:32.830 UTC [1] LOG:  background worker \"logical replication launcher\" (PID 32) exited with exit code 1\n2026-11-15 23:49:32.831 UTC [27] LOG:  shutting down\n2026-11-15 23:49:32.832 UTC [27] LOG:  checkpoint starting: shutdown immediate\n2026-11-15 23:49:32.843 UTC [27] LOG:  checkpoint complete: wrote 79 buffers (0.5%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.002 s, sync=0.009 s, total=0.012 s; sync files=36, longest=0.001 s, average=0.001 s; distance=47 kB, estimate=47 kB; lsn=0/1BDD878, redo lsn=0/1BDD878\n2026-11-15 23:49:32.845 UTC [1] LOG:  database system is shut down\n"
+  },
+  {
+    "elapsed": 22,
+    "name": "nukmiris-vnext-13c860837b8048d98ae6404513097b05",
+    "state": {
+      "Status": "exited",
+      "Running": false,
+      "Paused": false,
+      "Restarting": false,
+      "OOMKilled": false,
+      "Dead": false,
+      "Pid": 0,
+      "ExitCode": 1,
+      "Error": "",
+      "StartedAt": "2026-11-15T23:49:37.650691806Z",
+      "FinishedAt": "2026-11-15T23:49:37.816765365Z"
+    },
+    "ports": "",
+    "logs": "The files belonging to this database system will be owned by user \"postgres\".\nThis user must also own the server process.\n\nThe database cluster will be initialized with locale \"en_US.utf8\".\nThe default database encoding has accordingly been set to \"UTF8\".\nThe default text search configuration will be set to \"english\".\n\nData page checksums are disabled.\n\nfixing permissions on existing directory /var/lib/postgresql/data ... ok\ninitdb: error: could not create directory \"/var/lib/postgresql/data/pg_wal\": No space left on device\ninitdb: removing contents of data directory \"/var/lib/postgresql/data\"\n"
+  },
+  {
+    "elapsed": 22,
+    "name": "nukmiris-vnext-1d7d7148e40f45e78ef462600a6889bd",
+    "state": {
+      "Status": "exited",
+      "Running": false,
+      "Paused": false,
+      "Restarting": false,
+      "OOMKilled": false,
+      "Dead": false,
+      "Pid": 0,
+      "ExitCode": 0,
+      "Error": "",
+      "StartedAt": "2026-11-15T23:49:32.391608205Z",
+      "FinishedAt": "2026-11-15T23:49:32.847697105Z"
+    },
+    "ports": "",
+    "logs": "2026-11-15 23:49:32.537 UTC [1] LOG:  listening on IPv4 address \"0.0.0.0\", port 5432\n2026-11-15 23:49:32.537 UTC [1] LOG:  listening on IPv6 address \"::\", port 5432\n2026-11-15 23:49:32.538 UTC [1] LOG:  listening on Unix socket \"/var/run/postgresql/.s.PGSQL.5432\"\n2026-11-15 23:49:32.541 UTC [29] LOG:  database system was shut down at 2026-11-15 23:49:32 UTC\n2026-11-15 23:49:32.545 UTC [1] LOG:  database system is ready to accept connections\n2026-11-15 23:49:32.828 UTC [1] LOG:  received fast shutdown request\n2026-11-15 23:49:32.828 UTC [1] LOG:  aborting any active transactions\n2026-11-15 23:49:32.830 UTC [1] LOG:  background worker \"logical replication launcher\" (PID 32) exited with exit code 1\n2026-11-15 23:49:32.831 UTC [27] LOG:  shutting down\n2026-11-15 23:49:32.832 UTC [27] LOG:  checkpoint starting: shutdown immediate\n2026-11-15 23:49:32.843 UTC [27] LOG:  checkpoint complete: wrote 79 buffers (0.5%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.002 s, sync=0.009 s, total=0.012 s; sync files=36, longest=0.001 s, average=0.001 s; distance=47 kB, estimate=47 kB; lsn=0/1BDD878, redo lsn=0/1BDD878\n2026-11-15 23:49:32.845 UTC [1] LOG:  database system is shut down\n"
+  },
+  {
+    "elapsed": 23,
+    "name": "nukmiris-vnext-13c860837b8048d98ae6404513097b05",
+    "state": {
+      "Status": "exited",
+      "Running": false,
+      "Paused": false,
+      "Restarting": false,
+      "OOMKilled": false,
+      "Dead": false,
+      "Pid": 0,
+      "ExitCode": 1,
+      "Error": "",
+      "StartedAt": "2026-11-15T23:49:37.650691806Z",
+      "FinishedAt": "2026-11-15T23:49:37.816765365Z"
+    },
+    "ports": "",
+    "logs": "The files belonging to this database system will be owned by user \"postgres\".\nThis user must also own the server process.\n\nThe database cluster will be initialized with locale \"en_US.utf8\".\nThe default database encoding has accordingly been set to \"UTF8\".\nThe default text search configuration will be set to \"english\".\n\nData page checksums are disabled.\n\nfixing permissions on existing directory /var/lib/postgresql/data ... ok\ninitdb: error: could not create directory \"/var/lib/postgresql/data/pg_wal\": No space left on device\ninitdb: removing contents of data directory \"/var/lib/postgresql/data\"\n"
+  },
+  {
+    "elapsed": 23,
+    "name": "nukmiris-vnext-1d7d7148e40f45e78ef462600a6889bd",
+    "state": {
+      "Status": "exited",
+      "Running": false,
+      "Paused": false,
+      "Restarting": false,
+      "OOMKilled": false,
+      "Dead": false,
+      "Pid": 0,
+      "ExitCode": 0,
+      "Error": "",
+      "StartedAt": "2026-11-15T23:49:32.391608205Z",
+      "FinishedAt": "2026-11-15T23:49:32.847697105Z"
+    },
+    "ports": "",
+    "logs": "2026-11-15 23:49:32.537 UTC [1] LOG:  listening on IPv4 address \"0.0.0.0\", port 5432\n2026-11-15 23:49:32.537 UTC [1] LOG:  listening on IPv6 address \"::\", port 5432\n2026-11-15 23:49:32.538 UTC [1] LOG:  listening on Unix socket \"/var/run/postgresql/.s.PGSQL.5432\"\n2026-11-15 23:49:32.541 UTC [29] LOG:  database system was shut down at 2026-11-15 23:49:32 UTC\n2026-11-15 23:49:32.545 UTC [1] LOG:  database system is ready to accept connections\n2026-11-15 23:49:32.828 UTC [1] LOG:  received fast shutdown request\n2026-11-15 23:49:32.828 UTC [1] LOG:  aborting any active transactions\n2026-11-15 23:49:32.830 UTC [1] LOG:  background worker \"logical replication launcher\" (PID 32) exited with exit code 1\n2026-11-15 23:49:32.831 UTC [27] LOG:  shutting down\n2026-11-15 23:49:32.832 UTC [27] LOG:  checkpoint starting: shutdown immediate\n2026-11-15 23:49:32.843 UTC [27] LOG:  checkpoint complete: wrote 79 buffers (0.5%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.002 s, sync=0.009 s, total=0.012 s; sync files=36, longest=0.001 s, average=0.001 s; distance=47 kB, estimate=47 kB; lsn=0/1BDD878, redo lsn=0/1BDD878\n2026-11-15 23:49:32.845 UTC [1] LOG:  database system is shut down\n"
+  },
+  {
+    "elapsed": 24,
+    "name": "nukmiris-vnext-13c860837b8048d98ae6404513097b05",
+    "state": {
+      "Status": "exited",
+      "Running": false,
+      "Paused": false,
+      "Restarting": false,
+      "OOMKilled": false,
+      "Dead": false,
+      "Pid": 0,
+      "ExitCode": 1,
+      "Error": "",
+      "StartedAt": "2026-11-15T23:49:37.650691806Z",
+      "FinishedAt": "2026-11-15T23:49:37.816765365Z"
+    },
+    "ports": "",
+    "logs": "The files belonging to this database system will be owned by user \"postgres\".\nThis user must also own the server process.\n\nThe database cluster will be initialized with locale \"en_US.utf8\".\nThe default database encoding has accordingly been set to \"UTF8\".\nThe default text search configuration will be set to \"english\".\n\nData page checksums are disabled.\n\nfixing permissions on existing directory /var/lib/postgresql/data ... ok\ninitdb: error: could not create directory \"/var/lib/postgresql/data/pg_wal\": No space left on device\ninitdb: removing contents of data directory \"/var/lib/postgresql/data\"\n"
+  },
+  {
+    "elapsed": 24,
+    "name": "nukmiris-vnext-1d7d7148e40f45e78ef462600a6889bd",
+    "state": {
+      "Status": "exited",
+      "Running": false,
+      "Paused": false,
+      "Restarting": false,
+      "OOMKilled": false,
+      "Dead": false,
+      "Pid": 0,
+      "ExitCode": 0,
+      "Error": "",
+      "StartedAt": "2026-11-15T23:49:32.391608205Z",
+      "FinishedAt": "2026-11-15T23:49:32.847697105Z"
+    },
+    "ports": "",
+    "logs": "2026-11-15 23:49:32.537 UTC [1] LOG:  listening on IPv4 address \"0.0.0.0\", port 5432\n2026-11-15 23:49:32.537 UTC [1] LOG:  listening on IPv6 address \"::\", port 5432\n2026-11-15 23:49:32.538 UTC [1] LOG:  listening on Unix socket \"/var/run/postgresql/.s.PGSQL.5432\"\n2026-11-15 23:49:32.541 UTC [29] LOG:  database system was shut down at 2026-11-15 23:49:32 UTC\n2026-11-15 23:49:32.545 UTC [1] LOG:  database system is ready to accept connections\n2026-11-15 23:49:32.828 UTC [1] LOG:  received fast shutdown request\n2026-11-15 23:49:32.828 UTC [1] LOG:  aborting any active transactions\n2026-11-15 23:49:32.830 UTC [1] LOG:  background worker \"logical replication launcher\" (PID 32) exited with exit code 1\n2026-11-15 23:49:32.831 UTC [27] LOG:  shutting down\n2026-11-15 23:49:32.832 UTC [27] LOG:  checkpoint starting: shutdown immediate\n2026-11-15 23:49:32.843 UTC [27] LOG:  checkpoint complete: wrote 79 buffers (0.5%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.002 s, sync=0.009 s, total=0.012 s; sync files=36, longest=0.001 s, average=0.001 s; distance=47 kB, estimate=47 kB; lsn=0/1BDD878, redo lsn=0/1BDD878\n2026-11-15 23:49:32.845 UTC [1] LOG:  database system is shut down\n"
+  },
+  {
+    "elapsed": 25,
+    "name": "nukmiris-vnext-13c860837b8048d98ae6404513097b05",
+    "state": {
+      "Status": "exited",
+      "Running": false,
+      "Paused": false,
+      "Restarting": false,
+      "OOMKilled": false,
+      "Dead": false,
+      "Pid": 0,
+      "ExitCode": 1,
+      "Error": "",
+      "StartedAt": "2026-11-15T23:49:37.650691806Z",
+      "FinishedAt": "2026-11-15T23:49:37.816765365Z"
+    },
+    "ports": "",
+    "logs": "The files belonging to this database system will be owned by user \"postgres\".\nThis user must also own the server process.\n\nThe database cluster will be initialized with locale \"en_US.utf8\".\nThe default database encoding has accordingly been set to \"UTF8\".\nThe default text search configuration will be set to \"english\".\n\nData page checksums are disabled.\n\nfixing permissions on existing directory /var/lib/postgresql/data ... ok\ninitdb: error: could not create directory \"/var/lib/postgresql/data/pg_wal\": No space left on device\ninitdb: removing contents of data directory \"/var/lib/postgresql/data\"\n"
+  },
+  {
+    "elapsed": 25,
+    "name": "nukmiris-vnext-1d7d7148e40f45e78ef462600a6889bd",
+    "state": {
+      "Status": "exited",
+      "Running": false,
+      "Paused": false,
+      "Restarting": false,
+      "OOMKilled": false,
+      "Dead": false,
+      "Pid": 0,
+      "ExitCode": 0,
+      "Error": "",
+      "StartedAt": "2026-11-15T23:49:32.391608205Z",
+      "FinishedAt": "2026-11-15T23:49:32.847697105Z"
+    },
+    "ports": "",
+    "logs": "2026-11-15 23:49:32.537 UTC [1] LOG:  listening on IPv4 address \"0.0.0.0\", port 5432\n2026-11-15 23:49:32.537 UTC [1] LOG:  listening on IPv6 address \"::\", port 5432\n2026-11-15 23:49:32.538 UTC [1] LOG:  listening on Unix socket \"/var/run/postgresql/.s.PGSQL.5432\"\n2026-11-15 23:49:32.541 UTC [29] LOG:  database system was shut down at 2026-11-15 23:49:32 UTC\n2026-11-15 23:49:32.545 UTC [1] LOG:  database system is ready to accept connections\n2026-11-15 23:49:32.828 UTC [1] LOG:  received fast shutdown request\n2026-11-15 23:49:32.828 UTC [1] LOG:  aborting any active transactions\n2026-11-15 23:49:32.830 UTC [1] LOG:  background worker \"logical replication launcher\" (PID 32) exited with exit code 1\n2026-11-15 23:49:32.831 UTC [27] LOG:  shutting down\n2026-11-15 23:49:32.832 UTC [27] LOG:  checkpoint starting: shutdown immediate\n2026-11-15 23:49:32.843 UTC [27] LOG:  checkpoint complete: wrote 79 buffers (0.5%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.002 s, sync=0.009 s, total=0.012 s; sync files=36, longest=0.001 s, average=0.001 s; distance=47 kB, estimate=47 kB; lsn=0/1BDD878, redo lsn=0/1BDD878\n2026-11-15 23:49:32.845 UTC [1] LOG:  database system is shut down\n"
+  },
+  {
+    "elapsed": 26,
+    "name": "nukmiris-vnext-13c860837b8048d98ae6404513097b05",
+    "state": {
+      "Status": "exited",
+      "Running": false,
+      "Paused": false,
+      "Restarting": false,
+      "OOMKilled": false,
+      "Dead": false,
+      "Pid": 0,
+      "ExitCode": 1,
+      "Error": "",
+      "StartedAt": "2026-11-15T23:49:37.650691806Z",
+      "FinishedAt": "2026-11-15T23:49:37.816765365Z"
+    },
+    "ports": "",
+    "logs": "The files belonging to this database system will be owned by user \"postgres\".\nThis user must also own the server process.\n\nThe database cluster will be initialized with locale \"en_US.utf8\".\nThe default database encoding has accordingly been set to \"UTF8\".\nThe default text search configuration will be set to \"english\".\n\nData page checksums are disabled.\n\nfixing permissions on existing directory /var/lib/postgresql/data ... ok\ninitdb: error: could not create directory \"/var/lib/postgresql/data/pg_wal\": No space left on device\ninitdb: removing contents of data directory \"/var/lib/postgresql/data\"\n"
+  },
+  {
+    "elapsed": 26,
+    "name": "nukmiris-vnext-1d7d7148e40f45e78ef462600a6889bd",
+    "state": {
+      "Status": "exited",
+      "Running": false,
+      "Paused": false,
+      "Restarting": false,
+      "OOMKilled": false,
+      "Dead": false,
+      "Pid": 0,
+      "ExitCode": 0,
+      "Error": "",
+      "StartedAt": "2026-11-15T23:49:32.391608205Z",
+      "FinishedAt": "2026-11-15T23:49:32.847697105Z"
+    },
+    "ports": "",
+    "logs": "2026-11-15 23:49:32.537 UTC [1] LOG:  listening on IPv4 address \"0.0.0.0\", port 5432\n2026-11-15 23:49:32.537 UTC [1] LOG:  listening on IPv6 address \"::\", port 5432\n2026-11-15 23:49:32.538 UTC [1] LOG:  listening on Unix socket \"/var/run/postgresql/.s.PGSQL.5432\"\n2026-11-15 23:49:32.541 UTC [29] LOG:  database system was shut down at 2026-11-15 23:49:32 UTC\n2026-11-15 23:49:32.545 UTC [1] LOG:  database system is ready to accept connections\n2026-11-15 23:49:32.828 UTC [1] LOG:  received fast shutdown request\n2026-11-15 23:49:32.828 UTC [1] LOG:  aborting any active transactions\n2026-11-15 23:49:32.830 UTC [1] LOG:  background worker \"logical replication launcher\" (PID 32) exited with exit code 1\n2026-11-15 23:49:32.831 UTC [27] LOG:  shutting down\n2026-11-15 23:49:32.832 UTC [27] LOG:  checkpoint starting: shutdown immediate\n2026-11-15 23:49:32.843 UTC [27] LOG:  checkpoint complete: wrote 79 buffers (0.5%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.002 s, sync=0.009 s, total=0.012 s; sync files=36, longest=0.001 s, average=0.001 s; distance=47 kB, estimate=47 kB; lsn=0/1BDD878, redo lsn=0/1BDD878\n2026-11-15 23:49:32.845 UTC [1] LOG:  database system is shut down\n"
+  },
+  {
+    "elapsed": 27,
+    "name": "nukmiris-vnext-13c860837b8048d98ae6404513097b05",
+    "state": {
+      "Status": "exited",
+      "Running": false,
+      "Paused": false,
+      "Restarting": false,
+      "OOMKilled": false,
+      "Dead": false,
+      "Pid": 0,
+      "ExitCode": 1,
+      "Error": "",
+      "StartedAt": "2026-11-15T23:49:37.650691806Z",
+      "FinishedAt": "2026-11-15T23:49:37.816765365Z"
+    },
+    "ports": "",
+    "logs": "The files belonging to this database system will be owned by user \"postgres\".\nThis user must also own the server process.\n\nThe database cluster will be initialized with locale \"en_US.utf8\".\nThe default database encoding has accordingly been set to \"UTF8\".\nThe default text search configuration will be set to \"english\".\n\nData page checksums are disabled.\n\nfixing permissions on existing directory /var/lib/postgresql/data ... ok\ninitdb: error: could not create directory \"/var/lib/postgresql/data/pg_wal\": No space left on device\ninitdb: removing contents of data directory \"/var/lib/postgresql/data\"\n"
+  },
+  {
+    "elapsed": 27,
+    "name": "nukmiris-vnext-1d7d7148e40f45e78ef462600a6889bd",
+    "state": {
+      "Status": "exited",
+      "Running": false,
+      "Paused": false,
+      "Restarting": false,
+      "OOMKilled": false,
+      "Dead": false,
+      "Pid": 0,
+      "ExitCode": 0,
+      "Error": "",
+      "StartedAt": "2026-11-15T23:49:32.391608205Z",
+      "FinishedAt": "2026-11-15T23:49:32.847697105Z"
+    },
+    "ports": "",
+    "logs": "2026-11-15 23:49:32.537 UTC [1] LOG:  listening on IPv4 address \"0.0.0.0\", port 5432\n2026-11-15 23:49:32.537 UTC [1] LOG:  listening on IPv6 address \"::\", port 5432\n2026-11-15 23:49:32.538 UTC [1] LOG:  listening on Unix socket \"/var/run/postgresql/.s.PGSQL.5432\"\n2026-11-15 23:49:32.541 UTC [29] LOG:  database system was shut down at 2026-11-15 23:49:32 UTC\n2026-11-15 23:49:32.545 UTC [1] LOG:  database system is ready to accept connections\n2026-11-15 23:49:32.828 UTC [1] LOG:  received fast shutdown request\n2026-11-15 23:49:32.828 UTC [1] LOG:  aborting any active transactions\n2026-11-15 23:49:32.830 UTC [1] LOG:  background worker \"logical replication launcher\" (PID 32) exited with exit code 1\n2026-11-15 23:49:32.831 UTC [27] LOG:  shutting down\n2026-11-15 23:49:32.832 UTC [27] LOG:  checkpoint starting: shutdown immediate\n2026-11-15 23:49:32.843 UTC [27] LOG:  checkpoint complete: wrote 79 buffers (0.5%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.002 s, sync=0.009 s, total=0.012 s; sync files=36, longest=0.001 s, average=0.001 s; distance=47 kB, estimate=47 kB; lsn=0/1BDD878, redo lsn=0/1BDD878\n2026-11-15 23:49:32.845 UTC [1] LOG:  database system is shut down\n"
+  },
+  {
+    "elapsed": 28,
+    "name": "nukmiris-vnext-13c860837b8048d98ae6404513097b05",
+    "state": {
+      "Status": "exited",
+      "Running": false,
+      "Paused": false,
+      "Restarting": false,
+      "OOMKilled": false,
+      "Dead": false,
+      "Pid": 0,
+      "ExitCode": 1,
+      "Error": "",
+      "StartedAt": "2026-11-15T23:49:37.650691806Z",
+      "FinishedAt": "2026-11-15T23:49:37.816765365Z"
+    },
+    "ports": "",
+    "logs": "The files belonging to this database system will be owned by user \"postgres\".\nThis user must also own the server process.\n\nThe database cluster will be initialized with locale \"en_US.utf8\".\nThe default database encoding has accordingly been set to \"UTF8\".\nThe default text search configuration will be set to \"english\".\n\nData page checksums are disabled.\n\nfixing permissions on existing directory /var/lib/postgresql/data ... ok\ninitdb: error: could not create directory \"/var/lib/postgresql/data/pg_wal\": No space left on device\ninitdb: removing contents of data directory \"/var/lib/postgresql/data\"\n"
+  },
+  {
+    "elapsed": 28,
+    "name": "nukmiris-vnext-1d7d7148e40f45e78ef462600a6889bd",
+    "state": {
+      "Status": "exited",
+      "Running": false,
+      "Paused": false,
+      "Restarting": false,
+      "OOMKilled": false,
+      "Dead": false,
+      "Pid": 0,
+      "ExitCode": 0,
+      "Error": "",
+      "StartedAt": "2026-11-15T23:49:32.391608205Z",
+      "FinishedAt": "2026-11-15T23:49:32.847697105Z"
+    },
+    "ports": "",
+    "logs": "2026-11-15 23:49:32.537 UTC [1] LOG:  listening on IPv4 address \"0.0.0.0\", port 5432\n2026-11-15 23:49:32.537 UTC [1] LOG:  listening on IPv6 address \"::\", port 5432\n2026-11-15 23:49:32.538 UTC [1] LOG:  listening on Unix socket \"/var/run/postgresql/.s.PGSQL.5432\"\n2026-11-15 23:49:32.541 UTC [29] LOG:  database system was shut down at 2026-11-15 23:49:32 UTC\n2026-11-15 23:49:32.545 UTC [1] LOG:  database system is ready to accept connections\n2026-11-15 23:49:32.828 UTC [1] LOG:  received fast shutdown request\n2026-11-15 23:49:32.828 UTC [1] LOG:  aborting any active transactions\n2026-11-15 23:49:32.830 UTC [1] LOG:  background worker \"logical replication launcher\" (PID 32) exited with exit code 1\n2026-11-15 23:49:32.831 UTC [27] LOG:  shutting down\n2026-11-15 23:49:32.832 UTC [27] LOG:  checkpoint starting: shutdown immediate\n2026-11-15 23:49:32.843 UTC [27] LOG:  checkpoint complete: wrote 79 buffers (0.5%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.002 s, sync=0.009 s, total=0.012 s; sync files=36, longest=0.001 s, average=0.001 s; distance=47 kB, estimate=47 kB; lsn=0/1BDD878, redo lsn=0/1BDD878\n2026-11-15 23:49:32.845 UTC [1] LOG:  database system is shut down\n"
+  },
+  {
+    "elapsed": 29,
+    "name": "nukmiris-vnext-13c860837b8048d98ae6404513097b05",
+    "state": {
+      "Status": "exited",
+      "Running": false,
+      "Paused": false,
+      "Restarting": false,
+      "OOMKilled": false,
+      "Dead": false,
+      "Pid": 0,
+      "ExitCode": 1,
+      "Error": "",
+      "StartedAt": "2026-11-15T23:49:37.650691806Z",
+      "FinishedAt": "2026-11-15T23:49:37.816765365Z"
+    },
+    "ports": "",
+    "logs": "The files belonging to this database system will be owned by user \"postgres\".\nThis user must also own the server process.\n\nThe database cluster will be initialized with locale \"en_US.utf8\".\nThe default database encoding has accordingly been set to \"UTF8\".\nThe default text search configuration will be set to \"english\".\n\nData page checksums are disabled.\n\nfixing permissions on existing directory /var/lib/postgresql/data ... ok\ninitdb: error: could not create directory \"/var/lib/postgresql/data/pg_wal\": No space left on device\ninitdb: removing contents of data directory \"/var/lib/postgresql/data\"\n"
+  },
+  {
+    "elapsed": 29,
+    "name": "nukmiris-vnext-1d7d7148e40f45e78ef462600a6889bd",
+    "state": {
+      "Status": "exited",
+      "Running": false,
+      "Paused": false,
+      "Restarting": false,
+      "OOMKilled": false,
+      "Dead": false,
+      "Pid": 0,
+      "ExitCode": 0,
+      "Error": "",
+      "StartedAt": "2026-11-15T23:49:32.391608205Z",
+      "FinishedAt": "2026-11-15T23:49:32.847697105Z"
+    },
+    "ports": "",
+    "logs": "2026-11-15 23:49:32.537 UTC [1] LOG:  listening on IPv4 address \"0.0.0.0\", port 5432\n2026-11-15 23:49:32.537 UTC [1] LOG:  listening on IPv6 address \"::\", port 5432\n2026-11-15 23:49:32.538 UTC [1] LOG:  listening on Unix socket \"/var/run/postgresql/.s.PGSQL.5432\"\n2026-11-15 23:49:32.541 UTC [29] LOG:  database system was shut down at 2026-11-15 23:49:32 UTC\n2026-11-15 23:49:32.545 UTC [1] LOG:  database system is ready to accept connections\n2026-11-15 23:49:32.828 UTC [1] LOG:  received fast shutdown request\n2026-11-15 23:49:32.828 UTC [1] LOG:  aborting any active transactions\n2026-11-15 23:49:32.830 UTC [1] LOG:  background worker \"logical replication launcher\" (PID 32) exited with exit code 1\n2026-11-15 23:49:32.831 UTC [27] LOG:  shutting down\n2026-11-15 23:49:32.832 UTC [27] LOG:  checkpoint starting: shutdown immediate\n2026-11-15 23:49:32.843 UTC [27] LOG:  checkpoint complete: wrote 79 buffers (0.5%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.002 s, sync=0.009 s, total=0.012 s; sync files=36, longest=0.001 s, average=0.001 s; distance=47 kB, estimate=47 kB; lsn=0/1BDD878, redo lsn=0/1BDD878\n2026-11-15 23:49:32.845 UTC [1] LOG:  database system is shut down\n"
+  },
+  {
+    "elapsed": 30,
+    "name": "nukmiris-vnext-13c860837b8048d98ae6404513097b05",
+    "state": {
+      "Status": "exited",
+      "Running": false,
+      "Paused": false,
+      "Restarting": false,
+      "OOMKilled": false,
+      "Dead": false,
+      "Pid": 0,
+      "ExitCode": 1,
+      "Error": "",
+      "StartedAt": "2026-11-15T23:49:37.650691806Z",
+      "FinishedAt": "2026-11-15T23:49:37.816765365Z"
+    },
+    "ports": "",
+    "logs": "The files belonging to this database system will be owned by user \"postgres\".\nThis user must also own the server process.\n\nThe database cluster will be initialized with locale \"en_US.utf8\".\nThe default database encoding has accordingly been set to \"UTF8\".\nThe default text search configuration will be set to \"english\".\n\nData page checksums are disabled.\n\nfixing permissions on existing directory /var/lib/postgresql/data ... ok\ninitdb: error: could not create directory \"/var/lib/postgresql/data/pg_wal\": No space left on device\ninitdb: removing contents of data directory \"/var/lib/postgresql/data\"\n"
+  },
+  {
+    "elapsed": 30,
+    "name": "nukmiris-vnext-1d7d7148e40f45e78ef462600a6889bd",
+    "state": {
+      "Status": "exited",
+      "Running": false,
+      "Paused": false,
+      "Restarting": false,
+      "OOMKilled": false,
+      "Dead": false,
+      "Pid": 0,
+      "ExitCode": 0,
+      "Error": "",
+      "StartedAt": "2026-11-15T23:49:32.391608205Z",
+      "FinishedAt": "2026-11-15T23:49:32.847697105Z"
+    },
+    "ports": "",
+    "logs": "2026-11-15 23:49:32.537 UTC [1] LOG:  listening on IPv4 address \"0.0.0.0\", port 5432\n2026-11-15 23:49:32.537 UTC [1] LOG:  listening on IPv6 address \"::\", port 5432\n2026-11-15 23:49:32.538 UTC [1] LOG:  listening on Unix socket \"/var/run/postgresql/.s.PGSQL.5432\"\n2026-11-15 23:49:32.541 UTC [29] LOG:  database system was shut down at 2026-11-15 23:49:32 UTC\n2026-11-15 23:49:32.545 UTC [1] LOG:  database system is ready to accept connections\n2026-11-15 23:49:32.828 UTC [1] LOG:  received fast shutdown request\n2026-11-15 23:49:32.828 UTC [1] LOG:  aborting any active transactions\n2026-11-15 23:49:32.830 UTC [1] LOG:  background worker \"logical replication launcher\" (PID 32) exited with exit code 1\n2026-11-15 23:49:32.831 UTC [27] LOG:  shutting down\n2026-11-15 23:49:32.832 UTC [27] LOG:  checkpoint starting: shutdown immediate\n2026-11-15 23:49:32.843 UTC [27] LOG:  checkpoint complete: wrote 79 buffers (0.5%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.002 s, sync=0.009 s, total=0.012 s; sync files=36, longest=0.001 s, average=0.001 s; distance=47 kB, estimate=47 kB; lsn=0/1BDD878, redo lsn=0/1BDD878\n2026-11-15 23:49:32.845 UTC [1] LOG:  database system is shut down\n"
+  },
+  {
+    "elapsed": 31,
+    "name": "nukmiris-vnext-13c860837b8048d98ae6404513097b05",
+    "state": {
+      "Status": "exited",
+      "Running": false,
+      "Paused": false,
+      "Restarting": false,
+      "OOMKilled": false,
+      "Dead": false,
+      "Pid": 0,
+      "ExitCode": 1,
+      "Error": "",
+      "StartedAt": "2026-11-15T23:49:37.650691806Z",
+      "FinishedAt": "2026-11-15T23:49:37.816765365Z"
+    },
+    "ports": "",
+    "logs": "The files belonging to this database system will be owned by user \"postgres\".\nThis user must also own the server process.\n\nThe database cluster will be initialized with locale \"en_US.utf8\".\nThe default database encoding has accordingly been set to \"UTF8\".\nThe default text search configuration will be set to \"english\".\n\nData page checksums are disabled.\n\nfixing permissions on existing directory /var/lib/postgresql/data ... ok\ninitdb: error: could not create directory \"/var/lib/postgresql/data/pg_wal\": No space left on device\ninitdb: removing contents of data directory \"/var/lib/postgresql/data\"\n"
+  },
+  {
+    "elapsed": 31,
+    "name": "nukmiris-vnext-1d7d7148e40f45e78ef462600a6889bd",
+    "state": {
+      "Status": "exited",
+      "Running": false,
+      "Paused": false,
+      "Restarting": false,
+      "OOMKilled": false,
+      "Dead": false,
+      "Pid": 0,
+      "ExitCode": 0,
+      "Error": "",
+      "StartedAt": "2026-11-15T23:49:32.391608205Z",
+      "FinishedAt": "2026-11-15T23:49:32.847697105Z"
+    },
+    "ports": "",
+    "logs": "2026-11-15 23:49:32.537 UTC [1] LOG:  listening on IPv4 address \"0.0.0.0\", port 5432\n2026-11-15 23:49:32.537 UTC [1] LOG:  listening on IPv6 address \"::\", port 5432\n2026-11-15 23:49:32.538 UTC [1] LOG:  listening on Unix socket \"/var/run/postgresql/.s.PGSQL.5432\"\n2026-11-15 23:49:32.541 UTC [29] LOG:  database system was shut down at 2026-11-15 23:49:32 UTC\n2026-11-15 23:49:32.545 UTC [1] LOG:  database system is ready to accept connections\n2026-11-15 23:49:32.828 UTC [1] LOG:  received fast shutdown request\n2026-11-15 23:49:32.828 UTC [1] LOG:  aborting any active transactions\n2026-11-15 23:49:32.830 UTC [1] LOG:  background worker \"logical replication launcher\" (PID 32) exited with exit code 1\n2026-11-15 23:49:32.831 UTC [27] LOG:  shutting down\n2026-11-15 23:49:32.832 UTC [27] LOG:  checkpoint starting: shutdown immediate\n2026-11-15 23:49:32.843 UTC [27] LOG:  checkpoint complete: wrote 79 buffers (0.5%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.002 s, sync=0.009 s, total=0.012 s; sync files=36, longest=0.001 s, average=0.001 s; distance=47 kB, estimate=47 kB; lsn=0/1BDD878, redo lsn=0/1BDD878\n2026-11-15 23:49:32.845 UTC [1] LOG:  database system is shut down\n"
+  },
+  {
+    "elapsed": 32,
+    "name": "nukmiris-vnext-13c860837b8048d98ae6404513097b05",
+    "state": {
+      "Status": "exited",
+      "Running": false,
+      "Paused": false,
+      "Restarting": false,
+      "OOMKilled": false,
+      "Dead": false,
+      "Pid": 0,
+      "ExitCode": 1,
+      "Error": "",
+      "StartedAt": "2026-11-15T23:49:37.650691806Z",
+      "FinishedAt": "2026-11-15T23:49:37.816765365Z"
+    },
+    "ports": "",
+    "logs": "The files belonging to this database system will be owned by user \"postgres\".\nThis user must also own the server process.\n\nThe database cluster will be initialized with locale \"en_US.utf8\".\nThe default database encoding has accordingly been set to \"UTF8\".\nThe default text search configuration will be set to \"english\".\n\nData page checksums are disabled.\n\nfixing permissions on existing directory /var/lib/postgresql/data ... ok\ninitdb: error: could not create directory \"/var/lib/postgresql/data/pg_wal\": No space left on device\ninitdb: removing contents of data directory \"/var/lib/postgresql/data\"\n"
+  },
+  {
+    "elapsed": 32,
+    "name": "nukmiris-vnext-1d7d7148e40f45e78ef462600a6889bd",
+    "state": {
+      "Status": "exited",
+      "Running": false,
+      "Paused": false,
+      "Restarting": false,
+      "OOMKilled": false,
+      "Dead": false,
+      "Pid": 0,
+      "ExitCode": 0,
+      "Error": "",
+      "StartedAt": "2026-11-15T23:49:32.391608205Z",
+      "FinishedAt": "2026-11-15T23:49:32.847697105Z"
+    },
+    "ports": "",
+    "logs": "2026-11-15 23:49:32.537 UTC [1] LOG:  listening on IPv4 address \"0.0.0.0\", port 5432\n2026-11-15 23:49:32.537 UTC [1] LOG:  listening on IPv6 address \"::\", port 5432\n2026-11-15 23:49:32.538 UTC [1] LOG:  listening on Unix socket \"/var/run/postgresql/.s.PGSQL.5432\"\n2026-11-15 23:49:32.541 UTC [29] LOG:  database system was shut down at 2026-11-15 23:49:32 UTC\n2026-11-15 23:49:32.545 UTC [1] LOG:  database system is ready to accept connections\n2026-11-15 23:49:32.828 UTC [1] LOG:  received fast shutdown request\n2026-11-15 23:49:32.828 UTC [1] LOG:  aborting any active transactions\n2026-11-15 23:49:32.830 UTC [1] LOG:  background worker \"logical replication launcher\" (PID 32) exited with exit code 1\n2026-11-15 23:49:32.831 UTC [27] LOG:  shutting down\n2026-11-15 23:49:32.832 UTC [27] LOG:  checkpoint starting: shutdown immediate\n2026-11-15 23:49:32.843 UTC [27] LOG:  checkpoint complete: wrote 79 buffers (0.5%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.002 s, sync=0.009 s, total=0.012 s; sync files=36, longest=0.001 s, average=0.001 s; distance=47 kB, estimate=47 kB; lsn=0/1BDD878, redo lsn=0/1BDD878\n2026-11-15 23:49:32.845 UTC [1] LOG:  database system is shut down\n"
+  },
+  {
+    "elapsed": 33,
+    "name": "nukmiris-vnext-13c860837b8048d98ae6404513097b05",
+    "state": {
+      "Status": "exited",
+      "Running": false,
+      "Paused": false,
+      "Restarting": false,
+      "OOMKilled": false,
+      "Dead": false,
+      "Pid": 0,
+      "ExitCode": 1,
+      "Error": "",
+      "StartedAt": "2026-11-15T23:49:37.650691806Z",
+      "FinishedAt": "2026-11-15T23:49:37.816765365Z"
+    },
+    "ports": "",
+    "logs": "The files belonging to this database system will be owned by user \"postgres\".\nThis user must also own the server process.\n\nThe database cluster will be initialized with locale \"en_US.utf8\".\nThe default database encoding has accordingly been set to \"UTF8\".\nThe default text search configuration will be set to \"english\".\n\nData page checksums are disabled.\n\nfixing permissions on existing directory /var/lib/postgresql/data ... ok\ninitdb: error: could not create directory \"/var/lib/postgresql/data/pg_wal\": No space left on device\ninitdb: removing contents of data directory \"/var/lib/postgresql/data\"\n"
+  },
+  {
+    "elapsed": 33,
+    "name": "nukmiris-vnext-1d7d7148e40f45e78ef462600a6889bd",
+    "state": {
+      "Status": "exited",
+      "Running": false,
+      "Paused": false,
+      "Restarting": false,
+      "OOMKilled": false,
+      "Dead": false,
+      "Pid": 0,
+      "ExitCode": 0,
+      "Error": "",
+      "StartedAt": "2026-11-15T23:49:32.391608205Z",
+      "FinishedAt": "2026-11-15T23:49:32.847697105Z"
+    },
+    "ports": "",
+    "logs": "2026-11-15 23:49:32.537 UTC [1] LOG:  listening on IPv4 address \"0.0.0.0\", port 5432\n2026-11-15 23:49:32.537 UTC [1] LOG:  listening on IPv6 address \"::\", port 5432\n2026-11-15 23:49:32.538 UTC [1] LOG:  listening on Unix socket \"/var/run/postgresql/.s.PGSQL.5432\"\n2026-11-15 23:49:32.541 UTC [29] LOG:  database system was shut down at 2026-11-15 23:49:32 UTC\n2026-11-15 23:49:32.545 UTC [1] LOG:  database system is ready to accept connections\n2026-11-15 23:49:32.828 UTC [1] LOG:  received fast shutdown request\n2026-11-15 23:49:32.828 UTC [1] LOG:  aborting any active transactions\n2026-11-15 23:49:32.830 UTC [1] LOG:  background worker \"logical replication launcher\" (PID 32) exited with exit code 1\n2026-11-15 23:49:32.831 UTC [27] LOG:  shutting down\n2026-11-15 23:49:32.832 UTC [27] LOG:  checkpoint starting: shutdown immediate\n2026-11-15 23:49:32.843 UTC [27] LOG:  checkpoint complete: wrote 79 buffers (0.5%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.002 s, sync=0.009 s, total=0.012 s; sync files=36, longest=0.001 s, average=0.001 s; distance=47 kB, estimate=47 kB; lsn=0/1BDD878, redo lsn=0/1BDD878\n2026-11-15 23:49:32.845 UTC [1] LOG:  database system is shut down\n"
+  }
+]

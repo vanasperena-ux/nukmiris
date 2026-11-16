@@ -1,0 +1,32 @@
+Pulling/verifying pinned PostgreSQL image (first download budget: 10 minutes).
+Pulling/verifying pinned PostgreSQL image (first download budget: 10 minutes).
+✖ SE1 TCP owner authorization, service/employee forms API, booking, crash/restart and coherent inert restore (41125.784529ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 41252.699368
+
+✖ failing tests:
+
+test at local/services.test.mjs:12:1
+✖ SE1 TCP owner authorization, service/employee forms API, booking, crash/restart and coherent inert restore (41125.784529ms)
+  Error: local_postgres_not_ready
+      at ready (file:///workspace/work/nukmiris-product-services-employees/vnext/local/fixture.mjs:38:8)
+      at async provision (file:///workspace/work/nukmiris-product-services-employees/vnext/local/fixture.mjs:80:18)
+      at async restoreInteractive (file:///workspace/work/nukmiris-product-services-employees/vnext/local/coherent-backup.mjs:33:5)
+      at async TestContext.<anonymous> (file:///workspace/work/nukmiris-product-services-employees/vnext/local/services.test.mjs:42:74)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    [cause]: Error: connect ECONNREFUSED 127.0.0.1:23759
+        at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16) {
+      errno: -111,
+      code: 'ECONNREFUSED',
+      syscall: 'connect',
+      address: '127.0.0.1',
+      port: 23759
+    }
+  }

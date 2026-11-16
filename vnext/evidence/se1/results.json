@@ -1,0 +1,62 @@
+{
+  "source": "540fc4af57a29eba380c0f53df0bf3ad12093ad7",
+  "tree": "0dd4f535ad45bce6c0e818a470efd558069c71a9",
+  "baseline": "b4d0be0cb98c7f2b69be318e18b93f4de102c511",
+  "results": {
+    "services-browser": {
+      "tests": 1,
+      "pass": 1,
+      "fail": 0,
+      "skipped": 0
+    },
+    "services": {
+      "tests": 18,
+      "pass": 18,
+      "fail": 0,
+      "skipped": 0
+    },
+    "full": {
+      "tests": 685,
+      "pass": 685,
+      "fail": 0,
+      "skipped": 0
+    },
+    "runtime": {
+      "tests": 47,
+      "pass": 45,
+      "fail": 0,
+      "skipped": 2
+    },
+    "capacity": {
+      "tests": 4,
+      "pass": 4,
+      "fail": 0,
+      "skipped": 0
+    },
+    "browser": {
+      "tests": 1,
+      "pass": 1,
+      "fail": 0,
+      "skipped": 0
+    },
+    "final-browser": {
+      "tests": 1,
+      "pass": 1,
+      "fail": 0,
+      "skipped": 0
+    },
+    "capacity-browser": {
+      "tests": 1,
+      "pass": 1,
+      "fail": 0,
+      "skipped": 0
+    }
+  },
+  "typecheck": "PASS",
+  "scope": "PASS",
+  "nativeWindows": "NOT_EXECUTED",
+  "ownerAcceptance": "PENDING",
+  "independentReview": "NOT_RUN",
+  "sourceIntegrityAfterTests": "MATCHED",
+  "observedAtUtc": "2026-11-16T00:55:01.814259+00:00"
+}

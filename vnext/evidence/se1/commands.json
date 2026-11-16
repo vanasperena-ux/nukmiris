@@ -1,0 +1,134 @@
+[
+  {
+    "source": "540fc4af57a29eba380c0f53df0bf3ad12093ad7",
+    "suite": "services-browser",
+    "argv": [
+      "npm",
+      "run",
+      "test:services:browser",
+      "--",
+      "chromium",
+      "/tmp/nukmiris-se1-owner-final.png"
+    ],
+    "startedAt": "2026-11-16T00:44:20.327911+00:00",
+    "finishedAt": "2026-11-16T00:44:41.176102+00:00",
+    "durationSeconds": 20.848377098998753,
+    "exitCode": 0
+  },
+  {
+    "source": "540fc4af57a29eba380c0f53df0bf3ad12093ad7",
+    "suite": "services",
+    "argv": [
+      "npm",
+      "run",
+      "test:services"
+    ],
+    "startedAt": "2026-11-16T00:44:41.185032+00:00",
+    "finishedAt": "2026-11-16T00:45:02.671421+00:00",
+    "durationSeconds": 21.48640156899637,
+    "exitCode": 0
+  },
+  {
+    "source": "540fc4af57a29eba380c0f53df0bf3ad12093ad7",
+    "suite": "full",
+    "argv": [
+      "npm",
+      "test"
+    ],
+    "startedAt": "2026-11-16T00:45:02.672335+00:00",
+    "finishedAt": "2026-11-16T00:49:59.522452+00:00",
+    "durationSeconds": 296.85018702399975,
+    "exitCode": 0
+  },
+  {
+    "source": "540fc4af57a29eba380c0f53df0bf3ad12093ad7",
+    "suite": "runtime",
+    "argv": [
+      "npm",
+      "run",
+      "test:runtime"
+    ],
+    "startedAt": "2026-11-16T00:49:59.523711+00:00",
+    "finishedAt": "2026-11-16T00:52:27.733226+00:00",
+    "durationSeconds": 148.2101520130018,
+    "exitCode": 0
+  },
+  {
+    "source": "540fc4af57a29eba380c0f53df0bf3ad12093ad7",
+    "suite": "capacity",
+    "argv": [
+      "npm",
+      "run",
+      "test:capacity"
+    ],
+    "startedAt": "2026-11-16T00:52:27.759150+00:00",
+    "finishedAt": "2026-11-16T00:53:05.952163+00:00",
+    "durationSeconds": 38.19302168500144,
+    "exitCode": 0
+  },
+  {
+    "source": "540fc4af57a29eba380c0f53df0bf3ad12093ad7",
+    "suite": "browser",
+    "argv": [
+      "npm",
+      "run",
+      "test:browser"
+    ],
+    "startedAt": "2026-11-16T00:53:05.953120+00:00",
+    "finishedAt": "2026-11-16T00:53:34.864475+00:00",
+    "durationSeconds": 28.91137291099585,
+    "exitCode": 0
+  },
+  {
+    "source": "540fc4af57a29eba380c0f53df0bf3ad12093ad7",
+    "suite": "final-browser",
+    "argv": [
+      "npm",
+      "run",
+      "test:final-browser"
+    ],
+    "startedAt": "2026-11-16T00:53:34.873277+00:00",
+    "finishedAt": "2026-11-16T00:54:15.032186+00:00",
+    "durationSeconds": 40.1589224269992,
+    "exitCode": 0
+  },
+  {
+    "source": "540fc4af57a29eba380c0f53df0bf3ad12093ad7",
+    "suite": "capacity-browser",
+    "argv": [
+      "npm",
+      "run",
+      "test:capacity:browser"
+    ],
+    "startedAt": "2026-11-16T00:54:15.039389+00:00",
+    "finishedAt": "2026-11-16T00:54:37.562266+00:00",
+    "durationSeconds": 22.522949703998165,
+    "exitCode": 0
+  },
+  {
+    "source": "540fc4af57a29eba380c0f53df0bf3ad12093ad7",
+    "suite": "typecheck",
+    "argv": [
+      "npm",
+      "run",
+      "typecheck"
+    ],
+    "startedAt": "2026-11-16T00:54:37.568428+00:00",
+    "finishedAt": "2026-11-16T00:54:41.371703+00:00",
+    "durationSeconds": 3.8032872609983315,
+    "exitCode": 0
+  },
+  {
+    "source": "540fc4af57a29eba380c0f53df0bf3ad12093ad7",
+    "suite": "scope",
+    "argv": [
+      "npm",
+      "run",
+      "check:scope"
+    ],
+    "startedAt": "2026-11-16T00:54:41.376223+00:00",
+    "finishedAt": "2026-11-16T00:54:41.491180+00:00",
+    "durationSeconds": 0.11496833799901651,
+    "exitCode": 0
+  }
+]

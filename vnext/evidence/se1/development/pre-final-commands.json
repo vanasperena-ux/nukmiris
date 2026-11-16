@@ -1,0 +1,27 @@
+[
+  {
+    "source": "a1535a0be75e4834405bda16d5af7f15616cb081",
+    "suite": "services",
+    "argv": [
+      "npm",
+      "run",
+      "test:services"
+    ],
+    "startedAt": "2026-11-16T00:16:02.329453+00:00",
+    "finishedAt": "2026-11-16T00:16:23.619571+00:00",
+    "durationSeconds": 21.290125742998498,
+    "exitCode": 0
+  },
+  {
+    "source": "a1535a0be75e4834405bda16d5af7f15616cb081",
+    "suite": "full",
+    "argv": [
+      "npm",
+      "test"
+    ],
+    "startedAt": "2026-11-16T00:16:23.620479+00:00",
+    "finishedAt": "2026-11-16T00:21:19.002397+00:00",
+    "durationSeconds": 295.3819300750001,
+    "exitCode": 0
+  }
+]

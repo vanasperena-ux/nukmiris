@@ -1,0 +1,29 @@
+{
+  "observedAtUtc": "2026-11-16T00:16:20.590264+00:00",
+  "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+  "node": {
+    "exitCode": 0,
+    "output": "v24.22.3"
+  },
+  "npm": {
+    "exitCode": 0,
+    "output": "11.19.1"
+  },
+  "browser": {
+    "exitCode": 0,
+    "output": "Chromium 154.0.8037.57 built on Debian GNU/Linux 13 (trixie)"
+  },
+  "postgresImage": "postgres@sha256:839fbb5a4942a7758dd93e18b42ea5649807491a0545b5eeeb8f0b8bb11857a5",
+  "nativeWindows": "NOT_EXECUTED",
+  "source": "540fc4af57a29eba380c0f53df0bf3ad12093ad7",
+  "baseline": "b4d0be0cb98c7f2b69be318e18b93f4de102c511",
+  "noLegacyChanges": {
+    "exitCode": 0,
+    "output": ""
+  },
+  "experimentalProofFiles": {
+    "exitCode": 0,
+    "output": ""
+  },
+  "packageLockSha256": "08b21f97a1272051a1dbeb22a15dc24c0f7dfc7fa63a137439794966e30a88b3"
+}

@@ -1,0 +1,65 @@
+
+> nukmiris-wp1-synthetic-core@0.0.0 test:services
+> npm run build && node scripts/run-tests.mjs services
+
+
+> nukmiris-wp1-synthetic-core@0.0.0 build
+> tsc -p tsconfig.json
+
+npm notice
+npm notice New major version of npm available! 11.19.1 -> 12.2.2
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.2
+npm notice To update run: npm install -g npm@12.2.2
+npm notice
+WP1 evidence run: /workspace/work/nukmiris-product-services-employees/vnext/evidence/runs/2026-11-16T00-10-29.516Z-services
+✔ SE1 configured service -> qualified employee -> immutable appointment snapshot and preserved confirmation (1202.557393ms)
+✔ SE1 no qualified employee or inactive service cannot create appointments (785.538834ms)
+✔ SE1 revisions, replay identity and role/tenant isolation are enforced in SQL (236.720081ms)
+✔ SE1 owner edit invalidates displayed slots before name/customer/booking allocation (614.451355ms)
+✔ SE1 edit between recheck and SQL preparation rejects atomically and progresses without retry (929.414164ms)
+✔ SE1 committed prepared booking and UNKNOWN survive catalog edits and new app objects (674.176223ms)
+✔ SE1 solo default resource automatically qualifies for new services; weekly hours filter availability (469.367329ms)
+✔ SE1 long catalogs paginate using valid lists and service selection survives restart (644.827397ms)
+✔ SE1 validation rejects bundles, malformed hours, amounts, missing fields and alternate tenant binding (0.490617ms)
+✔ SE1 configured new-customer booking still asks name after slot; commands never become names (1635.10653ms)
+✔ SE1 configured duration + post-service buffer excludes the same resource until the next valid grid slot (1170.694965ms)
+✔ SE1 no active services renders honest text without invalid interactive lists or booking effects (453.873698ms)
+✔ SE1 SQL validates employee hours even when a corrupt writer omits the catalog revision increment (683.525971ms)
+✔ SE1 catalog change receipts and booked service snapshots are append-only (827.70114ms)
+✔ SE1 approved random allocation selects from every eligible employee and request replay never rerolls (758.122572ms)
+✔ SE1 crash after independent employee allocation reuses that allocation without drawing again (842.522603ms)
+✔ SE1 concurrent customers at one time allocate remaining eligible capacity without overlap (1171.584613ms)
+✖ SE1 dates before service selection request one service and Menu resets service pagination (315.320432ms)
+ℹ tests 18
+ℹ suites 0
+ℹ pass 17
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 13547.250252
+
+✖ failing tests:
+
+test at dist/test/se1-services.test.js:277:1
+✖ SE1 dates before service selection request one service and Menu resets service pagination (315.320432ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  'MENU' !== 'SERVICES'
+  
+      at TestContext.<anonymous> (file:///workspace/work/nukmiris-product-services-employees/vnext/dist/test/se1-services.test.js:282:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'MENU',
+    expected: 'SERVICES',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+npm notice
+npm notice New major version of npm available! 11.19.1 -> 12.2.2
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.2
+npm notice To update run: npm install -g npm@12.2.2
+npm notice

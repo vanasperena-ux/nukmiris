@@ -1,0 +1,50 @@
+
+> nukmiris-wp1-synthetic-core@0.0.0 test:services:runtime
+> npm run build && node --test --test-concurrency=1 local/services.test.mjs
+
+
+> nukmiris-wp1-synthetic-core@0.0.0 build
+> tsc -p tsconfig.json
+
+npm notice
+npm notice New major version of npm available! 11.19.1 -> 12.2.2
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.2
+npm notice To update run: npm install -g npm@12.2.2
+npm notice
+Pulling/verifying pinned PostgreSQL image (first download budget: 10 minutes).
+Pulling/verifying pinned PostgreSQL image (first download budget: 10 minutes).
+✖ SE1 TCP owner authorization, service/employee forms API, booking, crash/restart and coherent inert restore (38936.074647ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 39049.400301
+
+✖ failing tests:
+
+test at local/services.test.mjs:12:1
+✖ SE1 TCP owner authorization, service/employee forms API, booking, crash/restart and coherent inert restore (38936.074647ms)
+  Error: local_postgres_not_ready
+      at ready (file:///workspace/work/nukmiris-product-services-employees/vnext/local/fixture.mjs:38:8)
+      at async provision (file:///workspace/work/nukmiris-product-services-employees/vnext/local/fixture.mjs:80:18)
+      at async restoreInteractive (file:///workspace/work/nukmiris-product-services-employees/vnext/local/coherent-backup.mjs:33:5)
+      at async TestContext.<anonymous> (file:///workspace/work/nukmiris-product-services-employees/vnext/local/services.test.mjs:42:54)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    [cause]: Error: connect ECONNREFUSED 127.0.0.1:33455
+        at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16) {
+      errno: -111,
+      code: 'ECONNREFUSED',
+      syscall: 'connect',
+      address: '127.0.0.1',
+      port: 33455
+    }
+  }
+npm notice
+npm notice New major version of npm available! 11.19.1 -> 12.2.2
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.2
+npm notice To update run: npm install -g npm@12.2.2
+npm notice

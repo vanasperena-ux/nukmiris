@@ -1,0 +1,31 @@
+{
+  "source": "b82426f038d1e91679190ea8f24f5d9021f49126",
+  "tree": "442e68c0befdd42559b458034181788bee11a32f",
+  "parent": "a1535a0be75e4834405bda16d5af7f15616cb081",
+  "changedFilesSha256": {
+    "docs/greenfield/31-SE1-SERVICES-EMPLOYEES-LOCAL.md": "3e8deb9ff79e00fb578ca408692844ecebaef5c4b134c5eafd102a24d0183452",
+    "vnext/local/services-browser.mjs": "f1c17c626acdb9e3cce0c546961adfb9747e1b859d3e32b1872c80fe63a8292d",
+    "vnext/local/services.test.mjs": "61b194be7187eeec2dcbcf85d9fd06b820f4921c39a72e808a613f5a8156894f",
+    "vnext/local/web/owner.css": "bbe445c3d15ddea523ddd1d97720c9f5689b08151546340c21103e5cd55844dd",
+    "vnext/local/web/owner.html": "334e48e190820456a793694591aa3f6c013edb44b606c45d28305a15ead5f224",
+    "vnext/local/web/owner.js": "eaccf3e7993fcb248e7b6b4eb120347e0f87adf3c3827bfa8d067a22c510c1d1",
+    "vnext/src/application/service-catalog.ts": "41326379a0575e9a40efd5290a60a25763ebb37fff5579193f73630798fccf05",
+    "vnext/src/infrastructure/postgres/migrations/010-services-employees.sql": "c44540252b65eb9023a2355c26810beca7ca1819c8b0acea4d4a7a128210b2be",
+    "vnext/test/se1-services.test.ts": "7a2a7c9b69337f2b62538c90923f1f220922526fc55b5d4f44a0dc1bd0e320db",
+    "docs/greenfield/NUKMIRIS_FEATURE_REGISTER.md": "1313e1a98b1242bd20fd21edd179b4c21007066f727b709c5821346601211b85",
+    "vnext/local/booking-worker.mjs": "bede4fc9fc519c1c6ca0d3038905a8b508cdaa7d01c0397c146008f3c0aa07a4",
+    "vnext/local/browser-smoke.mjs": "99280a201e70d68464934d1aa5721672d72572d2186c3384f7605347635a0708",
+    "vnext/local/fixture.mjs": "310c201c10a995ebad23104b805aa28fd1896c2d7bfe9a6f40e0c4dc00c80cb6",
+    "vnext/local/interactive-profile.mjs": "a0f6be69c02fd21a3ca6bb28dd200717c53a30262f568a10320639d9f2e6b33c",
+    "vnext/local/web/app.js": "f27f4b52d31339f4c813b713e9215f9e248496be5d350a09f6715fc9c1098e30",
+    "vnext/local/web/index.html": "f202dffc422b227a0f6225c6111eaf70a312b1fd2a0fd65c0e148bdfd06317b6",
+    "vnext/package.json": "d9c25cc9d3997537d5e13f01684a5c57bf10c382c922eac9d69044f8a76dfb27",
+    "vnext/scripts/run-tests.mjs": "341ef565ceeeffcc890216a0afa24645ec7671ce289ba11e97fe0f0742a002b7",
+    "vnext/src/application/availability-oracle.ts": "24181b025295279a7ac4ed595bad5d2e846660f27f17dac93e3d494b78ff1683",
+    "vnext/src/application/interactive-booking.ts": "cba7dc4fab1771d39833929c2ec407a41a15f3a56f51eee628068e35d2465caa",
+    "vnext/src/application/prepare-operation.ts": "c8e1d8238aca418a9b64935666a610535ae65302ec12e2ef94f35a5918b15a42",
+    "vnext/src/domain/availability.ts": "20ed44a31d65aa2c7629ebb6fb96b2933859a38e40d5a7ab64e1e2af1055fad8",
+    "vnext/src/domain/whatsapp-presentation.ts": "c4223048ae4f2c4bec3e17cfde15f4eee4f5999ce15bed421c1dbc6033812bf2",
+    "vnext/test/support/postgres-fixture.ts": "c0e206ac2e5ef0c48cfd996058f7aadc14e1539895c7bf2ca0ea5e561c7458e6"
+  }
+}

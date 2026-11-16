@@ -1,0 +1,160 @@
+[
+  {
+    "source": "b82426f038d1e91679190ea8f24f5d9021f49126",
+    "suite": "services-browser",
+    "argv": [
+      "npm",
+      "run",
+      "test:services:browser",
+      "--",
+      "chromium",
+      "/tmp/nukmiris-se1-owner-final.png"
+    ],
+    "startedAt": "2026-11-16T00:21:19.676333+00:00",
+    "finishedAt": "2026-11-16T00:21:39.709275+00:00",
+    "durationSeconds": 20.033047762000933,
+    "exitCode": 0
+  },
+  {
+    "source": "b82426f038d1e91679190ea8f24f5d9021f49126",
+    "suite": "services",
+    "argv": [
+      "npm",
+      "run",
+      "test:services"
+    ],
+    "startedAt": "2026-11-16T00:21:39.716804+00:00",
+    "finishedAt": "2026-11-16T00:22:02.275393+00:00",
+    "durationSeconds": 22.558665915003075,
+    "exitCode": 0
+  },
+  {
+    "source": "b82426f038d1e91679190ea8f24f5d9021f49126",
+    "suite": "full",
+    "argv": [
+      "npm",
+      "test"
+    ],
+    "startedAt": "2026-11-16T00:22:02.277391+00:00",
+    "finishedAt": "2026-11-16T00:26:57.083331+00:00",
+    "durationSeconds": 294.8059553380008,
+    "exitCode": 0
+  },
+  {
+    "source": "b82426f038d1e91679190ea8f24f5d9021f49126",
+    "suite": "fault",
+    "argv": [
+      "npm",
+      "run",
+      "test:fault"
+    ],
+    "startedAt": "2026-11-16T00:26:57.085009+00:00",
+    "finishedAt": "2026-11-16T00:31:37.751979+00:00",
+    "durationSeconds": 280.66698523899686,
+    "exitCode": 0
+  },
+  {
+    "source": "b82426f038d1e91679190ea8f24f5d9021f49126",
+    "suite": "concurrency",
+    "argv": [
+      "npm",
+      "run",
+      "test:concurrency"
+    ],
+    "startedAt": "2026-11-16T00:31:37.753693+00:00",
+    "finishedAt": "2026-11-16T00:35:39.929223+00:00",
+    "durationSeconds": 242.17554337299953,
+    "exitCode": 0
+  },
+  {
+    "source": "b82426f038d1e91679190ea8f24f5d9021f49126",
+    "suite": "runtime",
+    "argv": [
+      "npm",
+      "run",
+      "test:runtime"
+    ],
+    "startedAt": "2026-11-16T00:35:39.930535+00:00",
+    "finishedAt": "2026-11-16T00:38:02.519479+00:00",
+    "durationSeconds": 142.58895922299416,
+    "exitCode": 0
+  },
+  {
+    "source": "b82426f038d1e91679190ea8f24f5d9021f49126",
+    "suite": "capacity",
+    "argv": [
+      "npm",
+      "run",
+      "test:capacity"
+    ],
+    "startedAt": "2026-11-16T00:38:02.520767+00:00",
+    "finishedAt": "2026-11-16T00:38:40.145537+00:00",
+    "durationSeconds": 37.624784942003316,
+    "exitCode": 0
+  },
+  {
+    "source": "b82426f038d1e91679190ea8f24f5d9021f49126",
+    "suite": "browser",
+    "argv": [
+      "npm",
+      "run",
+      "test:browser"
+    ],
+    "startedAt": "2026-11-16T00:38:40.146710+00:00",
+    "finishedAt": "2026-11-16T00:39:09.320933+00:00",
+    "durationSeconds": 29.174239617997955,
+    "exitCode": 0
+  },
+  {
+    "source": "b82426f038d1e91679190ea8f24f5d9021f49126",
+    "suite": "final-browser",
+    "argv": [
+      "npm",
+      "run",
+      "test:final-browser"
+    ],
+    "startedAt": "2026-11-16T00:39:09.328044+00:00",
+    "finishedAt": "2026-11-16T00:39:49.130434+00:00",
+    "durationSeconds": 39.802401980996365,
+    "exitCode": 0
+  },
+  {
+    "source": "b82426f038d1e91679190ea8f24f5d9021f49126",
+    "suite": "capacity-browser",
+    "argv": [
+      "npm",
+      "run",
+      "test:capacity:browser"
+    ],
+    "startedAt": "2026-11-16T00:39:49.137130+00:00",
+    "finishedAt": "2026-11-16T00:40:11.049792+00:00",
+    "durationSeconds": 21.912735404999694,
+    "exitCode": 0
+  },
+  {
+    "source": "b82426f038d1e91679190ea8f24f5d9021f49126",
+    "suite": "typecheck",
+    "argv": [
+      "npm",
+      "run",
+      "typecheck"
+    ],
+    "startedAt": "2026-11-16T00:40:11.054840+00:00",
+    "finishedAt": "2026-11-16T00:40:14.643971+00:00",
+    "durationSeconds": 3.5896983179991366,
+    "exitCode": 0
+  },
+  {
+    "source": "b82426f038d1e91679190ea8f24f5d9021f49126",
+    "suite": "scope",
+    "argv": [
+      "npm",
+      "run",
+      "check:scope"
+    ],
+    "startedAt": "2026-11-16T00:40:14.676999+00:00",
+    "finishedAt": "2026-11-16T00:40:15.169301+00:00",
+    "durationSeconds": 0.49230954900122015,
+    "exitCode": 0
+  }
+]
