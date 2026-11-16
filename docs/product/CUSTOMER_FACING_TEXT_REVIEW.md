@@ -1,6 +1,6 @@
 # NukMiris — Customer-facing Spanish copy review
 
-**Review draft:** 1.2 — 2026-11-16  
+**Review draft:** 1.3 — 2026-11-16  
 **Status:** OWNER-APPROVED COPY DECISIONS for R0, including editorial corrections; application code unchanged.  
 **Source inspected:** `product/rc1-local-reschedule-cancel` (current RC-1 local/synthetic vNext development branch), using the linked TypeScript source below. This branch is **not** equivalent to approved production WhatsApp copy and should not be confused with the default branch or the legacy v0.8.1 runtime.
 **Scope:** Strings emitted toward the *customer chat* by the vNext booking, appointment-management, date parser, name validation, appointment summary and WhatsApp interactive-presentation components. Simulator-only banners and owner-facing PWA UI are listed separately. Real Meta outbound templates/reminders are **not** wired into the reviewed vNext local synthetic flow; this audit is not a verification of approved Meta template bodies.
@@ -14,7 +14,7 @@
 | CX-001 | `Elige un horario` | Previously requested change to initial time options; confirm terminal punctuation only if necessary to avoid altering approved literal. |
 | CX-002 | `Te muestro más opciones. Elige un horario:` | More available times (first set of extra slots). |
 | CX-004 | `Te muestro más opciones. Elige un horario:` | More available times for a specifically selected date. |
-| CX-008 | `No hay servicios activos disponibles. Contacta al negocio.` | **APPROVED DISTINCT SCENARIOS:** CX-008 applies when the business has no active services; preserve its existing service-specific wording. CX-007 already uses the owner's desired `No encontré horarios disponibles por ahora. Puedes llamar al negocio para consultar más opciones.` for the separate case of no available times. Do not display a time-availability explanation for missing services. |
+| CX-008 | `No encontré horarios disponibles por ahora. Puedes llamar al negocio para consultar más opciones.` | **OWNER OVERRIDE (explicitly reconfirmed):** Use this exact replacement even when no active services are configured. The wording deliberately matches CX-007; do not revert to the previous services-specific copy. Triggering scenario remains unchanged. |
 | CX-012 | `Esa fecha ya pasó. Elige otra fecha o escríbela.` | Past date. |
 | CX-013 | `Por ahora solo podemos agendar citas dentro de los próximos {n} días. Elige otra fecha o escríbela.` | Date beyond booking horizon. Keep {n} dynamic, not literal rendered braces. |
 | CX-014 | `El día de la semana no coincide con la fecha. Elige otra fecha o escríbela.` | Weekday/date mismatch. |
@@ -25,7 +25,7 @@
 | CX-039 | `La cita ya no está disponible. Elige de nuevo.` | Appointment no longer valid for management. |
 | CX-040 | `La cita ya no está disponible. Elige de nuevo.` | Appointment changed/invalid during manage action. |
 
-**Editorial approval:** Owner confirmed on 2026-11-16 that the suggested grammatical, spelling and formatting corrections should be included. CX-008 remains a distinct no-active-services message while CX-007 covers no available time slots.\n\n**Acceptance criteria:** The correct text fires only for its CX scenario; variable values use business/customer context; customer messages display Spanish accents and actual paragraph breaks; old text is absent from its superseded context; dynamic and failure-safe booking logic stays unchanged. Test zero/one/multiple appointments, invalid dates, service-unavailable vs times-unavailable, human entry/exit, and stale/changed management choices.
+**Editorial approval:** Owner confirmed on 2026-11-16 that the suggested grammatical, spelling and formatting corrections should be included. CX-008 uses the owner's exact requested no-availability wording even for the existing no-active-services trigger; CX-007 independently uses the same wording for no available slots.\n\n**Acceptance criteria:** The correct text fires only for its CX scenario; variable values use business/customer context; customer messages display Spanish accents and actual paragraph breaks; old text is absent from its superseded context; dynamic and failure-safe booking logic stays unchanged. Test zero/one/multiple appointments, invalid dates, service-unavailable vs times-unavailable, human entry/exit, and stale/changed management choices.
 
 **Scope:** This is a requirements/documentation update only. No source changes, tests or provider calls are authorized here. CX-008 scenario and CX-021/CX-022/CX-024 editorial questions are now resolved by owner approval. Other requested lines are ready for an explicitly authorized R0 copy-only change.
 
@@ -135,4 +135,4 @@ The browser simulator has separate test-only text such as `Hola, ¿agendamos?`, 
 - Customer-facing text that might be added on other active feature branches not merged into the inspected `product/rc1-local-reschedule-cancel` branch.
 - Locale and dynamic substitution variants. The tables show structural templates, not every date/name/price combination.
 
-## Review status\n\nPrior editorial questions concerning CX-008, CX-021, CX-022 and CX-024 were resolved by the owner. CX-001 remains the requested literal `Elige un horario`. No code has been changed.\n\n**Change policy:** This is a review document, not a code change or Codex authorization. Once owner approves specific CX IDs, update the Feature Register's copy requirement and implement via separately authorized change with regression tests.
+## Review status\n\nThe owner explicitly reconfirmed CX-008 verbatim, overriding the earlier proposed services-specific wording. CX-021, CX-022 and CX-024 editorial changes remain approved. CX-001 remains the requested literal `Elige un horario`. No code has been changed.\n\n**Change policy:** This is a review document, not a code change or Codex authorization. Once owner approves specific CX IDs, update the Feature Register's copy requirement and implement via separately authorized change with regression tests.
