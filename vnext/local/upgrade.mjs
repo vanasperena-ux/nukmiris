@@ -10,11 +10,11 @@ export async function upgrade(s,confirmation){
  await owned(s);await stopWorker(s);await startDatabase(s);
  const db=new pg.Client(connection(s));await db.connect();
  try{
-  const installed=(await db.query("SELECT to_regclass('core.local_support_message') IS NOT NULL AS support,to_regprocedure('core.local_support_route_v2()') IS NOT NULL AS routing")).rows[0];
-  if(installed.support&&installed.routing)return {upgraded:false,alreadyCurrent:true,instance:s.id,mode:'SYNTHETIC_STOPPED'};
+  const installed=(await db.query("SELECT to_regclass('core.local_support_message') IS NOT NULL AS support,to_regprocedure('core.local_support_route_v2()') IS NOT NULL AS routing,to_regprocedure('core.catalog_save(text,uuid,bigint,text,jsonb)') IS NOT NULL AS catalog,coalesce(obj_description(to_regprocedure('core.catalog_save(text,uuid,bigint,text,jsonb)'),'pg_proc')='SE1_N1_CREATE_ONLY_V1',false) AS solo_creation_only")).rows[0];
+  const appliedMigrations=[...(installed.support&&installed.routing?[]:[...(installed.support?[]:['008-local-corrections.sql']),'009-local-review-corrections.sql']),...(installed.catalog&&!installed.solo_creation_only?['011-solo-qualification-creation-only.sql']:[])];
+  if(!appliedMigrations.length)return {upgraded:false,alreadyCurrent:true,instance:s.id,mode:'SYNTHETIC_STOPPED'};
   const saved=await backup(s);const manifest=await verifyBundle(saved.directory,saved.manifestSha256);
   if(manifest.sourceInstance!==s.id||manifest.sourceDatabase!==s.database)throw Error('upgrade_backup_identity_denied');
-  const appliedMigrations=[...(installed.support?[]:['008-local-corrections.sql']),'009-local-review-corrections.sql'];
   await db.query('BEGIN');
   try{for(const file of appliedMigrations)await db.query(await fs.readFile(new URL('../src/infrastructure/postgres/migrations/'+file,import.meta.url),'utf8'));await db.query('COMMIT');}
   catch(error){await db.query('ROLLBACK');throw error;}

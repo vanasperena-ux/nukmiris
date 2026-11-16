@@ -25,7 +25,7 @@
     "demo:reset": "node local/cli.mjs reset",
     "demo:backup": "node local/cli.mjs backup",
     "demo:smoke": "npm run build && node local/cli.mjs smoke",
-    "test:runtime": "npm run build && node --test --test-concurrency=1 local/platform.test.mjs local/command-lock.test.mjs local/runtime.test.mjs local/interactive.test.mjs local/final-functional.test.mjs local/services.test.mjs",
+    "test:runtime": "npm run build && node --test --test-concurrency=1 local/platform.test.mjs local/command-lock.test.mjs local/runtime.test.mjs local/interactive.test.mjs local/final-functional.test.mjs local/services.test.mjs local/services-n1.test.mjs",
     "demo:unlock": "node local/cli.mjs unlock",
     "test:l1": "npm run build && node scripts/run-tests.mjs l1",
     "demo:transcript": "npm run build && node scripts/availability-transcript.mjs",
@@ -46,7 +46,7 @@
     "test:final-functional": "npm run build && node --test --test-concurrency=1 local/final-functional.test.mjs",
     "test:final-browser": "npm run build && node local/final-browser.mjs",
     "test:services": "npm run build && node scripts/run-tests.mjs services",
-    "test:services:runtime": "npm run build && node --test --test-concurrency=1 local/services.test.mjs",
+    "test:services:runtime": "npm run build && node --test --test-concurrency=1 local/services.test.mjs local/services-n1.test.mjs",
     "test:services:browser": "npm run build && node local/services-browser.mjs"
   },
   "dependencies": {

@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {randomUUID} from 'node:crypto';
+import {readFile} from 'node:fs/promises';
 import {fixture,cut} from './support/helpers.js';
 import {l1Config} from './support/l1-calendar.js';
 import {InteractiveBooking,type LocalScope} from '../src/application/interactive-booking.js';
@@ -97,4 +98,39 @@ test('SE1 dates before service selection request one service and Menu resets ser
  await s.send('cita');let v=await s.send('mañana');assert.equal(last(v)['outcome'],'SERVICES');assert.equal((await s.f.rows('appointment')).length,0);
  v=await s.choose(v,choices(v).findIndex(c=>c['title']==='Más servicios'));assert.ok(choices(v).some(c=>c['title']==='Servicios anteriores'));
  await s.send('menu');v=await s.send('cita');assert.equal(last(v)['outcome'],'SERVICES');assert.ok(!choices(v).some(c=>c['title']==='Servicios anteriores'));
+});
+
+test('N1 fresh solo service creation qualifies once; removal survives replay and every service edit',async t=>{
+ const s=await setup(t,undefined,true),value=object(s.service()),expected=(await s.catalog.load()).revision,request=randomUUID();
+ assert.equal((await s.f.admin.query("SELECT obj_description('core.catalog_save(text,uuid,bigint,text,jsonb)'::regprocedure,'pg_proc') version")).rows[0].version,'SE1_N1_CREATE_ONLY_V1');
+ const created=await s.catalog.save(request,expected,'service',value);assert.ok((await s.catalog.load()).employees[0]!.serviceIds.includes('manicura'));
+ await s.save('employee',object({...((await s.catalog.load()).employees[0]!),serviceIds:[]}));
+ const revision=(await s.catalog.load()).revision;assert.equal(await s.catalog.save(request,expected,'service',value),created);assert.equal((await s.catalog.load()).revision,revision);
+ let service={...s.service()};
+ for(const patch of [{priceMinor:31025},{name:'Manicura corregida'},{description:'Descripción editada'},{durationMinutes:45},{bufferMinutes:20},{active:false},{active:true}]){
+  service={...service,...patch};await s.save('service',object(service));assert.deepEqual((await s.catalog.load()).employees[0]!.serviceIds,[],JSON.stringify(patch));
+ }
+ const select=await s.send('cita'),i=choices(select).findIndex(c=>text(c['title']).includes('Manicura corregida'));assert.ok(i>=0);const offer=await s.choose(select,i);assert.equal(last(offer)['outcome'],'OFFER');assert.equal(choices(offer).length,0);
+ assert.equal((await s.f.rows('appointment')).length,0);assert.equal((await s.f.rows('attempt')).length,0);assert.equal((await s.f.rows('protection')).length,0);
+});
+test('N1 one active plus one inactive employee record is still a team and receives no automatic qualification',async t=>{
+ const s=await setup(t),other=(await s.catalog.load()).employees.find(e=>e.id===s.f.id('otherResource'))!;await s.save('employee',object({...other,active:false}));await s.save('service',object(s.service()));
+ const catalog=await s.catalog.load();assert.equal(catalog.employees.length,2);assert.equal(catalog.employees.filter(e=>e.active).length,1);assert.ok(catalog.employees.every(e=>!e.serviceIds.includes('manicura')));
+ const menu=await s.send('cita'),offer=await s.choose(menu,choices(menu).findIndex(c=>text(c['title']).includes('Manicura')));assert.equal(choices(offer).length,0);assert.equal((await s.f.rows('appointment')).length,0);
+});
+test('N1 a sole non-default resource never receives automatic qualification',async t=>{
+ const s=await setup(t,undefined,true);await s.f.admin.query('UPDATE core.resource SET is_default=false WHERE business_id=$1 AND id=$2',[b,s.f.id('resource')]);await s.save('service',object(s.service()));assert.ok(!(await s.catalog.load()).employees[0]!.serviceIds.includes('manicura'));
+});
+test('N1 inactive solo default employee remains unbookable even when a new service grants qualification',async t=>{
+ const s=await setup(t,undefined,true),employee=(await s.catalog.load()).employees[0]!;await s.save('employee',object({...employee,active:false}));await s.save('service',object(s.service()));assert.ok((await s.catalog.load()).employees[0]!.serviceIds.includes('manicura'));
+ const menu=await s.send('cita'),offer=await s.choose(menu,choices(menu).findIndex(c=>text(c['title']).includes('Manicura')));assert.equal(choices(offer).length,0);assert.equal((await s.f.rows('appointment')).length,0);
+});
+
+test('N1 historical010 solo reproducer upgrades without deleting qualifications; future owner removal persists',async t=>{
+ const s=await setup(t,undefined,true),original=await readFile(new URL('../../src/infrastructure/postgres/migrations/010-services-employees.sql',import.meta.url),'utf8');
+ await s.f.admin.query(original.slice(original.indexOf('CREATE FUNCTION core.catalog_save('),original.indexOf('\n-- A catalog edit')).replace('CREATE FUNCTION','CREATE OR REPLACE FUNCTION'));
+ await s.save('service',object(s.service()));await s.save('employee',object({...((await s.catalog.load()).employees[0]!),serviceIds:[]}));
+ await s.save('service',object({...s.service(),priceMinor:31000}));assert.deepEqual((await s.catalog.load()).employees[0]!.serviceIds,['manicura'],'original010 reproduces N1');
+ const before=await s.catalog.load();await s.f.admin.query(await readFile(new URL('../../src/infrastructure/postgres/migrations/011-solo-qualification-creation-only.sql',import.meta.url),'utf8'));assert.deepEqual(await s.catalog.load(),before,'011 preserves previously inserted qualifications and configuration');
+ await s.save('employee',object({...before.employees[0]!,serviceIds:[]}));await s.save('service',object({...s.service(),name:'Manicura corregida'}));assert.deepEqual((await s.catalog.load()).employees[0]!.serviceIds,[]);
 });
