@@ -1,0 +1,127 @@
+
+> nukmiris-wp1-synthetic-core@0.0.0 test:rc1
+> npm run build && node scripts/run-tests.mjs rc1
+
+
+> nukmiris-wp1-synthetic-core@0.0.0 build
+> tsc -p tsconfig.json
+
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.2
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.2
+npm notice To update run: npm install -g npm@12.2.2
+npm notice
+WP1 evidence run: /workspace/work/nukmiris-product-rc1/vnext/evidence/runs/2026-11-16T21-46-05.880Z-rc1
+✔ RC1 customer overlap owner reproduction: known-after-name customer never sees another employee at their booked time (1577.858675ms)
+✔ RC1 customer exact/partial overlap and buffers match SQL half-open adjacency on both sides (753.652069ms)
+✔ RC1 customer constraint covers initial offers, Más opciones, dates and time pagination (2370.333158ms)
+✔ RC1 different customers legitimately book the same time on distinct qualified employees (1487.165207ms)
+✔ RC1 reschedule excludes only its source appointment, retaining other own-employee protections (2735.231516ms)
+✖ RC1 a customer conflict created after display is stale availability, rechecked without allocating another operation (535.222764ms)
+✖ RC1 SQL still rejects a same-customer race after the final availability recheck on a different employee (1024.643873ms)
+✔ RC1 customer availability retains PREPARED ranges without a fake calendar effect or inferred release (226.729908ms)
+✔ RC1 customer availability retains ARMED ranges without a fake calendar effect or inferred release (243.818858ms)
+✔ RC1 customer availability retains SUBMISSION_ENTERED ranges without a fake calendar effect or inferred release (248.602232ms)
+✔ RC1 customer availability retains UNKNOWN ranges without a fake calendar effect or inferred release (278.459015ms)
+✔ RC1 only proven cancellation or safe unsent abandonment frees a customer range (1284.146914ms)
+✔ RC1 protected ranges on another calendar block this customer but leave other customers free (228.356461ms)
+✔ RC1 tenant isolation includes equal customer subjects across businesses (708.987411ms)
+✔ RC1 restart and request replay retain customer-filtered offers without creating another booking (825.649827ms)
+✔ RC1 composition helper resolves the scoped customer before final availability validation (464.332671ms)
+✔ RC1 single appointment is explicitly selected, moved on slot selection with same employee/event/service, then cancelled exactly once (2271.884736ms)
+✔ RC1 zero appointments is honest; menu and direct booking never show a management picker (939.311983ms)
+✔ RC1 two real appointments: cancel the second exact ID and retain the first (1778.585306ms)
+✔ RC1 many appointments paginate within Meta limits with no overview repetition (12368.290095ms)
+✔ RC1 inactive/edited service may move using its frozen snapshot, original duration/buffer and employee (1519.035223ms)
+✔ RC1 original employee inactive routes to attention, never assigns a replacement; cancellation remains available (1514.203429ms)
+✔ RC1 original employee unqualified routes to attention, never assigns a replacement; cancellation remains available (1241.491137ms)
+✔ RC1 old appointment selection, slot selection and replay after cancellation cannot mutate twice (1101.678962ms)
+✔ RC1 customer and tenant action substitution never discloses a picker or creates an operation (1124.830261ms)
+✔ RC1 owner edit between offers and slot selection refreshes management, never books a new service (1031.137337ms)
+✔ RC1 MOVE before-effect failure remains uncertain/protected across menu and restart (1413.535628ms)
+✔ RC1 CANCEL before-effect failure remains uncertain/protected across menu and restart (1134.785156ms)
+✔ RC1 MOVE crash at rc1.afterIntentArchive resumes the same identity without employee redraw (1442.776842ms)
+✔ RC1 MOVE crash at prepare.afterArchive resumes the same identity without employee redraw (1232.488625ms)
+✔ RC1 MOVE crash at prepare.beforeCommit resumes the same identity without employee redraw (1344.382076ms)
+✔ RC1 MOVE crash at prepare.afterCommit resumes the same identity without employee redraw (1411.767998ms)
+✔ RC1 MOVE crash at local-view.beforeCommit resumes the same identity without employee redraw (1248.196734ms)
+✔ RC1 MOVE crash at local-view.afterCommit resumes the same identity without employee redraw (1209.614708ms)
+✔ RC1 MOVE entered without provider call cannot be superseded or retried after restart (1555.286057ms)
+✔ RC1 CANCEL entered without provider call cannot be superseded or retried after restart (1108.291412ms)
+✔ RC1 MOVE lost provider reply reconciles exact ledger once; finalizer faults retain protections/history atomically (1595.442855ms)
+✔ RC1 CANCEL lost provider reply reconciles exact ledger once; finalizer faults retain protections/history atomically (1148.094515ms)
+✔ RC1 MOVE expired action does not mutate or allocate a new booking (1123.291665ms)
+✔ RC1 CANCEL expired action does not mutate or allocate a new booking (744.292528ms)
+✔ RC1 appointment that became past after display is not cancelled and is not described as current (804.597843ms)
+✔ RC1 catalog edit after recheck but before SQL preparation rejects without releasing original protection (1064.394418ms)
+✔ RC1 competing booking takes offered replacement: choose again, retain original employee and appointment (1982.64819ms)
+✔ RC1 missing fake event is not evidence of successful cancellation; original slot stays protected (949.450809ms)
+✔ RC1 history cannot be forged through operator/reducer roles or edited after proof (684.874401ms)
+✔ RC1 menu safely abandons never-entered MOVE and restores only the original protection (1247.250015ms)
+✔ RC1 humano safely abandons never-entered MOVE and restores only the original protection (1250.959598ms)
+✔ RC1 expiry safely abandons never-entered MOVE and restores only the original protection (1133.224916ms)
+✔ RC1 menu safely abandons never-entered CANCEL and restores only the original protection (1059.014257ms)
+✔ RC1 humano safely abandons never-entered CANCEL and restores only the original protection (1046.755038ms)
+✔ RC1 expiry safely abandons never-entered CANCEL and restores only the original protection (933.072585ms)
+✔ RC1 simultaneous competing customers and workers cannot move two appointments into the same employee/time (3374.258823ms)
+✔ RC1 retained employee hours, absences, busy-event buffers and business breaks constrain replacement suggestions (937.939633ms)
+✔ RC1 maximum service/employee names fit the explicit appointment list without losing exact identifiers (2.943441ms)
+✔ RC1 business timezone DST boundaries preserve frozen elapsed duration and exact local-date selection (1449.123022ms)
+✔ RC1 duplicate concurrent cancellation uses one original attempt and releases only its own appointment (1840.511556ms)
+✔ RC1 no eligible original-employee hours offers no replacement or reassignment; cancellation releases the original slot for a new booking (2250.401712ms)
+ℹ tests 57
+ℹ suites 0
+ℹ pass 55
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 79952.502712
+
+✖ failing tests:
+
+test at dist/test/rc1-customer-overlap.test.js:103:1
+✖ RC1 a customer conflict created after display is stale availability, rechecked without allocating another operation (535.222764ms)
+  Error [AggregateError]: admission_incomplete: error: unsealed_batch
+      at admitInput (file:///workspace/work/nukmiris-product-rc1/vnext/dist/src/application/admit-input.js:124:15)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async plan (file:///workspace/work/nukmiris-product-rc1/vnext/dist/test/support/helpers.js:30:48)
+      at async TestContext.<anonymous> (file:///workspace/work/nukmiris-product-rc1/vnext/dist/test/rc1-customer-overlap.test.js:106:51)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    [errors]: [
+      error: unsealed_batch
+          at /workspace/work/nukmiris-product-rc1/vnext/node_modules/pg/lib/client.js:545:17
+          at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+          at async file:///workspace/work/nukmiris-product-rc1/vnext/dist/src/application/admit-input.js:107:49
+          at async ClockedUnitOfWork.tx (file:///workspace/work/nukmiris-product-rc1/vnext/dist/src/infrastructure/postgres/unit-of-work.js:18:28)
+          at async admitInput (file:///workspace/work/nukmiris-product-rc1/vnext/dist/src/application/admit-input.js:107:13)
+          at async plan (file:///workspace/work/nukmiris-product-rc1/vnext/dist/test/support/helpers.js:30:48)
+          at async TestContext.<anonymous> (file:///workspace/work/nukmiris-product-rc1/vnext/dist/test/rc1-customer-overlap.test.js:106:51)
+          at async Test.run (node:internal/test_runner/test:1389:7)
+          at async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+    ]
+  }
+
+test at dist/test/rc1-customer-overlap.test.js:115:1
+✖ RC1 SQL still rejects a same-customer race after the final availability recheck on a different employee (1024.643873ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  5 !== 0
+  
+      at TestContext.<anonymous> (file:///workspace/work/nukmiris-product-rc1/vnext/dist/test/rc1-customer-overlap.test.js:141:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 5,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.2
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.2
+npm notice To update run: npm install -g npm@12.2.2
+npm notice

@@ -25,7 +25,7 @@ Initial offers, more/time pagination and date choices use this customer-filtered
 Keep the existing Windows test profile and Ana's protected case untouched. Requires Git, Node 24 and Docker Desktop in Linux-container mode. Read the final tested SHA from the evidence README linked above; this guide's publication may be a documentation-only successor.
 
 ```powershell
-$Source = 'REPLACE_WITH_TESTED_CORRECTION_SHA'
+$Source = '47f485b691c62dc8968ad2aec7cf6f05aaf7df93'
 $Checkout = Join-Path $env:USERPROFILE 'Desktop\NukMiris RC1 Overlap Retest'
 if (Test-Path -LiteralPath $Checkout) { throw 'Choose a NEW checkout directory.' }
 git clone --single-branch --branch product/rc1-local-reschedule-cancel https://github.com/vanasperena-ux/nukmiris.git "$Checkout"

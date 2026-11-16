@@ -1,0 +1,15 @@
+{
+  "platform": "Linux",
+  "kernel": "6.18.57",
+  "architecture": "x86_64",
+  "node": "v24.19.0",
+  "npm": "11.9.0",
+  "dockerClient": "Docker version 28.4.0, build d8eb465",
+  "chromium": "Chromium 154.0.8037.57 built on Debian GNU/Linux 13 (trixie)",
+  "postgres": "17.11 (Debian 17.11-1.pgdg12+2)",
+  "fixtureTimeZone": "UTC",
+  "nativeWindows": "NOT_EXECUTED",
+  "ownerNativeReport": "Owner reported the overlap reproduction on prior source 77ea22b; this is not acceptance of the corrected source.",
+  "ownerProfilesAccessed": false,
+  "realMetaGoogle": "NOT_USED"
+}

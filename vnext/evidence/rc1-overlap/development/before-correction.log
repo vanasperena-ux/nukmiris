@@ -1,0 +1,89 @@
+
+> nukmiris-wp1-synthetic-core@0.0.0 test:rc1
+> npm run build && node scripts/run-tests.mjs rc1
+
+
+> nukmiris-wp1-synthetic-core@0.0.0 build
+> tsc -p tsconfig.json
+
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.2
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.2
+npm notice To update run: npm install -g npm@12.2.2
+npm notice
+WP1 evidence run: /workspace/work/nukmiris-product-rc1/vnext/evidence/runs/2026-11-16T21-39-51.485Z-rc1
+✖ RC1 customer overlap owner reproduction: known-after-name customer never sees another employee at their booked time (1886.163757ms)
+✔ RC1 single appointment is explicitly selected, moved on slot selection with same employee/event/service, then cancelled exactly once (2329.275031ms)
+✔ RC1 zero appointments is honest; menu and direct booking never show a management picker (829.331219ms)
+✔ RC1 two real appointments: cancel the second exact ID and retain the first (2068.857917ms)
+✔ RC1 many appointments paginate within Meta limits with no overview repetition (14251.617402ms)
+✔ RC1 inactive/edited service may move using its frozen snapshot, original duration/buffer and employee (1477.624293ms)
+✔ RC1 original employee inactive routes to attention, never assigns a replacement; cancellation remains available (1479.69771ms)
+✔ RC1 original employee unqualified routes to attention, never assigns a replacement; cancellation remains available (1291.591733ms)
+✔ RC1 old appointment selection, slot selection and replay after cancellation cannot mutate twice (1133.610124ms)
+✔ RC1 customer and tenant action substitution never discloses a picker or creates an operation (1107.09714ms)
+✔ RC1 owner edit between offers and slot selection refreshes management, never books a new service (1016.003996ms)
+✔ RC1 MOVE before-effect failure remains uncertain/protected across menu and restart (1312.946612ms)
+✔ RC1 CANCEL before-effect failure remains uncertain/protected across menu and restart (1060.427587ms)
+✔ RC1 MOVE crash at rc1.afterIntentArchive resumes the same identity without employee redraw (1238.287552ms)
+✔ RC1 MOVE crash at prepare.afterArchive resumes the same identity without employee redraw (1252.089735ms)
+✔ RC1 MOVE crash at prepare.beforeCommit resumes the same identity without employee redraw (1313.752989ms)
+✔ RC1 MOVE crash at prepare.afterCommit resumes the same identity without employee redraw (1328.245213ms)
+✔ RC1 MOVE crash at local-view.beforeCommit resumes the same identity without employee redraw (1321.288449ms)
+✔ RC1 MOVE crash at local-view.afterCommit resumes the same identity without employee redraw (1219.17117ms)
+✔ RC1 MOVE entered without provider call cannot be superseded or retried after restart (1161.106571ms)
+✔ RC1 CANCEL entered without provider call cannot be superseded or retried after restart (1004.726021ms)
+✔ RC1 MOVE lost provider reply reconciles exact ledger once; finalizer faults retain protections/history atomically (1392.149536ms)
+✔ RC1 CANCEL lost provider reply reconciles exact ledger once; finalizer faults retain protections/history atomically (1080.390853ms)
+✔ RC1 MOVE expired action does not mutate or allocate a new booking (956.524051ms)
+✔ RC1 CANCEL expired action does not mutate or allocate a new booking (719.375659ms)
+✔ RC1 appointment that became past after display is not cancelled and is not described as current (847.912276ms)
+✔ RC1 catalog edit after recheck but before SQL preparation rejects without releasing original protection (1051.416014ms)
+✔ RC1 competing booking takes offered replacement: choose again, retain original employee and appointment (1932.388342ms)
+✔ RC1 missing fake event is not evidence of successful cancellation; original slot stays protected (951.883835ms)
+✔ RC1 history cannot be forged through operator/reducer roles or edited after proof (564.500826ms)
+✔ RC1 menu safely abandons never-entered MOVE and restores only the original protection (1129.675326ms)
+✔ RC1 humano safely abandons never-entered MOVE and restores only the original protection (1196.053762ms)
+✔ RC1 expiry safely abandons never-entered MOVE and restores only the original protection (1068.150272ms)
+✔ RC1 menu safely abandons never-entered CANCEL and restores only the original protection (1072.380184ms)
+✔ RC1 humano safely abandons never-entered CANCEL and restores only the original protection (1074.223777ms)
+✔ RC1 expiry safely abandons never-entered CANCEL and restores only the original protection (892.062495ms)
+✔ RC1 simultaneous competing customers and workers cannot move two appointments into the same employee/time (3412.334859ms)
+✔ RC1 retained employee hours, absences, busy-event buffers and business breaks constrain replacement suggestions (1116.053956ms)
+✔ RC1 maximum service/employee names fit the explicit appointment list without losing exact identifiers (3.019042ms)
+✔ RC1 business timezone DST boundaries preserve frozen elapsed duration and exact local-date selection (1482.959438ms)
+✔ RC1 duplicate concurrent cancellation uses one original attempt and releases only its own appointment (1958.424329ms)
+✔ RC1 no eligible original-employee hours offers no replacement or reassignment; cancellation releases the original slot for a new booking (2068.77191ms)
+ℹ tests 42
+ℹ suites 0
+ℹ pass 41
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 67316.098205
+
+✖ failing tests:
+
+test at dist/test/rc1-customer-overlap.test.js:9:1
+✖ RC1 customer overlap owner reproduction: known-after-name customer never sees another employee at their booked time (1886.163757ms)
+  AssertionError [ERR_ASSERTION]: same customer must not be offered the same time on Sofía
+  
+  true !== false
+  
+      at TestContext.<anonymous> (file:///workspace/work/nukmiris-product-rc1/vnext/dist/test/rc1-customer-overlap.test.js:20:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: true,
+    expected: false,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.2
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.2
+npm notice To update run: npm install -g npm@12.2.2
+npm notice
