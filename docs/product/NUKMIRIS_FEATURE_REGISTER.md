@@ -1,6 +1,6 @@
 # NukMiris — Feature & Improvement Register
 
-**Version:** 1.5  
+**Version:** 1.6  
 **Established:** 2026-10-27  
 **Product baseline:** v0.8.1; local vNext L2 owner walkthrough on Windows (tested source `3d8f82bb047e6ed937750b7ce6e81ecd23ab9f42`)  
 **Purpose:** Living backlog for functional features, UX improvements, compliance, reliability, and maintenance. This is a planning source, **not** proof that implementation has been independently tested.
@@ -176,10 +176,54 @@ The following entries preserve the original interview observations and suggested
 | NM-053 | DEFERRED — LOW PRIORITY | P3 (proposed; low) | Payments | Consider optional customer payment functionality in a later phase. | Define payment use cases, provider, refunds and compliance only when prioritized. Source: Issue #17. |
 | NM-054 | OPEN — PREVIOUSLY DISCUSSED; DISCOVERY CROSS-REFERENCE | P2 (proposed; uncommitted) | Waiting list | Waiting-list capability was already discussed before the field interview; salon professional endorsed its value. | Reconcile with existing vNext roadmap before design; avoid duplicate implementation scope. Source: Issue #17. |
 
+## Owner decisions — 2026-11-16 (requirements clarification; no implementation authorized)
+
+**Source:** Owner's responses to 20 questions on the v1.5 Feature Register. All decisions below are **OWNER-APPROVED PRODUCT INTENT**, **not proof of implementation, acceptance testing, or authorization to modify runtime**. Preserve existing feature IDs. Cross-references refer to existing requirements; newly numbered entries NM-055–NM-057 represent distinct capabilities not adequately captured in those rows. Items marked *OPEN CLARIFICATION* are not delegated to Codex for silent product decisions.
+
+| Decision | Feature reference | Owner-approved product requirement | Open clarifications / acceptance boundaries |
+|---|---|---|---|
+| OD-01 | NM-038 | Prevent a single customer from holding overlapping appointments, even with different employees. Multiple non-overlapping appointments remain allowed. | Define overlap using scheduled service time and whether buffers count; handle verified same customer across number changes, race conditions, pre-existing manual conflicts; never silently reject without an explanation. |
+| OD-02 | NM-006, NM-007, NM-031 | Customers can cancel and reschedule without advance-notice restrictions. | Does **not** imply changing past/completed appointments or overriding safety holds; resolve already-started appointment and owner-lock exceptions. |
+| OD-03 | NM-022 | Each business owner configures the minimum lead time for online appointments. | Define default, allowed values and whether owner-created appointments override the rule. |
+| OD-04 | NM-054 | When a waiting-list slot opens, notify all eligible interested customers; the **first confirmed response wins**. | Transactional single-winner reservation, slot hold/expiry, fair notification delivery, consent/template eligibility, and how late responses are handled. No booked slot may be double-assigned. |
+| OD-05 | NM-014 | Owner chooses which introductory details to show to first-time customers. | Define configurable fields/defaults and minimal required identity/automation disclosure, if applicable. |
+| OD-06 | NM-012, NM-046 | **No customer block-list product feature.** Owner may disable automatic appointment scheduling for individual customers; this is not punitive blocking. NM-012's prior block-list scope is **withdrawn/superseded by NM-046**. | Determine customer-visible response/handoff when automated booking is off. Preserve audit; avoid silently dropping messages. |
+| OD-07 | NM-046 | Per customer, owner independently configures automated conversational replies and appointment reminders; scheduling automation also needs its own explicit on/off behavior per OD-06. | Resolve default combinations and what happens to existing bookings and active conversations. |
+| OD-08 | NM-028 | When automation is disabled for a business, owner chooses which remaining automated functions stay active. | Define separately new booking, rescheduling, cancellations, reminders and human handoff; enforce consistent states and safe defaults. |
+| OD-09 | NM-034 | Owner/staff should respond to human-attention conversations directly using the **business's WhatsApp app**, rather than relying on a separate NukMiris inbox for replies. | **FEASIBILITY GATE:** verify actual Meta WhatsApp Business App + Cloud API coexistence capabilities, setup eligibility, number ownership, routing/state synchronization, permissions, and audit before committing architecture. Do not claim that normal WhatsApp app operation and Cloud API automatically coexist. Needs Attention can remain an internal tracking/notification queue. |
+| OD-10 | NM-034, NM-039 | Owner configures notifications by staff role and event/request type. | Define delivery channels, escalation rules and roles authorized to see sensitive requests. |
+| OD-11 | NM-048, NM-057 | Support permission-based phone contact import and CSV/Excel import. Additionally scan the **last 365 days of existing Google Calendar entries** during onboarding; import customers only where structured name/phone fields can be reliably identified. | Explicit owner authorization; preview/deduplicate by normalized phone; do not assume free-form event titles/descriptions prove identity; skip ambiguous records; no notification on import; comply with data minimization. Distinguish historical customer discovery from future booking import. |
+| OD-12 | NM-048 | When an inbound WhatsApp number matches an imported phone contact, ask the customer to confirm the saved name once; persist the confirmation. | Correction/rejection path and duplicate/shared-number handling. |
+| OD-13 | NM-047 | Minimum information for owner-entered offline appointment: **none**. Owner can simply block time, without customer name or WhatsApp number. | Appointment vs unavailability classification, employee/resource scope and optional service/duration; no automated customer messages without contact/consent. |
+| OD-14 | NM-047 | An offline appointment may later be associated with a WhatsApp number and, after appropriate consent, enabled for reminders. | Matching/merge rules, exact consent capture and prevention of retroactive or duplicated sends. |
+| OD-15 | NM-055, NM-052 | Initial service catalog: every standard service has a **name, fixed price, and fixed duration**. | Custom human-reviewed variable-price quotes remain a **later, distinct exception workflow** (NM-052), not a default variable-price service in MVP; define service currency and optional buffers. |
+| OD-16 | NM-056 | Choose employees automatically: for a returning customer booking the **same service**, prefer the employee who provided it previously (continuity); with **no qualifying history**, choose randomly among qualified, available employees. Customer is not asked to choose an employee in the default flow. | **OPEN CLARIFICATION:** what if preferred employee is unavailable? Offer next available time with them, or assign another qualified employee? Define which historical booking counts (latest completed vs latest booked), fairness of randomness, employee absences and deterministic testing. Never assign an unqualified/unavailable employee. |
+| OD-17 | NM-050, NM-051 | Initial owner dashboard should include both appointment/business performance and customer-level insights, including estimated booked revenue and retention signals. | Define MVP metrics/window and segmentation; distinguish booked value from actual collected revenue, and cancellations from no-shows. |
+| OD-18 | NM-049 | Future announcements support both operational notices (vacations, closures) and promotions/special offers. | Distinguish operational and marketing consent, opt-outs, Meta template categories and owner authorization; no blanket broadcast without messaging eligibility. |
+| OD-19 | NM-052 | For the deferred human-reviewed custom quote process, an **authorized assigned employee** decides price and duration. | Define assignment, authority limits, quote validity, approval and downstream booking. No automated AI price calculation. |
+| OD-20 | NM-053 | **Customer payments remain outside NukMiris for now.** | Keep payment integration deferred; no payment checkout or payment processing requirement for current roadmap. |
+
+### Additional entries required by the clarified decisions
+
+| ID | Status | Priority | Area | Feature / requirement | Acceptance criteria / decisions to resolve |
+|---|---|---|---|---|---|
+| NM-055 | OPEN — OWNER-APPROVED REQUIREMENT; NOT IMPLEMENTED | P1 (proposed) | Service catalog | Business owner maintains standard service name, fixed price and fixed duration. | Owner can add/edit/disable standard services; future bookings use the configured service values; price/currency and duration consistently displayed/stored; custom quotes remain separate NM-052 deferred scope. |
+| NM-056 | OPEN — OWNER-APPROVED REQUIREMENT; NOT IMPLEMENTED | P1 (proposed) | Employee assignment | Automatic qualified-employee assignment with same-service continuity for returning customers and random qualified/available assignment where no service-specific history exists. | Scope historical matches to customer and service, never violate qualifications, hours or schedule; decide preferred-employee unavailability fallback with owner before implementation. |
+| NM-057 | OPEN — OWNER-APPROVED REQUIREMENT; NOT IMPLEMENTED | P1 (proposed) | Onboarding / calendar import | Scan prior 365 days of authorized Google Calendar entries for reliably structured customer name and phone information and offer those customers for import. | Owner previews/confirms import; parse only defensible structured fields; handle duplicate contacts, insufficient data, permissions and timezone. No past-event resurrection, invitations or outbound messages triggered by import. |
+
+### Requirements governance
+
+- **No implementation authorized:** these are feature-definition decisions, not a Codex implementation request, merge approval, provider call or deployment permission.
+- Keep historical rows even where superseded. In particular **NM-012 is withdrawn as a block-list capability**, replaced by per-customer automation controls in NM-046; do not build both.
+- Keep product status (owner-approved intent) separate from delivery status (OPEN / READY FOR TEST / VERIFIED).
+- Existing main-table acceptance descriptions for NM-014, NM-022, NM-028, NM-034, NM-038, NM-046–NM-054 must be read together with the owner decisions above; this dated section overrides older conflicting option language.
+- Resolve open product questions explicitly before handing those feature slices to Codex; technical/legal/Meta feasibility must be verified rather than assumed.
+
 ## Change log
 
 | Date | Change |
 |---|---|
+| 2026-11-16 | Recorded 20 owner decisions OD-01–OD-20, clarified/superseded conflicting scope, and added NM-055–NM-057 for service catalog, employee continuity and historical calendar contact import. No implementation authorized. |
 | 2026-11-15 | Consolidated GitHub Issue #17 (hair-salon interview of 2026-11-07) as NM-046–NM-054, retaining source feedback, proposed priorities, discovery/deferred status and implementation boundaries; waiting list cross-referenced as previously discussed. |
 | 2026-10-27 | Created NM-001 through NM-028 from original 28-item notes; retained 12 author-reported DONE items; remaining 16 OPEN; proposed priorities and acceptance criteria. |
 | 2026-11-05 | Added NM-029 (P1, OPEN) to restore the v0.8.1 short Spanish date/time format uniformly across vNext WhatsApp interactive messages, with Meta label limits and regression coverage. Cross-reference NM-011. |
