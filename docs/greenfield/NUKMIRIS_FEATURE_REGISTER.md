@@ -355,3 +355,18 @@ SE-1 automated evidence at`540fc4af57a29eba380c0f53df0bf3ad12093ad7`:18 focused;
 Original SE-1 source `540fc4a` has [owner-reported Windows functional acceptance](https://github.com/vanasperena-ux/nukmiris/pull/25#issuecomment-6906738033); that is separate from an automated native suite. The owner approved correcting [N1](https://github.com/vanasperena-ux/nukmiris/pull/25#issuecomment-6906440798): automatic qualification only for a genuinely new service under the unchanged one-record/default-resource solo definition. Existing service edits must preserve explicit qualification removal. Forward migration 011 changes no existing rows; no inferred cleanup of old inserted qualifications. Decisions 139/147 unchanged.
 
 N1 tested source `95b122771b0958c0bc9bda07db1dab14f35aeb67`: 23 focused, 2 service-runtime, 690 full, 46 runtime PASS / 2 native-only SKIP, browser/typecheck/scope PASS on Linux Node 24.22.3 / PostgreSQL 17.11. Counts overlap. [Evidence](../../vnext/evidence/se1-n1/README.md) / [upgrade and optional native check](32-SE1-N1-SOLO-QUALIFICATION.md). N1 independent re-verification and native Windows correction run remain pending. N2–N5 are not addressed. The authoritative v1.4 documentation branch, original acceptance artifacts, owner profile and Ana's protected case are unchanged.
+
+## RC-1 — local reschedule/cancel implementation branch
+
+Authority remains **v1.4 at `59cde023d2dff088161c1d01bd76c1099386e13f`**. [Issue #26](https://github.com/vanasperena-ux/nukmiris/issues/26) controls RC-1, including explicit appointment selection even for one appointment and retaining the original employee. Owner clarification permits existing inactive-service appointments to reschedule using their frozen service snapshot. No changes to the authoritative documentation branch.
+
+N1 closure above is now historical: [Claude independently accepted N1](https://github.com/vanasperena-ux/nukmiris/pull/25#issuecomment-6920796218); [owner native disposable check: 2/2 PASS](https://github.com/vanasperena-ux/nukmiris/pull/25#issuecomment-6922286710). This does not accept RC-1 or modify original SE-1/N1 evidence. N2–N5 remain outside this increment.
+
+| ID | RC-1 status / boundary |
+|---|---|
+|NM-006|READY FOR TEST — explicit appointment → original employee's replacement slots → direct proven move, old/new success copy, stable appointment/event/service snapshot.|
+|NM-007 / NM-010|READY FOR TEST — explicit appointment → immediate proven cancellation, exact fake-event deletion, retained history, no obsolete menu suffix or extra confirmation.|
+|NM-029 / NM-031 / NM-032|REGRESSION REQUIRED — short business-local labels, bounded paginated list presentation and unchanged approved summary triggers.|
+|Owner Citas|READY FOR TEST — Confirmada after move; cancelled toggle OFF default; grey Cancelada at last booked time; history with customer origin and request/applied timestamps.|
+
+[Flow/copy](33-RC1-FLOW-COPY.md), [fresh-profile Windows walkthrough and limits](34-RC1-LOCAL-ACCEPTANCE.md), [exact source and test evidence](../../vnext/evidence/rc1/README.md). Independent RC-1 safety review and owner native Windows/functional acceptance remain pending. Synthetic only; no existing-profile upgrade, real provider, employee notifications, cloud or production activation.

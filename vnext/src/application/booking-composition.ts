@@ -12,19 +12,19 @@ function validate(c:AvailabilityConfig,b:BookingBindings):void{
  if(new Set(b.employees.values()).size!==b.employees.size)throw Error('booking_resource_binding_ambiguous');
 }
 /** Read observation only. SQL exclusion/guards remain the reservation authority. */
-export function protectedCalendar(args:{config:AvailabilityConfig;source:SyntheticCalendarReader;bindings:BookingBindings;reducer:UnitOfWork;now:string;signal:(s:AvailabilitySignal)=>void}):SyntheticCalendarReader{
+export function protectedCalendar(args:{config:AvailabilityConfig;source:SyntheticCalendarReader;bindings:BookingBindings;reducer:UnitOfWork;now:string;signal:(s:AvailabilitySignal)=>void;excludeAppointmentId?:string}):SyntheticCalendarReader{
  const {config:c,source,bindings:b,reducer}=args;validate(c,b);if(source.mode!=='L1_SYNTHETIC_ONLY')throw Error('synthetic_calendar_required');const notices=new Set<string>(),reverse=new Map([...b.employees].map(([name,id])=>[id,name]));
  const now=DateTime.fromISO(args.now,{setZone:true}).setZone(c.timeZone);if(!now.isValid)throw Error('availability_clock_invalid');const from=now.minus({minutes:1440}).toISO()!,until=now.plus({days:365}).toISO()!;
  const notice=(code:AvailabilitySignal['code'],eventId:string,resourceId:string)=>{const key=code+'/'+eventId+'/'+resourceId;if(!notices.has(key)){notices.add(key);args.signal({code,businessId:c.businessId,calendarId:c.calendarId,eventId,resourceId});}};
  return {mode:'L1_SYNTHETIC_ONLY',async read(range,cursor){
   if(range.businessId!==c.businessId||range.calendarId!==c.calendarId)throw new AvailabilityHeldError('CALENDAR_SCOPE');
-  const rows=await reducer.tx(c.businessId,async db=>(await db.query<Protection>(`SELECT pr.appointment_id::text AS "appointmentId",pr.operation_id::text AS "operationId",pr.resource_id::text AS "resourceId",lower(pr.protected_range) AS "startAt",upper(pr.protected_range) AS "endAt"
+  const rows=await reducer.tx(c.businessId,async db=>{if(args.excludeAppointmentId&&(await db.query('SELECT 1 FROM core.mutation_guard WHERE business_id=$1 AND appointment_id=$2',[c.businessId,args.excludeAppointmentId])).rowCount)throw new AvailabilityHeldError('APPOINTMENT_HELD');return (await db.query<Protection>(`SELECT pr.appointment_id::text AS "appointmentId",pr.operation_id::text AS "operationId",pr.resource_id::text AS "resourceId",lower(pr.protected_range) AS "startAt",upper(pr.protected_range) AS "endAt"
    FROM core.protection pr JOIN core.appointment a ON a.business_id=pr.business_id AND a.id=pr.appointment_id
    WHERE pr.business_id=$1 AND a.calendar_id=$2 AND pr.protected_range && tstzrange($3::timestamptz,$4::timestamptz,'[)')
-   ORDER BY pr.resource_id,pr.appointment_id,lower(pr.protected_range)`,[c.businessId,b.calendar.coreId,from,until])).rows);
+   ORDER BY pr.resource_id,pr.appointment_id,lower(pr.protected_range)`,[c.businessId,b.calendar.coreId,from,until])).rows;});
   const page=await source.read(range,cursor);if(page.businessId!==c.businessId||page.calendarId!==c.calendarId||!Array.isArray(page.events))throw new AvailabilityHeldError('CALENDAR_SCOPE');
   const events:CalendarEvent[]=page.events.map(e=>{if(e.businessId!==c.businessId||e.calendarId!==c.calendarId)throw new AvailabilityHeldError('EVENT_SCOPE_OR_SCHEMA');if(e.resourceId&&!c.employees.some(x=>x.id===e.resourceId)){notice('UNKNOWN_CALENDAR_RESOURCE',e.id,e.resourceId);const {resourceId,...unassigned}=e;void resourceId;return unassigned;}return e;});
-  for(const p of rows){if(Date.parse(p.startAt)>=Date.parse(range.end)||Date.parse(p.endAt)<=Date.parse(range.start))continue;const id='local-protection/'+p.appointmentId+'/'+p.operationId+'/'+p.resourceId+'/'+p.startAt,resourceId=reverse.get(p.resourceId);if(!resourceId)notice('UNKNOWN_LOCAL_PROTECTION_RESOURCE',id,p.resourceId);
+  for(const p of rows){if(p.appointmentId===args.excludeAppointmentId)continue;if(Date.parse(p.startAt)>=Date.parse(range.end)||Date.parse(p.endAt)<=Date.parse(range.start))continue;const id='local-protection/'+p.appointmentId+'/'+p.operationId+'/'+p.resourceId+'/'+p.startAt,resourceId=reverse.get(p.resourceId);if(!resourceId)notice('UNKNOWN_LOCAL_PROTECTION_RESOURCE',id,p.resourceId);
    // Range upper already includes the reservation's buffer: never add it twice.
    events.push({businessId:c.businessId,calendarId:c.calendarId,id,start:p.startAt,end:p.endAt,bufferMinutes:0,state:'UNKNOWN',...(resourceId?{resourceId}:{})});
   }

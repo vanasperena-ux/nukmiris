@@ -11,7 +11,7 @@ export interface PlanRequest {
   startAt:string; endAt:string; kind?:'CREATE'|'MOVE'|'CANCEL'|'ATTENDANCE';
   appointmentId?:string; eventId?:string; expectedRevision?:number;
   outputPurpose?:'CUSTOMER_REQUEST'|'REMINDER'; bufferMinutes?:number;
-  confirmation?:ObjectValue;catalogRevision?:number;serviceSnapshot?:ObjectValue;
+  management?:ObjectValue;deadlineLimit?:string;confirmation?:ObjectValue;catalogRevision?:number;serviceSnapshot?:ObjectValue;
 }
 /** Sealed synthetic plan. SQL requires either the retained test selector or a
  * consumed, sealed local booking intent; no Google adapter is accepted. */
@@ -38,13 +38,13 @@ export async function prepareOperation(args:{request:PlanRequest;reducer:UnitOfW
   const intent={businessId:b,inputId:r.inputId,customerId:r.customerId,calendarId:r.calendarId,resourceId:r.resourceId,
     startAt:finiteDate(r.startAt),endAt:finiteDate(r.endAt),kind:r.kind??'CREATE',
     appointmentId:r.appointmentId??null,eventId:r.eventId??null,expectedRevision:r.expectedRevision??1,
-    bufferMinutes:r.bufferMinutes??0,outputPurpose:r.outputPurpose??'CUSTOMER_REQUEST',...(r.confirmation?{confirmation:r.confirmation}:{}),...(r.serviceSnapshot?{serviceSnapshot:r.serviceSnapshot,catalogRevision:r.catalogRevision!}:{})};
+    bufferMinutes:r.bufferMinutes??0,outputPurpose:r.outputPurpose??'CUSTOMER_REQUEST',...(r.management?{management:r.management,deadlineLimit:r.deadlineLimit!}:{}),...(r.confirmation?{confirmation:r.confirmation}:{}),...(r.serviceSnapshot?{serviceSnapshot:r.serviceSnapshot,catalogRevision:r.catalogRevision!}:{})};
   if(Date.parse(intent.startAt)>=Date.parse(intent.endAt)||!Number.isInteger(intent.bufferMinutes)||intent.bufferMinutes<0||intent.bufferMinutes>1440)throw new Error('invalid_interval');
   const plan=await archive.ensure(`operation/${b}/${r.inputId}`,'OPERATION_PLAN',{intent},()=>{
     const attemptId=randomUUID(),operationId=randomUUID(),appointmentId=r.appointmentId??randomUUID(),eventId=r.eventId??randomUUID(),outputId=randomUUID();
     const payload={kind:intent.kind,businessId:b,calendarId:r.calendarId,appointmentId,eventId,customerId:r.customerId,resourceId:r.resourceId,startAt:intent.startAt,endAt:intent.endAt,bufferMinutes:intent.bufferMinutes};
     const outputPayload=r.confirmation??{synthetic:'WP1_ONLY',operationId,appointmentId};
-    const now=clock.now().toISOString(),deadline=new Date(Math.min(clock.now().getTime()+900000,Date.parse(intent.startAt)-2000)).toISOString();
+    const now=clock.now().toISOString(),deadline=new Date(Math.min(clock.now().getTime()+900000,Date.parse(intent.startAt)-2000,...(r.deadlineLimit?[Date.parse(r.deadlineLimit)]:[]))).toISOString();
     const envelope:Envelope={formatVersion:1,businessId:b,attemptId,payloadDigest:digest(payload),recipient:text(context.input['subject']),
       channelId:text(context.ch['id']),channelRevision:Number(context.ch['revision']),conversationId:text(context.input['conversation_id']),
       waba:text(context.ch['waba']),numberId:text(context.ch['number_id']),calendarId:r.calendarId,calendarRevision:Number(context.calendar['revision']),grantId:text(context.calendar['grant_id']),
