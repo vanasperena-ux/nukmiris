@@ -1,6 +1,6 @@
 # NukMiris — Feature & Improvement Register
 
-**Version:** 1.11  
+**Version:** 1.12  
 **Established:** 2026-10-27  
 **Product baseline:** v0.8.1; local vNext L2 owner walkthrough on Windows (tested source `3d8f82bb047e6ed937750b7ce6e81ecd23ab9f42`)  
 **Purpose:** Living backlog for functional features, UX improvements, compliance, reliability, and maintenance. This is a planning source, **not** proof that implementation has been independently tested.
@@ -277,12 +277,35 @@ The following clarifications are **OWNER-APPROVED PRODUCT INTENT**, not implemen
 |---|---|---|---|---|---|---|
 | NM-068 | OPEN — OWNER-REQUESTED; NOT IMPLEMENTED | P1 | Customer WhatsApp copy | Apply CX-001, CX-002, CX-004, CX-008, CX-012–015, CX-021, CX-022, CX-024, CX-039 and CX-040 owner-requested Spanish replacement strings. | Correct scenario only; accurate substitutions, line breaks and Unicode; preserve booking/handoff/recovery safety. **Explicit owner override CX-008:** use `No encontré horarios disponibles por ahora. Puedes llamar al negocio para consultar más opciones.` in the existing no-active-services scenario, even though the wording matches CX-007's no-available-times message. Do not replace with services-specific copy. **Owner approved CX-021/CX-022/CX-024** grammatical and formatting fixes. See copy review v1.3 for exact final strings. No other CX IDs changed. | R0 |
 
+### NM-068 — final approved customer messages (source of truth)
+
+These are the **owner-approved target strings** for R0, not evidence that the runtime has changed. `{n}`, `{nombre}`, and `{negocio}` are dynamic substitutions. `\\n\\n` below represents a blank line in the outgoing message. All earlier contradictory editorial suggestions, particularly the older v1.10 note about CX-008, are superseded by this table.
+
+| CX ID | Approved target customer-facing text | Scenario |
+|---|---|---|
+| CX-001 | `Elige un horario` | Initial time options |
+| CX-002 | `Te muestro más opciones. Elige un horario:` | More options |
+| CX-004 | `Te muestro más opciones. Elige un horario:` | More options on selected date |
+| CX-008 | `No encontré horarios disponibles por ahora. Puedes llamar al negocio para consultar más opciones.` | **Existing no-active-services trigger**, as explicitly chosen by owner; CX-007 uses this same wording for no available slots |
+| CX-012 | `Esa fecha ya pasó. Elige otra fecha o escríbela.` | Past date |
+| CX-013 | `Por ahora solo podemos agendar citas dentro de los próximos {n} días. Elige otra fecha o escríbela.` | Beyond configured booking horizon |
+| CX-014 | `El día de la semana no coincide con la fecha. Elige otra fecha o escríbela.` | Weekday mismatch |
+| CX-015 | `Esa fecha no existe en el calendario. Elige otra fecha o escríbela.` | Impossible date |
+| CX-021 | `Hola {nombre}, bienvenido a {negocio}. Soy un bot que te ayuda a agendar, reagendar o cancelar una cita.` | Main-menu greeting; omit name cleanly if unknown |
+| CX-022 | `¿En qué podemos ayudarte?\\n\\nEscribe "cita" o "agendar" para agendar una cita nueva. Escribe "reagendar" o "cancelar" para gestionar una cita.\\n\\nEscribe "menu" para volver al menú principal. Para solicitar apoyo, escribe "humano" o elige "Hablar con alguien".` | Main menu; no stray letter `n` |
+| CX-024 | `Escribe tu mensaje. El bot ya no está activo.\\n\\nEscribe "menu" para activar el bot y volver al menú principal.` | Human-support entry |
+| CX-039 | `La cita ya no está disponible. Elige de nuevo.` | Appointment no longer available |
+| CX-040 | `La cita ya no está disponible. Elige de nuevo.` | Appointment changed or unavailable |
+
+**Implementation boundary:** R0 requirement only, not authorized implementation. Retain current triggers, safe booking rules, correct dynamic placeholders, human-mode suppression and owner acceptance tests. Customer-facing source inventory: [CUSTOMER_FACING_TEXT_REVIEW.md](CUSTOMER_FACING_TEXT_REVIEW.md).
+
 **Relationship to existing IDs:** NM-003/004 (previously reported copy changes) require re-verification against the new approved R0 text; NM-014/031–034 (greeting, menu, human interaction and management) preserve their functional behavior, with only these listed messages subject to R0 wording change. This is not a new conversation-flow design, nor a modification of R1+ features.
 
 ## Change log
 
 | Date | Change |
 |---|---|
+| 2026-11-16 | v1.12: placed the definitive 13 approved NM-068/CX target strings directly into the master Feature Register; owner's exact CX-008 override remains authoritative. R0, unimplemented. |
 | 2026-11-16 | v1.11: explicit owner correction supersedes previous CX-008 editorial recommendation; preserve requested no-availability sentence for CX-008 existing trigger. No implementation started. |
 | 2026-11-16 | v1.10: resolved NM-068 CX-008 as no-active-services distinct from CX-007 no-available-times; approved corrected greeting CX-021, formatting CX-022, and accent/spacing CX-024. R0 scope unchanged; no code change. |
 | 2026-11-16 | v1.9: added NM-068 (R0) for owner-reviewed customer-facing Spanish copy corrections CX-001, 002, 004, 008, 012–015, 021, 022, 024, 039, 040; preserved semantic/editorial review questions and no-code-change boundary. |
