@@ -15,7 +15,7 @@ Migration 012 is installed only in fresh isolated fixtures in RC-1. **No upgrade
 Prerequisites: Git, Node 24, Docker Desktop running Linux containers, enough local storage for the pinned PostgreSQL 17.11 image. These commands create synthetic local resources only. Use the exact tested source in the linked evidence README, not an unreviewed newer branch head.
 
 ```powershell
-$Source = 'REPLACE_WITH_RC1_TESTED_SOURCE_FROM_EVIDENCE'
+$Source = '77ea22b59d1b7022cecb3cf7a007ca14affee9ff'
 $Checkout = Join-Path $env:USERPROFILE 'Desktop\NukMiris RC1 Review'
 if (Test-Path -LiteralPath $Checkout) { throw 'Choose a NEW checkout directory.' }
 git clone --single-branch --branch product/rc1-local-reschedule-cancel https://github.com/vanasperena-ux/nukmiris.git "$Checkout"
@@ -47,8 +47,8 @@ node local/cli.mjs book --state-dir "$Profile" --db-port 0 --port 0
 ```
 
 1. Select **Juanita's Nail Salon / Ana**. Enter `reagendar`, then `cancelar`: there are no upcoming appointments and no mutation. Enter `menu`: exactly the existing three options; no management picker yet.
-2. Enter `cita`, select one offered time. It books directly. Note service, employee and time. Enter `reagendar`: select the exact appointment even though only one exists. See two replacement suggestions, use **Ver más opciones** and date selection as desired. Select a replacement directly. The success shows **Antes / Ahora**, same service and employee; the fake calendar has one updated event, not a second booking.
-3. Open **Mi negocio** (`/owner`) from the chat. In **Citas**, see **Confirmada**. **Ver historial** shows creation and move, old/new time, Cliente (WhatsApp), request and completion timestamps. `Mostrar citas canceladas` starts OFF.
+2. Enter `cita`, select one offered time. It books directly. Note service, employee and time. Enter `reagendar`: select the exact appointment even though only one exists. See two replacement suggestions, use **Más opciones** and date selection as desired. Select a replacement directly. The success shows **Antes / Ahora**, same service and employee; the fake calendar has one updated event, not a second booking.
+3. Open **Administrar servicios, empleados y citas** (`/owner`) from the chat. In **Citas**, see **Confirmada**. **Ver historial** shows creation and move, old/new time, Cliente (WhatsApp), request and completion timestamps. `Mostrar citas canceladas` starts OFF.
 4. Return to chat. Enter `cancelar`, select the exact appointment. No extra confirmation. Success names the cancelled service/time/employee. The fake event disappears. Owner calendar hides the entry by default; enabling the toggle shows grey **Cancelada** at its last booked time. **Historial de citas** retains it regardless of toggle.
 5. Book a second and third appointment on distinct days; `reagendar`/`cancelar` must let you select exactly which one. For many appointments, create at least four and use **Más citas / Citas anteriores**. Ordinary `menu` and `cita` summaries retain the approved trigger behavior; pickers appear only inside management.
 6. Switch to a new synthetic customer and book after entering their name, then manage that appointment. Switch to **Bernard's Grooming Salon**: Juanita's appointments/history must not appear. Do not use any real names or provider accounts.

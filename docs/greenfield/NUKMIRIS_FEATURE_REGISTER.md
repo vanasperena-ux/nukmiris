@@ -366,7 +366,9 @@ N1 closure above is now historical: [Claude independently accepted N1](https://g
 |---|---|
 |NM-006|READY FOR TEST — explicit appointment → original employee's replacement slots → direct proven move, old/new success copy, stable appointment/event/service snapshot.|
 |NM-007 / NM-010|READY FOR TEST — explicit appointment → immediate proven cancellation, exact fake-event deletion, retained history, no obsolete menu suffix or extra confirmation.|
-|NM-029 / NM-031 / NM-032|REGRESSION REQUIRED — short business-local labels, bounded paginated list presentation and unchanged approved summary triggers.|
+|NM-029 / NM-031 / NM-032|REGRESSION PASSED (Linux) — short business-local labels, bounded paginated list presentation and unchanged approved summary triggers.|
 |Owner Citas|READY FOR TEST — Confirmada after move; cancelled toggle OFF default; grey Cancelada at last booked time; history with customer origin and request/applied timestamps.|
 
 [Flow/copy](33-RC1-FLOW-COPY.md), [fresh-profile Windows walkthrough and limits](34-RC1-LOCAL-ACCEPTANCE.md), [exact source and test evidence](../../vnext/evidence/rc1/README.md). Independent RC-1 safety review and owner native Windows/functional acceptance remain pending. Synthetic only; no existing-profile upgrade, real provider, employee notifications, cloud or production activation.
+
+RC-1 tested source `77ea22b59d1b7022cecb3cf7a007ca14affee9ff`: 731 full, 48 portable runtime PASS (2 native-only Windows SKIP on Linux), 1 RC-1 Chromium browser and 1 SE-1 owner-browser PASS; typecheck/scope PASS. The 41 RC-1 core and 2 RC-1 TCP cases are overlapping subsets. Linux Node 24.19.0 / PostgreSQL 17.11. See RC-1 evidence; native Windows and independent RC-1 acceptance remain pending.
