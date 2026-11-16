@@ -1,8 +1,8 @@
 # NukMiris — Release Roadmap
 
-**Planning version:** 1.1 (2026-11-16)
+**Planning version:** 1.2 (2026-11-16)
 **Status:** OWNER-APPROVED RELEASE ALLOCATION; **NOT IMPLEMENTATION AUTHORIZATION**
-**Master register:** [NUKMIRIS_FEATURE_REGISTER.md](NUKMIRIS_FEATURE_REGISTER.md) v1.9
+**Master register:** [NUKMIRIS_FEATURE_REGISTER.md](NUKMIRIS_FEATURE_REGISTER.md) v1.11
 **Source decisions:** Owner release validations (2026-11-16), including R1 PWA, calendar import, and start-time setting NM-067.
 
 ## Release governance
@@ -21,7 +21,7 @@
 
 **Delivery dependencies:** Current bounded RC-1 local reschedule/cancel work (GitHub Issue #26) and Milestone A (Issue #7); do not misstate prior synthetic tests as real provider proof.
 
-**Owner-requested Spanish copy corrections (NM-068):** Review and, upon separate implementation authorization, apply CX-001, CX-002, CX-004, CX-008, CX-012–015, CX-021, CX-022, CX-024, CX-039 and CX-040 from [CUSTOMER_FACING_TEXT_REVIEW.md](CUSTOMER_FACING_TEXT_REVIEW.md). Preserve approved scenario routing, human handoff and error safety. **Open copy checks:** CX-008 is sourced from a no-active-services condition but the requested replacement describes no available times; CX-021/CX-022/CX-024 contain small spelling/formatting ambiguities to resolve before implementation. The feature is not built; its placement in R0 is planning only.
+**Owner-requested Spanish copy corrections (NM-068):** Review and, upon separate implementation authorization, apply CX-001, CX-002, CX-004, CX-008, CX-012–015, CX-021, CX-022, CX-024, CX-039 and CX-040 from [CUSTOMER_FACING_TEXT_REVIEW.md](CUSTOMER_FACING_TEXT_REVIEW.md). Preserve approved scenario routing, human handoff and error safety. **Owner-confirmed wording:** CX-008 must use exactly `No encontré horarios disponibles por ahora. Puedes llamar al negocio para consultar más opciones.` even in the no-active-services code scenario; do not substitute a service-specific explanation. CX-021/CX-022/CX-024 editorial fixes are also approved; refer to copy review v1.3. The feature is not built; its placement in R0 is planning only.
 
 **Acceptance gate:** Owner walks through known/new booking, 0/1/multiple appointments, immediate cancel/reschedule (only before appointment start), employee and customer overlap protection, menu/human support, replayed/stale actions, restart, service buffers, and no false confirmations. Native Windows test evidence and independent reviews as required.
 
