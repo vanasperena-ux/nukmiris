@@ -1,6 +1,6 @@
 # NukMiris — Feature & Improvement Register
 
-**Version:** 1.10  
+**Version:** 1.11  
 **Established:** 2026-10-27  
 **Product baseline:** v0.8.1; local vNext L2 owner walkthrough on Windows (tested source `3d8f82bb047e6ed937750b7ce6e81ecd23ab9f42`)  
 **Purpose:** Living backlog for functional features, UX improvements, compliance, reliability, and maintenance. This is a planning source, **not** proof that implementation has been independently tested.
@@ -275,7 +275,7 @@ The following clarifications are **OWNER-APPROVED PRODUCT INTENT**, not implemen
 
 | Feature ID | Status | Priority | Area | Feature requirement | Acceptance criteria / open questions | Target release |
 |---|---|---|---|---|---|---|
-| NM-068 | OPEN — OWNER-REQUESTED; NOT IMPLEMENTED | P1 | Customer WhatsApp copy | Apply CX-001, CX-002, CX-004, CX-008, CX-012–015, CX-021, CX-022, CX-024, CX-039 and CX-040 owner-requested Spanish replacement strings. | Correct scenario only; accurate substitutions, line breaks and Unicode; preserve booking/handoff/recovery safety. **Owner resolved CX-008:** keep a distinct no-active-services message (current `No hay servicios activos disponibles. Contacta al negocio.`); CX-007 already covers no available times using the owner's requested wording. **Owner approved CX-021/CX-022/CX-024** grammatical and formatting fixes. See copy review v1.2 for exact final strings. No other CX IDs changed. | R0 |
+| NM-068 | OPEN — OWNER-REQUESTED; NOT IMPLEMENTED | P1 | Customer WhatsApp copy | Apply CX-001, CX-002, CX-004, CX-008, CX-012–015, CX-021, CX-022, CX-024, CX-039 and CX-040 owner-requested Spanish replacement strings. | Correct scenario only; accurate substitutions, line breaks and Unicode; preserve booking/handoff/recovery safety. **Explicit owner override CX-008:** use `No encontré horarios disponibles por ahora. Puedes llamar al negocio para consultar más opciones.` in the existing no-active-services scenario, even though the wording matches CX-007's no-available-times message. Do not replace with services-specific copy. **Owner approved CX-021/CX-022/CX-024** grammatical and formatting fixes. See copy review v1.3 for exact final strings. No other CX IDs changed. | R0 |
 
 **Relationship to existing IDs:** NM-003/004 (previously reported copy changes) require re-verification against the new approved R0 text; NM-014/031–034 (greeting, menu, human interaction and management) preserve their functional behavior, with only these listed messages subject to R0 wording change. This is not a new conversation-flow design, nor a modification of R1+ features.
 
@@ -283,6 +283,7 @@ The following clarifications are **OWNER-APPROVED PRODUCT INTENT**, not implemen
 
 | Date | Change |
 |---|---|
+| 2026-11-16 | v1.11: explicit owner correction supersedes previous CX-008 editorial recommendation; preserve requested no-availability sentence for CX-008 existing trigger. No implementation started. |
 | 2026-11-16 | v1.10: resolved NM-068 CX-008 as no-active-services distinct from CX-007 no-available-times; approved corrected greeting CX-021, formatting CX-022, and accent/spacing CX-024. R0 scope unchanged; no code change. |
 | 2026-11-16 | v1.9: added NM-068 (R0) for owner-reviewed customer-facing Spanish copy corrections CX-001, 002, 004, 008, 012–015, 021, 022, 024, 039, 040; preserved semantic/editorial review questions and no-code-change boundary. |
 | 2026-11-16 | Feature Register v1.8: owner-approved planning allocation of all existing requirements, new NM-058–NM-067 including mobile-first installable PWA, structured Calendar import, employee management, subscription billing and configurable appointment start times; no implementation authorized. |
