@@ -1,9 +1,33 @@
 # NukMiris — Customer-facing Spanish copy review
 
-**Review draft:** 1.0 — 2026-11-16  
-**Status:** FOR OWNER REVIEW ONLY; no wording has been changed in application code.  
+**Review draft:** 1.1 — 2026-11-16  
+**Status:** OWNER-SUBMITTED COPY DECISIONS RECORDED for R0; application code unchanged. Two editorial/semantic ambiguities remain highlighted.  
 **Source inspected:** `product/rc1-local-reschedule-cancel` (current RC-1 local/synthetic vNext development branch), using the linked TypeScript source below. This branch is **not** equivalent to approved production WhatsApp copy and should not be confused with the default branch or the legacy v0.8.1 runtime.
 **Scope:** Strings emitted toward the *customer chat* by the vNext booking, appointment-management, date parser, name validation, appointment summary and WhatsApp interactive-presentation components. Simulator-only banners and owner-facing PWA UI are listed separately. Real Meta outbound templates/reminders are **not** wired into the reviewed vNext local synthetic flow; this audit is not a verification of approved Meta template bodies.
+
+## Owner's reviewed wording — change register (2026-11-16)
+
+**Target:** R0, feature NM-068. **Status:** OWNER-REQUESTED / DOCUMENTED, NOT IMPLEMENTED. The following table takes precedence over the historic “Current text” inventory below. The exact owner-supplied strings are retained, including typing anomalies; *no unrequested silent editorial corrections* are authorized.
+
+| CX ID | Owner-requested replacement | Scenario / implementation note |
+|---|---|---|
+| CX-001 | `Elige un horario` | Previously requested change to initial time options; confirm terminal punctuation only if necessary to avoid altering approved literal. |
+| CX-002 | `Te muestro más opciones. Elige un horario:` | More available times (first set of extra slots). |
+| CX-004 | `Te muestro más opciones. Elige un horario:` | More available times for a specifically selected date. |
+| CX-008 | `No encontré horarios disponibles por ahora. Puedes llamar al negocio para consultar más opciones.` | **OPEN SEMANTIC CLARIFICATION:** CX-008 in the inspected code means *no active services*, not *no available times*. The requested text exactly duplicates the existing general no-availability text CX-007; decide whether intentional or whether CX-008 should instead explain that services are unavailable. |
+| CX-012 | `Esa fecha ya pasó. Elige otra fecha o escríbela.` | Past date. |
+| CX-013 | `Por ahora solo podemos agendar citas dentro de los próximos {n} días. Elige otra fecha o escríbela.` | Date beyond booking horizon. Keep {n} dynamic, not literal rendered braces. |
+| CX-014 | `El día de la semana no coincide con la fecha. Elige otra fecha o escríbela.` | Weekday/date mismatch. |
+| CX-015 | `Esa fecha no existe en el calendario. Elige otra fecha o escríbela.` | Impossible date. |
+| CX-021 | `Hola {nombre, si se conoce}, bienvenido a {negocio}. Soy un bot que te ayuda hacer una cita o reagandar / cancelar.` | Main-menu greeting and bot disclosure. **OPEN EDITORIAL CHECK:** the owner's original wording has “te ayuda hacer” and “reagandar”; do not silently change without approval. Dynamic placeholders are not displayed as braces. |
+| CX-022 | `¿En qué podemos ayudarte?\n\nEscribe "cita" o "agendar" para agendar una cita nueva. Escribe "reagendar" o "cancelar" para gestionar una cita. n\n Escribe "menu" para volver al menú principal. Para solicitar apoyo, escribe "humano" o elige "Hablar con alguien".` | Main menu. **OPEN EDITORIAL CHECK:** user-supplied `n` before line break appears accidental; preserve original in decision history, normalize display line breaks when owner confirms whether `n` is a typo. |
+| CX-024 | `Escribe tu mensaje. El bot ya no esta activo.\n\nEscribe "menu" para activar el bot y  volver al menú principal.` | Human-support entry. **OPEN EDITORIAL CHECK:** “esta” accent and double space before “volver”; retain as provided until copy cleanup confirmation. Ensure actual human mode suppresses additional auto-replies and `menu` exits. |
+| CX-039 | `La cita ya no está disponible. Elige de nuevo.` | Appointment no longer valid for management. |
+| CX-040 | `La cita ya no está disponible. Elige de nuevo.` | Appointment changed/invalid during manage action. |
+
+**Acceptance criteria:** The correct text fires only for its CX scenario; variable values use business/customer context; customer messages display Spanish accents and actual paragraph breaks; old text is absent from its superseded context; dynamic and failure-safe booking logic stays unchanged. Test zero/one/multiple appointments, invalid dates, service-unavailable vs times-unavailable, human entry/exit, and stale/changed management choices.
+
+**Scope:** This is a requirements/documentation update only. No source changes, tests or provider calls are authorized here. The requested CX-008 semantics and CX-021/CX-022/CX-024 punctuation/spelling questions should be resolved before implementing those specific lines. Other requested lines are ready for an explicitly authorized R0 copy-only change.
 
 ## Proposed edit from owner
 
