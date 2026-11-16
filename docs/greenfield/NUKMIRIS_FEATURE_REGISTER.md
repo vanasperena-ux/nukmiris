@@ -372,3 +372,9 @@ N1 closure above is now historical: [Claude independently accepted N1](https://g
 [Flow/copy](33-RC1-FLOW-COPY.md), [fresh-profile Windows walkthrough and limits](34-RC1-LOCAL-ACCEPTANCE.md), [exact source and test evidence](../../vnext/evidence/rc1/README.md). Independent RC-1 safety review and owner native Windows/functional acceptance remain pending. Synthetic only; no existing-profile upgrade, real provider, employee notifications, cloud or production activation.
 
 RC-1 tested source `77ea22b59d1b7022cecb3cf7a007ca14affee9ff`: 731 full, 48 portable runtime PASS (2 native-only Windows SKIP on Linux), 1 RC-1 Chromium browser and 1 SE-1 owner-browser PASS; typecheck/scope PASS. The 41 RC-1 core and 2 RC-1 TCP cases are overlapping subsets. Linux Node 24.19.0 / PostgreSQL 17.11. See RC-1 evidence; native Windows and independent RC-1 acceptance remain pending.
+
+## RC-1 follow-up — customer-overlap offers
+
+NM-038 bounded correction is authorized by the owner's PR #27 follow-up: offers must follow the **existing SQL** same-customer protection rule across employees/calendars, including buffers. The broader v1.4 exception/policy discussion above is historical context; this increment adds no exception or SQL policy change. [Investigation and fresh Windows retest](35-RC1-CUSTOMER-OVERLAP.md).
+
+READY FOR RETEST: authenticated-customer availability filtering, navigation refresh, source-only exclusion during reschedule, preserved different-customer capacity, stale/racing rejection and retained uncertain protections. Decisions 139/147, employee allocation, snapshots and custody/dispatch are unchanged. [Correction evidence and exact tested source](../../vnext/evidence/rc1-overlap/README.md). Existing profiles, original RC-1/SE-1/N1 evidence and the authoritative v1.4 documentation branch are untouched. New-source native Windows and owner acceptance remain pending.

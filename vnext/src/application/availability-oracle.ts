@@ -52,10 +52,10 @@ export class AvailabilityOracle {
   if(action.kind==='service'){if(!this.catalog?.services.some(s=>s.id===action.value&&s.active))throw Error('oracle_stale_or_foreign_action');this.serviceId=action.value;return this.open();}
   if(action.kind==='manage')return this.management();
   if(action.kind==='human')return this.humano();
-  if(action.kind==='more')return this.timesOrSuggestions(true);
-  if(action.kind==='times'){this.timePage=Number(action.value);return this.timesOrSuggestions();}
-  if(action.kind==='dates'){if(this.selectedDate)this.slots=await searchAvailability(this.config,this.reader,this.now());this.selectedDate=undefined;this.datePages=[this.slots];this.datePage=0;return this.dates();}
-  if(action.kind==='days'){const page=Number(action.value);if(!this.datePages[page])this.datePages[page]=await searchAvailability(this.config,this.reader,this.now(),{afterDate:this.day(this.datePages[page-1]!.at(-1)!)});this.datePage=page;this.slots=this.datePages[page]!;return this.dates();}
+  if(action.kind==='more'){this.slots=await searchAvailability(this.config,this.reader,this.now());return this.timesOrSuggestions(true);}
+  if(action.kind==='times'){this.slots=await searchAvailability(this.config,this.reader,this.now(),{date:this.selectedDate!});this.timePage=Number(action.value);return this.timesOrSuggestions();}
+  if(action.kind==='dates'){this.slots=await searchAvailability(this.config,this.reader,this.now());this.selectedDate=undefined;this.datePages=[this.slots];this.datePage=0;return this.dates();}
+  if(action.kind==='days'){const page=Number(action.value);this.datePages[page]=await searchAvailability(this.config,this.reader,this.now(),page?{afterDate:this.day(this.datePages[page-1]!.at(-1)!)}:{});this.datePage=page;this.slots=this.datePages[page]!;return this.dates();}
   if(action.kind==='date')return this.date(action.value);
   if(action.kind!=='slot')throw Error('oracle_action_kind');
   const slot=this.slots[Number(action.value)];if(!slot)throw Error('oracle_slot_missing');this.selected={...await recheckSlot(this.config,this.reader,this.now(),slot),...(this.catalog?{serviceSnapshot:serviceSnapshot(this.catalog.services.find(s=>s.id===this.serviceId)!)}:{})};
