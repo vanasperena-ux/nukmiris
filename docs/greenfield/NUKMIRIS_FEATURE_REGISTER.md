@@ -355,3 +355,28 @@ SE-1 automated evidence at`540fc4af57a29eba380c0f53df0bf3ad12093ad7`:18 focused;
 Original SE-1 source `540fc4a` has [owner-reported Windows functional acceptance](https://github.com/vanasperena-ux/nukmiris/pull/25#issuecomment-6906738033); that is separate from an automated native suite. The owner approved correcting [N1](https://github.com/vanasperena-ux/nukmiris/pull/25#issuecomment-6906440798): automatic qualification only for a genuinely new service under the unchanged one-record/default-resource solo definition. Existing service edits must preserve explicit qualification removal. Forward migration 011 changes no existing rows; no inferred cleanup of old inserted qualifications. Decisions 139/147 unchanged.
 
 N1 tested source `95b122771b0958c0bc9bda07db1dab14f35aeb67`: 23 focused, 2 service-runtime, 690 full, 46 runtime PASS / 2 native-only SKIP, browser/typecheck/scope PASS on Linux Node 24.22.3 / PostgreSQL 17.11. Counts overlap. [Evidence](../../vnext/evidence/se1-n1/README.md) / [upgrade and optional native check](32-SE1-N1-SOLO-QUALIFICATION.md). N1 independent re-verification and native Windows correction run remain pending. N2–N5 are not addressed. The authoritative v1.4 documentation branch, original acceptance artifacts, owner profile and Ana's protected case are unchanged.
+
+## RC-1 — local reschedule/cancel implementation branch
+
+Authority remains **v1.4 at `59cde023d2dff088161c1d01bd76c1099386e13f`**. [Issue #26](https://github.com/vanasperena-ux/nukmiris/issues/26) controls RC-1, including explicit appointment selection even for one appointment and retaining the original employee. Owner clarification permits existing inactive-service appointments to reschedule using their frozen service snapshot. No changes to the authoritative documentation branch.
+
+N1 closure above is now historical: [Claude independently accepted N1](https://github.com/vanasperena-ux/nukmiris/pull/25#issuecomment-6920796218); [owner native disposable check: 2/2 PASS](https://github.com/vanasperena-ux/nukmiris/pull/25#issuecomment-6922286710). This does not accept RC-1 or modify original SE-1/N1 evidence. N2–N5 remain outside this increment.
+
+| ID | RC-1 status / boundary |
+|---|---|
+|NM-006|READY FOR TEST — explicit appointment → original employee's replacement slots → direct proven move, old/new success copy, stable appointment/event/service snapshot.|
+|NM-007 / NM-010|READY FOR TEST — explicit appointment → immediate proven cancellation, exact fake-event deletion, retained history, no obsolete menu suffix or extra confirmation.|
+|NM-029 / NM-031 / NM-032|REGRESSION PASSED (Linux) — short business-local labels, bounded paginated list presentation and unchanged approved summary triggers.|
+|Owner Citas|READY FOR TEST — Confirmada after move; cancelled toggle OFF default; grey Cancelada at last booked time; history with customer origin and request/applied timestamps.|
+
+[Flow/copy](33-RC1-FLOW-COPY.md), [fresh-profile Windows walkthrough and limits](34-RC1-LOCAL-ACCEPTANCE.md), [exact source and test evidence](../../vnext/evidence/rc1/README.md). Independent RC-1 safety review and owner native Windows/functional acceptance remain pending. Synthetic only; no existing-profile upgrade, real provider, employee notifications, cloud or production activation.
+
+RC-1 tested source `77ea22b59d1b7022cecb3cf7a007ca14affee9ff`: 731 full, 48 portable runtime PASS (2 native-only Windows SKIP on Linux), 1 RC-1 Chromium browser and 1 SE-1 owner-browser PASS; typecheck/scope PASS. The 41 RC-1 core and 2 RC-1 TCP cases are overlapping subsets. Linux Node 24.19.0 / PostgreSQL 17.11. See RC-1 evidence; native Windows and independent RC-1 acceptance remain pending.
+
+## RC-1 follow-up — customer-overlap offers
+
+NM-038 bounded correction is authorized by the owner's PR #27 follow-up: offers must follow the **existing SQL** same-customer protection rule across employees/calendars, including buffers. The broader v1.4 exception/policy discussion above is historical context; this increment adds no exception or SQL policy change. [Investigation and fresh Windows retest](35-RC1-CUSTOMER-OVERLAP.md).
+
+READY FOR RETEST: authenticated-customer availability filtering, navigation refresh, source-only exclusion during reschedule, preserved different-customer capacity, stale/racing rejection and retained uncertain protections. Decisions 139/147, employee allocation, snapshots and custody/dispatch are unchanged. [Correction evidence and exact tested source](../../vnext/evidence/rc1-overlap/README.md). Existing profiles, original RC-1/SE-1/N1 evidence and the authoritative v1.4 documentation branch are untouched. New-source native Windows and owner acceptance remain pending.
+
+Customer-overlap correction tested source `47f485b691c62dc8968ad2aec7cf6f05aaf7df93`: 749 complete core PASS (includes 18 new overlap cases), 49 complete runtime PASS / 2 native-only Windows SKIP (includes 3 RC-1 TCP cases), both Chromium browser checks PASS, typecheck/scope PASS. Linux Node 24.19.0 / PostgreSQL 17.11. Native Windows and owner acceptance remain pending; no earlier independent verdict is transferred to this new source.

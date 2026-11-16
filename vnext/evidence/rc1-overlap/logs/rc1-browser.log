@@ -1,0 +1,29 @@
+
+> nukmiris-wp1-synthetic-core@0.0.0 test:rc1:browser
+> npm run build && node local/rc1-browser.mjs
+
+
+> nukmiris-wp1-synthetic-core@0.0.0 build
+> tsc -p tsconfig.json
+
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.2
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.2
+npm notice To update run: npm install -g npm@12.2.2
+npm notice
+Pulling/verifying pinned PostgreSQL image (first download budget: 10 minutes).
+{"rc1Browser":"PASS","browser":"Chromium CDP","soleAppointmentSelection":"EXPLICIT","move":"DIRECT_SAME_EMPLOYEE","cancel":"DIRECT","history":"CREATE_MOVE_CANCEL","cancelledToggle":"OFF_DEFAULT_GREY_LAST_BOOKED_TIME","tenantIsolation":"PASS","mobile":"390px PASS","nativeWindows":"NOT_EXECUTED"}
+✔ RC1 browser direct move/cancel -> owner calendar, grey toggle, detailed history and tenant isolation (14871.345654ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 1
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 17895.401509
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.2
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.2
+npm notice To update run: npm install -g npm@12.2.2
+npm notice

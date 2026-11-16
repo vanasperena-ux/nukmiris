@@ -4,7 +4,7 @@ export interface Window {start:string;end:string}
 export type Week=Readonly<Record<number,readonly Window[]>>;
 export interface Service {id:string;durationMinutes:number;bufferMinutes:number}
 export interface Employee {id:string;serviceIds:readonly string[];hours:Week;absences:readonly Window[]}
-export interface AvailabilityConfig {businessId:string;calendarId:string;timeZone:string;hours:Week;breaks:Week;startIntervalMinutes:number;service:Service;employees:readonly Employee[];catalogRevision?:number}
+export interface AvailabilityConfig {businessId:string;calendarId:string;timeZone:string;hours:Week;breaks:Week;startIntervalMinutes:number;service:Service;employees:readonly Employee[];catalogRevision?:number;excludeStartAt?:string}
 export interface CalendarEvent {businessId:string;calendarId:string;id:string;resourceId?:string;start:string;end:string;bufferMinutes?:number;state?:'ACTIVE'|'UNKNOWN'|'CANCELLED'}
 export interface CalendarRange {businessId:string;calendarId:string;start:string;end:string}
 export interface CalendarPage extends CalendarRange {snapshotId:string;events:readonly CalendarEvent[];nextCursor:string|null;complete:boolean}
@@ -37,7 +37,7 @@ async function readComplete(reader:SyntheticCalendarReader,r:CalendarRange,deadl
 }
 function candidates(c:AvailabilityConfig,events:readonly CalendarEvent[],now:DateTime,from:DateTime,to:DateTime,snapshotId:string,allResources=false):Slot[]{
  const out:Slot[]=[];for(let day=from.startOf('day');day<to;day=day.plus({days:1}))for(const w of c.hours[day.weekday]??[]){const open=minute(w.start),close=local(day,minute(w.end));if(!close)continue;
-  for(let m=open;m<minute(w.end);m+=c.startIntervalMinutes){const start=local(day,m);if(!start||start<=now||start<from||start>=to)continue;const end=start.plus({minutes:c.service.durationMinutes}),occupied=end.plus({minutes:c.service.bufferMinutes});if(occupied>close||occupied>to)continue;
+  for(let m=open;m<minute(w.end);m+=c.startIntervalMinutes){const start=local(day,m);if(!start||start<=now||start<from||start>=to||(c.excludeStartAt&&start.toMillis()===Date.parse(c.excludeStartAt)))continue;const end=start.plus({minutes:c.service.durationMinutes}),occupied=end.plus({minutes:c.service.bufferMinutes});if(occupied>close||occupied>to)continue;
    const first=start.toMillis(),last=occupied.toMillis();if((c.breaks[day.weekday]??[]).some(x=>{const a=local(day,minute(x.start)),b=local(day,minute(x.end));return !a||!b||overlap(first,last,a.toMillis(),b.toMillis());}))continue;
    for(const employee of c.employees){if(!employee.serviceIds.includes(c.service.id))continue;
     if(!(employee.hours[day.weekday]??[]).some(x=>{const a=local(day,minute(x.start)),b=local(day,minute(x.end));return a&&b&&start>=a&&occupied<=b;}))continue;

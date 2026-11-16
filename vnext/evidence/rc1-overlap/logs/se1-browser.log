@@ -1,0 +1,29 @@
+
+> nukmiris-wp1-synthetic-core@0.0.0 test:services:browser
+> npm run build && node local/services-browser.mjs
+
+
+> nukmiris-wp1-synthetic-core@0.0.0 build
+> tsc -p tsconfig.json
+
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.2
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.2
+npm notice To update run: npm install -g npm@12.2.2
+npm notice
+Pulling/verifying pinned PostgreSQL image (first download budget: 10 minutes).
+{"browser":"Chromium CDP","ownerForms":"PASS","serviceSelection":"PASS","qualifiedEmployee":"Carolina","booking":"ONE_SERVICE_DIRECT_SELECTION","appointmentVisibility":"PASS","tenantIsolation":"PASS","mobile":"390px PASS","nativeWindows":"NOT_EXECUTED"}
+✔ SE1 real owner forms -> service/employee -> synthetic chat booking -> appointment and tenant isolation (11120.892807ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 1
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 14143.991588
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.2
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.2
+npm notice To update run: npm install -g npm@12.2.2
+npm notice

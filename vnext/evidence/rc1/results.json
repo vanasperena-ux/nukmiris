@@ -1,0 +1,92 @@
+{
+  "testedSource": "77ea22b59d1b7022cecb3cf7a007ca14affee9ff",
+  "sourceTree": "33e683382e48f492fbd9a8c722b0d07ff4c8fbe4",
+  "suites": [
+    {
+      "name": "full",
+      "command": "npm test",
+      "exitCode": 0,
+      "tests": 731,
+      "pass": 731,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0,
+      "durationMs": 421610.562008,
+      "log": "logs/full.log"
+    },
+    {
+      "name": "runtime",
+      "command": "npm run test:runtime",
+      "exitCode": 0,
+      "tests": 50,
+      "pass": 48,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 2,
+      "todo": 0,
+      "durationMs": 196011.366563,
+      "log": "logs/runtime.log"
+    },
+    {
+      "name": "rc1-browser",
+      "command": "npm run test:rc1:browser",
+      "exitCode": 0,
+      "tests": 1,
+      "pass": 1,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0,
+      "durationMs": 18713.547709,
+      "log": "logs/rc1-browser.log"
+    },
+    {
+      "name": "se1-browser",
+      "command": "npm run test:services:browser",
+      "exitCode": 0,
+      "tests": 1,
+      "pass": 1,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0,
+      "durationMs": 15686.260723,
+      "log": "logs/se1-browser.log"
+    },
+    {
+      "name": "typecheck",
+      "command": "npm run typecheck",
+      "exitCode": 0,
+      "result": "PASS",
+      "log": "logs/typecheck.log"
+    },
+    {
+      "name": "scope",
+      "command": "npm run check:scope",
+      "exitCode": 0,
+      "result": "PASS",
+      "log": "logs/scope.log"
+    }
+  ],
+  "rc1CoreSubset": {
+    "pass": 41,
+    "includedInFull": true
+  },
+  "rc1TcpSubset": {
+    "pass": 2,
+    "includedInRuntime": true
+  },
+  "countsOverlap": true,
+  "nativeWindows": "NOT_EXECUTED",
+  "nativeOnlySkips": "Metadata-sync and ACL native Windows probes are skipped on Linux, not claimed as passes.",
+  "historicalFailure": {
+    "source": "4922269b4d0978ae12091260b5729d9a09621507",
+    "pass": 730,
+    "fail": 1,
+    "skipped": 0,
+    "log": "development/initial-full-4922269.log",
+    "correction": "Capability-specific menu text and regression assertion; original failure retained."
+  },
+  "acceptance": "PENDING_INDEPENDENT_REVIEW_AND_OWNER_FUNCTIONAL_NATIVE_CHECK"
+}

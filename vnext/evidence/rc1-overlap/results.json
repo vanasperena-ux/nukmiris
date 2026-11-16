@@ -1,0 +1,96 @@
+{
+  "testedSource": "47f485b691c62dc8968ad2aec7cf6f05aaf7df93",
+  "sourceTree": "de03771ed5110dcee98e5c5d0edd8f884b36c045",
+  "checks": [
+    {
+      "name": "full",
+      "command": "npm test",
+      "exitCode": 0,
+      "tests": 749,
+      "pass": 749,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0,
+      "durationMs": 384523.379811,
+      "log": "logs/full.log"
+    },
+    {
+      "name": "runtime",
+      "command": "npm run test:runtime",
+      "exitCode": 0,
+      "tests": 51,
+      "pass": 49,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 2,
+      "todo": 0,
+      "durationMs": 181970.441438,
+      "log": "logs/runtime.log"
+    },
+    {
+      "name": "rc1-browser",
+      "command": "npm run test:rc1:browser",
+      "exitCode": 0,
+      "tests": 1,
+      "pass": 1,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0,
+      "durationMs": 17895.401509,
+      "log": "logs/rc1-browser.log"
+    },
+    {
+      "name": "se1-browser",
+      "command": "npm run test:services:browser",
+      "exitCode": 0,
+      "tests": 1,
+      "pass": 1,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0,
+      "durationMs": 14143.991588,
+      "log": "logs/se1-browser.log"
+    },
+    {
+      "name": "typecheck",
+      "command": "npm run typecheck",
+      "exitCode": 0,
+      "result": "PASS",
+      "log": "logs/typecheck.log"
+    },
+    {
+      "name": "scope",
+      "command": "npm run check:scope",
+      "exitCode": 0,
+      "result": "PASS",
+      "log": "logs/scope.log"
+    },
+    {
+      "name": "install",
+      "command": "npm ci --ignore-scripts --no-audit --no-fund",
+      "exitCode": 0,
+      "result": "PASS",
+      "log": "logs/install.log"
+    }
+  ],
+  "newCustomerOverlapCases": {
+    "pass": 18,
+    "includedInFull": true
+  },
+  "rc1Subset": {
+    "pass": 59,
+    "includedInFull": true
+  },
+  "rc1TcpSubset": {
+    "pass": 3,
+    "includedInRuntime": true
+  },
+  "countsOverlap": true,
+  "nativeWindows": "NOT_EXECUTED",
+  "independentCorrectionReview": "NOT_PERFORMED",
+  "ownerAcceptance": "PENDING",
+  "unchanged": "SQL, migrations, allocation, service snapshots, custody, dispatch, finalization, recovery, original evidence and protected owner profiles"
+}

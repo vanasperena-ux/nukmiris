@@ -1,3 +1,4 @@
+import {upcomingAppointments,managementMenu,managementView,appointmentPicker,rescheduleContext,managementIntent,type ManagedAppointment,type ManagementState} from './appointment-management.js';
 import type {ServiceCatalog,Catalog} from './service-catalog.js';
 import {randomUUID,randomInt} from 'node:crypto';
 import {AvailabilityOracle,type OracleView} from './availability-oracle.js';
@@ -46,14 +47,14 @@ export class InteractiveBooking {
  private scope(b:string):LocalScope{const s=this.scopes.get(b);if(!s)throw Error('interactive_route_denied');return s;}
  private async now(s:LocalScope):Promise<string>{return s.reducer.tx(s.config.businessId,async db=>(await db.query<{v:string}>('SELECT core.local_now($1) v',[s.config.businessId])).rows[0]!.v);}
  private async attention(s:LocalScope,key:string,code:string,detail:ObjectValue={}):Promise<void>{await s.reducer.tx(s.config.businessId,async db=>{await db.query('SELECT core.local_attention($1,$2,$3,$4)',[s.config.businessId,key,code,detail]);});}
- private reader(s:LocalScope,now:string):SyntheticCalendarReader{
+ private reader(s:LocalScope,now:string,subject:string,exclude?:ManagedAppointment):SyntheticCalendarReader{
   const b=s.config.businessId,reverse=new Map([...s.bindings.employees].map(([k,v])=>[v,k]));
   const source:SyntheticCalendarReader={mode:'L1_SYNTHETIC_ONLY',read:async(range,cursor)=>{
    if(cursor!==null||range.businessId!==b||range.calendarId!==s.config.calendarId)throw Error('local_calendar_scope');
    const rows=await s.reducer.tx(b,async db=>(await db.query('SELECT * FROM core.local_calendar WHERE business_id=$1 AND calendar_id=$2 ORDER BY id',[b,s.bindings.calendar.coreId])).rows as ObjectValue[]);
-   return {...range,snapshotId:digest(rows),complete:true,nextCursor:null,events:rows.map(r=>({businessId:b,calendarId:s.config.calendarId,id:text(r['id']),start:text(r['start_at']),end:text(r['end_at']),bufferMinutes:Number(r['buffer_minutes']),...(r['resource_id']?{resourceId:reverse.get(text(r['resource_id']))??text(r['resource_id'])}:{})}))};
+   return {...range,snapshotId:digest(rows),complete:true,nextCursor:null,events:rows.filter(r=>r['id']!==exclude?.eventId).map(r=>({businessId:b,calendarId:s.config.calendarId,id:text(r['id']),start:text(r['start_at']),end:text(r['end_at']),bufferMinutes:Number(r['buffer_minutes']),...(r['resource_id']?{resourceId:reverse.get(text(r['resource_id']))??text(r['resource_id'])}:{})}))};
   }};
-  return protectedCalendar({config:s.config,bindings:s.bindings,source,reducer:s.reducer,now,signal:(signal:AvailabilitySignal)=>{void this.attention(s,signal.code+'/'+signal.eventId,signal.code,object(signal)).catch(()=>{});}});
+  return protectedCalendar({config:s.config,bindings:s.bindings,source,reducer:s.reducer,now,customerSubject:subject,...(exclude?{excludeAppointmentId:exclude.id}:{}),signal:(signal:AvailabilitySignal)=>{void this.attention(s,signal.code+'/'+signal.eventId,signal.code,object(signal)).catch(()=>{});}});
  }
  async submit(b:string,subject:string,requestId:string,payload:LocalInput):Promise<{inputId:string}>{
   const s=this.scope(b);uuid(requestId);if(!subject||subject.length>128||!payload||!['TEXT','ACTION'].includes(payload.kind)||typeof payload.value!=='string'||!payload.value.trim()||payload.value.length>1024||Object.keys(payload).some(k=>!['kind','value'].includes(k)))throw Error('local_input_schema');if(payload.kind==='ACTION')uuid(payload.value);
@@ -84,36 +85,61 @@ export class InteractiveBooking {
   }
  }
  private async process(s:LocalScope,inputId:string):Promise<void>{
-  const b=s.config.businessId,claimed=await s.reducer.tx(b,async db=>(await db.query<{v:{status:string;claim:Claim}}>('SELECT core.local_claim($1,$2) v',[b,inputId])).rows[0]!.v,'local-claim',this.faults);if(claimed.status!=='CLAIMED')return;
-  const c=claimed.claim;let catalog=s.catalog?await s.catalog.load():undefined;if(catalog){const selected=object(c.basis?.['oracle']??{})['serviceId'];s=catalogScope(s,catalog,typeof selected==='string'?selected:undefined);}
-  const now=await this.now(s),clock:Clock={now:()=>new Date(now)},basis=c.basis??{};let oracle=AvailabilityOracle.resume(s.config,this.reader(s,now),()=>now,object(basis['oracle']??{}),c.expiresAt,catalog);
+  const baseScope=s,b=s.config.businessId,claimed=await s.reducer.tx(b,async db=>(await db.query<{v:{status:string;claim:Claim}}>('SELECT core.local_claim($1,$2) v',[b,inputId])).rows[0]!.v,'local-claim',this.faults);if(claimed.status!=='CLAIMED')return;
+  const c=claimed.claim,basis=c.basis??{};let catalog=s.catalog?await s.catalog.load():undefined;
+  if(catalog){const selected=object(basis['oracle']??{})['serviceId'];s=catalogScope(s,catalog,typeof selected==='string'?selected:undefined);}
+  const now=await this.now(s),clock:Clock={now:()=>new Date(now)};let management=basis['management'] as unknown as ManagementState|undefined,effectiveCatalog=catalog;
+  if(catalog&&management?.mode==='MOVE'&&management.selected){const context=rescheduleContext(s.config,catalog,management.selected);if(context){s={...s,config:context.config};effectiveCatalog=context.catalog;}}
+  let oracle=AvailabilityOracle.resume(s.config,this.reader(s,now,c.subject,management?.mode==='MOVE'?management.selected:undefined),()=>now,object(basis['oracle']??{}),c.expiresAt,effectiveCatalog);
   const previousView=()=>{const {precedingTexts,...v}=object(basis['view']);void precedingTexts;return {...v,choices:(v['choices'] as ObjectValue[]).map(x=>({id:text(x['action']??x['id']),title:text(x['title'])}))} as unknown as OracleView;};
   const prior=await s.archive.lookup(`local-view/${b}/${inputId}`);if(prior){await this.finish(s,prior);return;}
-  let view:OracleView|undefined,book:Seal|undefined,silent=false;const n=normalizedText(c.payload.value),customer=await s.reducer.tx(b,async db=>(await db.query<{id:string;name:string}>('SELECT cu.id,p.name FROM core.customer cu LEFT JOIN core.local_customer p ON p.business_id=$1 AND p.customer_id=cu.id WHERE cu.business_id=$1 AND cu.subject=$2',[b,c.subject])).rows[0]);
+  let view:OracleView|undefined,book:Seal|undefined,silent=false,mutation:'MOVE'|'CANCEL'|undefined;
+  const n=normalizedText(c.payload.value),customer=await s.reducer.tx(b,async db=>(await db.query<{id:string;name:string}>('SELECT cu.id,p.name FROM core.customer cu LEFT JOIN core.local_customer p ON p.business_id=$1 AND p.customer_id=cu.id WHERE cu.business_id=$1 AND cu.subject=$2',[b,c.subject])).rows[0]);
+  const reset=()=>{management=undefined;if(catalog)s=catalogScope(baseScope,catalog);else s=baseScope;oracle=new AvailabilityOracle(s.config,this.reader(s,now,c.subject),()=>now,catalog);};
+  const chooseMode=()=>{reset();management={mode:'CHOOSE',page:0,appointments:[]};return managementMenu(b,c.revision+1,now);};
+  const pick=async(mode:'MOVE'|'CANCEL',page=0,prefix='')=>{reset();const result=appointmentPicker(b,c.revision+1,now,s.config.timeZone,mode,await upcomingAppointments(s.reducer,b,c.subject),page);management=result.state;if(prefix)result.view.text=prefix+'\n\n'+result.view.text;return result.view;};
+  const recover=async(prefix:string)=>management?.mode==='MOVE'||management?.mode==='CANCEL'?pick(management.mode,0,prefix):chooseMode();
+  const held=async(target:ManagedAppointment,reason:string)=>{const mode=management?.mode==='CANCEL'?'CANCEL':'MOVE';management={mode,page:0,appointments:[target]};await this.attention(s,'rc1/'+target.id+'/'+target.revision+'/'+catalog?.revision,reason,{appointmentId:target.id});return managementView(b,c.revision+1,now,'No pude ofrecer un cambio seguro para esta cita. El negocio debe verificarla; no se confirmó ningún cambio de esta solicitud.',[{kind:'rc1mode',value:mode,title:'Elegir otra cita'},{kind:'human',value:'0',title:'Hablar con alguien'}],'MANAGEMENT_HELD');};
+  const ensureSelected=async()=>{if(!management?.selected||!catalog)return true;const target=management.selected,current=(await upcomingAppointments(s.reducer,b,c.subject)).find(a=>a.id===target.id);if(!current||digest(object(current))!==digest(object(target))){view=await recover('La cita cambió o ya no está disponible para esta acción. Elige de nuevo.');return false;}if(!rescheduleContext(catalogScope(baseScope,catalog).config,catalog,current)){view=await held(current,current.held?'RC1_OPERATION_HELD':'RC1_EMPLOYEE_INELIGIBLE');return false;}return true;};
   const operation=await s.reducer.tx(b,async db=>(await db.query<{plan:ObjectValue}>('SELECT plan FROM core.operation WHERE business_id=$1 AND input_id=$2',[b,inputId])).rows[0]);
-  if(operation){book=await s.archive.lookup(`operation/${b}/${inputId}`)??undefined;if(!book)throw Error('operation_custody_missing');}
+  if(operation){book=await s.archive.lookup(`operation/${b}/${inputId}`)??undefined;if(!book)throw Error('operation_custody_missing');if(operation.plan['management']){const m=object(operation.plan['management']);management={mode:m['kind'] as 'MOVE'|'CANCEL',page:0,appointments:[],selected:m['appointment'] as unknown as ManagedAppointment};}}
   else try{
    if(basis['outcome']==='HUMAN_HANDOFF'&&!(c.payload.kind==='TEXT'&&n==='menu')){view=oracle.ordinary();silent=true;}
-   else if(c.payload.kind==='TEXT'&&['menu','hola'].includes(n))view=oracle.menu();
-   else if(c.payload.kind==='TEXT'&&ordinaryDecision({type:'text',text:{body:c.payload.value}},'BOT','NONE').outcome==='HUMAN_HANDOFF')view=oracle.humano();
-   else if(c.payload.kind==='TEXT'&&['cita','agendar','reservar','horarios'].includes(n))view=await oracle.open(true);
-   else if(c.payload.kind==='TEXT'&&['reagendar','cancelar'].includes(n))view=oracle.management();
-   else if(catalog&&(c.payload.kind==='ACTION'||basis['outcome']==='NAME_REQUIRED')&&Number(object(basis['oracle']??{})['catalogRevision'])!==catalog.revision){oracle.menu();view=await oracle.open();view.text='Los servicios o el equipo cambiaron. Elige de nuevo.\n\n'+view.text;}
-   else if(c.error||((c.payload.kind==='ACTION'||basis['outcome']==='NAME_REQUIRED')&&Date.parse(c.expiresAt)<=Date.parse(now))){oracle.menu();view=await oracle.open();view.text='Esa opción venció o ya fue utilizada. Elige un horario de nuevo.\n\n'+view.text;}
-   else if(c.payload.kind==='ACTION')view=await oracle.action(c.action,!!customer?.name);
+   else if(c.payload.kind==='TEXT'&&['menu','hola'].includes(n)){reset();view=oracle.menu();}
+   else if(c.payload.kind==='TEXT'&&ordinaryDecision({type:'text',text:{body:c.payload.value}},'BOT','NONE').outcome==='HUMAN_HANDOFF'){reset();view=oracle.humano();}
+   else if(c.payload.kind==='TEXT'&&['cita','agendar','reservar','horarios'].includes(n)){reset();view=await oracle.open(true);}
+   else if(c.payload.kind==='TEXT'&&['reagendar','cancelar'].includes(n))view=catalog?await pick(n==='reagendar'?'MOVE':'CANCEL'):oracle.management();
+   else if(c.error||((c.payload.kind==='ACTION'||basis['outcome']==='NAME_REQUIRED')&&Date.parse(c.expiresAt)<=Date.parse(now))){if(management)view=await recover('Esa opción venció o ya fue utilizada. Elige de nuevo.');else{oracle.menu();view=await oracle.open();view.text='Esa opción venció o ya fue utilizada. Elige un horario de nuevo.\n\n'+view.text;}}
+   else if(catalog&&(c.payload.kind==='ACTION'||basis['outcome']==='NAME_REQUIRED')&&Number(object(basis['oracle']??{})['catalogRevision'])!==catalog.revision){if(management)view=await recover('Los servicios o el equipo cambiaron. Elige de nuevo.');else{oracle.menu();view=await oracle.open();view.text='Los servicios o el equipo cambiaron. Elige de nuevo.\n\n'+view.text;}}
+   else if(c.payload.kind==='ACTION'){
+    const [, ,kind,value]=c.action.split(':');
+    if(catalog&&kind==='manage')view=chooseMode();
+    else if(catalog&&kind==='rc1mode'&&(value==='MOVE'||value==='CANCEL'))view=await pick(value);
+    else if(catalog&&kind==='rc1page'&&management&&management.mode!=='CHOOSE')view=await pick(management.mode,Number(value));
+    else if(catalog&&(kind==='rc1move'||kind==='rc1cancel')&&management&&management.mode!=='CHOOSE'){
+     const chosen=management.appointments.find(a=>a.id===value),current=(await upcomingAppointments(s.reducer,b,c.subject)).find(a=>a.id===value);
+     if(!chosen||!current||digest(object(current))!==digest(object(chosen)))view=await recover('La cita cambió o ya no está disponible. Elige de nuevo.');
+     else if(current.held||!current.service)view=await held(current,current.held?'RC1_OPERATION_HELD':'RC1_SNAPSHOT_MISSING');
+     else if(kind==='rc1cancel'){management.selected=current;mutation='CANCEL';}
+     else{const context=rescheduleContext(catalogScope(baseScope,catalog).config,catalog,current);if(!context)view=await held(current,'RC1_EMPLOYEE_INELIGIBLE');else{management.selected=current;s={...catalogScope(baseScope,catalog),config:context.config};oracle=new AvailabilityOracle(s.config,this.reader(s,now,c.subject,current),()=>now,context.catalog);view=await oracle.open();view.text='Elige otro horario para tu cita con '+String(current.service['employeeName'])+'.\n\n'+view.text;}}
+    }else if(kind==='human'){reset();view=oracle.humano();}
+    else if(kind==='book'){reset();view=await oracle.open(true);}
+    else if(await ensureSelected()){view=await oracle.action(c.action,management?.selected?true:!!customer?.name);if(management?.selected&&view.outcome==='BOOK_REQUEST')mutation='MOVE';}
+   }
    else if(basis['outcome']==='NAME_REQUIRED'){
     const name=bookingCustomerName(c.payload.value);
     if(!name){view={...previousView(),text:NAME_REPROMPT,choices:[]};}
     else{const identity=await s.archive.ensure(`local-name/${b}/${inputId}`,'LOCAL_CUSTOMER',{businessId:b,inputId,name},()=>({customerId:randomUUID()}));await s.reducer.tx(b,async db=>{await db.query('SELECT core.local_name($1,$2,$3,$4)',[b,inputId,name,identity.body['customerId']]);});view=await oracle.nameCaptured();}
    }
-   else if(!['OFFER','DATES','SERVICES'].includes(String(basis['outcome'])))view=oracle.menu();
-   else{const parsed=parseAppointmentDate(c.payload.value,{now,timeZone:s.config.timeZone});if(parsed.success){view=await oracle.date(parsed.date!);if(view.choices.length===1&&parsed.fallback?.success)view=await oracle.date(parsed.fallback.date!);}else view={...previousView(),text:explainDate(c.payload.value,parsed,365)};}
-   if(view?.outcome==='BOOK_REQUEST'){
+   else if(!['OFFER','DATES','SERVICES'].includes(String(basis['outcome']))){reset();view=oracle.menu();}
+   else if(await ensureSelected()){const parsed=parseAppointmentDate(c.payload.value,{now,timeZone:s.config.timeZone});if(parsed.success){view=await oracle.date(parsed.date!);if(view.choices.length===1&&parsed.fallback?.success)view=await oracle.date(parsed.fallback.date!);}else view={...previousView(),text:explainDate(c.payload.value,parsed,365)};}
+   if(mutation&&management?.selected)book=await this.prepareManagement(s,c,mutation,management.selected,view,now,catalog!.revision);
+   if(view?.outcome==='BOOK_REQUEST'&&!mutation){
     const known=await s.reducer.tx(b,async db=>(await db.query<{id:string;name:string}>('SELECT cu.id,p.name FROM core.customer cu JOIN core.local_customer p ON p.business_id=$1 AND p.customer_id=cu.id WHERE cu.business_id=$1 AND cu.subject=$2',[b,c.subject])).rows[0]);if(!known)throw Error('local_customer_missing');
     const original=await s.archive.lookup(`operation/${b}/${inputId}`);
     if(original){await s.sealer.seal(b,s.archive,original);await s.reducer.tx(b,async db=>{const r=(await db.query<{v:{state:string}}>('SELECT core.try_prepare_operation($1,$2,$3,$4) v',[b,original.body,original.digest,original.key])).rows[0]!.v;if(r.state!=='PREPARED')throw new PlanConflictError('P0001',true,new Error('terminal_plan_conflict'));});book=original;}
     else{
-     const available=catalog?await eligibleSlotResources(s.config,this.reader(s,now),now,view.slot!):[await recheckSlot(s.config,this.reader(s,now),now,view.slot!)];
+     const available=catalog?await eligibleSlotResources(s.config,this.reader(s,now,c.subject),now,view.slot!):[await recheckSlot(s.config,this.reader(s,now,c.subject),now,view.slot!)];
      const selectedSnapshot=view.slot!.serviceSnapshot;
      const intent=await s.archive.ensure(`local-intent/${b}/${inputId}`,'LOCAL_BOOKING_INTENT',{businessId:b,inputId},()=>{
       const index=catalog?this.employeeIndex(available.length):0;if(!Number.isInteger(index)||index<0||index>=available.length)throw Error('employee_allocation_denied');
@@ -132,8 +158,12 @@ export class InteractiveBooking {
    }
   }catch(e){
    if(e instanceof ConversationHeldError)return;
-   if(e instanceof PlanConflictError||(e instanceof AvailabilityHeldError&&e.reason==='SLOT_UNAVAILABLE')||(e instanceof Error&&e.message==='local_action_expired')){if(s.catalog){catalog=await s.catalog.load();s=catalogScope(s,catalog);oracle=new AvailabilityOracle(s.config,this.reader(s,now),()=>now,catalog);}oracle.menu();view=await oracle.open();view.text='Ese horario ya no está disponible o la reserva tardó demasiado. No se confirmó. Elige un horario de nuevo.\n\n'+view.text;}
-   else throw e;
+   if(e instanceof AvailabilityHeldError&&e.reason==='APPOINTMENT_HELD'&&management?.selected)view=await held(management.selected,'RC1_OPERATION_HELD');
+   else if(e instanceof PlanConflictError||(e instanceof AvailabilityHeldError&&e.reason==='SLOT_UNAVAILABLE')||(e instanceof Error&&e.message==='local_action_expired')){
+    if(s.catalog)catalog=await s.catalog.load();
+    if(management)view=await recover('Esta solicitud no se confirmó. Revisa tus citas y elige de nuevo.');
+    else{reset();oracle.menu();view=await oracle.open();view.text='Ese horario ya no está disponible o la reserva tardó demasiado. No se confirmó. Elige un horario de nuevo.\n\n'+view.text;}
+   }else throw e;
   }
   if(!book&&!view)throw Error('local_view_missing');
   let reply:ObjectValue|null=null;
@@ -150,7 +180,18 @@ export class InteractiveBooking {
    if(!silent){const displayed={...view!,choices:view!.choices.map(x=>({id:randomUUID(),title:x.title,action:x.id}))};whatsappMessages(displayed);reply=object(displayed);}
    await reduceInput({businessId:b,inputId,reducer:s.reducer,sealer:s.sealer,archive:s.archive});
   }
-  const saved=await s.archive.ensure(`local-view/${b}/${inputId}`,'LOCAL_VIEW',{businessId:b,inputId},()=>({revision:c.revision+1,replyId:randomUUID(),reply,state:{oracle:oracle.snapshot(),outcome:book?'BOOKING':view!.outcome,view:reply},...(book?{attemptId:book.body['attemptId']!}:{})}));await this.finish(s,saved);
+  const saved=await s.archive.ensure(`local-view/${b}/${inputId}`,'LOCAL_VIEW',{businessId:b,inputId},()=>({revision:c.revision+1,replyId:randomUUID(),reply,state:{oracle:oracle.snapshot(),outcome:book?'BOOKING':view!.outcome,view:reply,...(management?{management:object(management)}:{})},...(book?{attemptId:book.body['attemptId']!}:{})}));await this.finish(s,saved);
+ }
+ private async prepareManagement(s:LocalScope,c:Claim,kind:'MOVE'|'CANCEL',target:ManagedAppointment,view:OracleView|undefined,now:string,catalogRevision:number):Promise<Seal>{
+  const b=s.config.businessId,deadlineLimit=new Date(Math.min(Date.parse(c.expiresAt),Date.parse(target.startAt)-2000)).toISOString();
+  if(Date.parse(deadlineLimit)-Date.parse(now)<=2000)throw new AvailabilityHeldError('SLOT_UNAVAILABLE');
+  const management=managementIntent(kind,target,c.expiresAt),fresh=kind==='MOVE'?await recheckSlot(s.config,this.reader(s,now,c.subject,target),now,view!.slot!):{businessId:b,calendarId:s.config.calendarId,resourceId:target.resourceId,serviceId:String(target.service!['id']),startAt:target.startAt,endAt:target.endAt,bufferMinutes:target.bufferMinutes,snapshotId:'RC1_CANCEL'};
+  const slot=object({...fresh,serviceSnapshot:target.service!,catalogRevision,rc1:management});
+  const intent=await s.archive.ensure(`local-intent/${b}/${c.inputId}`,'LOCAL_BOOKING_INTENT',{businessId:b,inputId:c.inputId},()=>({customerId:target.customerId,calendarId:target.calendarId,resourceId:target.resourceId,slot}));
+  await this.faults.hit('rc1.afterIntentArchive');await s.sealer.seal(b,s.archive,intent);await s.reducer.tx(b,async db=>{await db.query('SELECT core.local_intent($1,$2,$3,$4)',[b,intent.body,intent.key,intent.digest]);});
+  const saved=object(intent.body['slot']),startAt=text(saved['startAt']),endAt=text(saved['endAt']),employee=String(target.service!['employeeName']),service=String(target.service!['name']);
+  const confirmation={text:kind==='MOVE'?`¡Tu cita está reagendada!\n\n${service}\nAntes: ${shortDate(target.startAt,s.config.timeZone)}\nAhora: ${shortDate(startAt,s.config.timeZone)}\nCon ${employee}.\n\n¡Te esperamos en ${s.businessName??'el negocio'}!`:`Tu cita de ${service} del ${shortDate(target.startAt,s.config.timeZone)} con ${employee} está cancelada.`,choices:[],presentation:'TEXT' as const,outcome:kind==='MOVE'?'RESCHEDULED':'CANCELLED',appointmentId:target.id,employee,startAt,endAt,oldStartAt:target.startAt,oldEndAt:target.endAt};whatsappMessages(confirmation);
+  return prepareOperation({request:{businessId:b,inputId:c.inputId,customerId:target.customerId,calendarId:target.calendarId,resourceId:target.resourceId,kind,appointmentId:target.id,eventId:target.eventId,expectedRevision:target.revision,startAt,endAt,bufferMinutes:target.bufferMinutes,confirmation,catalogRevision,serviceSnapshot:target.service!,management:object(saved['rc1']),deadlineLimit},reducer:s.reducer,sealer:s.sealer,archive:s.archive,clock:{now:()=>new Date(now)},faults:this.faults});
  }
  private async finish(s:LocalScope,seal:Seal):Promise<void>{await s.sealer.seal(s.config.businessId,s.archive,seal);await s.reducer.tx(s.config.businessId,async db=>{await db.query('SELECT core.local_finish($1,$2,$3,$4)',[s.config.businessId,seal.body,seal.key,seal.digest]);},'local-view',this.faults);}
  private async active(s:LocalScope,subject:string,all=false):Promise<ObjectValue[]>{return s.reducer.tx(s.config.businessId,async db=>(await db.query(`
@@ -214,11 +255,13 @@ export class InteractiveBooking {
    const appointments=(await db.query(`SELECT a.*,p.name AS "customerName" FROM core.appointment a JOIN core.customer c ON c.business_id=a.business_id AND c.id=a.customer_id LEFT JOIN core.local_customer p ON p.business_id=c.business_id AND p.customer_id=c.id WHERE a.business_id=$1 AND c.subject=$2 AND a.state='ACTIVE' ORDER BY a.start_at`,[b,subject])).rows;
    const calendar=(await db.query(s.catalog?`SELECT ev.*,cs.snapshot->>'name' AS service_name,cs.snapshot->>'employeeName' AS employee_name FROM core.local_calendar ev LEFT JOIN core.appointment a ON a.business_id=ev.business_id AND a.event_id=ev.id LEFT JOIN core.appointment_service cs ON cs.business_id=a.business_id AND cs.appointment_id=a.id WHERE ev.business_id=$1 ORDER BY ev.start_at`:'SELECT * FROM core.local_calendar WHERE business_id=$1 ORDER BY start_at',[b])).rows;
    const diagnostics=(await db.query('SELECT code,detail FROM core.local_diagnostic WHERE business_id=$1 ORDER BY id',[b])).rows;
-   const session=(await db.query('SELECT ls.revision FROM core.local_session ls JOIN core.conversation c ON c.business_id=ls.business_id AND c.id=ls.conversation_id WHERE ls.business_id=$1 AND c.subject=$2 AND c.channel_id=$3',[b,subject,s.channelId])).rows[0];
+   const session=(await db.query('SELECT ls.revision,ls.state FROM core.local_session ls JOIN core.conversation c ON c.business_id=ls.business_id AND c.id=ls.conversation_id WHERE ls.business_id=$1 AND c.subject=$2 AND c.channel_id=$3',[b,subject,s.channelId])).rows[0];
    const pending=(await db.query("SELECT count(*)::int n FROM core.attempt WHERE business_id=$1 AND envelope->>'recipient'=$2 AND state NOT IN ('VERIFIED_APPLIED','ABANDONED')",[b,subject])).rows[0]!.n;
+   const managementAttempt=(await db.query(`SELECT op.kind,atp.state FROM core.operation op JOIN core.attempt atp ON atp.business_id=op.business_id AND atp.operation_id=op.id JOIN core.input i ON i.business_id=op.business_id AND i.id=op.input_id WHERE op.business_id=$1 AND i.subject=$2 AND op.plan ? 'management' ORDER BY i.sequence DESC LIMIT 1`,[b,subject])).rows[0];
+   let managementNotice='';if(managementAttempt){const state=managementAttempt.state;if(state==='SUBMISSION_ENTERED'||state==='UNKNOWN')managementNotice='Tu cambio sigue en verificación. Consulta su estado antes de solicitar otro cambio o reserva. La cita y sus horarios siguen protegidos mientras el negocio verifica el resultado.';else if(state==='PREPARED'||state==='ARMED')managementNotice='Estamos procesando tu solicitud. Aún no se ha confirmado ningún cambio.';else if(state==='ABANDONED'&&session?.state?.outcome==='BOOKING'&&session?.state?.management)managementNotice='La solicitud venció sin enviarse. No se realizó ese cambio. Escribe reagendar o cancelar para elegir de nuevo.';}
    const serverNow=(await db.query<{v:string}>('SELECT core.local_now($1) v',[b])).rows[0]!.v;
    const supportMessages=(await db.query('SELECT count(*)::int n FROM core.local_support_message WHERE business_id=$1',[b])).rows[0]!.n;
-   return object({businessId:b,subject,inputs,replies,appointments,calendar,diagnostics,supportMessages,currentRevision:session?.revision??0,serverNow,pendingEffects:pending});
+   return object({businessId:b,subject,inputs,replies,appointments,calendar,diagnostics,supportMessages,currentRevision:session?.revision??0,serverNow,pendingEffects:pending,managementNotice});
   });
  }
 }

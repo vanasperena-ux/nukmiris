@@ -1,0 +1,79 @@
+{
+  "testedSource": "77ea22b59d1b7022cecb3cf7a007ca14affee9ff",
+  "workingDirectory": "vnext",
+  "setup": "npm ci --ignore-scripts",
+  "commands": [
+    {
+      "name": "full",
+      "command": "npm test",
+      "exitCode": 0,
+      "tests": 731,
+      "pass": 731,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0,
+      "durationMs": 421610.562008,
+      "log": "logs/full.log"
+    },
+    {
+      "name": "runtime",
+      "command": "npm run test:runtime",
+      "exitCode": 0,
+      "tests": 50,
+      "pass": 48,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 2,
+      "todo": 0,
+      "durationMs": 196011.366563,
+      "log": "logs/runtime.log"
+    },
+    {
+      "name": "rc1-browser",
+      "command": "npm run test:rc1:browser",
+      "exitCode": 0,
+      "tests": 1,
+      "pass": 1,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0,
+      "durationMs": 18713.547709,
+      "log": "logs/rc1-browser.log"
+    },
+    {
+      "name": "se1-browser",
+      "command": "npm run test:services:browser",
+      "exitCode": 0,
+      "tests": 1,
+      "pass": 1,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0,
+      "durationMs": 15686.260723,
+      "log": "logs/se1-browser.log"
+    },
+    {
+      "name": "typecheck",
+      "command": "npm run typecheck",
+      "exitCode": 0,
+      "result": "PASS",
+      "log": "logs/typecheck.log"
+    },
+    {
+      "name": "scope",
+      "command": "npm run check:scope",
+      "exitCode": 0,
+      "result": "PASS",
+      "log": "logs/scope.log"
+    }
+  ],
+  "optionalOverlappingSubsets": [
+    "npm run test:rc1",
+    "npm run test:rc1:runtime"
+  ],
+  "faultConcurrency": "All existing fault and concurrency test files are included in npm test; no separate nonoverlapping totals claimed.",
+  "runSerialDockerSuites": true
+}

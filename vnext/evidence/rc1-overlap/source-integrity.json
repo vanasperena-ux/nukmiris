@@ -1,0 +1,877 @@
+{
+  "testedSource": "47f485b691c62dc8968ad2aec7cf6f05aaf7df93",
+  "sourceTree": "de03771ed5110dcee98e5c5d0edd8f884b36c045",
+  "previousEvidenceHead": "4d61f52ba89f288d195bd48057f1b2dcf061046b",
+  "previousReviewedSource": "77ea22b59d1b7022cecb3cf7a007ca14affee9ff",
+  "requirements": {
+    "registerVersion": "1.4",
+    "registerCommit": "59cde023d2dff088161c1d01bd76c1099386e13f",
+    "correctionAuthority": "Owner RC-1 Customer Overlap Availability Defect follow-up; confirms existing SQL rule, no new exception policy"
+  },
+  "changedPaths": [
+    "docs/greenfield/35-RC1-CUSTOMER-OVERLAP.md",
+    "docs/greenfield/NUKMIRIS_FEATURE_REGISTER.md",
+    "vnext/local/rc1.test.mjs",
+    "vnext/src/application/availability-oracle.ts",
+    "vnext/src/application/booking-composition.ts",
+    "vnext/src/application/interactive-booking.ts",
+    "vnext/test/rc1-customer-overlap.test.ts"
+  ],
+  "unchangedProtectedPaths": [
+    "vnext/src/infrastructure/postgres",
+    "vnext/src/infrastructure/archive",
+    "vnext/src/application/dispatch-once.ts",
+    "vnext/src/application/prepare-operation.ts",
+    "vnext/src/application/record-result.ts",
+    "vnext/src/application/recover-expired.ts",
+    "vnext/local/upgrade.mjs",
+    "backend",
+    "platform-proof",
+    "vnext/evidence/rc1",
+    "vnext/evidence/se1",
+    "vnext/evidence/se1-n1"
+  ],
+  "sourcePublication": "GitHub Git-object tree equals local staged tree; source fetched through anonymous HTTPS Git",
+  "files": [
+    {
+      "path": "vnext/local/booking-worker.mjs",
+      "bytes": 8892,
+      "sha256": "bede4fc9fc519c1c6ca0d3038905a8b508cdaa7d01c0397c146008f3c0aa07a4",
+      "gitBlob": "50e3d4438191e9c1181df7d690bf257c9fe7959e"
+    },
+    {
+      "path": "vnext/local/browser-smoke.mjs",
+      "bytes": 8463,
+      "sha256": "99280a201e70d68464934d1aa5721672d72572d2186c3384f7605347635a0708",
+      "gitBlob": "c4c26283e134b7e9e566971e84b799dad1fcb492"
+    },
+    {
+      "path": "vnext/local/capacity-browser.mjs",
+      "bytes": 6495,
+      "sha256": "746fee16b23c436e7c9492b5a6a2881456daf51605ae1d22450beff979ca17bb",
+      "gitBlob": "1fcce9de91259fd81f11365a4672f24ae7e8fb36"
+    },
+    {
+      "path": "vnext/local/capacity-cli.mjs",
+      "bytes": 1657,
+      "sha256": "ca33c4ede970452e731e03947c79a335ba47afad8f68265d6705242c8ebd39e1",
+      "gitBlob": "ddbb526ab77edb9ff3f53501cf02678bf53baf1a"
+    },
+    {
+      "path": "vnext/local/capacity-fixture.mjs",
+      "bytes": 13193,
+      "sha256": "e1de6341974de1f728254f121ab02042bc29dd6f725343f31c718c62add9cc58",
+      "gitBlob": "c69abd1722978e95ccb0de06394b131e3d149ce2"
+    },
+    {
+      "path": "vnext/local/capacity-test-support.mjs",
+      "bytes": 3596,
+      "sha256": "009a134c51e7a2d2b3ef338c17829d8d0849dd0124cdeef0fa0cbc3c99d65b2a",
+      "gitBlob": "f1182ca162625cd5018d8e2a438609ad61fb3c7c"
+    },
+    {
+      "path": "vnext/local/capacity-web/app.css",
+      "bytes": 1039,
+      "sha256": "ae3248a4134c5e36d293f2e34e4fb850026ecfdee3689cdd7302ae4557fb0600",
+      "gitBlob": "9f70d6383ad3e775b66b45833bcbd8232f25dbd5"
+    },
+    {
+      "path": "vnext/local/capacity-web/app.js",
+      "bytes": 5218,
+      "sha256": "65464f721d8c7132afb4428ff9907f078f895bee8a46660a7c145e1d4889dfc2",
+      "gitBlob": "96352ba471f11315629b6c5f8d8f981e75a99045"
+    },
+    {
+      "path": "vnext/local/capacity-web/index.html",
+      "bytes": 1833,
+      "sha256": "4860fd47a44a5948a4662c044168945c4edf53407327af4a34a6235e9d53053d",
+      "gitBlob": "74b3c39d6bafc5b5421ad22738aa0b66b6da3c1e"
+    },
+    {
+      "path": "vnext/local/capacity.test.mjs",
+      "bytes": 8480,
+      "sha256": "3b94b1ae8bb2fdf4507d69af6aa86b30b9b2f4da887f1684250eb9b7cccc7ee9",
+      "gitBlob": "a0e18234e7bf1b8e7f7972232b1fbadee692f71d"
+    },
+    {
+      "path": "vnext/local/child.mjs",
+      "bytes": 1504,
+      "sha256": "2ba63ad383a44d821fc8e5dd517bc8391af5090d0d336cdbfaac03f72f1b3926",
+      "gitBlob": "46066e20653ae1dff7e6291725cf922a03181bf0"
+    },
+    {
+      "path": "vnext/local/cli.mjs",
+      "bytes": 2313,
+      "sha256": "14f7ad7ccc46dcf6c76b06b730905b46809e846399368ed256506e641d5babb8",
+      "gitBlob": "d5341b7302dc74c1e56153df4570f77e85b74aa0"
+    },
+    {
+      "path": "vnext/local/coherent-backup.mjs",
+      "bytes": 6046,
+      "sha256": "4730f9e341b6382e5a4e9a7ff5dc6d01cc868bc6165856efd893ec693b875069",
+      "gitBlob": "bdf36ff99f5f475804c0731498da8f52969a84a6"
+    },
+    {
+      "path": "vnext/local/command-lock.mjs",
+      "bytes": 6535,
+      "sha256": "26c10013da24f0a53a300f0d306c68277a7842c63e1d825dd3b7e9ab5df5a3bb",
+      "gitBlob": "22daabdb19f51daed925c354a059dc0f0f4a9792"
+    },
+    {
+      "path": "vnext/local/command-lock.test.mjs",
+      "bytes": 7234,
+      "sha256": "dc1ad51690d0f37828b3a60c74e6cecc0e2604e58dda5f6fb73c67b1d61a14a3",
+      "gitBlob": "fc159bee5b5e0a48ad0b02924a0c010651ccc07c"
+    },
+    {
+      "path": "vnext/local/custody.mjs",
+      "bytes": 3541,
+      "sha256": "d9d24988e8ed00142a5eca4c93e37c214e4cd631f17206bfeee5f37cd3f619ed",
+      "gitBlob": "e7c9c5b0df1f20e22f1912c257c1260e0580c4f2"
+    },
+    {
+      "path": "vnext/local/final-browser.mjs",
+      "bytes": 6895,
+      "sha256": "22d2e8c7c07aa379801bc9f6cd9a2b0bdd4843ad1c2f4abd977a86812545f675",
+      "gitBlob": "3d0559996926ecc68cba71e6f881976684e71c58"
+    },
+    {
+      "path": "vnext/local/final-functional.test.mjs",
+      "bytes": 6452,
+      "sha256": "92059f94437d55462d1858421115a533a49d86b5c788a080650a9413738db7cc",
+      "gitBlob": "f9b3b360130d335f513b674e5c88cbe108408e56"
+    },
+    {
+      "path": "vnext/local/fixture.mjs",
+      "bytes": 12382,
+      "sha256": "38ee99111b6f4509554067e2a3c3e8efce13cdcdb934d79968f1ae9337154079",
+      "gitBlob": "8045bdf5502c469db8432efb7f8bee2d627c4e8a"
+    },
+    {
+      "path": "vnext/local/health-worker.mjs",
+      "bytes": 2197,
+      "sha256": "e02eaa0cb462085240335f315470adeb28e7bd2213f8d17a4d1f417ffdb16ae0",
+      "gitBlob": "807d6c76604d70ae2a7a9ed0fb2d55608fb77413"
+    },
+    {
+      "path": "vnext/local/interactive-profile.mjs",
+      "bytes": 6133,
+      "sha256": "2aff4a7ad30220b141ae586edab519bece3ec278c55a7aaf1169ea093a25be91",
+      "gitBlob": "ae3c94b80fba049ae4b1b2761081264427477fbe"
+    },
+    {
+      "path": "vnext/local/interactive.test.mjs",
+      "bytes": 17177,
+      "sha256": "dcea7bbe91322614cd2e9eeafee68c686bd0736c98628ae5185bbaa3e610214f",
+      "gitBlob": "43e171c04cb41140eb8e7a447204ade9bc66b9b6"
+    },
+    {
+      "path": "vnext/local/lock-worker.mjs",
+      "bytes": 466,
+      "sha256": "bedad3467c2cb79417dd3db2f8ca4ab0d6462600072aba9dcf1572ac95b5798b",
+      "gitBlob": "58e1a8c2406b0d23041efea2c557f7bd89520189"
+    },
+    {
+      "path": "vnext/local/platform.mjs",
+      "bytes": 5797,
+      "sha256": "ee1cd24c9cd467c8fc14f8d9fc8ce966b1f866702e57557314d578d265620bf4",
+      "gitBlob": "9586d7fe846310eab51053b1d7b7dc6231f33ede"
+    },
+    {
+      "path": "vnext/local/platform.test.mjs",
+      "bytes": 5992,
+      "sha256": "0b7f5469ad1318a631dd782216ccd786805d26881ad6c519a4127d3058b64b3c",
+      "gitBlob": "ce0a600e05ed56819e748f9c410e96107f924338"
+    },
+    {
+      "path": "vnext/local/rc1-browser.mjs",
+      "bytes": 7751,
+      "sha256": "dadeae54b94c50cfbf593bf850ad58c4ff5bd30cdf9031e807973bc94a8f17c5",
+      "gitBlob": "d17b1524273d2037ae48ce8a9311e0ad79802ca3"
+    },
+    {
+      "path": "vnext/local/rc1.test.mjs",
+      "bytes": 11162,
+      "sha256": "047a1b36b12b24dcd8d2d9a69e2c594bca8cdba8bfd80a04760585c663bc83fd",
+      "gitBlob": "38ce31eb9ff5d97f582b4e51f4cea3ed348c1f24"
+    },
+    {
+      "path": "vnext/local/runtime.mjs",
+      "bytes": 4221,
+      "sha256": "ac572ba8c4289c8e1bc0352fefaceecee7d1e9b23ef5bcd14f081adc7a7ab555",
+      "gitBlob": "62a1f424a5cf64a57bc630792401e734b89f46ee"
+    },
+    {
+      "path": "vnext/local/runtime.test.mjs",
+      "bytes": 10047,
+      "sha256": "45d0eba7dbf98bc4a108852a603a76b2558029ad3d6c182ddf61aa96b0343885",
+      "gitBlob": "70432416f48b4e286e4364de447c874cdce7f7bc"
+    },
+    {
+      "path": "vnext/local/services-browser.mjs",
+      "bytes": 9631,
+      "sha256": "26037274cf7bda87f0cde0f43de513c6475808e4757ce1acc8c71e69b03d12ca",
+      "gitBlob": "6285d5e343274a67e84f4d58a05f88ea70117fcc"
+    },
+    {
+      "path": "vnext/local/services-n1.test.mjs",
+      "bytes": 6990,
+      "sha256": "5141064441110d92993ab66ea4eb04917b4dbbbc034a9af063d2ef75a45008ce",
+      "gitBlob": "9b9c96657fab20555efa9faa89dfe3eee1fdbfa8"
+    },
+    {
+      "path": "vnext/local/services.test.mjs",
+      "bytes": 6721,
+      "sha256": "61b194be7187eeec2dcbcf85d9fd06b820f4921c39a72e808a613f5a8156894f",
+      "gitBlob": "9d46909b20b8aa23496e9312a20a00a51427f7b5"
+    },
+    {
+      "path": "vnext/local/smoke.mjs",
+      "bytes": 4997,
+      "sha256": "f2da506d5e4b0bba01d66885cf0690f7d80797eb91693ee009b1f9dd49421e04",
+      "gitBlob": "e3a8d3f9c0f70112e83b21d4cb3b58511ffdf1f7"
+    },
+    {
+      "path": "vnext/local/test-fixture.mjs",
+      "bytes": 2119,
+      "sha256": "279f9de7d2bb99bf165c6e46637295ed858cde33da959455c96718871461ef8a",
+      "gitBlob": "8f5e44db8656f3f1ef89247c768ade1fd3c7c4d8"
+    },
+    {
+      "path": "vnext/local/upgrade.mjs",
+      "bytes": 2166,
+      "sha256": "6243f4de9bd8f77fb2ed9764fcb8990fe4dda675d6d8090d6b72050c75520db8",
+      "gitBlob": "00813b0a6d1fe4609b7d68840e8e60b5f6cb9031"
+    },
+    {
+      "path": "vnext/local/web/app.css",
+      "bytes": 5204,
+      "sha256": "178bfdf9f04f29bed2a631b9218f849648bb0dfe7bceedd1044c85949c345161",
+      "gitBlob": "b2d112ddd5da214ab1ef536f03cc539a2181dbb2"
+    },
+    {
+      "path": "vnext/local/web/app.js",
+      "bytes": 9003,
+      "sha256": "a071767f0c162b0c8bb01e2e1b81966c87c12d6dc441f33270c2ba2391e6ddd8",
+      "gitBlob": "af1157f6bd723b0b0662d02e2842609263565f91"
+    },
+    {
+      "path": "vnext/local/web/index.html",
+      "bytes": 2869,
+      "sha256": "f202dffc422b227a0f6225c6111eaf70a312b1fd2a0fd65c0e148bdfd06317b6",
+      "gitBlob": "bd362e5048b3b865ff5a8605ef93009171d6062b"
+    },
+    {
+      "path": "vnext/local/web/owner.css",
+      "bytes": 2866,
+      "sha256": "432a8a8a43076fc2ea7cb1008c4259c50cfff1cecca002d661c70678dc958fd5",
+      "gitBlob": "67382de2402eab144faca4dbffe5458b79a2f75c"
+    },
+    {
+      "path": "vnext/local/web/owner.html",
+      "bytes": 3605,
+      "sha256": "216d53dfa41bfba1827b5b5c2633df3b0f0840421984145ffedb947ca39dd225",
+      "gitBlob": "ab47851649b20a2f51e92c3783cd3d4b5d5ae1b7"
+    },
+    {
+      "path": "vnext/local/web/owner.js",
+      "bytes": 12176,
+      "sha256": "6d48c8b75781847e410c89e62ec05aaa2b34de8672dab6f15cf9e89b7b93b734",
+      "gitBlob": "28508307024487b119d6bf23730f6ed6b0a3c964"
+    },
+    {
+      "path": "vnext/package-lock.json",
+      "bytes": 8103,
+      "sha256": "08b21f97a1272051a1dbeb22a15dc24c0f7dfc7fa63a137439794966e30a88b3",
+      "gitBlob": "6c05cf0c4f447c75b6ddcdc43ff6b96047c63447"
+    },
+    {
+      "path": "vnext/package.json",
+      "bytes": 3907,
+      "sha256": "1d78fd23a2512521d1aeb592e6be83ba5d176bc26908c15930d232f2c17b266d",
+      "gitBlob": "e76a0606dbe7f19641a652095ac89ba6a4857aab"
+    },
+    {
+      "path": "vnext/scripts/archive-capacity.mjs",
+      "bytes": 5885,
+      "sha256": "b83fce1e59aa6b29c2ae498f73f0deb69c4b69499ea2f0b3e03b5847992da1ae",
+      "gitBlob": "37921fe03af5733669111028cc853bb0a1fb820d"
+    },
+    {
+      "path": "vnext/scripts/availability-transcript.mjs",
+      "bytes": 771,
+      "sha256": "13734d8ef995b709cbbcde5df63d9e0fc965080ba687e64bb195cc1c6b0acaae",
+      "gitBlob": "c08c77585fba3b7389addc56a262f48da5f31fa8"
+    },
+    {
+      "path": "vnext/scripts/check-scope.mjs",
+      "bytes": 1285,
+      "sha256": "57a33f15c318080f026fea6a6946dc28a67062accffe879f7eace6175a32df27",
+      "gitBlob": "d172b8dcae6f4537b55867a1144542d975102f2a"
+    },
+    {
+      "path": "vnext/scripts/run-tests.mjs",
+      "bytes": 2206,
+      "sha256": "8cb0e9ad32f23b8451b3eccd8968cb96cd55075d69cadb5778a9847ce3a07803",
+      "gitBlob": "a9cf1d287a55e9a865a1a91a5a106f367fbb6a58"
+    },
+    {
+      "path": "vnext/src/application/admission-custody.ts",
+      "bytes": 1206,
+      "sha256": "acd8ae30e28fd8846e2a0806d0fb2964d3ad72e24c77045afa3efaa10db2f804",
+      "gitBlob": "fbdf7171fb19ca2535d0a3f26e84bec1e1b5a173"
+    },
+    {
+      "path": "vnext/src/application/admit-input.ts",
+      "bytes": 7686,
+      "sha256": "427467318a0238bf9cb776498df84f4b685765ba31d3773545815060e739e04f",
+      "gitBlob": "3ff012b5240dcca3d16e25de97af4b407f0b80c8"
+    },
+    {
+      "path": "vnext/src/application/appointment-management.ts",
+      "bytes": 4944,
+      "sha256": "a61442049e5341f3782fd17fc72f0f3669a48bd651fbc23831deeef823ee2f60",
+      "gitBlob": "c7794ccca4397e5102d4d820822ba9be0c9fd413"
+    },
+    {
+      "path": "vnext/src/application/archive-policy.ts",
+      "bytes": 1816,
+      "sha256": "d8f1477ec1c416f7b587576611718e6f9534020e1d1f0776eb3559dd2977b489",
+      "gitBlob": "2c6ed92f01208873cc446e0e757b0cc3d4d127ef"
+    },
+    {
+      "path": "vnext/src/application/availability-oracle.ts",
+      "bytes": 11368,
+      "sha256": "0c2edbd6370effb5b2c5ba8820bf68786a20177ba1938238da5f5dffb29205ef",
+      "gitBlob": "2ef0982f747e596cd5e201e24fc3e383a019ee89"
+    },
+    {
+      "path": "vnext/src/application/booking-composition.ts",
+      "bytes": 6600,
+      "sha256": "56218d4f76be57ec7e57c0048c52c92e50eb26901765a602b5ea9db40ac4d67c",
+      "gitBlob": "4fd89548ec57bc4136aa7597acaf13e3c4052b62"
+    },
+    {
+      "path": "vnext/src/application/dispatch-once.ts",
+      "bytes": 4049,
+      "sha256": "357f0950aa9ac7142188aa17312e9bdaccd01d4f7edc531294212739c2db726c",
+      "gitBlob": "d23040990a20f0e5d8bb223e56983fcd8f5578d8"
+    },
+    {
+      "path": "vnext/src/application/interactive-booking.ts",
+      "bytes": 38407,
+      "sha256": "e14e7d545363062243277d4c1f4b153356a3ade4b9b93639eae7b64d51a74587",
+      "gitBlob": "71f7d8c276052d34a1c1527f5fbe20412e33b7ff"
+    },
+    {
+      "path": "vnext/src/application/plan-conflict.ts",
+      "bytes": 1289,
+      "sha256": "cea7badc6ef09155459b218775e78f7a87c708b14ddec5ad34c23ccd688b73bf",
+      "gitBlob": "c7154b2337694c38ac363dbba3269f5d9f5def09"
+    },
+    {
+      "path": "vnext/src/application/prepare-operation.ts",
+      "bytes": 10800,
+      "sha256": "ff6cf9ad3b422a8c12168d018957013fec09d0f5e288b3c5c778627b2df37899",
+      "gitBlob": "28f2c181efcd99a7a2496169e3ef77d3ec38f41a"
+    },
+    {
+      "path": "vnext/src/application/record-result.ts",
+      "bytes": 759,
+      "sha256": "37965413cc3bb5c816ab2385df3fa09415a50f749081ccbc16de5112311f8c1f",
+      "gitBlob": "d288916874e163d24d30578a137c9a556cb33d45"
+    },
+    {
+      "path": "vnext/src/application/recover-expired.ts",
+      "bytes": 3117,
+      "sha256": "09671efe2facf7c339b88402448672f353cc237d96da384b7ca71d38014243b0",
+      "gitBlob": "541f7e98a44116c6618014f934925460ba08a96c"
+    },
+    {
+      "path": "vnext/src/application/reduce-input.ts",
+      "bytes": 5452,
+      "sha256": "f88dd10e37852bdebeaa8b3d603e0d749287c0188373ef293b5893c77299c2a2",
+      "gitBlob": "ab3d803cb142b5941f1c85ef89cd2152e7a8f2de"
+    },
+    {
+      "path": "vnext/src/application/restore-inert.ts",
+      "bytes": 1326,
+      "sha256": "cf44fadb6f486efdba0738e79b4cb0672047f2965555a32076572653b686c7b0",
+      "gitBlob": "4417a8b4634e15faf03ec7cf0b8e8a227dbcb415"
+    },
+    {
+      "path": "vnext/src/application/service-catalog.ts",
+      "bytes": 6919,
+      "sha256": "8fbc3327f016454ac22cef269c0c4fdbfae85b0e37922be73f2128bff1909b63",
+      "gitBlob": "43fe38217331c2fedade0d067302e5c08f046db0"
+    },
+    {
+      "path": "vnext/src/application/set-business-status.ts",
+      "bytes": 1032,
+      "sha256": "361ac8058efd14c628b4c0d7f46d77723d0be50f3c78ac9ce6898130aa539f82",
+      "gitBlob": "04faa5f8664c9a3406c9c7d688b36c243edfdfc3"
+    },
+    {
+      "path": "vnext/src/domain/appointment-date.ts",
+      "bytes": 9006,
+      "sha256": "43a0d2da33506a1c2d194225e5f07a1af6fb41c124600c8910ff66d08efc1b17",
+      "gitBlob": "54f09b35a583d9b45dfaa96101ef2ad3c17105be"
+    },
+    {
+      "path": "vnext/src/domain/appointment-summary.ts",
+      "bytes": 1894,
+      "sha256": "a1f4e9af9508b6247004f5e5234b4033ed7883d954e2f15298f4d67480b7cecb",
+      "gitBlob": "05329cc8b90c38102c52e4130584c1ecf5652d02"
+    },
+    {
+      "path": "vnext/src/domain/availability.ts",
+      "bytes": 10919,
+      "sha256": "3c0e13ad3e5b04cb49375c091d7214ee435bf9b978f2c19ce5d3e47f6a2df73c",
+      "gitBlob": "abead7e7eff014631533afac612ed446e03f91f1"
+    },
+    {
+      "path": "vnext/src/domain/classification.ts",
+      "bytes": 1971,
+      "sha256": "c80c5c985b9ae98dcad529292cf86c01582ff69f79e5d394aa541a5ab9eb65b9",
+      "gitBlob": "0db5c3b6c656566b71ef83d9b2d9162309cec1b5"
+    },
+    {
+      "path": "vnext/src/domain/customer-name.ts",
+      "bytes": 3526,
+      "sha256": "a911f1659f21304de5d26ff075f411fa5e0e03c813b12fb23d1b99b674980032",
+      "gitBlob": "f472e7c6a1deaf2721cd096dea66b3dcb1fc7f5e"
+    },
+    {
+      "path": "vnext/src/domain/protocol.ts",
+      "bytes": 2408,
+      "sha256": "19e2a34e2b8eb575d17041a00d957aaf376b9794a027081b867dc81789acb09c",
+      "gitBlob": "732310877560e5cdc408c1d78cbd13f9bcd69327"
+    },
+    {
+      "path": "vnext/src/domain/short-date.ts",
+      "bytes": 660,
+      "sha256": "8f6282b8a73c14b0895429c6d33f2f8e418e97a726a9310133f846678eb18d60",
+      "gitBlob": "018f7129cd18febb747822c05d9f13279d691ae6"
+    },
+    {
+      "path": "vnext/src/domain/tenant.ts",
+      "bytes": 1143,
+      "sha256": "644f21fdee7a995f603310571164e77ce49b1b0aabb61aa918e05c73822d304c",
+      "gitBlob": "13b1e109a3ad9617e3fc946e421b488129bd9e21"
+    },
+    {
+      "path": "vnext/src/domain/whatsapp-presentation.ts",
+      "bytes": 2309,
+      "sha256": "ad790506501328a6be39e0e057a9d06b890679bb36d8306730cee26cfa05d671",
+      "gitBlob": "e363d3f111543cf7ab59dc625650e13aa250f7e9"
+    },
+    {
+      "path": "vnext/src/infrastructure/archive/authenticated-tree.ts",
+      "bytes": 3972,
+      "sha256": "a58c467550063a18ae75823de33c6b957da26b0887d83f24ab1d4bf2c2ca92a3",
+      "gitBlob": "e78e49c8f2339f6d297b2686ecf8371946c20547"
+    },
+    {
+      "path": "vnext/src/infrastructure/archive/availability.ts",
+      "bytes": 3085,
+      "sha256": "55d2476a39b03eeeecf4c9b08e797d648d36c720056f90da66c888260911ce45",
+      "gitBlob": "8504f265b664508db872e0d6b0f4f24f99bcb4b9"
+    },
+    {
+      "path": "vnext/src/infrastructure/archive/indexed-archive.ts",
+      "bytes": 21775,
+      "sha256": "7f167a3eda4cd9d348128e61043e2a70ad0c64d70f43f1269fd30223a3d62ee7",
+      "gitBlob": "1b0fbcc4678404cac8ddda0bed480af8947ba24a"
+    },
+    {
+      "path": "vnext/src/infrastructure/archive/protocol.ts",
+      "bytes": 2225,
+      "sha256": "978b476a22272c5f4945c9e16a3b3c4888b650e7df85296af17ce5ac5781baea",
+      "gitBlob": "5c8aafe9a76c3c33ff73257033e346fd80db9641"
+    },
+    {
+      "path": "vnext/src/infrastructure/meta-signature.ts",
+      "bytes": 535,
+      "sha256": "61aec290ad429cf9dc3f6f5fd2b951955047c90a8d786141c6ed396b217abb96",
+      "gitBlob": "6bd8251ed4d6e4b0e5496bb600860a2a5305208d"
+    },
+    {
+      "path": "vnext/src/infrastructure/postgres/migrations/001-foundation.sql",
+      "bytes": 21618,
+      "sha256": "b1065dccf73ded6f3b91d962c3d2a1585d10a75a672c90f71e67f22be9000468",
+      "gitBlob": "4a515fb5821e7e7e4865a175b17e798797ebb1a7"
+    },
+    {
+      "path": "vnext/src/infrastructure/postgres/migrations/002-execution.sql",
+      "bytes": 31816,
+      "sha256": "c00e59c115fcdd6441038d75274079f1eecfd8f9d0a76ab3212966af89cf33f6",
+      "gitBlob": "2e9cb3a44b3cd72c7c1536da85c7eaae081f2907"
+    },
+    {
+      "path": "vnext/src/infrastructure/postgres/migrations/003-dispositions.sql",
+      "bytes": 8284,
+      "sha256": "33681aee587267609954b8058e2458c067d8f12f921fcfc65133584e82eed726",
+      "gitBlob": "539723391101348281c545b0b4629028c63e4e37"
+    },
+    {
+      "path": "vnext/src/infrastructure/postgres/migrations/004-classification-and-ordering.sql",
+      "bytes": 39738,
+      "sha256": "6c83c70c3bf49a97b1883b2769c142f893df151e6386622a82ceaa8cae03fc9e",
+      "gitBlob": "333a583b95f5fde45e322162289a95a9c75c196d"
+    },
+    {
+      "path": "vnext/src/infrastructure/postgres/migrations/005-conversation-progress.sql",
+      "bytes": 18836,
+      "sha256": "8adbed6fac2ec4c21eca5d1f03c9e17d0861cdafa4258b58ed0f08d2312c6900",
+      "gitBlob": "1c0ca68c77635163e514a76706b2485b9da4c61d"
+    },
+    {
+      "path": "vnext/src/infrastructure/postgres/migrations/006-deadline-recovery.sql",
+      "bytes": 5280,
+      "sha256": "165502801b70bb4f118386ac6066140d42e8f84c74a2407c2f62731d9dfb6cce",
+      "gitBlob": "09a58c16174e8a3ecf751d03dc83f66f15bed90c"
+    },
+    {
+      "path": "vnext/src/infrastructure/postgres/migrations/007-local-interactive.sql",
+      "bytes": 36690,
+      "sha256": "c627e62ec6db01b1fc5d1ff16a87b42b6836645ec594bd59e2d9d56e53d5e0a1",
+      "gitBlob": "a06835c3f8ae056f70694262c8bf227b92c34ea2"
+    },
+    {
+      "path": "vnext/src/infrastructure/postgres/migrations/008-local-corrections.sql",
+      "bytes": 6060,
+      "sha256": "f9a4014d628e74d4e4965bbdd43939e8df2848c1f49cae36cd14d507408f19fd",
+      "gitBlob": "419fbfcb792f9515207d21c7359483966e0a6f6a"
+    },
+    {
+      "path": "vnext/src/infrastructure/postgres/migrations/009-local-review-corrections.sql",
+      "bytes": 3601,
+      "sha256": "0d3ce4ab162572a41d5fc86be9a2cc7a61d4bc151ca597c9d9cd08780eeb3b4d",
+      "gitBlob": "bf54c2e8243fa14b40732802b77b446f119fb4ae"
+    },
+    {
+      "path": "vnext/src/infrastructure/postgres/migrations/010-services-employees.sql",
+      "bytes": 13368,
+      "sha256": "c44540252b65eb9023a2355c26810beca7ca1819c8b0acea4d4a7a128210b2be",
+      "gitBlob": "3f8bc05ca950b8463f867fa7516d85aac2435eac"
+    },
+    {
+      "path": "vnext/src/infrastructure/postgres/migrations/011-solo-qualification-creation-only.sql",
+      "bytes": 5028,
+      "sha256": "5257e289f87acfa467a42d983f168f89a37b2a4bc63d3baaa01f4a649edaef9c",
+      "gitBlob": "12487d6bf7a766b469578f72a219b7f21c5a536e"
+    },
+    {
+      "path": "vnext/src/infrastructure/postgres/migrations/012-local-appointment-management.sql",
+      "bytes": 19847,
+      "sha256": "21e81f83abe1dc1ec750e5c2a15ef111d5f4fb2e6a0d5a38ce230e23f1ff26ea",
+      "gitBlob": "258e50a09c314c91e6d23c584ee67a7da71d4a1c"
+    },
+    {
+      "path": "vnext/src/infrastructure/postgres/roles.sql",
+      "bytes": 6370,
+      "sha256": "108062d2163095dcb6c6186f829a82159d509132e3287ac719378494f3ac7ded",
+      "gitBlob": "e4640a9bb9cb913310e4b44f65ba7e59840e2199"
+    },
+    {
+      "path": "vnext/src/infrastructure/postgres/unit-of-work.ts",
+      "bytes": 2227,
+      "sha256": "9c526298ab9f56ef28e101546a736f84e79d4047a47cec617669b57f2e19e07c",
+      "gitBlob": "a52bc602dba3909c5fafbd140b0d3cb6075ba8c9"
+    },
+    {
+      "path": "vnext/src/ports.ts",
+      "bytes": 1712,
+      "sha256": "830ea92da56ecf380915eb5248c844344c185f7b88a0badea869230e88fefc7a",
+      "gitBlob": "8df31feacb3c8901e06cac362617015980d414bd"
+    },
+    {
+      "path": "vnext/test/archive-concurrency.test.ts",
+      "bytes": 7783,
+      "sha256": "3b743b79afe8ac685ee4a171365c399f620ac22a731135acdcfac9f29303964d",
+      "gitBlob": "85d752c34c7371bb1f3710ba3ded4de9b1797441"
+    },
+    {
+      "path": "vnext/test/archive-integration.test.ts",
+      "bytes": 6840,
+      "sha256": "8b5b60feb02c8df2ba929e630c0e2fbe233277a4a18f6ed7fabf60777a1819be",
+      "gitBlob": "da0c4ac89c919265b40ac7dbf162272f4a8080b3"
+    },
+    {
+      "path": "vnext/test/archive-process.test.ts",
+      "bytes": 3997,
+      "sha256": "c11919fa048f363655d8cb3d57eb90dd496a51f03dc7bab1bcda3ff4efd6eba2",
+      "gitBlob": "42204760ab9fa8145f5487368b6f1fa655af201e"
+    },
+    {
+      "path": "vnext/test/archive-security-boundary.test.ts",
+      "bytes": 4456,
+      "sha256": "4e82343526652ec16663e53c5397ed69eb47cacb7114e83aac8e955380a73135",
+      "gitBlob": "22a1b4601c15a6ab8449ff7c8c6dbe227f6ff790"
+    },
+    {
+      "path": "vnext/test/archive.test.ts",
+      "bytes": 13555,
+      "sha256": "8b96a120bcfbe6189ba9ee474e6ae041b35b8f9f6fa54908fb8f4f78952691d0",
+      "gitBlob": "45d86ef3cbb688228af79b030afafeef98037d4a"
+    },
+    {
+      "path": "vnext/test/concurrent.test.ts",
+      "bytes": 5280,
+      "sha256": "f91e4dbc7b24a3566f97206926d0ce3552f009caf6adba60ef83e6b77dcc3dad",
+      "gitBlob": "fb3ba1bf0eff5488f48ed08ac20f8b8bab105648"
+    },
+    {
+      "path": "vnext/test/database.test.ts",
+      "bytes": 8465,
+      "sha256": "b8a20ff559d9ad7ee8c84ad83dedd689a16de47416b21640daa25538b825f968",
+      "gitBlob": "3f4cf530ddc307f10a824ea41823aa8b9a53716b"
+    },
+    {
+      "path": "vnext/test/dispatch.test.ts",
+      "bytes": 12970,
+      "sha256": "12235585b76d8ab444a2ce216738a5466f6575cc18e3e78eceb3cbdee63ba65b",
+      "gitBlob": "2c5a90fe212401cb52d503677d6606a95d692b70"
+    },
+    {
+      "path": "vnext/test/ingress.test.ts",
+      "bytes": 4819,
+      "sha256": "85286b77d2d8ebad463d42cab9fb92651031dfa45786c5eb432c1dcf7ac11deb",
+      "gitBlob": "4931aefa3f654e858ad9af97df2868d5eb738c0e"
+    },
+    {
+      "path": "vnext/test/l0b-archive-policy.test.ts",
+      "bytes": 7132,
+      "sha256": "fbafa04797bf5ee4e1f7c47a8d58a55a8248584006de50e109652ffbfd5762a9",
+      "gitBlob": "c5a42833a4c627d8056c2714bbcd85e16c6d3a9d"
+    },
+    {
+      "path": "vnext/test/l0b-classification.test.ts",
+      "bytes": 13204,
+      "sha256": "38b48cf9508fa2b4a2e2d6418e3ad893334ab13523d580ce5ab5909b84abaa94",
+      "gitBlob": "53328c74557ea4380202ba71a0bf35c35cbad623"
+    },
+    {
+      "path": "vnext/test/l0b-ordering.test.ts",
+      "bytes": 13579,
+      "sha256": "78e56db6c990ba3776cba648513fb09c7c24a33c5e824380b2569272dd6205a2",
+      "gitBlob": "d28db5a58fbd812c2f33e2871444b94a0b90e93c"
+    },
+    {
+      "path": "vnext/test/l1-availability.test.ts",
+      "bytes": 10696,
+      "sha256": "f2a1fa1c66a938bafefcb4af30f2ba87d27a02fc4597fa5ff00d09eeb1cf6af7",
+      "gitBlob": "e79c987d492af6f49e5946c60624140cff384ca0"
+    },
+    {
+      "path": "vnext/test/l1-contention.test.ts",
+      "bytes": 3362,
+      "sha256": "8b38546ea24e6d0fe0fd9f2c18d41d1b5e31a097c8bc3878ab3a0c70e9fa4f84",
+      "gitBlob": "da019c6c58da53be3e7a0d6e7fadeeebef024a40"
+    },
+    {
+      "path": "vnext/test/l2-composition.test.ts",
+      "bytes": 8241,
+      "sha256": "a85fbc87c743de419ed97273a41f9b0bb74b5098ba1338293b94a0c5289630f4",
+      "gitBlob": "7a4c3650eecc390bdf44e4895ebfeab59906cc8b"
+    },
+    {
+      "path": "vnext/test/l2-corrections.test.ts",
+      "bytes": 21677,
+      "sha256": "02b77d0b721cf3d5098ec355ac4dd50d315a2c6758da98cb9ee95c44f0a16d7a",
+      "gitBlob": "ed8a8d4756e024e785ce798ae4c975711a3eb19b"
+    },
+    {
+      "path": "vnext/test/l2-date-parity.test.ts",
+      "bytes": 1274,
+      "sha256": "7fe565b0ce755ccb44114fa1e7b8abcaa20ac092f1ef9a23f51f83f9d55be47a",
+      "gitBlob": "1e722a3e6e3d828d0cf32c05618c821ed5adc73d"
+    },
+    {
+      "path": "vnext/test/l2-deadline.test.ts",
+      "bytes": 8294,
+      "sha256": "793ad2cb9d5fb5d0f0dbc6eacc365a977be441abe3aa38a4a4b086958555e3a4",
+      "gitBlob": "30e31a3221f87b1c88ccbc642e80be8bcaa9c6d3"
+    },
+    {
+      "path": "vnext/test/l2-final-corrections.test.ts",
+      "bytes": 17074,
+      "sha256": "635f05d0fefb0e6d7ab64aa06d5770b4da844bbe73a88f5255e08eb797b921ec",
+      "gitBlob": "f023a499be7b53f74d87d9fcf0df0ab3e8116ba6"
+    },
+    {
+      "path": "vnext/test/l2-interactive.test.ts",
+      "bytes": 22458,
+      "sha256": "d8c3807a13ce426d4b83a67f8c372b86888883287bc9c67489f0285bff1de8fc",
+      "gitBlob": "a9917294d0a8dec1073bf2caed52758fb611ec9d"
+    },
+    {
+      "path": "vnext/test/l2-review-conditions.test.ts",
+      "bytes": 24268,
+      "sha256": "74c93256589ca965a8bafd2a6e5bc0ba00fb804569cc2cb8e78b32cba70cbc42",
+      "gitBlob": "57321f43af349eab17a4d1bf3430c7c36a466205"
+    },
+    {
+      "path": "vnext/test/permission.test.ts",
+      "bytes": 6717,
+      "sha256": "23ebce53993cc6eddb24788afee5c27a7c00f3a7340c9afe0bd1a898c15f1a89",
+      "gitBlob": "17d684bc1720b5b0e48f15c6a72882f225f7537e"
+    },
+    {
+      "path": "vnext/test/process.test.ts",
+      "bytes": 5126,
+      "sha256": "922ae27018638add0a69c6666c70d80c8b1c3c5dd43bbe65f2d16026ee4280da",
+      "gitBlob": "a45945fc17b5bb87e75131d8dc8f2746b6aae3a0"
+    },
+    {
+      "path": "vnext/test/progress.test.ts",
+      "bytes": 14338,
+      "sha256": "02af60163a797896a1e956090d62b40292c33b0770dba9e558a1dc10e6abbfce",
+      "gitBlob": "b598684b5ffad3f7752078152c92e7d22ad13f8f"
+    },
+    {
+      "path": "vnext/test/rc1-customer-overlap.test.ts",
+      "bytes": 15186,
+      "sha256": "cd1ed0c8db5aa03c6a4bc3b5a755fd7dc29f494c72ad8df2aaaae8ac64912704",
+      "gitBlob": "7f241cffe38301316ab8b7e2c1ee16a45ca52ab2"
+    },
+    {
+      "path": "vnext/test/rc1-management.test.ts",
+      "bytes": 27439,
+      "sha256": "d6b5812253388476ddf6a705a6ef02f00ac18656ce768f1013d5b3ec0292faea",
+      "gitBlob": "f98ddb5df654f980520834f48bfc52ff8c55e74f"
+    },
+    {
+      "path": "vnext/test/remediation.test.ts",
+      "bytes": 25118,
+      "sha256": "978f39978489621431b8ea3cd40cf056e9a11e769e368f8196e9eb4d336ede38",
+      "gitBlob": "f314e8e0feb121d22a3fc1f6b3e07ab6a4662d45"
+    },
+    {
+      "path": "vnext/test/restore.test.ts",
+      "bytes": 4973,
+      "sha256": "4fa7802df22b0c3dc0625c082edf616d90ed19dbe4192b7f7af2385caf848890",
+      "gitBlob": "b7a0607ec2a96a8266c31b394d4b5de13d5b33d5"
+    },
+    {
+      "path": "vnext/test/review-conditions.test.ts",
+      "bytes": 12215,
+      "sha256": "1dbfcea1f3983d2372de040efa5a14dbf2cca0e2587dcd82699bde6a18bee726",
+      "gitBlob": "d0a44114aaa49b74a45c2b4db20e13ec239f29f8"
+    },
+    {
+      "path": "vnext/test/scheduler.test.ts",
+      "bytes": 4400,
+      "sha256": "c0a1f66c5f015934fe97a87474f5ea632bedda535550e85732eac365f6569099",
+      "gitBlob": "92b3fe578f42c372d6072569a5225fc607263489"
+    },
+    {
+      "path": "vnext/test/se1-services.test.ts",
+      "bytes": 22497,
+      "sha256": "f2c6d87befd690305179cf6a4eecf17dcc5ee8e6ebbc7556e487d05d5cfb8cfb",
+      "gitBlob": "fc13328737d5e2f3b3ecc165bb98cd95a58af02d"
+    },
+    {
+      "path": "vnext/test/support/archive-capacity-workflow.ts",
+      "bytes": 3921,
+      "sha256": "c24b7d870b756d177f3d7c761d3535c676e1039c1140a3f11612d2e825bfd507",
+      "gitBlob": "45c782d1ad569ec66efc0a3f8baa132106589ddf"
+    },
+    {
+      "path": "vnext/test/support/archive-driver.ts",
+      "bytes": 2338,
+      "sha256": "5fe799c24fba6e161120030119622f19b234d540b81279b880a59943c3d2c247",
+      "gitBlob": "2cec50f061ca5aaa9a3437ec1a2d5b3538799fa7"
+    },
+    {
+      "path": "vnext/test/support/archive-fixture.ts",
+      "bytes": 4596,
+      "sha256": "488b884ffd0561556cdb25080003e17de2f2c3a5884ad6a0a2cf3712ed317d8e",
+      "gitBlob": "159509173406dbc8e3a9fa8e33476912085c544f"
+    },
+    {
+      "path": "vnext/test/support/archive-worker.ts",
+      "bytes": 2153,
+      "sha256": "cf0044c29533047bab1ed0ef623629e0bfe1f13579c04cab2dd14697b32193bf",
+      "gitBlob": "62e72f2ef746195ccf16743eb4a0c4644f4b0bc9"
+    },
+    {
+      "path": "vnext/test/support/cleanup.ts",
+      "bytes": 595,
+      "sha256": "dc44a8096802cb2bc0e7d98908b78884f76355e0e8170454c8615496c6650d81",
+      "gitBlob": "4c9b5afa135f69ec4b9778494905ddad4f6780a7"
+    },
+    {
+      "path": "vnext/test/support/custody.ts",
+      "bytes": 338,
+      "sha256": "426a9be5dfe03ee0dc6f878aa9685f85735a28f3e260b005a9686e67b96b13c7",
+      "gitBlob": "dd5bc3cb59a38c283715ea96c02960dda4e35fa2"
+    },
+    {
+      "path": "vnext/test/support/fake-archive.ts",
+      "bytes": 7428,
+      "sha256": "c49797dfd9b3697b8be7a47bf74aa25f5e11a19ce51fa3aaf5fc51c15fa5b915",
+      "gitBlob": "a5dbffdfcb70d98ff5abd7c42db8bfa0c483536b"
+    },
+    {
+      "path": "vnext/test/support/fake-provider.ts",
+      "bytes": 4536,
+      "sha256": "46b7e695eb148c990b4087d9a48e70f3a3cf40152f70204042de8462473bd686",
+      "gitBlob": "22b138b3963d7f999aac6aa4a34c512a9add849f"
+    },
+    {
+      "path": "vnext/test/support/helpers.ts",
+      "bytes": 6826,
+      "sha256": "1d9cad2b7e26dd867b08b97eae0bd64bc4b903646836cd2b8a77b3536f961e82",
+      "gitBlob": "8850b1a758c8b308cdb7daae90c8fc671675bc06"
+    },
+    {
+      "path": "vnext/test/support/l0b.ts",
+      "bytes": 2548,
+      "sha256": "f1a8418587323f20883e33a463a6716c1db22500a219067e538d6b3a5389ff82",
+      "gitBlob": "9e81058272cb8a9fdd6f63a4065a5f7d67df40f6"
+    },
+    {
+      "path": "vnext/test/support/l1-calendar.ts",
+      "bytes": 1421,
+      "sha256": "31808b81fc48399d46ae3fb45751b0051f9400074193e55e0f0c1cfda6669276",
+      "gitBlob": "5dccf7084e23eb2f1240582edeb7bcef39042f3d"
+    },
+    {
+      "path": "vnext/test/support/postgres-fixture.ts",
+      "bytes": 10502,
+      "sha256": "ea8653394ab1bbb7c4e8f359eb2d876ea21fdcb92fb88e6710c19c22851b2573",
+      "gitBlob": "bf4eb8ec424e6537b298a597672173f0235c4e46"
+    },
+    {
+      "path": "vnext/test/support/process-driver.ts",
+      "bytes": 1884,
+      "sha256": "6d3c5e01bcdf1d6ffb8cf31e577562b682bfb99e6c10f54b1f16a778375fdb56",
+      "gitBlob": "9796b55a5d77b5ab5253a1d48a3fbddd07b26d68"
+    },
+    {
+      "path": "vnext/test/support/rc1-fixture.ts",
+      "bytes": 2927,
+      "sha256": "fde1259087af919cf160324a47824d9b04bc315458ff26df5f0d6d45e1aa5fb6",
+      "gitBlob": "6651ded5ccb8eba820b4badc5867e1a12618c62b"
+    },
+    {
+      "path": "vnext/test/support/scheduler.ts",
+      "bytes": 383,
+      "sha256": "f0b12cfe62829dc36556e58a2f1d11f9dd899ce1c3e828bf2dad947264e75cc5",
+      "gitBlob": "77ee685863602ff4f4a2a64ececdfebada32795a"
+    },
+    {
+      "path": "vnext/test/support/worker-process.ts",
+      "bytes": 3022,
+      "sha256": "90bebe728b2c8f6a3bf4fc9cc7f84e0c930417213b681783fca0abc5b806a274",
+      "gitBlob": "79108ddf06142c1b84f1b135a0506d63352d5a9d"
+    },
+    {
+      "path": "vnext/tsconfig.json",
+      "bytes": 460,
+      "sha256": "615d1a161e93d572c48d092c4884b8b9ddff309a63634d04dd6ec9120cc82c37",
+      "gitBlob": "50c109184f31d39b7351f2a88882bdf811af9ed9"
+    }
+  ]
+}

@@ -4,7 +4,7 @@ import {searchAvailability,recheckSlot,type AvailabilityConfig,type Slot,type Sy
 import {object,type ObjectValue} from '../domain/protocol.js';
 import {serviceSnapshot,type Catalog} from './service-catalog.js';
 import {shortDate} from '../domain/short-date.js';
-export interface OracleView {text:string;choices:{id:string;title:string}[];outcome:'OFFER'|'DATES'|'NAME_REQUIRED'|'BOOK_REQUEST'|'HUMAN_HANDOFF'|'MENU'|'SERVICES';slot?:Slot;viewRevision:number;expiresAt:string;presentation:'TEXT'|'REPLY_BUTTONS'|'LIST';precedingTexts?:string[]}
+export interface OracleView {text:string;choices:{id:string;title:string}[];outcome:'OFFER'|'DATES'|'NAME_REQUIRED'|'BOOK_REQUEST'|'HUMAN_HANDOFF'|'MENU'|'SERVICES'|'MANAGE'|'APPOINTMENTS'|'MANAGEMENT_HELD';slot?:Slot;viewRevision:number;expiresAt:string;presentation:'TEXT'|'REPLY_BUTTONS'|'LIST';precedingTexts?:string[]}
 export const DATE_PROMPT='¿Para qué día te gustaría tu cita? Puedes escribir, por ejemplo: 13 oct, 13/10 o próximo lunes.';
 export class AvailabilityOracle {
  private slots:Slot[]=[];private revision=0;private allowed=new Map<string,{kind:string;value:string}>();private human=false;private selected:Slot|undefined;
@@ -41,7 +41,7 @@ export class AvailabilityOracle {
   return this.view('Elige un servicio para tu cita:\n\n'+details,'SERVICES',choices);
  }
  async open(resetService=false):Promise<OracleView>{if(this.human)return this.ordinary();if(this.catalog){if(resetService){this.serviceId=undefined;this.servicePage=0;}const active=this.catalog.services.filter(s=>s.active);if(active.length===1)this.serviceId=active[0]!.id;if(!this.serviceId||!active.some(s=>s.id===this.serviceId))return this.services();this.config={...this.config,service:active.find(s=>s.id===this.serviceId)!};}this.slots=await searchAvailability(this.config,this.reader,this.now());if(this.catalog){const svc=this.catalog.services.find(s=>s.id===this.serviceId)!;this.slots=this.slots.map(slot=>({...slot,serviceSnapshot:serviceSnapshot(svc)}));}this.expiresAt=Date.parse(this.now())+900000;this.selected=undefined;this.selectedDate=undefined;return this.timesOrSuggestions();}
- menu():OracleView{this.human=false;this.serviceId=undefined;this.servicePage=0;this.selected=undefined;return this.view('¿En qué podemos ayudarte?\n\nEscribe "cita" o "agendar" para agendar una cita nueva, "horarios" para ver opciones y "menu" para volver al menú principal.\n\nPara solicitar apoyo, escribe "humano" o elige "Hablar con alguien".\n\n"reagendar" y "cancelar" aún no están disponibles en esta prueba local.','MENU',[{kind:'book',value:'0',title:'Agendar una cita'},{kind:'manage',value:'0',title:'Reagendar / cancelar'},{kind:'human',value:'0',title:'Hablar con alguien'}]);}
+ menu():OracleView{this.human=false;this.serviceId=undefined;this.servicePage=0;this.selected=undefined;return this.view('¿En qué podemos ayudarte?\n\nEscribe "cita" o "agendar" para agendar una cita nueva, "horarios" para ver opciones y "menu" para volver al menú principal.\n\nPara solicitar apoyo, escribe "humano" o elige "Hablar con alguien".\n\n'+(this.catalog?'Escribe "reagendar" o "cancelar" para gestionar una cita.':'"reagendar" y "cancelar" aún no están disponibles en esta prueba local.')+'','MENU',[{kind:'book',value:'0',title:'Agendar una cita'},{kind:'manage',value:'0',title:'Reagendar / cancelar'},{kind:'human',value:'0',title:'Hablar con alguien'}]);}
  humano():OracleView{this.human=true;this.selected=undefined;return this.view('Escribe tu mensaje.\n\nEscribe "menu" para volver al menú principal.','HUMAN_HANDOFF',[]);}
  management():OracleView{const view=this.menu();view.text='Reagendar y cancelar aún no están disponibles en esta prueba local. No se modificó ninguna cita.\n\n'+view.text;return view;}
  ordinary():OracleView{return this.human?this.view('Atención humana activa.','HUMAN_HANDOFF',[]):this.view('Menú','MENU',[]);}
@@ -52,10 +52,10 @@ export class AvailabilityOracle {
   if(action.kind==='service'){if(!this.catalog?.services.some(s=>s.id===action.value&&s.active))throw Error('oracle_stale_or_foreign_action');this.serviceId=action.value;return this.open();}
   if(action.kind==='manage')return this.management();
   if(action.kind==='human')return this.humano();
-  if(action.kind==='more')return this.timesOrSuggestions(true);
-  if(action.kind==='times'){this.timePage=Number(action.value);return this.timesOrSuggestions();}
-  if(action.kind==='dates'){if(this.selectedDate)this.slots=await searchAvailability(this.config,this.reader,this.now());this.selectedDate=undefined;this.datePages=[this.slots];this.datePage=0;return this.dates();}
-  if(action.kind==='days'){const page=Number(action.value);if(!this.datePages[page])this.datePages[page]=await searchAvailability(this.config,this.reader,this.now(),{afterDate:this.day(this.datePages[page-1]!.at(-1)!)});this.datePage=page;this.slots=this.datePages[page]!;return this.dates();}
+  if(action.kind==='more'){this.slots=await searchAvailability(this.config,this.reader,this.now());return this.timesOrSuggestions(true);}
+  if(action.kind==='times'){this.slots=await searchAvailability(this.config,this.reader,this.now(),{date:this.selectedDate!});this.timePage=Number(action.value);return this.timesOrSuggestions();}
+  if(action.kind==='dates'){this.slots=await searchAvailability(this.config,this.reader,this.now());this.selectedDate=undefined;this.datePages=[this.slots];this.datePage=0;return this.dates();}
+  if(action.kind==='days'){const page=Number(action.value);this.datePages[page]=await searchAvailability(this.config,this.reader,this.now(),page?{afterDate:this.day(this.datePages[page-1]!.at(-1)!)}:{});this.datePage=page;this.slots=this.datePages[page]!;return this.dates();}
   if(action.kind==='date')return this.date(action.value);
   if(action.kind!=='slot')throw Error('oracle_action_kind');
   const slot=this.slots[Number(action.value)];if(!slot)throw Error('oracle_slot_missing');this.selected={...await recheckSlot(this.config,this.reader,this.now(),slot),...(this.catalog?{serviceSnapshot:serviceSnapshot(this.catalog.services.find(s=>s.id===this.serviceId)!)}:{})};
