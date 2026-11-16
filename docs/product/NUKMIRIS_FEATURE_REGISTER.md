@@ -1,6 +1,6 @@
 # NukMiris — Feature & Improvement Register
 
-**Version:** 1.6  
+**Version:** 1.7  
 **Established:** 2026-10-27  
 **Product baseline:** v0.8.1; local vNext L2 owner walkthrough on Windows (tested source `3d8f82bb047e6ed937750b7ce6e81ecd23ab9f42`)  
 **Purpose:** Living backlog for functional features, UX improvements, compliance, reliability, and maintenance. This is a planning source, **not** proof that implementation has been independently tested.
@@ -219,10 +219,24 @@ The following entries preserve the original interview observations and suggested
 - Existing main-table acceptance descriptions for NM-014, NM-022, NM-028, NM-034, NM-038, NM-046–NM-054 must be read together with the owner decisions above; this dated section overrides older conflicting option language.
 - Resolve open product questions explicitly before handing those feature slices to Codex; technical/legal/Meta feasibility must be verified rather than assumed.
 
+## Owner follow-up decisions — 2026-11-16 (clarification of OD-02, OD-09, OD-13 and OD-16)
+
+The following clarifications are **OWNER-APPROVED PRODUCT INTENT**, not implementation authorization. They supersede the open product questions identified after the v1.6 decision review. Previous decisions remain in the historical record.
+
+| Reference | Clarification | Acceptance guidance / outstanding technical question |
+|---|---|---|
+| NM-056 / OD-16 — returning employee continuity | When a customer requests the same service again, **prioritize offering the previously used employee's next available appointment** if that employee is unavailable at the initially sought time. Do not immediately switch to another employee merely to offer an earlier slot. If no prior same-service employee exists, randomly choose among qualified, available employees as already approved. | Confirm employee qualification and live availability. Preserve customer choice to accept or decline suggested times; alternative-employee fallback after rejected dates is a future interaction-detail question, not an automatic override of continuity. |
+| NM-034 / OD-09 — human WhatsApp replies | Owner acknowledged the feasibility review requirement for replying via the business's WhatsApp app. **No change to desired experience**: owner/staff reply in the business WhatsApp app, subject to successful verification of Meta Cloud API / Business App coexistence and message routing. | Still an **OPEN TECHNICAL FEASIBILITY GATE**; acknowledgment is not proof of compatibility or permission to implement an unverified integration. |
+| NM-006, NM-007, NM-031 / OD-02 — eligibility of manage actions | Customers may cancel or reschedule a booked appointment **only while its scheduled start date/time is strictly in the future**. At or after the start timestamp, that appointment is **not eligible** for customer self-service cancellation or rescheduling, even if still in progress. There is no additional advance-notice cutoff. | Use business timezone for display and an unambiguous instant comparison at action execution, not merely when offering options. If a formerly eligible offer becomes stale after start time, refuse the change without mutating the booking and explain that it is no longer available for self-service. Retain history of past appointments. |
+| NM-047 / OD-13 — unnamed offline blocks | When an owner creates an offline/time-block entry without customer details, it should block booking availability for **all employees**, not just one selected employee. | Model as a business-wide unavailability/closure interval rather than inventing customer or WhatsApp identities. Existing appointments should not be cancelled automatically; whether to warn about conflicts with existing bookings is a UI design detail. |
+
+**Scope:** These requirements are recorded for future design and acceptance criteria. No application code, deployment, providers, schedules or current implementation authorization changed.
+
 ## Change log
 
 | Date | Change |
 |---|---|
+| 2026-11-16 | Follow-up owner clarification: prefer previous employee's next slot; past/started appointments ineligible for customer cancel/reschedule; unnamed offline block applies to all employees; WhatsApp coexistence remains a technical gate. Version 1.7; no implementation authorized. |
 | 2026-11-16 | Recorded 20 owner decisions OD-01–OD-20, clarified/superseded conflicting scope, and added NM-055–NM-057 for service catalog, employee continuity and historical calendar contact import. No implementation authorized. |
 | 2026-11-15 | Consolidated GitHub Issue #17 (hair-salon interview of 2026-11-07) as NM-046–NM-054, retaining source feedback, proposed priorities, discovery/deferred status and implementation boundaries; waiting list cross-referenced as previously discussed. |
 | 2026-10-27 | Created NM-001 through NM-028 from original 28-item notes; retained 12 author-reported DONE items; remaining 16 OPEN; proposed priorities and acceptance criteria. |
