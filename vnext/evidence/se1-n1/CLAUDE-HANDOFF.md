@@ -1,0 +1,13 @@
+# Claude re-verification — N1 only
+
+Please review implementation **`95b122771b0958c0bc9bda07db1dab14f35aeb67`** against `daf84507fc72c5015d329e0e6e2eb54ac7a27d21` in Draft PR #25. This addresses only [N1](https://github.com/vanasperena-ux/nukmiris/pull/25#issuecomment-6906440798), under the owner's explicit creation-only rule. Original SE-1 tested source `540fc4a`, review/owner acceptance and raw evidence remain unchanged. No new independent acceptance is claimed.
+
+Check these bounded points:
+
+1. Migration 010 is unchanged. New 011 replaces only `core.catalog_save` and adds its version comment. Service existence is read under the original catalog-head lock before upsert; only genuinely new services can enter the unchanged single-record/default-resource qualification insert. Missing qualifications, inactive status and existing zero-qualified services never imply creation. The seven requested edit types and exact replay do not restore owner removals.
+2. Confirm function validation, request receipts, RLS/owner/ACL, revision and locking semantics match 010. No table DML executes during migration; old inserted qualifications are deliberately retained. No service/employee allocation, snapshots, appointments or uncertainty logic changed.
+3. Fresh fixtures append 011; existing SE-1 profiles use the existing command-lock/stopped-worker/coherent-backup upgrade path and transactional function replacement. Version detection makes repeat upgrade a no-op. Boot refuses missing011 rather than silently running old behavior. Legacy 008/009 selection remains, and the command does not install010 or reinitialize an old profile. Inert restore still cannot activate. Review rollback/repeat/preservation assertions in `local/services-n1.test.mjs`.
+
+Evidence: [README](README.md), logs, commands, source hashes and manifest. Final source: **23 focused / 2 service-runtime / 690 full / 46 runtime PASS + 2 Windows-only SKIP / actual browser PASS**; typecheck/scope PASS. Suites overlap; full includes fault/concurrent files. Node 24.22.3 / PostgreSQL 17.11 on Linux. No native Windows N1 run claimed. All 43 core tables and function identity/owner/ACL are preserved in the simulated existing-profile upgrade. [Compatibility and optional owner check](../../../docs/greenfield/32-SE1-N1-SOLO-QUALIFICATION.md).
+
+Please report N1-only verdict, concrete counterexamples and any remaining N1 condition. N2–N5 stay open; do not expand into architecture, PC-1, infrastructure or unrelated features. Do not merge, access owner profiles/credentials, use real Meta/Google or provision cloud. This review does not authorize deployment or altering the protected original profile.

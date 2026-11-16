@@ -1,0 +1,94 @@
+[
+  {
+    "source": "95b122771b0958c0bc9bda07db1dab14f35aeb67",
+    "suite": "focused",
+    "argv": [
+      "npm",
+      "run",
+      "test:services"
+    ],
+    "startedAt": "2026-11-16T04:17:25.646911+00:00",
+    "finishedAt": "2026-11-16T04:17:50.439217+00:00",
+    "durationSeconds": 24.79231714100024,
+    "exitCode": 0
+  },
+  {
+    "source": "95b122771b0958c0bc9bda07db1dab14f35aeb67",
+    "suite": "upgrade",
+    "argv": [
+      "npm",
+      "run",
+      "test:services:runtime"
+    ],
+    "startedAt": "2026-11-16T04:17:50.442824+00:00",
+    "finishedAt": "2026-11-16T04:18:19.211733+00:00",
+    "durationSeconds": 28.768920317001175,
+    "exitCode": 0
+  },
+  {
+    "source": "95b122771b0958c0bc9bda07db1dab14f35aeb67",
+    "suite": "full",
+    "argv": [
+      "npm",
+      "test"
+    ],
+    "startedAt": "2026-11-16T04:18:19.212273+00:00",
+    "finishedAt": "2026-11-16T04:23:03.291011+00:00",
+    "durationSeconds": 284.0787540819947,
+    "exitCode": 0
+  },
+  {
+    "source": "95b122771b0958c0bc9bda07db1dab14f35aeb67",
+    "suite": "runtime",
+    "argv": [
+      "npm",
+      "run",
+      "test:runtime"
+    ],
+    "startedAt": "2026-11-16T04:23:03.291723+00:00",
+    "finishedAt": "2026-11-16T04:25:31.080742+00:00",
+    "durationSeconds": 147.78903410000203,
+    "exitCode": 0
+  },
+  {
+    "source": "95b122771b0958c0bc9bda07db1dab14f35aeb67",
+    "suite": "browser",
+    "argv": [
+      "npm",
+      "run",
+      "test:services:browser",
+      "--",
+      "chromium"
+    ],
+    "startedAt": "2026-11-16T04:25:31.081325+00:00",
+    "finishedAt": "2026-11-16T04:25:48.664425+00:00",
+    "durationSeconds": 17.583275573997525,
+    "exitCode": 0
+  },
+  {
+    "source": "95b122771b0958c0bc9bda07db1dab14f35aeb67",
+    "suite": "typecheck",
+    "argv": [
+      "npm",
+      "run",
+      "typecheck"
+    ],
+    "startedAt": "2026-11-16T04:25:48.669488+00:00",
+    "finishedAt": "2026-11-16T04:25:52.781417+00:00",
+    "durationSeconds": 4.111940211994806,
+    "exitCode": 0
+  },
+  {
+    "source": "95b122771b0958c0bc9bda07db1dab14f35aeb67",
+    "suite": "scope",
+    "argv": [
+      "npm",
+      "run",
+      "check:scope"
+    ],
+    "startedAt": "2026-11-16T04:25:52.784473+00:00",
+    "finishedAt": "2026-11-16T04:25:52.948976+00:00",
+    "durationSeconds": 0.16451708400563803,
+    "exitCode": 0
+  }
+]

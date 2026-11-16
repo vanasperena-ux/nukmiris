@@ -1,0 +1,17 @@
+{
+  "source": "95b122771b0958c0bc9bda07db1dab14f35aeb67",
+  "tree": "f065fdf25e43cd6a91e0b7f4cd85553d7b6594a8",
+  "parent": "daf84507fc72c5015d329e0e6e2eb54ac7a27d21",
+  "changedFilesSha256": {
+    "vnext/local/fixture.mjs": "9f692b773262f3aa38e3200b4d7f43bc2abcc932a695ae2779062b44208d484e",
+    "vnext/local/interactive-profile.mjs": "2ed6c5f1290c6a01fbec52a40695ee72adda0814d64630e2399862503504902f",
+    "vnext/local/services-n1.test.mjs": "5141064441110d92993ab66ea4eb04917b4dbbbc034a9af063d2ef75a45008ce",
+    "vnext/local/upgrade.mjs": "6243f4de9bd8f77fb2ed9764fcb8990fe4dda675d6d8090d6b72050c75520db8",
+    "vnext/package.json": "45b6434cd75fa0651e5517a2517b988817391402c4d2e6a34b9c6bce71fffcdd",
+    "vnext/src/infrastructure/postgres/migrations/011-solo-qualification-creation-only.sql": "5257e289f87acfa467a42d983f168f89a37b2a4bc63d3baaa01f4a649edaef9c",
+    "vnext/test/se1-services.test.ts": "f2c6d87befd690305179cf6a4eecf17dcc5ee8e6ebbc7556e487d05d5cfb8cfb",
+    "vnext/test/support/postgres-fixture.ts": "6e5be26cfe8f3106f177a05c76b7656778391876f44fb03baffc39e2fc4f5d75"
+  },
+  "originalAcceptedApplication": "540fc4af57a29eba380c0f53df0bf3ad12093ad7",
+  "originalEvidence": "daf84507fc72c5015d329e0e6e2eb54ac7a27d21"
+}

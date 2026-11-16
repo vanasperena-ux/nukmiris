@@ -1,0 +1,54 @@
+{
+  "source": "95b122771b0958c0bc9bda07db1dab14f35aeb67",
+  "verifiedAtUtc": "2026-11-16T04:23:49.657148+00:00",
+  "checks": [
+    {
+      "path": "vnext/local/fixture.mjs",
+      "sha256": "9f692b773262f3aa38e3200b4d7f43bc2abcc932a695ae2779062b44208d484e",
+      "gitBlob": "44deca17fcb13bd2c4320f6b8b2e6560c4da811e"
+    },
+    {
+      "path": "vnext/local/interactive-profile.mjs",
+      "sha256": "2ed6c5f1290c6a01fbec52a40695ee72adda0814d64630e2399862503504902f",
+      "gitBlob": "f9eca96a756faff827588e231f456697fdc02d5b"
+    },
+    {
+      "path": "vnext/local/services-n1.test.mjs",
+      "sha256": "5141064441110d92993ab66ea4eb04917b4dbbbc034a9af063d2ef75a45008ce",
+      "gitBlob": "9b9c96657fab20555efa9faa89dfe3eee1fdbfa8"
+    },
+    {
+      "path": "vnext/local/upgrade.mjs",
+      "sha256": "6243f4de9bd8f77fb2ed9764fcb8990fe4dda675d6d8090d6b72050c75520db8",
+      "gitBlob": "00813b0a6d1fe4609b7d68840e8e60b5f6cb9031"
+    },
+    {
+      "path": "vnext/package.json",
+      "sha256": "45b6434cd75fa0651e5517a2517b988817391402c4d2e6a34b9c6bce71fffcdd",
+      "gitBlob": "539e12d3b1179bb682215a9404f8910e380dbc9a"
+    },
+    {
+      "path": "vnext/src/infrastructure/postgres/migrations/011-solo-qualification-creation-only.sql",
+      "sha256": "5257e289f87acfa467a42d983f168f89a37b2a4bc63d3baaa01f4a649edaef9c",
+      "gitBlob": "12487d6bf7a766b469578f72a219b7f21c5a536e"
+    },
+    {
+      "path": "vnext/test/se1-services.test.ts",
+      "sha256": "f2c6d87befd690305179cf6a4eecf17dcc5ee8e6ebbc7556e487d05d5cfb8cfb",
+      "gitBlob": "fc13328737d5e2f3b3ecc165bb98cd95a58af02d"
+    },
+    {
+      "path": "vnext/test/support/postgres-fixture.ts",
+      "sha256": "6e5be26cfe8f3106f177a05c76b7656778391876f44fb03baffc39e2fc4f5d75",
+      "gitBlob": "96cb3e0f42b36dbbf7ffc9569f5ea76d0c89689e"
+    }
+  ],
+  "unchangedPaths": [
+    "vnext/evidence/se1",
+    "vnext/src/infrastructure/postgres/migrations/010-services-employees.sql",
+    "vnext/src/application",
+    "vnext/src/domain",
+    "vnext/local/web"
+  ],
+  "retrieval": "separate bare repository, anonymous public Git fetch"
+}

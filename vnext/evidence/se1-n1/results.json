@@ -1,0 +1,43 @@
+{
+  "source": "95b122771b0958c0bc9bda07db1dab14f35aeb67",
+  "results": {
+    "focused": {
+      "tests": 23,
+      "pass": 23,
+      "fail": 0,
+      "skipped": 0
+    },
+    "upgrade": {
+      "tests": 2,
+      "pass": 2,
+      "fail": 0,
+      "skipped": 0
+    },
+    "full": {
+      "tests": 690,
+      "pass": 690,
+      "fail": 0,
+      "skipped": 0
+    },
+    "runtime": {
+      "tests": 48,
+      "pass": 46,
+      "fail": 0,
+      "skipped": 2
+    },
+    "browser": {
+      "tests": 1,
+      "pass": 1,
+      "fail": 0,
+      "skipped": 0
+    }
+  },
+  "typecheck": "PASS",
+  "scope": "PASS",
+  "nativeWindows": "NOT_EXECUTED",
+  "independentN1Review": "PENDING",
+  "originalAcceptedSource": "540fc4af57a29eba380c0f53df0bf3ad12093ad7",
+  "allCoreTablesPreserved": 43,
+  "sourceIntegrityAfterTests": "MATCHED",
+  "observedAtUtc": "2026-11-16T04:26:20.745271+00:00"
+}

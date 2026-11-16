@@ -1,0 +1,23 @@
+
+> nukmiris-wp1-synthetic-core@0.0.0 test:services:runtime
+> npm run build && node --test --test-concurrency=1 local/services.test.mjs local/services-n1.test.mjs
+
+
+> nukmiris-wp1-synthetic-core@0.0.0 build
+> tsc -p tsconfig.json
+
+Pulling/verifying pinned PostgreSQL image (first download budget: 10 minutes).
+{"N1Upgrade":"PASS","postgres":"17.11 (Debian 17.11-1.pgdg12+2)","platform":"linux","nativeWindows":"NOT_EXECUTED","applied":["011-solo-qualification-creation-only.sql"],"allCoreTablesPreserved":43,"functionIdentityOwnerAclPreserved":true,"ddlRollback":"PASS","repeatUpgrade":"NO_OP","reapplyMigration":"NO_DATA_CHANGE","activeBooking":"PRESERVED","unknownBooking":"PROTECTED","automaticActivation":false}
+✔ N1 original010 profile upgrades through CLI once; rollback, all rows, ACLs, ACTIVE and UNKNOWN identities preserved (9018.125036ms)
+Pulling/verifying pinned PostgreSQL image (first download budget: 10 minutes).
+Pulling/verifying pinned PostgreSQL image (first download budget: 10 minutes).
+{"servicesOwner":"PASS","nativeWindows":"NOT_EXECUTED","postgres":"17.11 (Debian 17.11-1.pgdg12+2)","timezone":"UTC","bookings":1,"historySnapshot":"PRESERVED","restart":"PASS","coherentRestore":"INERT"}
+✔ SE1 TCP owner authorization, service/employee forms API, booking, crash/restart and coherent inert restore (15309.205622ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 2
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 24900.582792
