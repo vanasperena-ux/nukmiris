@@ -1,5 +1,43 @@
 # NukMiris project continuity
 
+> **Current vNext roadmap — updated 2026-11-16 (America/Mexico_City).** The sections below the current roadmap retain the historical v0.x continuity and owner-acceptance record; do not mistake old checkpoint authorizations for approval to deploy vNext. This file tracks milestones and authorization, not a substitute for the detailed [feature register](greenfield/NUKMIRIS_FEATURE_REGISTER.md), [RC-1 scope](https://github.com/vanasperena-ux/nukmiris/issues/26), or test evidence.
+
+## Current vNext roadmap (local-first)
+
+| Sequence | Milestone | Status as of 2026-11-16 | Exit / boundary |
+|---|---|---|---|
+| 0 | Legacy v0.8.1 reminder/reliability baseline | **Owner-accepted; PR #1 merged** | Preserve the legacy behavior and evidence. This is *not* a claim that vNext has full legacy parity. |
+| 1 | Greenfield vNext safety/runtime and local test foundation | **Accepted groundwork** | Accepted executable baseline `b4d0be0cb98c7f2b69be318e18b93f4de102c511`; cloud architecture remains documented/planned, not provisioned for live use. |
+| 2 | **SE-1 — Services, employees and Spanish owner interface** | **Locally owner-accepted** (2026-11-15); [Draft PR #25](https://github.com/vanasperena-ux/nukmiris/pull/25) **unmerged** | One service per appointment (Decision 147), standard duration/buffer (139), qualified employee allocation, owner appointment display, isolated synthetic booking. Tested SE-1 source `540fc4af57a29eba380c0f53df0bf3ad12093ad7`. |
+| 2a | **SE-1 N1 solo auto-qualification correction** | **Closed for local use** (2026-11-16); remains in Draft PR #25 | Owner-approved rule: auto-qualify sole default employee only on *new* service creation, never on service edits. Corrected tested source `95b122771b0958c0bc9bda07db1dab14f35aeb67`; migration 011, Codex regression pass, owner-reported Windows 2/2, Claude GO. Existing protected profiles were not upgraded. N2–N5 remain nonblocking findings. |
+| 3 | **RC-1 — Rescheduling and cancellation in vNext** | **Owner-authorized for implementation; not yet accepted/verified** | [Issue #26](https://github.com/vanasperena-ux/nukmiris/issues/26). Build on accepted SE-1+N1, in a separate Draft PR, synthetic/local only; focused Claude review and fresh Windows acceptance needed before marking complete. |
+| 4 | Restore remaining customer functionality / reminders parity | **Future implementation; not yet RC-1 scope** | Bring legacy reminder/attendance behavior and missing vNext customer flows forward with their own bounded review, tests and approval. |
+| 5 | Owner usability, business configuration, onboarding and commercial readiness | **Planned / requirements backlog** | Refine business-owner settings, customer management, self-service setup, Meta/Google connection and commercial account lifecycle; stage work only after discrete owner authorizations. |
+| 6 | Cloud deployment, real-provider integration and launch preparation | **Architecture planning only; no deployment authorization** | Cloud synthetic proofs, production authorization/security, provider testing, billing, marketing/launch readiness require separate explicit decisions. Do not provision, incur costs or connect real customers based on this roadmap. |
+
+### Current build contract — RC-1
+
+The owner approved the WhatsApp/customer, owner-web-app and employee/calendar UX and authorized building RC-1 on **2026-11-16**. [Full contract and authorization](https://github.com/vanasperena-ux/nukmiris/issues/26).
+
+- **Rescheduling:** customer explicitly selects the appointment even if only one exists; selecting the replacement slot moves it immediately without a second confirmation. **Keep the original employee** and offer only that employee's eligible times; do not silently reassign or create a second appointment. Customer success copy shows old/new times.
+- **Cancellation:** customer explicitly selects the appointment even if only one exists; that selection cancels immediately without a second confirmation. Keep a durable cancellation/history record and do not falsely acknowledge uncertain completion.
+- **Owner web app:** show prior/new appointment details, change origin and history. Calendar toggle **`Mostrar citas canceladas` OFF by default**; when enabled, cancelled entries appear at their **original time**, greyed out, labelled `Cancelada` and never blocking future availability.
+- **Employee view:** update synthetic employee calendar/availability; no new employee accounts or separate notification in RC-1.
+- **Future live Google Calendar requirement:** delete the cancelled event from the corresponding Google Calendar after safe, confirmed cancellation; **not part of live RC-1 execution**. Synthetic delete/reconciliation semantics must be tested now.
+- **Navigation and safety:** retain the approved three-option `menu` and direct `cita`/`agendar`/`reagendar`/`cancelar` commands, customer-specific upcoming appointment summaries, Spanish business-timezone date labels, WhatsApp limits, strict tenant/customer/appointment identity, stale-choice protection, idempotency, unknown-outcome custody, booking history, Decision 139 and Decision 147.
+
+**RC-1 exit gate:** a separate Draft PR with tested commit and evidence, accepted WhatsApp/web UI copy, Claude's *focused* review, and owner Windows local synthetic walkthrough. Nothing here authorizes a PR merge, profile reset/upgrade, live Meta/Google requests, cloud spend, registry actions or production deployment.
+
+### Product backlog and proposed sequence after RC-1
+
+After RC-1 local acceptance, evaluate the next functional slices with the owner, prioritizing **reminders parity**, **business/owner usability**, **self-service onboarding**, and then **cloud/live-provider launch preparation**. These are planning priorities, **not implementation approvals**.
+
+Separately documented, not yet in SE-1/RC-1: NM-046 preloaded editable service templates by business type; NM-047 business-wide `Mostrar precios en WhatsApp` (default OFF); NM-048 preferred-date-first booking (default OFF; two chronological offered slots plus `Elegir otra fecha`). See the [documentation branch feature register](https://github.com/vanasperena-ux/nukmiris/blob/docs/starter-services-25-business-types/docs/greenfield/NUKMIRIS_FEATURE_REGISTER.md). Do not assume this documentation-only branch is merged or implemented.
+
+---
+
+## Historical v0.x continuity and accepted checkpoints
+
 Current owner-accepted baseline: **v0.8.1 reliability maintenance**. The owner approved it, merged PR #1 and reported all PC tests passed after accepting A/B/C and the ordinary-flow checklist. [Release/update instructions](releases/v0.8.1.md) and [exact acceptance evidence](../backend/BASELINE.md) govern future work. Preserve the accepted behavior; further Category B deletion needs separate authorization. Keep using `npm.cmd` in Windows PowerShell.
 
 Previous owner-verified baseline: v0.7.3 consistent appointment choices (`9c9e1a9`), including v0.7.2 Calendar details/empty results and v0.7.1 slot labels. It retains the verified v0.7.0 simple menu instructions (`e1c5370`), v0.6.0 natural dates (`3238e34`), v0.5.0 intent recognition (`b6a9169`), v0.4.1 availability (`8649109`) and v0.4.0 reliability (`9d6358b`) behavior.
@@ -20,7 +58,7 @@ On October 26, 2026, the owner stopped the audit before its report or cleanup wa
 
 The owner runs commands in PowerShell, where invoking `npm` is not allowed, and uses `npm.cmd` successfully. Use **`npm.cmd` for all Windows PC release, setup, testing, and troubleshooting instructions**, including `npm.cmd ci --ignore-scripts`, `npm.cmd test`, `npm.cmd run SCRIPT_NAME`, and `npm.cmd start`. Cloud/Linux commands can continue using `npm`.
 
-## Current priorities
+## Historical v0.3.x priorities (accepted)
 
 The owner verified v0.3.0 booking, rescheduling, and cancellation on the Windows PC, and accepted the earlier short appointment menu. Preserve these calendar integrations, business/customer isolation, schedule settings, and safeguards.
 
