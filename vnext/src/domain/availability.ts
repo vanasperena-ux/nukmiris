@@ -4,12 +4,12 @@ export interface Window {start:string;end:string}
 export type Week=Readonly<Record<number,readonly Window[]>>;
 export interface Service {id:string;durationMinutes:number;bufferMinutes:number}
 export interface Employee {id:string;serviceIds:readonly string[];hours:Week;absences:readonly Window[]}
-export interface AvailabilityConfig {businessId:string;calendarId:string;timeZone:string;hours:Week;breaks:Week;startIntervalMinutes:number;service:Service;employees:readonly Employee[]}
+export interface AvailabilityConfig {businessId:string;calendarId:string;timeZone:string;hours:Week;breaks:Week;startIntervalMinutes:number;service:Service;employees:readonly Employee[];catalogRevision?:number}
 export interface CalendarEvent {businessId:string;calendarId:string;id:string;resourceId?:string;start:string;end:string;bufferMinutes?:number;state?:'ACTIVE'|'UNKNOWN'|'CANCELLED'}
 export interface CalendarRange {businessId:string;calendarId:string;start:string;end:string}
 export interface CalendarPage extends CalendarRange {snapshotId:string;events:readonly CalendarEvent[];nextCursor:string|null;complete:boolean}
 export interface SyntheticCalendarReader {readonly mode:'L1_SYNTHETIC_ONLY';read(range:CalendarRange,cursor:string|null):Promise<CalendarPage>}
-export interface Slot {businessId:string;calendarId:string;resourceId:string;serviceId:string;startAt:string;endAt:string;bufferMinutes:number;snapshotId:string}
+export interface Slot {businessId:string;calendarId:string;resourceId:string;serviceId:string;startAt:string;endAt:string;bufferMinutes:number;snapshotId:string;catalogRevision?:number;serviceSnapshot?:import('./protocol.js').ObjectValue}
 export class AvailabilityHeldError extends Error {readonly code='AVAILABILITY_HELD';constructor(readonly reason:string,cause?:unknown){super('availability_held:'+reason,{cause});}}
 const held=(s:string):never=>{throw new AvailabilityHeldError(s);};
 export const minute=(s:string):number=>{if(!/^\d{2}:\d{2}$/.test(s))return held('INVALID_HOURS');const [h,m]=s.split(':').map(Number);if(h!>23||m!>59)return held('INVALID_HOURS');return h!*60+m!;};
@@ -35,7 +35,7 @@ async function readComplete(reader:SyntheticCalendarReader,r:CalendarRange,deadl
  }
  return held('PAGE_LIMIT');
 }
-function candidates(c:AvailabilityConfig,events:readonly CalendarEvent[],now:DateTime,from:DateTime,to:DateTime,snapshotId:string):Slot[]{
+function candidates(c:AvailabilityConfig,events:readonly CalendarEvent[],now:DateTime,from:DateTime,to:DateTime,snapshotId:string,allResources=false):Slot[]{
  const out:Slot[]=[];for(let day=from.startOf('day');day<to;day=day.plus({days:1}))for(const w of c.hours[day.weekday]??[]){const open=minute(w.start),close=local(day,minute(w.end));if(!close)continue;
   for(let m=open;m<minute(w.end);m+=c.startIntervalMinutes){const start=local(day,m);if(!start||start<=now||start<from||start>=to)continue;const end=start.plus({minutes:c.service.durationMinutes}),occupied=end.plus({minutes:c.service.bufferMinutes});if(occupied>close||occupied>to)continue;
    const first=start.toMillis(),last=occupied.toMillis();if((c.breaks[day.weekday]??[]).some(x=>{const a=local(day,minute(x.start)),b=local(day,minute(x.end));return !a||!b||overlap(first,last,a.toMillis(),b.toMillis());}))continue;
@@ -43,21 +43,22 @@ function candidates(c:AvailabilityConfig,events:readonly CalendarEvent[],now:Dat
     if(!(employee.hours[day.weekday]??[]).some(x=>{const a=local(day,minute(x.start)),b=local(day,minute(x.end));return a&&b&&start>=a&&occupied<=b;}))continue;
     if(employee.absences.some(x=>overlap(first,last,instant(x.start).toMillis(),instant(x.end).toMillis())))continue;
     if(events.some(e=>e.state!=='CANCELLED'&&(!e.resourceId||e.resourceId===employee.id)&&overlap(first,last,instant(e.start).toMillis(),instant(e.end).plus({minutes:e.bufferMinutes??c.service.bufferMinutes}).toMillis())))continue;
-    out.push({businessId:c.businessId,calendarId:c.calendarId,resourceId:employee.id,serviceId:c.service.id,startAt:start.toISO()!,endAt:end.toISO()!,bufferMinutes:c.service.bufferMinutes,snapshotId});
+    out.push({businessId:c.businessId,calendarId:c.calendarId,resourceId:employee.id,serviceId:c.service.id,startAt:start.toISO()!,endAt:end.toISO()!,bufferMinutes:c.service.bufferMinutes,snapshotId,...(c.catalogRevision!==undefined?{catalogRevision:c.catalogRevision}:{})});
    }
   }
  }
- // P0 shows one slot per time, picking the deterministic first eligible resource.
- return out.sort((a,b)=>Date.parse(a.startAt)-Date.parse(b.startAt)||a.resourceId.localeCompare(b.resourceId,'en')).filter((s,i,a)=>i===0||Date.parse(s.startAt)!==Date.parse(a[i-1]!.startAt));
+ // Offers show one slot per time; SE-1 separately reads all eligible resources
+ // when it durably allocates the chosen appointment's employee.
+ return out.sort((a,b)=>Date.parse(a.startAt)-Date.parse(b.startAt)||a.resourceId.localeCompare(b.resourceId,'en')).filter((s,i,a)=>allResources||i===0||Date.parse(s.startAt)!==Date.parse(a[i-1]!.startAt));
 }
-export async function searchAvailability(c:AvailabilityConfig,reader:SyntheticCalendarReader,nowIso:string,query:{date?:string;afterDate?:string}={},budgetMs=1000):Promise<Slot[]>{
+export async function searchAvailability(c:AvailabilityConfig,reader:SyntheticCalendarReader,nowIso:string,query:{date?:string;afterDate?:string;allResources?:boolean}={},budgetMs=1000):Promise<Slot[]>{
  validateAvailability(c);if(!Number.isInteger(budgetMs)||budgetMs<1||budgetMs>10000)held('INVALID_BUDGET');const deadline=performance.now()+budgetMs,now=instant(nowIso).setZone(c.timeZone),horizon=now.plus({days:365});
  const date=(s:string)=>{const d=DateTime.fromISO(s,{zone:c.timeZone});if(!/^\d{4}-\d{2}-\d{2}$/.test(s)||!d.isValid||d.toISODate()!==s||d<now.startOf('day')||d>=horizon)held('DATE_OUT_OF_RANGE');return d;};
  if(query.date&&query.afterDate)held('INVALID_QUERY');let start=query.date?DateTime.max(date(query.date),now):query.afterDate?DateTime.max(date(query.afterDate).plus({days:1}),now):now;
  let end=query.date?DateTime.min(start.startOf('day').plus({days:1}),horizon):DateTime.min(start.startOf('day').plus({days:30}),horizon);const history:CalendarEvent[]=[],slots:Slot[]=[];let snapshot:string|undefined;
  while(start<horizon){
   const r:CalendarRange={businessId:c.businessId,calendarId:c.calendarId,start:start.minus({minutes:1440}).toISO()!,end:end.toISO()!},read=await readComplete(reader,r,deadline);if(snapshot&&snapshot!==read.snapshotId)held('SNAPSHOT_CHANGED');if(read.events.some(e=>e.resourceId&&!c.employees.some(x=>x.id===e.resourceId)))held('EVENT_RESOURCE');snapshot=read.snapshotId;history.push(...read.events);
-  slots.push(...candidates(c,history,now,start,end,snapshot));if(performance.now()>deadline)held('READ_DEADLINE');const dates=[...new Set(slots.map(s=>instant(s.startAt).setZone(c.timeZone).toISODate()))];
+  slots.push(...candidates(c,history,now,start,end,snapshot,query.allResources??false));if(performance.now()>deadline)held('READ_DEADLINE');const dates=[...new Set(slots.map(s=>instant(s.startAt).setZone(c.timeZone).toISODate()))];
   if(query.date||dates.length>=3){const first=new Set(dates.slice(0,3));return slots.filter(s=>first.has(instant(s.startAt).setZone(c.timeZone).toISODate()));}
   start=end;end=DateTime.min(end.plus({days:15}),horizon);
  }
@@ -66,4 +67,12 @@ export async function searchAvailability(c:AvailabilityConfig,reader:SyntheticCa
 export async function recheckSlot(c:AvailabilityConfig,reader:SyntheticCalendarReader,now:string,slot:Slot):Promise<Slot>{
  if(slot.businessId!==c.businessId||slot.calendarId!==c.calendarId||slot.serviceId!==c.service.id)held('SLOT_SCOPE');const date=instant(slot.startAt).setZone(c.timeZone).toISODate()!;
  const fresh=await searchAvailability(c,reader,now,{date});const same=fresh.find(x=>Date.parse(x.startAt)===Date.parse(slot.startAt)&&Date.parse(x.endAt)===Date.parse(slot.endAt)&&x.bufferMinutes===slot.bufferMinutes);if(!same)return held('SLOT_UNAVAILABLE');return same;
+}
+
+/** All qualified resources for this exact selected service/time; no identity allocation. */
+export async function eligibleSlotResources(c:AvailabilityConfig,reader:SyntheticCalendarReader,now:string,slot:Slot):Promise<Slot[]>{
+ if(slot.businessId!==c.businessId||slot.calendarId!==c.calendarId||slot.serviceId!==c.service.id)held('SLOT_SCOPE');
+ const date=instant(slot.startAt).setZone(c.timeZone).toISODate()!;
+ const slots=(await searchAvailability(c,reader,now,{date,allResources:true})).filter(s=>Date.parse(s.startAt)===Date.parse(slot.startAt)&&Date.parse(s.endAt)===Date.parse(slot.endAt)&&s.bufferMinutes===slot.bufferMinutes);
+ if(!slots.length)held('SLOT_UNAVAILABLE');return [...new Map(slots.map(s=>[s.resourceId,s])).values()];
 }

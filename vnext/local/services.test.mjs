@@ -1,0 +1,44 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {randomUUID} from 'node:crypto';
+import {localFixture,httpClient} from './test-fixture.mjs';
+import {start,stop,backup,request,workerState} from './runtime.mjs';
+import {readState,destroy,connection} from './fixture.mjs';
+import {restoreInteractive} from './coherent-backup.mjs';
+import {freeLoopbackPort} from './command-lock.mjs';
+import path from 'node:path';
+import pg from 'pg';
+const wait=ms=>new Promise(r=>setTimeout(r,ms));
+test('SE1 TCP owner authorization, service/employee forms API, booking, crash/restart and coherent inert restore',{timeout:240000},async t=>{
+ const {s,running,parent}=await localFixture(t),c=await httpClient(s,running);
+ async function call(route,body,owner,custom={}){const r=await fetch(c.origin+route,{method:body?'POST':'GET',headers:{Cookie:c.cookie,...(body?{Origin:c.origin,'Content-Type':'application/json'}:{}),...(owner?{'x-owner-session':owner.token}:{}),...custom},...(body?{body:JSON.stringify(body)}:{})});return {status:r.status,body:await r.json()};}
+ assert.equal((await fetch(c.origin+'/api/owner/catalog')).status,401);
+ assert.equal((await call('/api/owner/catalog',undefined,undefined,{'x-owner-session':c.session.token})).status,403);
+ const a=(await call('/api/owner/session',{businessId:'synthetic-a'})).body,b=(await call('/api/owner/session',{businessId:'synthetic-b'})).body;
+ assert.equal((await call('/api/owner/session',{businessId:'synthetic-a'},undefined,{Origin:'http://evil.invalid'})).status,403);
+ assert.equal((await call('/api/owner/session',{businessId:'not-granted'})).status,403);
+ assert.equal((await call('/api/owner/catalog',undefined,{token:a.token+'bad'})).status,403);
+ let catalog=(await call('/api/owner/catalog',undefined,a)).body;const beforeB=(await call('/api/owner/catalog',undefined,b)).body;
+ const service={id:randomUUID(),name:'Manicura local',description:'Trabajo de prueba\nSin cobros',durationMinutes:30,bufferMinutes:10,priceMinor:29,currency:'MXN',active:true};
+ const message={requestId:randomUUID(),expected:catalog.revision,kind:'service',value:service};assert.equal((await call('/api/owner/save',message,a)).status,200);assert.equal((await call('/api/owner/save',message,a)).status,200);
+ assert.equal((await call('/api/owner/save',{...message,value:{...service,name:'Alterada'}},a)).status,400);
+ assert.equal((await call('/api/owner/save',{...message,requestId:randomUUID(),businessId:'synthetic-b'},a)).status,400);
+ assert.equal((await call('/api/owner/save',{...message,requestId:randomUUID(),value:{...service,tenant_id:'synthetic-b'}},a)).status,400);
+ catalog=(await call('/api/owner/catalog',undefined,a)).body;
+ const employee={id:randomUUID(),calendarId:catalog.employees[0].calendarId,name:'Carolina',active:true,hours:catalog.employees[0].hours,serviceIds:[service.id]};
+ assert.equal((await call('/api/owner/save',{requestId:randomUUID(),expected:catalog.revision,kind:'employee',value:{...employee,serviceIds:['foreign-only-service']}},a)).status,400);
+ assert.equal((await call('/api/owner/save',{requestId:randomUUID(),expected:catalog.revision,kind:'employee',value:{...employee,calendarId:beforeB.employees[0].calendarId}},a)).status,400);
+ assert.equal((await call('/api/owner/save',{requestId:randomUUID(),expected:catalog.revision,kind:'employee',value:employee},a)).status,200);
+ assert.deepEqual((await call('/api/owner/catalog',undefined,b)).body,beforeB);
+ await c.send({kind:'TEXT',value:'cita'});let state=await c.until(x=>x.replies.at(-1)?.payload.outcome==='SERVICES');const svc=state.replies.at(-1).payload.choices.find(x=>x.title.includes('Manicura'));assert.ok(svc);
+ await c.send({kind:'ACTION',value:svc.id});state=await c.until(x=>x.replies.at(-1)?.payload.outcome==='OFFER');const choice=state.replies.at(-1).payload.choices[0],id=randomUUID(),payload={kind:'ACTION',value:choice.id};await c.call('/api/message',{requestId:id,payload},c.session);await c.call('/api/message',{requestId:id,payload},c.session);await c.until(x=>x.replies.at(-1)?.payload.outcome==='CONFIRMED');
+ let appointments=(await call('/api/owner/appointments',undefined,a)).body.appointments;assert.equal(appointments.length,1);const appointment=appointments[0];assert.equal(appointment.service.id,service.id);assert.equal(appointment.employee,'Carolina');assert.equal(Number(appointment.durationMinutes),30);assert.equal(appointment.bufferMinutes,10);assert.equal(appointment.service.priceMinor,29);assert.equal(appointment.customer,'Ana Ejemplo');assert.equal(appointment.status,'ACTIVE');
+ assert.equal((await call('/api/owner/appointments',undefined,b)).body.appointments.length,0);
+ const saved=(await call('/api/owner/catalog',undefined,a)).body;
+ const concurrent=await Promise.all([call('/api/owner/save',{requestId:randomUUID(),expected:saved.revision,kind:'service',value:{...service,name:'Manicura editada'}},a),call('/api/owner/save',{requestId:randomUUID(),expected:saved.revision,kind:'service',value:{...service,name:'Otra edición'}},a)]);assert.deepEqual(concurrent.map(x=>x.status).sort(),[200,409]);assert.deepEqual((await call('/api/owner/appointments',undefined,a)).body.appointments,appointments);
+ for(const route of ['/owner','/owner.js','/owner.css'])assert.equal((await fetch(c.origin+route)).status,200);
+ await request(s,await workerState(s),'crash');await wait(250);const restarted=await start(s,Number(new URL(running.url).port)),next=await httpClient(s,restarted);const auth=await next.call('/api/owner/session',{businessId:'synthetic-a'});
+ const raw=await fetch(new URL('/api/owner/appointments',restarted.url),{headers:{Cookie:next.cookie,'x-owner-session':auth.token}});assert.deepEqual((await raw.json()).appointments,appointments);
+ await stop(s);const bundle=await backup(s);await stop(s);const restored=await restoreInteractive(bundle.directory,bundle.manifestSha256,path.join(parent,'nukmiris-vnext-services-restored'),{port:await freeLoopbackPort()}),target=await readState(restored.directory);t.after(()=>destroy(target));const db=new pg.Client(connection(target));await db.connect();try{assert.equal((await db.query('SELECT count(*)::int n FROM core.appointment_service')).rows[0].n,1);assert.equal((await db.query('SELECT count(*)::int n FROM core.employee')).rows[0].n,5);assert.equal((await db.query("SELECT bool_and(status='SUSPENDED' AND NOT dispatch_enabled) inert FROM core.business")).rows[0].inert,true);}finally{await db.end();}
+ console.log(JSON.stringify({servicesOwner:'PASS',nativeWindows:process.platform==='win32'?'EXECUTED':'NOT_EXECUTED',postgres:s.observed.serverVersion,timezone:'UTC',bookings:1,historySnapshot:'PRESERVED',restart:'PASS',coherentRestore:'INERT'}));
+});

@@ -5,6 +5,7 @@ import pg from 'pg';
 import {connection,privateJson,startDatabase} from './fixture.mjs';
 import {openCustody} from './custody.mjs';
 import {UnitOfWork} from '../dist/src/infrastructure/postgres/unit-of-work.js';
+import {ServiceCatalog} from '../dist/src/application/service-catalog.js';
 import {InteractiveBooking} from '../dist/src/application/interactive-booking.js';
 export async function replaceState(s){const temp=path.join(s.directory,'state-'+randomUUID()+'.tmp');await privateJson(temp,s);await fs.rename(temp,path.join(s.directory,'state.json'));}
 export async function enableInteractive(s){
@@ -22,6 +23,13 @@ export async function enableInteractive(s){
   try{await fs.access(path.join(s.directory,'custody'));const c=await openCustody(s);c.close();}catch(e){if(e.code!=='ENOENT')throw e;const c=await openCustody(s,{create:true});c.close();}
   await admin.query('BEGIN');
   for(const p of profile.scopes){await admin.query('INSERT INTO core.resource VALUES($1,$2,$3,false) ON CONFLICT DO NOTHING',[p.businessId,p.employees[1].id,p.calendarId]);await admin.query('INSERT INTO core.local_customer VALUES($1,$2,$3) ON CONFLICT DO NOTHING',[p.businessId,s.seed.ids[p.businessId].customer,'Ana Ejemplo']);}
+  // Fresh local catalog only: no automatic migration of an owner's older profile.
+  if(!(await admin.query("SELECT to_regclass('core.catalog_head') v")).rows[0].v)throw Error('SE1_requires_fresh_profile_do_not_upgrade_owner_data');
+  for(const p of profile.scopes){
+   const inserted=await admin.query('INSERT INTO core.catalog_head(business_id,revision,time_zone) VALUES($1,1,$2) ON CONFLICT DO NOTHING RETURNING business_id',[p.businessId,p.config.timeZone]);if(!inserted.rowCount)continue;
+   await admin.query('INSERT INTO core.service VALUES($1,$2,$3,$4,$5,$6,0,$7,true)',[p.businessId,p.config.service.id,'Cita general','Servicio de prueba editable',p.config.service.durationMinutes,p.config.service.bufferMinutes,'MXN']);
+   for(const e of p.employees){const config=p.config.employees.find(x=>x.id===e.id);await admin.query('INSERT INTO core.employee VALUES($1,$2,$3,$4,true,$5)',[p.businessId,e.id,p.calendarId,e.name,config.hours]);for(const id of config.serviceIds)await admin.query('INSERT INTO core.qualification VALUES($1,$2,$3)',[p.businessId,e.id,id]);}
+  }
   await admin.query("UPDATE core.business SET status='ACTIVE',dispatch_enabled=true");await admin.query('COMMIT');
   s.application={format:1,mode:'L2_SYNTHETIC_ONLY',restored:false,uiToken:s.application?.uiToken??randomBytes(32).toString('hex')};await replaceState(s);return s;
  }catch(e){await admin.query('ROLLBACK').catch(()=>{});throw e;}finally{await admin.end();}
@@ -31,6 +39,6 @@ export async function openInteractive(s){
  const profile=JSON.parse(await fs.readFile(path.join(s.directory,'application.json'),'utf8'));if(profile.format!==1)throw Error('local_profile_schema');const custody=await openCustody(s),roles=new Map();
  const role=n=>{if(!roles.has(n))roles.set(n,new UnitOfWork(connection(s,'wp1_'+n)));return roles.get(n);};
  try{const scopes=profile.scopes.map(p=>({businessName:p.title,config:p.config,bindings:{businessId:p.businessId,calendar:{id:p.config.calendarId,coreId:p.calendarId},employees:new Map(p.employees.map(e=>[e.id,e.id]))},channelId:p.channelId,employeeNames:new Map(p.employees.map(e=>[e.id,e.name])),archive:custody.archive.scope(p.businessId),ingress:role('ingress'),sealer:role('sealer'),reducer:role('reducer'),dispatcher:role('dispatch'),result:role('result')}));
-  const check=new pg.Client(connection(s));try{await check.connect();if(!(await check.query("SELECT to_regclass('core.local_support_message') IS NOT NULL AND to_regprocedure('core.local_support_route_v2()') IS NOT NULL v")).rows[0].v)throw Error('local_corrections_upgrade_required');}finally{await check.end();}const app=new InteractiveBooking(scopes);return {app,profile,async close(){await app.stop();await Promise.all([...roles.values()].map(r=>r.close()));custody.close();}};
+  const check=new pg.Client(connection(s));try{await check.connect();if(!(await check.query("SELECT to_regclass('core.catalog_head') IS NOT NULL AND to_regclass('core.local_support_message') IS NOT NULL AND to_regprocedure('core.local_support_route_v2()') IS NOT NULL v")).rows[0].v)throw Error('local_corrections_upgrade_required');}finally{await check.end();}for(const scope of scopes){scope.catalog=new ServiceCatalog(scope.config.businessId,scope.reducer,role('operator'));}const app=new InteractiveBooking(scopes);return {app,profile,async close(){await app.stop();await Promise.all([...roles.values()].map(r=>r.close()));custody.close();}};
  }catch(e){await Promise.all([...roles.values()].map(r=>r.close()));custody.close();throw e;}
 }

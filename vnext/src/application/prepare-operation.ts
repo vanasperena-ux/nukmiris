@@ -11,7 +11,7 @@ export interface PlanRequest {
   startAt:string; endAt:string; kind?:'CREATE'|'MOVE'|'CANCEL'|'ATTENDANCE';
   appointmentId?:string; eventId?:string; expectedRevision?:number;
   outputPurpose?:'CUSTOMER_REQUEST'|'REMINDER'; bufferMinutes?:number;
-  confirmation?:ObjectValue;
+  confirmation?:ObjectValue;catalogRevision?:number;serviceSnapshot?:ObjectValue;
 }
 /** Sealed synthetic plan. SQL requires either the retained test selector or a
  * consumed, sealed local booking intent; no Google adapter is accepted. */
@@ -38,7 +38,7 @@ export async function prepareOperation(args:{request:PlanRequest;reducer:UnitOfW
   const intent={businessId:b,inputId:r.inputId,customerId:r.customerId,calendarId:r.calendarId,resourceId:r.resourceId,
     startAt:finiteDate(r.startAt),endAt:finiteDate(r.endAt),kind:r.kind??'CREATE',
     appointmentId:r.appointmentId??null,eventId:r.eventId??null,expectedRevision:r.expectedRevision??1,
-    bufferMinutes:r.bufferMinutes??0,outputPurpose:r.outputPurpose??'CUSTOMER_REQUEST',...(r.confirmation?{confirmation:r.confirmation}:{})};
+    bufferMinutes:r.bufferMinutes??0,outputPurpose:r.outputPurpose??'CUSTOMER_REQUEST',...(r.confirmation?{confirmation:r.confirmation}:{}),...(r.serviceSnapshot?{serviceSnapshot:r.serviceSnapshot,catalogRevision:r.catalogRevision!}:{})};
   if(Date.parse(intent.startAt)>=Date.parse(intent.endAt)||!Number.isInteger(intent.bufferMinutes)||intent.bufferMinutes<0||intent.bufferMinutes>1440)throw new Error('invalid_interval');
   const plan=await archive.ensure(`operation/${b}/${r.inputId}`,'OPERATION_PLAN',{intent},()=>{
     const attemptId=randomUUID(),operationId=randomUUID(),appointmentId=r.appointmentId??randomUUID(),eventId=r.eventId??randomUUID(),outputId=randomUUID();

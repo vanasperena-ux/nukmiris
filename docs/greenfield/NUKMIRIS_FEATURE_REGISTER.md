@@ -332,3 +332,18 @@ Owner's original profile, protected Ana, literal invalid-name accidental booking
 and other appointments are not modified or repaired. Existing SQL/schema/roles,
 archive, fencing and legacy stay unchanged. Production/provider/OPS01 and larger
 local parity gates remain; Milestone A is not declared complete.
+
+## SE-1 approved product increment — implementation branch only
+
+Current requirements reference remains **v1.4 at59cde023d2dff088161c1d01bd76c1099386e13f**, blob679a5b465b913843566fb59f1410b69cf9803bc1. Its documentation branch is unchanged. The exact executableb4d0be0 received [owner browser acceptance](https://github.com/vanasperena-ux/nukmiris/pull/16#issuecomment-6754899286) and [46/46 native Windows runtime PASS](https://github.com/vanasperena-ux/nukmiris/pull/16#issuecomment-6754990526); earlier pending statements above are historical for that bounded synthetic baseline. PC-1 is [independently accepted](https://github.com/vanasperena-ux/nukmiris/pull/24#issuecomment-6902801719), not a prerequisite to reopen for product work.
+
+Owner approved [SE-1](https://github.com/vanasperena-ux/nukmiris/issues/7#issuecomment-6902954212) implementation, reconfirmed Decision147 and authorized approved random allocation among eligible employees for this slice. No customer-facing employee selector is added. New entries describe this feature only; no broad parity or production acceptance is claimed.
+
+| ID | Implementation status | Scope / remaining acceptance |
+|---|---|---|
+|NM-046|READY FOR TEST — Services catalog|Per-business PostgreSQL persistence; name, description, standard duration/buffer, informational price/currency, active status; exactly one service per appointment. Synthetic chat selection and immutable appointment snapshot. Owner acceptance pending.|
+|NM-047|READY FOR TEST — Employees and service qualifications|Per-business staff/weekly hours/active state, stable resources, qualifications; solo default retained. Random choice among eligible employees is allocated once and reused across retries/crashes. No employee duration overrides or new preference UI. Owner acceptance pending.|
+|NM-048|READY FOR TEST — Minimal local owner interface|Spanish responsive Servicios/Empleados/Citas, existing private local owner authentication, business-bound owner API sessions, restart persistence. No registration, invitations, onboarding, subscriptions or payments. Owner acceptance pending.|
+|NM-035 / NM-041|SE-1 extension READY FOR TEST|New catalog-backed appointment details preserve service/employee names, duration/buffer and informational price; configured buffer/qualification/hour boundaries tested. No new claim about real Google/Meta fields.|
+
+[Implementation and short Windows walkthrough](31-SE1-SERVICES-EMPLOYEES-LOCAL.md). Exact source, automated results and limits accompany the Draft PR. Old profiles, Ana's held case, existing appointments and legacy remain untouched. Full reschedule/cancel, NM-038 policy and all unrelated features retain their prior scope. Real-provider, custody and OPS01 restrictions remain; PC-1 is closed for its accepted scope. No merges or cloud/provider activation.

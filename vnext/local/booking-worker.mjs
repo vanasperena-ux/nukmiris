@@ -22,13 +22,31 @@ process.once('message',config=>{void(async()=>{
   if(req.headers.host!=='127.0.0.1:'+server.address().port){json(403,{error:'loopback_host_required'});return;}
   if(req.method==='POST'&&['/stop','/crash'].includes(req.url)&&same(req.headers['x-nukmiris-control'],state.controlToken)){json(200,{instance:state.id,stopping:true});if(req.url==='/crash')setImmediate(()=>process.exit(137));else setImmediate(()=>void stop());return;}
   if(req.method==='GET'&&req.url==='/health'){json(200,{instance:state.id,mode:'L2_SYNTHETIC_ONLY',interactiveBookingEnabled:true,loopback:true,recoveryWorker:true,postgres:state.observed.serverVersion,timezone:'UTC'});return;}
-  if(req.method==='GET'&&['/','/app.js','/app.css'].includes(req.url)){
-   const file=req.url==='/'?'index.html':req.url.slice(1),content=await fs.readFile(fileURLToPath(new URL((state.capacityFixture?'./capacity-web/':'./web/')+file,import.meta.url)));res.writeHead(200,{'Content-Type':file.endsWith('.html')?'text/html; charset=utf-8':file.endsWith('.js')?'text/javascript; charset=utf-8':'text/css; charset=utf-8'});res.end(content);return;
+  if(req.method==='GET'&&['/','/app.js','/app.css','/owner','/owner.js','/owner.css'].includes(req.url)){
+   const file=req.url==='/'?'index.html':req.url==='/owner'?'owner.html':req.url.slice(1),content=await fs.readFile(fileURLToPath(new URL((state.capacityFixture?'./capacity-web/':'./web/')+file,import.meta.url)));res.writeHead(200,{'Content-Type':file.endsWith('.html')?'text/html; charset=utf-8':file.endsWith('.js')?'text/javascript; charset=utf-8':'text/css; charset=utf-8'});res.end(content);return;
   }
   if(req.method==='POST'&&req.headers.origin!==origin){json(403,{error:'same_origin_required'});return;}
   if(req.method==='POST'&&req.url==='/api/auth'){const p=await body(req);if(!exact(p,['token'])||!same(p.token,state.application.uiToken)){json(403,{error:'local_auth_denied'});return;}res.setHeader('Set-Cookie',cookie+'='+state.application.uiToken+'; HttpOnly; SameSite=Strict; Path=/');json(200,{authenticated:true});return;}
   const cookies=String(req.headers.cookie??'').split(';').map(s=>s.trim());if(!cookies.some(c=>same(c,cookie+'='+state.application.uiToken))){json(401,{error:'open_the_private_URL_from_demo_book'});return;}
-  if(req.method==='GET'&&req.url==='/api/businesses'){json(200,{businesses:opened.profile.scopes.map(s=>({id:s.businessId,title:s.title,employees:s.employees,timeZone:s.config.timeZone}))});return;}
+  // Existing private fixture cookie is owner authority. Customer session tokens
+  // are never accepted as owner grants; owner sessions are domain-separated.
+  if(req.method==='POST'&&req.url==='/api/owner/session'){
+   const p=await body(req);if(!exact(p,['businessId'])||!opened.profile.scopes.some(s=>s.businessId===p.businessId)){json(403,{error:'owner_scope_denied'});return;}
+   const payload=Buffer.from(JSON.stringify({role:'owner',businessId:p.businessId,instance:state.id})).toString('base64url');json(200,{businessId:p.businessId,token:payload+'.'+sign('owner:'+payload)});return;
+  }
+  if(req.url?.startsWith('/api/owner/')){
+   const raw=String(req.headers['x-owner-session']??''),parts=raw.split('.');if(parts.length!==2||!same(sign('owner:'+parts[0]),parts[1])){json(403,{error:'owner_session_denied'});return;}
+   const grant=JSON.parse(Buffer.from(parts[0],'base64url'));if(grant.role!=='owner'||grant.instance!==state.id){json(403,{error:'owner_session_denied'});return;}
+   const scope=opened.app.ownerCatalog(grant.businessId);if(!scope){json(403,{error:'owner_scope_denied'});return;}
+   if(req.method==='GET'&&req.url==='/api/owner/catalog'){json(200,{businessId:grant.businessId,...await scope.load()});return;}
+   if(req.method==='GET'&&req.url==='/api/owner/appointments'){json(200,{businessId:grant.businessId,appointments:await scope.appointments()});return;}
+   if(req.method==='POST'&&req.url==='/api/owner/save'){
+    const p=await body(req);if(!exact(p,['requestId','expected','kind','value'])){json(400,{error:'owner_schema_denied'});return;}
+    try{const revision=await scope.save(p.requestId,p.expected,p.kind,p.value);json(200,{saved:true,revision});}catch(e){json(e.code==='P7601'?409:400,{error:e.code==='P7601'?'catalog_revision_conflict':'catalog_invalid',message:e.code==='P7601'?'Otra edición cambió los datos. Actualiza y vuelve a intentar.':'Revisa los campos, horarios y servicios autorizados.'});}return;
+   }
+   json(404,{error:'owner_route_missing'});return;
+  }
+  if(req.method==='GET'&&req.url==='/api/businesses'){json(200,{businesses:await Promise.all(opened.profile.scopes.map(async s=>({id:s.businessId,title:s.title,employees:(await opened.app.ownerCatalog(s.businessId).load()).employees,timeZone:s.config.timeZone})))});return;}
   if(req.method==='POST'&&req.url==='/api/session'){const p=await body(req);if(!exact(p,['businessId','persona'])||!opened.profile.scopes.some(s=>s.businessId===p.businessId)||!['known','new','new2','new3'].includes(p.persona)){json(400,{error:'local_route_denied'});return;}const v={businessId:p.businessId,subject:({'known':'customer-','new':'new-','new2':'new2-','new3':'new3-'})[p.persona]+p.businessId},payload=Buffer.from(JSON.stringify(v)).toString('base64url');json(200,{...v,token:payload+'.'+sign(payload)});return;}
   const bound=session(req);
   if(state.capacityFixture&&req.method==='GET'&&req.url==='/api/capacity'){json(200,await capacityReport(state,bound.businessId));return;}
