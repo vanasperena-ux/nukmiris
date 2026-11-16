@@ -1,8 +1,8 @@
 # NukMiris — Release Roadmap
 
-**Planning version:** 1.0 (2026-11-16)
+**Planning version:** 1.1 (2026-11-16)
 **Status:** OWNER-APPROVED RELEASE ALLOCATION; **NOT IMPLEMENTATION AUTHORIZATION**
-**Master register:** [NUKMIRIS_FEATURE_REGISTER.md](NUKMIRIS_FEATURE_REGISTER.md) v1.8
+**Master register:** [NUKMIRIS_FEATURE_REGISTER.md](NUKMIRIS_FEATURE_REGISTER.md) v1.9
 **Source decisions:** Owner release validations (2026-11-16), including R1 PWA, calendar import, and start-time setting NM-067.
 
 ## Release governance
@@ -17,9 +17,11 @@
 
 **Outcome:** Locally accepted (Windows, synthetic providers) booking, rescheduling/cancellation, correct customer-facing conversation flow, and bounded recovery and safety.
 
-**Feature targets:** NM-006, NM-007, NM-010, NM-024, NM-025, NM-029, NM-031, NM-032, NM-033, NM-036, NM-037, NM-038, NM-040, NM-041, NM-042, NM-043, NM-045; plus parity verification of NM-001–005, NM-008, NM-009, NM-011, NM-013.
+**Feature targets:** NM-006, NM-007, NM-010, NM-024, NM-025, NM-029, NM-031, NM-032, NM-033, NM-036, NM-037, NM-038, NM-040, NM-041, NM-042, NM-043, NM-045, **NM-068**; plus parity verification of NM-001–005, NM-008, NM-009, NM-011, NM-013.
 
 **Delivery dependencies:** Current bounded RC-1 local reschedule/cancel work (GitHub Issue #26) and Milestone A (Issue #7); do not misstate prior synthetic tests as real provider proof.
+
+**Owner-requested Spanish copy corrections (NM-068):** Review and, upon separate implementation authorization, apply CX-001, CX-002, CX-004, CX-008, CX-012–015, CX-021, CX-022, CX-024, CX-039 and CX-040 from [CUSTOMER_FACING_TEXT_REVIEW.md](CUSTOMER_FACING_TEXT_REVIEW.md). Preserve approved scenario routing, human handoff and error safety. **Open copy checks:** CX-008 is sourced from a no-active-services condition but the requested replacement describes no available times; CX-021/CX-022/CX-024 contain small spelling/formatting ambiguities to resolve before implementation. The feature is not built; its placement in R0 is planning only.
 
 **Acceptance gate:** Owner walks through known/new booking, 0/1/multiple appointments, immediate cancel/reschedule (only before appointment start), employee and customer overlap protection, menu/human support, replayed/stale actions, restart, service buffers, and no false confirmations. Native Windows test evidence and independent reviews as required.
 
