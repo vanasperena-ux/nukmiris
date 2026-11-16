@@ -1,6 +1,6 @@
 # NukMiris — Feature & Improvement Register
 
-**Version:** 1.8  
+**Version:** 1.9  
 **Established:** 2026-10-27  
 **Product baseline:** v0.8.1; local vNext L2 owner walkthrough on Windows (tested source `3d8f82bb047e6ed937750b7ce6e81ecd23ab9f42`)  
 **Purpose:** Living backlog for functional features, UX improvements, compliance, reliability, and maintenance. This is a planning source, **not** proof that implementation has been independently tested.
@@ -269,10 +269,21 @@ The following clarifications are **OWNER-APPROVED PRODUCT INTENT**, not implemen
 
 **NM-067 Spanish UI wording proposal:** “Intervalos de inicio de citas” with “Horarios fijos” (e.g., starts at the top of each hour) and “Horarios flexibles” (e.g., next begins at 11:45 when prior service + buffer ends at 11:45). The owner may later approve a fixed 15/30/60-minute grid choice. This feature must not override employee qualifications, business closures, buffers or customer overlap protections.
 
+## R0 customer-facing copy updates — owner review (2026-11-16)
+
+**Feature NM-068 — Spanish customer-facing message copy corrections.** **Target release: R0**. **Status: OPEN — OWNER-REQUESTED, NOT IMPLEMENTED**. This documents owner-requested wording; it does *not* authorize changing application code or initiating Codex work. The exact per-scenario copy and source/implementation notes are in [CUSTOMER_FACING_TEXT_REVIEW.md](CUSTOMER_FACING_TEXT_REVIEW.md), section “Owner's reviewed wording — change register”.
+
+| Feature ID | Status | Priority | Area | Feature requirement | Acceptance criteria / open questions | Target release |
+|---|---|---|---|---|---|---|
+| NM-068 | OPEN — OWNER-REQUESTED; NOT IMPLEMENTED | P1 | Customer WhatsApp copy | Apply CX-001, CX-002, CX-004, CX-008, CX-012–015, CX-021, CX-022, CX-024, CX-039 and CX-040 owner-requested Spanish replacement strings. | Correct scenario only; accurate substitutions, line breaks and Unicode; preserve booking/handoff/recovery safety. **CX-008 currently represents no active services, yet proposed text states no available times; must confirm intended scenario.** CX-021, CX-022 and CX-024 have apparent editorial typos/formatting to clarify before code changes. No other CX IDs changed. | R0 |
+
+**Relationship to existing IDs:** NM-003/004 (previously reported copy changes) require re-verification against the new approved R0 text; NM-014/031–034 (greeting, menu, human interaction and management) preserve their functional behavior, with only these listed messages subject to R0 wording change. This is not a new conversation-flow design, nor a modification of R1+ features.
+
 ## Change log
 
 | Date | Change |
 |---|---|
+| 2026-11-16 | v1.9: added NM-068 (R0) for owner-reviewed customer-facing Spanish copy corrections CX-001, 002, 004, 008, 012–015, 021, 022, 024, 039, 040; preserved semantic/editorial review questions and no-code-change boundary. |
 | 2026-11-16 | Feature Register v1.8: owner-approved planning allocation of all existing requirements, new NM-058–NM-067 including mobile-first installable PWA, structured Calendar import, employee management, subscription billing and configurable appointment start times; no implementation authorized. |
 | 2026-11-16 | Follow-up owner clarification: prefer previous employee's next slot; past/started appointments ineligible for customer cancel/reschedule; unnamed offline block applies to all employees; WhatsApp coexistence remains a technical gate. Version 1.7; no implementation authorized. |
 | 2026-11-16 | Recorded 20 owner decisions OD-01–OD-20, clarified/superseded conflicting scope, and added NM-055–NM-057 for service catalog, employee continuity and historical calendar contact import. No implementation authorized. |
