@@ -1,6 +1,6 @@
 # NukMiris — Feature & Improvement Register
 
-**Version:** 1.12  
+**Version:** 1.13  
 **Established:** 2026-10-27  
 **Product baseline:** v0.8.1; local vNext L2 owner walkthrough on Windows (tested source `3d8f82bb047e6ed937750b7ce6e81ecd23ab9f42`)  
 **Purpose:** Living backlog for functional features, UX improvements, compliance, reliability, and maintenance. This is a planning source, **not** proof that implementation has been independently tested.
@@ -14,6 +14,8 @@
 - **Feature IDs never change.** New features receive NM-029, NM-030, etc. Preserve audit history and implementation/version evidence.
 
 ## Summary
+
+- **NM-069 (R0):** owner-authorized *local synthetic* rebuild of accepted v0.8.1 reminders and attendance confirmation: 7-day, 24-hour request, conditional 22-hour follow-up, 2-hour final reminder. The R3 provider, WABA/template and compliance gates are unchanged.
 
 - **NM-001–NM-032:** original and previously agreed register items, retained with their original IDs. NM-029–NM-032 cover vNext date labels, uncertainty acknowledgments, multiple-appointment management parity and the three-option main menu.
 - **NM-033–NM-044:** additions from the complete vNext L2 owner walkthrough, classified as regressions, improvements, decisions to resolve, or testing infrastructure. New entries are **OPEN** or **DEFERRED**, not treated as implemented.
@@ -301,10 +303,19 @@ These are the **owner-approved target strings** for R0, not evidence that the ru
 
 **Relationship to existing IDs:** NM-003/004 (previously reported copy changes) require re-verification against the new approved R0 text; NM-014/031–034 (greeting, menu, human interaction and management) preserve their functional behavior, with only these listed messages subject to R0 wording change. This is not a new conversation-flow design, nor a modification of R1+ features.
 
+## R0 reminder parity — owner implementation decision (2026-11-16)
+
+| ID | Status | Priority | Area | Feature / requirement | Acceptance criteria / binding legacy behavior | Release |
+|---|---|---|---|---|---|---|
+| NM-069 | OPEN — OWNER-AUTHORIZED FOR CODEX LOCAL SYNTHETIC IMPLEMENTATION; NOT YET BUILT | P1 | vNext appointment reminders / attendance confirmation | Restore the **accepted v0.8.1 four-stage appointment reminder sequence** in vNext: **7 days (168 h) before**: information-only; **24 h before**: attendance request with `Sí, confirmo` and `Necesito reagendar`; **22 h before**: same two-button follow-up **only when the 24 h message has correlated delivered/read proof and no confirmation or reschedule request**; **2 h before**: final information-only reminder, including when the customer has not confirmed. Use the four pre-existing Spanish Utility template definitions as synthetic fixtures, not live sends. | Exact elapsed-time thresholds in business timezone display; schedule only future thresholds at booking/replacement commit; no backfill of already missed thresholds; 15-minute late-send allowance then skip; default disabled until synthetic activation; opt-in permission and withdrawal honored; no follow-up without 24 h delivery proof; no cancellation for nonresponse. `Sí, confirmo` updates attendance for the exact scoped appointment once (booking remains active); `Necesito reagendar` enters existing RC-1 exact-appointment move without premature mutation; old reminder versions invalidated on proven move/cancel and regenerated as eligible; pending/UNKNOWN operations held; durable per-business job/attempt/receipt/attendance audit; idempotent restart/replay/races, no false delivery claims, cross-tenant isolation. Deterministic accelerated clock and fresh-profile Windows walkthrough. **Build locally with synthetic transport only; do not merge, send real Meta messages, change live Google Calendar, migrate protected profiles or provision cloud.** Legacy reference: `backend/REMINDERS.md`, `backend/REMINDER_TEMPLATES.md` in accepted v0.8.1. | R0 |
+
+**Release split:** NM-069 restores observable local synthetic reminders/attendance functionality in R0. NM-017–020, NM-026 and other R3 assignments for *live WABA/template readiness, consent/compliance checks and production provider operation* remain in R3. Synthetic permission/approval/receipt fixtures needed to test NM-069 are not claims of production compliance. Other RM-1 items outside R0 may be analyzed/design-prepared, but not implemented ahead of their approved release without a separate owner scope decision.
+
 ## Change log
 
 | Date | Change |
 |---|---|
+| 2026-11-16 | v1.13: owner assigned accepted legacy v0.8.1 reminder/attendance parity to R0 as NM-069 and expressly authorized a **synthetic-only Codex implementation now** alongside NM-068. Four stages 168/24/22/2 h; conditional 22 h delivery proof; no-response does not cancel; no live provider or R3 activation. Roadmap updated in tandem. |
 | 2026-11-16 | v1.12: placed the definitive 13 approved NM-068/CX target strings directly into the master Feature Register; owner's exact CX-008 override remains authoritative. R0, unimplemented. |
 | 2026-11-16 | v1.11: explicit owner correction supersedes previous CX-008 editorial recommendation; preserve requested no-availability sentence for CX-008 existing trigger. No implementation started. |
 | 2026-11-16 | v1.10: resolved NM-068 CX-008 as no-active-services distinct from CX-007 no-available-times; approved corrected greeting CX-021, formatting CX-022, and accent/spacing CX-024. R0 scope unchanged; no code change. |
