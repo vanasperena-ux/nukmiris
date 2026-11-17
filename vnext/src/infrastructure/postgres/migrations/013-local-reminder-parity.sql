@@ -56,6 +56,7 @@ CREATE OR REPLACE FUNCTION core.authoritative_time() RETURNS timestamptz LANGUAG
 $$;
 CREATE FUNCTION core.rm1_advance(b text,at_value timestamptz) RETURNS timestamptz LANGUAGE plpgsql SECURITY DEFINER SET search_path=pg_catalog,core AS $$
 BEGIN
+ IF b IS NULL OR at_value IS NULL THEN RAISE EXCEPTION 'null_argument';END IF;
  PERFORM core.assert_scope(b);IF at_value IS NULL OR NOT isfinite(at_value) OR at_value<core.authoritative_time() THEN RAISE EXCEPTION 'rm1_clock_must_advance';END IF;
  INSERT INTO core.rm1_clock VALUES(true,at_value) ON CONFLICT(singleton) DO UPDATE SET at_time=excluded.at_time WHERE core.rm1_clock.at_time<=excluded.at_time;
  IF NOT FOUND THEN RAISE EXCEPTION 'rm1_clock_race';END IF;
@@ -91,6 +92,7 @@ CREATE TRIGGER rm1_schedule_changed AFTER INSERT ON core.rc1_history FOR EACH RO
 CREATE FUNCTION core.rm1_eligibility(b text,jid uuid) RETURNS text LANGUAGE plpgsql SECURITY DEFINER SET search_path=pg_catalog,core AS $$
 DECLARE j core.rm1_job; s core.rm1_schedule; ap core.appointment; ch core.channel; ph core.permission_head; t core.rm1_template; now_value timestamptz=core.authoritative_time();
 BEGIN
+ IF b IS NULL OR jid IS NULL THEN RAISE EXCEPTION 'null_argument';END IF;
  PERFORM core.assert_scope(b);SELECT * INTO j FROM core.rm1_job WHERE business_id=b AND id=jid;IF j.id IS NULL THEN RETURN 'JOB_MISSING';END IF;
  SELECT * INTO s FROM core.rm1_schedule WHERE business_id=b AND appointment_id=j.appointment_id AND schedule_revision=j.schedule_revision;
  SELECT * INTO ap FROM core.appointment WHERE business_id=b AND id=j.appointment_id;
@@ -140,6 +142,7 @@ CREATE TRIGGER rm1_permission_changed AFTER INSERT OR UPDATE ON core.permission_
 CREATE FUNCTION core.rm1_configure(b text,p jsonb,k text,d text) RETURNS boolean LANGUAGE plpgsql SECURITY DEFINER SET search_path=pg_catalog,core AS $$
 DECLARE ch core.channel; kind_value text;
 BEGIN
+ IF b IS NULL OR p IS NULL OR k IS NULL OR d IS NULL THEN RAISE EXCEPTION 'null_argument';END IF;
  PERFORM core.assert_scope(b);PERFORM 1 FROM core.business WHERE business_id=b FOR UPDATE;
  IF NOT EXISTS(SELECT 1 FROM core.channel WHERE business_id=b AND id=(p->>'channelId')::uuid AND verified) THEN RAISE EXCEPTION 'rm1_sender_scope';END IF;
  IF NOT core.valid_tenant_bindings(p,b) OR p->>'businessId' IS DISTINCT FROM b OR NOT EXISTS(SELECT 1 FROM core.seal WHERE business_id=b AND stable_key=k AND digest=d AND kind='RM1_CONFIG' AND receipt->'body'=p) THEN RAISE EXCEPTION 'rm1_config_unsealed';END IF;
@@ -158,6 +161,7 @@ END $$;
 CREATE FUNCTION core.rm1_record_receipt(b text,p jsonb,k text,d text) RETURNS boolean LANGUAGE plpgsql SECURITY DEFINER SET search_path=pg_catalog,core AS $$
 DECLARE j core.rm1_job; s core.rm1_schedule; a core.attempt; old core.rm1_receipt; correlated_value boolean=false;
 BEGIN
+ IF b IS NULL OR p IS NULL OR k IS NULL OR d IS NULL THEN RAISE EXCEPTION 'null_argument';END IF;
  PERFORM core.assert_scope(b);IF NOT core.valid_tenant_bindings(p,b) OR p->>'businessId' IS DISTINCT FROM b OR NOT EXISTS(SELECT 1 FROM core.seal WHERE business_id=b AND stable_key=k AND digest=d AND kind='RM1_RECEIPT' AND receipt->'body'=p) THEN RAISE EXCEPTION 'rm1_receipt_unsealed';END IF;
  SELECT * INTO old FROM core.rm1_receipt WHERE business_id=b AND evidence_id=(p->>'evidenceId')::uuid;
  IF old.evidence_id IS NOT NULL THEN IF old.seal_key<>k THEN RAISE EXCEPTION 'rm1_receipt_conflict';END IF;RETURN old.correlated;END IF;
@@ -167,19 +171,20 @@ BEGIN
  PERFORM core.lock_conversation(b,s.conversation_id);
  SELECT * INTO a FROM core.attempt WHERE business_id=b AND id=(p->>'attemptId')::uuid FOR UPDATE;
  IF a.id IS NULL THEN RAISE EXCEPTION 'rm1_receipt_attempt_missing';END IF;
- IF (p->>'atTime')::timestamptz>core.authoritative_time() OR p->>'status' NOT IN ('sent','delivered','read','failed') THEN RAISE EXCEPTION 'rm1_receipt_invalid';END IF;
+ IF (p->>'atTime')::timestamptz<j.queued_at OR NOT isfinite((p->>'atTime')::timestamptz) OR (p->>'atTime')::timestamptz>core.authoritative_time() OR p->>'status' NOT IN ('sent','delivered','read','failed') THEN RAISE EXCEPTION 'rm1_receipt_invalid';END IF;
  correlated_value=a.output_id=j.output_id AND a.state IN ('SUBMISSION_ENTERED','UNKNOWN','VERIFIED_APPLIED') AND a.envelope->>'remoteId'=p->>'messageId'
  AND a.envelope->>'recipient'=p->>'recipient' AND a.envelope->>'channelId'=p->>'channelId' AND a.envelope->>'waba'=p->>'waba' AND a.envelope->>'numberId'=p->>'numberId'
  AND EXISTS(SELECT 1 FROM core.local_ledger l WHERE l.business_id=b AND l.id=a.id AND l.kind='CORE' AND l.payload_digest=a.payload_digest AND l.proof->>'remoteId'=p->>'messageId');
  INSERT INTO core.rm1_receipt VALUES(b,(p->>'evidenceId')::uuid,j.id,a.id,p->>'messageId',p->>'status',(p->>'atTime')::timestamptz,coalesce(correlated_value,false),k);
  IF correlated_value THEN
-  UPDATE core.attempt SET meta_status=CASE WHEN meta_status='read' OR (meta_status='delivered' AND p->>'status'<>'read') THEN meta_status ELSE p->>'status' END WHERE business_id=b AND id=a.id;
+  UPDATE core.attempt SET meta_status=CASE WHEN array_position(ARRAY['sent','failed','delivered','read'],coalesce(meta_status,'sent'))>array_position(ARRAY['sent','failed','delivered','read'],p->>'status') THEN meta_status ELSE p->>'status' END WHERE business_id=b AND id=a.id;
  END IF;RETURN coalesce(correlated_value,false);
 END $$;
 
 CREATE FUNCTION core.rm1_respond(b text,p jsonb,k text,d text) RETURNS jsonb LANGUAGE plpgsql SECURITY DEFINER SET search_path=pg_catalog,core AS $$
 DECLARE i core.input; m core.local_message; j core.rm1_job; s core.rm1_schedule; ap core.appointment; prior core.rm1_response; outcome_value text; action_value text=p->>'action';
 BEGIN
+ IF b IS NULL OR p IS NULL OR k IS NULL OR d IS NULL THEN RAISE EXCEPTION 'null_argument';END IF;
  PERFORM core.assert_scope(b);IF NOT core.valid_tenant_bindings(p,b) OR p->>'businessId' IS DISTINCT FROM b OR action_value IS NULL OR action_value NOT IN ('confirm','reschedule') OR NOT EXISTS(SELECT 1 FROM core.seal WHERE business_id=b AND stable_key=k AND digest=d AND kind='RM1_RESPONSE' AND receipt->'body'=p) THEN RAISE EXCEPTION 'rm1_response_unsealed';END IF;
  SELECT * INTO i FROM core.input WHERE business_id=b AND id=(p->>'inputId')::uuid;
  PERFORM core.lock_conversation(b,i.conversation_id);
@@ -217,6 +222,7 @@ END $$;
 CREATE FUNCTION core.rm1_enqueue(b text,p jsonb,k text,d text) RETURNS boolean LANGUAGE plpgsql SECURITY DEFINER SET search_path=pg_catalog,core AS $$
 DECLARE j core.rm1_job; s core.rm1_schedule; i core.input; reason_value text;
 BEGIN
+ IF b IS NULL OR p IS NULL OR k IS NULL OR d IS NULL THEN RAISE EXCEPTION 'null_argument';END IF;
  PERFORM core.assert_scope(b);IF NOT core.valid_tenant_bindings(p,b) OR p->>'businessId' IS DISTINCT FROM b OR NOT EXISTS(SELECT 1 FROM core.seal WHERE business_id=b AND stable_key=k AND digest=d AND kind='RM1_OUTPUT' AND receipt->'body'=p) THEN RAISE EXCEPTION 'rm1_output_unsealed';END IF;
  SELECT * INTO j FROM core.rm1_job WHERE business_id=b AND id=(p->>'jobId')::uuid;
  SELECT * INTO s FROM core.rm1_schedule WHERE business_id=b AND appointment_id=j.appointment_id AND schedule_revision=j.schedule_revision;
@@ -238,6 +244,7 @@ END $$;
 CREATE FUNCTION core.rm1_due_jobs(b text) RETURNS jsonb LANGUAGE plpgsql SECURITY DEFINER SET search_path=pg_catalog,core AS $$
 DECLARE j core.rm1_job; reason_value text; result jsonb='[]';
 BEGIN
+ IF b IS NULL THEN RAISE EXCEPTION 'null_argument';END IF;
  PERFORM core.assert_scope(b);IF NOT EXISTS(SELECT 1 FROM core.rm1_config WHERE business_id=b AND enabled) THEN RETURN result;END IF;
  UPDATE core.rm1_schedule s SET attendance=CASE WHEN confirmed_at IS NULL THEN 'PENDING' ELSE 'CONFIRMED' END,reschedule_until=NULL WHERE business_id=b AND attendance='RESCHEDULE_REQUESTED' AND reschedule_until<=core.authoritative_time() AND NOT EXISTS(SELECT 1 FROM core.mutation_guard g WHERE g.business_id=b AND g.appointment_id=s.appointment_id);
  FOR j IN SELECT * FROM core.rm1_job WHERE business_id=b AND state='SCHEDULED' AND due_at<=core.authoritative_time() ORDER BY due_at,id LIMIT 100 LOOP
