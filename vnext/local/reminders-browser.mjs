@@ -1,0 +1,41 @@
+// Actual browser interaction through Chromium/Edge CDP. No external page/provider.
+import {test} from 'node:test';
+import assert from 'node:assert/strict';
+import {spawn} from 'node:child_process';
+import {promises as fs} from 'node:fs';
+import path from 'node:path';
+import {localFixture} from './test-fixture.mjs';
+import {freeLoopbackPort} from './command-lock.mjs';
+const wait=ms=>new Promise(r=>setTimeout(r,ms));
+test('NM068/NM069 browser: exact copy, synthetic consent, four reminders, receipt, attendance and tenant isolation',{timeout:240000},async t=>{
+ const {running,parent}=await localFixture(t),port=await freeLoopbackPort();const executable=process.argv[2]??'chromium';
+ const browser=spawn(executable,['--headless=new','--no-sandbox','--disable-gpu','--disable-background-networking','--disable-component-update','--disable-extensions','--disable-default-apps','--no-first-run','--remote-debugging-address=127.0.0.1','--remote-debugging-port='+port,'--user-data-dir='+path.join(parent,'browser'),'about:blank'],{stdio:'ignore',windowsHide:true});
+ const closed=new Promise((r,j)=>{browser.once('error',j);browser.once('exit',r);});t.after(async()=>{browser.kill();await Promise.race([closed,wait(3000)]);});
+ let target;for(let i=0;i<100;i++){try{target=await(await fetch('http://127.0.0.1:'+port+'/json/new?'+encodeURIComponent(running.url),{method:'PUT'})).json();break;}catch{await wait(50);}}assert.ok(target?.webSocketDebuggerUrl,'browser CDP endpoint');
+ const ws=new WebSocket(target.webSocketDebuggerUrl),pending=new Map();await new Promise((r,j)=>{ws.onopen=r;ws.onerror=j;});let sequence=0;
+ ws.onmessage=event=>{const m=JSON.parse(event.data);if(m.id){const p=pending.get(m.id);pending.delete(m.id);if(m.error)p.reject(Error(m.error.message));else p.resolve(m.result);}};t.after(()=>ws.close());
+ const call=(method,params={})=>new Promise((resolve,reject)=>{const id=++sequence;pending.set(id,{resolve,reject});ws.send(JSON.stringify({id,method,params}));});
+ await call('Emulation.setDeviceMetricsOverride',{width:1320,height:930,deviceScaleFactor:1,mobile:false});
+ const evaluate=async expression=>{const r=await call('Runtime.evaluate',{expression,returnByValue:true,awaitPromise:true});if(r.exceptionDetails)throw Error('browser evaluation failed');return r.result?.value;};
+ const until=async expression=>{for(let i=0;i<200;i++){try{if(await evaluate(expression))return;}catch{}await wait(50);}throw Error('browser condition timed out: '+expression+' status='+await evaluate("document.getElementById('status')?.textContent"));};
+ const send=value=>evaluate("document.getElementById('message').value="+JSON.stringify(value)+";document.getElementById('composer').requestSubmit();true");
+ await until("document.getElementById('status')?.textContent.includes('Conectado')");
+ const latest="document.querySelector('#messages .message:last-child')";
+ const clickFirst=()=>evaluate("(()=>{const m="+latest+";const d=m.querySelector('details');if(d)d.open=true;m.querySelector('button:not([disabled])').click();return true;})()");
+
+ await send('menu');await until(latest+"?.textContent.includes('Soy un bot que te ayuda a agendar, reagendar o cancelar una cita.')");assert.match(await evaluate(latest+".textContent"),/Escribe "cita" o "agendar" para agendar una cita nueva\. Escribe "reagendar" o "cancelar" para gestionar una cita\./);
+ await call('Page.navigate',{url:new URL('/owner',running.url).href});await until("document.getElementById('notice')?.textContent.includes('Datos de')");await evaluate("document.querySelector('[data-tab=reminders]').click();true");await until("document.getElementById('reminder-clock')?.textContent.includes('Instante')");assert.equal(await evaluate("document.getElementById('reminders-enabled').checked"),false);await evaluate("document.getElementById('reminders-enabled').click();true");await until("document.querySelectorAll('#reminder-templates .card').length===4");
+ await evaluate("document.getElementById('reminder-evidence').value='Permiso sintético explícito de Ana para recordatorios de Juanita';document.getElementById('reminder-affirmed').checked=true;document.getElementById('reminder-grant').click();true");await until("document.getElementById('reminder-permission').textContent.includes('registrado')");
+ await call('Page.navigate',{url:new URL('/',running.url).href});await until("document.getElementById('status')?.textContent.includes('Conectado')");await send('cita');await until(latest+"?.querySelector('div')?.textContent==='Elige un horario'");assert.equal(await evaluate(latest+".querySelector('div').textContent"),'Elige un horario');
+ const {DateTime}=await import('luxon');let day=DateTime.now().setZone('America/Mexico_City').plus({days:10});if(day.weekday===7)day=day.plus({days:1});await send(day.setLocale('es').toFormat('d LLL yyyy'));await until(latest+"?.textContent.includes('¿Qué hora prefieres')");await clickFirst();await until(latest+"?.textContent.includes('Tu cita está confirmada')");
+ await call('Page.navigate',{url:new URL('/owner',running.url).href});await until("document.getElementById('notice')?.textContent.includes('Datos de')");await evaluate("document.querySelector('[data-tab=reminders]').click();true");await until("document.querySelectorAll('#reminder-jobs .card').length===4");
+ const job=kind=>"document.querySelector('#reminder-jobs [data-kind="+kind+"]')";
+ const advance=async(kind,status='ACCEPTED')=>{await evaluate("document.getElementById('reminder-next').click();true");await until(job(kind)+"?.dataset.status==='"+status+"'");};
+ await advance('seven_day');await advance('confirmation');assert.match(await evaluate(job('confirmation')+".textContent"),/entrega no confirmada/);
+ await evaluate("[..."+job('confirmation')+".querySelectorAll('button')].find(b=>b.textContent==='Simular entregado').click();true");await until(job('confirmation')+"?.dataset.status==='DELIVERED'");await advance('followup');
+ await call('Page.navigate',{url:new URL('/',running.url).href});await until("document.getElementById('status')?.textContent.includes('Conectado')");const reminder="[...document.querySelectorAll('#messages .message')].find(m=>m.textContent.includes('todavía no recibimos tu confirmación'))";await until(reminder+"?.querySelector('button:not([disabled])')");await evaluate(reminder+".querySelector('button').click();true");await until(latest+"?.textContent.includes('¡Gracias, Ana Ejemplo!')");
+ await call('Page.navigate',{url:new URL('/owner',running.url).href});await until("document.getElementById('notice')?.textContent.includes('Datos de')");await evaluate("document.querySelector('[data-tab=reminders]').click();true");await until("document.querySelectorAll('#reminder-jobs .card').length===4 && [...document.querySelectorAll('#reminder-jobs .card')].every(c=>c.textContent.includes('Asistencia confirmada'))");await advance('final');
+ await call('Emulation.setDeviceMetricsOverride',{width:390,height:844,deviceScaleFactor:1,mobile:true});await wait(100);assert.equal(await evaluate('document.documentElement.scrollWidth<=innerWidth'),true,'reminder owner screen fits mobile');
+ await evaluate("document.getElementById('business').value='synthetic-b';document.getElementById('business').dispatchEvent(new Event('change'));true");await until("document.getElementById('notice').textContent.includes('Bernard')");await until("document.querySelectorAll('#reminder-jobs .card').length===0 && !document.getElementById('reminders-enabled').checked");
+ console.log(JSON.stringify({rm1Browser:'PASS',copy:'NM068_MENU_AND_INITIAL_OFFER',controls:'EXPLICIT_PERMISSION_AND_DURABLE_CLOCK',stages:[168,24,22,2],receipt:'EXPLICIT_SIMULATED_DELIVERY',attendance:'EXACT_FOLLOWUP_BUTTON',tenantIsolation:'PASS',mobile:'390px PASS',nativeWindows:process.platform==='win32'?'EXECUTED':'NOT_EXECUTED',realProviders:false}));
+});

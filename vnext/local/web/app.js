@@ -10,11 +10,11 @@ function render(state){
  const {serverNow,...stable}=state,signature=JSON.stringify(stable);if(signature===previous){for(const button of document.querySelectorAll('[data-expires]'))if(Date.parse(button.dataset.expires)<=Date.parse(serverNow))button.disabled=true;return;}previous=signature;const messages=$('messages'),atBottom=messages.scrollHeight-messages.scrollTop-messages.clientHeight<70;messages.replaceChildren();
  const replies=state.replies,allChoices=new Map(replies.flatMap(r=>(r.payload.choices||[]).map(c=>[c.id,c.title]))),current=state.currentRevision;
  for(const input of state.inputs){const value=input.payload.kind==='ACTION'?(allChoices.get(input.payload.value)||'Opción seleccionada'):input.payload.value,m=node('div',null,'message customer');m.append(node('small','CLIENTE'),node('div',value));messages.append(m);
-  for(const reply of replies.filter(r=>r.sequence===input.sequence)){const p=reply.payload;
+  for(const reply of replies.filter(r=>Number(r.displaySequence??r.sequence)===Number(input.sequence))){const p=reply.payload;
    for(const text of p.precedingTexts||[]){const preceding=node('div',null,'message');preceding.append(node('small','ASISTENTE'),node('div',text));messages.append(preceding);}
-   const bubble=node('div',null,'message'+(['CONFIRMED','RESCHEDULED','CANCELLED'].includes(p.outcome)?' confirmed':''));bubble.append(node('small','ASISTENTE'),node('div',p.text));
+   const bubble=node('div',null,'message'+(['CONFIRMED','RESCHEDULED','CANCELLED'].includes(p.outcome)?' confirmed':''));bubble.append(node('small',reply.reminder?'RECORDATORIO · SIMULADO (aceptado; entrega por separado)':'ASISTENTE'),node('div',p.text));
    if(p.choices?.length){const list=p.presentation==='LIST',choices=node(list?'details':'div',null,list?'whatsapp-list':'choices');if(list)choices.append(node('summary',p.outcome==='SERVICES'?'Elegir servicio':p.outcome==='APPOINTMENTS'?'Elegir cita':'Elegir fecha'));const rows=list?node('ul'):choices;
-    for(const c of p.choices){const button=node('button',c.title);button.type='button';button.dataset.expires=reply.expiresAt;button.disabled=reply.revision!==current||Date.parse(reply.expiresAt)<=Date.parse(state.serverNow);button.onclick=()=>{button.disabled=true;void send({kind:'ACTION',value:c.id});};if(list){const row=node('li');row.append(button);rows.append(row);}else rows.append(button);}
+    for(const c of p.choices){const button=node('button',c.title);button.type='button';button.dataset.expires=reply.expiresAt;button.disabled=(reply.reminder?!reply.reminderCurrent:reply.revision!==current)||Date.parse(reply.expiresAt)<=Date.parse(state.serverNow);button.onclick=()=>{button.disabled=true;void send({kind:'ACTION',value:c.id});};if(list){const row=node('li');row.append(button);rows.append(row);}else rows.append(button);}
     if(list)choices.append(rows);bubble.append(choices);
    }messages.append(bubble);
   }
