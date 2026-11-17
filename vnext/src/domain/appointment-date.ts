@@ -107,10 +107,10 @@ export function parseAppointmentDate(value:unknown, { now, timeZone, maxBookingH
   return dateError("INVALID");
 }
 export function dateErrorMessage(result:ParsedDate, horizonDays:number) {
-  if (result.error === "PAST") return "Esa fecha ya pasó. ¿Qué otro día te gustaría?";
-  if (result.error === "OUT_OF_HORIZON") return `Por ahora solo podemos agendar citas dentro de los próximos ${horizonDays} días. ¿Qué otra fecha te gustaría?`;
-  if(result.detail==='WEEKDAY_MISMATCH')return 'El día de la semana no coincide con la fecha. Revisa la fecha o elige otra opción.';
-  if(result.detail==='IMPOSSIBLE')return 'Esa fecha no existe en el calendario. Escribe otra fecha o elige una opción.';
+  if (result.error === "PAST") return "Esa fecha ya pasó. Elige otra fecha o escríbela.";
+  if (result.error === "OUT_OF_HORIZON") return `Por ahora solo podemos agendar citas dentro de los próximos ${horizonDays} días. Elige otra fecha o escríbela.`;
+  if(result.detail==='WEEKDAY_MISMATCH')return 'El día de la semana no coincide con la fecha. Elige otra fecha o escríbela.';
+  if(result.detail==='IMPOSSIBLE')return 'Esa fecha no existe en el calendario. Elige otra fecha o escríbela.';
   return INVALID_DATE;
 }
 /** Preserve the accepted parser result shape; add editorial context at the boundary. */

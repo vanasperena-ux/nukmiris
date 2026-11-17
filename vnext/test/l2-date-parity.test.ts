@@ -5,9 +5,13 @@ import vm from 'node:vm';
 import {DateTime} from 'luxon';
 import assert from 'node:assert/strict';
 import * as dates from '../src/domain/appointment-date.js';
-// Run the accepted v0.8.1 date acceptance corpus unchanged against the new port.
+// Keep the accepted v0.8.1 parser corpus. NM-068 deliberately supersedes one
+// editorial expectation; adapt only that literal without modifying legacy files.
 // The running application never imports legacy code or legacy configuration/data.
-const source=readFileSync(fileURLToPath(new URL('../../../backend/test/appointment-date.test.cjs',import.meta.url)),'utf8');
+const legacySource=readFileSync(fileURLToPath(new URL('../../../backend/test/appointment-date.test.cjs',import.meta.url)),'utf8');
+const oldPastCopy='"Esa fecha ya pasó. ¿Qué otro día te gustaría?"';
+assert.equal(legacySource.split(oldPastCopy).length,2,'only the NM-068 CX012 copy expectation may be adapted');
+const source=legacySource.replace(oldPastCopy,'"Esa fecha ya pasó. Elige otra fecha o escríbela."');
 const context=vm.createContext({require:(id:string)=>{
  if(id==='node:test')return {test:(name:string,fn:()=>void)=>test('L2 date parity: '+name,fn)};
  if(id==='node:assert/strict')return assert;

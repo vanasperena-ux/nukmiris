@@ -4,7 +4,7 @@ export interface Window {start:string;end:string}
 export type Week=Readonly<Record<number,readonly Window[]>>;
 export interface Service {id:string;durationMinutes:number;bufferMinutes:number}
 export interface Employee {id:string;serviceIds:readonly string[];hours:Week;absences:readonly Window[]}
-export interface AvailabilityConfig {businessId:string;calendarId:string;timeZone:string;hours:Week;breaks:Week;startIntervalMinutes:number;service:Service;employees:readonly Employee[];catalogRevision?:number;excludeStartAt?:string}
+export interface AvailabilityConfig {businessId:string;calendarId:string;timeZone:string;hours:Week;breaks:Week;startIntervalMinutes:number;service:Service;employees:readonly Employee[];catalogRevision?:number;excludeStartAt?:string;maxBookingHorizonDays?:number}
 export interface CalendarEvent {businessId:string;calendarId:string;id:string;resourceId?:string;start:string;end:string;bufferMinutes?:number;state?:'ACTIVE'|'UNKNOWN'|'CANCELLED'}
 export interface CalendarRange {businessId:string;calendarId:string;start:string;end:string}
 export interface CalendarPage extends CalendarRange {snapshotId:string;events:readonly CalendarEvent[];nextCursor:string|null;complete:boolean}
@@ -12,6 +12,8 @@ export interface SyntheticCalendarReader {readonly mode:'L1_SYNTHETIC_ONLY';read
 export interface Slot {businessId:string;calendarId:string;resourceId:string;serviceId:string;startAt:string;endAt:string;bufferMinutes:number;snapshotId:string;catalogRevision?:number;serviceSnapshot?:import('./protocol.js').ObjectValue}
 export class AvailabilityHeldError extends Error {readonly code='AVAILABILITY_HELD';constructor(readonly reason:string,cause?:unknown){super('availability_held:'+reason,{cause});}}
 const held=(s:string):never=>{throw new AvailabilityHeldError(s);};
+/** Shared by availability and date feedback; retain the accepted 365-day default. */
+export function bookingHorizonDays(c:AvailabilityConfig):number{const days=c.maxBookingHorizonDays??365;if(!Number.isInteger(days)||days<1||days>365)held('INVALID_HORIZON');return days;}
 export const minute=(s:string):number=>{if(!/^\d{2}:\d{2}$/.test(s))return held('INVALID_HOURS');const [h,m]=s.split(':').map(Number);if(h!>23||m!>59)return held('INVALID_HOURS');return h!*60+m!;};
 const integer=(n:number,min:number)=>{if(!Number.isInteger(n)||n<min||n>1440)held('INVALID_MINUTES');};
 function validateWeek(w:Week){if(!w||typeof w!=='object'||Array.isArray(w))held('INVALID_HOURS');for(const [key,list] of Object.entries(w)){if(!/^[1-7]$/.test(key)||!Array.isArray(list))held('INVALID_HOURS');for(const x of list)if(minute(x.start)>=minute(x.end))held('OVERNIGHT_UNSUPPORTED');}}
@@ -19,7 +21,7 @@ function instant(s:string):DateTime{if(typeof s!=='string'||!/(?:Z|[+-]\d\d:\d\d
 function local(day:DateTime,n:number):DateTime|null{const d=day.set({hour:Math.floor(n/60),minute:n%60,second:0,millisecond:0});return d.hour===Math.floor(n/60)&&d.minute===n%60?d:null;}
 const overlap=(a:number,b:number,c:number,d:number)=>a<d&&b>c;
 export function validateAvailability(c:AvailabilityConfig):void{
- tenantId(c.businessId);if(!c.calendarId||!DateTime.now().setZone(c.timeZone).isValid||!c.service?.id||'services' in c)held('INVALID_CONFIG');validateWeek(c.hours);validateWeek(c.breaks);integer(c.startIntervalMinutes,1);integer(c.service.durationMinutes,1);integer(c.service.bufferMinutes,0);
+ tenantId(c.businessId);if(!c.calendarId||!DateTime.now().setZone(c.timeZone).isValid||!c.service?.id||'services' in c)held('INVALID_CONFIG');bookingHorizonDays(c);validateWeek(c.hours);validateWeek(c.breaks);integer(c.startIntervalMinutes,1);integer(c.service.durationMinutes,1);integer(c.service.bufferMinutes,0);
  if(!Array.isArray(c.employees)||new Set(c.employees.map(e=>e.id)).size!==c.employees.length)held('INVALID_EMPLOYEES');for(const e of c.employees){if(!e.id||!Array.isArray(e.serviceIds))held('INVALID_EMPLOYEES');validateWeek(e.hours);for(const a of e.absences)if(instant(a.start)>=instant(a.end))held('INVALID_ABSENCE');}
 }
 async function readComplete(reader:SyntheticCalendarReader,r:CalendarRange,deadline:number):Promise<{events:CalendarEvent[];snapshotId:string}>{
@@ -52,7 +54,7 @@ function candidates(c:AvailabilityConfig,events:readonly CalendarEvent[],now:Dat
  return out.sort((a,b)=>Date.parse(a.startAt)-Date.parse(b.startAt)||a.resourceId.localeCompare(b.resourceId,'en')).filter((s,i,a)=>allResources||i===0||Date.parse(s.startAt)!==Date.parse(a[i-1]!.startAt));
 }
 export async function searchAvailability(c:AvailabilityConfig,reader:SyntheticCalendarReader,nowIso:string,query:{date?:string;afterDate?:string;allResources?:boolean}={},budgetMs=1000):Promise<Slot[]>{
- validateAvailability(c);if(!Number.isInteger(budgetMs)||budgetMs<1||budgetMs>10000)held('INVALID_BUDGET');const deadline=performance.now()+budgetMs,now=instant(nowIso).setZone(c.timeZone),horizon=now.plus({days:365});
+ validateAvailability(c);if(!Number.isInteger(budgetMs)||budgetMs<1||budgetMs>10000)held('INVALID_BUDGET');const deadline=performance.now()+budgetMs,now=instant(nowIso).setZone(c.timeZone),horizon=now.plus({days:bookingHorizonDays(c)});
  const date=(s:string)=>{const d=DateTime.fromISO(s,{zone:c.timeZone});if(!/^\d{4}-\d{2}-\d{2}$/.test(s)||!d.isValid||d.toISODate()!==s||d<now.startOf('day')||d>=horizon)held('DATE_OUT_OF_RANGE');return d;};
  if(query.date&&query.afterDate)held('INVALID_QUERY');let start=query.date?DateTime.max(date(query.date),now):query.afterDate?DateTime.max(date(query.afterDate).plus({days:1}),now):now;
  let end=query.date?DateTime.min(start.startOf('day').plus({days:1}),horizon):DateTime.min(start.startOf('day').plus({days:30}),horizon);const history:CalendarEvent[]=[],slots:Slot[]=[];let snapshot:string|undefined;

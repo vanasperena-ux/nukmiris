@@ -9,7 +9,7 @@ import {recordResult} from './record-result.js';
 import {reduceInput} from './reduce-input.js';
 import {RecoveryWorker} from './recover-expired.js';
 import {PlanConflictError,ConversationHeldError} from './plan-conflict.js';
-import {AvailabilityHeldError,recheckSlot,eligibleSlotResources,type AvailabilityConfig,type SyntheticCalendarReader} from '../domain/availability.js';
+import {bookingHorizonDays,AvailabilityHeldError,recheckSlot,eligibleSlotResources,type AvailabilityConfig,type SyntheticCalendarReader} from '../domain/availability.js';
 import {parseAppointmentDate,explainDate} from '../domain/appointment-date.js';
 import {normalizedText,ordinaryDecision,localRoutingDecision} from '../domain/classification.js';
 import {bookingCustomerName,NAME_REPROMPT} from '../domain/customer-name.js';
@@ -100,7 +100,7 @@ export class InteractiveBooking {
   const pick=async(mode:'MOVE'|'CANCEL',page=0,prefix='')=>{reset();const result=appointmentPicker(b,c.revision+1,now,s.config.timeZone,mode,await upcomingAppointments(s.reducer,b,c.subject),page);management=result.state;if(prefix)result.view.text=prefix+'\n\n'+result.view.text;return result.view;};
   const recover=async(prefix:string)=>management?.mode==='MOVE'||management?.mode==='CANCEL'?pick(management.mode,0,prefix):chooseMode();
   const held=async(target:ManagedAppointment,reason:string)=>{const mode=management?.mode==='CANCEL'?'CANCEL':'MOVE';management={mode,page:0,appointments:[target]};await this.attention(s,'rc1/'+target.id+'/'+target.revision+'/'+catalog?.revision,reason,{appointmentId:target.id});return managementView(b,c.revision+1,now,'No pude ofrecer un cambio seguro para esta cita. El negocio debe verificarla; no se confirmó ningún cambio de esta solicitud.',[{kind:'rc1mode',value:mode,title:'Elegir otra cita'},{kind:'human',value:'0',title:'Hablar con alguien'}],'MANAGEMENT_HELD');};
-  const ensureSelected=async()=>{if(!management?.selected||!catalog)return true;const target=management.selected,current=(await upcomingAppointments(s.reducer,b,c.subject)).find(a=>a.id===target.id);if(!current||digest(object(current))!==digest(object(target))){view=await recover('La cita cambió o ya no está disponible para esta acción. Elige de nuevo.');return false;}if(!rescheduleContext(catalogScope(baseScope,catalog).config,catalog,current)){view=await held(current,current.held?'RC1_OPERATION_HELD':'RC1_EMPLOYEE_INELIGIBLE');return false;}return true;};
+  const ensureSelected=async()=>{if(!management?.selected||!catalog)return true;const target=management.selected,current=(await upcomingAppointments(s.reducer,b,c.subject)).find(a=>a.id===target.id);if(!current||digest(object(current))!==digest(object(target))){view=await recover('La cita ya no está disponible. Elige de nuevo.');return false;}if(!rescheduleContext(catalogScope(baseScope,catalog).config,catalog,current)){view=await held(current,current.held?'RC1_OPERATION_HELD':'RC1_EMPLOYEE_INELIGIBLE');return false;}return true;};
   const operation=await s.reducer.tx(b,async db=>(await db.query<{plan:ObjectValue}>('SELECT plan FROM core.operation WHERE business_id=$1 AND input_id=$2',[b,inputId])).rows[0]);
   if(operation){book=await s.archive.lookup(`operation/${b}/${inputId}`)??undefined;if(!book)throw Error('operation_custody_missing');if(operation.plan['management']){const m=object(operation.plan['management']);management={mode:m['kind'] as 'MOVE'|'CANCEL',page:0,appointments:[],selected:m['appointment'] as unknown as ManagedAppointment};}}
   else try{
@@ -118,7 +118,7 @@ export class InteractiveBooking {
     else if(catalog&&kind==='rc1page'&&management&&management.mode!=='CHOOSE')view=await pick(management.mode,Number(value));
     else if(catalog&&(kind==='rc1move'||kind==='rc1cancel')&&management&&management.mode!=='CHOOSE'){
      const chosen=management.appointments.find(a=>a.id===value),current=(await upcomingAppointments(s.reducer,b,c.subject)).find(a=>a.id===value);
-     if(!chosen||!current||digest(object(current))!==digest(object(chosen)))view=await recover('La cita cambió o ya no está disponible. Elige de nuevo.');
+     if(!chosen||!current||digest(object(current))!==digest(object(chosen)))view=await recover('La cita ya no está disponible. Elige de nuevo.');
      else if(current.held||!current.service)view=await held(current,current.held?'RC1_OPERATION_HELD':'RC1_SNAPSHOT_MISSING');
      else if(kind==='rc1cancel'){management.selected=current;mutation='CANCEL';}
      else{const context=rescheduleContext(catalogScope(baseScope,catalog).config,catalog,current);if(!context)view=await held(current,'RC1_EMPLOYEE_INELIGIBLE');else{management.selected=current;s={...catalogScope(baseScope,catalog),config:context.config};oracle=new AvailabilityOracle(s.config,this.reader(s,now,c.subject,current),()=>now,context.catalog);view=await oracle.open();view.text='Elige otro horario para tu cita con '+String(current.service['employeeName'])+'.\n\n'+view.text;}}
@@ -132,7 +132,7 @@ export class InteractiveBooking {
     else{const identity=await s.archive.ensure(`local-name/${b}/${inputId}`,'LOCAL_CUSTOMER',{businessId:b,inputId,name},()=>({customerId:randomUUID()}));await s.reducer.tx(b,async db=>{await db.query('SELECT core.local_name($1,$2,$3,$4)',[b,inputId,name,identity.body['customerId']]);});view=await oracle.nameCaptured();}
    }
    else if(!['OFFER','DATES','SERVICES'].includes(String(basis['outcome']))){reset();view=oracle.menu();}
-   else if(await ensureSelected()){const parsed=parseAppointmentDate(c.payload.value,{now,timeZone:s.config.timeZone});if(parsed.success){view=await oracle.date(parsed.date!);if(view.choices.length===1&&parsed.fallback?.success)view=await oracle.date(parsed.fallback.date!);}else view={...previousView(),text:explainDate(c.payload.value,parsed,365)};}
+   else if(await ensureSelected()){const parsed=parseAppointmentDate(c.payload.value,{now,timeZone:s.config.timeZone,maxBookingHorizonDays:bookingHorizonDays(s.config)});if(parsed.success){view=await oracle.date(parsed.date!);if(view.choices.length===1&&parsed.fallback?.success)view=await oracle.date(parsed.fallback.date!);}else view={...previousView(),text:explainDate(c.payload.value,parsed,bookingHorizonDays(s.config))};}
    if(mutation&&management?.selected)book=await this.prepareManagement(s,c,mutation,management.selected,view,now,catalog!.revision);
    if(view?.outcome==='BOOK_REQUEST'&&!mutation){
     const known=await s.reducer.tx(b,async db=>(await db.query<{id:string;name:string}>('SELECT cu.id,p.name FROM core.customer cu JOIN core.local_customer p ON p.business_id=$1 AND p.customer_id=cu.id WHERE cu.business_id=$1 AND cu.subject=$2',[b,c.subject])).rows[0]);if(!known)throw Error('local_customer_missing');
@@ -170,7 +170,7 @@ export class InteractiveBooking {
   if(!book){
    const mode=appointmentSummaryMode(c.payload,view!.outcome,silent);
    const active=mode==='NONE'?[]:await this.active(s,c.subject,mode==='ALL');
-   const greeting=view!.outcome==='MENU'?`Hola${customer?.name?' '+customer.name:''}, bienvenido a ${s.businessName??'el negocio'}.`:'';
+   const greeting=view!.outcome==='MENU'?`Hola${customer?.name?' '+customer.name:''}, bienvenido a ${s.businessName??'el negocio'}. Soy un bot que te ayuda a agendar, reagendar o cancelar una cita.`:'';
    const prefix=[greeting,this.activeText(s,active)].filter(Boolean).join('\n\n');
    if(prefix){
     if([...prefix+'\n\n'+view!.text].length<=1024)view!.text=prefix+'\n\n'+view!.text;
