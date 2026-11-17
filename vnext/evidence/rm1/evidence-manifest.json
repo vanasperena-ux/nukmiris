@@ -1,0 +1,192 @@
+{
+  "format": 1,
+  "source": "6a25e295a7b05860d0cb8207c0b4c57731af74e7",
+  "sourceTree": "b36328203fb462bc59e76a0c20bf1e984c286e84",
+  "pr": 28,
+  "scope": "additive RM-1 documentation/evidence only; source unchanged",
+  "verification": "Expected bytes. Actual GitHub download/readback result is recorded separately in PR #28 after publication.",
+  "files": [
+    {
+      "path": "docs/product/rm1/COMMUNICATION-DESIGN.md",
+      "bytes": 3610,
+      "chars": 3608,
+      "sha256": "2e2db72c4dc001b2fcf4ad1052be8ee0f750cb15208cb842419b48d6c148de01",
+      "gitBlob": "3997e4bc71174e3e8f4344d38fd34a85fc802503"
+    },
+    {
+      "path": "docs/product/rm1/CX-MATRIX.md",
+      "bytes": 5669,
+      "chars": 5618,
+      "sha256": "23806f2018bdf2efab67330103b8748f898b0c214f67b1d9cd53cc0bf5b34cca",
+      "gitBlob": "affba5ba3534fc86d35e6c062a784e63b4b8b428"
+    },
+    {
+      "path": "docs/product/rm1/IMPLEMENTATION-STATUS.md",
+      "bytes": 1939,
+      "chars": 1937,
+      "sha256": "4310efb60697278d5cb24fd8a86247ba843ef59695f129e4c840af159892a3fb",
+      "gitBlob": "46acd022179b0cd22115173a28dedb471ffb84e4"
+    },
+    {
+      "path": "docs/product/rm1/REQUIREMENTS.md",
+      "bytes": 12256,
+      "chars": 12248,
+      "sha256": "2382242536252cb42f39062ce5b0fd0a0fab8c35c26583cb435b973209c4566a",
+      "gitBlob": "7253c47495593e2b7f47d37e9d0ee2ebaef3365e"
+    },
+    {
+      "path": "docs/product/rm1/WINDOWS.md",
+      "bytes": 12971,
+      "chars": 12942,
+      "sha256": "4d6bd3db71918375e54c592bfadf55afff21af27e4449912f945be7a7e4dabc3",
+      "gitBlob": "9fe871845a31c1abffc8a5eea0cfc4538498ce08"
+    },
+    {
+      "path": "vnext/evidence/rm1/CLAUDE-HANDOFF.md",
+      "bytes": 5621,
+      "chars": 5619,
+      "sha256": "9edf71290cfc315e7e6bbaa7846181f2e216be8b2f2ed3768355593a034385cf",
+      "gitBlob": "e7888695c849114ce25d21c2f52f0a29180db0cb"
+    },
+    {
+      "path": "vnext/evidence/rm1/README.md",
+      "bytes": 5859,
+      "chars": 5855,
+      "sha256": "47ec5ebb4679f6dfb62562be88b49e21c5652464022f1b32efa1d7e31e57acf4",
+      "gitBlob": "d305729606a98b6624348d987fc59375e3b338bd"
+    },
+    {
+      "path": "vnext/evidence/rm1/environment.json",
+      "bytes": 779,
+      "chars": 779,
+      "sha256": "690ee658cadc1a5d8a8237baba54ba4c5060ea9bad67511affe8843237c6c498",
+      "gitBlob": "23515a49c9207aeadb2b9c20f8a26a607f895de5"
+    },
+    {
+      "path": "vnext/evidence/rm1/logs/full.log",
+      "bytes": 82344,
+      "chars": 80593,
+      "sha256": "a68d9d110f1a29d858e25b9fcb80b00afde4755bd11d867e97a6469e0c3d0155",
+      "gitBlob": "5afbb0d92586eb054fcfb397cc943b4bbb3a1cc4"
+    },
+    {
+      "path": "vnext/evidence/rm1/logs/rc1-browser.log",
+      "bytes": 1198,
+      "chars": 1180,
+      "sha256": "a0491d2f58fb3d3d444c4d9bf96821e3e9c331644f5ecfd62698980018073128",
+      "gitBlob": "de9e1c1a1474a37d01ef1425cc0537020a165502"
+    },
+    {
+      "path": "vnext/evidence/rm1/logs/rm1-browser.log",
+      "bytes": 1226,
+      "chars": 1208,
+      "sha256": "98dadaa9f0ee42d59c4614b5fe568470cfb7ef7b1702b54d0714cadb41d8d815",
+      "gitBlob": "a723da7e9f6c7599d7b8b2ff57dbc550e66daca1"
+    },
+    {
+      "path": "vnext/evidence/rm1/logs/runtime.log",
+      "bytes": 11262,
+      "chars": 11138,
+      "sha256": "8a2df44ce29879d2835931fa0338e7d345c95c5d32d0c337448a7d01fad809a2",
+      "gitBlob": "10af3ecd041ccae7451f4f6f3f2323a80a45a523"
+    },
+    {
+      "path": "vnext/evidence/rm1/logs/scope.log",
+      "bytes": 234,
+      "chars": 234,
+      "sha256": "a016f0b0b2ea85cfab9c4f0ae44eb538a8c9f0458be2746bebf520dd5d892f18",
+      "gitBlob": "766e920913685cf245c4a579e83aa8e0a8c95b65"
+    },
+    {
+      "path": "vnext/evidence/rm1/logs/services-browser.log",
+      "bytes": 1168,
+      "chars": 1150,
+      "sha256": "46331ccb5b695183723759f5a57edc6bb1e0af5d4a55f385c41a00d32822e52d",
+      "gitBlob": "2ae3754c81e73d482a66dcb8da9b41ab4a7bc810"
+    },
+    {
+      "path": "vnext/evidence/rm1/logs/typecheck.log",
+      "bytes": 80,
+      "chars": 80,
+      "sha256": "c54b63c53ecf769f791e62b3d589fc3042ec66d706b6fa5b33faf93446b21049",
+      "gitBlob": "5a4605a2d34ac1c18a2fdae83daaba8887125b13"
+    },
+    {
+      "path": "vnext/evidence/rm1/logs/whitespace.log",
+      "bytes": 0,
+      "chars": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "gitBlob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    {
+      "path": "vnext/evidence/rm1/preflight/README.md",
+      "bytes": 2059,
+      "chars": 2059,
+      "sha256": "e82ca160382e81cbdfdd2063e9a54fba32705b3cbd94c86ac4b21658f9de2135",
+      "gitBlob": "94ae12f05cdc9932e8fc7ca11e85391f7b257b67"
+    },
+    {
+      "path": "vnext/evidence/rm1/preflight/browser-development-assertion.log",
+      "bytes": 1684,
+      "chars": 1662,
+      "sha256": "4979c414e64b16a7f0f66db369c9b506453362563e55ecc90716e7d654b730c8",
+      "gitBlob": "760fe055a35fc025f541ec7ec97639b4170d89b8"
+    },
+    {
+      "path": "vnext/evidence/rm1/preflight/full-231d-before-fixture-release.log",
+      "bytes": 82331,
+      "chars": 80580,
+      "sha256": "486caa3c690af578b1d5fc20eea9a43ba9ff290fa9fdc74486ff566d0bbe57af",
+      "gitBlob": "825f752921c9b59a2178dfb33a29c2178e000fb7"
+    },
+    {
+      "path": "vnext/evidence/rm1/preflight/full-ddbd-before-null-guards.log",
+      "bytes": 83071,
+      "chars": 81328,
+      "sha256": "23115878f0ef85174dba19ae796823447cb7d695f8a6287a5601832edcc1b3bf",
+      "gitBlob": "6e96d19b630e5331bc181661332ce70d1261ece9"
+    },
+    {
+      "path": "vnext/evidence/rm1/preflight/restore-host-diagnostic.log",
+      "bytes": 1312,
+      "chars": 1312,
+      "sha256": "39471b2153f0680b2eb536c283d67466363578c46f43f74a196f98e11d978d2d",
+      "gitBlob": "233cda24f55a83b88543fded3c8980d71f9259b4"
+    },
+    {
+      "path": "vnext/evidence/rm1/preflight/runtime-231d-before-fixture-release.log",
+      "bytes": 14566,
+      "chars": 14432,
+      "sha256": "db4f8f048ba3d212344244820bb34fb8a2e3acdb07669237f53aa0943a6b017e",
+      "gitBlob": "e52e18df75d136f5b4ddf6e3b120d32b6307c11f"
+    },
+    {
+      "path": "vnext/evidence/rm1/preflight/targeted-development-schedule.log",
+      "bytes": 9946,
+      "chars": 9764,
+      "sha256": "0e3c2a7003702259e86bcc6736143a2bde5130fdf9fcff45f58b6b2d5dffb651",
+      "gitBlob": "58c0a4c626d3c29ad1bb233448fa6c8188cf4653"
+    },
+    {
+      "path": "vnext/evidence/rm1/results.json",
+      "bytes": 2163,
+      "chars": 2163,
+      "sha256": "35afc8210912cd02356c443ab2385cd3bf5ddbd00698ea4eee6bb7dd3dafd90a",
+      "gitBlob": "613709e987722f1613bf1e2912d0a8e277357321"
+    },
+    {
+      "path": "vnext/evidence/rm1/source-integrity.json",
+      "bytes": 36050,
+      "chars": 36048,
+      "sha256": "df809635744c6d2bdd4883ce05281b5aa2b26cd461b6f7c6dcdfb79fa6a9a057",
+      "gitBlob": "cec1d660097130546d8c1970420da25a9d18e9ff"
+    },
+    {
+      "path": "vnext/evidence/rm1/sources.json",
+      "bytes": 2230,
+      "chars": 2230,
+      "sha256": "1e1852026104e5848a81db1e41c374dfaf79a5adfe3c5388dba82a130126c7a6",
+      "gitBlob": "eda12289985ff34f87490bdd703047a8fe080b2c"
+    }
+  ]
+}

@@ -1,0 +1,187 @@
+
+> nukmiris-wp1-synthetic-core@0.0.0 test:runtime
+> npm run build && node --test --test-concurrency=1 local/platform.test.mjs local/command-lock.test.mjs local/runtime.test.mjs local/interactive.test.mjs local/final-functional.test.mjs local/services.test.mjs local/services-n1.test.mjs local/rc1.test.mjs local/reminders.test.mjs
+
+
+> nukmiris-wp1-synthetic-core@0.0.0 build
+> tsc -p tsconfig.json
+
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.2
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.2
+npm notice To update run: npm install -g npm@12.2.2
+npm notice
+✔ W3 a live command remains exclusive; contender cannot alter metadata or execute (16.060671ms)
+✔ W3 a crashed real CLI child leaves diagnostic metadata and a new command recovers without PID killing (76.819893ms)
+✔ W3 reboot/PID reuse residue cannot brick commands; concurrent recovery has at most one owner (23.735172ms)
+✔ W3 legacy/corrupt lock is preserved with a recovery command; explicit instance confirmation is required (3.816506ms)
+✔ W9 Windows-shaped flush rejects the former read-only handle; metadata flushes its writable creator (4.322044ms)
+✔ W9 write failure preserves prior metadata, cleans only its temporary file and propagates failure (1.974456ms)
+✔ W9 sync failure preserves prior metadata, cleans only its temporary file and propagates failure (2.012662ms)
+✔ W9 close failure preserves prior metadata, cleans only its temporary file and propagates failure (1.887207ms)
+✔ W9 rename failure preserves prior metadata, cleans only its temporary file and propagates failure (2.002027ms)
+✔ W9 exclusive-create collision never removes a pre-existing temporary file (1.631678ms)
+﹣ W9 native Windows rejects read-only fsync and publishes through a writable exclusive handle (0.171575ms) # SKIP
+Pulling/verifying pinned PostgreSQL image (first download budget: 10 minutes).
+{"finalFunctional":"PASS","platform":"linux","node":"v24.19.0","postgres":"17.11 (Debian 17.11-1.pgdg12+2)","realHttp":true,"existingBookings":2,"invalidNameEffects":0,"directCitaAgendarAll":true,"menuBookingNoRepeat":true,"humanEntryNoSummary":true,"quietQueueRestart":true,"validNameDirectBooking":true,"stableRequestReplay":true,"tenantIsolation":true,"ownerProfileAccessed":false,"nativeWindows":"NOT RUN"}
+✔ Final three corrections through authenticated TCP HTTP: safe names, explicit summaries, durable quiet human mode (17286.200392ms)
+Pulling/verifying pinned PostgreSQL image (first download budget: 10 minutes).
+Pulling/verifying pinned PostgreSQL image (first download budget: 10 minutes).
+✖ L2 TCP/browser HTTP: real indexed archive, known/new booking, tenant auth, crash/restart and coherent inert restore (40127.212766ms)
+✔ W8 low ports and confirmed guard relocation from EACCES preserve live-command exclusion (15.182828ms)
+✔ W8 Docker Windows bind-forbidden diagnostics identify the reserved port without daemon advice (1.391783ms)
+✔ L2 published demo:book/start/stop CLI works with spaces/Unicode and reuses the original profile (9558.809404ms)
+Pulling/verifying pinned PostgreSQL image (first download budget: 10 minutes).
+✔ NM-035/040 authenticated details and fourth persona are scoped; no invented phone (7585.395753ms)
+Pulling/verifying pinned PostgreSQL image (first download budget: 10 minutes).
+Pulling/verifying pinned PostgreSQL image (first download budget: 10 minutes).
+✖ Additive existing-profile upgrade preserves UNKNOWN identities, history, custody and coherent inert rollback backup (39725.653241ms)
+Pulling/verifying pinned PostgreSQL image (first download budget: 10 minutes).
+✔ PR16 C1/C2 HTTP: conversational names cannot book and Unicode support messages remain queued (9609.488667ms)
+Pulling/verifying pinned PostgreSQL image (first download budget: 10 minutes).
+✔ PR16 C2 already008 profile upgrades only009 and preserves protected rows (8678.489282ms)
+✔ W1 numeric SID uses wildcard prefix; icacls and SID-normalized ACL are read back; every native process hidden (2.161152ms)
+✔ W1 refuses a successful grant with invalid ACL: extra ACE (0.5671ms)
+✔ W1 refuses a successful grant with invalid ACL: wrong SID (0.297581ms)
+✔ W1 refuses a successful grant with invalid ACL: inherited root (0.336709ms)
+✔ W1 refuses a successful grant with invalid ACL: unprotected root (0.468734ms)
+Pulling/verifying pinned PostgreSQL image (first download budget: 10 minutes).
+✔ W1 failed protection/pull removes only the empty root it created and permits a fresh retry (20.612852ms)
+✔ W2 explicit digest pull has a ten-minute budget and rejects a different reported image (0.486631ms)
+✔ W2 actionable sanitized Docker error: port (1.097466ms)
+✔ W2 actionable sanitized Docker error: desktop (0.423958ms)
+✔ W2 actionable sanitized Docker error: timeout (0.366042ms)
+✔ W2 actionable sanitized Docker error: missing binary (0.442065ms)
+✔ W5 Docker endpoint selection and child creation force hidden windows (0.307486ms)
+﹣ W1 native Windows directory, child file and persisted state privacy (0.053129ms) # Native Windows ACL execution unavailable on this host
+✔ W1 Azure AD numeric SID is supported without account-name resolution (0.404019ms)
+Pulling/verifying pinned PostgreSQL image (first download budget: 10 minutes).
+Pulling/verifying pinned PostgreSQL image (first download budget: 10 minutes).
+✖ RC1 portable TCP: known/new customers, direct move/cancel, exact history, tenant/auth, process crash and inert coherent restore (41837.839479ms)
+Pulling/verifying pinned PostgreSQL image (first download budget: 10 minutes).
+{"rc1Unknown":"HELD","restart":"NO_RETRY","nativeWindows":"NOT_EXECUTED"}
+✔ RC1 TCP uncertain move before fake effect remains protected across process crash; no retry, false success or original-slot release (9357.725539ms)
+Pulling/verifying pinned PostgreSQL image (first download budget: 10 minutes).
+{"rc1CustomerOverlap":"PASS","newThenKnown":true,"sameCustomer":"NO_EXACT_PARTIAL_OR_BUFFER_OVERLAP","differentCustomers":"SAME_TIME_DISTINCT_EMPLOYEES","requestReplay":"ONE_IDENTITY","restart":"PASS","tenantIsolation":"PASS","node":"v24.19.0","postgres":"17.11 (Debian 17.11-1.pgdg12+2)","nativeWindows":"NOT_EXECUTED","ownerProfileAccessed":false}
+✔ RC1 customer overlap TCP regression: new customer books, second offer filters own ranges, other customer keeps capacity, restart stays isolated (11064.856304ms)
+Pulling/verifying pinned PostgreSQL image (first download budget: 10 minutes).
+Pulling/verifying pinned PostgreSQL image (first download budget: 10 minutes).
+{"rm1Tcp":"PASS","stages":[168,24,22,2],"delivery":"EXPLICIT_CORRELATED_SIMULATED_RECEIPT","attendance":"EXACT_ONCE","restart":"PERSISTENT_NO_DUPLICATE","backup":"COHERENT_INERT_RESTORE","node":"v24.19.0","postgres":"17.11 (Debian 17.11-1.pgdg12+2)","timeZone":"UTC","nativeWindows":"NOT_EXECUTED","realProviders":false}
+✔ NM069 TCP/UTC complete four-stage reminder, attendance, owner authorization, crash/restart, coherent backup and inert restore (17909.387426ms)
+Pulling/verifying pinned PostgreSQL image (first download budget: 10 minutes).
+{"rm1Unknown":"HELD_NO_RETRY","processRestart":"PASS","nativeWindows":"NOT_EXECUTED"}
+✔ NM069 TCP fake send failure remains UNKNOWN through actual process crash/restart without blind resubmit (8444.327097ms)
+✔ W8 high service ports are rejected before database or worker access (1.308489ms)
+Pulling/verifying pinned PostgreSQL image (first download budget: 10 minutes).
+▶ Windows-targeted local runtime over isolated TCP PostgreSQL17.11 (host execution recorded)
+  ✔ fresh isolated resources use loopback only, SCRAM, UTC and inert businesses (44.323869ms)
+  ✔ E1 every runtime connection overrides a Mexico City role default with UTC (18.254305ms)
+  ✔ W4 loopback connections ignore inherited PGSSLMODE require/verify-full (26.074402ms)
+Pulling/verifying pinned PostgreSQL image (first download budget: 10 minutes).
+  ✔ path/identity checks and occupied DB port fail without fallback or touching the existing fixture (5875.940228ms)
+  ✔ portable child startup, cooperative stop and owned-handle crash need no POSIX signals (214.098123ms)
+  ✔ start/health/authenticated stop/crash/restart keep the original DB and refuse an occupied service port (1248.933908ms)
+  ✔ real indexed-custody/core booking smoke and C1 work over TCP without mutating persistent demo data (726.803161ms)
+  ✔ private backup restores to a separate inert database; corruption fails closed (820.427056ms)
+Pulling/verifying pinned PostgreSQL image (first download budget: 10 minutes).
+  ✔ reset requires exact identity, retains backup and creates fresh isolated IDs (6901.151822ms)
+{"platform":"linux","node":"v24.19.0","postgres":"17.11 (Debian 17.11-1.pgdg12+2)","tcp":true,"utc":true,"nativeWindows":"NOT RUN","generatedStatePublished":false}
+✔ Windows-targeted local runtime over isolated TCP PostgreSQL17.11 (host execution recorded) (22595.279503ms)
+✔ published CLI prepare/start/smoke/backup/stop/reset commands execute with spaces and Unicode paths (15766.906573ms)
+Pulling/verifying pinned PostgreSQL image (first download budget: 10 minutes).
+{"N1Upgrade":"PASS","postgres":"17.11 (Debian 17.11-1.pgdg12+2)","platform":"linux","nativeWindows":"NOT_EXECUTED","applied":["011-solo-qualification-creation-only.sql"],"allCoreTablesPreserved":52,"functionIdentityOwnerAclPreserved":true,"ddlRollback":"PASS","repeatUpgrade":"NO_OP","reapplyMigration":"NO_DATA_CHANGE","activeBooking":"PRESERVED","unknownBooking":"PROTECTED","automaticActivation":false}
+✔ N1 original010 profile upgrades through CLI once; rollback, all rows, ACLs, ACTIVE and UNKNOWN identities preserved (9153.742611ms)
+Pulling/verifying pinned PostgreSQL image (first download budget: 10 minutes).
+Pulling/verifying pinned PostgreSQL image (first download budget: 10 minutes).
+✖ SE1 TCP owner authorization, service/employee forms API, booking, crash/restart and coherent inert restore (39831.49637ms)
+ℹ tests 53
+ℹ suites 0
+ℹ pass 47
+ℹ fail 4
+ℹ cancelled 0
+ℹ skipped 2
+ℹ todo 0
+ℹ duration_ms 309837.597007
+
+✖ failing tests:
+
+test at local/interactive.test.mjs:20:1
+✖ L2 TCP/browser HTTP: real indexed archive, known/new booking, tenant auth, crash/restart and coherent inert restore (40127.212766ms)
+  Error: local_postgres_not_ready
+      at ready (file:///workspace/work/nukmiris-product-rm1/vnext/local/fixture.mjs:38:8)
+      at async provision (file:///workspace/work/nukmiris-product-rm1/vnext/local/fixture.mjs:80:18)
+      at async restoreInteractive (file:///workspace/work/nukmiris-product-rm1/vnext/local/coherent-backup.mjs:33:5)
+      at async TestContext.<anonymous> (file:///workspace/work/nukmiris-product-rm1/vnext/local/interactive.test.mjs:26:140)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    [cause]: Error: connect ECONNREFUSED 127.0.0.1:25716
+        at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1864:16) {
+      errno: -111,
+      code: 'ECONNREFUSED',
+      syscall: 'connect',
+      address: '127.0.0.1',
+      port: 25716
+    }
+  }
+
+test at local/interactive.test.mjs:50:1
+✖ Additive existing-profile upgrade preserves UNKNOWN identities, history, custody and coherent inert rollback backup (39725.653241ms)
+  Error: local_postgres_not_ready
+      at ready (file:///workspace/work/nukmiris-product-rm1/vnext/local/fixture.mjs:38:8)
+      at async provision (file:///workspace/work/nukmiris-product-rm1/vnext/local/fixture.mjs:80:18)
+      at async restoreInteractive (file:///workspace/work/nukmiris-product-rm1/vnext/local/coherent-backup.mjs:33:5)
+      at async TestContext.<anonymous> (file:///workspace/work/nukmiris-product-rm1/vnext/local/interactive.test.mjs:59:17)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    [cause]: Error: connect ECONNREFUSED 127.0.0.1:31007
+        at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1864:16) {
+      errno: -111,
+      code: 'ECONNREFUSED',
+      syscall: 'connect',
+      address: '127.0.0.1',
+      port: 31007
+    }
+  }
+
+test at local/rc1.test.mjs:12:1
+✖ RC1 portable TCP: known/new customers, direct move/cancel, exact history, tenant/auth, process crash and inert coherent restore (41837.839479ms)
+  Error: local_postgres_not_ready
+      at ready (file:///workspace/work/nukmiris-product-rm1/vnext/local/fixture.mjs:38:8)
+      at async provision (file:///workspace/work/nukmiris-product-rm1/vnext/local/fixture.mjs:80:18)
+      at async restoreInteractive (file:///workspace/work/nukmiris-product-rm1/vnext/local/coherent-backup.mjs:33:5)
+      at async TestContext.<anonymous> (file:///workspace/work/nukmiris-product-rm1/vnext/local/rc1.test.mjs:27:74)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    [cause]: Error: connect ECONNREFUSED 127.0.0.1:24709
+        at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1864:16) {
+      errno: -111,
+      code: 'ECONNREFUSED',
+      syscall: 'connect',
+      address: '127.0.0.1',
+      port: 24709
+    }
+  }
+
+test at local/services.test.mjs:12:1
+✖ SE1 TCP owner authorization, service/employee forms API, booking, crash/restart and coherent inert restore (39831.49637ms)
+  Error: local_postgres_not_ready
+      at ready (file:///workspace/work/nukmiris-product-rm1/vnext/local/fixture.mjs:38:8)
+      at async provision (file:///workspace/work/nukmiris-product-rm1/vnext/local/fixture.mjs:80:18)
+      at async restoreInteractive (file:///workspace/work/nukmiris-product-rm1/vnext/local/coherent-backup.mjs:33:5)
+      at async TestContext.<anonymous> (file:///workspace/work/nukmiris-product-rm1/vnext/local/services.test.mjs:42:74)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    [cause]: Error: connect ECONNREFUSED 127.0.0.1:28056
+        at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1864:16) {
+      errno: -111,
+      code: 'ECONNREFUSED',
+      syscall: 'connect',
+      address: '127.0.0.1',
+      port: 28056
+    }
+  }
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.2
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.2
+npm notice To update run: npm install -g npm@12.2.2
+npm notice

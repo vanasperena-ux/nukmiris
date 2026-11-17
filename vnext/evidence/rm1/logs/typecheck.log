@@ -1,0 +1,4 @@
+
+> nukmiris-wp1-synthetic-core@0.0.0 typecheck
+> tsc -p tsconfig.json --noEmit
+
