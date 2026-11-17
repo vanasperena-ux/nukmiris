@@ -1,9 +1,9 @@
 # NukMiris — Release Roadmap
 
-**Planning version:** 1.3 (2026-11-16)
+**Planning version:** 1.4 (2026-11-16)
 **Status:** OWNER-APPROVED RELEASE ALLOCATION; **NOT IMPLEMENTATION AUTHORIZATION**
-**Master register:** [NUKMIRIS_FEATURE_REGISTER.md](NUKMIRIS_FEATURE_REGISTER.md) v1.13
-**Source decisions:** Owner release validations (2026-11-16), including R1 PWA, calendar import, start-time setting NM-067, and R0 local reminder parity NM-069. This v1.3 update changes release allocation only, not R3 deployment authorization.
+**Master register:** [NUKMIRIS_FEATURE_REGISTER.md](NUKMIRIS_FEATURE_REGISTER.md) v1.14
+**Source decisions:** Owner release validations (2026-11-16), including R1 PWA, calendar import, start-time setting NM-067, R0 local reminder parity NM-069, and the post-NM-068/NM-069 legacy-parity acceptance gate. This v1.4 update does not authorize gap implementation or R3 deployment.
 
 ## Release governance
 
@@ -26,6 +26,8 @@
 **R0 reminder parity (NM-069; owner-authorized synthetic implementation):** Restore the four accepted v0.8.1 reminders in local vNext: seven days (168 h) before (informational); 24 hours before (attendance confirmation `Sí, confirmo` / `Necesito reagendar`); 22 hours before (same actions **only after correlated proof that the 24-hour message was delivered/read and absent confirmation or change request**); two hours before (informational, even when attendance remains unconfirmed). Preserve original v0.8.1 timing eligibility, 15-minute late-send limit, consent/opt-out gates, per-appointment/version audit, durable restart/replay, cancel/reschedule invalidation and UNKNOWN custody. Nonresponse never cancels the booking. **Synthetic messaging and receipts only; no real WhatsApp or Google Calendar actions.** See [legacy reminders](../../backend/REMINDERS.md) and [template definitions](../../backend/REMINDER_TEMPLATES.md). This R0 parity is distinct from R3 activation/verification of actual Meta templates, WABA sender approval, real webhook delivery, production consent compliance, integrations and cloud.
 
 **Acceptance gate:** Owner walks through known/new booking, 0/1/multiple appointments, immediate cancel/reschedule (only before appointment start), employee and customer overlap protection, menu/human support, replayed/stale actions, restart, service buffers, **four reminder stages, response/attendance status, 22-hour delivered-and-unanswered gating, opt-out, no-response preservation, reschedule/cancel suppression and reminder restart**, and no false confirmations. Native Windows test evidence and independent reviews as required.
+
+**Post-NM-068/NM-069 legacy parity gate (owner-approved sequence):** After owner Windows testing and independent review of **both** NM-068 and NM-069, request a separate Codex assessment of the accepted **v0.8.1 vs current vNext** functionality before declaring R0 complete. Cover deterministic conversational Spanish intent handling, the full 30/15/3/365 dynamic search policy, first-time customer name capture/identity reuse, durable inbound/outbound and uncertainty/restart behavior, and local backups/isolated restore. Reconcile any other accepted legacy features against existing NM IDs and SE-1/RC-1 evidence. Codex must produce a source/test-backed `VERIFIED / PARTIAL / MISSING / INTENTIONALLY DEFERRED` matrix and proposed targeted corrections. **Do not start this audit before NM-068/NM-069 acceptance; do not automatically implement gaps**. Owner reviews scope and authorizes any bounded R0 fix PR separately, followed by Claude review and native Windows acceptance. R0 closure and transition to R1 require explicit owner approval. Reference: [Feature Register v1.14](NUKMIRIS_FEATURE_REGISTER.md), section “R0 v0.8.1 parity audit — gated follow-up”.
 
 ## R1 — Services and installable mobile-first owner PWA
 
@@ -101,7 +103,7 @@
 ## Cross-release controls
 
 - R0 includes the **owner-authorized synthetic rebuild** of legacy reminders and attendance (NM-069); the R3 live-provider/compliance features remain gated. R1 and R2 may have synthetic prototype adapters even though R3 enables real provider accounts; production integration must not be implied by prototype acceptance.
-- R0 must not be marked complete solely from previous legacy `DONE (reported)` entries or old draft PR tests.
+- R0 must not be marked complete solely from previous legacy `DONE (reported)` entries or old draft PR tests. Complete NM-068/NM-069 acceptance first, then the separate v0.8.1 parity audit and any owner-authorized R0 gap fixes before R0 release sign-off.
 - Owner decisions recorded in Feature Register v1.7 remain binding, including no customer overlaps, owner lead time, reschedule/cancel eligibility cutoff at scheduled start, and employee continuity.
 - Preserve stable NM IDs and log future changes to release targets with rationale; update source register and roadmap together.
 - Every release transition requires owner confirmation; no implementation begins from this planning document alone.
