@@ -40,6 +40,21 @@ process.once('message',config=>{void(async()=>{
    const scope=opened.app.ownerCatalog(grant.businessId);if(!scope){json(403,{error:'owner_scope_denied'});return;}
    if(req.method==='GET'&&req.url==='/api/owner/catalog'){json(200,{businessId:grant.businessId,...await scope.load()});return;}
    if(req.method==='GET'&&req.url==='/api/owner/appointments'){json(200,{businessId:grant.businessId,appointments:await scope.appointments()});return;}
+   if(req.url==='/api/owner/reminders'){
+    const reminders=opened.app.ownerReminders(grant.businessId);if(!reminders){json(403,{error:'reminder_fixture_unavailable'});return;}
+    if(req.method==='GET'){json(200,await reminders.activity());return;}
+    if(req.method==='POST'){
+     const p=await body(req);if(!exact(p,['requestId','action','value'])||typeof p.requestId!=='string'||!/^[-0-9a-f]{36}$/.test(p.requestId)){json(400,{error:'reminder_schema_denied'});return;}
+     if(p.action==='ENABLE'&&exact(p.value,['enabled']))await reminders.configure(p.requestId,{action:'ENABLE',enabled:p.value.enabled});
+     else if(p.action==='TEMPLATE'&&exact(p.value,['kind','status']))await reminders.configure(p.requestId,{action:'TEMPLATE',...p.value});
+     else if(p.action==='PERMISSION'&&exact(p.value,['subject','wording','affirmed'])&&p.value.affirmed===true)await reminders.grant(p.requestId,p.value.subject,'SYNTHETIC_OWNER_EVIDENCE',p.value.wording);
+     else if(p.action==='WITHDRAW'&&exact(p.value,['subject']))await reminders.withdraw(p.requestId,p.value.subject);
+     else if(p.action==='ADVANCE'&&exact(p.value,['at'])){await reminders.advance(p.value.at);await opened.app.recovery.tick();}
+     else if(p.action==='RECEIPT'&&exact(p.value,['jobId','status']))await reminders.receipt(p.requestId,p.value.jobId,p.value.status);
+     else{json(400,{error:'reminder_action_denied'});return;}
+     await opened.app.tick();json(200,{saved:true,synthetic:true});return;
+    }
+   }
    if(req.method==='POST'&&req.url==='/api/owner/save'){
     const p=await body(req);if(!exact(p,['requestId','expected','kind','value'])){json(400,{error:'owner_schema_denied'});return;}
     try{const revision=await scope.save(p.requestId,p.expected,p.kind,p.value);json(200,{saved:true,revision});}catch(e){json(e.code==='P7601'?409:400,{error:e.code==='P7601'?'catalog_revision_conflict':'catalog_invalid',message:e.code==='P7601'?'Otra edición cambió los datos. Actualiza y vuelve a intentar.':'Revisa los campos, horarios y servicios autorizados.'});}return;

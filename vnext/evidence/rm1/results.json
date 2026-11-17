@@ -1,0 +1,83 @@
+{
+  "source": "6a25e295a7b05860d0cb8207c0b4c57731af74e7",
+  "tree": "b36328203fb462bc59e76a0c20bf1e984c286e84",
+  "baseline": "47f485b691c62dc8968ad2aec7cf6f05aaf7df93",
+  "pr": 28,
+  "status": "READY_FOR_TEST",
+  "requirements": {
+    "register": "1.13",
+    "roadmap": "1.3",
+    "copyReview": "1.3",
+    "commit": "6c1cdf67fe49b677a6ba16d964badcbc7318b303",
+    "scope": [
+      "NM-068",
+      "NM-069"
+    ],
+    "release": "R0 remains open"
+  },
+  "platform": "linux",
+  "node": "24.19.0",
+  "postgres": "17.11",
+  "suites": {
+    "full.log": {
+      "tests": 813,
+      "pass": 813,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0
+    },
+    "runtime.log": {
+      "tests": 53,
+      "pass": 51,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 2
+    },
+    "rm1-browser.log": {
+      "tests": 1,
+      "pass": 1,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0
+    },
+    "rc1-browser.log": {
+      "tests": 1,
+      "pass": 1,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0
+    },
+    "services-browser.log": {
+      "tests": 1,
+      "pass": 1,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0
+    }
+  },
+  "newCasesIncludedInFull": {
+    "NM-068": 15,
+    "NM-069": 49
+  },
+  "staticChecks": {
+    "typecheck": "PASS",
+    "scope": "PASS",
+    "whitespace": "PASS"
+  },
+  "countsOverlap": true,
+  "faultAndConcurrencyFiles": "ALL included in full core; no duplicate subset totals added",
+  "nativeWindows": "NOT_EXECUTED; two platform-specific tests skipped on Linux",
+  "independentReview": "NOT_RUN; handoff prepared",
+  "ownerAcceptance": "PENDING",
+  "runtimeFixtureCorrection": "Only three legacy runtime test files release owned source resources after source checks/backup and before independent restore; all assertions preserved. Final source bytes matched throughout test execution.",
+  "restrictions": {
+    "existingOwnerProfilesAccessed": false,
+    "legacyChanged": false,
+    "pr27AcceptanceEvidenceChanged": false,
+    "realProvidersUsed": false,
+    "cloudProvisioned": false,
+    "registryPushed": false,
+    "prsMerged": false
+  },
+  "recordedAtUtc": "2026-11-17T02:12:48.427784+00:00"
+}

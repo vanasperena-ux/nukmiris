@@ -1,6 +1,6 @@
 /** Deterministic read-only reference model; no durable L2 state or effect path. */
 import {DateTime} from 'luxon';
-import {searchAvailability,recheckSlot,type AvailabilityConfig,type Slot,type SyntheticCalendarReader} from '../domain/availability.js';
+import {bookingHorizonDays,searchAvailability,recheckSlot,type AvailabilityConfig,type Slot,type SyntheticCalendarReader} from '../domain/availability.js';
 import {object,type ObjectValue} from '../domain/protocol.js';
 import {serviceSnapshot,type Catalog} from './service-catalog.js';
 import {shortDate} from '../domain/short-date.js';
@@ -23,26 +23,26 @@ export class AvailabilityOracle {
  private timesOrSuggestions(more=false):OracleView{
   if(!this.slots.length)return this.view(this.selectedDate?'No hay horarios disponibles para este día. Elige otra fecha o escríbela.':'No encontré horarios disponibles por ahora. Puedes llamar al negocio para consultar más opciones.','OFFER',this.selectedDate?[{kind:'dates',value:'0',title:'Elegir otra fecha'}]:[]);
   const offset=this.selectedDate?this.timePage*2:more?2:0,choices=this.slots.slice(offset,offset+2).map((s,i)=>({kind:'slot',value:String(offset+i),title:shortDate(s.startAt,this.config.timeZone)}));
-  if(this.selectedDate){choices.push(offset+2<this.slots.length?{kind:'times',value:String(this.timePage+1),title:'Más horarios'}:{kind:'dates',value:'0',title:'Elegir otra fecha'});const day=DateTime.fromISO(this.selectedDate,{zone:this.config.timeZone}).setLocale('es').toFormat('cccc d \'de\' LLLL yyyy');return this.view(this.timePage>0?'Te muestro más opciones. Elige un horario que te funciona mejor:':`¿Qué hora prefieres para el ${day}?\n\nSelecciona el horario que prefieres. Para cambiar de día, escribe otra fecha.`,'OFFER',choices);}
-  choices.push(!more&&this.slots.length>2?{kind:'more',value:'0',title:'Más opciones'}:{kind:'dates',value:'0',title:'Elegir fecha'});return this.view(more?'Te muestro más opciones. Elige un horario que te funciona mejor:':'Elige un horario que te funciona mejor:','OFFER',choices);
+  if(this.selectedDate){choices.push(offset+2<this.slots.length?{kind:'times',value:String(this.timePage+1),title:'Más horarios'}:{kind:'dates',value:'0',title:'Elegir otra fecha'});const day=DateTime.fromISO(this.selectedDate,{zone:this.config.timeZone}).setLocale('es').toFormat('cccc d \'de\' LLLL yyyy');return this.view(this.timePage>0?'Te muestro más opciones. Elige un horario:':`¿Qué hora prefieres para el ${day}?\n\nSelecciona el horario que prefieres. Para cambiar de día, escribe otra fecha.`,'OFFER',choices);}
+  choices.push(!more&&this.slots.length>2?{kind:'more',value:'0',title:'Más opciones'}:{kind:'dates',value:'0',title:'Elegir fecha'});return this.view(more?'Te muestro más opciones. Elige un horario:':'Elige un horario','OFFER',choices);
  }
  private dates():OracleView{
   const days=[...new Set(this.slots.map(s=>this.day(s)))],choices=days.slice(0,3).map(d=>({kind:'date',value:d,title:shortDate(d,this.config.timeZone,false)}));
   if(this.datePage>0)choices.push({kind:'days',value:String(this.datePage-1),title:'Fechas anteriores'});
-  if(days.length>=3&&DateTime.fromISO(days.at(-1)!,{zone:this.config.timeZone}).plus({days:1})<DateTime.fromISO(this.now()).setZone(this.config.timeZone).plus({days:365}))choices.push({kind:'days',value:String(this.datePage+1),title:'Más fechas'});
+  if(days.length>=3&&DateTime.fromISO(days.at(-1)!,{zone:this.config.timeZone}).plus({days:1})<DateTime.fromISO(this.now()).setZone(this.config.timeZone).plus({days:bookingHorizonDays(this.config)}))choices.push({kind:'days',value:String(this.datePage+1),title:'Más fechas'});
   return this.view(DATE_PROMPT,'DATES',choices);
  }
  private services():OracleView{
   const all=this.catalog!.services.filter(s=>s.active),offset=this.servicePage*4,page=all.slice(offset,offset+4);
-  if(!page.length)return this.view('No hay servicios activos disponibles. Contacta al negocio.','SERVICES',[]);
+  if(!page.length)return this.view('No encontré horarios disponibles por ahora. Puedes llamar al negocio para consultar más opciones.','SERVICES',[]);
   const choices=page.map((s,i)=>({kind:'service',value:s.id,title:[...`${offset+i+1}. ${s.name}`].slice(0,24).join('')}));
   if(offset)choices.push({kind:'services',value:String(this.servicePage-1),title:'Servicios anteriores'});if(offset+4<all.length)choices.push({kind:'services',value:String(this.servicePage+1),title:'Más servicios'});
   const details=page.map((s,i)=>`${offset+i+1}. ${s.name} · ${(s.priceMinor/100).toFixed(2)} ${s.currency} · ${s.durationMinutes} min`).join('\n');
   return this.view('Elige un servicio para tu cita:\n\n'+details,'SERVICES',choices);
  }
  async open(resetService=false):Promise<OracleView>{if(this.human)return this.ordinary();if(this.catalog){if(resetService){this.serviceId=undefined;this.servicePage=0;}const active=this.catalog.services.filter(s=>s.active);if(active.length===1)this.serviceId=active[0]!.id;if(!this.serviceId||!active.some(s=>s.id===this.serviceId))return this.services();this.config={...this.config,service:active.find(s=>s.id===this.serviceId)!};}this.slots=await searchAvailability(this.config,this.reader,this.now());if(this.catalog){const svc=this.catalog.services.find(s=>s.id===this.serviceId)!;this.slots=this.slots.map(slot=>({...slot,serviceSnapshot:serviceSnapshot(svc)}));}this.expiresAt=Date.parse(this.now())+900000;this.selected=undefined;this.selectedDate=undefined;return this.timesOrSuggestions();}
- menu():OracleView{this.human=false;this.serviceId=undefined;this.servicePage=0;this.selected=undefined;return this.view('¿En qué podemos ayudarte?\n\nEscribe "cita" o "agendar" para agendar una cita nueva, "horarios" para ver opciones y "menu" para volver al menú principal.\n\nPara solicitar apoyo, escribe "humano" o elige "Hablar con alguien".\n\n'+(this.catalog?'Escribe "reagendar" o "cancelar" para gestionar una cita.':'"reagendar" y "cancelar" aún no están disponibles en esta prueba local.')+'','MENU',[{kind:'book',value:'0',title:'Agendar una cita'},{kind:'manage',value:'0',title:'Reagendar / cancelar'},{kind:'human',value:'0',title:'Hablar con alguien'}]);}
- humano():OracleView{this.human=true;this.selected=undefined;return this.view('Escribe tu mensaje.\n\nEscribe "menu" para volver al menú principal.','HUMAN_HANDOFF',[]);}
+ menu():OracleView{this.human=false;this.serviceId=undefined;this.servicePage=0;this.selected=undefined;return this.view('¿En qué podemos ayudarte?\n\nEscribe "cita" o "agendar" para agendar una cita nueva. Escribe "reagendar" o "cancelar" para gestionar una cita.\n\nEscribe "menu" para volver al menú principal. Para solicitar apoyo, escribe "humano" o elige "Hablar con alguien".'+(this.catalog?'':'\n\n"reagendar" y "cancelar" aún no están disponibles en esta prueba local.'),'MENU',[{kind:'book',value:'0',title:'Agendar una cita'},{kind:'manage',value:'0',title:'Reagendar / cancelar'},{kind:'human',value:'0',title:'Hablar con alguien'}]);}
+ humano():OracleView{this.human=true;this.selected=undefined;return this.view('Escribe tu mensaje. El bot ya no está activo.\n\nEscribe "menu" para activar el bot y volver al menú principal.','HUMAN_HANDOFF',[]);}
  management():OracleView{const view=this.menu();view.text='Reagendar y cancelar aún no están disponibles en esta prueba local. No se modificó ninguna cita.\n\n'+view.text;return view;}
  ordinary():OracleView{return this.human?this.view('Atención humana activa.','HUMAN_HANDOFF',[]):this.view('Menú','MENU',[]);}
  async action(id:string,knownCustomer:boolean):Promise<OracleView>{

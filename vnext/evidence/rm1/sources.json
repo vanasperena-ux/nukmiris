@@ -1,0 +1,56 @@
+{
+  "acceptedExecutable": "47f485b691c62dc8968ad2aec7cf6f05aaf7df93",
+  "authoritativeRegisterVersion": "1.13",
+  "authoritativeCommit": "6c1cdf67fe49b677a6ba16d964badcbc7318b303",
+  "releaseAllocation": "R0 NM-068 and NM-069; remaining R3 work design-only",
+  "sources": [
+    {
+      "commit": "0ad6d508868b4f6a879825426b3b02509fc9e40c",
+      "path": "docs/product/NUKMIRIS_FEATURE_REGISTER.md",
+      "version": "1.12",
+      "bytes": 68902,
+      "sha256": "c1f435fdecc0a3899c4da031affe50a69a433f09f673b204a1160b0de49aa3c7",
+      "gitBlob": "fe187433564c2a73652ea17bbed8efc34ed41df4"
+    },
+    {
+      "commit": "6c1cdf67fe49b677a6ba16d964badcbc7318b303",
+      "path": "docs/product/NUKMIRIS_FEATURE_REGISTER.md",
+      "version": "1.13",
+      "bytes": 72131,
+      "sha256": "68949de1fb4ed0ed7bf33d2e763ff55b63fe011a06963dd579b87c5798be7208",
+      "gitBlob": "8a646e56b09dc00e5d7a2584c5156659363a0855"
+    },
+    {
+      "commit": "6c1cdf67fe49b677a6ba16d964badcbc7318b303",
+      "path": "docs/product/RELEASE_ROADMAP.md",
+      "version": "1.3",
+      "bytes": 12783,
+      "sha256": "94847b9d4cec483fe4536230b8c50a592e0d11f9632ae1125f59c39a7b8cec85",
+      "gitBlob": "a20aee6dca7b8add86af06e92736c229a1a836f7"
+    },
+    {
+      "commit": "6c1cdf67fe49b677a6ba16d964badcbc7318b303",
+      "path": "docs/product/CUSTOMER_FACING_TEXT_REVIEW.md",
+      "version": "1.3",
+      "bytes": 19720,
+      "sha256": "5869fbded77c14f81fa8ea5667c2a052a836a0284f14c363b3f0eac03511e503",
+      "gitBlob": "2caf8039b8e2c2519daf6458c9059b19ca365b9f"
+    },
+    {
+      "commit": "47f485b691c62dc8968ad2aec7cf6f05aaf7df93",
+      "path": "backend/REMINDERS.md",
+      "version": "accepted legacy reference",
+      "bytes": 23165,
+      "sha256": "b7b7c710a4679e993ac8f6ffbfc1f68f72f4bee0b6a45548d5e1efcca83ce665",
+      "gitBlob": "764fa096cc43227e017496290216cce7b9db5192"
+    },
+    {
+      "commit": "47f485b691c62dc8968ad2aec7cf6f05aaf7df93",
+      "path": "backend/REMINDER_TEMPLATES.md",
+      "version": "prepared definitions, not live approvals",
+      "bytes": 9535,
+      "sha256": "a83f9f9dc1d9bde3c5cc03daa179a759318091f8a9d8f751c04f8d0be32d84ea",
+      "gitBlob": "0fbb55c78ff07717e7f7a864b20ef3fe8843dba2"
+    }
+  ]
+}

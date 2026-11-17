@@ -1,0 +1,47 @@
+
+> nukmiris-wp1-synthetic-core@0.0.0 test:rm1:browser
+> npm run build && node local/reminders-browser.mjs
+
+
+> nukmiris-wp1-synthetic-core@0.0.0 build
+> tsc -p tsconfig.json
+
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.2
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.2
+npm notice To update run: npm install -g npm@12.2.2
+npm notice
+Pulling/verifying pinned PostgreSQL image (first download budget: 10 minutes).
+✖ NM068/NM069 browser: exact copy, synthetic consent, four reminders, receipt, attendance and tenant isolation (40980.228205ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 43967.220728
+
+✖ failing tests:
+
+test at local/reminders-browser.mjs:10:1
+✖ NM068/NM069 browser: exact copy, synthetic consent, four reminders, receipt, attendance and tenant isolation (40980.228205ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok((await evaluate(latest+".textContent")).startsWith('Elige un horario'))
+  
+      at TestContext.<anonymous> (file:///workspace/work/nukmiris-product-rm1/vnext/local/reminders-browser.mjs:29:254)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.2
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.2
+npm notice To update run: npm install -g npm@12.2.2
+npm notice

@@ -1,0 +1,109 @@
+✔ NM068 CX001/CX002/CX004 exact initial and more-options copy; CX003 and interactive limits unchanged (71.197213ms)
+✔ NM068 CX008 existing no-active-service trigger differs from CX007 only by state; CX006 unchanged (692.62112ms)
+✔ NM068 CX012 exact date feedback preserves offers without booking (583.602746ms)
+✔ NM068 CX013 exact date feedback preserves offers without booking (519.226457ms)
+✔ NM068 CX014 exact date feedback preserves offers without booking (493.543497ms)
+✔ NM068 CX015 exact date feedback preserves offers without booking (526.945772ms)
+✔ NM068 CX013 uses the actual 30-day horizon for parser, offers and copy (507.535717ms)
+✔ NM068 CX013 uses the actual 90-day horizon for parser, offers and copy (622.667195ms)
+✔ NM068 CX013 retains the default and fails closed for unsupported horizon configuration (0.660859ms)
+✔ NM068 CX021/CX022 exact known greeting, paragraphs and three choices (462.617109ms)
+✔ NM068 CX021/CX022 exact unknown greeting, paragraphs and three choices (425.680422ms)
+✔ NM068 CX021/CX022 zero, one and multiple appointments preserve their separate overview (1885.613576ms)
+✔ NM068 CX024 exact human entry has no overview, retains support messages, stays silent and exits on menu (1056.475461ms)
+✔ NM068 CX039 disappeared appointment keeps exact recovery prefix; no cancellation claim or operation (1006.455325ms)
+✔ NM068 CX040 selected appointment no longer current preserves original booking and recovers safely (1028.275404ms)
+✔ NM069 disabled by default: no reminder adoption/backfill when activated after booking (973.851948ms)
+✔ NM069 four thresholds use elapsed hours, future-only enrollment and durable unique identities (966.672779ms)
+✔ NM069 acceptance is not delivery: 22h follow-up requires exact correlated delivered/read receipt; final sends unconfirmed (1526.973517ms)
+✔ NM069 exact reminder button confirms once; confirmed attendance suppresses follow-up but not final (1797.080266ms)
+✔ NM069 restart retains schedule identities and does not duplicate an accepted reminder (950.673228ms)
+✔ NM069 22h sends only after timely correlated delivered proof; duplicate/out-of-order receipts are monotonic (1256.744705ms)
+✔ NM069 22h sends only after timely correlated read proof; duplicate/out-of-order receipts are monotonic (1125.635745ms)
+✔ NM069 late window 0 minutes is measured from the original due time (986.406336ms)
+✔ NM069 late window 15 minutes is measured from the original due time (1040.416516ms)
+✔ NM069 late window 16 minutes is measured from the original due time (826.903417ms)
+✔ NM069 short-lead bookings skip missed and exactly-now thresholds without catch-up (888.63511ms)
+✔ NM069 booking less than two hours away produces no reminder sends (936.158943ms)
+✔ NM069 missing permission suppresses due reminder; booking never creates a grant (890.732533ms)
+✔ NM069 withdrawal, reauthorization, duplicate input and restart affect only this business/customer and future thresholds (1456.106486ms)
+✔ NM069 MISSING account template holds dispatch without free-form fallback (861.608951ms)
+✔ NM069 REJECTED account template holds dispatch without free-form fallback (763.756703ms)
+✔ NM069 UNAVAILABLE account template holds dispatch without free-form fallback (923.154271ms)
+✔ NM069 failed delivery is auditable and never automatically resubmitted; 22h remains skipped (1060.213469ms)
+✔ NM069 reminder reschedule opens the exact RC1 appointment, retains it until proven move and invalidates old actions/history (1947.06925ms)
+✔ NM069 abandoned reminder reschedule restores prior attendance after 15 minutes without a misleading 22h follow-up (1182.832769ms)
+✔ NM069 proven cancellation after an earlier send retains that send and suppresses every remaining reminder (1546.65777ms)
+✔ NM069 UNKNOWN move preserves the old schedule/history and blocks reminders without asserting a new time (1601.554339ms)
+✔ NM069 crash at dispatch.beforeGate preserves original send identity and never reconstructs an invocation permit (909.046552ms)
+✔ NM069 crash at dispatch.afterGate preserves original send identity and never reconstructs an invocation permit (915.589086ms)
+✔ NM069 crash at dispatch.afterProvider preserves original send identity and never reconstructs an invocation permit (949.080225ms)
+✔ NM069 queued ordinary replies and UNKNOWN output hold reminders; no priority or alternate-channel bypass (980.60657ms)
+✔ NM069 human mode holds reminder sends and keeps all customer support messages quiet (1086.251773ms)
+✔ NM069 source/time/evidence and template approvals cannot cross businesses or customer identities (1157.505872ms)
+✔ NM069 elapsed thresholds and full Spanish labels across New York DST: 10 mar 2030 (1012.473132ms)
+✔ NM069 elapsed thresholds and full Spanish labels across New York DST: 3 nov 2030 (1021.229494ms)
+✔ NM069 exact two-hour enrollment threshold is skipped, never invented as immediate catch-up (889.596366ms)
+✔ NM069 unmanaged/import-like calendar events are never adopted as contact, permission or reminders (345.082537ms)
+✔ NM069 generic confirmation stays out of name/date inputs; stale quote never falls back to another schedule (2273.321602ms)
+✔ NM069 multiple current requests make generic text ambiguous; exact button affects only its appointment (2883.510077ms)
+✔ NM069 concurrent schedulers produce one output/attempt/ledger effect for the same due reminder (1241.241752ms)
+✔ NM069 withdraw-first race preserves final permission gate and existing in-flight boundary (1202.920337ms)
+✔ NM069 entry-first race preserves final permission gate and existing in-flight boundary (1458.350922ms)
+✔ NM069 scheduling crash at rm1.afterOutputArchive reuses the archived output identity (1506.206375ms)
+✔ NM069 scheduling crash at rm1-enqueue.beforeCommit reuses the archived output identity (1584.389075ms)
+✔ NM069 scheduling crash at rm1-enqueue.afterCommit reuses the archived output identity (1657.342764ms)
+✔ NM069 reminder schedule and event history roll back with every failed booking finalizer stage (1172.53153ms)
+✔ NM069 replaying old permission evidence never revives a later withdrawal or falsely reports current permission (1112.947577ms)
+✔ NM069 receipt and response audit cannot be rewritten, and archive/template evidence contains only scoped synthetic data (1503.257185ms)
+✔ NM069 late sent receipt cannot regress failed status, but a later delivered/read proof can supersede failure (1610.657314ms)
+✖ NM069 inbound arrival after reminder preparation vetoes send; existing deadline recovery restores progress without takeover (1756.215407ms)
+✔ R002: sealed batch rejects extension, wrong manifest/count, missing/extra membership and NULL item fields (727.325878ms)
+✔ R003/R012: NULL, infinities and wrong caller clocks never authorize submission or future grants (505.36497ms)
+✔ R006: operation envelope and digests must match the protected authoritative plan and input (2374.504149ms)
+✔ R004/R006: output row purpose, payload and complete context defeat false CUSTOMER_REQUEST after STOP (1222.201472ms)
+✔ R007: earlier STAGED command blocks later conversation execution (227.305612ms)
+✔ R007: earlier PREPARED command blocks later conversation execution (283.60517ms)
+✔ R007: earlier SUBMISSION_ENTERED command blocks later conversation execution (307.798558ms)
+✔ R007: earlier UNKNOWN command blocks later conversation execution (336.139882ms)
+✔ R008: post-snapshot suspension and lost archive restore SUSPENDED with dispatch disabled (589.384972ms)
+✔ R005: signed mixed-tenant STOP partitions durably, a failing tenant never rolls it back and ACK waits for all (309.422423ms)
+✔ R010: sealed abandonment of never-entered PREPARED releases slot and head without rearming old work (486.053007ms)
+✔ R010: sealed abandonment of never-entered ARMED releases slot and head without rearming old work (468.667861ms)
+✔ R010: UNKNOWN/entered cannot be abandoned; rollback cannot release any protection (291.45574ms)
+✔ R007/R010: ordinary unsupported text reduces without a poison head; an explicit sealed hold permanently denies preparation (347.88856ms)
+✔ R009/R014/R015: forged digest, crossed privileges, conflicting status replay and direct evidence DML are refused (205.585466ms)
+✔ R003/R012/SEC: every exposed mutating SQL argument rejects NULL before any state change (941.760769ms)
+✔ R010: abandoning an unsubmitted MOVE restores source protection exactly and retains source identity (595.319105ms)
+✔ R005: archive outage after mixed-business STOPs leaves both SQL withdrawals durable (153.996164ms)
+✔ R015: all eight evidence tables reject owner payload UPDATE and DELETE even with valid RLS scope (511.109ms)
+✔ R009: SQL/TypeScript canonical digests agree for nested Unicode, escapes, arrays and safe integers (156.116108ms)
+✔ R010-ATOMIC: an abandonment transaction failure restores attempt, appointment, guard, protection and audit together (241.215582ms)
+ℹ tests 81
+ℹ suites 0
+ℹ pass 80
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 77300.553657
+
+✖ failing tests:
+
+test at dist/test/l2-rm1-reminders.test.js:540:1
+✖ NM069 inbound arrival after reminder preparation vetoes send; existing deadline recovery restores progress without takeover (1756.215407ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  1 !== 0
+  
+      at TestContext.<anonymous> (file:///workspace/work/nukmiris-product-rm1/vnext/dist/test/l2-rm1-reminders.test.js:552:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

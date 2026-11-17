@@ -10,7 +10,7 @@ import path from 'node:path';
 import pg from 'pg';
 const wait=ms=>new Promise(r=>setTimeout(r,ms));
 test('SE1 TCP owner authorization, service/employee forms API, booking, crash/restart and coherent inert restore',{timeout:240000},async t=>{
- const {s,running,parent}=await localFixture(t),c=await httpClient(s,running);
+ const {s,running,parent,releaseResources}=await localFixture(t),c=await httpClient(s,running);
  async function call(route,body,owner,custom={}){const r=await fetch(c.origin+route,{method:body?'POST':'GET',headers:{Cookie:c.cookie,...(body?{Origin:c.origin,'Content-Type':'application/json'}:{}),...(owner?{'x-owner-session':owner.token}:{}),...custom},...(body?{body:JSON.stringify(body)}:{})});return {status:r.status,body:await r.json()};}
  assert.equal((await fetch(c.origin+'/api/owner/catalog')).status,401);
  assert.equal((await call('/api/owner/catalog',undefined,undefined,{'x-owner-session':c.session.token})).status,403);
@@ -39,6 +39,6 @@ test('SE1 TCP owner authorization, service/employee forms API, booking, crash/re
  for(const route of ['/owner','/owner.js','/owner.css'])assert.equal((await fetch(c.origin+route)).status,200);
  await request(s,await workerState(s),'crash');await wait(250);const restarted=await start(s,Number(new URL(running.url).port)),next=await httpClient(s,restarted);const auth=await next.call('/api/owner/session',{businessId:'synthetic-a'});
  const raw=await fetch(new URL('/api/owner/appointments',restarted.url),{headers:{Cookie:next.cookie,'x-owner-session':auth.token}});assert.deepEqual((await raw.json()).appointments,appointments);
- await stop(s);const bundle=await backup(s);await stop(s);const restored=await restoreInteractive(bundle.directory,bundle.manifestSha256,path.join(parent,'nukmiris-vnext-services-restored'),{port:await freeLoopbackPort()}),target=await readState(restored.directory);t.after(()=>destroy(target));const db=new pg.Client(connection(target));await db.connect();try{assert.equal((await db.query('SELECT count(*)::int n FROM core.appointment_service')).rows[0].n,1);assert.equal((await db.query('SELECT count(*)::int n FROM core.employee')).rows[0].n,5);assert.equal((await db.query("SELECT bool_and(status='SUSPENDED' AND NOT dispatch_enabled) inert FROM core.business")).rows[0].inert,true);}finally{await db.end();}
+ await stop(s);const bundle=await backup(s);await stop(s);await releaseResources();const restored=await restoreInteractive(bundle.directory,bundle.manifestSha256,path.join(parent,'nukmiris-vnext-services-restored'),{port:await freeLoopbackPort()}),target=await readState(restored.directory);t.after(()=>destroy(target));const db=new pg.Client(connection(target));await db.connect();try{assert.equal((await db.query('SELECT count(*)::int n FROM core.appointment_service')).rows[0].n,1);assert.equal((await db.query('SELECT count(*)::int n FROM core.employee')).rows[0].n,5);assert.equal((await db.query("SELECT bool_and(status='SUSPENDED' AND NOT dispatch_enabled) inert FROM core.business")).rows[0].inert,true);}finally{await db.end();}
  console.log(JSON.stringify({servicesOwner:'PASS',nativeWindows:process.platform==='win32'?'EXECUTED':'NOT_EXECUTED',postgres:s.observed.serverVersion,timezone:'UTC',bookings:1,historySnapshot:'PRESERVED',restart:'PASS',coherentRestore:'INERT'}));
 });

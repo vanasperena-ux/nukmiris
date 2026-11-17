@@ -1,0 +1,29 @@
+
+> nukmiris-wp1-synthetic-core@0.0.0 test:rm1:browser
+> npm run build && node local/reminders-browser.mjs
+
+
+> nukmiris-wp1-synthetic-core@0.0.0 build
+> tsc -p tsconfig.json
+
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.2
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.2
+npm notice To update run: npm install -g npm@12.2.2
+npm notice
+Pulling/verifying pinned PostgreSQL image (first download budget: 10 minutes).
+{"rm1Browser":"PASS","copy":"NM068_MENU_AND_INITIAL_OFFER","controls":"EXPLICIT_PERMISSION_AND_DURABLE_CLOCK","stages":[168,24,22,2],"receipt":"EXPLICIT_SIMULATED_DELIVERY","attendance":"EXACT_FOLLOWUP_BUTTON","tenantIsolation":"PASS","mobile":"390px PASS","nativeWindows":"NOT_EXECUTED","realProviders":false}
+✔ NM068/NM069 browser: exact copy, synthetic consent, four reminders, receipt, attendance and tenant isolation (21644.22703ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 1
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 24654.640365
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.2
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.2
+npm notice To update run: npm install -g npm@12.2.2
+npm notice
