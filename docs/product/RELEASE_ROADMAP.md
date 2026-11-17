@@ -1,9 +1,9 @@
 # NukMiris — Release Roadmap
 
-**Planning version:** 1.2 (2026-11-16)
+**Planning version:** 1.3 (2026-11-16)
 **Status:** OWNER-APPROVED RELEASE ALLOCATION; **NOT IMPLEMENTATION AUTHORIZATION**
-**Master register:** [NUKMIRIS_FEATURE_REGISTER.md](NUKMIRIS_FEATURE_REGISTER.md) v1.11
-**Source decisions:** Owner release validations (2026-11-16), including R1 PWA, calendar import, and start-time setting NM-067.
+**Master register:** [NUKMIRIS_FEATURE_REGISTER.md](NUKMIRIS_FEATURE_REGISTER.md) v1.13
+**Source decisions:** Owner release validations (2026-11-16), including R1 PWA, calendar import, start-time setting NM-067, and R0 local reminder parity NM-069. This v1.3 update changes release allocation only, not R3 deployment authorization.
 
 ## Release governance
 
@@ -13,17 +13,19 @@
 - **No automatic merge, GCP provisioning, real WhatsApp sending, live Google Calendar access, account creation, or payments** from this document.
 - **Pilot is not paid public launch.** Real business paid self-service onboarding and subscription billing are R5 requirements.
 
-## R0 — Complete and accept vNext core booking
+## R0 — Complete and accept vNext core booking and legacy reminder parity
 
-**Outcome:** Locally accepted (Windows, synthetic providers) booking, rescheduling/cancellation, correct customer-facing conversation flow, and bounded recovery and safety.
+**Outcome:** Locally accepted (Windows, synthetic providers) booking, rescheduling/cancellation, correct customer-facing conversation flow, **four-stage local synthetic reminders with attendance response**, and bounded recovery and safety.
 
-**Feature targets:** NM-006, NM-007, NM-010, NM-024, NM-025, NM-029, NM-031, NM-032, NM-033, NM-036, NM-037, NM-038, NM-040, NM-041, NM-042, NM-043, NM-045, **NM-068**; plus parity verification of NM-001–005, NM-008, NM-009, NM-011, NM-013.
+**Feature targets:** NM-006, NM-007, NM-010, NM-024, NM-025, NM-029, NM-031, NM-032, NM-033, NM-036, NM-037, NM-038, NM-040, NM-041, NM-042, NM-043, NM-045, **NM-068, NM-069**; plus parity verification of NM-001–005, NM-008, NM-009, NM-011, NM-013.
 
 **Delivery dependencies:** Current bounded RC-1 local reschedule/cancel work (GitHub Issue #26) and Milestone A (Issue #7); do not misstate prior synthetic tests as real provider proof.
 
 **Owner-requested Spanish copy corrections (NM-068):** Review and, upon separate implementation authorization, apply CX-001, CX-002, CX-004, CX-008, CX-012–015, CX-021, CX-022, CX-024, CX-039 and CX-040 from [CUSTOMER_FACING_TEXT_REVIEW.md](CUSTOMER_FACING_TEXT_REVIEW.md). Preserve approved scenario routing, human handoff and error safety. **Owner-confirmed wording:** CX-008 must use exactly `No encontré horarios disponibles por ahora. Puedes llamar al negocio para consultar más opciones.` even in the no-active-services code scenario; do not substitute a service-specific explanation. CX-021/CX-022/CX-024 editorial fixes are also approved; refer to copy review v1.3. The feature is not built; its placement in R0 is planning only.
 
-**Acceptance gate:** Owner walks through known/new booking, 0/1/multiple appointments, immediate cancel/reschedule (only before appointment start), employee and customer overlap protection, menu/human support, replayed/stale actions, restart, service buffers, and no false confirmations. Native Windows test evidence and independent reviews as required.
+**R0 reminder parity (NM-069; owner-authorized synthetic implementation):** Restore the four accepted v0.8.1 reminders in local vNext: seven days (168 h) before (informational); 24 hours before (attendance confirmation `Sí, confirmo` / `Necesito reagendar`); 22 hours before (same actions **only after correlated proof that the 24-hour message was delivered/read and absent confirmation or change request**); two hours before (informational, even when attendance remains unconfirmed). Preserve original v0.8.1 timing eligibility, 15-minute late-send limit, consent/opt-out gates, per-appointment/version audit, durable restart/replay, cancel/reschedule invalidation and UNKNOWN custody. Nonresponse never cancels the booking. **Synthetic messaging and receipts only; no real WhatsApp or Google Calendar actions.** See [legacy reminders](../../backend/REMINDERS.md) and [template definitions](../../backend/REMINDER_TEMPLATES.md). This R0 parity is distinct from R3 activation/verification of actual Meta templates, WABA sender approval, real webhook delivery, production consent compliance, integrations and cloud.
+
+**Acceptance gate:** Owner walks through known/new booking, 0/1/multiple appointments, immediate cancel/reschedule (only before appointment start), employee and customer overlap protection, menu/human support, replayed/stale actions, restart, service buffers, **four reminder stages, response/attendance status, 22-hour delivered-and-unanswered gating, opt-out, no-response preservation, reschedule/cancel suppression and reminder restart**, and no false confirmations. Native Windows test evidence and independent reviews as required.
 
 ## R1 — Services and installable mobile-first owner PWA
 
@@ -57,7 +59,7 @@
 
 **Outcome:** Real WhatsApp and Google Calendar supported safely in a limited pilot, on approved managed hosting; public informational pilot website available.
 
-**Feature targets:** NM-015, NM-017–021, NM-023, NM-026, NM-027, NM-030, NM-034, NM-039, NM-035 (live event mapping), NM-057 (live authorized Calendar contact import), NM-063.
+**Feature targets (production integration/compliance; not R0 synthetic reminder parity NM-069):** NM-015, NM-017–021, NM-023, NM-026, NM-027, NM-030, NM-034, NM-039, NM-035 (live event mapping), NM-057 (live authorized Calendar contact import), NM-063.
 
 **Dependencies / gates:**
 - Explicit GCP spend/region authorization, approved architecture/security/recovery, safe migration and deployment gates; no production cutover from this plan.
@@ -98,7 +100,7 @@
 
 ## Cross-release controls
 
-- R1 and R2 may have synthetic prototype adapters even though R3 enables real provider accounts; production integration must not be implied by prototype acceptance.
+- R0 includes the **owner-authorized synthetic rebuild** of legacy reminders and attendance (NM-069); the R3 live-provider/compliance features remain gated. R1 and R2 may have synthetic prototype adapters even though R3 enables real provider accounts; production integration must not be implied by prototype acceptance.
 - R0 must not be marked complete solely from previous legacy `DONE (reported)` entries or old draft PR tests.
 - Owner decisions recorded in Feature Register v1.7 remain binding, including no customer overlaps, owner lead time, reschedule/cancel eligibility cutoff at scheduled start, and employee continuity.
 - Preserve stable NM IDs and log future changes to release targets with rationale; update source register and roadmap together.
