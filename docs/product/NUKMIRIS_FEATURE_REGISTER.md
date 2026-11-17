@@ -1,6 +1,6 @@
 # NukMiris — Feature & Improvement Register
 
-**Version:** 1.13  
+**Version:** 1.14  
 **Established:** 2026-10-27  
 **Product baseline:** v0.8.1; local vNext L2 owner walkthrough on Windows (tested source `3d8f82bb047e6ed937750b7ce6e81ecd23ab9f42`)  
 **Purpose:** Living backlog for functional features, UX improvements, compliance, reliability, and maintenance. This is a planning source, **not** proof that implementation has been independently tested.
@@ -14,6 +14,8 @@
 - **Feature IDs never change.** New features receive NM-029, NM-030, etc. Preserve audit history and implementation/version evidence.
 
 ## Summary
+
+- **R0 staged legacy-parity gate:** after NM-068 and NM-069 pass owner Windows acceptance and independent review, audit the remaining accepted v0.8.1 behavior against vNext. Codex must verify each gap and propose targeted fixes; **no gap implementation is preauthorized** by this audit entry.
 
 - **NM-069 (R0):** owner-authorized *local synthetic* rebuild of accepted v0.8.1 reminders and attendance confirmation: 7-day, 24-hour request, conditional 22-hour follow-up, 2-hour final reminder. The R3 provider, WABA/template and compliance gates are unchanged.
 
@@ -311,10 +313,31 @@ These are the **owner-approved target strings** for R0, not evidence that the ru
 
 **Release split:** NM-069 restores observable local synthetic reminders/attendance functionality in R0. NM-017–020, NM-026 and other R3 assignments for *live WABA/template readiness, consent/compliance checks and production provider operation* remain in R3. Synthetic permission/approval/receipt fixtures needed to test NM-069 are not claims of production compliance. Other RM-1 items outside R0 may be analyzed/design-prepared, but not implemented ahead of their approved release without a separate owner scope decision.
 
+## R0 v0.8.1 parity audit — gated follow-up (owner decision, 2026-11-16)
+
+**Sequence is binding:**
+1. **Current Codex increment:** implement **NM-068** (13 exact approved Spanish CX messages) and **NM-069** (four-stage, local synthetic reminders/attendance), with full evidence, fresh-profile Windows walkthrough and a focused Claude review. **Do not interrupt or widen this increment** for the parity audit.
+2. **Owner acceptance gate:** owner tests NM-068 and NM-069; record independent review and any blockers. Do not treat R0 as fully closed merely because these two items pass.
+3. **Then request a separate Codex v0.8.1-to-vNext parity audit**, using accepted legacy `v0.8.1` (`backend/BASELINE.md`, `backend/INTENT_RECOGNITION.md`, `backend/DYNAMIC_AVAILABILITY.md`, `backend/REMINDERS.md`, `docs/releases/v0.8.1.md`, relevant code/tests) and the pinned accepted vNext source after NM-068/NM-069. Start with code-level traceability, not an assumption that features are missing. Distinguish current executable evidence from legacy `DONE (reported)` and planned register statuses.
+4. **Codex reports verified gaps and targeted correction proposals for owner scope approval.** Only after owner authorization may Codex implement missing R0 parity, in a separate bounded Draft PR with tests, Claude review and Windows acceptance. No automatic merge, provider activation, production cloud or protected-profile upgrade.
+5. **R0 release acceptance** occurs only after the parity audit, any owner-authorized R0 gap fixes and remaining R0 acceptance gates. The owner alone authorizes transition to R1; R0 → R1 → R2 → R3 remains intact.
+
+| Audit area | Accepted v0.8.1 behavior to compare | Verification outcome required |
+|---|---|---|
+| Natural Spanish intent recognition | `backend/INTENT_RECOGNITION.md`: deterministic booking/reschedule/cancel phrases; negation, ambiguous combined requests, context-sensitive nonattendance, human and active-workflow precedence, persisted clarification choices. | `VERIFIED`, `PARTIAL`, `MISSING`, or `INTENTIONALLY DEFERRED`; exact source/tests and behavior differences. Avoid expanding to LLM/NLU. |
+| Dynamic appointment availability | `backend/DYNAMIC_AVAILABILITY.md`: initial 30-day discovery; 15-day extensions; first three available dates; 365-day horizon; 2+2 choices, date navigation/typed date, business timezone, booking and rescheduling safety. | Verify all boundaries and owner-facing interactions, using current synthetic calendars and employee/service qualification; no inferred real-provider assurance. |
+| Customer registration and identity reuse | First new booking asks for name once; returning customer retains business-scoped identity across booking, reschedule, cancellation, reminders and restart; customer data does not leak between tenants. | Verify the full lifecycle and existing SE-1/RC-1/R0 tests, only flag concrete mismatches. |
+| Durable messaging, recovery and ordering | Accepted inbound signed-routing/deduplication semantics, persisted outbound intent and replay/expiry handling, uncertain outcomes/reconciliation, reliable restart; separate synthetic behaviors from real Meta integration (R3). | Verify equivalent vNext safe behaviors and document any intentional architectural differences, never demand SQLite-specific design in PostgreSQL. |
+| Backups and isolated restore | Accepted local verified backups/isolated restore, preservation of state/evidence, and no unsafe resending or external mutation after restore. | Verify local vNext equivalents, note what is implemented but not tested on Windows, and distinguish full future cloud backup/DR (not R0). |
+| Other legacy parity | Cross-check `v0.8.1` release/baseline and tests for functionality not enumerated above; reconcile with already registered NM IDs, including completed RC-1 and NM-069, before creating new entries. | Report any *genuine* uncatalogued requirement as a proposed register addition with acceptance criteria and release, for owner approval; no automatic implementation. |
+
+**Audit deliverable:** matrix with legacy source/test, vNext source/test, implementation status, safety impact, recommended R0 remedy versus R3 deferral, complexity/risk, and whether owner approval is needed. Preserve original NM IDs. This section is a **future verification checkpoint, not a new implementation feature and not permission to begin it before NM-068/NM-069 acceptance**.
+
 ## Change log
 
 | Date | Change |
 |---|---|
+| 2026-11-16 | v1.14: owner approved staged R0 v0.8.1 parity audit **after** NM-068/NM-069 tests and independent review; Codex to verify and propose gaps, with implementation only after separate owner authorization. No change to current Codex scope or R1–R3 boundaries. |
 | 2026-11-16 | v1.13: owner assigned accepted legacy v0.8.1 reminder/attendance parity to R0 as NM-069 and expressly authorized a **synthetic-only Codex implementation now** alongside NM-068. Four stages 168/24/22/2 h; conditional 22 h delivery proof; no-response does not cancel; no live provider or R3 activation. Roadmap updated in tandem. |
 | 2026-11-16 | v1.12: placed the definitive 13 approved NM-068/CX target strings directly into the master Feature Register; owner's exact CX-008 override remains authoritative. R0, unimplemented. |
 | 2026-11-16 | v1.11: explicit owner correction supersedes previous CX-008 editorial recommendation; preserve requested no-availability sentence for CX-008 existing trigger. No implementation started. |
