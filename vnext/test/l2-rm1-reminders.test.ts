@@ -184,3 +184,7 @@ test('NM069 two active businesses use independent permission and template fixtur
 for(const field of ['waba','number_id'] as const)test('NM069 stale synthetic approval cannot follow a changed '+field+' binding',async t=>{
  const s=await setup(t);await s.grant();await s.book();await s.f.admin.query(`UPDATE core.channel SET ${field}=$2,revision=revision+1 WHERE business_id=$1`,[s.b,'different-synthetic-account']);const j=await s.at('seven_day');assert.equal(j['reason'],'TEMPLATE_UNAVAILABLE');assert.equal((await s.f.rows('output_intent')).filter(o=>o['purpose']==='REMINDER').length,0);
 });
+
+test('NM069 expired reminder does not turn a past, already-confirmed booking into a delayed booking-confirmation summary',async t=>{
+ let enabled=false;const s=await setup(t,{async hit(point){if(enabled&&point==='dispatch.beforeGate')throw Error('stopped_before_reminder_entry');}});await s.grant();const ap=await s.book();enabled=true;await s.at('seven_day');enabled=false;s.f.clock.instant=Date.parse(text(ap['start_at']))+1000;await s.app.recovery.tick();const menu=await s.send('menu');assert.equal(s.last(menu)['outcome'],'MENU');assert.doesNotMatch(text(s.last(menu)['text']),/Tu cita actual|Tus próximas citas|Cita registrada/);assert.equal((await s.f.rows('appointment')).length,1);assert.ok((await s.f.rows('output_intent')).some(o=>o['purpose']==='REMINDER'&&o['state']==='EXPIRED'));
+});

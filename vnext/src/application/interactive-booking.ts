@@ -224,7 +224,7 @@ export class InteractiveBooking {
   WHERE a.business_id=$1 AND c.subject=$2 AND a.state='ACTIVE'
   AND (a.start_at>=core.local_now($1) OR EXISTS(
    SELECT 1 FROM core.output_intent oi JOIN core.operation oc ON oc.business_id=oi.business_id AND oc.id=oi.parent_operation_id
-   WHERE oi.business_id=a.business_id AND oc.appointment_id=a.id AND oi.state<>'ACCEPTED'))
+   WHERE oi.business_id=a.business_id AND oc.appointment_id=a.id AND oi.purpose='CUSTOMER_REQUEST' AND oi.state<>'ACCEPTED'))
   GROUP BY a.business_id,a.id
   ORDER BY ${all?'a.start_at,a.id':'max(i.sequence) DESC NULLS LAST,a.start_at DESC LIMIT 1'}`,[s.config.businessId,subject])).rows as ObjectValue[]);}
  private activeText(s:LocalScope,rows:ObjectValue[]):string{
